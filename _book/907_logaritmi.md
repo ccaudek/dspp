@@ -1,20 +1,6 @@
 # Funzioni esponenziale e logaritmica {#funs-exp-log}
 
-```{r setup, include = FALSE}
-source("_common.R")
-library("patchwork")
-theme_set(bayesplot::theme_default())
-bayesplot::color_scheme_set("brightblue") 
-knitr::opts_chunk$set(
-  message = FALSE, 
-  warning = FALSE,
-  error = FALSE,
-  tidy = FALSE, 
-  cache = FALSE, 
-  echo = TRUE,
-  fig.align = "center"
-)
-```
+
 
 ## Funzione esponenziale
 
@@ -31,39 +17,59 @@ La base $a = 1$ è esclusa perché produce $f(x) = 1^x = 1$, la quale è una cos
 
 Per esempio, un grafico della funzione esponenziale di base 2 si trova con
 
-```{r}
+
+```r
 exp_base2 = function(x){2^x}
 tibble(x = c(-5, 5)) %>% 
 ggplot(aes(x = x)) + 
   stat_function(fun = exp_base2)
 ```
+
+
+
+\begin{center}\includegraphics{907_logaritmi_files/figure-latex/unnamed-chunk-1-1} \end{center}
 Se usiamo la base 4 troviamo
 
-```{r}
+
+```r
 exp_base4 = function(x){4^x}
 tibble(x = c(-5, 5)) %>% 
 ggplot(aes(x = x)) + 
   stat_function(fun = exp_base4)
 ```
+
+
+
+\begin{center}\includegraphics{907_logaritmi_files/figure-latex/unnamed-chunk-2-1} \end{center}
 Oppure
 
-```{r}
+
+```r
 exp_base4 = function(x){4^-{x}}
 tibble(x = c(-5, 5)) %>% 
 ggplot(aes(x = x)) + 
   stat_function(fun = exp_base4)
 ```
 
+
+
+\begin{center}\includegraphics{907_logaritmi_files/figure-latex/unnamed-chunk-3-1} \end{center}
+
 In molte applicazioni la scelta più conveniente per la base è il numero irrazionale $e = 2.718281828\dots. Questo numero è chiamato la base naturale.  La funzione $f(x) = e^x$ è chiamata funzione esponenziale naturale.
 
 Per esempio, abbiamo
 
-```{r}
+
+```r
 exp_base_e= function(x){exp(x)}
 tibble(x = c(-2, 1.5)) %>% 
 ggplot(aes(x = x)) + 
   stat_function(fun = exp_base_e)
 ```
+
+
+
+\begin{center}\includegraphics{907_logaritmi_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 
 ## Funzione logaritmica
