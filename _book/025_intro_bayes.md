@@ -68,9 +68,9 @@ Possiamo dire che la regola di Bayes viene usata per aggiornare le credenze a pr
 La \@ref(eq:bayesmodel) rende evidente che, in ottica bayesiana, la quantità di interesse $\theta$ non è fissata come nell'impostazione frequentista, ma è una variabile casuale la cui distribuzione di probabilità è influenzata sia dalle informazioni a priori sia dai dati a disposizione. In altre parole, nell'approccio bayesiano non esiste un valore vero di $\theta$, ma vogliamo fornire invece un giudizio di probabilità. Prima delle osservazioni, sulla base delle nostre conoscenze assegniamo a $\theta$ una distribuzione a priori di probabilità. Dopo le osservazioni, correggiamo il nostro giudizio e assegniamo a $\theta$ una distribuzione a posteriori di probabilità. La distribuzione a posteriori $p(\theta \mid y)$ contiene tutta l'informazione riguardante il parametro $\theta$ e viene utilizzata per produrre indicatori sintetici, per la determinazione di stime puntuali o intervallari, e per la verifica d'ipotesi.
 
 
-## Inferenza bayesiana
+## Un esempio concreto
 
-Un esempio di inferenza bayesiana è quello nel quale i dati sono rappresentati da una proporzione. Per questo tipo di dati possiamo adottare il seguente modello statistico 
+L'esempio più semplice di inferenza bayesiana è quello nel quale i dati sono rappresentati da una proporzione. Per questo tipo di dati possiamo adottare il seguente modello statistico 
 
 \begin{equation}
 y  \sim \mbox{Bin}(n, \theta),
@@ -78,7 +78,7 @@ y  \sim \mbox{Bin}(n, \theta),
 \end{equation}
 
 \noindent
-laddove $\theta$ è la probabiltà che una prova Bernoulliana assuma il valore 1 e $n$ corrisponde al numero di prove Bernoulliane. Questo modello assume che le prove Bernoulliane $y_i$ che costituiscono il campione $y$ siano tra loro indipendenti e che ciascuna abbia la stessa probabilità $\theta \in [0, 1]$ di essere un "successo" (valore 1). In altre parole, il modello generatore dei dati avrà una funzione di massa di probabilità 
+laddove $\theta$ è la probabiltà che una prova Bernoulliana assuma il valore 1 e $n$ corrisponde al numero di prove Bernoulliane. Questo modello statistico assume che le prove Bernoulliane $y_i$ che costituiscono il campione $y$ siano tra loro indipendenti e che ciascuna abbia la stessa probabilità $\theta \in [0, 1]$ di essere un "successo" (valore 1). In altre parole, il modello generatore dei dati ha una funzione di massa di probabilità 
 
 $$
 p(y \mid \theta)
@@ -86,21 +86,21 @@ p(y \mid \theta)
 \mbox{Bin}(y \mid n, \theta).
 $$
 
-Nei capitoli precedenti è stato mostrato come, sulla base del modello binomiale, sia possibile assegnare una probabilità a ciascun possibile valore $y \in \{0, 1, \dots, n\}$ _assumendo noto il valore del parametro_ $\theta$. Ma ora abbiamo il problema inverso, ovvero quello di fare inferenza su $\theta$ alla luce dei dati campionari $y$. In altre parole, riteniamo di conoscere il modello probabilistico che ha generato i dati, ma di tale modello non conosciamo i parametri. Nel caso presente, il modello probabilistico è quello binomiale. Noi vogliamo ottenere informazioni sul valore di $\theta$ conoscendo il numero $y$ di successi osservati nel campione.
+Nei capitoli precedenti è stato mostrato come, sulla base del modello statistico binomiale, sia possibile assegnare una probabilità a ciascun possibile valore $y \in \{0, 1, \dots, n\}$ _assumendo noto il valore del parametro_ $\theta$. Ma ora abbiamo il *problema inverso*, ovvero quello di fare inferenza su $\theta$ alla luce dei dati campionari $y$. In altre parole, riteniamo di conoscere il modello probabilistico che ha generato i dati, ma di tale modello non conosciamo i parametri. Nel caso presente, il modello probabilistico è quello binomiale. Noi vogliamo ottenere informazioni sul valore di $\theta$ conoscendo il numero osservato $y$ di successi.
 
 
 ::: {.rmdnote}
 
-La \@ref(eq:binomialmodel) è un _modello statistico_. Tale modello non spiega perché, in ciascuna realizzazione, $Y$ assume un particolare valore. Questo modello deve piuttosto essere inteso come un costrutto matematico che ha lo scopo di riflettere alcune proprietà del processo corrispondente ad una sequenza di prove Bernoulliane. In questo senso, è simile al modello di Isaac Newton dei moti planetari che utilizza equazioni differenziali. Le equazioni non sono i pianeti, ma solo descrizioni di come si muovono i pianeti in risposta alle forze gravitazionali. Modelli come quello di Newton ci permettono di prevedere alcuni fenomeni, come il moto dei pianeti, ad esempio. Ma in generale i modelli sono solo delle approssimazioni del fenomeno che vogliono descrivere.  Anche il modello di Newton, che produce previsioni estremamente accurate di ciò che possiamo osservare a occhio nudo a proposito del moto dei corpi celesti, è solo un'approssimazione dei modelli del moto e dei fenomeni gravitazionali che, in seguito, sono stati introdotti da Albert Einstein. E anche tali modelli successivi sono, a loro volta, solo un caso speciale della più generale teoria della relatività. In altre parole, modelli sempre migliori vengono proposti, laddove ogni successivo modello è migliore di quello precedente in quanto ne migliora le capacità di previsione, è più generale, o è più elegante.
+La \@ref(eq:binomialmodel) è un _modello statistico_. Tale modello non spiega perché, in ciascuna realizzazione, $Y$ assume un particolare valore. Questo modello deve piuttosto essere inteso come un costrutto matematico che ha lo scopo di riflettere alcune proprietà del processo corrispondente ad una sequenza di prove Bernoulliane. In questo senso, è simile al modello di Isaac Newton dei moti planetari che utilizza equazioni differenziali. Le equazioni non sono i pianeti, ma solo descrizioni di come si muovono i pianeti in risposta alle forze gravitazionali. Modelli come quello di Newton ci permettono di prevedere alcuni fenomeni, come il moto dei pianeti, ad esempio. Ma in generale i modelli sono solo delle approssimazioni del fenomeno che vogliono descrivere.  Anche il modello di Newton, che produce previsioni estremamente accurate di ciò che possiamo osservare a occhio nudo a proposito del moto dei corpi celesti, è solo un'approssimazione dei modelli del moto e dei fenomeni gravitazionali che, in seguito, sono stati introdotti da Albert Einstein. E anche tali modelli successivi sono, a loro volta, solo un caso speciale della più generale teoria della relatività. In altre parole, modelli sempre migliori vengono proposti, laddove ogni successivo modello è migliore di quello precedente in quanto ne migliora le capacità di previsione, è più generale, o è più elegante. 
 
 Una parte del lavoro della ricerca in tutte le scienze consiste nel verificare le assunzioni dei modelli e, se necessario, nel migliorare i modelli dei fenomeni considerati. Un modello viene giudicato in relazione al suo obiettivo. Se l'obiettivo del modello molto semplice che stiamo discutendo è quello di prevedere la proporzione di casi nei quali $y_i = 1$, $i = 1, \dots, n$, allora un modello con un solo parametro come quello che abbiamo introdotto sopra può essere sufficiente. Ma l'evento $y_i=1$ (supponiamo: superare l'esame di Psicometria, oppure risultare positivi al COVID-19) dipende da molti fattori e se vogliamo rendere conto di una tale complessità, un modello come quello che stiamo discutendo qui certamente non sarà sufficiente.
 
 Per concludere, un modello è un costrutto matematico il cui scopo è quello di rappresentare un qualche aspetto della realtà. Il valore di un tale strumento dipende dalla sua capacità di ottenere lo scopo per cui è stato costruito.
 
-:::
+::: 
 
 
-### Notazione
+### Notazione 
 
 Per rappresentare in un modo conciso i modelli statistici viene usata una notazione particolare. Ad esempio, invece di scrivere
 
@@ -121,9 +121,9 @@ y \sim \text{Bin}(n, \theta).
 $$
 
 
-### Il problema inverso
+### Il problema inverso 
 
-Nel modello statistico che stiamo esaminando, il termine $n$ viene trattato come una costante nota e $\theta$ come una *variabile casuale*. Il parametro $\theta$ del modello rappresenta la probabilità che ciascuna prova Bernoulliana sia un "successo". Dato che $\theta$ è incognito, ma abbiamo a disposione un campione di dati, l'inferenza su $\theta$ può essere svolta, mediante la regola di Bayes, costruendo la distribuzione a posteriori $p(\theta \mid y)$. Una volta ottenuta la distribuzione a posteriori possiamo riassumerla, ad esempio, riportando l'intervallo centrale al 95% della distribuzione di densità, ovvero
+Nel modello statistico che stiamo esaminando, il termine $n$ viene trattato come una costante nota e $\theta$ come una *variabile casuale*. Il parametro $\theta$ del modello rappresenta la probabilità che ciascuna prova Bernoulliana sia un "successo". Dato che $\theta$ è incognito, ma abbiamo a disposione un campione di dati, l'inferenza su $\theta$ può essere svolta, mediante la regola di Bayes, costruendo la distribuzione a posteriori $p(\theta \mid y)$. Una volta ottenuta la distribuzione a posteriori possiamo riassumerla, ad esempio, riportando l'intervallo centrale al 95% della distribuzione di densità, ovvero  
 
 $$
 \mbox{Pr}\left[ 0.025 \leq \theta \leq 0.975
@@ -141,34 +141,26 @@ $$
          \right].
 $$
 
-
 ### Cos'è un parametro del modello?
 
 Il parametro di un modello è un valore che influenza la credibilità dei dati. Ad esempio, il singolo parametro $\theta$ del modello binomiale determina la forma della funzione di verosimiglianza binomiale. Ricordiamo che, per il modello binomiale, la funzione di verosimiglianza è:
 
+$$ 
+p(y \mid \theta, n) = \text{Bin}(y, n, \theta) = \binom{n}{y}\theta^y(1-\theta)^{n-y}. 
 $$
-p(y \mid \theta, n) = \text{Bin}(y, n, \theta) = \binom{n}{y}\theta^y(1-\theta)^{n-y}.
-$$
+Per comprendere il ruolo del parametro $\theta$, possiamo generare un grafico della verosimiglianza dei dati come funzione di $\theta$. Poniamo $y = 23$ e $n = 30$. La figura mostra, per ogni possibile valore di $\theta \in [0, 1]$ (sull'asse orizzontale), la verosimiglianza dei dati (sull'asse verticale). Dalla figura notiamo che la credibilità dei dati dipende dal valore del parametro $\theta$: i dati risultano più o meno verosimili a seconda del valore di $\theta$. 
 
-<!-- Per comprendere il ruolo del parametro $\theta$, possiamo generare un grafico della verosimiglianza dei dati come funzione di $\theta$. Poniamo $y = 23$ e $n = 30$. La figura mostra, per ogni possibile valore di $\theta \in [0, 1]$ (sull'asse orizzontale), la verosimiglianza dei dati (sull'asse verticale). Dalla figura notiamo che la credibilità dei dati dipende dal valore del parametro $\theta$: i dati risultano più o meno verosimili a seconda del valore di $\theta$. -->
+\begin{figure}
 
-<!-- ```{r ch-03-02-LH-Binomial-Model, fig.cap= "Funzione di verosimiglianza per il modello binomiale con $y = 23$ e $n = 30$.", echo = FALSE} -->
-<!-- y <- 23 -->
-<!-- n <- 30 -->
-<!-- tibble( -->
-<!--   theta = seq(0, 1, length.out = 4001), -->
-<!--   L = dbinom(x = y, size = n, prob = theta) -->
-<!-- ) %>% -->
-<!--   ggplot(aes(x = theta, y = L)) + -->
-<!--   geom_line() + -->
-<!--   labs( -->
-<!--     x = latex2exp::TeX("Probabilità di $Y=1$, ovvero $\\theta$"), -->
-<!--     y = latex2exp::TeX("Verosimiglianza, $ Bin(k=23, N=30, \\theta)$") -->
-<!--   ) -->
-<!-- ``` -->
+{\centering \includegraphics{025_intro_bayes_files/figure-latex/ch-03-02-LH-Binomial-Model-1} 
+
+}
+
+\caption{Funzione di verosimiglianza per il modello binomiale con $y = 23$ e $n = 30$.}(\#fig:ch-03-02-LH-Binomial-Model)
+\end{figure}
 
 
-### La distribuzione a priori sui parametri
+### La distribuzione a priori sui parametri 
 
 Quando adottiamo un approccio bayesiano, la distribuzione a priori sui valori dei parametri $p(\theta)$ è parte integrante del modello statistico. Ciò implica che due modelli bayesiani possono condividere la stessa funzione di verosimiglianza, ma tuttavia devono essere considerati come modelli diversi, se specificano diverse distribuzioni a priori. Ciò significa che, quando diciamo "Modello binomiale", intendiamo in realtà un'intera classe di modelli, ovvero tutti i possibili modelli che hanno la stessa verosimiglianza ma diverse distribuzioni a priori su $\theta$.
 
@@ -200,133 +192,138 @@ La figura seguente mostra esempi di distribuzioni a priori non informative, debo
 
 ### Scelta della distribuzione a priori
 
-La selezione delle distribuzioni a priori è stata spesso vista come una delle scelte più importanti che un ricercatore fa quando implementa un modello bayesiano in quanto può avere un impatto sostanziale sui risultati finali.  La soggettività delle distribuzioni a priori è evidenziata dai critici come un potenziale svantaggio dei metodi bayesiani. A questa critica, @vandeSchoot2021modelling rispondono dicendo che, al di là della scelta delle distribuzioni a priori, ci sono molti elementi del processo di inferenza statistica che sono soggettivi, ovvero la scelta del modello statistico e le ipotesi sulla distribuzione degli errori. In secondo luogo, @vandeSchoot2021modelling notano come le distribuzioni a priori svolgono due importanti ruoli statistici: quello della "regolarizzazione della stima", ovvero, il processo che porta ad indebolire l'influenza indebita di osservazioni estreme, e quello del miglioramento dell'efficienza della stima, ovvero, la facilitazione dei processi di calcolo numerico di stima della distribuzione a posteriori. L'effetto della distribuzione a priori sulla distribuzione a posteriori verrà discusso nel Capitolo \@ref(chapter-balance).
+La selezione delle distribuzioni a priori è stata spesso vista come una delle scelte più importanti che un ricercatore fa quando implementa un modello bayesiano in quanto può avere un impatto sostanziale sui risultati finali.  La soggettività delle distribuzioni a priori è evidenziata dai critici come un potenziale svantaggio dei metodi bayesiani. A questa critica, @vandeSchoot2021modelling rispondono dicendo che, al di là della scelta delle distribuzioni a priori, ci sono molti elementi del processo di inferenza statistica che sono soggettivi, ovvero la scelta del modello statistico e le ipotesi sulla distribuzione degli errori. In secondo luogo, @vandeSchoot2021modelling notano come le distribuzioni a priori svolgono due importanti ruoli statistici: quello della "regolarizzazione della stima", ovvero, il processo che porta ad indebolire l'influenza indebita di osservazioni estreme, e quello del miglioramento dell'efficienza della stima, ovvero, la facilitazione dei processi di calcolo numerico di stima della distribuzione a posteriori.
+
+L'effetto della distribuzione a priori sulla distribuzione a posteriori verrà discusso nel Capitolo \@ref(chapter-balance).
 
 
 ## Verosimiglianza marginale {#verosim-marginale}
 
-Al denominatore della regola di Bayes abbiamo la verosimiglianza marginale $p(y)$. Tale denominatore è espresso nei termini di un integrale che, tranne in pochi casi particolari, non ha una soluzione analitica. 
-<!-- Per questa ragione, l'inferenza bayesiana procede calcolando una approssimazione della distribuzione a posteriori mediante metodi numerici. -->
+Al denominatore della regola di Bayes abbiamo la verosimiglianza marginale $p(y)$. Obiettivo di questo Paragrafo è chiarire questo concetto in riferimento al caso più semplice, ovvero quello della distribuzione binomiale. 
+
+Sia $Y$ una variabile casuale con funzione di massa di probabilità $p(Y)$. Iniziamo la discussione con un semplice esempio in cui supponiamo che la funzione di massa di probabilità della $Y$ sia definita nei termini del parametro $\theta$ e che $\theta$ possa assumere solo i valori 0.1, 0.5, 0.9, ciascuno con eguale probabilità. In altre parole, la probabilità che $\theta$ sia 0.1, 0.5, o 0.9 è sempre 1/3. 
+
+Ponendo $n = 30$ e $y = 23$, ad esempio, la funzione di verosimiglianza diventa
+
+$$
+p(y = 23, n = 30 \mid \theta) = \binom{30}{23} \theta^{23} (1-\theta)^{7}.
+$$
+La _verosimiglianza marginale_ $p(y = 23, n = 30)$ basata su $\theta$ si ottiene marginalizzando rispetto al parametro $\theta$: per ogni possibile valore del parametro $\theta$, calcoliamo il valore della verosimiglianza e lo moltiplichiamo per la probabilità di $\theta$; poi sommiamo tutti i prodotti ottenuti in questo modo. Matematicamente, ciò significa eseguire l'operazione descritta di seguito.
+
+Nell'esempio abbiamo tre possibili valori $\theta$ che chiameremo $\theta_1 = 0.1$, $\theta_2 = 0.5$ e $\theta_3 = 0.9$. Ciascuno ha probabilità 1/3, quindi $p(\theta_1) = p(\theta_2) = p(\theta_3) = 1/3$. Date queste informazioni possiamo calcolare la verosimiglianza marginale come segue:
 
 
-<!-- Obiettivo di questo Paragrafo è chiarire questo concetto in riferimento al caso più semplice, ovvero quello della distribuzione binomiale. -->
+\begin{align}
+p(y = 23, n = 30) &= \binom{30}{23} \theta_1^{23} (1-\theta_1)^{7} \cdot p(\theta_1) \notag\\
+&+ \binom{30}{23} \theta_2^{23} (1-\theta_2)^{7} \cdot p(\theta_2) \notag\\
+&+ \binom{30}{23} \theta_3^{23} (1-\theta_3)^{7} \cdot p(\theta_3) \notag,
+\end{align}
 
-<!-- Sia $Y$ una variabile casuale con funzione di massa di probabilità $p(Y)$. Iniziamo la discussione con un semplice esempio in cui supponiamo che la funzione di massa di probabilità della $Y$ sia definita nei termini del parametro $\theta$ e che $\theta$ possa assumere solo i valori 0.1, 0.5, 0.9, ciascuno con eguale probabilità. In altre parole, la probabilità che $\theta$ sia 0.1, 0.5, o 0.9 è sempre 1/3.  -->
+\noindent
+ovvero
 
-<!-- Ponendo $n = 30$ e $y = 23$, ad esempio, la funzione di verosimiglianza diventa -->
+\begin{align}
+p(y = 23, n = 30) &= \binom{30}{23} 0.1^{23} (1-0.1)^{7} \cdot \frac{1}{3} \notag\\
+&+ \binom{30}{23} 0.5^{23} (1-0.5)^{7} \cdot \frac{1}{3} \notag\\
+&+ \binom{30}{23} 0.9^{23} (1-0.9)^{7} \cdot \frac{1}{3} \notag.
+\end{align}
 
-<!-- $$ -->
-<!-- p(y = 23, n = 30 \mid \theta) = \binom{30}{23} \theta^{23} (1-\theta)^{7}. -->
-<!-- $$ -->
-<!-- La _verosimiglianza marginale_ $p(y = 23, n = 30)$ basata su $\theta$ si ottiene marginalizzando rispetto al parametro $\theta$: per ogni possibile valore del parametro $\theta$, calcoliamo il valore della verosimiglianza e lo moltiplichiamo per la probabilità di $\theta$; poi sommiamo tutti i prodotti ottenuti in questo modo. Matematicamente, ciò significa eseguire l'operazione descritta di seguito. -->
+È dunque possibile considerare la verosimiglianza marginale come una sorta di media ponderata della verosimiglianza, nella quale i "pesi" dipendono dalla credibilità dei valori del parametro.
 
-<!-- Nell'esempio abbiamo tre possibili valori $\theta$ che chiameremo $\theta_1 = 0.1$, $\theta_2 = 0.5$ e $\theta_3 = 0.9$. Ciascuno ha probabilità 1/3, quindi $p(\theta_1) = p(\theta_2) = p(\theta_3) = 1/3$. Date queste informazioni possiamo calcolare la verosimiglianza marginale come segue: -->
+L'esempio che abbiamo presentato sopra è artificiale perché al parametro $\theta$ abbiamo attribuito solo tre possibili valori. In  realtà, $\theta$ può assumere tutti i possibili valori compresi nell'intervallo [0, 1] e dunque la somma che dobbiamo calcolare avrà infiniti addendi. Dal punto di vista matematico, una tale somma corrisponde all'integrale:
 
+$$
+p(y = 23, n = 30) = \int_0^1 \binom{30}{23} \theta^{23} (1-\theta)^{7} d\theta.
+$$
 
-<!-- \begin{align} -->
-<!-- p(y = 23, n = 30) &= \binom{30}{23} \theta_1^{23} (1-\theta_1)^{7} \cdot p(\theta_1) \notag\\ -->
-<!-- &+ \binom{30}{23} \theta_2^{23} (1-\theta_2)^{7} \cdot p(\theta_2) \notag\\ -->
-<!-- &+ \binom{30}{23} \theta_3^{23} (1-\theta_3)^{7} \cdot p(\theta_3) \notag, -->
-<!-- \end{align} -->
-
-<!-- \noindent -->
-<!-- ovvero -->
-
-<!-- \begin{align} -->
-<!-- p(y = 23, n = 30) &= \binom{30}{23} 0.1^{23} (1-0.1)^{7} \cdot \frac{1}{3} \notag\\ -->
-<!-- &+ \binom{30}{23} 0.5^{23} (1-0.5)^{7} \cdot \frac{1}{3} \notag\\ -->
-<!-- &+ \binom{30}{23} 0.9^{23} (1-0.9)^{7} \cdot \frac{1}{3} \notag. -->
-<!-- \end{align} -->
-
-<!-- È dunque possibile considerare la verosimiglianza marginale come una sorta di media ponderata della verosimiglianza, nella quale i "pesi" dipendono dalla credibilità dei valori del parametro. -->
-
-<!-- L'esempio che abbiamo presentato sopra è artificiale perché al parametro $\theta$ abbiamo attribuito solo tre possibili valori. In  realtà, $\theta$ può assumere tutti i possibili valori compresi nell'intervallo [0, 1] e dunque la somma che dobbiamo calcolare avrà infiniti addendi. Dal punto di vista matematico, una tale somma corrisponde all'integrale: -->
-
-<!-- $$ -->
-<!-- p(y = 23, n = 30) = \int_0^1 \binom{30}{23} \theta^{23} (1-\theta)^{7} d\theta. -->
-<!-- $$ -->
-
-<!-- \noindent -->
-<!-- L'integrale precedente descrive esattamente le stesse operazioni che abbiamo discusso nell'esempio "artificiale" in cui $\theta$ poteva assumere solo tre valori, eccetto che ora dobbiamo eseguire la somma dei prodotti calcolati su tutti gli infiniti valori $\theta$. Questo integrale corrisponde alla "marginalizzazione" del parametro $\theta$. Non è tuttavia necessario eseguire una tale operazione di maginalizzazione in forma analitica in quanto il precedente integrale può essere calcolato con R: -->
-
-<!-- ```{r} -->
-<!-- BinLik <- function(theta) { -->
-<!--   choose(30, 23) * theta^23 * (1 - theta)^7 -->
-<!-- } -->
-<!-- integrate(BinLik, lower = 0, upper = 1)$value -->
-<!-- ``` -->
+\noindent
+L'integrale precedente descrive esattamente le stesse operazioni che abbiamo discusso nell'esempio "artificiale" in cui $\theta$ poteva assumere solo tre valori, eccetto che ora dobbiamo eseguire la somma dei prodotti calcolati su tutti gli infiniti valori $\theta$. Questo integrale corrisponde alla "marginalizzazione" del parametro $\theta$. Non è tuttavia necessario eseguire una tale operazione di maginalizzazione in forma analitica in quanto il precedente integrale può essere calcolato con R:
 
 
-<!-- ### Soluzione analitica -->
-
-<!-- Qui di seguito è riportata la derivazione analitica. Sia $\theta \sim \Beta(a, b)$ e sia $y = \{y_1, \dots, y_n\} \sim \Bin(\theta, n)$. Ponendo  -->
-
-<!-- $$ -->
-<!-- B(a, b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}, -->
-<!-- $$ -->
-
-<!-- \noindent -->
-<!-- la verosimiglianza marginale diventa -->
-
-<!-- \begin{align} -->
-<!-- p(y) &= \binom{n}{y} \int p(y \mid \theta) p(\theta) d\theta \notag\\ -->
-<!-- &= \binom{n}{y}\int_0^1 \theta^{y} (1 - \theta)^{n- y} \frac{1}{B(a,b)} \theta^{a-1} (1-\theta)^{b-1} d \theta \notag\\ -->
-<!-- &= \binom{n}{y}\frac{1}{B(a,b)} \int_0^1 \theta^{y + a - 1} (1-\theta)^{n- y + b-1} \notag\\ -->
-<!-- &= \binom{n}{y}\frac{B(y + a, n- y + b)}{B(a,b)}, -->
-<!-- \end{align} -->
-
-<!-- \noindent -->
-<!-- in quanto -->
-
-<!-- \begin{align} -->
-<!-- \int_0^1 \frac{1}{B(a,b)} \theta^{a-1} (1-\theta)^{b-1} d \theta &= 1\notag\\ -->
-<!-- \frac{1}{B(a,b)} \int_0^1  \theta^{a-1} (1-\theta)^{b-1} d \theta &= 1\notag\\ -->
-<!-- \int_0^1  \theta^{a-1} (1-\theta)^{b-1} d \theta &= B(a,b). \notag -->
-<!-- \end{align} -->
-
-<!-- \noindent -->
-<!-- Continuiamo con l'esempio precedente. Per replicare il risultato trovato per via numerica con R, assumiamo una distribuzione a priori uniforme, ovvero $\Beta(1, 1)$. I valori del problema sono i seguenti: -->
-
-<!-- ```{r} -->
-<!-- a <- 1 -->
-<!-- b <- 1 -->
-<!-- y <- 23 -->
-<!-- n <- 30 -->
-<!-- ``` -->
-
-<!-- \noindent -->
-<!-- e dunque -->
-
-<!-- ```{r} -->
-<!-- alpha <- y + a -->
-<!-- beta <- n - y + b -->
-<!-- ``` -->
-
-<!-- \noindent -->
-<!-- Definiamo -->
-
-<!-- ```{r} -->
-<!-- B <- function(a, b) { -->
-<!--   (gamma(a) * gamma(b)) / gamma(a + b) -->
-<!-- } -->
-<!-- ``` -->
-
-<!-- \noindent -->
-<!-- Il risultato cercato si ottiene con -->
-
-<!-- ```{r} -->
-<!-- choose(30, 23) * B(alpha, beta) / B(a, b) -->
-<!-- ``` -->
-
-<!-- In conclusione, nel caso di una verosimiglianza binomiale $y = \sim \Bin(\theta, n)$ e di una distribuzione a priori  $\theta \sim \Beta(a, b)$, la verosimiglianza marginale diventa -->
-
-<!-- \begin{equation} -->
-<!-- \binom{n}{y}\frac{B(y + a, n - y + b)}{B(a, b)}. -->
-<!-- (\#eq:constant-norm-beta-binom) -->
-<!-- \end{equation} -->
+```r
+BinLik <- function(theta) {
+  choose(30, 23) * theta^23 * (1 - theta)^7
+}
+integrate(BinLik, lower = 0, upper = 1)$value
+#> [1] 0.03225806
+```
 
 
-## La distribuzione a posteriori
+### Soluzione analitica
+
+Qui di seguito è riportata la derivazione analitica. Sia $\theta \sim \Beta(a, b)$ e sia $y = \{y_1, \dots, y_n\} \sim \Bin(\theta, n)$. Ponendo 
+
+$$
+B(a, b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)},
+$$
+
+\noindent
+la verosimiglianza marginale diventa
+
+\begin{align}
+p(y) &= \binom{n}{y} \int p(y \mid \theta) p(\theta) d\theta \notag\\
+&= \binom{n}{y}\int_0^1 \theta^{y} (1 - \theta)^{n- y} \frac{1}{B(a,b)} \theta^{a-1} (1-\theta)^{b-1} d \theta \notag\\
+&= \binom{n}{y}\frac{1}{B(a,b)} \int_0^1 \theta^{y + a - 1} (1-\theta)^{n- y + b-1} \notag\\
+&= \binom{n}{y}\frac{B(y + a, n- y + b)}{B(a,b)},
+\end{align}
+
+\noindent
+in quanto
+
+\begin{align}
+\int_0^1 \frac{1}{B(a,b)} \theta^{a-1} (1-\theta)^{b-1} d \theta &= 1\notag\\
+\frac{1}{B(a,b)} \int_0^1  \theta^{a-1} (1-\theta)^{b-1} d \theta &= 1\notag\\
+\int_0^1  \theta^{a-1} (1-\theta)^{b-1} d \theta &= B(a,b). \notag
+\end{align}
+
+\noindent
+Continuiamo con l'esempio precedente. Per replicare il risultato trovato per via numerica con R, assumiamo una distribuzione a priori uniforme, ovvero $\Beta(1, 1)$. I valori del problema sono i seguenti:
+
+
+```r
+a <- 1
+b <- 1
+y <- 23
+n <- 30
+```
+
+\noindent
+e dunque
+
+
+```r
+alpha <- y + a
+beta <- n - y + b
+```
+
+\noindent
+Definiamo
+
+
+```r
+B <- function(a, b) {
+  (gamma(a) * gamma(b)) / gamma(a + b)
+}
+```
+
+\noindent
+Il risultato cercato si ottiene con
+
+
+```r
+choose(30, 23) * B(alpha, beta) / B(a, b)
+#> [1] 0.03225806
+```
+
+In conclusione, nel caso di una verosimiglianza binomiale $y = \sim \Bin(\theta, n)$ e di una distribuzione a priori  $\theta \sim \Beta(a, b)$, la verosimiglianza marginale diventa
+
+\begin{equation}
+\binom{n}{y}\frac{B(y + a, n - y + b)}{B(a, b)}.
+(\#eq:constant-norm-beta-binom)
+\end{equation}
+
+
+## La distribuzione a posteriori 
 
 Ci sono due metodi principali per calcolare la distribuzione a posteriori $p(\theta \mid y)$:
 
@@ -338,9 +335,7 @@ Una volta calcolata la distribuzione a posteriori dobbiamo riassumerla in qualch
 
 ## Considerazioni conclusive {-}
 
-In base all'approccio bayesiano, invece di dire che il parametro di interesse di un modello statistico ha un valore vero ma sconosciuto, diciamo che, prima di eseguire l'esperimento, è possibile assegnare una distribuzione di probabilità, che chiamano stato di credenza, a quello che è il vero valore del parametro. Questa distribuzione a priori può essere nota (per esempio, sappiamo che la distribuzione dei punteggi del QI è normale con media 100 e deviazione standard 15) o può essere  del tutto arbitraria. L'inferenza bayesiana procede poi nel modo seguente: si raccolgono alcuni dati e si calcola la probabilità dei possibili valori del parametro alla luce dei dati osservati e delle credenze a priori. Questa nuova distribuzione di probabilità è chiamata "distribuzione a posteriori" e riassume l'incertezza dell'inferenza.
-
-<!-- L'approccio bayesiano riassumere l'incertezza dell'inferenza fornendo un intervallo di valori sulla distribuzione di probabilità a posteriori che include il 95% della probabilità --- questo intervallo è chiamato "intervallo di credibilità del 95%". -->
+In base all'approccio bayesiano, invece di dire che il parametro di interesse di un modello statistico ha un valore vero ma sconosciuto, diciamo che, prima di eseguire l'esperimento, è possibile assegnare una distribuzione di probabilità, che chiamano stato di credenza, a quello che è il vero valore del parametro. Questa distribuzione a priori può essere nota (per esempio, sappiamo che la distribuzione dei punteggi del QI è normale con media 100 e deviazione standard 15) o può essere  del tutto arbitraria. L'inferenza bayesiana procede poi nel modo seguente: si raccolgono alcuni dati e si calcola la probabilità dei possibili valori del parametro _alla luce_ dei dati osservati. Questa nuova distribuzione di probabilità è chiamata "distribuzione a posteriori". L'approccio bayesiano riassumere l'incertezza dell'inferenza fornendo un intervallo di valori sulla distribuzione di probabilità a posteriori che include il 95% della probabilità --- questo intervallo è chiamato "intervallo di credibilità del 95%".
 
 
 
