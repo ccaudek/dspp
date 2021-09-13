@@ -476,6 +476,7 @@ Nella simulazione, il valore \(\theta\) che massimizza la funzione di verosimigl
 \end{Highlighting}
 \end{Shaded}
 
+\noindent
 Il valore così trovato è uguale al valore definito dalla \eqref{eq:mlprop}.
 
 \hypertarget{la-verosimiglianza-del-modello-normale}{%
@@ -485,26 +486,26 @@ Ora che abbiamo capito come costruire la funzione verosimiglianza di
 una binomiale è relativamente semplice fare un passo ulteriore e
 considerare la verosimiglianza del caso di una funzione di densità,
 ovvero nel caso di una variabile casuale continua. Consideriamo qui il
-caso della Normale. La densità di una distribuzione Normale di parametri
-\(\mu\) e \(\sigma\) è
+caso della Normale.
+
+La densità di una distribuzione Normale di parametri \(\mu\) e \(\sigma\) è
 
 \[
 f(y \mid \mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left\{-\frac{1}{2\sigma^2}(y-\mu)^2\right\}.
 \label{eq:gausslike}
 \]
-Nel caso in cui le \(n\) osservazioni \(y = (y_1, \dots, y_n)\) siano realizzazioni indipendenti ed identicamente distribuite (di seguito, i.i.d.) della medesima variabile casuale \(Y\) con densità Normale di parametri \(\mu\) e \(\sigma\), poniamoci il problema di trovare la s.m.v. dei parametri sconosciuti \(\mu\) e \(\sigma\). Per semplicità, scriviamo \(\theta = \{\mu, \sigma\}.\)
 
-In precedenza abbiamo utilizzato la nozione di probabilità congiunta per
-fare riferimento alla probabilità del verificarsi di un insieme di
-eventi. Estendiamo questo ragionamento al caso presente. Consideriamo il campione osservato come un insieme di eventi. Ciascuno di tali eventi è la realizzazione di una variabile casuale --- possiamo pensarla come l'estrazione casuale di un valore dalla ``popolazione'' \(\mathcal{N}(\mu, \sigma)\). Se tali variabili casuali sono i.i.d. la loro densità congiunta è data da:
+Poniamoci ora il problema di trovare la s.m.v. dei parametri sconosciuti \(\mu\) e \(\sigma\) nel caso in cui le \(n\) osservazioni \(y = (y_1, \dots, y_n)\) sono realizzazioni indipendenti ed identicamente distribuite (di seguito, i.i.d.) della medesima variabile casuale \(Y \sim \mathcal{N}(\mu, \sigma)\). Per semplicità, scriveremo \(\theta = \{\mu, \sigma\}.\)
 
-\[
-\begin{aligned}
+Il campione osservato è un insieme di eventi, ciascuno dei quali corrisponde alla realizzazione di una variabile casuale --- possiamo pensare ad uno di tali eventi come all'estrazione casuale di un valore dalla ``popolazione'' \(\mathcal{N}(\mu, \sigma)\). Se le variabili casuali sono i.i.d., la loro densità congiunta è data da:
+
+\begin{align}
 f(y \mid \theta) &= f(y_1 \mid \theta) \cdot f(y_2 \mid \theta) \cdot \; \dots \; \cdot f(y_n \mid \theta)\notag\\
-&= \prod_{i=1}^n f(y_i \mid \theta),
-\end{aligned}
-\]
-laddove la funzione \(f(\cdot)\) è data dalla \eqref{eq:gausslike}. La funzione di verosimiglianza è dunque:
+                 &= \prod_{i=1}^n f(y_i \mid \theta),
+\label{eq:gauss-prob-cong}
+\end{align}
+\noindent
+laddove la funzione \(f(\cdot)\) è la \eqref{eq:gausslike}. Tenendo costanti i dati \(y\), la funzione di verosimiglianza è:
 
 \begin{equation}
 \mathcal{L}(\theta \mid y) = \prod_{i=1}^n f(y_i \mid \theta).
@@ -517,7 +518,7 @@ L'obiettivo è quello di massimizzare la funzione di verosimiglianza per trovare
 \hat{\theta} = \text{argmax}_{\theta} \prod_{i=1}^n f(y_i \mid \theta).
 \]
 
-Questo problema si risolve calcolando le derivate della funzione rispetto a \(\theta\), ponendo le derivate uguali a zero e risolvendo. Saltando tutti i passaggi algebrici di questo procedimento, per \(\mu\) abbiamo
+Questo problema si risolve calcolando le derivate della funzione rispetto a \(\theta\), ponendo le derivate uguali a zero e risolvendo. Saltando tutti i passaggi algebrici di questo procedimento, per \(\mu\) troviamo
 
 \begin{equation}
 \hat{\mu} = \frac{1}{n} \sum_{i=1}^n y_i
@@ -529,13 +530,12 @@ e per \(\sigma\) abbiamo
 \hat{\sigma} = \sqrt{\sum_{i=1}^n\frac{1}{n}(y_i- \mu)^2}.
 \label{eq:maxlikesigma}
 \end{equation}
-
 In altri termini, la s.m.v. del parametro \(\mu\) è la media del campione e la s.m.v. del parametro \(\sigma\) è la deviazione standard del campione.
 
 \hypertarget{simulazione}{%
 \subsection{Simulazione}\label{simulazione}}
 
-Consideriamo ora un esempio relativo al campione di valori BDI-II dei trenta soggetti del campione clinico di \citet{zetschefuture2019}, ovvero
+Consideriamo ora un esempio che utilizza dei dati reali. I dati corrispondono ai valori BDI-II dei trenta soggetti del campione clinico di \citet{zetschefuture2019}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -547,16 +547,28 @@ Consideriamo ora un esempio relativo al campione di valori BDI-II dei trenta sog
 \end{Highlighting}
 \end{Shaded}
 
-Ci poniamo lo scopo di generare la funzione di verosimiglianza per questi dati. Supponiamo che ricerche precedenti ci dicano che il BDI-II si distribuisce secondo una legge Normale.
+Ci poniamo l'obiettivo di creare la funzione di verosimiglianza per questi dati, supponendo, in base ai risultati di ricerche precedenti, di sapere che i punteggi BDI-II si distribuiscono secondo una legge Normale.
 
-Ci concentreremo qui sul parametro \(\mu\) della distribuzione Normale: per semplificare il problema assumiamo di conoscere \(\sigma\) (lo porremo uguale alla deviazione standard del campione) in modo da avere un solo parametro sconosciuto. Il nostro problema è dunque quello di trovare la funzione di verosimiglianza per il parametro \(\mu\), date le 30 osservazioni che abbiamo a disposizione e dato \(\sigma = s\).
+Per semplificare il problema, assumeremo di conoscere \(\sigma\) (lo porremo uguale alla deviazione standard del campione) in modo da avere un solo parametro sconosciuto, cioè \(\mu\). Il problema è dunque quello di trovare la funzione di verosimiglianza per il parametro \(\mu\), date le 30 osservazioni del campione e dato \(\sigma = s = 6.61\).
 
-Abbiamo visto sopra che, per una singola osservazione, la funzione di verosimiglianza è la densità Normale espressa in funzione dei parametri. Per un \emph{campione} di osservazioni \(y = (y_1, y_2, \dots, y_n)\) dobbiamo utilizzare la funzione di densità congiunta \(f(y \mid \mu, \sigma)\) espressa in funzione dei parametri, ovvero \(\mathcal{L}(\mu, \sigma \mid y)\). Se le osservazioni sono i.i.d., la densità congiunta è data dal prodotto delle densità delle singole osservazioni. Per una singola osservazione \(y_i\) abbiamo
+Per una singola osservazione, la funzione di verosimiglianza è la densità Normale espressa in funzione dei parametri. Per un campione di osservazioni i.i.d., ovvero \(y = (y_1, y_2, \dots, y_n)\), la verosimiglianza è la funzione di densità congiunta \(f(y \mid \mu, \sigma)\) espressa in funzione dei parametri, ovvero \(\mathcal{L}(\mu, \sigma \mid y)\). Dato che le osservazioni sono i.i.d., la densità congiunta è data dal prodotto delle densità delle singole osservazioni.
+
+Per semplicità, assumiamo \(\sigma\) noto e uguale alla deviazione standard del campione:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{true\_sigma }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(d}\SpecialCharTok{$}\NormalTok{y)}
+\NormalTok{true\_sigma }
+\CommentTok{\#\textgreater{} [1] 6.606858}
+\end{Highlighting}
+\end{Shaded}
+
+Avendo posto \(\sigma = 6.61\), per una singola osservazione \(y_i\) abbiamo
 
 \[
-f(y_i \mid \mu, \sigma) = \frac{1}{{\sigma \sqrt {2\pi}}}\exp\left\{{-\frac{(y_i - \mu)^2}{2\sigma^2}}\right\},\notag
+f(y_i \mid \mu, \sigma) = \frac{1}{{6.61 \sqrt {2\pi}}}\exp\left\{{-\frac{(y_i - \mu)^2}{2\cdot 6.61^2}}\right\},\notag
 \]
-dove il pedice \(i\) specifica l'osservazione \(y_i\) tra le molteplici osservazioni \(y\), e \(\mu\) e \(\sigma\) sono i parametri sconosciuti che devono essere determinati. La densità congiunta è dunque
+dove il pedice \(i\) specifica l'osservazione \(y_i\) tra le molteplici osservazioni \(y\), e \(\mu\) è il parametro sconosciuto che deve essere determinato (nell'esempio, \(\sigma = s\)). La densità congiunta è dunque
 
 \[
 f(y \mid \mu, \sigma) = \, \prod_{i=1}^n f(y_i \mid \mu, \sigma)\notag
@@ -566,37 +578,41 @@ e, alla luce dei dati osservati, la verosimiglianza diventa
 \[
 \begin{aligned}
 \mathcal{L}(\mu, \sigma \mid y) =& \, \prod_{i=1}^n f(y_i \mid \mu, \sigma) = \notag\\
-& \frac{1}{{\sigma \sqrt {2\pi}}}\exp\left\{{-\frac{(26 - \mu)^2}{2\sigma^2}}\right\} \times \notag\\
- & \frac{1}{{\sigma \sqrt {2\pi}}}\exp\left\{{-\frac{(35 - \mu)^2}{2\sigma^2}}\right\} \times  \notag\\
+& \frac{1}{{6.61 \sqrt {2\pi}}}\exp\left\{{-\frac{(26 - \mu)^2}{2\cdot 6.61^2}}\right\} \times \notag\\
+ & \frac{1}{{6.61 \sqrt {2\pi}}}\exp\left\{{-\frac{(35 - \mu)^2}{2\cdot 6.61^2}}\right\} \times  \notag\\
 & \vdots \notag\\
- & \frac{1}{{\sigma \sqrt {2\pi}}}\exp\left\{{-\frac{(22 - \mu)^2}{2\sigma^2}}\right\}.
+ & \frac{1}{{6.61 \sqrt {2\pi}}}\exp\left\{{-\frac{(22 - \mu)^2}{2\cdot 6.61^2}}\right\}.
 \end{aligned}
 \label{eq:lldepression}
 \]
 
-Poniamoci ora il problema di rappresentare graficamente la funzione di verosimiglianza per il parametro \(\mu\) --- per semplicità, assumiamo \(\sigma\) noto e uguale alla deviazione standard del campione.
+Poniamoci ora il problema di rappresentare graficamente la funzione di verosimiglianza per il parametro \(\mu\). Avendo un solo parametro sconosciuto, possiamo rappresentare la verosimiglianza con una curva. In \R, definiamo la funzione di log-verosimiglianza nel modo seguente:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{true\_sigma }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(d}\SpecialCharTok{$}\NormalTok{y)}
-\end{Highlighting}
-\end{Shaded}
-
-Avendo un solo parametro sconosciuto da stimare possiamo rappresentare la verosimiglianza con una curva, anziché con una superficie. In \R, possiamo definire la funzione di log-verosimiglianza nel modo seguente:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{log\_likelihood }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(y, mu, }\AttributeTok{sigma=}\NormalTok{true\_sigma) \{}
-  \FunctionTok{sum}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(y, mu, sigma, }\AttributeTok{log=}\ConstantTok{TRUE}\NormalTok{))}
+\NormalTok{log\_likelihood }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(y, mu, }\AttributeTok{sigma =}\NormalTok{ true\_sigma) \{}
+  \FunctionTok{sum}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(y, mu, sigma, }\AttributeTok{log =} \ConstantTok{TRUE}\NormalTok{))}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
 
-Si noti che, nella funzione \texttt{log\_likelihood}, \texttt{y} è un vettore che, nel caso presente conterrà \(n = 30\) valori. Per ciascuno di questi valori, la funzione \texttt{dnorm()} troverà la densità Normale (l'ordinata della funzione) utilizzando il valore \(\mu\) che viene passato a \texttt{log\_likelihood} e un valore \(\sigma\) sempre uguale, dato che, nell'esempio, questo parametro verrà mantenuto costante. L'argomento \texttt{log\ =\ TRUE} specifica che deve essere preso il logaritmo. La funzione \texttt{dnorm()} è un argomento della funzione \texttt{sum()}. Ciò significa che i 30 valori così trovati, espressi su scala logaritmica, verranno sommati --- sommare logaritmi è equivalente a fare il prodotto dei valori sulla scala originaria.
+Nella funzione \texttt{log\_likelihood()}, \texttt{y} è un vettore che, nel caso presente contiene \(n = 30\) valori. Per ciascuno di questi valori, la funzione \texttt{dnorm()} trova la densità Normale utilizzando il valore \(\mu\) che passato a \texttt{log\_likelihood()} e il valore \(\sigma\) uguale a 6.61 --- nell'esempio, questo parametro viene assunto come noto. L'argomento \texttt{log\ =\ TRUE} specifica che deve essere preso il logaritmo. La funzione \texttt{dnorm()} è un argomento della funzione \texttt{sum()}. Ciò significa che i 30 valori così trovati, espressi su scala logaritmica, verranno sommati --- sommare logaritmi è equivalente a fare il prodotto dei valori sulla scala originaria.
 
-Se applichiamo questa funzione ad un solo valore \(\mu\) otteniamo un singolo valore della funzione di log-verosimiglianza (ovvero, l'ordinata di un singolo punto della funzione rappresentata nella figura \eqref{eq:lldepression}). Tale singolo valore viene trovato utilizzando tutti i 30 dati del campione, il valore \(\sigma = s\) che viene tenuto fisso e il singolo valore \(\mu\) che abbiamo passato alla funzione \texttt{log\_likelihood()}. Dobbiamo, tuttavia, applicare la funzione a tutti i possibili valori che \(\mu\) può assumere. Per cui il procedimento che abbiamo descritto sopra per un singolo valore \(\mu\) viene ripetuto moltissime volte.
+Se applichiamo questa funzione ad un solo valore \(\mu\) otteniamo l'ordinata della funzione di log-verosimiglianza in corrispondenza del valore \(\mu\) (si veda la figura \eqref{eq:lldepression}). Si noti che, per trovare un tale valore, abbiamo utilizzato le seguenti informazioni:
 
-Nel seguente ciclo \texttt{for()} usato nelle istruzioni seguenti viene calcolata la log-verosimiglianza di 100,000 possibili valori del parametro \(\mu\):
+\begin{itemize}
+\tightlist
+\item
+  i 30 dati del campione,
+\item
+  il valore \(\sigma = s\) fissato a 6.61,
+\item
+  il singolo valore \(\mu\) passato alla funzione \texttt{log\_likelihood()}.
+\end{itemize}
+
+Avendo trovato un singolo punto della funzione di log-verosimiglianza, dobbiamo ripetere i calcoli precedenti per tutti i possibili valori che \(\mu\) può assumere.
+
+Nel seguente ciclo \texttt{for()} viene calcolata la log-verosimiglianza di 100,000 valori possibili del parametro \(\mu\):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -614,7 +630,9 @@ Nel seguente ciclo \texttt{for()} usato nelle istruzioni seguenti viene calcolat
 \end{Highlighting}
 \end{Shaded}
 
-Il vettore \texttt{mu} contiene 100,000 possibili valori del parametro \(\mu\). Tali valori sono stati scelti in modo tale da essere compresi nell'intervallo \(\bar{y} \pm s\). Per ciascuno dei possibili valori del parametro \(\mu\) la funzione \texttt{log\_likelihood()} calcola la log-verosimiglianza seguendo la procedura descritta sopra. All'interno del ciclo \texttt{for()} i 100,000 risultati così ottenuti vengono salvati nel vettore \texttt{ll}. Possiamo ora utilizzare i valori contenuti nei vettori \texttt{mu} e \texttt{ll} per disegnare il grafico della funzione di log-verosimiglianza per il parametro \(\mu\):
+Il vettore \texttt{mu} contiene 100,000 possibili valori del parametro \(\mu\); tali valori sono stati scelti nell'intervallo \(\bar{y} \pm s\). Per ciascuno di questi valori la funzione \texttt{log\_likelihood()} calcola il valore di log-verosimiglianza. I 100,000 risultati vengono salvati nel vettore \texttt{ll}.
+
+I vettori \texttt{mu} e \texttt{ll} possono dunque essere usati per disegnare il grafico della funzione di log-verosimiglianza per il parametro \(\mu\):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -624,14 +642,14 @@ Il vettore \texttt{mu} contiene 100,000 possibili valori del parametro \(\mu\). 
   \FunctionTok{vline\_at}\NormalTok{(}\FunctionTok{mean}\NormalTok{(d}\SpecialCharTok{$}\NormalTok{y), }\AttributeTok{color =} \StringTok{"sky blue"}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}
     \AttributeTok{y =} \StringTok{"Log{-}verosimiglianza"}\NormalTok{,}
-    \AttributeTok{x =} \FunctionTok{c}\NormalTok{(}\StringTok{"Parametro \textbackslash{}u03BC"}\NormalTok{)}
+    \AttributeTok{x =} \FunctionTok{expression}\NormalTok{(}\StringTok{"Parametro"}\SpecialCharTok{\textasciitilde{}}\NormalTok{mu)}
 \NormalTok{  ) }
 \end{Highlighting}
 \end{Shaded}
 
 \begin{center}\includegraphics{024_likelihood_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
-Dalla figura notiamo che, per questi dati, il massimo della funzione di log-verosimiglianza calcolata per via numerica è uguale a 30.93. Tale valore è identico alla media dei dati campionari e corrisponde al risultato teorico della \eqref{eq:lldepression}.
+Dalla figura notiamo che, per i dati osservati, il massimo della funzione di log-verosimiglianza calcolata per via numerica, ovvero 30.93, è identico alla media dei dati campionari e corrisponde al risultato teorico della \eqref{eq:lldepression}.
 
 \hypertarget{considerazioni-conclusive}{%
 \section*{Considerazioni conclusive}\label{considerazioni-conclusive}}
