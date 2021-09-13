@@ -31,7 +31,7 @@ Prima di lanciare in aria il mappamondo e di ottenere il primo dato, non sappiam
 
 }
 
-\caption{Come apprende un modello statistico. Ciascun lancio del mappamondo produce un'osservazione: acqua (A) o terra (T). La stima del modello statistico della proporzione di acqua sulla superficie terreste è espressa nei termini del grado di credibilità di ciascun possibile valore $	heta$ (proporzione di acqua). Le linee e le curve in questa figura rappresentano il grado di credibilità fornito dal modello. In ogni diagramma, le credibilità calcolate in base alle informazioni precedenti (curva tratteggiata) vengono aggiornate alla luce dell'ultima osservazione che è stata ottenuta per produrre un nuovo insieme di valori di credibilità (curva solida).}(\#fig:rethinkingmodlearn)
+\caption{Come un modello statistico impara? Ciascun lancio del mappamondo produce un'osservazione: acqua (A) o terra (T). La stima della proporzione di acqua ($\theta$) sulla superficie terreste prodotta dal modello è espressa nei termini del grado di credibilità (o Plausibilità, nella figura) di ciascun possibile valore $\theta$. Le linee e le curve nella figura rappresentano il grado di credibilità dei valori $\theta$ per diversi set di dati. In ogni pannello, le credibilità (curva tratteggiata) calcolate in base alle informazioni fornite dai lanci $1, \dots, k$ vengono aggiornate a seguito dell'informazione fornita dal lancio $k + 1$. I nuovi valori di credibilità di $\theta$ sono rappresentati dalla curva solida.}(\#fig:rethinkingmodlearn)
 \end{figure}
 
 Lanciamo in aria il mappamondo una prima volta e, quando lo riprendiamo, notiamo che sotto il nostro indice destro c'è "acqua". Dopo avere osservato il risultato del primo lancio, ovvero "A", il modello aggiorna le credibilità dei valori del parametro $\theta$ che ora sono rappresentate dalla linea continua nel pannello $n = 1$ della figura  \@ref(fig:rethinkingmodlearn). La credibilità associata all'evento $\theta = 0$ è scesa esattamente a zero, l'equivalente di "impossibile". Infatti, avendo osservato almeno un luogo sul mappamondo in cui c'è dell'acqua, possiamo dire che l'evento "non c'è acqua" (ovvero $\theta = 0$) è impossibile. Allo stesso modo, la credibilità di $\theta > 0.5$ è aumentata. Non abbiamo ancora evidenze che ci sia terra sul mappamondo, quindi le credibilità iniziali sono state modificate per essere coerenti con questa informazione: le credibilità associate a $\theta$ aumentano passando dal valore $\theta = 0$ a valore $\theta = 1$, in maniera coerente con i dati che abbiamo. Il punto importante è che le evidenze disponibili fino a questo momento vengono incorporata nelle credibilità attribuite a ciascun possibile valore $\theta$. Il modello implementa questa logica in maniera _automatica_. Non è necessario fornire al modello alcuna istruzione per ottenere questo risultato. La teoria della probabilità svolge tutti i
@@ -192,16 +192,16 @@ Per le proprietà del logaritmo, si ha
 Si noti che non è necessario lavorare con i logaritmi, anche se è fortemente consigliato, e questo perché i valori della verosimiglianza, in cui si moltiplicano valori di probabilità molto piccoli, possono diventare estremamente piccoli (qualcosa come $10^{-34}$). In tali circostanze, non è sorprendente che i programmi dei computer mostrino problemi di arrotondamento numerico. Le trasformazioni logaritmiche risolvono questo problema.
 
 
-### Derivazione della s.m.v. per una proporzione
+### Derivazione della s.m.v. per una proporzione {#derivation-smv-prop}
 
-Nell'esempio precedente abbiamo trovato che la s.m.v. di $\theta$ è uguale alla proporzione di successi campionari. Questo risultato può essere dimostrato come segue. Per $n$ prove Bernoulliane indipendenti, le quali producono $y$ successi e ($n-y$) insuccessi, la funzione nucleo (ovvero, la funzione di verosimiglianza da cui sono state escluse tutte le costanti moltiplicative che non hanno alcun effetto su $\hat{\theta}$) è
+Nel Paragrafo \@ref(derivation-smv-prop) abbiamo trovato che la s.m.v. di $\theta$ è uguale alla proporzione di successi campionari. Questo risultato può essere dimostrato come segue. 
 
+::: {.proof}
+Per $n$ prove Bernoulliane indipendenti, le quali producono $y$ successi e ($n-y$) insuccessi, la funzione nucleo (ovvero, la funzione di verosimiglianza da cui sono state escluse tutte le costanti moltiplicative che non hanno alcun effetto su $\hat{\theta}$) è
 $$
 \mathcal{L}(p \mid y) = \theta^y (1-\theta)^{n - y}.\notag
 $$ 
-
 La funzione nucleo di log-verosimiglianza è 
-
 $$
 \begin{aligned}
 \ell(\theta \mid y) &= \log \mathcal{L}(\theta \mid y) \notag\\
@@ -210,44 +210,32 @@ $$
           &= y \log \theta + (n - y) \log (1-\theta).\notag
 \end{aligned}
 $$ 
-
 Per calcolare il massimo della funzione di log-verosimiglianza è necessario differenziare $\ell(\theta \mid y)$ rispetto a $\theta$, porre la derivata a zero e risolvere. La derivata di $\ell(\theta \mid y)$ è:
-
 $$
 \ell'(\theta \mid y) = \frac{y}{\theta} -\frac{n-y}{1-\theta}.
 $$ 
-
 Ponendo l'equazione uguale a zero e risolvendo otteniamo la s.m.v.: 
-
 \begin{equation}
   \hat{\theta} = \frac{y}{n},
   (\#eq:mlprop)
 \end{equation}
-
 ovvero la frequenza relativa dei successi nel campione.
+::: 
 
 
 #### Calcolo numerico 
 
-Lo stesso risultato può essere ottenuto in maniera più semplice mediante una simulazione svolta in R. Iniziamo con il definire una serie di valori possibili per il parametro incognito $\theta$:
-
+In maniera più semplice, il risultato descritto nel Paragrafo \@ref(derivation-smv-prop) può essere ottenuto mediante una simulazione in \R. Iniziamo a definire un insieme di valori possibili per il parametro incognito $\theta$:
 
 ```r
 theta <- seq(0, 1, length.out=1e3)
 ```
-
-Sappiamo che la funzione di verosimiglianza è la funzione di massa di probabilità espressa in funzione del parametro sconosciuto $\theta$  assumendo come noti i dati. Questo si può esprimere nel modo seguente:
-
+Sappiamo che la funzione di verosimiglianza è la funzione di massa di probabilità espressa in funzione del parametro sconosciuto $\theta$  assumendo come noti i dati. Questo si può esprimere in $\R$ nel modo seguente:
 
 ```r
-like <- dbinom(6, 9, theta)
+like <- dbinom(x = 6, size = 9, prob = theta)
 ```
-
-Si noti che, nell'istruzione precedente, abbiamo passato alla funzione
-`dbinom()` i dati, ovvero 6 successi in 9 prove. Inoltre, abbiamo
-passato alla funzione un vettore che contiene 1000 valori possibili per
-il parametro $\theta$, da 0 a 1. Per ciascuno di questi valori $\theta$, la funzione `dbinom()` ritorna un valore che corrisopnde all'ordinata della funzione di verosimiglianza, tenendo costanti i dati (ovvero, 6 successi in 9 prove). Un grafico della funzione di verosimiglianza è dato da:
-
+Si noti che, nell'istruzione precedente, abbiamo passato alla funzione `dbinom()` i dati, ovvero `x = 6` successi in `size = 9` prove. Inoltre, abbiamo passato alla funzione il vettore `prob = theta` che contiene 1000 valori possibili per il parametro $\theta \in [0, 1]$. Per ciascuno dei valori $\theta$, la funzione `dbinom()` ritorna un valore che corrisopnde all'ordinata della funzione di verosimiglianza, tenendo sempre costanti i dati (ovvero, 6 successi in 9 prove). Un grafico della funzione di verosimiglianza è dato da:
 
 ```r
 tibble(theta, like) %>% 
@@ -262,15 +250,12 @@ tibble(theta, like) %>%
 
 
 \begin{center}\includegraphics{024_likelihood_files/figure-latex/unnamed-chunk-3-1} \end{center}
-
 Nella simulazione, il valore $\theta$ che massimizza la funzione di verosimiglianza può essere trovato nel modo seguente:
-
 
 ```r
 theta[which.max(like)]
 #> [1] 0.6666667
 ```
-
 Il valore così trovato è uguale al valore definito dalla \@ref(eq:mlprop).
 
 
