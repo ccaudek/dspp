@@ -25,7 +25,7 @@ Bernoulliane" (il lancio di una moneta è il tipico esempio).
 ::: {.definition}
 Viene detta variabile di Bernoulli una variabile casuale discreta $Y = \{0, 1\}$ con la seguente distribuzione di probabilità: 
 $$
-Pr(Y \mid \theta) =
+P(Y \mid \theta) =
   \begin{cases}
     \theta     & \text{se $Y = 1$}, \\
     1 - \theta & \text{se $Y = 0$},
@@ -251,10 +251,7 @@ La distribuzione di Poisson può essere intesa come limite della distribuzione b
 :::
 
 
-
-
 ::: {.example}
-
 Supponiamo che un evento accada 300 volte all'ora e si vuole determinare la probabilità che in un minuto accadano esattamente 3 eventi. 
 
 Il numero medio di eventi in un minuto è pari a 
@@ -290,7 +287,6 @@ Svolgendo i calcoli in \R otteniamo:
 ppois(q = 7, lambda = 5, lower.tail = FALSE)
 ```
 :::
-
 
 ::: {.example}
 Sapendo che un evento avviene in media 6 volte al minuto, si calcoli (a) la probabilità di osservare un numero di eventi uguale o inferiore a 3 in un minuto, e (b) la probabilità di osservare esattamente 2 eventi in 30 secondi.

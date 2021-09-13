@@ -1,6 +1,6 @@
 \chapterstyle{bianchi}
 
-\usepackage{amsmath}
+\usepackage{mathtools}
 \usepackage[italian]{babel} 
 \usepackage{lmodern} 
 \usepackage{booktabs}
@@ -14,11 +14,13 @@
 ]{caption} 
 \usepackage{upquote} % print correct quotes in verbatim-environments
 \usepackage[autostyle, italian=quotes]{csquotes}
+\usepackage{empheq} 
 \usepackage{xfrac}
 
 \raggedbottom % allow variable (ragged) site heights
 \frenchspacing
 \setlength\parskip{1.5pt plus 1pt minus 0.5pt}
+
 
 \DeclareMathOperator{\Var}{Var} % Define variance operator
 \DeclareMathOperator{\SD}{SD} % Define sd operator
@@ -27,6 +29,9 @@
 \DeclareMathOperator{\Me}{Me} % Define mediane operator
 \DeclareMathOperator{\Mo}{Mo} % Define mode operator
 \DeclareMathOperator{\Bin}{Bin} % Define binomial operator
+\DeclareMathOperator{\Bernoulli}{Bernoulli} % Define Bernoulli operator
+\DeclareMathOperator{\Poi}{Poi} % Define Poisson operator
+\DeclareMathOperator{\Uniform}{Uniform} % Define Uniform operator
 \DeclareMathOperator{\Cauchy}{Cauchy} % Define Cauchy operator
 \DeclareMathOperator{\B}{\mathscr{B}} % Define Bernoulli operator
 \newcommand{\R}{\textsf{R}} % Define R programming language symbol

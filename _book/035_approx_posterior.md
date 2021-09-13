@@ -1,17 +1,6 @@
 # Approssimazione della distribuzione a posteriori 
 
-```{r setup, include = FALSE}
-source("_common.R")
-library("patchwork")
-theme_set(bayesplot::theme_default())
-bayesplot::color_scheme_set("brightblue") 
-knitr::opts_chunk$set(
-  message = FALSE, 
-  warning = FALSE,
-  error = FALSE,
-  fig.align = "center"
-)
-```
+
 
 In generale, in un problema bayesiano i dati $y$ provengono da una densità $p(y \mid \theta)$ e al parametro $\theta$ viene assegnata una densità a priori $p(\theta)$. Dopo avere osservato un campione $Y = y$, la funzione di verosimiglianza è uguale a $\mathcal{L}(\theta) = p(y \mid \theta)$ e la densità a posteriori diventa
 
@@ -68,7 +57,8 @@ In queste circostanze, l'aggiornamento bayesiano produce una distribuzione a pos
 
 Iniziamo a definire i valori $\theta$ della griglia: $\theta \in \{0, 0.2, 0.4, 0.6, 0.8, 1\}$ (in questo primo esempio considereremo solo 6 valori):
 
-```{r}
+
+```r
 grid_data <- tibble(
   theta_grid = seq(from = 0, to = 1, length = 6)
 )
@@ -76,7 +66,8 @@ grid_data <- tibble(
 \noindent
 In corrispondenza di ciascuno dei 6 valori della griglia, valutiamo la distribuzione a priori $\mbox{Beta}(2, 2)$ e la verosimiglianza $\Bin(10, \theta)$ con $y = 9$.
 
-```{r}
+
+```r
 grid_data <- grid_data %>%
   mutate(
     prior = dbeta(theta_grid, 2, 2),
@@ -87,7 +78,8 @@ grid_data <- grid_data %>%
 \noindent
 In ciascuna cella della griglia, calcoliamo il prodotto della verosimiglianza e della distribuzione a priori. Troviamo così un'approssimazione discreta non normalizzata del distribuzione a posteriori. Successivamente normalizziamo questa approssimazione dividendo ciascun valore a posteriori non normalizzato per la  somma di tutti i valori a posteriori non normalizzati:
 
-```{r}
+
+```r
 grid_data <- grid_data %>%
   mutate(
     unnormalized = likelihood * prior,
@@ -95,23 +87,39 @@ grid_data <- grid_data %>%
 ```
 \noindent
 Confermiamo che la somma dei valori a posteriori sia 1:
-```{r}
+
+```r
 grid_data %>%
   summarize(
     sum(unnormalized),
     sum(posterior)
   )
+#> # A tibble: 1 x 2
+#>   `sum(unnormalized)` `sum(posterior)`
+#>                 <dbl>            <dbl>
+#> 1               0.318                1
 ```
 
 \noindent
 Otteniamo dunque la seguente distribuzione a posteriori discretizzata $p(\theta \mid y)$:
 
-```{r}
+
+```r
 round(grid_data, 2)
+#> # A tibble: 6 x 5
+#>   theta_grid prior likelihood unnormalized posterior
+#>        <dbl> <dbl>      <dbl>        <dbl>     <dbl>
+#> 1        0    0          0            0         0   
+#> 2        0.2  0.96       0            0         0   
+#> 3        0.4  1.44       0            0         0.01
+#> 4        0.6  1.44       0.04         0.06      0.18
+#> 5        0.8  0.96       0.27         0.26      0.81
+#> 6        1    0          0            0         0
 ```
 \noindent
 Un grafico della distribuzione a posteriori discretizzata è dato da:
-```{r}
+
+```r
 grid_data %>% 
   ggplot(
     aes(x = theta_grid, y = posterior)
@@ -126,9 +134,14 @@ grid_data %>%
   )
 ```
 
+
+
+\begin{center}\includegraphics{035_approx_posterior_files/figure-latex/unnamed-chunk-6-1} \end{center}
+
 Ora possiamo campionare dalla distribuzione a posteriori discretizzata. È facile intuire che i valori estratti con rimessa dalla distribuzione a posteriori discretizzata saranno quasi sempre uguali a 0.6 o 0.8. Questa intuizione è confermata dal grafico successivo a cui è statsa sovrapposta la vera distribuzione a posteriori $\mbox{Beta}(11, 3)$:
 
-```{r}
+
+```r
 set.seed(84735)
 
 post_sample <- sample_n(
@@ -139,17 +152,23 @@ post_sample <- sample_n(
 )
 ```
 
-```{r}
+
+```r
 ggplot(post_sample, aes(x = theta_grid)) +
   geom_histogram(aes(y = ..density..), color = "white") +
   stat_function(fun = dbeta, args = list(11, 3)) +
   lims(x = c(0, 1))
 ```
 
+
+
+\begin{center}\includegraphics{035_approx_posterior_files/figure-latex/unnamed-chunk-8-1} \end{center}
+
 \noindent
 La figura precedente mostra che, con una griglia così sparsa abbiamo ottenuto una versione estremamente approssimata della vera distribuzione a posteriori. Possiamo ottenere un risultato migliore con una griglia più densa:
 
-```{r}
+
+```r
 grid_data  <- data.frame(theta_grid = seq(from = 0, to = 1, length = 101))
 
 grid_data <- grid_data %>%
@@ -165,10 +184,15 @@ ggplot(grid_data, aes(x = theta_grid, y = posterior)) +
   geom_segment(aes(x = theta_grid, xend = theta_grid, y = 0, yend = posterior))
 ```
 
+
+
+\begin{center}\includegraphics{035_approx_posterior_files/figure-latex/unnamed-chunk-9-1} \end{center}
+
 \noindent
 Campioniamo ora 10000 punti:
 
-```{r}
+
+```r
 # Set the seed
 set.seed(84735)
 
@@ -184,7 +208,8 @@ post_sample <- sample_n(
 \noindent
 Con una griglia più densa abbiamo ottenuto un risultato soddisfacente: la posizione e la distribuzione dei valori prodotti dalla simulazione corrispondono da vicino a quelli della distribuzione a posteriori $p(\theta \mid y)$.
 
-```{r}
+
+```r
 post_sample %>%
   ggplot(aes(x = theta_grid)) +
   geom_histogram(
@@ -195,6 +220,10 @@ post_sample %>%
   stat_function(fun = dbeta, args = list(11, 3)) +
   lims(x = c(0, 1))
 ```
+
+
+
+\begin{center}\includegraphics{035_approx_posterior_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
 Come messo in evidenza da @Johnson2022bayesrules, il metodo basato su griglia è molto intuitivo e non richiede particolari competenze di programmazione per essere implementato. Soprattutto, il risultato è costituito da un campione che, per tutti gli scopi pratici, può essere inteso come un campione casuale estratto da $p(\theta \mid y)$. Tuttavia, anche se tale metodo può fornire risultati accuratissimi, il suo uso è molto limitato. A causa della _maledizione della dimensionalità_^[Che cos'è la _maledizione della dimensionalità_? È molto facile da capire.  Supponiamo di utilizzare una griglia di 100 punti equispaziati. Nel caso di un solo parametro, sarà necessario calcolare 100 valori. Per due parametri devono essere  calcolari $100^2$ valori. Ma già per 10 parametri avremo bisogno di calcolare $10^{10}$ valori -- è facile capire che una tale quantità di calcoli è troppo grande anche per un computer molto potente. Per modelli che richiedono la stima di un numero non piccolo di parametri è dunque necessario procedere in un altro modo.], infatti, possiamo fare ricorso a tale procedura numerica per la stima di $p(\theta \mid y)$ solo nel caso di modelli statistici semplici, con non più di due parametri. Nella pratica concreta tale metodo viene sostituito da altre tecniche più efficienti in quanto, anche nei comuni modelli utilizzati in psicologia, vengono solitamente stimati centinaia se non migliaia di parametri.
 
@@ -209,10 +238,21 @@ Nel campione dei 30 partecipanti clinici esaminati da @zetschefuture2019, 23 par
 
 Iniziamo a costruire la griglia di valori del parametro $\theta$. In questo esempio considereremo 50 valori egualmente spaziati nell'intervallo [0, 1]: 0.000, 0.0204, ..., 0.978, 1.000. Per ottenere i valori griglia procediamo nel modo seguente:
 
-```{r}
+
+```r
 n_points <- 50
 p_grid <- seq(from = 0, to = 1, length.out = n_points)
 p_grid
+#>  [1] 0.00000000 0.02040816 0.04081633 0.06122449 0.08163265
+#>  [6] 0.10204082 0.12244898 0.14285714 0.16326531 0.18367347
+#> [11] 0.20408163 0.22448980 0.24489796 0.26530612 0.28571429
+#> [16] 0.30612245 0.32653061 0.34693878 0.36734694 0.38775510
+#> [21] 0.40816327 0.42857143 0.44897959 0.46938776 0.48979592
+#> [26] 0.51020408 0.53061224 0.55102041 0.57142857 0.59183673
+#> [31] 0.61224490 0.63265306 0.65306122 0.67346939 0.69387755
+#> [36] 0.71428571 0.73469388 0.75510204 0.77551020 0.79591837
+#> [41] 0.81632653 0.83673469 0.85714286 0.87755102 0.89795918
+#> [46] 0.91836735 0.93877551 0.95918367 0.97959184 1.00000000
 ```
 
 
@@ -220,22 +260,31 @@ p_grid
 
 Supponiamo che le nostre credenze a priori sulla tendenza di un individuo clinicamente depresso a manifestare delle aspettative distorte negativamente circa il suo umore futuro siano molto scarse. Imponiamo quindi su $\theta$ una distribuzione a priori non informativa -- ovvero, ipotizziamo che la distribuzione a priori sia una distribuzione uniforme nell'intervallo [0, 1]. Dato che consideriamo soltanto $n = 50$ valori possibili per il parametro $\theta$, creiamo un vettore di 50 elementi che conterrà i valori della distribuzione a priori scalando ciascun valore del vettore per $n$ in modo tale che la somma di tutti i valori sia uguale a 1.0 (in questo modo viene definita una funzione di massa di probabilità):
 
-```{r}
+
+```r
 prior1 <- dbeta(p_grid, 1, 1) / sum(dbeta(p_grid, 1, 1))
 prior1
+#>  [1] 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02
+#> [12] 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02
+#> [23] 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02
+#> [34] 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02
+#> [45] 0.02 0.02 0.02 0.02 0.02 0.02
 ```
 
 \noindent
 Verifichiamo:
 
-```{r}
+
+```r
 sum(prior1)
+#> [1] 1
 ```
 
 \noindent
 La distribuzione a priori così costruita è rappresentata nella figura \@ref(fig:gridappr1).
 
-```{r gridappr1, fig.cap="Rappresentazione grafica della distribuzione a priori per il parametro $\theta$, ovvero la probabilità di aspettative future distorte negativamente."}
+
+```r
 p1 <- data.frame(p_grid, prior1) %>%
   ggplot(aes(x=p_grid, xend=p_grid, y=0, yend=prior1)) +
   geom_line() +
@@ -248,6 +297,15 @@ p1 <- data.frame(p_grid, prior1) %>%
   )
 p1
 ```
+
+\begin{figure}
+
+{\centering \includegraphics{035_approx_posterior_files/figure-latex/gridappr1-1} 
+
+}
+
+\caption{Rappresentazione grafica della distribuzione a priori per il parametro $	heta$, ovvero la probabilità di aspettative future distorte negativamente.}(\#fig:gridappr1)
+\end{figure}
 
 
 #### Funzione di verosimiglianza
@@ -268,15 +326,30 @@ Per $\theta = 0.837$, l'ordinata della funzione di verosimiglianza è
 \noindent
 Dobbiamo svolgere questo calcolo per tutti gli elementi della griglia. Usando R il risultato cercato si trova nel modo seguente:
 
-```{r}
+
+```r
 likelihood <- dbinom(x = 23, size = 30, prob = p_grid)
 likelihood
+#>  [1] 0.000000e+00 2.352564e-33 1.703051e-26 1.644169e-22
+#>  [5] 1.053708e-19 1.525217e-17 8.602222e-16 2.528440e-14
+#>  [9] 4.606907e-13 5.819027e-12 5.499269e-11 4.105534e-10
+#> [13] 2.520191e-09 1.311195e-08 5.919348e-08 2.362132e-07
+#> [17] 8.456875e-07 2.749336e-06 8.196948e-06 2.259614e-05
+#> [21] 5.798673e-05 1.393165e-04 3.148623e-04 6.720574e-04
+#> [25] 1.359225e-03 2.611870e-03 4.778973e-03 8.340230e-03
+#> [29] 1.390025e-02 2.214199e-02 3.372227e-02 4.909974e-02
+#> [33] 6.830377e-02 9.068035e-02 1.146850e-01 1.378206e-01
+#> [37] 1.568244e-01 1.681749e-01 1.688979e-01 1.575211e-01
+#> [41] 1.348746e-01 1.043545e-01 7.133007e-02 4.165680e-02
+#> [45] 1.972669e-02 6.936821e-03 1.535082e-03 1.473375e-04
+#> [49] 1.868105e-06 0.000000e+00
 ```
 
 \noindent
 Il vettore `likelihood` è stato ottenuto passando alla funzione `dbinom()` un vettore di valori, ovvero gli elementi della griglia `p_grid`. La funzione `dbinom(x, size, prob)` richiede che vengano specificati tre parametri: il numero di "successi", il numero di prove e la probabilità di successo. Dato che `x` (numero di successi) e `size` (numero di prove bernoulliane) sono degli scalari e `prob` è un vettore, questo significa che la formula della probabilità binomiale verrà applicata a ciascun elemento di `p_grid` tenendo costanti i valori di `x` e `size`, ovvero i dati. In questo modo otteniamo in output un vettore i cui valori corrispondono all'ordinata della funzione di verosimiglianza per il corrispondente valore griglia di $\theta$. La funzione di verosimiglianza così ottenuta è riportata nella figura \@ref(fig:gridappr2).
 
-```{r gridappr2, fig.cap="Rappresentazione della funzione di verosimiglianza per il parametro $\\theta$, ovvero la probabilità di aspettative future distorte negativamente."}
+
+```r
 p2 <- data.frame(p_grid, likelihood) %>%
   ggplot(aes(x=p_grid, xend=p_grid, y=0, yend=likelihood)) +
   geom_segment() +
@@ -288,6 +361,15 @@ p2 <- data.frame(p_grid, likelihood) %>%
 p2
 ```
 
+\begin{figure}
+
+{\centering \includegraphics{035_approx_posterior_files/figure-latex/gridappr2-1} 
+
+}
+
+\caption{Rappresentazione della funzione di verosimiglianza per il parametro $\theta$, ovvero la probabilità di aspettative future distorte negativamente.}(\#fig:gridappr2)
+\end{figure}
+
 
 #### Distribuzione a posteriori
 
@@ -295,35 +377,68 @@ L'approssimazione discretizzata della distribuzione a posteriori $p(\theta \mid 
 
 Nel caso di una distribuzione a priori non informativa (ovvero una distribuzione uniforme), per ottenere la funzione a posteriori non standardizzata è sufficiente moltiplicare ciascun valore della funzione di verosimiglianza per 0.02. Per esempio, per il primo valore della funzione di verosimiglianza usato quale esempio in precedenza, abbiamo $0.135 \cdot 0.02$; per il secondo valore della funzione di verosimiglianza usato come esempio abbiamo $0.104 \cdot 0.02$; e così via. Possiamo svolgere tutti i calcoli usando R nel modo seguente:
 
-```{r}
+
+```r
 unstd_posterior <- likelihood * prior1
 unstd_posterior
+#>  [1] 0.000000e+00 4.705127e-35 3.406102e-28 3.288337e-24
+#>  [5] 2.107415e-21 3.050433e-19 1.720444e-17 5.056880e-16
+#>  [9] 9.213813e-15 1.163805e-13 1.099854e-12 8.211068e-12
+#> [13] 5.040382e-11 2.622390e-10 1.183870e-09 4.724263e-09
+#> [17] 1.691375e-08 5.498671e-08 1.639390e-07 4.519229e-07
+#> [21] 1.159735e-06 2.786331e-06 6.297247e-06 1.344115e-05
+#> [25] 2.718450e-05 5.223741e-05 9.557946e-05 1.668046e-04
+#> [29] 2.780049e-04 4.428398e-04 6.744454e-04 9.819948e-04
+#> [33] 1.366075e-03 1.813607e-03 2.293700e-03 2.756411e-03
+#> [37] 3.136488e-03 3.363497e-03 3.377958e-03 3.150422e-03
+#> [41] 2.697491e-03 2.087091e-03 1.426601e-03 8.331361e-04
+#> [45] 3.945339e-04 1.387364e-04 3.070164e-05 2.946751e-06
+#> [49] 3.736209e-08 0.000000e+00
 ```
 
 Ricordiamo il principio dell'aritmetica vettorializzata: i vettori `likelihood` e `prior1` sono entrambi costituiti da 50 elementi. Se facciamo il prodotto tra i due vettori otteniamo un vettore di 50 elementi, ciascuno dei quali uguale al prodotto dei corrispondenti elementi dei vettori `likelihood` e `prior1`.
 
 Avendo calcolato i valori della funzione a posteriori non standardizzata è poi necessario dividere per una costante di normalizzazione. Nel caso discreto, trovare il denominatore del teorema di Bayes è facile: esso è uguale alla somma di tutti i valori della distribuzione a posteriori non normalizzata. Per i dati presenti, tale costante di normalizzazione è uguale a 0.032:
 
-```{r}
+
+```r
 sum(unstd_posterior)
+#> [1] 0.0316129
 ```
 
 La standardizzazione dei due valori usati negli esempi sopra si ottiene con: $0.135 \cdot 0.02 / 0.032$ e $0.104 \cdot 0.02 / 0.032$. Usiamo R per svolgere questo calcolo su tutti i 50 valori di `unstd_posterior`:
 
-```{r}
+
+```r
 posterior <- unstd_posterior / sum(unstd_posterior)
 posterior
+#>  [1] 0.000000e+00 1.488357e-33 1.077440e-26 1.040188e-22
+#>  [5] 6.666313e-20 9.649330e-18 5.442222e-16 1.599625e-14
+#>  [9] 2.914574e-13 3.681425e-12 3.479129e-11 2.597379e-10
+#> [13] 1.594406e-09 8.295316e-09 3.744893e-08 1.494410e-07
+#> [17] 5.350268e-07 1.739376e-06 5.185824e-06 1.429552e-05
+#> [21] 3.668548e-05 8.813904e-05 1.991986e-04 4.251792e-04
+#> [25] 8.599178e-04 1.652408e-03 3.023432e-03 5.276472e-03
+#> [29] 8.794033e-03 1.400820e-02 2.133450e-02 3.106310e-02
+#> [33] 4.321259e-02 5.736920e-02 7.255582e-02 8.719259e-02
+#> [37] 9.921545e-02 1.063963e-01 1.068538e-01 9.965619e-02
+#> [41] 8.532881e-02 6.602021e-02 4.512719e-02 2.635430e-02
+#> [45] 1.248015e-02 4.388601e-03 9.711744e-04 9.321354e-05
+#> [49] 1.181862e-06 0.000000e+00
 ```
 
 In questo modo la somma di tutti e 50 i valori di `posterior` è uguale a 1.0. Verifichiamo:
 
-```{r}
+
+```r
 sum(posterior)
+#> [1] 1
 ```
 
 Nell'esempio, la distribuzione a posteriori trovata come descritto sopra non è altro che la versione normalizzata della funzione di verosimiglianza: questo avviene perché la distribuzione a priori uniforme non ha aggiunto altre informazioni oltre a quelle che erano già fornite dalla funzione di verosimiglianza. L'approssimazione discretizzata di $p(\theta \mid y)$ che abbiamo appena trovato è riportata nella figura \@ref(fig:gridappr3).
 
-```{r gridappr3, fig.cap="Rappresentazione della distribuzione a posteriori per il parametro $\\theta$, ovvero la probabilità di aspettative future distorte negativamente."}
+
+```r
 p3 <- data.frame(p_grid, posterior) %>%
   ggplot(aes(x=p_grid, xend=p_grid, y=0, yend=posterior)) +
   geom_segment() +
@@ -334,6 +449,15 @@ p3 <- data.frame(p_grid, posterior) %>%
   )
 p3
 ```
+
+\begin{figure}
+
+{\centering \includegraphics{035_approx_posterior_files/figure-latex/gridappr3-1} 
+
+}
+
+\caption{Rappresentazione della distribuzione a posteriori per il parametro $\theta$, ovvero la probabilità di aspettative future distorte negativamente.}(\#fig:gridappr3)
+\end{figure}
 
 I grafici delle figure \@ref(fig:gridappr1), \@ref(fig:gridappr2) e \@ref(fig:gridappr3) sono state calcolati utilizzando una griglia di 50 valori equi-spaziati per il parametro $\theta$. I segmenti verticali rappresentano l'intensità della funzione in corrispondenza di ciascuna modalità parametro $\theta$. Nella figura \@ref(fig:gridappr1) e nella figura \@ref(fig:gridappr3) la somma delle lunghezze dei segmenti verticali è pari ad 1.0; ciò non si verifica, invece, nel caso della figura \@ref(fig:gridappr3) (la funzione di verosimiglianza non è mai una funzione di probabilità, né nel caso discreto né in quello continuo).
 
@@ -346,7 +470,8 @@ Nel caso presente, supponiamo che la letteratura psicologica fornisca delle info
 
 Con calcoli del tutto simili a quelli descritti sopra si giunge alla distribuzione a posteriori rappresentata nella figura \@ref(fig:gridappr4). Useremo una griglia di 100 valori per il parametro $\theta$:
 
-```{r}
+
+```r
 n_points <- 100
 p_grid <- seq(from = 0, to = 1, length.out = n_points)
 ```
@@ -354,17 +479,20 @@ p_grid <- seq(from = 0, to = 1, length.out = n_points)
 \noindent
 Per la distribuzione a priori scegliamo una Beta(2, 10):
 
-```{r}
+
+```r
 alpha <- 2
 beta <- 10
 prior2 <- dbeta(p_grid, alpha, beta) / sum(dbeta(p_grid, alpha, beta))
 sum(prior2)
+#> [1] 1
 ```
 
 \noindent
 Tale distribuzione a priori è rappresentata nella figura \@ref(fig:gridappr4):
 
-```{r gridappr4, fig.cap="Rappresentazione di una funzione a priori informativa per il parametro $\\theta$."}
+
+```r
 plot_df <- data.frame(p_grid, prior2)
 p4 <- plot_df %>%
   ggplot(aes(x=p_grid, xend=p_grid, y=0, yend=prior2)) +
@@ -377,38 +505,53 @@ p4 <- plot_df %>%
 p4
 ```
 
+\begin{figure}
+
+{\centering \includegraphics{035_approx_posterior_files/figure-latex/gridappr4-1} 
+
+}
+
+\caption{Rappresentazione di una funzione a priori informativa per il parametro $\theta$.}(\#fig:gridappr4)
+\end{figure}
+
 \noindent
 Calcoliamo ora il valore della funzione di verosimiglianza in corrispondenza di ciascun punto della griglia:
 
-```{r}
+
+```r
 likelihood <- dbinom(23, size = 30, prob = p_grid)
 ```
 
 \noindent
 Il prodotto tra la verosimiglianza e la distribuzione a priori per ciascun punto della griglia si ottiene con:
 
-```{r}
+
+```r
 unstd_posterior2 <- likelihood * prior2
 ```
 
 \noindent
 È necessario normalizzare la distribuzione a posteriori in modo tale che la somma dei valori sia 1:
 
-```{r}
+
+```r
 posterior2 <- unstd_posterior2 / sum(unstd_posterior2)
 ```
 
 \noindent
 Verifichiamo:
 
-```{r}
+
+```r
 sum(posterior2)
+#> [1] 1
 ```
 
 \noindent
 La nuova funzione a posteriori è rappresentata nella figura \@ref(fig:gridappr5):
 
-```{r gridappr5, fig.cap="Rappresentazione della funzione a posteriori per il parametro $\\theta$ calcolata utilizzando una distribuzione a priori informativa."}
+
+```r
 plot_df <- data.frame(p_grid, posterior2)
 p5 <- plot_df %>%
   ggplot(aes(x = p_grid, xend = p_grid, y = 0, yend = posterior2)) +
@@ -421,11 +564,21 @@ p5 <- plot_df %>%
 p5
 ```
 
+\begin{figure}
+
+{\centering \includegraphics{035_approx_posterior_files/figure-latex/gridappr5-1} 
+
+}
+
+\caption{Rappresentazione della funzione a posteriori per il parametro $\theta$ calcolata utilizzando una distribuzione a priori informativa.}(\#fig:gridappr5)
+\end{figure}
+
 Facendo un confronto tra le figure \@ref(fig:gridappr4) e \@ref(fig:gridappr5) notiamo la differenza tra la distribuzione a priori $\theta$ e la distribuzione a posteriori per $\theta$. In particolare, la distribuzione a posteriori rappresentata nella \@ref(fig:gridappr5) risulta spostata verso destra su posizioni più vicine a quelle della verosimiglianza, rappresentata nella figura \@ref(fig:gridappr2). Si noti inoltre che, a causa dell'effetto della distribuzione a priori, le distribuzioni a posteriori riportate nelle figure \@ref(fig:gridappr3) e \@ref(fig:gridappr5) sono molto diverse tra loro.
 
 Campioniamo ora 10,000 punti dall'approssimazione discretizzata della distribuzione a posteriori:
 
-```{r}
+
+```r
 # Set the seed
 set.seed(84735)
 
@@ -445,7 +598,8 @@ post_samples <- df %>%
 \noindent
 Una rappresentazione grafica del campione casuale estratto dalla distribuzione a posteriori $p(\theta \mid y)$ è data da:
 
-```{r}
+
+```r
 post_samples %>%
   ggplot(aes(x = p_grid)) +
   geom_histogram(
@@ -457,13 +611,19 @@ post_samples %>%
   lims(x = c(0, 1))
 ```
 
+
+
+\begin{center}\includegraphics{035_approx_posterior_files/figure-latex/unnamed-chunk-27-1} \end{center}
+
 \noindent
 All'istogramma abbiamo sovrapposto una curva nera che rappresenta la corretta distribuzione a posteriori che è una Beta di parametri 25 ($y + \alpha$ = 23 + 2) e 17 ($n - y + \beta$ = 30 - 23 + 10).
 
 La stima della moda della distribuzione a posteriori si ottiene con
 
-```{r}
+
+```r
 df$p_grid[which.max(df$posterior2)]
+#> [1] 0.5959596
 ```
 
 \noindent e corrisponde a
@@ -474,8 +634,10 @@ $$
 
 Una stima della media della distribuzione a posteriori si ottiene con
 
-```{r}
+
+```r
 mean(post_samples$p_grid)
+#> [1] 0.5953337
 ```
 
 \noindent e corrisponde a
@@ -486,8 +648,10 @@ $$
 
 La mediana a posteriori si ottiene con
 
-```{r}
+
+```r
 median(post_samples$p_grid)
+#> [1] 0.5959596
 ```
 
 \noindent e corrisponde a
@@ -515,7 +679,8 @@ L'approssimazione quadratica si pone due obiettivi.
 
 Una descrizione della distribuzione a posteriori ottenuta mediante l'approssimazione quadratica si ottiene mediante la funzione `quap()` contenuta nel pacchetto `rethinking`. Tale pacchetto, creato da Richard McElreath per accompagnare il suo testo *Statistical Rethinking*$^2$, può essere scaricato utilizzando le istruzioni seguenti:
 
-```{r, eval=FALSE}
+
+```r
 install.packages(c("coda", "mvtnorm", "devtools", "loo", "dagitty"))
 library("devtools")
 devtools::install_github("rmcelreath/rethinking")
@@ -525,7 +690,8 @@ devtools::install_github("rmcelreath/rethinking")
 
 L'approssimazione quadratica fornisce risultati simili (o identici) a quelli ottenuti con il metodo _grid-based_. Il vantaggio dell'approssimazione quadratica è che disponiamo di una serie di funzioni R che svolgono tutti i calcoli per noi. Per trovare la funzione a posteriori di $\theta$ per i dati discussi nelle sezioni precedenti possiamo usare la funzione `rethinking::quap()`. La sintassi è la seguente:
 
-```{r}
+
+```r
 suppressPackageStartupMessages(library("rethinking"))
 
 mod <- quap(
@@ -539,13 +705,17 @@ mod <- quap(
 
 Un sommario dell'approssimazione quadratica è fornito da
 
-```{r}
+
+```r
 precis(mod, prob = 0.95)
+#>        mean         sd      2.5%     97.5%
+#> p 0.6000005 0.07745926 0.4481831 0.7518178
 ```
 
 Qui sotto è fornita una rappresentazione grafica della distribuzione a posteriori corretta (linea continua) e quella ottenuta mediante l'approssimazione quadratica (linea trateggiata).
 
-```{r}
+
+```r
 N <- 23
 P <- 7
 a <- N + 2
@@ -559,6 +729,10 @@ curve(
 )
 ```
 
+
+
+\begin{center}\includegraphics{035_approx_posterior_files/figure-latex/unnamed-chunk-34-1} \end{center}
+
 In realtà, l'approssimazione quadratica è poco usata in pratica, perché per problemi complessi è più conveniente usare i metodi Monte Carlo basati su Catena di Markov (MCMC) che verranno descritti nella successiva sezione.
 
 
@@ -568,28 +742,39 @@ Nel capitolo \@ref(chapter-distr-priori-coniugate) abbiamo visto che, nel caso d
 
 Per esempio, possiamo ottenere il valore della media della distribuzione a posteriori di $\theta$ prendendo un grande numero di campioni dalla distribuzione a posteriori:
 
-```{r}
+
+```r
 set.seed(7543897)
 print(mean(rbeta(1e3, shape1 = 25, shape2 = 17)), 6)
+#> [1] 0.596229
 ```
 
 L'approssimazione migliora all'aumentare del numero di campioni:
 
-```{r}
+
+```r
 print(mean(rbeta(1e4, shape1 = 25, shape2 = 17)), 6)
+#> [1] 0.595709
 ```
 
-```{r}
+
+```r
 print(mean(rbeta(1e5, shape1 = 25, shape2 = 17)), 6)
+#> [1] 0.595282
 ```
 
 Quindi possiamo dire che quando il numero di campioni tratti dalla distribuzione a posteriori è molto grande, la distribuzione dei campioni converge alla densità della popolazione (si veda l'Appendice \@ref(integration-mc)). Il metodo Monte Carlo funziona in molte situazioni. Si noti, naturalmente, che il numero dei campioni di simulazione è controllato dal ricercatore; è totalmente diverso dalla dimensione del campione, che è fisso ed è una proprietà dei dati.
 
 Inoltre, la maggior parte delle statistiche descrittive (es. media, _DS_) del campione convergeranno ai corrispondenti valori della vera distribuzione a posteriori. I grafici seguenti mostrano come, all'aumentare del numero di repliche, la media, la mediana, la _DS_ e l'asimmetria convergono al vero valore (linee rosse tratteggiate).
 
-```{r mcmc-chains-1, fig.align = 'center', out.width = "80%", fig.cap = "Convergenza delle simulazioni Monte Carlo.", echo = FALSE}
-knitr::include_graphics(here::here("images", "mcmc-chains-1.png"))
-```
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{/Users/corrado/Documents/teaching/2021-22/psicometria/dspp/images/mcmc-chains-1} 
+
+}
+
+\caption{Convergenza delle simulazioni Monte Carlo.}(\#fig:mcmc-chains-1)
+\end{figure}
 
 
 ## Metodi MC basati su Catena di Markov
@@ -613,7 +798,8 @@ Questo è un esempio di una catena di Markov discreta. Una catena di Markov desc
 
 È possibile descrivere il movimento tra gli stati nei termini delle _probabilità di transizione_, ovvero le probabilità di movimento tra tutti i possibili stati in un unico passaggio di una catena di Markov. Le probabilità di transizione possono essere riassunte per mezzo di una _matrice di transizione_ $P$:
 
-```{r}
+
+```r
 p <- c(0, 0, 1, 0, 0, 0)
 
 P <- matrix(c(.5, .5, 0, 0, 0, 0,
@@ -624,6 +810,13 @@ P <- matrix(c(.5, .5, 0, 0, 0, 0,
               0, 0, 0, 0, .5, .5),
             nrow=6, ncol=6, byrow=TRUE)
 print(P)
+#>      [,1] [,2] [,3] [,4] [,5] [,6]
+#> [1,] 0.50 0.50 0.00 0.00 0.00 0.00
+#> [2,] 0.25 0.50 0.25 0.00 0.00 0.00
+#> [3,] 0.00 0.25 0.50 0.25 0.00 0.00
+#> [4,] 0.00 0.00 0.25 0.50 0.25 0.00
+#> [5,] 0.00 0.00 0.00 0.25 0.50 0.25
+#> [6,] 0.00 0.00 0.00 0.00 0.50 0.50
 ```
 La prima riga di $P$ fornisce le probabilità di passare a tutti gli stati da 1 a 6 in un unico passaggio a partire dalla posizione 1; la seconda riga fornisce le probabilità di transizione in un unico passaggio dalla posizione 2 e così via.
 
@@ -638,7 +831,8 @@ La matrice di transizione che si ottiene dopo un enorme numero di passi di una p
 
 Un altro metodo per dimostrare l'esistenza della distribuzione stazionaria di una catena di Markov è quello di eseguire un esperimento di simulazione. Iniziamo la nostra passeggiata casuale partendo da un particolare stato, diciamo la posizione 3, e quindi simuliamo molti passaggi della catena di Markov usando la matrice di transizione $P$. Al crescere del numero di passi della catena, le frequenze relative che descrivono il passaggio in ciascuno dei sei possibili nodi della catena approssimano sempre meglio la distribuzione stazionaria $w$. Senza entrare nei dettagli della simulazione, la figura in basso raffigura i risultati ottenuti in 10,000 passi di una passeggiata casuale markoviana. Si noti che, all'aumentare del numero di iterazioni, le frequenze relative approssimano sempre meglio le probabilità nella distribuzione stazionaria $w = (0.1, 0.2, 0.2, 0.2, 0.2, 0.1)$.
 
-```{r, markovsim, fig.cap="Frequenze relative degli stati da 1 a 6 in funzione del numero di iterazioni per la simulazione di una catena di Markov."}
+
+```r
 set.seed(123)
 s <- vector("numeric", 10000)
 s[1] <- 3
@@ -674,6 +868,15 @@ ggplot(S2, aes(Iterazione, Probability)) +
   scale_x_continuous(breaks = c(0, 3000, 6000, 9000))
 ```
 
+\begin{figure}
+
+{\centering \includegraphics{035_approx_posterior_files/figure-latex/markovsim-1} 
+
+}
+
+\caption{Frequenze relative degli stati da 1 a 6 in funzione del numero di iterazioni per la simulazione di una catena di Markov.}(\#fig:markovsim)
+\end{figure}
+
 
 ### Campionamento mediante algoritmi MCMC
 
@@ -686,7 +889,8 @@ Presentiamo ora, in una forma intuitiva, l'algoritmo di Metropolis, ovvero il pr
 
 Per introdurre l'algoritmo di campionamento a catena di Markov considereremo il campionamento da una distribuzione discreta.^[Seguiamo qui la trattazione di @albert2019probability; si vedano anche @doing_bayesian_data_an; @McElreath_rethinking.] Supponiamo di definire una distribuzione di probabilità discreta sugli interi $1,\dots, K$. Ad esempio, scriviamo in R una funzione `pd()` che assegna ai valori $1,\dots, 8$ probabilità proporzionali a 5, 10, 4, 4, 20, 20, 12 e 5.
 
-```{r}
+
+```r
 pd <- function(x){
   values <- c(5, 10, 4, 4, 20, 20, 12, 5)
   ifelse(
@@ -705,13 +909,23 @@ prob_dist <- data.frame(
 \noindent
 La figura \@ref(fig:formetropolisdistr) illustra la distribuzione di probabilità che abbiamo generato.
 
-```{r formetropolisdistr, fig.cap="Distribuzione di massa di probabilità per una variabile casuale avente valori 1, 2, ..., 8."}
+
+```r
 x <- 1:8
 prob_dist %>%
   ggplot(aes(x = x, y = prob)) +
   geom_bar(stat = "identity", width = 0.06) +
   scale_x_continuous("x", labels = as.character(x), breaks = x)
 ```
+
+\begin{figure}
+
+{\centering \includegraphics{035_approx_posterior_files/figure-latex/formetropolisdistr-1} 
+
+}
+
+\caption{Distribuzione di massa di probabilità per una variabile casuale avente valori 1, 2, ..., 8.}(\#fig:formetropolisdistr)
+\end{figure}
 
 \noindent
 L'algoritmo di Metropolis corrisponde alla seguente passeggiata casuale.
@@ -732,7 +946,8 @@ I passi da 1 a 4 definiscono una catena di Markov irriducibile e aperiodica sui 
 
 La funzione `random_walk()` implementa l'algoritmo di Metropolis. Tale funzione richiede in input la distribuzione di probabilità `pd`, la posizione di partenza `start` e il numero di passi dell'algoritmo `s`.
 
-```{r}
+
+```r
 random_walk <- function(pd, start, num_steps){
   y <- rep(0, num_steps)
   current <- start
@@ -750,7 +965,8 @@ random_walk <- function(pd, start, num_steps){
 \noindent
 Di seguito, implementiamo l'algoritmo di Metropolis utilizzando, quale valore iniziale, $X=4$. Ripetiamo la simulazione 10\,000 volte.
 
-```{r}
+
+```r
 out <- random_walk(pd, 4, 1e4)
 
 S <- data.frame(out) %>%
@@ -770,7 +986,8 @@ prob_dist2 <- rbind(
 prob_dist2$Type <- rep(c("actual", "simulated"), each = 8)
 ```
 
-```{r, metropolishistogramsim, fig.cap="L'istogramma confronta i valori prodotti dall'algoritmo di Metropolis con i reali valori della distribuzione."}
+
+```r
 x <- 1:8
 prob_dist2 %>%
   ggplot(aes(x=x, y=prob, fill=Type)) +
@@ -778,6 +995,15 @@ prob_dist2 %>%
   scale_x_continuous("x", labels = as.character(x), breaks = x) +
   scale_fill_manual(values = c("black", "gray80"))
 ```
+
+\begin{figure}
+
+{\centering \includegraphics{035_approx_posterior_files/figure-latex/metropolishistogramsim-1} 
+
+}
+
+\caption{L'istogramma confronta i valori prodotti dall'algoritmo di Metropolis con i reali valori della distribuzione.}(\#fig:metropolishistogramsim)
+\end{figure}
 
 \noindent
 La Figura mette a confronto l'istogramma dei valori simulati dalla passeggiata casuale con l'effettiva distribuzione di probabilità. Si noti che le probabilità prodotte dalla simulazione sono molto simili alle vere probabilità.
@@ -825,7 +1051,8 @@ Per fare un esempio concreto, consideriamo nuovamente i 30 pazienti esaminati da
 
 Per calcolare la funzione di verosimiglianza per i 30 valori di @zetschefuture2019 useremo la funzione `likelihood()`:
 
-```{r}
+
+```r
 x <- 23
 N <- 30
 param <- seq(0, 1, length.out = 100)
@@ -843,6 +1070,10 @@ data.frame(x = param, y = likelihood(param)) %>%
   )
 ```
 
+
+
+\begin{center}\includegraphics{035_approx_posterior_files/figure-latex/unnamed-chunk-42-1} \end{center}
+
 La funzione `likelihood()` ritorna l'ordinata della verosimiglianza binomiale per ciascun valore del vettore `param` in input.
 
 
@@ -850,7 +1081,8 @@ La funzione `likelihood()` ritorna l'ordinata della verosimiglianza binomiale pe
 
 Utilizziamo anche in questo esempio la distribuzione a priori informativa Beta(2, 10):
 
-```{r}
+
+```r
 prior <- function(param, alpha = 2, beta = 10) {
   param_vals <- seq(0, 1, length.out = 100)
   dbeta(param, alpha, beta) # / sum(dbeta(param_vals, alpha, beta))
@@ -866,11 +1098,16 @@ data.frame(x = param, y = prior(param)) %>%
 ```
 
 
+
+\begin{center}\includegraphics{035_approx_posterior_files/figure-latex/unnamed-chunk-43-1} \end{center}
+
+
 ### Distribuzione a posteriori
 
 La funzione a posteriori è data dal prodotto della densità a priori e della verosimiglianza:
 
-```{r}
+
+```r
 posterior <- function(param) {
   likelihood(param) * prior(param)
 }
@@ -884,6 +1121,10 @@ data.frame(x = param, y = posterior(param)) %>%
   )
 ```
 
+
+
+\begin{center}\includegraphics{035_approx_posterior_files/figure-latex/unnamed-chunk-44-1} \end{center}
+
 Questo è il risultato che vogliamo ottenere utilizzando l'algoritmo di Metropolis.  Dalla figura precedente vediamo che la moda della distribuzione a posteriori è pari a circa 0.6. Questo è il valore più verosimile a posteriori per il parametro $\theta$ considerando i dati e la distribuzione a priori Beta(2, 10).
 
 
@@ -891,7 +1132,8 @@ Questo è il risultato che vogliamo ottenere utilizzando l'algoritmo di Metropol
 
 Implementiamo ora l'algoritmo di Metropolis utilizzando la Normale quale distribuzione proposta. Il valore candidato corrisponderà dunque ad un valore selezionato a caso da una Normale di parametri $\mu$ uguale al valore corrente nella catena e $\sigma$. In questo esempio, $\sigma$ è stata scelta empiricamente in modo tale da ottenere una accettanza adeguata. L'accettanza ottimale è di circa 0.20 e 0.30 --- se l'accettanza è troppo grande, l'algoritmo esplora uno spazio troppo ristretto della distribuzione a posteriori.^[L'accettanza dipende dalla distribuzione proposta: in generale, tanto più la distribuzione proposta è simile alla distribuzione target, tanto più alta diventa l'accettanza.]
 
-```{r}
+
+```r
 proposal_distribution <- function(param) {
   while(1) {
     res = rnorm(1, mean = param, sd = 0.9)
@@ -906,7 +1148,8 @@ In questa implementazione del campionamento dalla distribuzione proposta sono st
 
 L'algoritmo di Metropolis viene implementato nella funzione seguente:
 
-```{r}
+
+```r
 run_metropolis_MCMC <- function(startvalue, iterations) {
   chain <- vector(length = iterations + 1)
   chain[1] <- startvalue
@@ -925,7 +1168,8 @@ run_metropolis_MCMC <- function(startvalue, iterations) {
 
 Avendo definito le funzioni precedenti, generiamo una catena di valori $\theta$:
 
-```{r}
+
+```r
 set.seed(123)
 startvalue <- runif(1, 0, 1)
 niter <- 1e4
@@ -936,23 +1180,28 @@ Mediante le istruzioni precedenti otteniamo una catena di Markov costituita da 4
 
 L'accettanza è pari a
 
-```{r}
+
+```r
 burnIn <- niter / 2
 acceptance <- 1 - mean(duplicated(chain[-(1:burnIn)]))
 acceptance
+#> [1] 0.2511498
 ```
 
 il che conferma la bontà della deviazione standard ($\sigma$ = 0.9) scelta per la distribuzione proposta.
 
 A questo punto è facile ottenere una stima puntuale a posteriori del parametro $\theta$. Per esempio, possiamo calcolare la media del campione casuale di $p(\theta \mid y)$ prodotto dall'algoritmo di Metropolis:
 
-```{r}
+
+```r
 mean(chain[-(1:burnIn)])
+#> [1] 0.5921799
 ```
 
 Una figura che mostra l'approssimazione di $p(\theta \mid y)$  ottenuta con l'algoritmo di Metropolis, insieme ad un _trace plot_ dei valori della catena di Markov, viene prodotta usando le seguenti istruzioni:
 
-```{r sim-markov-chain-zetsche, fig.cap="Sinistra. Stima della distribuzione a posteriori della probabilità di una aspettativa futura distorta negativamente per i dati di @zetschefuture2019. Destra. Trace plot dei valori della catena di Markov escludendo il periodo di burn-in."}
+
+```r
 p1 <- data.frame(
   x = chain[-(1:burnIn)]
   ) %>%
@@ -986,6 +1235,15 @@ p2 <- data.frame(
 p1 + p2
 ```
 
+\begin{figure}
+
+{\centering \includegraphics{035_approx_posterior_files/figure-latex/sim-markov-chain-zetsche-1} 
+
+}
+
+\caption{Sinistra. Stima della distribuzione a posteriori della probabilità di una aspettativa futura distorta negativamente per i dati di @zetschefuture2019. Destra. Trace plot dei valori della catena di Markov escludendo il periodo di burn-in.}(\#fig:sim-markov-chain-zetsche)
+\end{figure}
+
 
 ### Input
 
@@ -1011,7 +1269,8 @@ L'autocorrelazione di ordine $k$ è data da $\rho_k$ e può essere stimata come:
 
 Per fare un esempio pratico, simuliamo dei dati autocorrelati con la funzione R `colorednoise::colored_noise()`:
 
-```{r}
+
+```r
 suppressPackageStartupMessages(library("colorednoise"))
 set.seed(34783859)
 rednoise <- colored_noise(
@@ -1021,15 +1280,22 @@ rednoise <- colored_noise(
 
 L'autocorrelazione di ordine 1 è semplicemente la correlazione tra ciascun elemento e quello successivo nella sequenza. Nell'esempio, il vettore `rednoise` è una sequenza temporale di 30 elementi. Il vettore `rednoise[-length(rednoise)]` include gli elementi con gli indici da 1 a 29 nella sequenza originaria, mentre il vettore `rednoise[-1]` include gli elementi 2:30. Gli elementi delle coppie ordinate dei due vettori avranno dunque gli indici $(1, 2), (2, 3), \dots (29, 30)$ degli elementi della sequenza originaria. La correlazione di Pearson tra i vettori `rednoise[-length(rednoise)]` e `rednoise[-1]` corrisponde dunque all'autocorrelazione di ordine 1 della serie temporale.
 
-```{r}
+
+```r
 cor(rednoise[-length(rednoise)], rednoise[-1])
+#> [1] 0.3967366
 ```
 
 Il Correlogramma è uno strumento grafico usato per la valutazione della tendenza di una catena di Markov nel tempo. Il correlogramma si costruisce a partire dall'autocorrelazione $\rho_k$ di una catena di Markov in funzione del ritardo (_lag_) $k$ con cui l'autocorrelazione è calcolata: nel grafico ogni barretta verticale riporta il valore dell'autocorrelazione (sull'asse delle ordinate) in funzione del ritardo (sull'asse delle ascisse). In R, il correlogramma può essere prodotto con una chiamata a `acf()`:
 
-```{r}
+
+```r
 acf(rednoise)
 ```
+
+
+
+\begin{center}\includegraphics{035_approx_posterior_files/figure-latex/unnamed-chunk-52-1} \end{center}
 
 Il correlogramma precedente mostra come l'autocorrelazione di ordine 1 sia circa pari a 0.4 e diminuisce per lag maggiori; per lag di 4, l'autocorrelazione diventa negativa e aumenta progressivamente fino ad un lag di 8; eccetera.
 
