@@ -1,0 +1,52 @@
+# Funzioni esponenziale e logaritmica {#funs-exp-log}
+
+```{r setup, include = FALSE}
+source("_common.R")
+library("patchwork")
+theme_set(bayesplot::theme_default())
+bayesplot::color_scheme_set("brightblue") 
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE,
+  error = FALSE,
+  tidy = FALSE, 
+  cache = FALSE, 
+  echo = TRUE,
+  fig.align = "center"
+)
+```
+
+## Funzione esponenziale
+
+::: {.example}
+La funzione esponenziale con base $a$ è
+\begin{equation}
+f(x) = a^x
+\end{equation}
+\noindent
+dove $a > 0$, $a \neq 1$ e $x$ è qualsiasi numero reale.
+::: 
+
+La base $a = 1$ è esclusa perché produce $f(x) = 1^x = 1$, la quale è una costante, non una funzione esponenziale.
+
+Per esempio, un grafico della funzione esponenziale di base 2 si trova con
+
+```{r}
+exp_base2 = function(x){2^x}
+tibble(x = c(-5, 5)) %>% 
+ggplot(aes(x = x)) + 
+  stat_function(fun = exp_base2)
+```
+Se usiamo la base e troviamo
+
+```{r}
+exp_base4 = function(x){4^x}
+tibble(x = c(-5, 5)) %>% 
+ggplot(aes(x = x)) + 
+  stat_function(fun = exp_base4)
+```
+
+
+
+## Funzione logaritmica
+

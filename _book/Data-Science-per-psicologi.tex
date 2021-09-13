@@ -195,473 +195,818 @@
 
 \thispagestyle{empty}
 
-\hypertarget{part-verosimiglianza}{%
-\part*{Verosimiglianza}\label{part-verosimiglianza}}
-\addcontentsline{toc}{part}{Verosimiglianza}
+\hypertarget{part-inferenza-bayesiana}{%
+\part*{Inferenza Bayesiana}\label{part-inferenza-bayesiana}}
+\addcontentsline{toc}{part}{Inferenza Bayesiana}
 
-\hypertarget{la-funzione-di-verosimiglianza}{%
-\chapter{La funzione di verosimiglianza}\label{la-funzione-di-verosimiglianza}}
+\hypertarget{chapter-intro-bayes-inference}{%
+\chapter{Il problema inverso}\label{chapter-intro-bayes-inference}}
 
-Per introdurre la funzione di verosimiglianza utilizzeremo un esempio proposto da \citet{McElreath_rethinking}.\footnote{Per una trattazione più formale, si consulti il tutorial di \citet{etz2018introduction}.} Supponiamo di tenere in mano un mappamondo e di chiederci: ``qual'è la proporzione della superficie terreste ricoperta d'acqua?'' Sembra una domanda a cui è difficile rispondere. Ma \citet{McElreath_rethinking} propone questa idea brillante: lanciamo in aria il mappamondo e, quando lo riprendiamo, osserviamo se la superfice del mappamondo sotto il nostro dito indice destro rappresenta acqua o terra. Possiamo ripetere questa procedura più volte, così da ottenere un campione causale di diverse porzioni della superficie dal mappamondo. Eseguiamo l'esperimento casuale nove volte e osserviamo i seguenti risultati: A, T, A, A, A, T, A, T, A, dove ``A'' indica acqua e ``T'' indica terra.
+La statistica descrittiva si occupa della descrizione, sintesi e presentazione delle informazioni contenute nei dati osservati. Essa spesso rappresenta la fase preliminare di uno studio e un ausilio per l'individuazione di possibili modelli da utilizzare nella successiva fase dell'analisi inferenziale. A differenza della statistica descrittiva, quella inferenziale assume che le osservazioni siano il risultato di un campionamento statistico e il suo obiettivo è ricavare informazioni circa l'intera popolazione a partire dall'osservazione di un suo sottoinsieme.
 
-\hypertarget{dati-e-parametri}{%
-\section{Dati e parametri}\label{dati-e-parametri}}
+L'aleatorietà del campione è l'aspetto sostanziale che distingue la statistica inferenziale dalla statistica descrittiva. Nel caso più semplice, il campione statistico è trattato come un insieme di realizzazioni di una variabile casuale assunta a modello del fenomeno oggetto di indagine. La natura del campionamento statistico e la distribuzione di tale variabile casuale determinano il modello statistico. La statistica inferenziale consente di stimare, verificare ipotesi, o effettuare previsioni sul fenomeno in esame.
 
-Per l'esempio del mappamondo possiamo dire quanto segue:
+L'inferenza Bayesiana è un approccio all'inferenza statistica in cui le probabilità non sono interpretate come frequenze, proporzioni o concetti analoghi, ma piuttosto come il grado di fiducia che una singola persona attribuisce al verificarsi di un evento sulla base delle proprie conoscenze e delle informazioni di cui dispone. Come suggerito dal nome stesso, la statistica bayesiana è un approccio all'analisi dei dati e alla stima dei parametri basato sul teorema di Bayes.
+
+\hypertarget{inferenza-statistica-come-un-problema-inverso}{%
+\section{Inferenza statistica come un problema inverso}\label{inferenza-statistica-come-un-problema-inverso}}
+
+\begin{itemize}
+\item
+  L'\emph{inferenza deduttiva} procede in maniera deterministica dai fatti verso le conclusioni. Ad esempio, se dico che tutti gli uomini sono mortali e che Socrate è un uomo, posso concludere deduttivamente che Socrate è mortale.
+\item
+  L'\emph{inferenza induttiva}, invece, procede dalle osservazioni ai fatti. Se pensiamo ai fatti come a ciò che governa o genera le osservazioni, allora l'induzione è una sorta di inferenza inversa.
+\item
+  L'\emph{inferenza statistica} è un tipo di inferenza induttiva che è specificamente formulata come un problema inverso.
+\end{itemize}
+
+L'inferenza bayesiana è formulata nei termini di un problema inverso che segue la regola di Bayes. Per fissare la notazione, nel seguito \(y\) rappresenterà le variabili osservate, ovvero i dati, e \(\theta\) rappresenterà i parametri incogniti di un modello statistico. Sia \(y\) che \(\theta\) sono concepiti come delle variabili casuali. Con \(x\) verranno invece denotate delle quantità note, come i predittori nel modello di regressione.
+
+\hypertarget{funzioni-di-probabilituxe0}{%
+\subsection{Funzioni di probabilità}\label{funzioni-di-probabilituxe0}}
+
+L'inferenza bayesiana utilizza le seguenti distribuzioni di probabilità (o densità di probabilità):
+
+\begin{itemize}
+\tightlist
+\item
+  la \emph{distribuzione a priori} \(p(\theta)\) --- la credenza iniziale riguardo alla credibilità di ciascun valore \(\theta\);
+\item
+  la \emph{funzione di verosimiglianza} \(p(y \mid \theta)\) --- la credibilità che il ricercatore assegnerebbe ai dati osservati se conoscesse il parametro di interesse \(\theta\);
+\item
+  la \emph{verosimiglianza marginale} \(p(y)\) --- quanto sono credibili i dati \(y\) alla luce della nostra credenza a priori relativamente a \(\theta\). In termini formali:
+\end{itemize}
+
+\[
+p(y) = \int_\theta p(y, \theta) d\theta = \int_\theta p(y \mid \theta) p(\theta) d\theta.
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  la \emph{distribuzione a posteriori} \(p(\theta \mid y)\) --- la nuova credenza a posteriori relativamente alla credibilità di ciascun valore \(\theta\) alla luce dei dati \(Y = y\).
+\end{itemize}
+
+\hypertarget{la-regola-di-bayes}{%
+\subsection{La regola di Bayes}\label{la-regola-di-bayes}}
+
+Nel contesto di un modello statistico, la formula di Bayes permette di giungere alla distribuzione a posteriori \(p(\theta \mid y)\) per il parametro di interesse \(\theta\), come indicato dalla seguente catena di equazioni:
+
+\begin{align}
+p(\theta \mid y)  &= \displaystyle \frac{p(\theta,y)}{p(y)}
+ \ \ \ \ \ \mbox{ [definizione di probabilità condizionata]}
+\\
+&= \displaystyle \frac{p(y \mid \theta) \, p(\theta)}{p(y)}
+ \ \ \ \ \ \mbox{ [legge della probabilità composta]}
+\\
+&=  \displaystyle \frac{p(y \mid\theta) \, p(\theta)}
+                        {\int_{\Theta} p(y,\theta) \, d\theta}
+ \ \ \ \ \ \mbox{ [legge della probabilità totale]}
+\\
+&= \displaystyle \frac{p(y \mid\theta) \, p(\theta)}
+                        {\int_{\Theta} p(y \mid\theta) \, p(\theta) \, d\theta}
+ \ \ \ \ \ \mbox{ [legge della probabilità composta]}
+\\
+& \propto \displaystyle p(y \mid\theta) \, p(\theta)
+\label{eq:bayesmodel}
+\end{align}
+
+La regola di Bayes ``inverte'' la probabilità della distribuzione a posteriori \(p(\theta \mid y)\), esprimendola nei termini della funzione di verosimiglianza \(p(y \mid \theta)\) e della distribuzione a priori \(p(\theta)\). L'ultimo passo è importante per la stima della distribuzione a posteriori mediante i metodi Monte Carlo a catena di Markov, in quanto per questi metodi richiedono soltanto che le funzioni di probabilità siano definite a meno di una costante di proporzionalità. In altri termini, per la maggior parte degli scopi dell'inferenza inversa, è sufficiente calcolare la densità a posteriori non normalizzata, ovvero è possibile ignorare il denominatore bayesiano \(p(y)\). La distribuzione a posteriori non normalizzata, dunque, si riduce al prodotto della varosimiglianza e della distribuzione a priori.
+
+Possiamo dire che la regola di Bayes viene usata per aggiornare le credenze a priori su \(\theta\) (ovvero, la distribuzione a priori) in modo tale da produrre le nuove credenze a posteriori \(p(\theta \mid y)\) che combinano le informazioni fornite dai dati \(y\) con le credenze precedenti. La distribuzione a posteriori riflette dunque l'aggiornamento delle credenze del ricercatore alla luce dei dati.
+
+La \eqref{eq:bayesmodel} rende evidente che, in ottica bayesiana, la quantità di interesse \(\theta\) non è fissata come nell'impostazione frequentista, ma è una variabile casuale la cui distribuzione di probabilità è influenzata sia dalle informazioni a priori sia dai dati a disposizione. In altre parole, nell'approccio bayesiano non esiste un valore vero di \(\theta\), ma vogliamo fornire invece un giudizio di probabilità. Prima delle osservazioni, sulla base delle nostre conoscenze assegniamo a \(\theta\) una distribuzione a priori di probabilità. Dopo le osservazioni, correggiamo il nostro giudizio e assegniamo a \(\theta\) una distribuzione a posteriori di probabilità. La distribuzione a posteriori \(p(\theta \mid y)\) contiene tutta l'informazione riguardante il parametro \(\theta\) e viene utilizzata per produrre indicatori sintetici, per la determinazione di stime puntuali o intervallari, e per la verifica d'ipotesi.
+
+\hypertarget{un-esempio-concreto}{%
+\section{Un esempio concreto}\label{un-esempio-concreto}}
+
+L'esempio più semplice di inferenza bayesiana è quello nel quale i dati sono rappresentati da una proporzione. Per questo tipo di dati possiamo adottare il seguente modello statistico
+
+\begin{equation}
+y  \sim \mbox{Bin}(n, \theta),
+\label{eq:binomialmodel}
+\end{equation}
+
+\noindent
+laddove \(\theta\) è la probabiltà che una prova Bernoulliana assuma il valore 1 e \(n\) corrisponde al numero di prove Bernoulliane. Questo modello statistico assume che le prove Bernoulliane \(y_i\) che costituiscono il campione \(y\) siano tra loro indipendenti e che ciascuna abbia la stessa probabilità \(\theta \in [0, 1]\) di essere un ``successo'' (valore 1). In altre parole, il modello generatore dei dati ha una funzione di massa di probabilità
+
+\[
+p(y \mid \theta)
+\ = \
+\mbox{Bin}(y \mid n, \theta).
+\]
+
+Nei capitoli precedenti è stato mostrato come, sulla base del modello statistico binomiale, sia possibile assegnare una probabilità a ciascun possibile valore \(y \in \{0, 1, \dots, n\}\) \emph{assumendo noto il valore del parametro} \(\theta\). Ma ora abbiamo il \emph{problema inverso}, ovvero quello di fare inferenza su \(\theta\) alla luce dei dati campionari \(y\). In altre parole, riteniamo di conoscere il modello probabilistico che ha generato i dati, ma di tale modello non conosciamo i parametri. Nel caso presente, il modello probabilistico è quello binomiale. Noi vogliamo ottenere informazioni sul valore di \(\theta\) conoscendo il numero osservato \(y\) di successi.
+
+La \eqref{eq:binomialmodel} è un \emph{modello statistico}. Tale modello non spiega perché, in ciascuna realizzazione, \(Y\) assume un particolare valore. Questo modello deve piuttosto essere inteso come un costrutto matematico che ha lo scopo di riflettere alcune proprietà del processo corrispondente ad una sequenza di prove Bernoulliane. In questo senso, è simile al modello di Isaac Newton dei moti planetari che utilizza equazioni differenziali. Le equazioni non sono i pianeti, ma solo descrizioni di come si muovono i pianeti in risposta alle forze gravitazionali. Modelli come quello di Newton ci permettono di prevedere alcuni fenomeni, come il moto dei pianeti, ad esempio. Ma in generale i modelli sono solo delle approssimazioni del fenomeno che vogliono descrivere. Anche il modello di Newton, che produce previsioni estremamente accurate di ciò che possiamo osservare a occhio nudo a proposito del moto dei corpi celesti, è solo un'approssimazione dei modelli del moto e dei fenomeni gravitazionali che, in seguito, sono stati introdotti da Albert Einstein. E anche tali modelli successivi sono, a loro volta, solo un caso speciale della più generale teoria della relatività. In altre parole, modelli sempre migliori vengono proposti, laddove ogni successivo modello è migliore di quello precedente in quanto ne migliora le capacità di previsione, è più generale, o è più elegante.
+
+Una parte del lavoro della ricerca in tutte le scienze consiste nel verificare le assunzioni dei modelli e, se necessario, nel migliorare i modelli dei fenomeni considerati. Un modello viene giudicato in relazione al suo obiettivo. Se l'obiettivo del modello molto semplice che stiamo discutendo è quello di prevedere la proporzione di casi nei quali \(y_i = 1\), \(i = 1, \dots, n\), allora un modello con un solo parametro come quello che abbiamo introdotto sopra può essere sufficiente. Ma l'evento \(y_i=1\) (supponiamo: superare l'esame di Psicometria, oppure risultare positivi al COVID-19) dipende da molti fattori e se vogliamo rendere conto di una tale complessità, un modello come quello che stiamo discutendo qui certamente non sarà sufficiente.
+
+Per concludere, un modello è un costrutto matematico il cui scopo è quello di rappresentare un qualche aspetto della realtà. Il valore di un tale strumento dipende dalla sua capacità di ottenere lo scopo per cui è stato costruito.
+
+\hypertarget{notazione}{%
+\subsection{Notazione}\label{notazione}}
+
+Per rappresentare in un modo conciso i modelli statistici viene usata una notazione particolare. Ad esempio, invece di scrivere
+
+\[
+p(\theta) = \text{Beta}(1, 1),
+\]
+\noindent
+scriviamo:
+
+\[
+\theta \sim \text{Beta}(1, 1).
+\]
+
+Il simbolo ``\(\sim\)'' viene spesso letto ``è distribuito come''. Possiamo anche pensare che significhi che \(\theta\) costituisce un campione casuale estratto dalla distribuzione Beta(1, 1). Allo stesso modo, per l'esempio presente, la verosimiglianza può essere scritta come:
+
+\[
+y \sim \text{Bin}(n, \theta).
+\]
+
+\hypertarget{il-problema-inverso}{%
+\subsection{Il problema inverso}\label{il-problema-inverso}}
+
+Nel modello statistico che stiamo esaminando, il termine \(n\) viene trattato come una costante nota e \(\theta\) come una \emph{variabile casuale}. Il parametro \(\theta\) del modello rappresenta la probabilità che ciascuna prova Bernoulliana sia un ``successo''. Dato che \(\theta\) è incognito, ma abbiamo a disposione un campione di dati, l'inferenza su \(\theta\) può essere svolta, mediante la regola di Bayes, costruendo la distribuzione a posteriori \(p(\theta \mid y)\). Una volta ottenuta la distribuzione a posteriori possiamo riassumerla, ad esempio, riportando l'intervallo centrale al 95\% della distribuzione di densità, ovvero
+
+\[
+\mbox{Pr}\left[ 0.025 \leq \theta \leq 0.975
+                \ \Big| \
+        Y = y
+         \right].
+\]
+
+Se vogliamo sapere, per esempio, se la probabilità di \(y_i=1\) sia maggiore di 0.5, possiamo calcolare la probabilità dell'evento
+
+\[
+\mbox{Pr}\left[\theta > \frac{1}{2}
+                \ \Bigg| \
+        Y = y
+         \right].
+\]
+
+\hypertarget{cosuxe8-un-parametro-del-modello}{%
+\subsection{Cos'è un parametro del modello?}\label{cosuxe8-un-parametro-del-modello}}
+
+Il parametro di un modello è un valore che influenza la credibilità dei dati. Ad esempio, il singolo parametro \(\theta\) del modello binomiale determina la forma della funzione di verosimiglianza binomiale. Ricordiamo che, per il modello binomiale, la funzione di verosimiglianza è:
+
+\[ 
+p(y \mid \theta, n) = \text{Bin}(y, n, \theta) = \binom{n}{y}\theta^y(1-\theta)^{n-y}. 
+\]
+Per comprendere il ruolo del parametro \(\theta\), possiamo generare un grafico della verosimiglianza dei dati come funzione di \(\theta\). Poniamo \(y = 23\) e \(n = 30\). La figura mostra, per ogni possibile valore di \(\theta \in [0, 1]\) (sull'asse orizzontale), la verosimiglianza dei dati (sull'asse verticale). Dalla figura notiamo che la credibilità dei dati dipende dal valore del parametro \(\theta\): i dati risultano più o meno verosimili a seconda del valore di \(\theta\).
+
+\begin{figure}
+
+{\centering \includegraphics{025_intro_bayes_files/figure-latex/ch-03-02-LH-Binomial-Model-1} 
+
+}
+
+\caption{Funzione di verosimiglianza per il modello binomiale con $y = 23$ e $n = 30$.}\label{fig:ch-03-02-LH-Binomial-Model}
+\end{figure}
+
+\hypertarget{la-distribuzione-a-priori-sui-parametri}{%
+\subsection{La distribuzione a priori sui parametri}\label{la-distribuzione-a-priori-sui-parametri}}
+
+Quando adottiamo un approccio bayesiano, la distribuzione a priori sui valori dei parametri \(p(\theta)\) è parte integrante del modello statistico. Ciò implica che due modelli bayesiani possono condividere la stessa funzione di verosimiglianza, ma tuttavia devono essere considerati come modelli diversi, se specificano diverse distribuzioni a priori. Ciò significa che, quando diciamo ``Modello binomiale'', intendiamo in realtà un'intera classe di modelli, ovvero tutti i possibili modelli che hanno la stessa verosimiglianza ma diverse distribuzioni a priori su \(\theta\).
+
+Nell'analisi dei dati bayesiana, la distribuzione a priori \(p(\theta)\) codifica le credenze del ricercatore a proposito dei valori dei parametri, prima di avere osservato i dati. Idealmente, le credenze a priori che supportano la specificazione di una distribuzione a priori dovrebbero essere supportate da una qualche motivazione, come ad esempio i risultati di ricerche precedenti, o altre motivazioni giustificabili. Tuttavia, le credenze soggettive sono solo uno dei possibili modi per giustificare le distribuzioni a priori sui parametri.
+
+Possiamo distinguere tre tipi principali di motivazioni per le distribuzioni a priori \(p(\theta)\).
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  la proporzione del pianeta Terra ricoperta d'acqua è \(\theta\);
+  Le \emph{distribuzioni a priori soggettive} catturano le credenze del ricercatore nel senso sopra descritto.
 \item
-  un singolo lancio del mappamondo ha una probabilità \(\theta\) di produrre l'osservazione ``acqua'' (A);
-\item
-  i lanci del mappamondo sono indipendenti (nel senso che il risultato
-  di un lancio non influenza i risultati degli altri lanci).
+  Le \emph{distribuzioni a priori con finalità pratiche} sono distribuzioni a priori che vengono utilizzate pragmaticamente a causa di una loro utilità specifica, ad esempio, perché semplificano un calcolo matematico o una simulazione al computer, o perché aiutano nel ragionamento statistico, come ad esempio quando vengono formulate gli \emph{skeptical priors} che hanno l'obiettivo di lavorare in senso contrario ad una particolare conclusione.
 \end{enumerate}
 
-Nella descrizione precedente, i \emph{dati} sono le frequenze degli eventi \(A\) (``acqua'') e \(T\) (``terra'') prodotte da una serie di osservazioni. La somma delle frequenze di \(A\) e \(T\) è il numero totale dei lanci del mappamondo: \(N = A + T\). Oltre ai dati, abbiamo anche fatto riferimento alla proporzione (incognita) di acqua sul globo terrestre. Tale proporzione corrisponde al \emph{parametro} \(\theta \in \Theta\), dove \(\Theta\) rappresenta lo spazio parametrico in cui può variare il parametro \(\theta\). Nel caso presente, \(\theta \in [0, 1]\), in quanto \(\theta\) è una proporzione. La descrizione del parametro \(\theta\) rappresenta l'obiettivo dell'inferenza.
+Oltre alla motivazione che giustifica una distribuzione a priori, possiamo distinguere tra diverse distribuzioni a priori in base a quanto fortemente impegnano il ricercatore a ritenere come plausibile un particolare intervallo di valori dei parametri. Il caso più estremo è quello che rivela una totale assenza di conoscenze a priori, il che conduce alle \emph{distribuzioni a priori non informative}, ovvero quelle che assegnano lo stesso livello di credibilità a tutti i valori dei parametri. Le distribuzioni a priori informative, d'altra parte, possono essere \emph{debolmente informative} o \emph{fortemente informative}, a seconda della forza della credenza che esprimono. Il caso più estremo di credenza a priori è quello che riassume il punto di vista del ricercatore nei termini di un \emph{unico valore} del parametro, il che assegna tutta la probabilità (massa o densità) su di un singolo valore di un parametro. Poiché questa non è più una distribuzione di probabilità, sebbene ne soddisfi la definizione, in questo caso si parla di una \emph{distribuzione a priori degenerata}.
 
-Anche se il parametro \(\theta\) non può essere direttamente osservato è possibile inferire il suo valore a partire dai dati. Avendo specificato ciò che abbiamo detto sopra, possiamo formulare un \emph{modello statistico}: abbiamo una sequenza di prove Bernoulliane indipendenti e, dunque, il modello statistico sarà quello binomiale. Prima di descrivere questo modello in dettaglio, è utile visualizzare il suo comportamento. Dopo aver visto come questo modello apprende dai dati ci porremo il problema di capire come funziona.
-
-\hypertarget{come-impara-un-modello-statistico}{%
-\subsection{Come impara un modello statistico?}\label{come-impara-un-modello-statistico}}
-
-Prima di lanciare in aria il mappamondo e di ottenere il primo dato, non sappiamo nulla del parametro \(\theta\). Dato che \(\theta\) è una proporzione, i suoi valori possibili vanno da 0 a 1. Se non possediamo alcuna informazione su \(\theta\), allora riteniamo che tutti i valori \(\theta\) siano egualmente credibili. Rappresentiamo dunque la nostra incertezza a proposito del parametro \(\theta\) mediante una distribuzione uniforme su tutti i valori \(\theta\), come indicato dalla linea tratteggiata nel pannello \(n = 1\) della figura \ref{fig:rethinkingmodlearn}.
-
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{images/rethinking_fig_2_5} 
-
-}
-
-\caption{Come un modello statistico impara? Ciascun lancio del mappamondo produce un'osservazione: acqua (A) o terra (T). La stima della proporzione di acqua ($\theta$) sulla superficie terreste prodotta dal modello è espressa nei termini del grado di credibilità (o Plausibilità, nella figura) di ciascun possibile valore $\theta$. Le linee e le curve nella figura rappresentano il grado di credibilità dei valori $\theta$ per diversi set di dati. In ogni pannello, le credibilità (curva tratteggiata) calcolate in base alle informazioni fornite dai lanci $1, \dots, k$ vengono aggiornate a seguito dell'informazione fornita dal lancio $k + 1$. I nuovi valori di credibilità di $\theta$ sono rappresentati dalla curva solida.}\label{fig:rethinkingmodlearn}
-\end{figure}
-
-Lanciamo in aria il mappamondo una prima volta e, quando lo riprendiamo, notiamo che sotto il nostro indice destro c'è ``acqua''. Dopo avere osservato il risultato del primo lancio, ovvero ``A'', il modello aggiorna le credibilità dei valori del parametro \(\theta\) che ora sono rappresentate dalla linea continua nel pannello \(n = 1\) della figura \ref{fig:rethinkingmodlearn}. La credibilità associata all'evento \(\theta = 0\) è scesa esattamente a zero, l'equivalente di ``impossibile''. Infatti, avendo osservato almeno un luogo sul mappamondo in cui c'è dell'acqua, possiamo dire che l'evento ``non c'è acqua'' (ovvero \(\theta = 0\)) è impossibile. Allo stesso modo, la credibilità di \(\theta > 0.5\) è aumentata. Non abbiamo ancora evidenze che ci sia terra sul mappamondo, quindi le credibilità iniziali sono state modificate per essere coerenti con questa informazione: le credibilità associate a \(\theta\) aumentano passando dal valore \(\theta = 0\) a valore \(\theta = 1\), in maniera coerente con i dati che abbiamo. Il punto importante è che le evidenze disponibili fino a questo momento vengono incorporata nelle credibilità attribuite a ciascun possibile valore \(\theta\). Il modello implementa questa logica in maniera \emph{automatica}. Non è necessario fornire al modello alcuna istruzione per ottenere questo risultato. La teoria della probabilità svolge tutti i
-calcoli necessari per noi.
-
-Lanciamo in aria il mappamondo una seconda volta e osserviamo ``T''. Consideriamo dunque il pannello \emph{n = 2} della figura \ref{fig:rethinkingmodlearn}. La linea tratteggiata in questo pannello ricopia semplicemente la descrizione del livello di credibilità di ciascun valore \(\theta\) che era disponibile nel caso di un solo lancio del mappamondo. La linea continua, invece, aggiorna tali valori di credibilità incorporando l'informazione secondo la quale in due lanci abbiamo ottenuto ``acqua'' una volta e ``terra'' una volta. Vediamo che ora il valore di credibilità di \(\theta\) è uguale a zero per l'evento \(\theta = 0\); infatti, abbiamo osservato ``acqua'' nel primo lancio. In maniera corrispondente, il valore di credibilità di \(\theta\) è uguale a zero per l'evento \(\theta = 1\) (c'è solo acqua); infatti, abbiamo osservato ``terra'' nel secondo lancio. Avendo osservato ``acqua'' nel 50\% dei casi, il valore più verosimile per \(\theta\) sarà 0.5, come indicato dalla linea continua in questo pannello.
-
-Nei pannelli rimanenti della figura \ref{fig:rethinkingmodlearn} i nuovi dati prodotti dai successivi lanci del mappamondo vengono analizzati dal modello, uno alla volta. La curva tratteggiata in ciascun pannello corrisponde alla curva solida del pannello precedente, spostandosi da sinistra a destra e dall'alto verso il basso. Ogni volta che si ottiene un dato \emph{A} il picco della curva di credibilità si sposta a destra, verso valori più grandi di \(\theta\). Ogni volta si ottiene \emph{T} ci si sposta nella direzione opposta. L'altezza massima della curva aumenta con ogni campione, il che significa che, all'aumentare della quantità di prove, viene associato un livello di credibilità maggiore ad un minor numero di valori di \(\theta\). Man mano che viene aggiunta una nuova osservazione, la curva che rappresenta la credibilità dei valori \(\theta\) viene aggiornata in maniera coerente con tutte le osservazioni precedenti.
-
-\hypertarget{la-funzione-di-verosimiglianza-1}{%
-\section{La funzione di verosimiglianza}\label{la-funzione-di-verosimiglianza-1}}
-
-Nella figura \ref{fig:rethinkingmodlearn} abbiamo descritto con una curva il grado di credibilità associato a ciascun valore del parametro \(\theta\). Una curva è il grafico di una funzione matematica. In statistica, tale funzione si chiama \emph{verosimiglianza} di \(\theta\) basata sui dati \(y = (y_1, \dots, y_n)\).
-
-\hypertarget{la-verosimiglianza-del-modello-binomiale}{%
-\subsection{La verosimiglianza del modello binomiale}\label{la-verosimiglianza-del-modello-binomiale}}
-
-Vediamo ora come si costruisce la funzione di verosimiglianza per l'esperimento casuale corrispondente al lancio del mappamondo. Gli eventi possibili che possono essere osservati nell'esperimento casuale sono acqua (\(A\)) e terra (\(T\)). Avendo lanciato in aria il mappamondo 9 volte, abbiamo osservato una serie di eventi \(A\) e \(T\). Ora ci chiediamo: qual è la probabilità di osservare questo \emph{specifico} campione (6 volte ``acqua'' in 9 lanci del mappamondo) nell'universo di tutte le possibili sequenze risultanti da 9 lanci del mappamondo? Sembra una domanda a cui è molto difficile rispondere, ma in realtà non è vero. Se specifichiamo le caratteristiche dell'esperimento casuale come abbiamo fatto sopra, ovvero: (1) ogni lancio è indipendente dagli altri e (2) la probabilità di osservare ``acqua'' è la stessa in ciascun lancio, allora la teoria della probabilità ci consente di trovare facilmente una risposta alla nostra domanda. Le caratteristiche dell'esperimento casuale che abbiamo descritto specificano infatti una variabile casuale binomiale. La funzione che stiamo cercando, dunque, è la distribuzione binomiale. In precedenza abbiamo discusso tale distribuzione facendo riferimento al lancio di una moneta. Ma l'esperimento casuale corrispondente a \(n\) lanci di una moneta è strutturalmente identico a quello del mappamondo (gli unici esiti possibili sono ``acqua'' e ``terra'', i lanci sono indipendenti gli uni dagli altri e la probabilità di osservare ``acqua'' rimane costante in ciascun lancio). Possiamo dunque usare la distribuzione binomiale per descrivere la probabilità di osservare \emph{A} = ``numero di volte in cui abbiamo osservato acqua'' e \emph{T} = ``numero di volte in cui abbiamo osservato terra'', quando il nostro mappamondo è stato lanciato in aria per \emph{n = A + T} volte. Tale probabilità è data dalla distribuzione binomiale di parametro \(\theta\):
-
-\begin{equation}
-P(A, T \mid \theta) = \frac{(A + T)!}{A!T!} \theta^A + (1-\theta)^T.
-\label{eq:binomwater}
-\end{equation}
-
-In altre parole, la frequenza degli eventi ``numero di volte in cui abbiamo osservato acqua'' e ``numero di volte in cui abbiamo osservato terra'' segue la distribuzione binomiale nella quale la probabilità di osservare ``acqua'' in ciascun lancio è uguale a \(\theta\).
-
-\hypertarget{la-verosimiglianza-vista-da-vicino}{%
-\subsection{La verosimiglianza vista da vicino}\label{la-verosimiglianza-vista-da-vicino}}
-
-Ma cosa dobbiamo fare, in pratica, per generare le funzioni di verosimiglianza che sono rappresentate nei diversi pannelli della figura \ref{fig:rethinkingmodlearn}? Iniziamo con una definizione formale.
-
-\begin{definition}
-La \emph{funzione di verosimiglianza} \(\mathcal{L}(\theta \mid y) = f(y \mid \theta), \theta \in \Theta,\) è la funzione di massa o di densità di probabilità dei dati \(y\) vista come una funzione del parametro sconosciuto \(\theta\).
-\end{definition}
-
-Spesso per indicare la verosimiglianza si scrive \(\mathcal{L}(\theta)\) se è chiaro a quali valori \(y\) ci si riferisce. La verosimiglianza \(\mathcal{L}\) è una curva (in generale, una superficie) nello spazio \(\Theta\) del parametro (in generale, dei parametri \(\boldsymbol\theta\)) che riflette la credibilità relativa dei valori \(\theta\) alla luce dei dati osservati. Notiamo un punto importante: la funzione \(\mathcal{L}(\theta \mid y)\) non è una funzione di densità. Infatti, essa non racchiude un'area unitaria.
-
-Nel caso presente, la funzione di verosimiglianza è descritta dalla \eqref{eq:binomwater}, ovvero, corrisponde alla funzione binomiale di parametro \(\theta \in (0, 1)\) sconosciuto. Nell'esempio che stiamo discutendo, abbiamo osservato ``acqua'' sei volte in nove lanci del mappamondo. Dunque, \(y = 6\) successi in \(n = 9\) prove. Per i dati del campione considerato, la funzione di verosimiglianza diventa
-
-\begin{equation}
-\mathcal{L}(\theta \mid y) = \frac{(6 + 3)!}{6!3!} \theta^6 + (1-\theta)^3.
-\label{eq:likebino69}
-\end{equation}
-
-La definizione precedente ci dice che, per costruire la funzione di verosimiglianza, dobbiamo applicare tante volte la \eqref{eq:likebino69} \emph{tenendo costanti i dati} e cambiando ogni volta il valore \(\theta\).
-
-Per esempio, se poniamo \(\theta = 0.1\)
-
-\[
-\mathcal{L}(\theta \mid y) = \frac{(6 + 3)!}{6!3!} 0.1^6 + (1-0.1)^3
-\]
-
-otteniamo il valore 0.0446. Se poniamo \(\theta = 0.2\)
-
-\[
-\mathcal{L}(\theta \mid y) = \frac{(6 + 3)!}{6!3!} 0.2^6 + (1-0.2)^3
-\]
-
-otteniamo 0.1762; e così via.
-
-La tabella seguente riportata alcuni valori rappresentativi della funzione di verosimiglianza definita da 6 successi in 9 prove Bernoulliane.
-
-\hypertarget{tab:likebino}{}
-\begin{longtable}[]{@{}cc@{}}
-\toprule
-\(\theta\) & \(\mathcal{L}(\theta \mid y)\) \\
-\midrule
-\endhead
-0.0 & 0.0000 \\
-0.1 & 0.0001 \\
-0.2 & 0.0028 \\
-0.3 & 0.0210 \\
-0.4 & 0.0743 \\
-0.5 & 0.1641 \\
-0.6 & 0.2508 \\
-0.7 & 0.2668 \\
-0.8 & 0.1762 \\
-0.9 & 0.0446 \\
-1.0 & 0.0000 \\
-\bottomrule
-\end{longtable}
-
-La figura \ref{fig:likelihoodwater} fornisce una rappresentazione grafica della funzione di verosimiglianza -- la figura è stata costruita utilizzando 100 valori equispaziati \(\theta \in [0, 1]\).
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{9}
-\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{6}
-\NormalTok{theta }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\AttributeTok{length.out=}\DecValTok{100}\NormalTok{)}
-\NormalTok{like }\OtherTok{\textless{}{-}} \FunctionTok{choose}\NormalTok{(n, y) }\SpecialCharTok{*}\NormalTok{ theta}\SpecialCharTok{\^{}}\NormalTok{y }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ theta)}\SpecialCharTok{\^{}}\NormalTok{(n }\SpecialCharTok{{-}}\NormalTok{ y)}
-\FunctionTok{plot}\NormalTok{(}
-\NormalTok{  theta, like, }
-  \AttributeTok{type =} \StringTok{\textquotesingle{}l\textquotesingle{}}\NormalTok{, }
-  \AttributeTok{xaxt =} \StringTok{"n"}\NormalTok{, }
-  \AttributeTok{bty =} \StringTok{\textquotesingle{}l\textquotesingle{}}\NormalTok{,}
-  \AttributeTok{main =} \StringTok{"Funzione di verosimiglianza"}\NormalTok{, }
-  \AttributeTok{ylab =} \FunctionTok{expression}\NormalTok{(}\FunctionTok{L}\NormalTok{(theta)),}
-  \AttributeTok{xlab =} \FunctionTok{expression}\NormalTok{(}\StringTok{\textquotesingle{}Valori possibili di\textquotesingle{}} \SpecialCharTok{\textasciitilde{}}\NormalTok{ theta)}
-\NormalTok{)}
-\FunctionTok{axis}\NormalTok{(}\AttributeTok{side =} \DecValTok{1}\NormalTok{, }\AttributeTok{at =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{11}\NormalTok{))}
-\FunctionTok{segments}\NormalTok{(}
-  \FloatTok{0.67}\NormalTok{, }\DecValTok{0}\NormalTok{, }\FloatTok{0.67}\NormalTok{, }
-  \FunctionTok{choose}\NormalTok{(n, y) }\SpecialCharTok{*} \FloatTok{0.67}\SpecialCharTok{\^{}}\NormalTok{y }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}} \FloatTok{0.67}\NormalTok{)}\SpecialCharTok{\^{}}\NormalTok{(n }\SpecialCharTok{{-}}\NormalTok{ y), }
-  \AttributeTok{lty =} \DecValTok{2}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}
-
-{\centering \includegraphics{024_likelihood_files/figure-latex/likelihoodwater-1} 
-
-}
-
-\caption{Funzione di verosimiglianza nel caso in cui l'esito acqua sia stato osservato 6 volte in 9 lanci del mappamondo.}\label{fig:likelihoodwater}
-\end{figure}
-
-\hypertarget{interpretazione}{%
-\subsubsection{Interpretazione}\label{interpretazione}}
-
-Come possiamo interpretare la curva che abbiamo ottenuto? Per alcuni valori \(\theta\) la funzione di verosimiglianza assume valori piccoli; per altri valori \(\theta\) la funzione di verosimiglianza assume valori più grandi. Questi ultimi sono i valori di \(\theta\) ``più credibili'' e il valore 0.67 è il valore più credibile di tutti. In termini più formali possiamo dire che la funzione di verosimiglianza ha la seguente interpretazione: sulla base dei dati, \(\theta_1 \in \Theta\) è più credibile di \(\theta_2 \in \Theta\) come indice del modello probabilistico generatore delle osservazioni se \(\mathcal{L}(\theta_1) > \mathcal{L}(\theta_1)\).
-
-In conclusione, la funzione di verosimiglianza descrive in termini relativi il sostegno empirico che \(\theta \in \Theta\) riceve da \(y\). La figura \ref{fig:rethinkingmodlearn}, infatti, mostra come la funzione di verosimiglianza assume una forma diversa quando \(y\) varia: le curve nei pannelli della figura \ref{fig:rethinkingmodlearn} sono tutte state ottenute usando la \eqref{eq:binomwater}, ma sono tra loro diverse perché i dati sono diversi: 1 successo in 1 prova (abbiamo lanciato il mappamondo una volta e abbiamo osservato ``acqua''); 1 successo in 2 prove (abbiamo lanciato il mappamondo due volte e abbiamo osservato ``acqua'' e ``terra''); 2 successi in 3 prove (abbiamo lanciato il mappamondo tre volte e abbiamo osservato ``acqua'', ``terra'' e ``acqua''); eccetera.
-
-\hypertarget{la-stima-di-massima-verosimiglianza}{%
-\subsection{La stima di massima verosimiglianza}\label{la-stima-di-massima-verosimiglianza}}
-
-La funzione di verosimiglianza rappresenta la ``credibilità relativa'' dei valori del parametro di interesse. Ma qual è il valore più credibile? Se utilizziamo soltanto la funzione di verosimiglianza, allora la risposta è data dalla stima di massima verosimiglinza.
-
-\begin{definition}
-Un valore di \(\theta\) che massimizza \(\mathcal{L}(\theta \mid y)\) sullo spazio parametrico \(\Theta\) è detto \emph{stima di massima verosimiglinza} (s.m.v.) di \(\theta\) ed è indicato con \(\hat{\theta}\):
-
-\begin{equation}
-\hat{\theta} = \text{argmax}_{\theta \in \Theta} \mathcal{L}(\theta).
-\end{equation}
-\end{definition}
-
-Il paradigma frequentista utilizza la funzione di verosimiglianza quale unico strumento per giungere alla stima del valore più credibile del parametro sconosciuto \(\theta\). Tale stima corrisponde al punto di massimo della funzione di verosimiglianza. Nell'esempio presente, \(\hat{\theta} = 0.6667\). Il massimo della funzione di verosimiglianza, ovvero \(\hat{\theta}\), si può ottenere con metodi numerici o grafici.
-
-In base all'approccio bayesiano, invece, il valore più credibile del parametro sconosciuto \(\theta\) non corrisponde alla s.m.v.. Per l'approccio bayesiano, invece, il valore più credibile del parametro sconosciuto \(\theta\) è dato dalla moda (o media, o mediana) della distribuzione a posteriori \(p(\theta \mid y)\) che si ottiene combinando la verosimiglianza \(p(y \mid \theta)\) con la distribuzione a priori \(p(\theta)\).
-
-\hypertarget{la-log-verosimiglianza}{%
-\subsection{La log-verosimiglianza}\label{la-log-verosimiglianza}}
-
-Dal punto di vista pratico risulta più conveniente utilizzare, al posto della funzione di verosimiglianza, il suo logaritmo naturale, ovvero la funzione di log-verosimiglianza
-
-\begin{equation}
-\ell(\theta) = \log \mathcal{L}(\theta).\notag
-\end{equation}
-
-Poiché il logaritmo è una funzione strettamente crescente (usualmente si considera il logaritmo naturale), allora \(\mathcal{L}(\theta)\) e \(\ell(\theta)\) assumono il massimo (o i punti di massimo) in corrispondenza degli stessi valori di \(\theta\):
-
-\[
-\hat{\theta} = \text{argmax}_{\theta \in \Theta} \ell(\theta).
-\]
-
-Per le proprietà del logaritmo, si ha
-
-\begin{equation}
-\ell(\theta) = \log \left( \prod_{i = 1}^n f(y \mid \theta) \right) = \sum_{i = 1}^n \log f(y \mid \theta).
-\end{equation}
-
-Si noti che non è necessario lavorare con i logaritmi, anche se è fortemente consigliato, e questo perché i valori della verosimiglianza, in cui si moltiplicano valori di probabilità molto piccoli, possono diventare estremamente piccoli (qualcosa come \(10^{-34}\)). In tali circostanze, non è sorprendente che i programmi dei computer mostrino problemi di arrotondamento numerico. Le trasformazioni logaritmiche risolvono questo problema.
-
-\hypertarget{derivation-smv-prop}{%
-\subsection{Derivazione della s.m.v. per una proporzione}\label{derivation-smv-prop}}
-
-Nel Paragrafo \ref{derivation-smv-prop} abbiamo trovato che la s.m.v. di \(\theta\) è uguale alla proporzione di successi campionari. Questo risultato può essere dimostrato come segue.
-
-\begin{proof}
-Per \(n\) prove Bernoulliane indipendenti, le quali producono \(y\) successi e (\(n-y\)) insuccessi, la funzione nucleo (ovvero, la funzione di verosimiglianza da cui sono state escluse tutte le costanti moltiplicative che non hanno alcun effetto su \(\hat{\theta}\)) è
-\[
-\mathcal{L}(p \mid y) = \theta^y (1-\theta)^{n - y}.\notag
-\]
-La funzione nucleo di log-verosimiglianza è
-\[
-\begin{aligned}
-\ell(\theta \mid y) &= \log \mathcal{L}(\theta \mid y) \notag\\
-          &= \log \left(\theta^y (1-\theta)^{n - y} \right) \notag\\
-          &= \log \theta^y + \log \left( (1-\theta)^{n - y} \right) \notag\\
-          &= y \log \theta + (n - y) \log (1-\theta).\notag
-\end{aligned}
-\]
-Per calcolare il massimo della funzione di log-verosimiglianza è necessario differenziare \(\ell(\theta \mid y)\) rispetto a \(\theta\), porre la derivata a zero e risolvere. La derivata di \(\ell(\theta \mid y)\) è:
-\[
-\ell'(\theta \mid y) = \frac{y}{\theta} -\frac{n-y}{1-\theta}.
-\]
-Ponendo l'equazione uguale a zero e risolvendo otteniamo la s.m.v.:
-\begin{equation}
-  \hat{\theta} = \frac{y}{n},
-  \label{eq:mlprop}
-\end{equation}
-ovvero la frequenza relativa dei successi nel campione.
-\end{proof}
-
-\hypertarget{calcolo-numerico}{%
-\subsubsection{Calcolo numerico}\label{calcolo-numerico}}
-
-In maniera più semplice, il risultato descritto nel Paragrafo \ref{derivation-smv-prop} può essere ottenuto mediante una simulazione in \R. Iniziamo a definire un insieme di valori possibili per il parametro incognito \(\theta\):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{theta }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\AttributeTok{length.out=}\FloatTok{1e3}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-Sappiamo che la funzione di verosimiglianza è la funzione di massa di probabilità espressa in funzione del parametro sconosciuto \(\theta\) assumendo come noti i dati. Questo si può esprimere in \(\R\) nel modo seguente:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{like }\OtherTok{\textless{}{-}} \FunctionTok{dbinom}\NormalTok{(}\AttributeTok{x =} \DecValTok{6}\NormalTok{, }\AttributeTok{size =} \DecValTok{9}\NormalTok{, }\AttributeTok{prob =}\NormalTok{ theta)}
-\end{Highlighting}
-\end{Shaded}
-
-Si noti che, nell'istruzione precedente, abbiamo passato alla funzione \texttt{dbinom()} i dati, ovvero \texttt{x\ =\ 6} successi in \texttt{size\ =\ 9} prove. Inoltre, abbiamo passato alla funzione il vettore \texttt{prob\ =\ theta} che contiene 1000 valori possibili per il parametro \(\theta \in [0, 1]\). Per ciascuno dei valori \(\theta\), la funzione \texttt{dbinom()} ritorna un valore che corrisopnde all'ordinata della funzione di verosimiglianza, tenendo sempre costanti i dati (ovvero, 6 successi in 9 prove). Un grafico della funzione di verosimiglianza è dato da:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{tibble}\NormalTok{(theta, like) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ theta, }\AttributeTok{y =}\NormalTok{ like)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}
-    \AttributeTok{y =} \FunctionTok{expression}\NormalTok{(}\FunctionTok{L}\NormalTok{(theta)),}
-    \AttributeTok{x =} \FunctionTok{expression}\NormalTok{(}\StringTok{\textquotesingle{}Valori possibili di\textquotesingle{}} \SpecialCharTok{\textasciitilde{}}\NormalTok{ theta)}
-\NormalTok{  )}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics{024_likelihood_files/figure-latex/unnamed-chunk-3-1} \end{center}
-
-Nella simulazione, il valore \(\theta\) che massimizza la funzione di verosimiglianza può essere trovato nel modo seguente:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{theta[}\FunctionTok{which.max}\NormalTok{(like)]}
-\CommentTok{\#\textgreater{} [1] 0.6666667}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Il valore così trovato è uguale al valore definito dalla \eqref{eq:mlprop}.
-
-\hypertarget{la-verosimiglianza-del-modello-normale}{%
-\section{La verosimiglianza del modello Normale}\label{la-verosimiglianza-del-modello-normale}}
-
-Ora che abbiamo capito come costruire la funzione verosimiglianza di
-una binomiale è relativamente semplice fare un passo ulteriore e
-considerare la verosimiglianza del caso di una funzione di densità,
-ovvero nel caso di una variabile casuale continua. Consideriamo qui il
-caso della Normale.
-
-La densità di una distribuzione Normale di parametri \(\mu\) e \(\sigma\) è
-
-\[
-f(y \mid \mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left\{-\frac{1}{2\sigma^2}(y-\mu)^2\right\}.
-\label{eq:gausslike}
-\]
-
-Poniamoci ora il problema di trovare la s.m.v. dei parametri sconosciuti \(\mu\) e \(\sigma\) nel caso in cui le \(n\) osservazioni \(y = (y_1, \dots, y_n)\) sono realizzazioni indipendenti ed identicamente distribuite (di seguito, i.i.d.) della medesima variabile casuale \(Y \sim \mathcal{N}(\mu, \sigma)\). Per semplicità, scriveremo \(\theta = \{\mu, \sigma\}.\)
-
-Il campione osservato è un insieme di eventi, ciascuno dei quali corrisponde alla realizzazione di una variabile casuale --- possiamo pensare ad uno di tali eventi come all'estrazione casuale di un valore dalla ``popolazione'' \(\mathcal{N}(\mu, \sigma)\). Se le variabili casuali sono i.i.d., la loro densità congiunta è data da:
-
-\begin{align}
-f(y \mid \theta) &= f(y_1 \mid \theta) \cdot f(y_2 \mid \theta) \cdot \; \dots \; \cdot f(y_n \mid \theta)\notag\\
-                 &= \prod_{i=1}^n f(y_i \mid \theta),
-\label{eq:gauss-prob-cong}
-\end{align}
-\noindent
-laddove la funzione \(f(\cdot)\) è la \eqref{eq:gausslike}. Tenendo costanti i dati \(y\), la funzione di verosimiglianza è:
-
-\begin{equation}
-\mathcal{L}(\theta \mid y) = \prod_{i=1}^n f(y_i \mid \theta).
-\label{eq:gausslike2}
-\end{equation}
-
-L'obiettivo è quello di massimizzare la funzione di verosimiglianza per trovare i valori \(\theta\) ottimali. Usando la notazione matematica questo si esprime dicendo che cerchiamo l'argmax della \eqref{eq:gausslike2} rispetto a \(\theta\), ovvero
-
-\[
-\hat{\theta} = \text{argmax}_{\theta} \prod_{i=1}^n f(y_i \mid \theta).
-\]
-
-Questo problema si risolve calcolando le derivate della funzione rispetto a \(\theta\), ponendo le derivate uguali a zero e risolvendo. Saltando tutti i passaggi algebrici di questo procedimento, per \(\mu\) troviamo
-
-\begin{equation}
-\hat{\mu} = \frac{1}{n} \sum_{i=1}^n y_i
-\label{eq:maxlikemu}
-\end{equation}
-e per \(\sigma\) abbiamo
-
-\begin{equation}
-\hat{\sigma} = \sqrt{\sum_{i=1}^n\frac{1}{n}(y_i- \mu)^2}.
-\label{eq:maxlikesigma}
-\end{equation}
-In altri termini, la s.m.v. del parametro \(\mu\) è la media del campione e la s.m.v. del parametro \(\sigma\) è la deviazione standard del campione.
-
-\hypertarget{simulazione}{%
-\subsection{Simulazione}\label{simulazione}}
-
-Consideriamo ora un esempio che utilizza dei dati reali. I dati corrispondono ai valori BDI-II dei trenta soggetti del campione clinico di \citet{zetschefuture2019}:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{d }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
-  \AttributeTok{y =} \FunctionTok{c}\NormalTok{(}\DecValTok{26}\NormalTok{, }\DecValTok{35}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{44}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{33}\NormalTok{, }\DecValTok{43}\NormalTok{, }\DecValTok{22}\NormalTok{, }\DecValTok{43}\NormalTok{, }\DecValTok{24}\NormalTok{, }
-        \DecValTok{19}\NormalTok{, }\DecValTok{39}\NormalTok{, }\DecValTok{31}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{28}\NormalTok{, }\DecValTok{35}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{26}\NormalTok{, }\DecValTok{31}\NormalTok{, }\DecValTok{41}\NormalTok{, }\DecValTok{36}\NormalTok{, }
-        \DecValTok{26}\NormalTok{, }\DecValTok{35}\NormalTok{, }\DecValTok{33}\NormalTok{, }\DecValTok{28}\NormalTok{, }\DecValTok{27}\NormalTok{, }\DecValTok{34}\NormalTok{, }\DecValTok{27}\NormalTok{, }\DecValTok{22}\NormalTok{)}
-\NormalTok{  )}
-\end{Highlighting}
-\end{Shaded}
-
-Ci poniamo l'obiettivo di creare la funzione di verosimiglianza per questi dati, supponendo, in base ai risultati di ricerche precedenti, di sapere che i punteggi BDI-II si distribuiscono secondo una legge Normale.
-
-Per semplificare il problema, assumeremo di conoscere \(\sigma\) (lo porremo uguale alla deviazione standard del campione) in modo da avere un solo parametro sconosciuto, cioè \(\mu\). Il problema è dunque quello di trovare la funzione di verosimiglianza per il parametro \(\mu\), date le 30 osservazioni del campione e dato \(\sigma = s = 6.61\).
-
-Per una singola osservazione, la funzione di verosimiglianza è la densità Normale espressa in funzione dei parametri. Per un campione di osservazioni i.i.d., ovvero \(y = (y_1, y_2, \dots, y_n)\), la verosimiglianza è la funzione di densità congiunta \(f(y \mid \mu, \sigma)\) espressa in funzione dei parametri, ovvero \(\mathcal{L}(\mu, \sigma \mid y)\). Dato che le osservazioni sono i.i.d., la densità congiunta è data dal prodotto delle densità delle singole osservazioni.
-
-Per semplicità, assumiamo \(\sigma\) noto e uguale alla deviazione standard del campione:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{true\_sigma }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(d}\SpecialCharTok{$}\NormalTok{y)}
-\NormalTok{true\_sigma }
-\CommentTok{\#\textgreater{} [1] 6.606858}
-\end{Highlighting}
-\end{Shaded}
-
-Avendo posto \(\sigma = 6.61\), per una singola osservazione \(y_i\) abbiamo
-
-\[
-f(y_i \mid \mu, \sigma) = \frac{1}{{6.61 \sqrt {2\pi}}}\exp\left\{{-\frac{(y_i - \mu)^2}{2\cdot 6.61^2}}\right\},\notag
-\]
-dove il pedice \(i\) specifica l'osservazione \(y_i\) tra le molteplici osservazioni \(y\), e \(\mu\) è il parametro sconosciuto che deve essere determinato (nell'esempio, \(\sigma = s\)). La densità congiunta è dunque
-
-\[
-f(y \mid \mu, \sigma) = \, \prod_{i=1}^n f(y_i \mid \mu, \sigma)\notag
-\]
-e, alla luce dei dati osservati, la verosimiglianza diventa
-
-\[
-\begin{aligned}
-\mathcal{L}(\mu, \sigma \mid y) =& \, \prod_{i=1}^n f(y_i \mid \mu, \sigma) = \notag\\
-& \frac{1}{{6.61 \sqrt {2\pi}}}\exp\left\{{-\frac{(26 - \mu)^2}{2\cdot 6.61^2}}\right\} \times \notag\\
- & \frac{1}{{6.61 \sqrt {2\pi}}}\exp\left\{{-\frac{(35 - \mu)^2}{2\cdot 6.61^2}}\right\} \times  \notag\\
-& \vdots \notag\\
- & \frac{1}{{6.61 \sqrt {2\pi}}}\exp\left\{{-\frac{(22 - \mu)^2}{2\cdot 6.61^2}}\right\}.
-\end{aligned}
-\label{eq:lldepression}
-\]
-
-Poniamoci ora il problema di rappresentare graficamente la funzione di verosimiglianza per il parametro \(\mu\). Avendo un solo parametro sconosciuto, possiamo rappresentare la verosimiglianza con una curva. In \R, definiamo la funzione di log-verosimiglianza nel modo seguente:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{log\_likelihood }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(y, mu, }\AttributeTok{sigma =}\NormalTok{ true\_sigma) \{}
-  \FunctionTok{sum}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(y, mu, sigma, }\AttributeTok{log =} \ConstantTok{TRUE}\NormalTok{))}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-Nella funzione \texttt{log\_likelihood()}, \texttt{y} è un vettore che, nel caso presente contiene \(n = 30\) valori. Per ciascuno di questi valori, la funzione \texttt{dnorm()} trova la densità Normale utilizzando il valore \(\mu\) che passato a \texttt{log\_likelihood()} e il valore \(\sigma\) uguale a 6.61 --- nell'esempio, questo parametro viene assunto come noto. L'argomento \texttt{log\ =\ TRUE} specifica che deve essere preso il logaritmo. La funzione \texttt{dnorm()} è un argomento della funzione \texttt{sum()}. Ciò significa che i 30 valori così trovati, espressi su scala logaritmica, verranno sommati --- sommare logaritmi è equivalente a fare il prodotto dei valori sulla scala originaria.
-
-Se applichiamo questa funzione ad un solo valore \(\mu\) otteniamo l'ordinata della funzione di log-verosimiglianza in corrispondenza del valore \(\mu\) (si veda la figura \eqref{eq:lldepression}). Si noti che, per trovare un tale valore, abbiamo utilizzato le seguenti informazioni:
+La figura seguente mostra esempi di distribuzioni a priori non informative, debolmente o fortemente informative, così come una distribuzione a priori espressa nei termini di un valore puntuale per il modello Binomiale. Le distribuzione a priori illustrate di seguito sono le seguenti:
 
 \begin{itemize}
 \tightlist
 \item
-  i 30 dati del campione,
+  \emph{non informativa} : \(\theta_c \sim \text{Beta}(1,1)\);
 \item
-  il valore \(\sigma = s\) fissato a 6.61,
+  \emph{debolmente informativa} : \(\theta_c \sim \text{Beta}(5,2)\);
 \item
-  il singolo valore \(\mu\) passato alla funzione \texttt{log\_likelihood()}.
+  \emph{fortemente informativa} : \(\theta_c \sim \text{Beta}(50,20)\);
+\item
+  \emph{valore puntuale} : \(\theta_c \sim \text{Beta}(\alpha, \beta)\) con \(\alpha, \beta \rightarrow \infty\) e \(\frac{\alpha}{\beta} = \frac{5}{2}\).
 \end{itemize}
 
-Avendo trovato un singolo punto della funzione di log-verosimiglianza, dobbiamo ripetere i calcoli precedenti per tutti i possibili valori che \(\mu\) può assumere.
+\begin{figure}
 
-Nel seguente ciclo \texttt{for()} viene calcolata la log-verosimiglianza di 100,000 valori possibili del parametro \(\mu\):
+{\centering \includegraphics{025_intro_bayes_files/figure-latex/ch-03-02-models-types-of-priors-1} 
+
+}
+
+\caption{Esempi di distribuzioni a priori per il parametro $\theta_c$ nel Modello Binomiale.}\label{fig:ch-03-02-models-types-of-priors}
+\end{figure}
+
+\hypertarget{scelta-della-distribuzione-a-priori}{%
+\subsection{Scelta della distribuzione a priori}\label{scelta-della-distribuzione-a-priori}}
+
+La selezione delle distribuzioni a priori è stata spesso vista come una delle scelte più importanti che un ricercatore fa quando implementa un modello bayesiano in quanto può avere un impatto sostanziale sui risultati finali. La soggettività delle distribuzioni a priori è evidenziata dai critici come un potenziale svantaggio dei metodi bayesiani. A questa critica, \citet{vandeSchoot2021modelling} rispondono dicendo che, al di là della scelta delle distribuzioni a priori, ci sono molti elementi del processo di inferenza statistica che sono soggettivi, ovvero la scelta del modello statistico e le ipotesi sulla distribuzione degli errori. In secondo luogo, \citet{vandeSchoot2021modelling} notano come le distribuzioni a priori svolgono due importanti ruoli statistici: quello della ``regolarizzazione della stima'', ovvero, il processo che porta ad indebolire l'influenza indebita di osservazioni estreme, e quello del miglioramento dell'efficienza della stima, ovvero, la facilitazione dei processi di calcolo numerico di stima della distribuzione a posteriori.
+
+L'effetto della distribuzione a priori sulla distribuzione a posteriori verrà discusso nel Capitolo \ref{chapter-balance}.
+
+\hypertarget{verosim-marginale}{%
+\section{Verosimiglianza marginale}\label{verosim-marginale}}
+
+Al denominatore della regola di Bayes abbiamo la verosimiglianza marginale \(p(y)\). Obiettivo di questo Paragrafo è chiarire questo concetto in riferimento al caso più semplice, ovvero quello della distribuzione binomiale.
+
+Sia \(Y\) una variabile casuale con funzione di massa di probabilità \(p(Y)\). Iniziamo la discussione con un semplice esempio in cui supponiamo che la funzione di massa di probabilità della \(Y\) sia definita nei termini del parametro \(\theta\) e che \(\theta\) possa assumere solo i valori 0.1, 0.5, 0.9, ciascuno con eguale probabilità. In altre parole, la probabilità che \(\theta\) sia 0.1, 0.5, o 0.9 è sempre 1/3.
+
+Ponendo \(n = 30\) e \(y = 23\), ad esempio, la funzione di verosimiglianza diventa
+
+\[
+p(y = 23, n = 30 \mid \theta) = \binom{30}{23} \theta^{23} (1-\theta)^{7}.
+\]
+La \emph{verosimiglianza marginale} \(p(y = 23, n = 30)\) basata su \(\theta\) si ottiene marginalizzando rispetto al parametro \(\theta\): per ogni possibile valore del parametro \(\theta\), calcoliamo il valore della verosimiglianza e lo moltiplichiamo per la probabilità di \(\theta\); poi sommiamo tutti i prodotti ottenuti in questo modo. Matematicamente, ciò significa eseguire l'operazione descritta di seguito.
+
+Nell'esempio abbiamo tre possibili valori \(\theta\) che chiameremo \(\theta_1 = 0.1\), \(\theta_2 = 0.5\) e \(\theta_3 = 0.9\). Ciascuno ha probabilità 1/3, quindi \(p(\theta_1) = p(\theta_2) = p(\theta_3) = 1/3\). Date queste informazioni possiamo calcolare la verosimiglianza marginale come segue:
+
+\begin{align}
+p(y = 23, n = 30) &= \binom{30}{23} \theta_1^{23} (1-\theta_1)^{7} \cdot p(\theta_1) \notag\\
+&+ \binom{30}{23} \theta_2^{23} (1-\theta_2)^{7} \cdot p(\theta_2) \notag\\
+&+ \binom{30}{23} \theta_3^{23} (1-\theta_3)^{7} \cdot p(\theta_3) \notag,
+\end{align}
+
+\noindent
+ovvero
+
+\begin{align}
+p(y = 23, n = 30) &= \binom{30}{23} 0.1^{23} (1-0.1)^{7} \cdot \frac{1}{3} \notag\\
+&+ \binom{30}{23} 0.5^{23} (1-0.5)^{7} \cdot \frac{1}{3} \notag\\
+&+ \binom{30}{23} 0.9^{23} (1-0.9)^{7} \cdot \frac{1}{3} \notag.
+\end{align}
+
+È dunque possibile considerare la verosimiglianza marginale come una sorta di media ponderata della verosimiglianza, nella quale i ``pesi'' dipendono dalla credibilità dei valori del parametro.
+
+L'esempio che abbiamo presentato sopra è artificiale perché al parametro \(\theta\) abbiamo attribuito solo tre possibili valori. In realtà, \(\theta\) può assumere tutti i possibili valori compresi nell'intervallo {[}0, 1{]} e dunque la somma che dobbiamo calcolare avrà infiniti addendi. Dal punto di vista matematico, una tale somma corrisponde all'integrale:
+
+\[
+p(y = 23, n = 30) = \int_0^1 \binom{30}{23} \theta^{23} (1-\theta)^{7} d\theta.
+\]
+
+\noindent
+L'integrale precedente descrive esattamente le stesse operazioni che abbiamo discusso nell'esempio ``artificiale'' in cui \(\theta\) poteva assumere solo tre valori, eccetto che ora dobbiamo eseguire la somma dei prodotti calcolati su tutti gli infiniti valori \(\theta\). Questo integrale corrisponde alla ``marginalizzazione'' del parametro \(\theta\). Non è tuttavia necessario eseguire una tale operazione di maginalizzazione in forma analitica in quanto il precedente integrale può essere calcolato con R:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{nrep }\OtherTok{\textless{}{-}} \FloatTok{1e5}
-\NormalTok{mu }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}
-  \FunctionTok{mean}\NormalTok{(d}\SpecialCharTok{$}\NormalTok{y) }\SpecialCharTok{{-}} \FunctionTok{sd}\NormalTok{(d}\SpecialCharTok{$}\NormalTok{y), }
-  \FunctionTok{mean}\NormalTok{(d}\SpecialCharTok{$}\NormalTok{y) }\SpecialCharTok{+} \FunctionTok{sd}\NormalTok{(d}\SpecialCharTok{$}\NormalTok{y), }
-  \AttributeTok{length.out =}\NormalTok{ nrep}
-\NormalTok{)}
+\NormalTok{BinLik }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(theta) \{}
+  \FunctionTok{choose}\NormalTok{(}\DecValTok{30}\NormalTok{, }\DecValTok{23}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ theta}\SpecialCharTok{\^{}}\DecValTok{23} \SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ theta)}\SpecialCharTok{\^{}}\DecValTok{7}
+\NormalTok{\}}
+\FunctionTok{integrate}\NormalTok{(BinLik, }\AttributeTok{lower =} \DecValTok{0}\NormalTok{, }\AttributeTok{upper =} \DecValTok{1}\NormalTok{)}\SpecialCharTok{$}\NormalTok{value}
+\CommentTok{\#\textgreater{} [1] 0.03225806}
+\end{Highlighting}
+\end{Shaded}
 
-\NormalTok{ll }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, nrep)}
-\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{nrep) \{}
-\NormalTok{  ll[i] }\OtherTok{\textless{}{-}} \FunctionTok{log\_likelihood}\NormalTok{(d}\SpecialCharTok{$}\NormalTok{y, mu[i], true\_sigma)}
+\hypertarget{soluzione-analitica}{%
+\subsection{Soluzione analitica}\label{soluzione-analitica}}
+
+Qui di seguito è riportata la derivazione analitica. Sia \(\theta \sim \Beta(a, b)\) e sia \(y = \{y_1, \dots, y_n\} \sim \Bin(\theta, n)\). Ponendo
+
+\[
+B(a, b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)},
+\]
+
+\noindent
+la verosimiglianza marginale diventa
+
+\begin{align}
+p(y) &= \binom{n}{y} \int p(y \mid \theta) p(\theta) d\theta \notag\\
+&= \binom{n}{y}\int_0^1 \theta^{y} (1 - \theta)^{n- y} \frac{1}{B(a,b)} \theta^{a-1} (1-\theta)^{b-1} d \theta \notag\\
+&= \binom{n}{y}\frac{1}{B(a,b)} \int_0^1 \theta^{y + a - 1} (1-\theta)^{n- y + b-1} \notag\\
+&= \binom{n}{y}\frac{B(y + a, n- y + b)}{B(a,b)},
+\end{align}
+
+\noindent
+in quanto
+
+\begin{align}
+\int_0^1 \frac{1}{B(a,b)} \theta^{a-1} (1-\theta)^{b-1} d \theta &= 1\notag\\
+\frac{1}{B(a,b)} \int_0^1  \theta^{a-1} (1-\theta)^{b-1} d \theta &= 1\notag\\
+\int_0^1  \theta^{a-1} (1-\theta)^{b-1} d \theta &= B(a,b). \notag
+\end{align}
+
+\noindent
+Continuiamo con l'esempio precedente. Per replicare il risultato trovato per via numerica con R, assumiamo una distribuzione a priori uniforme, ovvero \(\Beta(1, 1)\). I valori del problema sono i seguenti:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{b }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{23}
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{30}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+e dunque
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha }\OtherTok{\textless{}{-}}\NormalTok{ y }\SpecialCharTok{+}\NormalTok{ a}
+\NormalTok{beta }\OtherTok{\textless{}{-}}\NormalTok{ n }\SpecialCharTok{{-}}\NormalTok{ y }\SpecialCharTok{+}\NormalTok{ b}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Definiamo
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{B }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(a, b) \{}
+\NormalTok{  (}\FunctionTok{gamma}\NormalTok{(a) }\SpecialCharTok{*} \FunctionTok{gamma}\NormalTok{(b)) }\SpecialCharTok{/} \FunctionTok{gamma}\NormalTok{(a }\SpecialCharTok{+}\NormalTok{ b)}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
 
-Il vettore \texttt{mu} contiene 100,000 possibili valori del parametro \(\mu\); tali valori sono stati scelti nell'intervallo \(\bar{y} \pm s\). Per ciascuno di questi valori la funzione \texttt{log\_likelihood()} calcola il valore di log-verosimiglianza. I 100,000 risultati vengono salvati nel vettore \texttt{ll}.
-
-I vettori \texttt{mu} e \texttt{ll} possono dunque essere usati per disegnare il grafico della funzione di log-verosimiglianza per il parametro \(\mu\):
+\noindent
+Il risultato cercato si ottiene con
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{tibble}\NormalTok{(mu, ll) }\SpecialCharTok{\%\textgreater{}\%} 
-\FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ mu, }\AttributeTok{y =}\NormalTok{ ll)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{vline\_at}\NormalTok{(}\FunctionTok{mean}\NormalTok{(d}\SpecialCharTok{$}\NormalTok{y), }\AttributeTok{color =} \StringTok{"sky blue"}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}
-    \AttributeTok{y =} \StringTok{"Log{-}verosimiglianza"}\NormalTok{,}
-    \AttributeTok{x =} \FunctionTok{expression}\NormalTok{(}\StringTok{"Parametro"}\SpecialCharTok{\textasciitilde{}}\NormalTok{mu)}
-\NormalTok{  ) }
+\FunctionTok{choose}\NormalTok{(}\DecValTok{30}\NormalTok{, }\DecValTok{23}\NormalTok{) }\SpecialCharTok{*} \FunctionTok{B}\NormalTok{(alpha, beta) }\SpecialCharTok{/} \FunctionTok{B}\NormalTok{(a, b)}
+\CommentTok{\#\textgreater{} [1] 0.03225806}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{024_likelihood_files/figure-latex/unnamed-chunk-9-1} \end{center}
+In conclusione, nel caso di una verosimiglianza binomiale \(y = \sim \Bin(\theta, n)\) e di una distribuzione a priori \(\theta \sim \Beta(a, b)\), la verosimiglianza marginale diventa
 
-Dalla figura notiamo che, per i dati osservati, il massimo della funzione di log-verosimiglianza calcolata per via numerica, ovvero 30.93, è identico alla media dei dati campionari e corrisponde al risultato teorico della \eqref{eq:lldepression}.
+\begin{equation}
+\binom{n}{y}\frac{B(y + a, n - y + b)}{B(a, b)}.
+\label{eq:constant-norm-beta-binom}
+\end{equation}
+
+\hypertarget{la-distribuzione-a-posteriori}{%
+\section{La distribuzione a posteriori}\label{la-distribuzione-a-posteriori}}
+
+Ci sono due metodi principali per calcolare la distribuzione a posteriori \(p(\theta \mid y)\):
+
+\begin{itemize}
+\tightlist
+\item
+  una precisa derivazione matematica formulata nei termini della distribuzione a priori coniugata alla distribuzione a posteriori (si veda il Capitolo \ref{chapter-distr-coniugate}); tale procedura però ha un'applicabilità molto limitata;
+\item
+  un metodo approssimato, molto facile da utilizzare in pratica, che dipende da metodi Monte Carlo basati su Catena di Markov (MCMC).
+\end{itemize}
+
+Una volta calcolata la distribuzione a posteriori dobbiamo riassumerla in qualche modo. Questo problema verrà discusso nel Capitolo \ref{chapter-sintesi-distr-post}.
 
 \hypertarget{considerazioni-conclusive}{%
 \section*{Considerazioni conclusive}\label{considerazioni-conclusive}}
 \addcontentsline{toc}{section}{Considerazioni conclusive}
 
-La verosimiglianza viene utilizzata sia nell'inferenza bayesiana che in quella frequentista. In entrambi i paradigmi di inferenza, il suo ruolo è quantificare la forza con la quale i dati osservati supportano i possibili valori dei parametri sconosciuti.
+In base all'approccio bayesiano, invece di dire che il parametro di interesse di un modello statistico ha un valore vero ma sconosciuto, diciamo che, prima di eseguire l'esperimento, è possibile assegnare una distribuzione di probabilità, che chiamano stato di credenza, a quello che è il vero valore del parametro. Questa distribuzione a priori può essere nota (per esempio, sappiamo che la distribuzione dei punteggi del QI è normale con media 100 e deviazione standard 15) o può essere del tutto arbitraria. L'inferenza bayesiana procede poi nel modo seguente: si raccolgono alcuni dati e si calcola la probabilità dei possibili valori del parametro \emph{alla luce} dei dati osservati. Questa nuova distribuzione di probabilità è chiamata ``distribuzione a posteriori''. L'approccio bayesiano riassumere l'incertezza dell'inferenza fornendo un intervallo di valori sulla distribuzione di probabilità a posteriori che include il 95\% della probabilità --- questo intervallo è chiamato ``intervallo di credibilità del 95\%''.
 
-Nella funzione di verosimiglianza i dati (osservati) vengono trattati come fissi, mentre i valori del parametro (o dei parametri) \(\theta\) vengono variati: la verosimiglianza è una funzione di \(\theta\) per il dato fisso \(y\). Pertanto, la funzione di verosimiglianza riassume i seguenti elementi: un modello statistico che genera stocasticamente i dati (in questo capitolo abbiamo esaminato due modelli statistici: quello binomiale e quello Normale), un intervallo di valori possibili per \(\theta\) e i dati osservati \(y\).
+\hypertarget{appendix-appendix}{%
+\appendix}
 
-Nella statistica frequentista l'inferenza si basa solo sui dati a disposizione e qualunque informazione fornita dalle conoscenze precedenti non viene presa in considerazione. Nello specifico, nella statistica frequentista l'inferenza viene condotta massimizzando la funzione di (log) verosimiglianza, condizionatamente ai valori assunti dalle variabili casuali campionarie. Nella statistica bayesiana, invece, l'inferenza statistica viene condotta combinando la funzione di verosimiglianza con le distribuzioni a priori dei parametri incogniti \(\theta\).
 
-La differenza fondamentale tra inferenza bayesiana e frequentista è dunque che i frequentisti non ritengono utile descrivere in termini probabilistici i parametri: i parametri dei modelli statistici vengono concepiti come fissi ma sconosciuti. Nell'inferenza bayesiana, invece, i parametri sconosciuti sono intesi come delle variabili casuali e ciò consente di quantificare in termini probabilistici il nostro grado di intertezza relativamente al loro valore.
+\hypertarget{simbologia-di-base}{%
+\chapter{Simbologia di base}\label{simbologia-di-base}}
+
+Per una scrittura più sintetica possono essere utilizzati alcuni simboli
+matematici.
+
+\begin{itemize}
+\item
+  L'operatore logico booleano \(\land\) significa ``e'' (congiunzione
+  forte) mentre il connettivo di disgiunzione \(\lor\) significa ``o''
+  (oppure) (congiunzione debole).
+\item
+  Il quantificatore esistenziale \(\exists\) vuol dire ``esiste almeno
+  un'' e indica l'esistenza di almeno una istanza del concetto/oggetto
+  indicato. Il quantificatore esistenziale di unicità \(\exists!\)
+  (``esiste soltanto un'') indica l'esistenza di esattamente una istanza
+  del concetto/oggetto indicato. Il quantificatore esistenziale
+  \(\nexists\) nega l'esistenza del concetto/oggetto indicato.
+\item
+  Il quantificatore universale \(\forall\) vuol dire ``per ogni.''
+\item
+  L'implicazione logica ``\(\Rightarrow\)'' significa ``implica'' (se
+  \ldots allora). \(P \Rightarrow Q\) vuol dire che \(P\) è condizione
+  sufficiente per la verità di \(Q\) e che \(Q\) è condizione necessaria
+  per la verità di \(P\).
+\item
+  L'equivalenza matematica ``\(\iff\)'' significa ``se e solo se'' e indica
+  una condizione necessaria e sufficiente, o corrispondenza biunivoca.
+\item
+  Il simbolo \(\vert\) si legge ``tale che.''
+\item
+  Il simbolo \(\triangleq\) (o \(:=\)) si legge ``uguale per definizione.''
+\item
+  Il simbolo \(\Delta\) indica la differenza fra due valori della
+  variabile scritta a destra del simbolo.
+\item
+  Il simbolo \(\propto\) si legge ``proporzionale a.''
+\item
+  Il simbolo \(\approx\) si legge ``circa.''
+\item
+  Il simbolo \(\in\) della teoria degli insiemi vuol dire ``appartiene'' e
+  indica l'appartenenza di un elemento ad un insieme. Il simbolo
+  \(\notin\) vuol dire ``non appartiene.''
+\item
+  Il simbolo \(\subseteq\) si legge ``è un sottoinsieme di'' (può
+  coincidere con l'insieme stesso). Il simbolo \(\subset\) si legge ``è
+  un sottoinsieme proprio di.''
+\item
+  Il simbolo \(\#\) indica la cardinalità di un insieme.
+\item
+  Il simbolo \(\cap\) indica l'intersezione di due insiemi. Il simbolo
+  \(\cup\) indica l'unione di due insiemi.
+\item
+  Il simbolo \(\emptyset\) indica l'insieme vuoto o evento impossibile.
+\item
+  In matematica, \(\argmax\) identifica l'insieme dei punti per i quali una data funzione raggiunge il suo massimo. In altre parole, \(\argmax_x f(x)\) è l'insieme dei valori di \(x\) per i quali \(f(x)\) raggiunge il valore più alto.
+\end{itemize}
+
+\hypertarget{numeri-binari-interi-razionali-irrazionali-e-reali}{%
+\chapter{Numeri binari, interi, razionali, irrazionali e reali}\label{numeri-binari-interi-razionali-irrazionali-e-reali}}
+
+\hypertarget{numeri-binari}{%
+\section{Numeri binari}\label{numeri-binari}}
+
+I numeri più semplici sono quelli binari, cioè zero o uno. Useremo spesso
+numeri binari per indicare se qualcosa è vero o falso, presente o
+assente.
+
+I numeri binari sono molto utili per ottenere facilmente delle statistiche riassuntive in R.Supponiamo di chiedere a 10 studenti ``Ti piacciono i mirtilli?'' Poniamo che le risposte siano le seguenti:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{opinion }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}Yes\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}No\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Yes\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}No\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Yes\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}No\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Yes\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Yes\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Yes\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Yes\textquotesingle{}}\NormalTok{)}
+\NormalTok{opinion}
+\CommentTok{\#\textgreater{}  [1] "Yes" "No"  "Yes" "No"  "Yes" "No"  "Yes" "Yes" "Yes"}
+\CommentTok{\#\textgreater{} [10] "Yes"}
+\end{Highlighting}
+\end{Shaded}
+
+Tali risposte possono essere ricodificate nei termini di valori di
+verità, ovvero, vero e falso, generalmente denotati rispettivamente come
+1 e 0. In R tale ricodifica può essere effettuata mediante l'operatore
+\texttt{==} che è un test per l'uguaglianza e restituisce il valore logico VERO
+se i due oggetti valutati sono uguali e FALSO se non lo sono:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{opinion }\OtherTok{\textless{}{-}}\NormalTok{ opinion }\SpecialCharTok{==} \StringTok{"Yes"}
+\NormalTok{opinion}
+\CommentTok{\#\textgreater{}  [1]  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE  TRUE}
+\CommentTok{\#\textgreater{} [10]  TRUE}
+\end{Highlighting}
+\end{Shaded}
+
+R considera i valori di verità e i numeri binari in modo equivalente, con
+TRUE uguale a 1 e FALSE uguale a zero. Di conseguenza, possiamo
+effettuare operazioni algebriche sui valori logici VERO e FALSO.
+Nell'esempio, possiamo sommare i valori di verità e dividere per 10
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(opinion) }\SpecialCharTok{/} \FunctionTok{length}\NormalTok{(opinion)}
+\CommentTok{\#\textgreater{} [1] 0.7}
+\end{Highlighting}
+\end{Shaded}
+
+in modo tale da calcolare una propozione, il che ci consente di concludere che 7 risposte su 10 sono positive.
+
+\hypertarget{numeri-interi}{%
+\section{Numeri interi}\label{numeri-interi}}
+
+Un numero intero è un numero senza decimali. Si dicono \textbf{naturali} i
+numeri che servono a contare, come 1, 2, \ldots{} L'insieme dei numeri
+naturali si indica con il simbolo \(\mathbb{N}\). È anche necessario
+introdurre i numeri con il segno per poter trattare grandezze negative.
+Si ottengono così l'insieme numerico dei numeri interi relativi:
+\(\mathbb{Z} = \{0, \pm 1, \pm 2, \dots \}\)
+
+\hypertarget{numeri-razionali}{%
+\section{Numeri razionali}\label{numeri-razionali}}
+
+I numeri razionali sono i numeri frazionari \(m/n\), dove \(m, n \in N\),
+con \(n \neq 0\). Si ottengono così i numeri razionali:
+\(\mathbb{Q} = \{\frac{m}{n} \,\vert\, m, n \in \mathbb{Z}, n \neq 0\}\).
+È evidente che \(\mathbb{N} \subseteq \mathbb{Z} \subseteq \mathbb{Q}\).
+Anche in questo caso è necessario poter trattare grandezze negative. I
+numeri razionali non negativi sono indicati con
+\(\mathbb{Q^+} = \{q \in \mathbb{Q} \,\vert\, q \geq 0\}\).
+
+\hypertarget{numeri-irrazionali}{%
+\section{Numeri irrazionali}\label{numeri-irrazionali}}
+
+Tuttavia, non tutti i punti di una retta \(r\) possono essere
+rappresentati mediante i numeri interi e razionali. È dunque necessario
+introdurre un'altra classe di numeri. Si dicono \textbf{irrazionali}, e sono
+denotati con \(\mathbb{R}\), i numeri che possono essere scritti come una
+frazione \(a / b\), con \(a\) e \(b\) interi e \(b\) diverso da 0. I numeri
+irrazionali sono i numeri illimitati e non periodici che quindi non
+possono essere espressi sotto forma di frazione. Per esempio,
+\(\sqrt{2}\), \(\sqrt{3}\) e \({\displaystyle \pi =3,141592\ldots}\) sono
+numeri irrazionali.
+
+\hypertarget{numeri-reali}{%
+\section{Numeri reali}\label{numeri-reali}}
+
+I punti della retta \(r\) sono quindi ``di più'' dei numeri razionali. Per
+poter rappresentare tutti i punti della retta abbiamo dunque bisogno dei
+numeri \textbf{reali}. I numeri reali possono essere positivi, negativi o nulli
+e comprendono, come casi particolari, i numeri interi, i numeri
+razionali e i numeri irrazionali. Spesso in statisticac il numero dei
+decimali indica il grado di precisione della misurazione.
+
+\hypertarget{intervalli}{%
+\section{Intervalli}\label{intervalli}}
+
+Un intervallo si dice chiuso se gli estremi sono compresi
+nell'intervallo, aperto se gli estremi non sono compresi. Le
+caratteristiche degli intervalli sono riportate nella tabella seguente.
+
+\begin{longtable}[]{@{}cll@{}}
+\toprule
+Intervallo & & \\
+\midrule
+\endhead
+chiuso & \([a, b]\) & \(a \leq x \leq b\) \\
+aperto & \((a, b)\) & \(a < x < b\) \\
+chiuso a sinistra e aperto a destra & \([a, b)\) & \(a \leq x < b\) \\
+aperto a sinistra e chiuso a destra & \((a, b]\) & \(a < x \leq b\) \\
+\bottomrule
+\end{longtable}
+
+\hypertarget{insiemistica}{%
+\chapter{Insiemi}\label{insiemistica}}
+
+Un insieme (o collezione, classe, gruppo, \ldots) è un concetto primitivo,
+ovvero è un concetto che già possediamo. Georg Cantor l'ha definito nel
+modo seguente:
+
+\begin{quote}
+un insieme è una collezione di oggetti, determinati e distinti, della nostra percezione o del nostro pensiero, concepiti come un tutto unico; tali oggetti si dicono elementi dell'insieme.
+\end{quote}
+
+Mentre non è rilevante la natura degli oggetti che costituiscono
+l'insieme, ciò che importa è distinguere se un dato oggetto appartenga o
+meno ad un insieme. Deve essere vera una delle due possibilità: il dato
+oggetto è un elemento dell'insieme considerato oppure non è elemento
+dell'insieme considerato. Due insiemi \(A\) e \(B\) si dicono uguali se sono
+formati dagli stessi elementi, anche se disposti in ordine diverso:
+\(A=B\). Due insiemi \(A\) e \(B\) si dicono diversi se non contengono gli
+stessi elementi: \(A \neq B\). Ad esempio, i seguenti insiemi sono uguali:
+\[\{1, 2, 3\} = \{3, 1, 2\} = \{1, 3, 2\}= \{1, 1, 1, 2, 3, 3, 3\}.\]
+Gli insiemi sono denotati da una lettera maiuscola, mentre le lettere
+minuscole, di solito, designano gli elementi di un insieme. Per esempio,
+un generico insieme \(A\) si indica con
+\[A = \{a_1, a_2, \dots, a_n\}, \quad \text{con~} n > 0.\]
+
+La scrittura \(a \in A\) dice che \(a\) è un elemento di \(A\). Per dire che
+\(b\) non è un elemento di \(A\) si scrive \(b \notin A.\)
+
+Per quegli insiemi i cui elementi soddisfano una certa proprietà che li
+caratterizza, tale proprietà può essere usata per descrivere più
+sinteticamente l'insieme:
+\[
+A = \{x ~\vert~ \text{proprietà posseduta da~} x\},
+\]
+che si legge come ``\(A\) è l'insieme degli elementi \(x\) per cui è vera la proprietà
+indicata.'' Per esempio, per indicare l'insieme \(A\) delle coppie di
+numeri reali \((x,y)\) che appartengono alla parabola \(y = x^2 + 1\) si può
+scrivere:
+\[
+A = \{(x,y) ~\vert~ y = x^2 + 1\}.
+\]
+Dati due insiemi \(A\) e \(B\), diremo che \(A\) è un \emph{sottoinsieme} di \(B\) se
+e solo se tutti gli elementi di \(A\) sono anche elementi di \(B\):
+\[A \subseteq B \iff (\forall x \in A \Rightarrow x \in B).\] Se esiste
+almeno un elemento di \(B\) che non appartiene ad \(A\) allora diremo che
+\(A\) è un \emph{sottoinsieme proprio} di \(B\):
+\[
+A \subset B \iff (A \subseteq B, \exists~ x \in B ~\vert~ x \notin A).
+\]
+Un altro insieme, detto \emph{insieme delle parti}, o insieme potenza, che si
+associa all'insieme \(A\) è l'insieme di tutti i sottoinsiemi di \(A\),
+inclusi l'insieme vuoto e \(A\) stesso. Per esempio, per l'insieme
+\(A = \{a, b, c\}\), l'insieme delle parti è:
+\[
+\mathcal{P}(A) = \{
+\emptyset, \{a\}, \{b\}, \{c\},
+ \{a, b\}, \{a, c\}, \{c, b\},
+ \{a, b, c\}
+\}.
+\]
+
+\hypertarget{operazioni-tra-insiemi}{%
+\section{Operazioni tra insiemi}\label{operazioni-tra-insiemi}}
+
+Si definisce \textbf{intersezione} di \(A\) e \(B\) l'insieme \(A \cap B\) di tutti
+gli elementi \(x\) che appartengono ad \(A\) e contemporaneamente a \(B\):
+\[A \cap B = \{x ~\vert~ x \in A \land x \in B\}.\]
+
+Si definisce \textbf{unione} di \(A\) e \(B\) l'insieme \(A \cup B\) di tutti gli
+elementi \(x\) che appartengono ad \(A\) o a \(B\), cioè
+\[
+A \cup B = \{x ~\vert~ x \in A \lor x \in B\}.
+\]
+
+\textbf{Differenza}. Si indica con \(A \setminus B\) l'insieme degli elementi di
+\(A\) che non appartengono a \(B\):
+\[A \setminus B = \{x ~\vert~ x \in A \land x \notin B\}.\]
+
+\textbf{Insieme complementare}. Nel caso che sia \(B \subseteq A\), l'insieme
+differenza \(A \setminus B\) è detto insieme complementare di \(B\) in \(A\) e
+si indica con \(B^C\).
+
+Dato un insieme \(S\), una \textbf{partizione} di \(S\) è una collezione di
+sottoinsiemi di \(S\), \(S_1, \dots, S_k\), tali che
+\[S = S_1 \cup S_2 \cup \dots S_k\] e
+\[S_i \cap S_j, \quad \text{con~} i \neq j.\]
+
+La relazione tra unione, intersezione e insieme complementare è data
+dalle leggi di DeMorgan: \[(A \cup B)^c = A^c \cap B^c,\]
+\[(A \cap B)^c = A^c \cup B^c.\]
+
+\hypertarget{diagrammi-di-eulero-venn}{%
+\section{Diagrammi di Eulero-Venn}\label{diagrammi-di-eulero-venn}}
+
+In molte situazioni è utile servirsi dei cosiddetti diagrammi di
+Eulero-Venn per rappresentare gli insiemi e verificare le proprietà
+delle operazioni tra insiemi (si veda la figura~\ref{fig:sets-venn-diagrams}.
+I diagrammi di Venn sono così nominati in onore del matematico inglese del diciannovesimo secolo John Venn anche se Leibnitz e Eulero avevano già in precedenza utilizzato rappresentazioni simili.
+In tale rappresentazione, gli insiemi sono individuati da regioni del piano delimitate da una curva chiusa. Nel caso di insiemi finiti, è possibile evidenziare esplicitamente alcuni elementi di un insieme mediante punti, quando si
+possono anche evidenziare tutti gli elementi degli insiemi considerati.
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{images/sets-venn-diagrams} 
+
+}
+
+\caption{In tutte le figure $S$ è la regione delimitata dal rettangolo, $L$ è la regione all'interno del cerchio di sinistra e $R$ è la regione all'interno del cerchio di destra. La regione evidenziata mostra l'insieme indicato sotto ciascuna figura.}\label{fig:sets-venn-diagrams}
+\end{figure}
+
+I diagrammi di Eulero-Venn che forniscono una dimostrazione delle leggi
+di DeMorgan sono forniti nella figura \ref{fig:demorgan}.
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{images/demorgan} 
+
+}
+
+\caption{Dimostrazione delle leggi di DeMorgan.}\label{fig:demorgan}
+\end{figure}
+
+\hypertarget{coppie-ordinate-e-prodotto-cartesiano}{%
+\section{Coppie ordinate e prodotto cartesiano}\label{coppie-ordinate-e-prodotto-cartesiano}}
+
+Una coppia ordinata \((x,y)\) è l'insieme i cui elementi sono \(x \in A\) e
+\(y \in B\) e nella quale \(x\) è la prima componente (o prima coordinata),
+\(y\) la seconda. L'insieme di tutte le coppie ordinate costruite a
+partire dagli insiemi \(A\) e \(B\) viene detto \textbf{prodotto cartesiano}:
+\[A \times B = \{(x, y) ~\vert~ x \in A \land y \in B\}.\] Ad esempio,
+sia \(A = \{1, 2, 3\}\) e \(B = \{a, b\}\). Allora,
+\[\{1, 2\} \times \{a, b, c\} = \{(1, a), (1, b), (1, c), (2, a), (2, b), (2, c)\}.\]
+
+\hypertarget{cardinalituxe0}{%
+\section{Cardinalità}\label{cardinalituxe0}}
+
+Si definisce \textbf{cardinalità} (o potenza) di un insieme finito il numero
+degli elementi dell'insieme. Viene indicata con \(\vert A\vert, \#(A)\) o
+\(\text{c}(A)\).
+
+\hypertarget{sommatorie}{%
+\chapter{Simbolo di somma (sommatorie)}\label{sommatorie}}
+
+Le somme si incontrano costantemente in svariati contesti matematici e statistici quindi abbiamo bisogno di una notazione adeguata che ci consenta di gestirle. La somma dei primi \(n\) numeri interi può essere scritta come \(1+2+\dots+(n-1)+n\), dove `\(\dots\)' ci dice di completare la sequenza definita dai termini che vengono prima e dopo. Ovviamente, una notazione come \(1+7+\dots+73.6\) non avrebbe alcun senso senza qualche altro tipo di precisazione. In generale, nel seguito incontreremo delle somme nella forma
+\begin{equation}
+x_1+x_2+\dots+x_n,\notag
+\end{equation}
+dove \(x_i\) è un numero che è stato definito altrove. La notazione precedente, che fa uso dei tre puntini di sospensione, è utile in alcuni contesti ma in altri risulta ambigua. Pertanto la notazione di uso corrente è del tipo
+\begin{equation}
+  \sum_{i=1}^n x_i\notag
+\end{equation}
+\noindent
+e si legge ``sommatoria per \(i\) che va da \(1\) a \(n\) di \(x_i\).'\,' Il simbolo \(\sum\) (lettera sigma maiuscola dell'alfabeto greco) indica l'operazione di somma, il simbolo \(x_i\) indica il generico addendo della sommatoria, le lettere \(1\) ed \(n\) indicano i cosiddetti \emph{estremi della sommatoria}, ovvero l'intervallo (da \(1\) fino a \(n\) estremi inclusi) in cui deve variare l'indice \(i\) allorché si sommano gli addendi \(x_i\).
+Solitamente l'estremo inferiore è \(1\) ma potrebbe essere qualsiasi altri numero \(m < n\). Quindi
+\[
+  \sum_{i=1}^n x_i = x_1 + x_{2} + \dots + x_{n}.
+\]
+Per esempio, se i valori \(x\) sono \(\{3, 11, 4, 7\}\), si avrà
+\[
+  \sum_{i=1}^4 x_i = 3+11+4+7 = 25 
+\]
+laddove \(x_1 = 3\), \(x_2 = 11\), eccetera. La quantità \(x_i\) nella formula precedente si dice l'\emph{argomento} della sommatoria, mentre la variabile \(i\), che prende i valori naturali successivi indicati nel simbolo, si dice \emph{indice} della sommatoria.
+
+La notazione di sommatoria può anche essere fornita nella forma seguente
+\begin{equation}
+  \sum_{P(i)} x_i\notag
+\end{equation}
+dove \(P(i)\) è qualsiasi proposizione riguardante \(i\) che può essere vera o falsa. Quando è ovvio che si vogliono sommare tutti i valori di \(n\) osservazioni, la notazione può essere semplificata nel modo seguente: \(\sum_{i} x_i\) oppure \(\sum x_i\). Al posto di \(i\) si possono trovare altre lettere: \(k, j, l, \dots\),.
+
+\hypertarget{manipolazione-di-somme}{%
+\section{Manipolazione di somme}\label{manipolazione-di-somme}}
+
+È conveniente utilizzare le seguenti regole per semplificare i calcoli che coinvolgono l'operatore della sommatoria.
+
+\hypertarget{proprietuxe0-1}{%
+\subsection{Proprietà 1}\label{proprietuxe0-1}}
+
+La sommatoria di \(n\) valori tutti pari alla stessa costante \(a\) è pari a \(n\) volte la costante stessa:
+\[
+  \sum_{i=1}^{n} a =  \underbrace{a + a + \dots + a}_{n~\text{volte}} = n a.
+  \]
+
+\hypertarget{proprietuxe0-2-proprietuxe0-distributiva}{%
+\subsection{Proprietà 2 (proprietà distributiva)}\label{proprietuxe0-2-proprietuxe0-distributiva}}
+
+Nel caso in cui l'argomento contenga una costante, è possibile riscrivere la sommatoria. Ad esempio con
+\[
+  \sum_{i=1}^{n} a x_i =  a x_1 + a x_2 + \dots + a x_n
+  \]
+è possibile raccogliere la costante \(a\) e fare \(a(x_1 +x_2 + \dots + x_n)\). Quindi possiamo scrivere
+\[
+  \sum_{i=1}^{n} a x_i =  a  \sum_{i=1}^{n} x_i.
+  \]
+
+\hypertarget{proprietuxe0-3-proprietuxe0-associativa}{%
+\subsection{Proprietà 3 (proprietà associativa)}\label{proprietuxe0-3-proprietuxe0-associativa}}
+
+Nel caso in cui
+\[
+  \sum_{i=1}^{n} (a + x_i) =  (a + x_1) +  (a + x_1) + \dots  (a + x_n)
+  \]
+si ha che
+\[
+  \sum_{i=1}^{n} (a + x_i) =  n a + \sum_{i=1}^{n} x_i.
+  \]
+È dunque chiaro che in generale possiamo scrivere
+\[
+  \sum_{i=1}^{n} (x_i + y_i) =  \sum_{i=1}^{n} x_i + \sum_{i=1}^{n} y_i.
+  \]
+
+\hypertarget{proprietuxe0-4}{%
+\subsection{Proprietà 4}\label{proprietuxe0-4}}
+
+Se deve essere eseguita un'operazione algebrica (innalzamento a potenza, logaritmo, ecc.) sull'argomento della sommatoria, allora tale operazione algebrica deve essere eseguita prima della somma. Per esempio,
+\[
+\sum_{i=1}^{n} x_i^2 = x_1^2 + x_2^2 + \dots + x_n^2 \neq \left(\sum_{i=1}^{n} x_i \right)^2.
+\]
+
+\hypertarget{proprietuxe0-5}{%
+\subsection{Proprietà 5}\label{proprietuxe0-5}}
+
+Nel caso si voglia calcolare \(\sum_{i=1}^{n} x_i y_i\), il prodotto tra i punteggi appaiati deve essere eseguito prima e la somma dopo:
+\[
+\sum_{i=1}^{n} x_i y_i = x_1 y_1 + x_2 y_2 + \dots + x_n y_n,
+\]
+infatti, \(a_1 b_1 + a_2 b_2 \neq (a_1 + a_2)(b_1 + b_2)\).
+
+\hypertarget{doppia-sommatoria}{%
+\section{Doppia sommatoria}\label{doppia-sommatoria}}
+
+È possibile incontrare la seguente espressione in cui figurano una doppia sommatoria e un doppio indice:
+\[
+\sum_{i=1}^{n}\sum_{j=1}^{m} x_{ij}.
+\]
+La doppia sommatoria comporta che per ogni valore dell'indice esterno, \(i\) da \(1\) ad \(n\), occorre sviluppare la seconda sommatoria per \(j\) da \(1\) ad \(m\). Quindi,
+\[
+\sum_{i=1}^{3}\sum_{j=4}^{6} x_{ij} = (x_{1, 4} + x_{1, 5} + x_{1, 6}) + (x_{2, 4} + x_{2, 5} + x_{2, 6}) + (x_{3, 4} + x_{3, 5} + x_{3, 6}).
+\]
+
+Un caso particolare interessante di doppia sommatoria è il seguente:
+\[
+\sum_{i=1}^{n}\sum_{j=1}^{n} x_i y_j
+\]
+Si può osservare che nella sommatoria interna (quella che dipende dall'indice \(j\)), la quantità \(x_i\) è costante, ovvero non dipende dall'indice (che è \(j\)). Allora possiamo estrarre \(x_i\) dall'operatore di sommatoria interna e scrivere
+\[
+\sum_{i=1}^{n} \left( x_i \sum_{j=1}^{n} y_j \right).
+\]
+Allo stesso modo si può osservare che nell'argomento della sommatoria esterna la quantità costituita dalla sommatoria in \(j\) non dipende dall'indice \(i\) e quindi questa quantità può essere estratta dalla sommatoria esterna. Si ottiene quindi
+\[
+\sum_{i=1}^{n}\sum_{j=1}^{n} x_i y_j = \sum_{i=1}^{n} \left( x_i \sum_{j=1}^{n} y_j \right) = \sum_{i=1}^{n}\ x_i \sum_{j=1}^{n} y_j.
+\]
+
+\begin{example}
+Si verifichi quanto detto sopra nel caso particolare di \(x = \{2, 3, 1\}\) e \(y = \{1, 4, 9\}\), svolgendo prima la doppia sommatoria per poi verificare che quanto così ottenuto sia uguale al prodotto delle due sommatorie.
+
+\begin{align}
+\sum_{i=1}^3 \sum_{j=1}^3 x_i y_j &= x_1y_1 + x_1y_2 + x_1y_3 + 
+x_2y_1 + x_2y_2 + x_2y_3 + 
+x_3y_1 + x_3y_2 + x_3y_3 \notag\\
+&= 2 \times (1+4+9) + 3 \times (1+4+9) + 2 \times (1+4+9) = 84,\notag
+\end{align}
+ovvero
+\[
+(2 + 3 + 1) \times (1+4+9) = 84.
+\]
+\end{example}
 
   \bibliography{refs.bib,book.bib,packages.bib}
 
