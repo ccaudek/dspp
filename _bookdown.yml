@@ -1,0 +1,69 @@
+book_filename: "Data Science per psicologi"
+new_session: true
+before_chapter_script: _common.R
+delete_merged_file: true
+language:
+  label:
+    fig: 'Figura '
+    tab: 'Tabella '
+    eq: 'Equazione '
+    thm: 'Teorema '
+    lem: 'Lemma '
+    cor: 'Corollario '
+    prp: 'Proposizione '
+    cnj: 'Congettura '
+    def: 'Definizione '
+    exm: 'Esempio '
+    exr: 'Exercizio '
+    proof: 'Dimostrazione. '
+    remark: 'Osservazione. '
+    solution: 'Soluzione. '
+  ui:
+    chapter_name: 'Capitolo '
+    appendix_name: 'Appendice '
+rmd_files:
+    - "index.Rmd"
+    # - "000_prefazione.Rmd"
+    # - "001_data_science.Rmd"
+    # - "005_misurazione.Rmd"
+    # - "013_stat_descrittive.Rmd"
+    # - "015_prob_intro.Rmd"
+    # - "016_prob_condiz.Rmd"
+    # - "017_theo_bayes.Rmd"
+    # - "018_prob_congiunta.Rmd"
+    # - "019_density_func.Rmd"
+    # - "020_expval_var.Rmd"
+    # - "022_distr_rv_discr.Rmd"
+    # - "023_distr_rv_cont.Rmd"
+    # - "024_likelihood.Rmd"
+    # - "025_intro_bayes.Rmd"
+    # - "026_distr_coniugate.Rmd"
+    # - "027_balance_prior_post.Rmd"
+    # - "035_approx_posterior.Rmd"
+    # - "037_programmare_in_stan.Rmd"
+    # - "040_modello_binomiale.Rmd"
+    # - "041_diagnostica_MCMC.Rmd"
+    # - "045_summarize_posterior.Rmd"
+    # - "050_modello_normale.Rmd"
+    - "051_reglin1.Rmd"
+    - "052_reglin2.Rmd"
+    - "053_reglin3.Rmd"
+    - "054_reglin4.Rmd"
+    # - "055_anova.Rmd"
+    # - "056_hierarchical_model.Rmd"
+    # - "092_loo.Rmd"
+    # - "900_appendici.Rmd"
+    # - "901_simbologia.Rmd"
+    # - "902_numeri.Rmd"
+    # - "903_insiemi.Rmd"
+    # - "904_deriv_coef_binom.Rmd"
+    # - "905_gauss.Rmd"
+    # - "907_least_squares.Rmd"
+    # - "910_integrazioneMC.Rmd"
+    # - "922_R_intro.Rmd"
+    # - "924_R_sintassi.Rmd"
+    # - "925_R_classi.Rmd"
+    # - "926_R_controllo.Rmd"
+    # - "927_R_input_output.Rmd"
+    # - "928_R_tidyverse.Rmd"
+    # - "929_R_markdown.Rmd"

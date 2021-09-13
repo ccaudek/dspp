@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capitolo 2 Regressione lineare con Stan | Data Science per psicologi</title>
+  <meta name="description" content="Capitolo 2 Regressione lineare con Stan | Data Science per psicologi si propone di fornire un’introduzione all’analisi dei dati psicologici agli studenti del primo anno del Corso di Laurea in Scienze e Tecniche Psicologiche presso l’Università degli Studi di Firenze. Particolare attenzione sarà posta ai seguenti aspetti: l’uso del linguaggio R per lo svolgimento delle analisi statistiche, la rappresentazione grafica dei dati e l’inferenza Bayesiana." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capitolo 2 Regressione lineare con Stan | Data Science per psicologi" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Capitolo 2 Regressione lineare con Stan | Data Science per psicologi si propone di fornire un’introduzione all’analisi dei dati psicologici agli studenti del primo anno del Corso di Laurea in Scienze e Tecniche Psicologiche presso l’Università degli Studi di Firenze. Particolare attenzione sarà posta ai seguenti aspetti: l’uso del linguaggio R per lo svolgimento delle analisi statistiche, la rappresentazione grafica dei dati e l’inferenza Bayesiana." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capitolo 2 Regressione lineare con Stan | Data Science per psicologi" />
+  
+  <meta name="twitter:description" content="Capitolo 2 Regressione lineare con Stan | Data Science per psicologi si propone di fornire un’introduzione all’analisi dei dati psicologici agli studenti del primo anno del Corso di Laurea in Scienze e Tecniche Psicologiche presso l’Università degli Studi di Firenze. Particolare attenzione sarà posta ai seguenti aspetti: l’uso del linguaggio R per lo svolgimento delle analisi statistiche, la rappresentazione grafica dei dati e l’inferenza Bayesiana." />
+  
+
+<meta name="author" content="Corrado Caudek" />
+
+
+<meta name="date" content="2021-09-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="regr-models-intro.html"/>
+<link rel="next" href="inferenza-sul-modello-di-regressione.html"/>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Science per psicologi</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="regr-models-intro.html"><a href="regr-models-intro.html"><i class="fa fa-check"></i><b>1</b> Introduzione alla regressione lineare bayesiana</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="regr-models-intro.html"><a href="regr-models-intro.html#la-funzione-lineare"><i class="fa fa-check"></i><b>1.1</b> La funzione lineare</a></li>
+<li class="chapter" data-level="1.2" data-path="regr-models-intro.html"><a href="regr-models-intro.html#lerrore-di-misurazione"><i class="fa fa-check"></i><b>1.2</b> L’errore di misurazione</a></li>
+<li class="chapter" data-level="1.3" data-path="regr-models-intro.html"><a href="regr-models-intro.html#il-modello-di-regressione-da-una-prospettiva-bayesiana"><i class="fa fa-check"></i><b>1.3</b> Il modello di regressione da una prospettiva bayesiana</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="regr-models-intro.html"><a href="regr-models-intro.html#una-media-specifica-per-ciascuna-osservazione"><i class="fa fa-check"></i><b>1.3.1</b> Una media specifica per ciascuna osservazione</a></li>
+<li class="chapter" data-level="1.3.2" data-path="regr-models-intro.html"><a href="regr-models-intro.html#relazione-lineare-tra-la-media-e-il-predittore"><i class="fa fa-check"></i><b>1.3.2</b> Relazione lineare tra la media e il predittore</a></li>
+<li class="chapter" data-level="1.3.3" data-path="regr-models-intro.html"><a href="regr-models-intro.html#il-modello-di-regressione-lineare"><i class="fa fa-check"></i><b>1.3.3</b> Il modello di regressione lineare</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="regr-models-intro.html"><a href="regr-models-intro.html#considerazioni-conclusive"><i class="fa fa-check"></i>Considerazioni conclusive</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="regressione-lineare-con-stan.html"><a href="regressione-lineare-con-stan.html"><i class="fa fa-check"></i><b>2</b> Regressione lineare con Stan</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="regressione-lineare-con-stan.html"><a href="regressione-lineare-con-stan.html#interpretazione-dei-parametri"><i class="fa fa-check"></i><b>2.1</b> Interpretazione dei parametri</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="regressione-lineare-con-stan.html"><a href="regressione-lineare-con-stan.html#centrare-i-predittori"><i class="fa fa-check"></i><b>2.1.1</b> Centrare i predittori</a></li>
+<li class="chapter" data-level="2.1.2" data-path="regressione-lineare-con-stan.html"><a href="regressione-lineare-con-stan.html#rappresentazione-grafica-dellincertezza-della-stima"><i class="fa fa-check"></i><b>2.1.2</b> Rappresentazione grafica dell’incertezza della stima</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="regressione-lineare-con-stan.html"><a href="regressione-lineare-con-stan.html#minimi-quadrati"><i class="fa fa-check"></i><b>2.2</b> Minimi quadrati</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="regressione-lineare-con-stan.html"><a href="regressione-lineare-con-stan.html#massima-verosimiglianza"><i class="fa fa-check"></i><b>2.2.1</b> Massima verosimiglianza</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="inferenza-sul-modello-di-regressione.html"><a href="inferenza-sul-modello-di-regressione.html"><i class="fa fa-check"></i><b>3</b> Inferenza sul modello di regressione</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="inferenza-sul-modello-di-regressione.html"><a href="inferenza-sul-modello-di-regressione.html#rappresentazione-grafica-dellincertezza-della-stima-1"><i class="fa fa-check"></i><b>3.1</b> Rappresentazione grafica dell’incertezza della stima</a></li>
+<li class="chapter" data-level="3.2" data-path="inferenza-sul-modello-di-regressione.html"><a href="inferenza-sul-modello-di-regressione.html#intervalli-di-credibilità"><i class="fa fa-check"></i><b>3.2</b> Intervalli di credibilità</a></li>
+<li class="chapter" data-level="3.3" data-path="inferenza-sul-modello-di-regressione.html"><a href="inferenza-sul-modello-di-regressione.html#rappresentazione-grafica-della-distribuzione-a-posteriori"><i class="fa fa-check"></i><b>3.3</b> Rappresentazione grafica della distribuzione a posteriori</a></li>
+<li class="chapter" data-level="3.4" data-path="inferenza-sul-modello-di-regressione.html"><a href="inferenza-sul-modello-di-regressione.html#test-di-ipotesi"><i class="fa fa-check"></i><b>3.4</b> Test di ipotesi</a></li>
+<li class="chapter" data-level="3.5" data-path="inferenza-sul-modello-di-regressione.html"><a href="inferenza-sul-modello-di-regressione.html#regressione-robusta"><i class="fa fa-check"></i><b>3.5</b> Regressione robusta</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="confronto-tra-due-gruppi-indipendenti.html"><a href="confronto-tra-due-gruppi-indipendenti.html"><i class="fa fa-check"></i><b>4</b> Confronto tra due gruppi indipendenti</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="confronto-tra-due-gruppi-indipendenti.html"><a href="confronto-tra-due-gruppi-indipendenti.html#regressione-lineare-con-una-variabile-dicotomica"><i class="fa fa-check"></i><b>4.1</b> Regressione lineare con una variabile dicotomica</a></li>
+<li class="chapter" data-level="4.2" data-path="confronto-tra-due-gruppi-indipendenti.html"><a href="confronto-tra-due-gruppi-indipendenti.html#la-dimensione-delleffetto"><i class="fa fa-check"></i><b>4.2</b> La dimensione dell’effetto</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Science per psicologi</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="regressione-lineare-con-stan" class="section level1" number="2">
+<h1><span class="header-section-number">Capitolo 2</span> Regressione lineare con Stan</h1>
+<p>Obiettivo di questo Capitolo è illustrare come può essere svolta in pratica l’analisi di regressione lineare bayesiana usando il linguaggio Stan. Per fare un esempio concreto useremo un famoso dataset chiamaro <code>kidiq</code> <span class="citation">(<a href="#ref-gelman2020regression" role="doc-biblioref">Gelman, Hill, and Vehtari 2020</a>)</span> che riporta i dati di un’indagine del 2007 su un campione di donne americane adulte e sui loro bambini di età compres tra i 3 e i 4 anni. I dati sono costituiti da 434 osservazioni e 4 variabili:</p>
+<ul>
+<li><code>kid_score</code>: QI del bambino; è il punteggio totale del <em>Peabody Individual Achievement Test</em> (PIAT) costituito dalla somma dei punteggi di tre sottoscale (Mathematics, Reading comprehension, Reading recognition);</li>
+<li><code>mom_hs</code>: variabile dicotomica (0 or 1) che indica se la madre del bambino ha completato le scuole superiori (1) oppure no (0);</li>
+<li><code>mom_iq</code>: QI della madre;</li>
+<li><code>mom_age</code>: età della madre.</li>
+</ul>
+<p>Leggiamo i dati con le seguenti istruzioni R:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="regressione-lineare-con-stan.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;foreign&quot;</span>)</span>
+<span id="cb1-2"><a href="regressione-lineare-con-stan.html#cb1-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.dta</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;kidiq.dta&quot;</span>))</span>
+<span id="cb1-3"><a href="regressione-lineare-con-stan.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span>
+<span id="cb1-4"><a href="regressione-lineare-con-stan.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   kid_score mom_hs    mom_iq mom_work mom_age</span></span>
+<span id="cb1-5"><a href="regressione-lineare-con-stan.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1        65      1 121.11753        4      27</span></span>
+<span id="cb1-6"><a href="regressione-lineare-con-stan.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2        98      1  89.36188        4      25</span></span>
+<span id="cb1-7"><a href="regressione-lineare-con-stan.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3        85      1 115.44316        4      27</span></span>
+<span id="cb1-8"><a href="regressione-lineare-con-stan.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4        83      1  99.44964        3      25</span></span>
+<span id="cb1-9"><a href="regressione-lineare-con-stan.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5       115      1  92.74571        4      27</span></span>
+<span id="cb1-10"><a href="regressione-lineare-con-stan.html#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6        98      0 107.90184        1      18</span></span></code></pre></div>
+<p>Calcoliamo alcune statistiche descrittive usando la funzione <code>skimr::skim()</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="regressione-lineare-con-stan.html#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="regressione-lineare-con-stan.html#cb2-2" aria-hidden="true" tabindex="-1"></a>  skimr<span class="sc">::</span><span class="fu">skim</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="regressione-lineare-con-stan.html#cb2-3" aria-hidden="true" tabindex="-1"></a>  skimr<span class="sc">::</span><span class="fu">yank</span>(<span class="st">&quot;numeric&quot;</span>)</span></code></pre></div>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">kid_score</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">86.80</td>
+<td align="right">20.41</td>
+<td align="right">20.00</td>
+<td align="right">74.00</td>
+<td align="right">90.00</td>
+<td align="right">102.00</td>
+<td align="right">144.00</td>
+<td align="left">▁▃▇▇▁</td>
+</tr>
+<tr class="even">
+<td align="left">mom_hs</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.79</td>
+<td align="right">0.41</td>
+<td align="right">0.00</td>
+<td align="right">1.00</td>
+<td align="right">1.00</td>
+<td align="right">1.00</td>
+<td align="right">1.00</td>
+<td align="left">▂▁▁▁▇</td>
+</tr>
+<tr class="odd">
+<td align="left">mom_iq</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">100.00</td>
+<td align="right">15.00</td>
+<td align="right">71.04</td>
+<td align="right">88.66</td>
+<td align="right">97.92</td>
+<td align="right">110.27</td>
+<td align="right">138.89</td>
+<td align="left">▃▇▆▃▂</td>
+</tr>
+<tr class="even">
+<td align="left">mom_work</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">2.90</td>
+<td align="right">1.18</td>
+<td align="right">1.00</td>
+<td align="right">2.00</td>
+<td align="right">3.00</td>
+<td align="right">4.00</td>
+<td align="right">4.00</td>
+<td align="left">▃▃▁▂▇</td>
+</tr>
+<tr class="odd">
+<td align="left">mom_age</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">22.79</td>
+<td align="right">2.70</td>
+<td align="right">17.00</td>
+<td align="right">21.00</td>
+<td align="right">23.00</td>
+<td align="right">25.00</td>
+<td align="right">29.00</td>
+<td align="left">▂▅▇▃▂</td>
+</tr>
+</tbody>
+</table>
+<p>Dall’output di <code>skim()</code> vediamo che il QI medio dei bambini è di circa 87 mentre quello della madre è di 100. La gamma di età delle madri va da 17 a 29 anni con una media di circa 23 anni. Si noti infine che il 79% delle mamme ha un diploma di scuola superiore.</p>
+<p>Ci poniamo il problema di descrivere l’associazione tra il QI dei figli e il QI delle madri mediante un modello di regressione lineare.</p>
+<p>Per farci un’idea del valore dei parametri, iniziamo ad adattare il modello di regressione usando la procedura di massima verosimiglianza:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="regressione-lineare-con-stan.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(kid_score <span class="sc">~</span> mom_iq, <span class="at">data =</span> df))</span>
+<span id="cb3-2"><a href="regressione-lineare-con-stan.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-3"><a href="regressione-lineare-con-stan.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb3-4"><a href="regressione-lineare-con-stan.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = kid_score ~ mom_iq, data = df)</span></span>
+<span id="cb3-5"><a href="regressione-lineare-con-stan.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-6"><a href="regressione-lineare-con-stan.html#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb3-7"><a href="regressione-lineare-con-stan.html#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb3-8"><a href="regressione-lineare-con-stan.html#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -56.753 -12.074   2.217  11.710  47.691 </span></span>
+<span id="cb3-9"><a href="regressione-lineare-con-stan.html#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-10"><a href="regressione-lineare-con-stan.html#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb3-11"><a href="regressione-lineare-con-stan.html#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb3-12"><a href="regressione-lineare-con-stan.html#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept) 25.79978    5.91741    4.36 1.63e-05 ***</span></span>
+<span id="cb3-13"><a href="regressione-lineare-con-stan.html#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mom_iq       0.60997    0.05852   10.42  &lt; 2e-16 ***</span></span>
+<span id="cb3-14"><a href="regressione-lineare-con-stan.html#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb3-15"><a href="regressione-lineare-con-stan.html#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  </span></span>
+<span id="cb3-16"><a href="regressione-lineare-con-stan.html#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb3-17"><a href="regressione-lineare-con-stan.html#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-18"><a href="regressione-lineare-con-stan.html#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 18.27 on 432 degrees of freedom</span></span>
+<span id="cb3-19"><a href="regressione-lineare-con-stan.html#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.201,  Adjusted R-squared:  0.1991 </span></span>
+<span id="cb3-20"><a href="regressione-lineare-con-stan.html#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 108.6 on 1 and 432 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
+<p>Il modello statistico diventa:</p>
+<p><span class="math display">\[
+\begin{aligned}
+y_i &amp;\sim \mathcal{N}(\mu_i, \sigma) \\
+\mu_i &amp;= \alpha + \beta x_i \\
+\alpha &amp;\sim \mathcal{N}(25, 10) \\
+\beta &amp;\sim \mathcal{N}(0, 1) \\
+\sigma &amp;\sim \text{Cauchy}(18, 5) 
+\end{aligned}
+\]</span>
+dove la prima riga definisce la funzione di verosimiglianza e righe successive definiscono le distribuzioni a priori dei parametri. Il segno <span class="math inline">\(\sim\)</span> (tilde) si può leggere “si distribuisce come.” La prima riga, dunque, ci dice che ciascuna osservazione <span class="math inline">\(y_i\)</span> è una variabile casuale che segue la distribuzione Normale di parametri <span class="math inline">\(\mu_i\)</span> e <span class="math inline">\(\sigma\)</span>. La seconda riga specifica, in maniera deterministica, che ciascun <span class="math inline">\(\mu_i\)</span> è una funzione lineare di <span class="math inline">\(x_i\)</span>, con parametri <span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\beta\)</span>. Le due righe successive specificano le distribuzioni a priori per <span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\beta\)</span>. Per <span class="math inline">\(\alpha\)</span>, la distribuzione a priori è una distribuzione Normale di parametri <span class="math inline">\(\mu_{\alpha} = 25\)</span> e deviazione standard <span class="math inline">\(\sigma_{\alpha} = 10\)</span>. Per <span class="math inline">\(\beta\)</span>, la distribuzione a priori è una distribuzione Normale standardizzata. L’ultima riga definisce la la distribuzione a priori di <span class="math inline">\(\sigma\)</span>, ovvero una Cauchy di parametri 18 e 5.</p>
+<p>Il modello bayesiano descritto sopra può essere specificato usando il linguaggio Stan<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Il codice Stan viene eseguito più velocemente se l’input è standardizzato così da avere una media pari a zero e una varianza unitaria. Poniamoci dunque il problema di eseguire il campionamento MCMC sulle variabili standardizzate per poi riconvertire i parametri trovati sulla stessa scala di misura dei punteggi grezzi.</p>
+<p>Ponendo <span class="math inline">\(y = (y_1, \dots, y_n)\)</span> e <span class="math inline">\(x = (x_1, \dots, x_n)\)</span>, il modello di regressione può essere scritto come</p>
+<p><span class="math display">\[
+y_i = \alpha + \beta x_i + \varepsilon_i,
+\]</span>
+
+dove
+<span class="math display">\[
+\varepsilon_i \sim \mathcal{N}(0, \sigma).
+\]</span></p>
+<p>
+Se uno dei due vettori <span class="math inline">\(x\)</span> o <span class="math inline">\(y\)</span> ha valori molto grandi o molto piccoli o se la media campionaria dei valori è lontana da 0, allora può essere più efficiente standardizzare la variabile risposta <span class="math inline">\(y\)</span> e i predittori <span class="math inline">\(x\)</span>. I dati vengono prima centrati sottraendo la media campionaria, quindi scalati dividendo per la deviazione standard campionaria. Quindi un’osservazione <span class="math inline">\(u\)</span> viene standardizzata dalla funzione <span class="math inline">\(z\)</span> definita da</p>
+<p><span class="math display">\[
+z_y(u) = \frac{u - \bar{y}}{\texttt{sd}(y)}
+\]</span>
+
+dove la media <span class="math inline">\(\bar{y}\)</span> è</p>
+<p><span class="math display">\[
+\bar{y} = \frac{1}{n} \sum_{i=1}^n y_i,
+\]</span>
+
+e la deviazione standard è</p>
+<p><span class="math display">\[
+\texttt{sd} = \left(\frac{1}{n}\sum_{i=1}^n(y_i - \bar{y})^2\right)^{-\frac{1}{2}}.
+\]</span></p>
+<p>La trasformata inversa è definita invertendo i due passaggi precedenti, ovvero usando la deviazione standard per scalare di nuovo i valori <span class="math inline">\(u\)</span> per poi traslarli con la media campionaria:</p>
+<p><span class="math display">\[
+z_y^{-1}(u) = \texttt{sd}(y)u + \bar{y}.
+\]</span>
+Per eseguire la standardizzare all’interno di un’analisi di regressione, i predittori e la variabile risposta vengono standardizzati. Questa trasformazione cambia la scala delle variabili, e quindi cambia anche la scala delle distribuzioni a priori dei parametri. Consideriamo il seguente modello iniziale specificato con la sintassi richiesta dal linguaggio Stan:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="regressione-lineare-con-stan.html#cb4-1" aria-hidden="true" tabindex="-1"></a>modelString <span class="ot">=</span> <span class="st">&quot;</span></span>
+<span id="cb4-2"><a href="regressione-lineare-con-stan.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="st">data {</span></span>
+<span id="cb4-3"><a href="regressione-lineare-con-stan.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower=0&gt; N;</span></span>
+<span id="cb4-4"><a href="regressione-lineare-con-stan.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[N] y;</span></span>
+<span id="cb4-5"><a href="regressione-lineare-con-stan.html#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[N] x;</span></span>
+<span id="cb4-6"><a href="regressione-lineare-con-stan.html#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb4-7"><a href="regressione-lineare-con-stan.html#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="st">parameters {</span></span>
+<span id="cb4-8"><a href="regressione-lineare-con-stan.html#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="st">  real alpha;</span></span>
+<span id="cb4-9"><a href="regressione-lineare-con-stan.html#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="st">  real beta;</span></span>
+<span id="cb4-10"><a href="regressione-lineare-con-stan.html#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="st">  real&lt;lower=0&gt; sigma;</span></span>
+<span id="cb4-11"><a href="regressione-lineare-con-stan.html#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb4-12"><a href="regressione-lineare-con-stan.html#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb4-13"><a href="regressione-lineare-con-stan.html#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="st">  // priors</span></span>
+<span id="cb4-14"><a href="regressione-lineare-con-stan.html#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="st">  alpha ~ normal(25, 10);</span></span>
+<span id="cb4-15"><a href="regressione-lineare-con-stan.html#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="st">  beta ~ normal(0, 1);</span></span>
+<span id="cb4-16"><a href="regressione-lineare-con-stan.html#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="st">  sigma ~ cauchy(18, 5);</span></span>
+<span id="cb4-17"><a href="regressione-lineare-con-stan.html#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="st">  // likelihood</span></span>
+<span id="cb4-18"><a href="regressione-lineare-con-stan.html#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="st">  for (n in 1:N)</span></span>
+<span id="cb4-19"><a href="regressione-lineare-con-stan.html#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="st">    y[n] ~ normal(alpha + beta * x[n], sigma);</span></span>
+<span id="cb4-20"><a href="regressione-lineare-con-stan.html#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb4-21"><a href="regressione-lineare-con-stan.html#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb4-22"><a href="regressione-lineare-con-stan.html#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(modelString, <span class="at">con =</span> <span class="st">&quot;code/simpleregkidiq.stan&quot;</span>)</span></code></pre></div>
+<p>La funzione <code>modelString()</code> registra una stringa di testo mentre <code>writeLines()</code> crea un file nell’indirizzo specificato. Tale file deve avere l’estensione <code>.stan</code>.</p>
+<p>Il blocco <em>data</em> per il modello standardizzato è identico a quello del caso precedente. I predittori e la risposta standardizzati sono definiti nel blocco <em>transformed data</em>. Inoltre, per semplificare la notazione (e per velocizzare l’esecuzione), nel blocco <em>model</em> l’istruzione di campionamento è espressa in forma vettorializzata: <code>y_std ~ normal(alpha_std + beta_std * x_std, sigma_std);</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="regressione-lineare-con-stan.html#cb5-1" aria-hidden="true" tabindex="-1"></a>modelString <span class="ot">=</span> <span class="st">&quot;</span></span>
+<span id="cb5-2"><a href="regressione-lineare-con-stan.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="st">data {</span></span>
+<span id="cb5-3"><a href="regressione-lineare-con-stan.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower=0&gt; N;</span></span>
+<span id="cb5-4"><a href="regressione-lineare-con-stan.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[N] y;</span></span>
+<span id="cb5-5"><a href="regressione-lineare-con-stan.html#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[N] x;</span></span>
+<span id="cb5-6"><a href="regressione-lineare-con-stan.html#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb5-7"><a href="regressione-lineare-con-stan.html#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="st">transformed data {</span></span>
+<span id="cb5-8"><a href="regressione-lineare-con-stan.html#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[N] x_std;</span></span>
+<span id="cb5-9"><a href="regressione-lineare-con-stan.html#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[N] y_std;</span></span>
+<span id="cb5-10"><a href="regressione-lineare-con-stan.html#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="st">  x_std = (x - mean(x)) / sd(x);</span></span>
+<span id="cb5-11"><a href="regressione-lineare-con-stan.html#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="st">  y_std = (y - mean(y)) / sd(y);</span></span>
+<span id="cb5-12"><a href="regressione-lineare-con-stan.html#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb5-13"><a href="regressione-lineare-con-stan.html#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="st">parameters {</span></span>
+<span id="cb5-14"><a href="regressione-lineare-con-stan.html#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="st">  real alpha_std;</span></span>
+<span id="cb5-15"><a href="regressione-lineare-con-stan.html#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="st">  real beta_std;</span></span>
+<span id="cb5-16"><a href="regressione-lineare-con-stan.html#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="st">  real&lt;lower=0&gt; sigma_std;</span></span>
+<span id="cb5-17"><a href="regressione-lineare-con-stan.html#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb5-18"><a href="regressione-lineare-con-stan.html#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb5-19"><a href="regressione-lineare-con-stan.html#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="st">  alpha_std ~ normal(0, 2);</span></span>
+<span id="cb5-20"><a href="regressione-lineare-con-stan.html#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="st">  beta_std ~ normal(0, 2);</span></span>
+<span id="cb5-21"><a href="regressione-lineare-con-stan.html#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="st">  sigma_std ~ cauchy(0, 2);</span></span>
+<span id="cb5-22"><a href="regressione-lineare-con-stan.html#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="st">  y_std ~ normal(alpha_std + beta_std * x_std, sigma_std);</span></span>
+<span id="cb5-23"><a href="regressione-lineare-con-stan.html#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb5-24"><a href="regressione-lineare-con-stan.html#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="st">generated quantities {</span></span>
+<span id="cb5-25"><a href="regressione-lineare-con-stan.html#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="st">  real alpha;</span></span>
+<span id="cb5-26"><a href="regressione-lineare-con-stan.html#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="st">  real beta;</span></span>
+<span id="cb5-27"><a href="regressione-lineare-con-stan.html#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="st">  real&lt;lower=0&gt; sigma;</span></span>
+<span id="cb5-28"><a href="regressione-lineare-con-stan.html#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="st">  alpha = sd(y) * (alpha_std - beta_std * mean(x) / sd(x))</span></span>
+<span id="cb5-29"><a href="regressione-lineare-con-stan.html#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="st">           + mean(y);</span></span>
+<span id="cb5-30"><a href="regressione-lineare-con-stan.html#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="st">  beta = beta_std * sd(y) / sd(x);</span></span>
+<span id="cb5-31"><a href="regressione-lineare-con-stan.html#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="st">  sigma = sd(y) * sigma_std;</span></span>
+<span id="cb5-32"><a href="regressione-lineare-con-stan.html#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb5-33"><a href="regressione-lineare-con-stan.html#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb5-34"><a href="regressione-lineare-con-stan.html#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(modelString, <span class="at">con =</span> <span class="st">&quot;code/simpleregstd.stan&quot;</span>)</span></code></pre></div>
+<p>I parametri vengono rinominati per indicare che non sono i parametri “naturali,” ma per il resto il modello è identico. Le distribuzioni a priori per i parametri sono vagamente informative. I parametri originali possono essere recuperati con un po’ di algebra.</p>
+<p><span class="math display">\[\begin{align}
+y_n &amp;= \textrm{z}_y^{-1}(\textrm{z}_y(y_n)) \notag\\
+    &amp;= \textrm{z}_y^{-1}
+\left( \alpha&#39; + \beta&#39; \textrm{z}_x(x_n) + \epsilon_n&#39; \right) \notag\\
+    &amp;= \textrm{z}_y^{-1}
+\left( \alpha&#39; + \beta&#39; \left( \frac{x_n - \bar{x}}{\texttt{sd}(x)} \right) + \epsilon_n&#39; \right) \notag\\
+    &amp;= \texttt{sd}(y)
+\left( \alpha&#39; + \beta&#39; \left( \frac{x_n - \bar{x}}{\texttt{sd}(x)} \right) + \epsilon_n&#39; \right) + \bar{y} \notag\\
+    &amp;=
+\left( \texttt{sd}(y) \left( \alpha&#39; - \beta&#39; \frac{\bar{x}}{\texttt{sd}(x)} \right) + \bar{y} \right)
++ \left( \beta&#39; \frac{\texttt{sd}(y)}{\texttt{sd}(x)} \right) x_n
++ \texttt{sd}(y) \epsilon&#39;_n,
+\end{align}\]</span></p>
+<p>
+da cui</p>
+<p><span class="math display">\[
+\alpha
+=
+\texttt{sd}(y)
+      \left(
+          \alpha&#39;
+          - \beta&#39; \frac{\bar{x}}{\texttt{sd}(x)}
+      \right)
+  + \bar{y};
+\qquad
+\beta = \beta&#39; \frac{\texttt{sd}(y)}{\texttt{sd}(x)};
+\qquad
+\sigma = \texttt{sd}(y) \sigma&#39;.
+\]</span>
+
+I valori dei parametri sulle scale originali possono essere calcolati all’interno di Stan utilizzando il blocco <em>generated quantities</em> che segue il blocco <em>model</em>.</p>
+<p>
+Sistemiamo i dati nel formato appropriato per Stan:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="regressione-lineare-con-stan.html#cb6-1" aria-hidden="true" tabindex="-1"></a>data_list <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb6-2"><a href="regressione-lineare-con-stan.html#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> <span class="fu">length</span>(df<span class="sc">$</span>kid_score),</span>
+<span id="cb6-3"><a href="regressione-lineare-con-stan.html#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> df<span class="sc">$</span>kid_score,</span>
+<span id="cb6-4"><a href="regressione-lineare-con-stan.html#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> df<span class="sc">$</span>mom_iq</span>
+<span id="cb6-5"><a href="regressione-lineare-con-stan.html#cb6-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>
+La funzione <code>file.path()</code> ritorna l’indirizzo del file con il codice Stan:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="regressione-lineare-con-stan.html#cb7-1" aria-hidden="true" tabindex="-1"></a>file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;code&quot;</span>, <span class="st">&quot;simpleregstd.stan&quot;</span>)</span></code></pre></div>
+<p>
+Prendendo come input un file contenente un programma Stan, la funzione <code>cmdstan_model()</code> ritorna un oggetto di classe <code>CmdStanModel</code>. In pratica, <code>CmdStan</code> traduce un programma Stan in C++ e crea un eseguibile compilato.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="regressione-lineare-con-stan.html#cb8-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">cmdstan_model</span>(file)</span></code></pre></div>
+<p>
+Il codice Stan può essere stampato usando il metodo <code>$print()</code>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="regressione-lineare-con-stan.html#cb9-1" aria-hidden="true" tabindex="-1"></a>mod<span class="sc">$</span><span class="fu">print</span>()</span>
+<span id="cb9-2"><a href="regressione-lineare-con-stan.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-3"><a href="regressione-lineare-con-stan.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data {</span></span>
+<span id="cb9-4"><a href="regressione-lineare-con-stan.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   int&lt;lower=0&gt; N;</span></span>
+<span id="cb9-5"><a href="regressione-lineare-con-stan.html#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   vector[N] y;</span></span>
+<span id="cb9-6"><a href="regressione-lineare-con-stan.html#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   vector[N] x;</span></span>
+<span id="cb9-7"><a href="regressione-lineare-con-stan.html#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span>
+<span id="cb9-8"><a href="regressione-lineare-con-stan.html#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; transformed data {</span></span>
+<span id="cb9-9"><a href="regressione-lineare-con-stan.html#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   vector[N] x_std;</span></span>
+<span id="cb9-10"><a href="regressione-lineare-con-stan.html#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   vector[N] y_std;</span></span>
+<span id="cb9-11"><a href="regressione-lineare-con-stan.html#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   x_std = (x - mean(x)) / sd(x);</span></span>
+<span id="cb9-12"><a href="regressione-lineare-con-stan.html#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   y_std = (y - mean(y)) / sd(y);</span></span>
+<span id="cb9-13"><a href="regressione-lineare-con-stan.html#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span>
+<span id="cb9-14"><a href="regressione-lineare-con-stan.html#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; parameters {</span></span>
+<span id="cb9-15"><a href="regressione-lineare-con-stan.html#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   real alpha_std;</span></span>
+<span id="cb9-16"><a href="regressione-lineare-con-stan.html#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   real beta_std;</span></span>
+<span id="cb9-17"><a href="regressione-lineare-con-stan.html#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   real&lt;lower=0&gt; sigma_std;</span></span>
+<span id="cb9-18"><a href="regressione-lineare-con-stan.html#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span>
+<span id="cb9-19"><a href="regressione-lineare-con-stan.html#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; model {</span></span>
+<span id="cb9-20"><a href="regressione-lineare-con-stan.html#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   alpha_std ~ normal(0, 2);</span></span>
+<span id="cb9-21"><a href="regressione-lineare-con-stan.html#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   beta_std ~ normal(0, 2);</span></span>
+<span id="cb9-22"><a href="regressione-lineare-con-stan.html#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   sigma_std ~ cauchy(0, 2);</span></span>
+<span id="cb9-23"><a href="regressione-lineare-con-stan.html#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   y_std ~ normal(alpha_std + beta_std * x_std, sigma_std);</span></span>
+<span id="cb9-24"><a href="regressione-lineare-con-stan.html#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span>
+<span id="cb9-25"><a href="regressione-lineare-con-stan.html#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; generated quantities {</span></span>
+<span id="cb9-26"><a href="regressione-lineare-con-stan.html#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   real alpha;</span></span>
+<span id="cb9-27"><a href="regressione-lineare-con-stan.html#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   real beta;</span></span>
+<span id="cb9-28"><a href="regressione-lineare-con-stan.html#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   real&lt;lower=0&gt; sigma;</span></span>
+<span id="cb9-29"><a href="regressione-lineare-con-stan.html#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   alpha = sd(y) * (alpha_std - beta_std * mean(x) / sd(x))</span></span>
+<span id="cb9-30"><a href="regressione-lineare-con-stan.html#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;            + mean(y);</span></span>
+<span id="cb9-31"><a href="regressione-lineare-con-stan.html#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   beta = beta_std * sd(y) / sd(x);</span></span>
+<span id="cb9-32"><a href="regressione-lineare-con-stan.html#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   sigma = sd(y) * sigma_std;</span></span>
+<span id="cb9-33"><a href="regressione-lineare-con-stan.html#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span></code></pre></div>
+<p>
+L’indirizzo dell’eseguibile compilato viene ritornato da <code>$exe_file()</code>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="regressione-lineare-con-stan.html#cb10-1" aria-hidden="true" tabindex="-1"></a>mod<span class="sc">$</span><span class="fu">exe_file</span>()</span>
+<span id="cb10-2"><a href="regressione-lineare-con-stan.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;/Users/corrado/Documents/teaching/2021-22/psicometria/dspp/code/simpleregstd&quot;</span></span></code></pre></div>
+<p>
+Applicando il metodo <code>$sample()</code> ad un oggetto <code>CmdStanModel</code> eseguiamo il campionamento MCMC:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="regressione-lineare-con-stan.html#cb11-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> mod<span class="sc">$</span><span class="fu">sample</span>(</span>
+<span id="cb11-2"><a href="regressione-lineare-con-stan.html#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data_list,</span>
+<span id="cb11-3"><a href="regressione-lineare-con-stan.html#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter_sampling =</span> 4000L,</span>
+<span id="cb11-4"><a href="regressione-lineare-con-stan.html#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter_warmup =</span> 2000L,</span>
+<span id="cb11-5"><a href="regressione-lineare-con-stan.html#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> SEED,</span>
+<span id="cb11-6"><a href="regressione-lineare-con-stan.html#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> 4L,</span>
+<span id="cb11-7"><a href="regressione-lineare-con-stan.html#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">parallel_chains =</span> 2L,</span>
+<span id="cb11-8"><a href="regressione-lineare-con-stan.html#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">refresh =</span> <span class="dv">0</span>,</span>
+<span id="cb11-9"><a href="regressione-lineare-con-stan.html#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">thin =</span> <span class="dv">1</span></span>
+<span id="cb11-10"><a href="regressione-lineare-con-stan.html#cb11-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-11"><a href="regressione-lineare-con-stan.html#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Running MCMC with 4 chains, at most 2 in parallel...</span></span>
+<span id="cb11-12"><a href="regressione-lineare-con-stan.html#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb11-13"><a href="regressione-lineare-con-stan.html#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chain 1 finished in 0.3 seconds.</span></span>
+<span id="cb11-14"><a href="regressione-lineare-con-stan.html#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chain 2 finished in 0.3 seconds.</span></span>
+<span id="cb11-15"><a href="regressione-lineare-con-stan.html#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chain 3 finished in 0.3 seconds.</span></span>
+<span id="cb11-16"><a href="regressione-lineare-con-stan.html#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chain 4 finished in 0.3 seconds.</span></span>
+<span id="cb11-17"><a href="regressione-lineare-con-stan.html#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb11-18"><a href="regressione-lineare-con-stan.html#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; All 4 chains finished successfully.</span></span>
+<span id="cb11-19"><a href="regressione-lineare-con-stan.html#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Mean chain execution time: 0.3 seconds.</span></span>
+<span id="cb11-20"><a href="regressione-lineare-con-stan.html#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Total execution time: 0.9 seconds.</span></span></code></pre></div>
+<p>
+Al metodo <code>$sample()</code> possono essere passati molti argomenti. La pagina di documentazione è disponibile al seguente <a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html">link</a>.</p>
+<p>
+Un sommario della distribuzione a posteriori per i parametri stimati si ottiene con il metodo <code>$summary()</code>, il quale chiama la funzione <code>summarise_draws()</code> del pacchetto <code>posterior</code>:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="regressione-lineare-con-stan.html#cb12-1" aria-hidden="true" tabindex="-1"></a>fit<span class="sc">$</span><span class="fu">summary</span>(<span class="fu">c</span>(<span class="st">&quot;alpha&quot;</span>, <span class="st">&quot;beta&quot;</span>, <span class="st">&quot;sigma&quot;</span>))</span>
+<span id="cb12-2"><a href="regressione-lineare-con-stan.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span id="cb12-3"><a href="regressione-lineare-con-stan.html#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   variable   mean median     sd    mad     q5    q95  rhat</span></span>
+<span id="cb12-4"><a href="regressione-lineare-con-stan.html#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb12-5"><a href="regressione-lineare-con-stan.html#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 alpha    25.8   25.9   5.98   5.97   15.8   35.7    1.00</span></span>
+<span id="cb12-6"><a href="regressione-lineare-con-stan.html#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 beta      0.610  0.609 0.0594 0.0590  0.513  0.709  1.00</span></span>
+<span id="cb12-7"><a href="regressione-lineare-con-stan.html#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 sigma    18.3   18.3   0.616  0.611  17.3   19.3    1.00</span></span>
+<span id="cb12-8"><a href="regressione-lineare-con-stan.html#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 2 more variables: ess_bulk &lt;dbl&gt;, ess_tail &lt;dbl&gt;</span></span></code></pre></div>
+<p>
+Oppure è possibile usare:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="regressione-lineare-con-stan.html#cb13-1" aria-hidden="true" tabindex="-1"></a>fit<span class="sc">$</span><span class="fu">cmdstan_summary</span>()</span>
+<span id="cb13-2"><a href="regressione-lineare-con-stan.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Inference for Stan model: simpleregstd_model</span></span>
+<span id="cb13-3"><a href="regressione-lineare-con-stan.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 chains: each with iter=(4000,4000,4000,4000); warmup=(0,0,0,0); thin=(1,1,1,1); 16000 iterations saved.</span></span>
+<span id="cb13-4"><a href="regressione-lineare-con-stan.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-5"><a href="regressione-lineare-con-stan.html#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warmup took (0.085, 0.084, 0.083, 0.084) seconds, 0.34 seconds total</span></span>
+<span id="cb13-6"><a href="regressione-lineare-con-stan.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Sampling took (0.24, 0.26, 0.24, 0.22) seconds, 0.95 seconds total</span></span>
+<span id="cb13-7"><a href="regressione-lineare-con-stan.html#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-8"><a href="regressione-lineare-con-stan.html#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                     Mean     MCSE  StdDev        5%       50%    95%    N_Eff  N_Eff/s    R_hat</span></span>
+<span id="cb13-9"><a href="regressione-lineare-con-stan.html#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-10"><a href="regressione-lineare-con-stan.html#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lp__            -1.7e+02  1.4e-02     1.2  -1.7e+02  -1.7e+02   -168     8104     8539      1.0</span></span>
+<span id="cb13-11"><a href="regressione-lineare-con-stan.html#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; accept_stat__       0.91  7.7e-04    0.11      0.68      0.95    1.0  2.0e+04  2.1e+04  1.0e+00</span></span>
+<span id="cb13-12"><a href="regressione-lineare-con-stan.html#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; stepsize__          0.81  4.4e-02   0.062      0.73      0.83   0.90  2.0e+00  2.1e+00  5.4e+12</span></span>
+<span id="cb13-13"><a href="regressione-lineare-con-stan.html#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; treedepth__          2.2  1.1e-01    0.54       1.0       2.0    3.0  2.3e+01  2.4e+01  1.0e+00</span></span>
+<span id="cb13-14"><a href="regressione-lineare-con-stan.html#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; n_leapfrog__         4.4  2.6e-01     2.0       3.0       3.0    7.0  5.8e+01  6.1e+01  1.0e+00</span></span>
+<span id="cb13-15"><a href="regressione-lineare-con-stan.html#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; divergent__         0.00      nan    0.00      0.00      0.00   0.00      nan      nan      nan</span></span>
+<span id="cb13-16"><a href="regressione-lineare-con-stan.html#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; energy__             171  2.1e-02     1.7       169       171    174  6.9e+03  7.3e+03  1.0e+00</span></span>
+<span id="cb13-17"><a href="regressione-lineare-con-stan.html#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-18"><a href="regressione-lineare-con-stan.html#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alpha_std       -1.2e-04  3.3e-04   0.042  -6.9e-02  -1.2e-04  0.070    16028    16889     1.00</span></span>
+<span id="cb13-19"><a href="regressione-lineare-con-stan.html#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; beta_std         4.5e-01  3.4e-04   0.044   3.8e-01   4.5e-01   0.52    16421    17304     1.00</span></span>
+<span id="cb13-20"><a href="regressione-lineare-con-stan.html#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sigma_std        9.0e-01  2.3e-04   0.030   8.5e-01   9.0e-01   0.95    16890    17798     1.00</span></span>
+<span id="cb13-21"><a href="regressione-lineare-con-stan.html#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alpha            2.6e+01  4.7e-02     6.0   1.6e+01   2.6e+01     36    16400    17281     1.00</span></span>
+<span id="cb13-22"><a href="regressione-lineare-con-stan.html#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; beta             6.1e-01  4.6e-04   0.059   5.1e-01   6.1e-01   0.71    16421    17304     1.00</span></span>
+<span id="cb13-23"><a href="regressione-lineare-con-stan.html#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sigma            1.8e+01  4.7e-03    0.62   1.7e+01   1.8e+01     19    16890    17798     1.00</span></span>
+<span id="cb13-24"><a href="regressione-lineare-con-stan.html#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-25"><a href="regressione-lineare-con-stan.html#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Samples were drawn using hmc with nuts.</span></span>
+<span id="cb13-26"><a href="regressione-lineare-con-stan.html#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; For each parameter, N_Eff is a crude measure of effective sample size,</span></span>
+<span id="cb13-27"><a href="regressione-lineare-con-stan.html#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; and R_hat is the potential scale reduction factor on split chains (at </span></span>
+<span id="cb13-28"><a href="regressione-lineare-con-stan.html#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; convergence, R_hat=1).</span></span></code></pre></div>
+<p>
+Le statistiche diagnostiche sono fornite dal metodo <code>$cmdstan_diagnose()</code>:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="regressione-lineare-con-stan.html#cb14-1" aria-hidden="true" tabindex="-1"></a>fit<span class="sc">$</span><span class="fu">cmdstan_diagnose</span>()</span>
+<span id="cb14-2"><a href="regressione-lineare-con-stan.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Processing csv files: /var/folders/cy/4xdvhqx966nggmk95hsnyzc40000gn/T/RtmpLVUgPt/simpleregstd-202109130940-1-4b8c38.csv, /var/folders/cy/4xdvhqx966nggmk95hsnyzc40000gn/T/RtmpLVUgPt/simpleregstd-202109130940-2-4b8c38.csv, /var/folders/cy/4xdvhqx966nggmk95hsnyzc40000gn/T/RtmpLVUgPt/simpleregstd-202109130940-3-4b8c38.csv, /var/folders/cy/4xdvhqx966nggmk95hsnyzc40000gn/T/RtmpLVUgPt/simpleregstd-202109130940-4-4b8c38.csv</span></span>
+<span id="cb14-3"><a href="regressione-lineare-con-stan.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-4"><a href="regressione-lineare-con-stan.html#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Checking sampler transitions treedepth.</span></span>
+<span id="cb14-5"><a href="regressione-lineare-con-stan.html#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Treedepth satisfactory for all transitions.</span></span>
+<span id="cb14-6"><a href="regressione-lineare-con-stan.html#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-7"><a href="regressione-lineare-con-stan.html#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Checking sampler transitions for divergences.</span></span>
+<span id="cb14-8"><a href="regressione-lineare-con-stan.html#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; No divergent transitions found.</span></span>
+<span id="cb14-9"><a href="regressione-lineare-con-stan.html#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-10"><a href="regressione-lineare-con-stan.html#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Checking E-BFMI - sampler transitions HMC potential energy.</span></span>
+<span id="cb14-11"><a href="regressione-lineare-con-stan.html#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; E-BFMI satisfactory.</span></span>
+<span id="cb14-12"><a href="regressione-lineare-con-stan.html#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-13"><a href="regressione-lineare-con-stan.html#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Effective sample size satisfactory.</span></span>
+<span id="cb14-14"><a href="regressione-lineare-con-stan.html#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-15"><a href="regressione-lineare-con-stan.html#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Split R-hat values satisfactory all parameters.</span></span>
+<span id="cb14-16"><a href="regressione-lineare-con-stan.html#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-17"><a href="regressione-lineare-con-stan.html#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Processing complete, no problems detected.</span></span></code></pre></div>
+<p>
+È anche possibile creare un oggetto di classe <code>stanfit</code></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="regressione-lineare-con-stan.html#cb15-1" aria-hidden="true" tabindex="-1"></a>stanfit <span class="ot">&lt;-</span> rstan<span class="sc">::</span><span class="fu">read_stan_csv</span>(fit<span class="sc">$</span><span class="fu">output_files</span>())</span></code></pre></div>
+<p>
+per poi utilizzare le funzioni del pacchetto <code>bayesplot</code>:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="regressione-lineare-con-stan.html#cb16-1" aria-hidden="true" tabindex="-1"></a>stanfit <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="regressione-lineare-con-stan.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mcmc_trace</span>(<span class="at">pars =</span> <span class="fu">c</span>(<span class="st">&quot;alpha&quot;</span>, <span class="st">&quot;beta&quot;</span>, <span class="st">&quot;sigma&quot;</span>))</span></code></pre></div>
+<p><img src="052_reglin2_files/figure-html/unnamed-chunk-17-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>
+Eseguendo la funzione <code>launch_shinystan(fit)</code> è possibile analizzare oggetti di classe <code>stanfit</code> mediante le funzionalità del pacchetto <code>ShinyStan</code>.</p>
+<div class="rmdimportant">
+<p>Si noti un aspetto importante. Il fatto di standardizzare i dati fa in modo che le distribuzioni a priori sui parametri andranno espresse sulla scala delle v.c. normali standardizzate. Se centriamo sullo 0 tali distribuzioni a priori, con una deviazione standard dell’ordine di grandezza dell’unità, i discorsi sull’arbitrarietà delle distribuzioni a priori perdono di significato: nel caso di dati standardizzati le distribuzioni a priori formulate come indicato sopra sono sicuramente distribuzioni vagamente informative il cui unico scopo è quello della regolarizzazione dei dati, ovvero l’obiettivo di mantenere le inferenze in una gamma ragionevole di valori; ciò contribuisce nel contempo a limitare l’influenza eccessiva delle osservazioni estreme (valori anomali) — certamente tali distribuzioni a priori non introducono alcuna distorsione sistematica nella stima a posteriori.</p>
+</div>
+<div id="interpretazione-dei-parametri" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Interpretazione dei parametri</h2>
+<p>Assegnamo ai parametri la seguente interpretazione.</p>
+<ul>
+<li>L’intercetta pari a 25.8 indica il QI medio dei bamini la cui madre ha un QI = 0. Ovviamente questo non ha alcun significato. Vedremo nel modello successivo come trasformare l’intercetta in modo tale che possa essere interpretabile.</li>
+<li>La pendenza di 0.61 indica che, all’aumentare di un punto del QI delle madri, il QI medio dei loro bambini aumenta di 0.61 unità. Se consideriamo la gamma di variazione del QI delle madri nel campione, il QI medio dei bambini cambia di 41 punti, il che indica un sostanziale effetto del QI delle madri sul QI dei loro bambini:</li>
+</ul>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="regressione-lineare-con-stan.html#cb17-1" aria-hidden="true" tabindex="-1"></a>(<span class="fl">138.89</span> <span class="sc">-</span> <span class="fl">71.04</span>) <span class="sc">*</span> <span class="fl">0.61</span></span>
+<span id="cb17-2"><a href="regressione-lineare-con-stan.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 41.3885</span></span></code></pre></div>
+<ul>
+<li>Il parametro <span class="math inline">\(\sigma\)</span> fornisce una stima della dispersione delle osservazioni attorno al valore predetto dal modello di regressione, ovvero fornisce una stima della deviazione standard dei residui attorno alla retta di regressione.</li>
+</ul>
+<div id="centrare-i-predittori" class="section level3" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Centrare i predittori</h3>
+<p>Per migliorare l’interpretazione dell’intercetta possiamo “centrare” la <span class="math inline">\(x\)</span>, ovvero esprimere la <span class="math inline">\(x\)</span> nei termini di scarti dalla media: <span class="math inline">\(x - \bar{x}\)</span>. In tali circostanze, la pendenza della retta di regressione resterà immutata, ma l’intercetta corrisponderà a <span class="math inline">\(\E(y \mid x = \bar{x})\)</span>. Per ottenere questo risultato, modifichiamo i dati da passare a Stan:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="regressione-lineare-con-stan.html#cb18-1" aria-hidden="true" tabindex="-1"></a>data2_list <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb18-2"><a href="regressione-lineare-con-stan.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> <span class="fu">length</span>(df<span class="sc">$</span>kid_score),</span>
+<span id="cb18-3"><a href="regressione-lineare-con-stan.html#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> df<span class="sc">$</span>kid_score,</span>
+<span id="cb18-4"><a href="regressione-lineare-con-stan.html#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> df<span class="sc">$</span>mom_iq <span class="sc">-</span> <span class="fu">mean</span>(df<span class="sc">$</span>mom_iq)</span>
+<span id="cb18-5"><a href="regressione-lineare-con-stan.html#cb18-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>
+Adattiamo il modello:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="regressione-lineare-con-stan.html#cb19-1" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> mod<span class="sc">$</span><span class="fu">sample</span>(</span>
+<span id="cb19-2"><a href="regressione-lineare-con-stan.html#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data2_list,</span>
+<span id="cb19-3"><a href="regressione-lineare-con-stan.html#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter_sampling =</span> 4000L,</span>
+<span id="cb19-4"><a href="regressione-lineare-con-stan.html#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter_warmup =</span> 2000L,</span>
+<span id="cb19-5"><a href="regressione-lineare-con-stan.html#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> SEED,</span>
+<span id="cb19-6"><a href="regressione-lineare-con-stan.html#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> 4L,</span>
+<span id="cb19-7"><a href="regressione-lineare-con-stan.html#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">parallel_chains =</span> 2L,</span>
+<span id="cb19-8"><a href="regressione-lineare-con-stan.html#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">refresh =</span> <span class="dv">0</span>,</span>
+<span id="cb19-9"><a href="regressione-lineare-con-stan.html#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">thin =</span> <span class="dv">1</span></span>
+<span id="cb19-10"><a href="regressione-lineare-con-stan.html#cb19-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-11"><a href="regressione-lineare-con-stan.html#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Running MCMC with 4 chains, at most 2 in parallel...</span></span>
+<span id="cb19-12"><a href="regressione-lineare-con-stan.html#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb19-13"><a href="regressione-lineare-con-stan.html#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chain 1 finished in 0.3 seconds.</span></span>
+<span id="cb19-14"><a href="regressione-lineare-con-stan.html#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chain 2 finished in 0.3 seconds.</span></span>
+<span id="cb19-15"><a href="regressione-lineare-con-stan.html#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chain 3 finished in 0.3 seconds.</span></span>
+<span id="cb19-16"><a href="regressione-lineare-con-stan.html#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chain 4 finished in 0.3 seconds.</span></span>
+<span id="cb19-17"><a href="regressione-lineare-con-stan.html#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb19-18"><a href="regressione-lineare-con-stan.html#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; All 4 chains finished successfully.</span></span>
+<span id="cb19-19"><a href="regressione-lineare-con-stan.html#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Mean chain execution time: 0.3 seconds.</span></span>
+<span id="cb19-20"><a href="regressione-lineare-con-stan.html#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Total execution time: 0.8 seconds.</span></span></code></pre></div>
+<p>
+Trasformiamo l’oggetto <code>fit</code> in un oggetto di classe <code>stanfit</code>:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="regressione-lineare-con-stan.html#cb20-1" aria-hidden="true" tabindex="-1"></a>stanfit <span class="ot">&lt;-</span> rstan<span class="sc">::</span><span class="fu">read_stan_csv</span>(fit2<span class="sc">$</span><span class="fu">output_files</span>())</span></code></pre></div>
+<p>
+Le stime a posteriori dei parametri si ottengono con</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="regressione-lineare-con-stan.html#cb21-1" aria-hidden="true" tabindex="-1"></a>fit2<span class="sc">$</span><span class="fu">summary</span>(<span class="fu">c</span>(<span class="st">&quot;alpha&quot;</span>, <span class="st">&quot;beta&quot;</span>, <span class="st">&quot;sigma&quot;</span>))</span>
+<span id="cb21-2"><a href="regressione-lineare-con-stan.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span id="cb21-3"><a href="regressione-lineare-con-stan.html#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   variable   mean median     sd    mad     q5    q95  rhat</span></span>
+<span id="cb21-4"><a href="regressione-lineare-con-stan.html#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb21-5"><a href="regressione-lineare-con-stan.html#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 alpha    86.8   86.8   0.872  0.863  85.4   88.2    1.00</span></span>
+<span id="cb21-6"><a href="regressione-lineare-con-stan.html#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 beta      0.610  0.609 0.0591 0.0592  0.512  0.708  1.00</span></span>
+<span id="cb21-7"><a href="regressione-lineare-con-stan.html#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 sigma    18.3   18.3   0.616  0.616  17.3   19.3    1.00</span></span>
+<span id="cb21-8"><a href="regressione-lineare-con-stan.html#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 2 more variables: ess_bulk &lt;dbl&gt;, ess_tail &lt;dbl&gt;</span></span></code></pre></div>
+<p>
+Da questo output possiamo valutare rapidamente la convergenza del modello osservando i valori di Rhat per ciascun parametro. Quando questi sono pari o vicini a 1, le catene hanno realizzato la convergenza. Ci sono molti altri test diagnostici, ma questo test è importante per Stan.</p>
+<p>
+Si noti che la nuova intercetta, 86.8, corrisponde al QI medio dei bambini le cui madri hanno un QI pari alla media del campione. Centrare i dati consente dunque di assegnare un’interpretazione utile all’intercetta.</p>
+</div>
+<div id="rappresentazione-grafica-dellincertezza-della-stima" class="section level3" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Rappresentazione grafica dell’incertezza della stima</h3>
+<p>Mediante la funzione <code>extract()</code> salvo le stime a posteriori dei parametri in formato <code>list</code>:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="regressione-lineare-con-stan.html#cb22-1" aria-hidden="true" tabindex="-1"></a>stanfit <span class="ot">&lt;-</span> rstan<span class="sc">::</span><span class="fu">read_stan_csv</span>(fit2<span class="sc">$</span><span class="fu">output_files</span>())</span>
+<span id="cb22-2"><a href="regressione-lineare-con-stan.html#cb22-2" aria-hidden="true" tabindex="-1"></a>posterior <span class="ot">&lt;-</span> <span class="fu">extract</span>(stanfit)</span></code></pre></div>
+<p>
+Un diagramma a dispersione dei dati con sovrapposto il valore atteso della <span class="math inline">\(y\)</span> in base al modello bayesiano si ottiene nel modo seguente:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="regressione-lineare-con-stan.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb23-2"><a href="regressione-lineare-con-stan.html#cb23-2" aria-hidden="true" tabindex="-1"></a>  df<span class="sc">$</span>kid_score <span class="sc">~</span> <span class="fu">I</span>(df<span class="sc">$</span>mom_iq <span class="sc">-</span> <span class="fu">mean</span>(df<span class="sc">$</span>mom_iq)), </span>
+<span id="cb23-3"><a href="regressione-lineare-con-stan.html#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">pch =</span> <span class="dv">20</span>,</span>
+<span id="cb23-4"><a href="regressione-lineare-con-stan.html#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">&quot;mom_iq (centered)&quot;</span>,</span>
+<span id="cb23-5"><a href="regressione-lineare-con-stan.html#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">&quot;kid_score&quot;</span></span>
+<span id="cb23-6"><a href="regressione-lineare-con-stan.html#cb23-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-7"><a href="regressione-lineare-con-stan.html#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">mean</span>(posterior<span class="sc">$</span>alpha), <span class="fu">mean</span>(posterior<span class="sc">$</span>beta), <span class="at">col =</span> <span class="dv">6</span>, <span class="at">lw =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="052_reglin2_files/figure-html/unnamed-chunk-24-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>
+Un modo per visualizzare l’incertezza della stima della retta di regressione è quello di tracciare molteplici rette di regressione, ciascuna delle quali definita da una diversa stima dei parametri <span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\beta\)</span> che vengono estratti a caso dalle rispettive distribuzioni a posteriori.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="regressione-lineare-con-stan.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb24-2"><a href="regressione-lineare-con-stan.html#cb24-2" aria-hidden="true" tabindex="-1"></a>  df<span class="sc">$</span>kid_score <span class="sc">~</span> <span class="fu">I</span>(df<span class="sc">$</span>mom_iq <span class="sc">-</span> <span class="fu">mean</span>(df<span class="sc">$</span>mom_iq)), </span>
+<span id="cb24-3"><a href="regressione-lineare-con-stan.html#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">pch =</span> <span class="dv">20</span>,</span>
+<span id="cb24-4"><a href="regressione-lineare-con-stan.html#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">&quot;mom_iq (centered)&quot;</span>,</span>
+<span id="cb24-5"><a href="regressione-lineare-con-stan.html#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">&quot;kid_score&quot;</span></span>
+<span id="cb24-6"><a href="regressione-lineare-con-stan.html#cb24-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-7"><a href="regressione-lineare-con-stan.html#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>) {</span>
+<span id="cb24-8"><a href="regressione-lineare-con-stan.html#cb24-8" aria-hidden="true" tabindex="-1"></a> <span class="fu">abline</span>(posterior<span class="sc">$</span>alpha[i], posterior<span class="sc">$</span>beta[i], <span class="at">col =</span> <span class="st">&quot;gray&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>)</span>
+<span id="cb24-9"><a href="regressione-lineare-con-stan.html#cb24-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb24-10"><a href="regressione-lineare-con-stan.html#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">mean</span>(posterior<span class="sc">$</span>alpha), <span class="fu">mean</span>(posterior<span class="sc">$</span>beta), <span class="at">col =</span> <span class="dv">6</span>, <span class="at">lw =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="052_reglin2_files/figure-html/unnamed-chunk-25-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="minimi-quadrati" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Minimi quadrati</h2>
+<p>Nella trattazione classica del modello di regressione, <span class="math inline">\(y_i = \alpha + \beta x_i + e_i\)</span>, i coefficienti <span class="math inline">\(a = \hat{\alpha}\)</span> e <span class="math inline">\(b = \hat{\beta}\)</span> vengono stimati in modo tale da minimizzare i residui</p>
+<p><span class="math display" id="eq:residuals">\[\begin{equation}
+e_i = y_i - \hat{\alpha} - \hat{\beta} x_i.
+\tag{2.1}
+\end{equation}\]</span></p>
+<p>
+In altri termini, il residuo <span class="math inline">\(i\)</span>-esimo è la differenza fra l’ordinata del punto (<span class="math inline">\(x_i\)</span>, <span class="math inline">\(y_i\)</span>) e quella del punto di ascissa <span class="math inline">\(x_i\)</span> sulla retta di regressione campionaria.</p>
+<p>
+Per determinare i coefficienti <span class="math inline">\(a\)</span> e <span class="math inline">\(b\)</span> della retta <span class="math inline">\(y_i = a + b x_i + e_i\)</span> non è sufficiente minimizzare la somma dei residui <span class="math inline">\(\sum_{i=1}^{n}e_i\)</span>, in quanto i residui possono essere sia positivi che negativi e la loro somma può essere molto prossima allo zero anche per differenze molto grandi tra i valori osservati e la retta di regressione. Infatti, ciascuna retta passante per il punto (<span class="math inline">\(\bar{x}, \bar{y}\)</span>) ha <span class="math inline">\(\sum_{i=1}^{n}e_i=0\)</span>.</p>
+<div class="rmdnote">
+<p>Una retta passante per il punto (<span class="math inline">\(\bar{x}, \bar{y}\)</span>) soddisfa l’equazione <span class="math inline">\(\bar{y} = a + b \bar{x}\)</span>.
+Sottraendo tale equazione dall’equazione <span class="math inline">\(y_i = a + b x_i + e_i\)</span> otteniamo
+<span class="math display">\[
+y_i - \bar{y} =  b (x_i - \bar{x}) + e_i. 
+\]</span></p>
+<p>Sommando su tutte le osservazioni, si ha che
+<span class="math display" id="eq:res-sum-zero">\[\begin{equation}
+\sum_{i=1}^n e_i = \sum_{i=1}^n (y_i - \bar{y} ) -  b \sum_{i=1}^n (x_i - \bar{x}) = 0 - b(0) = 0. 
+\tag{2.2}
+\end{equation}\]</span></p>
+</div>
+<p>
+Questo problema viene risolto scegliendo i coefficienti <span class="math inline">\(a\)</span> e <span class="math inline">\(b\)</span> che minimizzano, non tanto la somma dei residui, ma bensì l’<em>errore quadratico</em>, cioè la somma dei quadrati degli errori:</p>
+<p><span class="math display">\[\begin{equation}
+S(a, b) = \sum_{i=1}^{n} e_i^2 = \sum (y_i - a - b x_i)^2.
+\end{equation}\]</span></p>
+<p>
+Il metodo più diretto per determinare quelli che vengono chiamati i <em>coefficienti dei minimi quadrati</em> è quello di trovare le derivate parziali della funzione <span class="math inline">\(S(a, b)\)</span> rispetto ai coefficienti <span class="math inline">\(a\)</span> e <span class="math inline">\(b\)</span>:</p>
+<p><span class="math display">\[\begin{align}
+\frac{\partial S(a,b)}{\partial a} &amp;= \sum (-1)(2)(y_i - a - b x_i), \notag \\
+\frac{\partial S(a,b)}{\partial b} &amp;= \sum (-x_i)(2)(y_i - a - b x_i).
+\end{align}\]</span></p>
+<p>
+Ponendo le derivate uguali a zero e dividendo entrambi i membri per <span class="math inline">\(-2\)</span> si ottengono le <em>equazioni normali</em></p>
+<p><span class="math display" id="eq:eq-normali">\[\begin{align}
+ an + b \sum x_i &amp;= \sum y_i, \notag \\
+ a \sum x_i + b \sum x_i^2 &amp;= \sum x_i y_i. 
+ \tag{2.3}
+\end{align}\]</span></p>
+<p>
+I coefficienti dei minimi quadrati <span class="math inline">\(a\)</span> e <span class="math inline">\(b\)</span> si trovano risolvendo le <a href="regressione-lineare-con-stan.html#eq:eq-normali">(2.3)</a> e sono uguali a:</p>
+<p><span class="math display" id="eq:minsq-ab">\[\begin{align}
+a &amp;= \bar{y} - b \bar{x},\\
+b &amp;= \frac{\sum (x_i - \bar{x}) (y_i - \bar{y})}{\sum (x_i - \bar{x})^2}.
+\tag{2.4}
+\end{align}\]</span></p>
+<div id="massima-verosimiglianza" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Massima verosimiglianza</h3>
+<p>Se gli errori del modello lineare sono indipendenti e distribuiti secondo una Normale, così che <span class="math inline">\(y_i \sim \mathcal{N}(\alpha + \beta x, \sigma^2)\)</span> per ciascun <span class="math inline">\(i\)</span>, allora le stime dei minimi quadrati di <span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\beta\)</span> corrispondono alla stima di massima verosimiglianza. La funzione di verosimiglianza del modello di regressione è definita come la funzione di densità di probabilità dei dati, dati i parametri e i predittori:</p>
+<p><span class="math display" id="eq:ml-reg">\[\begin{equation}
+p(y \mid \alpha, \beta, \sigma, x) = \prod_{i=1}^n \mathcal{N}(y_i \mid \alpha, \beta x_i, \sigma^2). 
+\tag{2.5}
+\end{equation}\]</span></p>
+<p>
+Massimizzare la <a href="regressione-lineare-con-stan.html#eq:ml-reg">(2.5)</a> conduce alle stime dei minimi quadrati <a href="regressione-lineare-con-stan.html#eq:minsq-ab">(2.4)</a>.</p>
+
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-gelman2020regression" class="csl-entry">
+Gelman, Andrew, Jennifer Hill, and Aki Vehtari. 2020. <em>Regression and Other Stories</em>. Cambridge University Press.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="2">
+<li id="fn2"><p>Nella discussione che segue ripeto pari pari ciò che è riportato nel manuale del linguaggio <a href="https://mc-stan.org/docs/2_27/stan-users-guide/standardizing-predictors-and-outputs.html">Stan</a>.<a href="regressione-lineare-con-stan.html#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="regr-models-intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="inferenza-sul-modello-di-regressione.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/052_reglin2.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Data Science per psicologi.pdf", "Data Science per psicologi.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

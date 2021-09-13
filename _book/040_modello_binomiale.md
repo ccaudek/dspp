@@ -1,0 +1,486 @@
+# Modello Beta-Binomiale {#mod-binom}
+
+
+
+
+## Una proporzione 
+
+Si considerino $n$ variabili casuali Bernoulliane i.i.d.: 
+
+$$
+y = (y_1, \dots, y_n) \stackrel{iid}{\sim} \mathcal{B}(\theta).
+$$ 
+\noindent
+Vogliamo stimare $\theta$ avendo osservato $y$. Essendo i.i.d., i dati possono essere riassunti dal numero totale di successi nelle $n$ prove, denotato da $y$. Il modello binomiale è
+
+\begin{equation}
+p(y \mid \theta) = \Bin(y \mid n, \theta) = \binom{n}{y}\theta^y (1 -\theta)^{n-y},
+\end{equation}
+
+\noindent
+dove nel termine di sinistra dell'equazione abbiamo ignorato $n$ in quanto viene considerato fisso per disegno.
+
+Per fare inferenza sul modello binomiale è necessario assegnare una distribuzione a priori al parametro $\theta$ sulla base delle nostre conoscenze. Scegliendo una $\Beta(2, 2)$ quale distribuzione a priori per $\theta$, il modello Beta-Binomiale diventa:
+  
+\begin{align}
+y &\sim \Bin(n, \theta) \notag\\
+\theta &\sim \Beta(2, 2),
+(\#eq:beta-binom-trump)
+\end{align}
+
+\noindent
+dove la prima riga definisce la funzione di verosimiglianza e la seconda riga definisce la distribuzione a priori. 
+
+<!-- Anziché con il metodo basato su griglia, faremo ora inferenza costruendo la distribuzione a posteriori mediante il metodo Monte Carlo a catene di Markov. -->
+
+<!-- Usando la regola di Bayes, la distribuzione a posteriori $p(\theta \mid y, n)$ è: -->
+
+<!-- $$ -->
+<!-- \text{distribuzione a posteriori} \propto \text{verosimiglianza} \times \text{distribuzione a priori}. -->
+<!-- $$ -->
+
+
+### Il presidente Trump e l'idrossiclorochina 
+
+Per fare un esempio concreto, consideriamo un set di dati reali. Cito dal *Washington Post* del 7 aprile 2020:
+    
+> One of the most bizarre and disturbing aspects of President Trump's nightly press briefings on the coronavirus pandemic is when he turns into a drug salesman. Like a cable TV pitchman hawking 'male enhancement' pills, Trump regularly extols the virtues of taking hydroxychloroquine, a drug used to treat malaria and lupus, as a potential 'game changer' that just might cure Covid-19.
+
+Tralasciamo qui il fatto che il presidente Trump non è un esperto in questo campo. Esaminiamo invece le evidenze iniziali a supporto dell'ipotesi che l'idrossiclorochina possa essere utile per la cura del Covid-19, ovvero le evidenze che erano disponibili nel momento in cui il presidente Trump ha fatto le affermazioni riportate sopra (in seguito, quest'idea è stata screditata). Tali evidenze sono state fornite da uno studio di @Gautret_2020.
+
+Il disegno sperimentale di @Gautret_2020 comprende, tra le altre cose, il confronto tra una condizione sperimentale e una condizione di controllo. Il confronto importante è tra la proporzione di paziente positivi al virus SARS-CoV-2 nel gruppo sperimentale (a cui è stata somministrata l'idrossiclorochina; 6 su 14) e la proporzione di paziente positivi nel gruppo di controllo (a cui non è stata somministrata l'idrossiclorochina; 14 su 16). 
+
+
+### Interfaccia `cmdstanr` {#cmdstanr-gautret}
+
+La stima bayesiana del parametro $\theta$ è stata implementata in Stan usando l'interfaccia `cmdstanr` di CmdStan.^[I modelli discussi in questo capitolo sono discussi da @gelman1995bayesian mentre il codice è stato ricavato dalla seguente [pagina web](http://avehtari.github.io/BDA_R_demos/demos_rstan/rstan_demo.html).]. Considereremo qui solo il gruppo di controllo. Iniziamo a caricare i pacchetti necessari:
+
+
+```r
+library("cmdstanr")
+set_cmdstan_path("/Users/corrado/.cmdstanr/cmdstan-2.27.0")
+library("posterior")
+rstan_options(auto_write = TRUE) # avoid recompilation of models
+options(mc.cores = parallel::detectCores()) # parallelize across all CPUs
+Sys.setenv(LOCAL_CPPFLAGS = '-march=native') # improve execution time
+SEED <- 374237 # set random seed for reproducibility
+```
+
+Ci sono due passaggi essenziali per le analisi svolte mediante `cmdstanr`: 
+
+1. definire la struttura del modello bayesiano nella notazione Stan; 
+2. eseguire il campionamento della distribuzione a posteriori. 
+
+Esaminiamo questi due passaggi nel contesto del modello Beta-Binomiale definito dalla \@ref(eq:beta-binom-trump). 
+
+
+#### Fase 1
+
+È necessario definire i dati, i parametri e il modello.
+
+I **dati** del gruppo di controllo, che verrà qui esaminato, devono essere contenuti in un oggetto di classe `list`:
+
+
+```r
+data1_list <- list(
+  N = 16,
+  y = c(rep(1, 14), rep(0, 2))
+)
+```
+
+Il modello dipende dal **parametro** `theta`. In Stan, dobbiamo specificare che `theta` può essere un qualsiasi numero reale compreso tra 0 e 1.
+
+Il **modello** è $\Bin(n, \theta)$ e, nel linguaggio Stan, può essere scritto come 
+
+
+```r
+for (i in 1:N) {
+  y[i] ~ bernoulli(theta);
+}
+```
+
+\noindent
+ovvero come
+
+
+```r
+y ~ bernoulli(theta);
+```
+
+La struttura del modello Beta-Binomiale viene tradotta nella sintassi Stan e viene poi memorizzata come stringa di caratteri del file `oneprop1.stan`:
+
+
+```r
+modelString = "
+data {
+  int<lower=0> N;
+  int<lower=0, upper=1> y[N];
+}
+parameters {
+  real<lower=0, upper=1> theta;
+}
+model {
+  theta ~ beta(2, 2);
+  y ~ bernoulli(theta);
+  // the notation using ~ is syntactic sugar for
+  //  target += beta_lpdf(theta | 1, 1);   // lpdf for continuous theta
+  //  target += bernoulli_lpmf(y | theta); // lpmf for discrete y
+  // target is the log density to be sampled
+  //
+  // y is an array of integers and
+  //  y ~ bernoulli(theta);
+  // is equivalent to
+  //  for (i in 1:N) {
+  //    y[i] ~ bernoulli(theta);
+  //  }
+  // which is equivalent to
+  //  for (i in 1:N) {
+  //    target += bernoulli_lpmf(y[i] | theta); 
+  //  }
+}
+generated quantities {
+  int y_rep[N];
+  real log_lik[N];
+  for (n in 1:N) {
+    y_rep[n] = bernoulli_rng(theta);
+    log_lik[n] = bernoulli_lpmf(y[n] | theta);
+  }
+}
+"
+writeLines(modelString, con = "code/oneprop1.stan")
+```
+
+#### Fase 2
+
+Leggiamo l'indirizzo del file che contiene il codice Stan:
+
+
+```r
+file <- file.path("code", "oneprop1.stan")
+```
+
+\noindent
+Compiliamo il codice:
+
+
+```r
+mod <- cmdstan_model(file)
+```
+
+\noindent
+Il campionamento MCMC si realizza con la chiamata:
+
+
+```r
+fit1 <- mod$sample(
+  data = data1_list,
+  iter_sampling = 4000L,
+  iter_warmup = 2000L,
+  seed = SEED,
+  chains = 4L,
+  parallel_chains = 4L,
+  refresh = 0,
+  thin = 1
+)
+```
+
+Avendo assunto una distribuzione a priori per il parametro $\theta$, l'algoritmo procede in maniera ciclica, correggendo la distribuzione a priori di $\theta$ condizionandola ai valori già generati. Dopo un certo numero di cicli, necessari per portare l'algoritmo a convergenza, i valori estratti possono essere assunti come campionati dalla distribuzione a posteriori di $\theta$.
+
+Si noti che `$sample()` richiede due tipi di informazioni. Innanzitutto, dobbiamo specificare le informazioni sul modello in base a:
+
+- `mod` = la stringa di caratteri che definisce il modello (qui `oneprop1.stan`),
+- data = i dati in formato lista (`data1_list`).
+
+Dobbiamo inoltre specificare le informazioni sul campionamento MCMC utilizzando tre argomenti aggiuntivi:
+
+- L'argomento `chains` specifica quante catene di Markov parallele eseguire. Eseguiamo qui quattro catene, quindi otteniamo quattro campioni distinti di valori $\pi$. 
+
+- L'argomento `iter` specifica il numero desiderato di iterazioni o la lunghezza di ciascuna catena di Markov. Per impostazione predefinita, la prima metà di queste iterazioni è costituita da campioni "burn-in" o "warm-up" che verranno ignorati. La seconda metà è conservata e costituisce un campione della distribuzione a posteriori.
+
+- L'argomento `seed` per impostare il numero casuale che genera il seme per una simulazione `cmdstanr`.
+
+
+#### Burn-in
+
+Al crescere del numero di passi della catena, la distribuzione di target viene sempre meglio approssimata. All'inizio del campionamento, però, la distribuzione può essere significativamente lontana da quella stazionaria, e ci vuole un certo tempo prima di raggiungere la distribuzione stazionaria di equilibrio, detto, appunto, periodo di *burn-in*. I campioni provenienti da tale parte iniziale della catena vanno tipicamente scartati perché possono non rappresentare accuratamente la distribuzione desiderata.
+ 
+
+#### Inferenza
+
+Un sommario della distribuzione a posteriori si ottiene con:
+
+
+```r
+fit1$summary(c("theta"))
+#> # A tibble: 1 x 10
+#>   variable  mean median     sd    mad    q5   q95  rhat
+#>   <chr>    <dbl>  <dbl>  <dbl>  <dbl> <dbl> <dbl> <dbl>
+#> 1 theta    0.802  0.813 0.0868 0.0867 0.644 0.928  1.00
+#> # ... with 2 more variables: ess_bulk <dbl>, ess_tail <dbl>
+```
+
+Creiamo un oggetto di classe `stanfit`
+
+
+```r
+stanfit1 <- rstan::read_stan_csv(fit1$output_files())
+```
+
+\noindent
+di dimensioni
+
+
+```r
+dim(as.matrix(stanfit1, pars = "theta"))
+#> [1] 16000     1
+```
+
+\noindent
+I primi 10 valori sono presentati qui di seguito
+
+
+```r
+as.matrix(stanfit1, pars = "theta") %>% 
+  head(10)
+#>           parameters
+#> iterations    theta
+#>       [1,] 0.757239
+#>       [2,] 0.703550
+#>       [3,] 0.772169
+#>       [4,] 0.747881
+#>       [5,] 0.765079
+#>       [6,] 0.793709
+#>       [7,] 0.857447
+#>       [8,] 0.845012
+#>       [9,] 0.824972
+#>      [10,] 0.881219
+```
+
+\noindent
+La matrice precedente include i valori assunti dalla catena di Markov, ovvero un insieme di plausibili valori $\theta$ estratti dalla distribuzione a posteriori. Un tracciato della catena di Markov illustra questa esplorazione rappresentando il valore $\theta$ sulle ordinate e l'indice progressivo di in ogni iterazione sull'ascissa. Usiamo la funzione `mcmc_trace()` del pacchetto `bayesplot` (Gabry et al. 2019) per costruire il grafico che include tutte e quattro le catene di Markov:
+
+
+```r
+stanfit1 %>% 
+  mcmc_trace(pars = c("theta"), size = 0.1)
+```
+
+\begin{figure}
+
+{\centering \includegraphics{040_modello_binomiale_files/figure-latex/trace-plot-gautret-1} 
+
+}
+
+\caption{Trace-plot per il parametro $\theta$ nel modello Beta-Binomiale.}(\#fig:trace-plot-gautret)
+\end{figure}
+
+Si vede che le catene esplorano uno spazio compreso approssimativamenre tra 0.7 e 0.9. Un grafico come il precedente descrive il comportamento _longitudinale_ delle catene di Markov.
+
+Possiamo anche esaminare la distribuzione degli stati della catena di Markov, ovvero, dei valori che queste catene visitano lungo il loro percorso, ignorando l'ordine di queste visite. L'istogramma successivo fornisce una rappresentazione grafica di questa distribuzione per i 16000 valori complessivi delle quattro catene, ovvero per 4000 valori provienienti da ciascuna catena.
+
+
+```r
+mcmc_hist(stanfit1, pars = "theta") + 
+  yaxis_text(TRUE) + 
+  ylab("count")
+```
+
+
+
+\begin{center}\includegraphics{040_modello_binomiale_files/figure-latex/unnamed-chunk-13-1} \end{center}
+
+Nel modello Beta-Binomiale in cui la verosimiglianza è binomiale con 14 successi su 16 prove e in cui assumiamo una distribuzione a priori di tipo Beta(2, 2) sul parametro $\theta$, la distribuzione a posteriori è ancora una distribuzione Beta di parametri $\alpha$ = 2 + 14 e $\beta$ = 2 + 16 - 14. La seguente figura riporta un grafico di densità empirica dei valori delle quattro catene di Markov con sovrapposta in nero la densità Beta(16, 4). Il punto importante è che la distribuzione dei valori delle catene di Markov produce un'eccellente approssimazione alla distribuzione bersaglio.
+
+
+```r
+mcmc_dens(stanfit1, pars = "theta") + 
+  yaxis_text(TRUE) + 
+  ylab("density") +
+  stat_function(fun = dbeta, args = list(shape1 = 16, shape2=4))
+```
+
+
+
+\begin{center}\includegraphics{040_modello_binomiale_files/figure-latex/unnamed-chunk-14-1} \end{center}
+
+::: {.rmdimportant}
+Nel caso presente, il risultato è poco utile dato che una soluzione analitica è disponibile. Tuttavia, questo esercizio mette in evidenza il fatto cruciale che, nei casi in cui possiamo verificarne la soluzione, il campionamento Monte Carlo a catena di Markov è in grado di trovare la risposta corretta. Di conseguenza, possiamo anche essere sicuri che fornirà un'approssimazione alla distribuzione a posteriori anche in quei casi in cui una soluzione analitica non è disponibile. 
+::: 
+
+Un intervallo di credibilità al 95% per $\theta$ si ottiene con la seguente chiamata:
+
+
+```r
+posterior1 <- extract(stanfit1)
+rstantools::posterior_interval(as.matrix(stanfit1), prob = 0.95)
+#>                    2.5%        97.5%
+#> theta         0.6107860   0.94402990
+#> y_rep[1]      0.0000000   1.00000000
+#> y_rep[2]      0.0000000   1.00000000
+#> y_rep[3]      0.0000000   1.00000000
+#> y_rep[4]      0.0000000   1.00000000
+#> y_rep[5]      0.0000000   1.00000000
+#> y_rep[6]      0.0000000   1.00000000
+#> y_rep[7]      0.0000000   1.00000000
+#> y_rep[8]      0.0000000   1.00000000
+#> y_rep[9]      0.0000000   1.00000000
+#> y_rep[10]     0.0000000   1.00000000
+#> y_rep[11]     0.0000000   1.00000000
+#> y_rep[12]     0.0000000   1.00000000
+#> y_rep[13]     0.0000000   1.00000000
+#> y_rep[14]     0.0000000   1.00000000
+#> y_rep[15]     0.0000000   1.00000000
+#> y_rep[16]     0.0000000   1.00000000
+#> log_lik[1]   -0.4930093  -0.05759735
+#> log_lik[2]   -0.4930093  -0.05759735
+#> log_lik[3]   -0.4930093  -0.05759735
+#> log_lik[4]   -0.4930093  -0.05759735
+#> log_lik[5]   -0.4930093  -0.05759735
+#> log_lik[6]   -0.4930093  -0.05759735
+#> log_lik[7]   -0.4930093  -0.05759735
+#> log_lik[8]   -0.4930093  -0.05759735
+#> log_lik[9]   -0.4930093  -0.05759735
+#> log_lik[10]  -0.4930093  -0.05759735
+#> log_lik[11]  -0.4930093  -0.05759735
+#> log_lik[12]  -0.4930093  -0.05759735
+#> log_lik[13]  -0.4930093  -0.05759735
+#> log_lik[14]  -0.4930093  -0.05759735
+#> log_lik[15]  -2.8829362  -0.94362543
+#> log_lik[16]  -2.8829362  -0.94362543
+#> lp__        -12.7342100 -10.00860000
+```
+
+Svolgendo un'analisi bayesiana simile a questa, @Gautret_2020 hanno trovato che gli intervalli di credibilità del gruppo di controllo e del gruppo sperimentale non si sovrappongono. Questo fatto viene interpretato dicendo che il parametro $\theta$ è diverso nei due gruppi. Sulla base di queste evidenza, @Gautret_2020 hanno concluso, con un grado di certezza soggettiva del 95%, che nel gruppo sperimentale vi è una probabilità più bassa di risultare positivi al SARS-CoV-2 rispetto al gruppo di controllo. In altri termini, questa analisi dei dati suggerisce che l'idrossiclorochina sia efficace come terapia per il Covid-19. 
+
+
+### La critica di @Hulme_2020
+
+Un articolo pubblicato da @Hulme_2020 si è posto il problema di rianalizzare i dati di @Gautret_2020 -- si veda <https://osf.io/5dgmx/>. Tra gli autori di questo secondo articolo figura anche Eric-Jan Wagenmakers, uno psicologo molto conosciuto per i suoi contributi metodologici. 
+<!-- @Hulme_2020 sottolineano il fatto che @Gautret_2020 si sono concentrati, nella loro analisi dei dati, soltanto su una parte del loro campione. Se però vengono considerati anche i pazienti che sono stati esclusi dall'analisi dei dati, le conclusioni a cui sono giunti @Gautret_2020 risultano fortemente indebolite. -->
+<!-- Nella ricerca di @Gautret_2020 è presente un aspetto che finora non è stato considerato.  -->
+@Hulme_2020 hanno osservato che, nelle  analisi statistiche riportate, @Gautret_2020 hanno escluso alcuni dati. Nel gruppo sperimentale, infatti, vi erano alcuni pazienti i quali, anziché migliorare, sono in realtà peggiorati. L'analisi statistica di @Gautret_2020 ha escluso i dati di questi pazienti.
+Se consideriamo tutti i pazienti --- non solo quelli selezionati da @Gautret_2020 --- la situazione diventa la seguente:
+
+- gruppo sperimentale: 10 positivi su 18; 
+- gruppo di controllo: 14 positivi su 16. 
+
+L'analisi dei dati proposta da @Hulme_2020 richiede l'uso di alcuni strumenti statistici che, in queste dispense, non verranno discussi. Ma possiamo giungere alle stesse conclusioni raggiunte da questi ricercatori anche usando le procedure statistiche descritte nel Paragrafo successivo. 
+
+
+## Due proporzioni
+
+Svolgiamo ora l'analisi considerando tutti i dati, come suggerito da @Hulme_2020. Per fare questo verrà creato unico modello per fare inferenza sulla differenza tra due proporzioni. 
+
+Una volta generate le distribuzioni a posteriori per le proporzioni di "successi" nei due gruppi, verrà anche generata la quantità
+
+$$
+\omega = \frac{\theta_2 / (1-\theta_2)}{\theta_1 / (1-\theta_1)},
+$$
+
+ovvero il rapporto tra gli Odds di positività tra i pazienti del gruppo di controllo e gli Odds di positività tra i pazienti del gruppo sperimentale. Se il valore dell'OR è uguale a 1, significa che l'Odds di positività nel gruppo di controllo è uguale all'odds di positività nel gruppo sperimentale, cioè il fattore in esame (somministrazione dell'idrossiclorochina) è ininfluente sulla comparsa della malattia. L'inferenza statistica sull'efficacia dell'idrossiclorochina come terapia per il Covid-19 può dunque essere effettuata esaminando l'intervallo di credibilità al 95% per l'OR: se tale intervallo include il valore 1, allora non vi è evidenza che l'idrossiclorochina sia efficace come terapia per il Covid-19.
+
+Nell'implementazione di questo modello, la quantità di interesse è dunque l'odds ratio; tale quantità viene calcolata nel blocco `generated quantities` del programma Stan. In questo esempio useremo delle distribuzioni a priori vagamente informative per i parametri del modello $\theta_1$ e $\theta_1$.
+
+
+```r
+data_list <- list(
+  N1 = 18, 
+  y1 = 10, 
+  N2 = 16, 
+  y2 = 14
+)
+```
+
+
+```r
+modelString = "
+//  Comparison of two groups with Binomial
+data {
+  int<lower=0> N1;              // number of experiments in group 1
+  int<lower=0> y1;              // number of deaths in group 1
+  int<lower=0> N2;              // number of experiments in group 2
+  int<lower=0> y2;              // number of deaths in group 2
+}
+parameters {
+  real<lower=0,upper=1> theta1; // probability of death in group 1
+  real<lower=0,upper=1> theta2; // probability of death in group 2
+}
+model {
+  theta1 ~ beta(2, 2);          // prior
+  theta2 ~ beta(2, 2);          // prior
+  y1 ~ binomial(N1, theta1);    // observation model / likelihood
+  y2 ~ binomial(N2, theta2);    // observation model / likelihood
+}
+generated quantities {
+  // generated quantities are computed after sampling
+  real oddsratio = (theta2/(1-theta2))/(theta1/(1-theta1));
+}
+"
+writeLines(modelString, con = "code/twoprop1.stan")
+```
+
+
+```r
+file <- file.path("code", "twoprop1.stan")
+```
+
+
+```r
+mod <- cmdstan_model(file)
+```
+
+
+```r
+fit <- mod$sample(
+  data = data_list,
+  iter_sampling = 4000L,
+  iter_warmup = 2000L,
+  seed = SEED,
+  chains = 4L,
+  parallel_chains = 4L,
+  refresh = 0,
+  thin = 1
+)
+```
+
+
+```r
+stanfit <- rstan::read_stan_csv(fit$output_files())
+```
+
+
+```r
+print(
+  stanfit,
+  pars = c("theta1", "theta2", "oddsratio"),
+  digits_summary = 3L
+)
+#> Inference for Stan model: twoprop1-202109130932-1-5063fd.
+#> 4 chains, each with iter=6000; warmup=2000; thin=1; 
+#> post-warmup draws per chain=4000, total post-warmup draws=16000.
+#> 
+#>            mean se_mean    sd  2.5%   25%   50%   75%
+#> theta1    0.546   0.001 0.104 0.337 0.475 0.547 0.619
+#> theta2    0.801   0.001 0.087 0.605 0.747 0.812 0.865
+#> oddsratio 4.859   0.049 4.740 0.914 2.221 3.599 5.933
+#>            97.5% n_eff  Rhat
+#> theta1     0.743 11214 1.000
+#> theta2     0.939 12359 1.000
+#> oddsratio 16.251  9207 1.001
+#> 
+#> Samples were drawn using NUTS(diag_e) at Lun Set 13 09:32:34 2021.
+#> For each parameter, n_eff is a crude measure of effective sample size,
+#> and Rhat is the potential scale reduction factor on split chains (at 
+#> convergence, Rhat=1).
+```
+
+Dato che l'intervallo di credibilità del 95% per l'OR include il valore di 1.0 (ovvero, è plausibile concludere che la probabilità di "successo" sia uguale nei due gruppi). In base agli standard correnti, un risultato di questo tipo non viene considerato come evidenza sufficiente per potere concludere che il parametro $\theta$ assume un valore diverso nei due gruppi. In altri termini, se consideriamo tutti i dati, e non solo quelli selezionati dagli autori della ricerca originaria, non vi è evidenza alcuna che l'idrossiclorochina sia efficace come terapia per il Covid-19.
+
+
+## Considerazioni conclusive {-}
+
+Concludiamo questa discussione dicendo che ciò che è stato presentato in questo capitolo è solo un esercizio didattico: la ricerca di @Gautret_2020 include tante altre informazioni che non sono state qui considerate. Tuttavia, notiamo che la semplice analisi statistica che abbiamo qui descritto è stata in grado di replicare le conclusioni a cui sono giunti (per altra via) @Hulme_2020.
+
+
+
+

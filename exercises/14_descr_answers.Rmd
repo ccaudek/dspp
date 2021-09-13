@@ -1,0 +1,454 @@
+---
+title: 'Esercizi 14: Statistiche descrittive'
+author: "Corrado Caudek"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+# please do not alter this code chunk
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, error = TRUE)
+```
+
+<!-- <style type="text/css"> -->
+<!--   body{ -->
+<!--   font-size: 13pt; -->
+<!-- } -->
+<!-- </style> -->
+
+
+Modifica i seguenti blocchi di codice e poi esegui (`knit`) ciascun blocco di codice singolarmente, uno dopo l'altro.
+
+```{r}
+library("tidyverse")
+```
+
+
+## Usare R come un calcolatore
+
+Nella console, digita le seguenti istruzioni:
+
+```
+1 + 2
+a <- 1
+b <- 2
+a + b
+```
+
+Lo stesso risultato si ottiene mediante il seguente blocco di codice in questo documento Rmd:
+
+```{r}
+1 + 2
+a <- 1
+b <- 2
+a + b
+```
+
+## Media
+
+Consideriamo ora i valori BDI-II che sono stati discussi nelle dispense e sono riportati qui di seguito:
+
+```{r}
+bdi <- c(
+0,  0, 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  2,  2,  2,  2, 3,  3,  3,  5,  7,  9, 12, 19, 22, 22, 24, 25, 25, 26, 26, 26, 27, 27, 28, 28, 30, 30, 30, 31, 31, 33, 33, 34, 35, 35, 35, 36, 39, 41, 43, 43, 44
+)
+```
+
+Si utilizzi la funzione appropriata per stabilire di quanti elementi è composto il vettore `bdi`.
+
+```{r}
+# inserisci il codice qui
+length(bdi)
+```
+
+Si utilizzi la funzione appropriata per trovare il valore della somma dei valori del vettore `bdi`.
+
+```{r}
+# inserisci il codice qui
+sum(bdi)
+```
+
+La media è data dalla somma dei valori divisa per il numero dei casi. Mediante le due funzioni utilizzate sopra, si calcoli la media:
+
+```{r}
+# inserisci il codice qui
+sum(bdi) / length(bdi)
+```
+
+Si confronti il risultato ottenuto con quello prodotto dalla funzione `mean()`:
+
+```{r}
+# inserisci il codice qui
+mean(bdi)
+```
+
+## Istogramma
+
+Poniamoci ora il problema di creare un istogramma con i valori `bdi`. Per semplicità useremo la funzione `hist()` di R base -- in seguito costruiremo l'istogramma con `ggplot()`. Iniziamo ad esaminare il file di help:
+
+```{r}
+?hist
+```
+
+Per i nostri scopi, dobbiamo capire come passare il vettore `bdi` in input a `hist()`. Il file di help ci dice che la sintassi è `hist(bdi)`. 
+
+Ma questo non è sufficiente, in quanto un istogramma può essere costruito in molti modi diversi, per cui dobbiamo capire come lo costruisce `hist()` di default (ovvero, senza altre specificazioni) e se questo risolve il __nostro__ problema.  
+
+Nel file di help, l'argomento `freq` viene descritto come segue:
+
+> freq	logical; if TRUE, the histogram graphic is a representation of frequencies, the counts component of the result; if FALSE, probability densities, component density, are plotted (so that the histogram has a total area of one).
+
+Da ciò deduciamo che dobbiamo porre `freq = FALSE` per ottenere un istogramma che abbia un'area totale uguale a 1, ovvero per ottenere quello che chiede il problema successivo.
+
+Utilizzando la funzione `hist()` si crei un istogramma tale che la somma delle aree delle barre dell'istogramma sia uguale a 1:
+
+```{r}
+# inserisci il codice qui
+hist(
+  bdi, 
+  freq = FALSE, 
+  main = "Istogramma dei valori BDI-II",
+  xlab = "BDI-II",
+  ylab = "Densità")
+```
+
+Esaminiamo i dati che sono stati utilizzati dalla funzione `hist()` per creare l'istogramma. 
+
+```{r}
+out <- hist(bdi, freq = FALSE, plot = FALSE)
+out
+```
+
+Dal file di help della funzione scopriamo che, di default, l'argomento `right` è posto uguale a `TRUE`. Questo significa che `hist()` utilizza (di default) intervalli chiusi a destra e aperti a sinistra: (]. In altre parole, un valore che coincide con il limite inferiore sarà escluso dall'intervallo, mentre un valore che coincide con il limite superiore sarà incluso nell'intervallo.
+
+La funzione `hist()` ha deciso di utilizzare i limiti degli intervalli specificati da $breaks -- questo si può cambiare, ma per ora non lo facciamo.
+
+Esaminiamo il secondo intervallo, ovvero (5, 10]. Chiediamoci la seguente domanda: quanti valori del vettore `bdi` sono compresi nell'intervallo (5, 10]?  
+
+Per rispondere a questa domanda dobbiamo esaminare la sequenza ordinata dei valori `bdi`. Se ci focalizziamo sui valori che ci interessano (... 3  5  7  9 12 ...), allora vediamo che, tra i possibili candidati il valore 5 coincide con il limite inferiore dell'intervallo. Ma, dato che l'intervallo è aperto a sinistra, il valore 5 non sarà incluso nell'intervallo.  Quindi restano solo due valori possibili: 7 e 9. La frequenza assoluta associata al secondo intervallo è dunque pari a 2. Questo è indicato dal secondo valore di $counts.
+
+Si calcoli ora la densità della seconda barra dell'istogramma. (Suggerimento: ricordiamo che l'area della seconda barra dell'istogramma è uguale alla frequenza relativa della seconda classe e che la densità della seconda barra è semplicemente l'altezza della barra).
+
+```{r}
+# inserisci il codice qui
+(2 / length(bdi)) / 5
+```
+
+Si può vedere che il valore trovato coincide con il secondo valore di $density. 
+
+Ripetiamo la procedura per l'ultima barra dell'istogramma. La densità dell'ultima barra dell'istogramma è
+
+```{r}
+# inserisci il codice qui
+(4 / length(bdi)) / 5
+```
+
+Questo risultato coincide con l'ultimo valore di $density.
+
+## Varianza
+
+La formula della varianza è
+
+\begin{equation}
+V(x) = \frac{\sum_{i=1}^n (x - \bar{x})^2}{n}
+\end{equation}
+
+Caloliamo la varianza per i valori `bdi`. Iniziamo a trovare il denominatore:
+
+```{r}
+# inserisci il codice qui
+length(bdi)
+```
+
+Al numeratore abbiamo la quantità $\bar{x}$, ovvero la media dei valori `bdi`. Questo valore è già stato trovato sopra.  Qui lo chiameremo `avg_bdi`:
+
+```{r}
+# inserisci il codice qui
+avg_bdi <- mean(bdi)
+avg_bdi
+```
+
+La formula ci dice che dobbiamo sottrare la media da ciascun valore del vettore: $x - \bar{x}$. Ciò significa che dobbiamo eseguire la differenza `bdi[i] - avg_bdi` per ciascun elemento del vettore, con _i_ che va da 1 a 66. Per il primo elemento di `bdi` tale differenza sarà
+
+```{r}
+bdi[1] - avg_bdi
+```
+
+e così via per tutti gli elementi del vettore `bdi`. Sappiamo che possiamo eseguire questa operazione algebrica direttamente sul vettore `bdi`.  Le operazioni algebriche sui vettori vengono eseguite __elemento per elemento__, il che significa che, se l'operazione algebrica è `- avg_bdi`, allora tale operazione verrà eseguita per ciascuno degli elementi di `bdi`, il che è esattamente quello che viene espresso in questo frammento dell'equazione precedente: $x - \bar{x}$. Chiamiamo `dif_bdi` il vettore che contiene queste differenze 
+
+```{r}
+# inserisci il codice qui
+dif_bdi <- bdi - avg_bdi
+dif_bdi
+```
+
+Dato che il vettore `bdi` è composto da 66 elementi, se sottraiamo 14.939394 da ciascun elemento del vettore, otterremo un vettore `dif_bdi` anch'esso costituito da 66 elementi, come indicato sopra.
+
+La formula della varianza ci dice che ciascun elemento del vettore `dif_bdi` va innalzato al quadrato: $(x - \bar{x})^2$. Facciamolo in R definendo il vettore `dif_sq_bdi`. L'innalzamento a potenza è un'altra operazione aritmetica, per cui procediamo come prima per ottenere un vettore anch'esso di 66 elementi. In R, la sintassi per inalzare al quadrato è `^2`.
+
+```{r}
+# inserisci il codice qui
+dif_sq_bdi <- dif_bdi^2
+dif_sq_bdi
+```
+
+Avendo trovato il vettore che contiene gli scarti dalla media innalzati al quadrato, la formula ci dice che dobbiamo calcolare la media di questi 66 numeri. Troviamola:
+
+```{r}
+# inserisci il codice qui
+var_bdi <- mean(dif_sq_bdi)
+var_bdi
+```
+
+Usiamo ora la fuzione `var()` per verificare che la formula della varianza sia stata implementata in modo corretto facendo quello che abbiamo fatto sopra. Dobbiamo però stare attenti di una cosa. La funzione `var()` calcola la varianza di una variabile. Ma, per motivi che vedremo in seguito, usa $n-1$ al denominatore. Per cui dobbiamo correggere questo aspetto per potere confrontare il risultato prodotto da `var()` con quello che abbiamo trovato noi:
+
+```{r}
+# inserisci il codice qui
+var_bdi <- var(bdi) * 65/66
+var_bdi
+```
+
+Il risultato prodotto da `var()` (dopo avere corretto il denominatore) ci dice che abbiamo implementato correttamente in R la formula della varianza.
+
+## Deviazione standard
+
+Si calcoli la deviazione standard del vettore `bdi`:
+
+```{r}
+# inserisci il codice qui
+sd_bdi <- sqrt(var_bdi)
+sd_bdi
+```
+
+## Interpretazione della deviazione standard
+
+La deviazione standard può essere interpretata dicendo che è simile alla media del valore assoluto degli scarti dalla media. Calcoliamo dunque la media del valore assoluto degli scarti dalla media per `bdi`. Per calcolare il valore assoluto usiamo la funzione `abs()`.
+
+
+```{r}
+# inserisci il codice qui
+mean(abs(bdi - mean(bdi)))
+```
+
+Vediamo che, in effetti, la media del valore assoluto degli scarti dalla media è molto simile alla deviazione standard. Questo significa che la deviazione standard può essere intesa come la __distanza__ media tra ciascun punto della distribuzione e il baricentro della distribuzione (ovvero, la media). 
+
+## Quantili
+
+Si trovi il terzo quartile della distribuzione dei valori `bdi`.
+
+```{r}
+# inserisci il codice qui
+quantile(bdi, prob = 0.75)
+```
+
+Ci aspettiamo che, in base alla definizione di quartile, sotto il terzo quarile si situino il 75% dei valori della distribuzione. Nel nostro caso abbiamo 66 valori e il 75% di 66 è
+
+```{r}
+66 * 0.75
+```
+
+ovvero 50 valori.  Il terzo quartile è 29.5. 
+
+Contiamo dunque quanti elementi del vettore  `bdi` hanno un valore minore di 29.5 per verificare se il risultato fornito da R ha senso.
+
+(Suggerimento. Per risolvere questo problema, possiamo utilizzare l'espressione `bdi < 29.5`. Questa è una proposizione logica che significa: "ciascun elemento del vettore `bdi` soddisfa la condizione `< 20.5`". Questa proposizione può essere VERA o FALSA per ciascun elemento  di `bdi`. Infatti, se scriviamo `bdi < 29.5`, R ritorna un vettore di ordine 66, i cui elementi hanno modalità TRUE o FALSE. Questo vettore ci dice, per ciascun elemento di `bdi`, se la condizione `< 29.5` è soddisfatta oppure no. Il vettore risultate contiene una variabile __booleana__, ovvero una variabile che assume valori booleani, cioè Vero|Falso, True|False, o 1|0. TRUE vale 1 e FALSE vale 0. Possiamo dunque eseguire delle operazioni aritmetiche su tali valori booleani. Per esempio, per trovare il numero di volte nelle quali la condizione `< 29.5` è soddisfatta, basta sommare i valori booleani del vettore che abbiamo trovato.)
+
+```{r}
+# inserisci il codice qui
+sum(bdi < 29.5) / length(bdi)
+```
+Non male! Abbiamo un numero __finito__ di valori, dunque non possiamo ottenere esattamente un risultato pari al 75%. Ma ci andiamo molto vicino.
+
+## Box olot
+
+Costruiamo ora un box-plot con i valori `bdi`. È sufficiente usare la funzione `boxplot()`.
+
+```{r}
+# inserisci il codice qui
+boxplot(bdi)
+```
+Qui non c'è molto di interessante che possiamo fare, dato che è chiaro che il valore dell'unico "baffo" (segmento!) del box-plot è uguale al massimo della distribuzione:
+
+```{r}
+max(bdi)
+```
+
+Per rendere più interessane il problema, consideriamo una diversa distribuzione nella quale ci sono alcuni valori anomali. Immaginiamo di avere 30 valori estratti a caso dalla distribuzione del quoziente di intelligenza. A tali 30 valori ci aggiungiamo due valori che sono più alti di quelli che si incontrano "normalmente" (160, 165).
+
+Nelle istruzioni seguenti, `set.seed(123)` consente la riproducibilità dei risultati. La funzione `rnorm(30, 100, 15)` prende 30 valori a caso dalla popolazione di valori del quoziente di intelligenza (vedremo in seguito come i valori del quoziente di intelligenza seguono una determinata distribuzione teorica detta normale o gaussiana di media 100 e deviazione standard 15). La funzione `round` elimina la componente decimale, in quanto il quoziente di intelligenza è un numero intero. La funzione `c()` crea un vettore nel quale aggiungiamo i due elementi che abbiamo specificato (160, 165) ai 30 creati da `rnorm(30, 100, 15)`:
+
+```{r}
+set.seed(123)
+iq <- c(round(rnorm(30, 100, 15)), 160, 165)
+iq
+```
+
+Creaiamo il box-plot per i 32 valori della variabile `iq`:
+
+```{r}
+# inserisci il codice qui
+boxplot(iq)
+```
+
+Ora il "baffo superiore" non coincide con il massimo della distribuzione. Si trovi il valore del punto che si trova all'estremità del baffo superiore.
+
+```{r}
+# inserisci il codice qui
+# dobbiamo trovare il più grande valore iq che è minore di Q3 + 1.5 IQR, ovvero 142.625
+quantile(iq, probs = 0.75) + 1.5 * IQR(iq)
+# dobbiamo poi ordinare i valori iq in ordine crescente
+sort(iq)
+# da cui si deduce che il valore più grande di iq che è minore di 142.625 è 127
+```
+
+Verifichiamo che la risposta trovata sia corretta
+
+```{r}
+out <- boxplot(iq, plot = FALSE)
+out
+```
+
+Infatti, il valore che abbiamo trovato è uguale a quello usato da R per costruire la figura, ovvero `r out$stats[5]`.
+
+## Covarianza
+
+Consideriamo ora il livello di depressione misurato dal test CES-D. Sono qui riportati i valori sia del BDI-II sia del CES-D ordinati nella maniera corretta.
+
+```{r}
+bdi <- c(
+  26, 35, 30, 25, 44, 30, 33, 43, 22, 43, 24, 19, 39,  3,  0,  1, 31, 25,  0,  2,  0,  0,  0, 28,  0,  0,  1,  0,  2, 0,  7, 35,  0,  2, 30,  0, 26,  1,  0,  0, 31,  0,  1, 41, 36, 26, 35, 33, 12, 28,  1, 27, 34, 27, 22,  1,  5,  3,
+ 1,  3,  0,  2,  9,  1,  0,  0
+)
+
+cesd <- c(
+  47, 35, 29, 25, 37, 38, 38, 44, 34, 48, 19, 29, 36, 16, 12, 5, 15, 38,  9, 16,  0,  5,  6, 34,  5,  7,  2,  8,  8, 5, 18, 46,  3, 12, 41,  5, 36,  9,  6,  2, 34,  6, 10, 31, 47, 44, 22, 39, 19, 25,  6, 28, 29, 39, 27,  0, 10,  4, 6,  8, 13,  3,  7,  5,  6, 10
+)
+```
+
+Iniziamo con il creare un diagramma a dispersione usando la funzione `ggplot()`.
+Prima di tutto creaimo un data.frame, perché `ggplot()` richiede un data.frame in input.
+
+```{r}
+d <- data.frame(
+  bdi, cesd
+)
+glimpse(d)
+```
+
+Iniziamo con il primo layes:
+
+```{r}
+d %>% 
+  ggplot(
+    aes(bdi, cesd)
+  )
+```
+
+e poi aggiungiamo i punti:
+
+```{r}
+d %>% 
+  ggplot(
+    aes(bdi, cesd)
+  ) +
+  geom_point()
+```
+
+Il diagramma a dispersione mostra che all'aumentare del BDI-II aumenta anche il CES-S. Questo è quello che dovremmo aspettarci in quanto entrambe sono misure dello stesso costrutto, la depressione. L'associazione non è perfetta e ciò è dovuto al fatto che nessun indicatore empirico riflette in maniera perfetta il costrutto. Qualsiasi misura empirica è inquinata dall'_errore di misurazione_.  
+
+Iniziamo a calcolare la covarianza:
+
+\begin{equation}
+S(x, y) = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{n}
+\end{equation}
+
+Calcoliamo dunque la covarianza tra i punteggi BDI-II e CES-D:
+
+```{r}
+# inserisci il codice qui
+mean(
+  (d$bdi - mean(d$bdi)) * (d$cesd - mean(d$cesd))
+)
+```
+
+Controlliamo usando la funzione `cov()`. (Suggerimento: anche la funzione `cov()`, come `var()`, usa _n - 1_ al denominatore).
+
+```{r}
+# inserisci il codice qui
+cov_bdi_cesd <- cov(d$bdi, d$cesd) * 65/66
+cov_bdi_cesd
+```
+
+Il valore ottenuto è difficile da interpretare. Il segno è positivo, quindi sappiamo che l'associazione è positiva (all'aumentare di _x_ aumenta _y_). Ma oltre a questo la covarianza non ci dice altro. Per capire di più dobbiamo usare la correlazione.
+
+## Correlazione
+
+La correlazione è una covarianza standardizzata. Calcoliamo la correlazione tra i punteggi BDI-II e CES-D:
+
+```{r}
+r_bdi_cesd <- cov_bdi_cesd / (sqrt(var(d$bdi)*65/66) * sqrt(var(d$cesd)*65/66))
+r_bdi_cesd
+```
+
+Controlliamo usando la funzione `cor()`. (Suggerimento: in questo caso non serve correggere il denominatore.)
+
+```{r}
+cor(d$bdi, d$cesd)
+```
+
+Oppure, possiamo prima standardizzare le variabili e poi calcolare la covarianza. Iniziamo a definire una funzione che standardizza i valori della variabile in input:
+
+```{r}
+scale_this <- function(x) {
+  std <- sqrt(var(x)*(length(x)-1)/length(x))
+  (x - mean(x)) / std
+}
+```
+
+```{r}
+z_bdi <- scale_this(d$bdi)
+mean(z_bdi)
+var(z_bdi)*65/66
+```
+
+```{r}
+z_cesd <- scale_this(d$cesd)
+mean(z_cesd)
+var(z_cesd)*65/66
+```
+Adesso calcolo la covarianza tra le variabili standardizzate:
+
+```{r}
+# inserisci il codice qui
+cov(z_bdi, z_cesd) * 65/66
+```
+
+il che, ovviamente, produce l'indice di correlazione.
+
+Se tutte le osservazioni stanno su una retta, la correlazione è 1 oppure -1.
+
+Creando i dati e svolgendo i calcoli, si provi l'affermazione precedente.
+
+```{r}
+# inserisci il codice qui
+# nel caso di una associazione positiva abbiamo:
+x <- 1:10
+y <- 3*x
+dd <- data.frame(x, y)
+dd %>% 
+  ggplot(
+    aes(x, y)
+  ) +
+  geom_point()
+cor(dd$x, dd$y)
+# nel caso di una associazione negativa abbiamo:
+x <- 1:10
+y <- -3*x
+dd <- data.frame(x, y)
+dd %>% 
+  ggplot(
+    aes(x, y)
+  ) +
+  geom_point()
+cor(dd$x, dd$y)
+```
+
