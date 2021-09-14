@@ -39,7 +39,7 @@ rmd_files:
     # - "025_intro_bayes.Rmd"
     # - "026_distr_coniugate.Rmd"
     # - "027_balance_prior_post.Rmd"
-    - "035_approx_posterior.Rmd"
+    - "036_approx_posterior.Rmd"
     # - "037_programmare_in_stan.Rmd"
     # - "040_modello_binomiale.Rmd"
     # - "041_diagnostica_MCMC.Rmd"

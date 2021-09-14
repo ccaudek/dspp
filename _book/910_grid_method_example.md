@@ -436,3 +436,95 @@ $$
 \Me = \frac{\alpha - \frac{1}{3}}{\alpha + \beta - \frac{2}{3}} \approx 0.5968.
 $$
 
+
+## Versione 2 {#es-pratico-zetsche-funzioni}
+
+Possiamo semplificare i calcoli precedenti definendo le funzioni `likelihood()`, `prior()` e `posterior()`.
+
+Per calcolare la funzione di verosimiglianza per i 30 valori di @zetschefuture2019 useremo la funzione `likelihood()`:
+
+
+```r
+x <- 23
+N <- 30
+param <- seq(0, 1, length.out = 100)
+
+likelihood <- function(param, x = 23, N = 30) {
+  dbinom(x, N, param)
+}
+
+tibble(
+  x = param, 
+  y = likelihood(param)
+) %>%
+  ggplot(aes(x, y)) +
+  geom_line() +
+  labs(
+    x = expression(theta),
+    y = "Verosimiglianza"
+  )
+```
+
+
+
+\begin{center}\includegraphics{910_grid_method_example_files/figure-latex/unnamed-chunk-20-1} \end{center}
+
+\noindent
+La funzione `likelihood()` ritorna l'ordinata della verosimiglianza binomiale per ciascun valore del vettore `param` in input.
+
+Quale distribuzione a priori utilizzeremo una $\mbox{Beta}(2, 10)$ che è implementata nella funzione `prior()`:
+
+
+```r
+prior <- function(param, alpha = 2, beta = 10) {
+  param_vals <- seq(0, 1, length.out = 100)
+  dbeta(param, alpha, beta) # / sum(dbeta(param_vals, alpha, beta))
+}
+
+tibble(
+  x = param, 
+  y = prior(param)
+) %>%
+  ggplot(aes(x, y)) +
+  geom_line() +
+  labs(
+    x = expression(theta),
+    y = "Densità"
+  )
+```
+
+
+
+\begin{center}\includegraphics{910_grid_method_example_files/figure-latex/unnamed-chunk-21-1} \end{center}
+
+La funzione `posterior()` ritorna il prodotto della densità a priori e della verosimiglianza:
+
+
+```r
+posterior <- function(param) {
+  likelihood(param) * prior(param)
+}
+
+tibble(
+  x = param, 
+  y = posterior(param)
+) %>%
+  ggplot(aes(x, y)) +
+  geom_line() +
+  labs(
+    x = expression(theta),
+    y = "Densità"
+  )
+```
+
+
+
+\begin{center}\includegraphics{910_grid_method_example_files/figure-latex/unnamed-chunk-22-1} \end{center}
+
+\noindent
+La distribuzione a posteriori non normalizzata mostrata nella figura replica il risultato ottenuto con il codice utilizzato nella prima parte di questo Capitolo. Per l'implementazione dell'algoritmo di Metropolis non è necessaria la normalizzazione della distribuzione a posteriori.
+
+
+
+
+

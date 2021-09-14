@@ -592,86 +592,42 @@ L'algoritmo di Metropolis prende come input il numero $M$ di passi da simulare, 
 
 ### Una applicazione concreta
 
-Per fare un esempio concreto, consideriamo nuovamente i 30 pazienti esaminati da @zetschefuture2019 e discussi nel Paragrafo \@ref(es-pratico-zetsche). Di essi, 23 hanno manifestato aspettative distorte negativamente sul loro stato d'animo futuro. Utilizzando l'algoritmo di Metropolis, ci poniamo il problema di ottenere la stima a posteriori di $\theta$ (probabilità di manifestare un'aspettativa distorta negativamente), dati 23 "successi" in 30 prove. Verrà imposta a $\theta$ la stessa distribuzione a priori usata nel Paragrafo \@ref(es-depression-beta-2-10).
+Per fare un esempio concreto, consideriamo nuovamente i 30 pazienti esaminati da @zetschefuture2019 e discussi nel Paragrafo \@ref(es-pratico-zetsche). Di essi, 23 hanno manifestato aspettative distorte negativamente sul loro stato d'animo futuro. Utilizzando l'algoritmo di Metropolis, ci poniamo il problema di ottenere la stima a posteriori di $\theta$ (probabilità di manifestare un'aspettativa distorta negativamente), dati 23 "successi" in 30 prove, imponendo su $\theta$ la stessa distribuzione a priori usata nel Paragrafo \@ref(es-depression-beta-2-10), ovvero $\mbox{Beta}(2, 10)$.
 
-
-#### Verosimiglianza
-
-Per calcolare la funzione di verosimiglianza per i 30 valori di @zetschefuture2019 useremo la funzione `likelihood()`:
+Per calcolare la funzione di verosimiglianza, avendo fissato i dati di @zetschefuture2019, useremo la funzione `likelihood()`
 
 ```{r}
-x <- 23
-N <- 30
-param <- seq(0, 1, length.out = 100)
-
 likelihood <- function(param, x = 23, N = 30) {
   dbinom(x, N, param)
 }
-
-tibble(
-  x = param, 
-  y = likelihood(param)
-) %>%
-  ggplot(aes(x, y)) +
-  geom_line() +
-  labs(
-    x = expression(theta),
-    y = "Verosimiglianza"
-  )
 ```
 
 \noindent
-La funzione `likelihood()` ritorna l'ordinata della verosimiglianza binomiale per ciascun valore del vettore `param` in input.
+che ritorna l'ordinata della verosimiglianza binomiale per ciascun valore del vettore `param` in input.
 
-
-#### Distribuzione a priori
-
-Quale distribuzione a priori utilizzeremo una $\mbox{Beta}(2, 10)$ implementata nella funzione `prior()`:
+La distribuzione a priori $\mbox{Beta}(2, 10)$ è implementata nella funzione `prior()`:
 
 ```{r}
 prior <- function(param, alpha = 2, beta = 10) {
   param_vals <- seq(0, 1, length.out = 100)
   dbeta(param, alpha, beta) # / sum(dbeta(param_vals, alpha, beta))
 }
-
-tibble(
-  x = param, 
-  y = prior(param)
-) %>%
-  ggplot(aes(x, y)) +
-  geom_line() +
-  labs(
-    x = expression(theta),
-    y = "Densità"
-  )
 ```
 
-
-#### Distribuzione a posteriori
-
-La funzione a posteriori è data dal prodotto della densità a priori e della verosimiglianza ed è implementata nella funzione `posterior()`:
+Il prodotto della densità a priori e della verosimiglianza è implementato nella funzione `posterior()`:
 
 ```{r}
 posterior <- function(param) {
   likelihood(param) * prior(param)
 }
-
-tibble(
-  x = param, 
-  y = posterior(param)
-) %>%
-  ggplot(aes(x, y)) +
-  geom_line() +
-  labs(
-    x = expression(theta),
-    y = "Densità"
-  )
 ```
 
-Il risultato della figura precedente è stato ottenuto con il metodo basato su griglia. Vogliamo ora replicare tale risultato usando l'algoritmo di Metropolis. La figura  indica che la media a posteriori è pari a circa 0.6. Questo è il valore a posteriori più verosimile per il parametro $\theta$ alla luce dei dati osservati se assumiamo una distribuzione a priori $\mbox{Beta}(2, 10)$. Ci poniamo ora il problema di replicare tale risultato usando l'algoritmo di Metropolis.
+L'Appendice \@ref(es-pratico-zetsche-funzioni) fornisce un'illustrazione dell'utilizzo di queste funzioni per generare un'approssimazione della distribuzione a posteriori $p(\theta \mid y)$ mediante il metodo basato su griglia. Ci poniamo ora il problema di replicare tale risultato usando l'algoritmo di Metropolis.
+
+<!-- Il risultato della figura precedente è stato ottenuto con il metodo basato su griglia. Vogliamo ora replicare tale risultato usando l'algoritmo di Metropolis. La figura  indica che la media a posteriori è pari a circa 0.6. Questo è il valore a posteriori più verosimile per il parametro $\theta$ alla luce dei dati osservati se assumiamo una distribuzione a priori $\mbox{Beta}(2, 10)$. Ci poniamo ora il problema di replicare tale risultato usando l'algoritmo di Metropolis. -->
 
 
-#### Implementazione
+### Implementazione
 
 Per implementare  l'algoritmo di Metropolis utilizzeremo una distribuzione proposta Normale. Il valore candidato sarà dunque un valore selezionato a caso da una Normale di parametri $\mu$ uguale al valore corrente nella catena e $\sigma = 0.9$. In questo esempio, la deviazione standard $\sigma$ è stata scelta empiricamente in modo tale da ottenere una accettanza adeguata. L'accettanza ottimale è di circa 0.20 e 0.30 --- se l'accettanza è troppo grande, l'algoritmo esplora uno spazio troppo ristretto della distribuzione a posteriori.^[L'accettanza dipende dalla distribuzione proposta: in generale, tanto più la distribuzione proposta è simile alla distribuzione target, tanto più alta diventa l'accettanza.]
 
@@ -736,7 +692,7 @@ mean(chain[-(1:burnIn)])
 
 Una figura che mostra l'approssimazione di $p(\theta \mid y)$  ottenuta con l'algoritmo di Metropolis, insieme ad un _trace plot_ dei valori della catena di Markov, viene prodotta usando le seguenti istruzioni:
 
-```{r sim-markov-chain-zetsche, fig.cap="Sinistra. Stima della distribuzione a posteriori della probabilità di una aspettativa futura distorta negativamente per i dati di @zetschefuture2019. Destra. Trace plot dei valori della catena di Markov escludendo il periodo di burn-in."}
+```{r sim-markov-chain-zetsche, fig.cap="Sinistra. Stima della distribuzione a posteriori della probabilità di una aspettativa futura distorta negativamente per i dati di Zetsche et al. (2019). Destra. Trace plot dei valori della catena di Markov escludendo il periodo di burn-in."}
 p1 <- tibble(
   x = chain[-(1:burnIn)]
   ) %>%

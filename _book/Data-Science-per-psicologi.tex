@@ -359,7 +359,7 @@ La figura \ref{fig:grid-method-6points-posterior-plot} mostra un grafico della d
 
 \begin{figure}
 
-{\centering \includegraphics{035_approx_posterior_files/figure-latex/grid-method-6points-posterior-plot-1} 
+{\centering \includegraphics{036_approx_posterior_files/figure-latex/grid-method-6points-posterior-plot-1} 
 
 }
 
@@ -395,7 +395,7 @@ L'ultimo passo della simulazione è il campionamento dalla distribuzione a poste
 
 \begin{figure}
 
-{\centering \includegraphics{035_approx_posterior_files/figure-latex/grid-method-6points-posterior-plot-sampling-1} 
+{\centering \includegraphics{036_approx_posterior_files/figure-latex/grid-method-6points-posterior-plot-sampling-1} 
 
 }
 
@@ -440,7 +440,7 @@ La figura \ref{fig:grid-method-6points-posterior-plot-sampling} mostra che, con 
 
 \begin{figure}
 
-{\centering \includegraphics{035_approx_posterior_files/figure-latex/grid-method-100points-posterior-plot-sampling-1} 
+{\centering \includegraphics{036_approx_posterior_files/figure-latex/grid-method-100points-posterior-plot-sampling-1} 
 
 }
 
@@ -482,7 +482,7 @@ Con il campionamento dalla distribuzione a posteriori discretizzata costruita me
 
 \begin{figure}
 
-{\centering \includegraphics{035_approx_posterior_files/figure-latex/grid-method-100points-posterior-plot-and-correct-posterior-1} 
+{\centering \includegraphics{036_approx_posterior_files/figure-latex/grid-method-100points-posterior-plot-and-correct-posterior-1} 
 
 }
 
@@ -556,7 +556,7 @@ Qui sotto è fornito un confronto tra la corretta distribuzione a posteriori (li
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{035_approx_posterior_files/figure-latex/unnamed-chunk-10-1} \end{center}
+\begin{center}\includegraphics{036_approx_posterior_files/figure-latex/unnamed-chunk-10-1} \end{center}
 
 Il grafico precedente mostra che l'approssimazione quadratica fornisce risultati soddisfacenti. Tali risultati sono simili (o identici) a quelli ottenuti con il metodo \emph{grid-based}, con il vantaggio aggiuntivo di disporre di una serie di funzioni \(\R\) in grado di svolgere i calcoli per noi. In realtà, però, l'approssimazione quadratica è poco usata perché, per problemi complessi, è più conveniente fare ricorso ai metodi Monte Carlo basati su Catena di Markov (MCMC) che verranno descritti nel Paragrafo successivo.
 
@@ -761,7 +761,7 @@ Senza entrare nei dettagli della simulazione, la figura \ref{fig:markovsim} most
 
 \begin{figure}
 
-{\centering \includegraphics{035_approx_posterior_files/figure-latex/markovsim-1} 
+{\centering \includegraphics{036_approx_posterior_files/figure-latex/markovsim-1} 
 
 }
 
@@ -815,7 +815,7 @@ La figura \ref{fig:formetropolisdistr} illustra la distribuzione di probabilità
 
 \begin{figure}
 
-{\centering \includegraphics{035_approx_posterior_files/figure-latex/formetropolisdistr-1} 
+{\centering \includegraphics{036_approx_posterior_files/figure-latex/formetropolisdistr-1} 
 
 }
 
@@ -896,8 +896,16 @@ Di seguito, implementiamo l'algoritmo di Metropolis utilizzando, quale valore in
 \NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\DecValTok{8}
 \NormalTok{prob\_dist2 }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{y =}\NormalTok{ prob, }\AttributeTok{fill =}\NormalTok{ Type)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{width =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{position =} \FunctionTok{position\_dodge}\NormalTok{(}\FloatTok{0.3}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\StringTok{"x"}\NormalTok{, }\AttributeTok{labels =} \FunctionTok{as.character}\NormalTok{(x), }\AttributeTok{breaks =}\NormalTok{ x) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}
+    \AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }
+    \AttributeTok{width =} \FloatTok{0.1}\NormalTok{, }
+    \AttributeTok{position =} \FunctionTok{position\_dodge}\NormalTok{(}\FloatTok{0.3}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}
+    \StringTok{"x"}\NormalTok{, }
+    \AttributeTok{labels =} \FunctionTok{as.character}\NormalTok{(x), }
+    \AttributeTok{breaks =}\NormalTok{ x}
+\NormalTok{  ) }\SpecialCharTok{+}
   \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"black"}\NormalTok{, }\StringTok{"gray80"}\NormalTok{)) }\SpecialCharTok{+}
   \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}
@@ -909,7 +917,7 @@ Di seguito, implementiamo l'algoritmo di Metropolis utilizzando, quale valore in
 
 \begin{figure}
 
-{\centering \includegraphics{035_approx_posterior_files/figure-latex/metropolishistogramsim-1} 
+{\centering \includegraphics{036_approx_posterior_files/figure-latex/metropolishistogramsim-1} 
 
 }
 
@@ -986,45 +994,22 @@ L'algoritmo di Metropolis prende come input il numero \(M\) di passi da simulare
 \hypertarget{una-applicazione-concreta}{%
 \subsection{Una applicazione concreta}\label{una-applicazione-concreta}}
 
-Per fare un esempio concreto, consideriamo nuovamente i 30 pazienti esaminati da \citet{zetschefuture2019} e discussi nel Paragrafo \ref{es-pratico-zetsche}. Di essi, 23 hanno manifestato aspettative distorte negativamente sul loro stato d'animo futuro. Utilizzando l'algoritmo di Metropolis, ci poniamo il problema di ottenere la stima a posteriori di \(\theta\) (probabilità di manifestare un'aspettativa distorta negativamente), dati 23 ``successi'' in 30 prove. Verrà imposta a \(\theta\) la stessa distribuzione a priori usata nel Paragrafo \ref{es-depression-beta-2-10}.
+Per fare un esempio concreto, consideriamo nuovamente i 30 pazienti esaminati da \citet{zetschefuture2019} e discussi nel Paragrafo \ref{es-pratico-zetsche}. Di essi, 23 hanno manifestato aspettative distorte negativamente sul loro stato d'animo futuro. Utilizzando l'algoritmo di Metropolis, ci poniamo il problema di ottenere la stima a posteriori di \(\theta\) (probabilità di manifestare un'aspettativa distorta negativamente), dati 23 ``successi'' in 30 prove, imponendo su \(\theta\) la stessa distribuzione a priori usata nel Paragrafo \ref{es-depression-beta-2-10}, ovvero \(\mbox{Beta}(2, 10)\).
 
-\hypertarget{verosimiglianza}{%
-\subsubsection{Verosimiglianza}\label{verosimiglianza}}
-
-Per calcolare la funzione di verosimiglianza per i 30 valori di \citet{zetschefuture2019} useremo la funzione \texttt{likelihood()}:
+Per calcolare la funzione di verosimiglianza, avendo fissato i dati di \citet{zetschefuture2019}, useremo la funzione \texttt{likelihood()}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{23}
-\NormalTok{N }\OtherTok{\textless{}{-}} \DecValTok{30}
-\NormalTok{param }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{100}\NormalTok{)}
-
 \NormalTok{likelihood }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(param, }\AttributeTok{x =} \DecValTok{23}\NormalTok{, }\AttributeTok{N =} \DecValTok{30}\NormalTok{) \{}
   \FunctionTok{dbinom}\NormalTok{(x, N, param)}
 \NormalTok{\}}
-
-\FunctionTok{tibble}\NormalTok{(}
-  \AttributeTok{x =}\NormalTok{ param, }
-  \AttributeTok{y =} \FunctionTok{likelihood}\NormalTok{(param)}
-\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(x, y)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}
-    \AttributeTok{x =} \FunctionTok{expression}\NormalTok{(theta),}
-    \AttributeTok{y =} \StringTok{"Verosimiglianza"}
-\NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{035_approx_posterior_files/figure-latex/unnamed-chunk-19-1} \end{center}
-
 \noindent
-La funzione \texttt{likelihood()} ritorna l'ordinata della verosimiglianza binomiale per ciascun valore del vettore \texttt{param} in input.
+che ritorna l'ordinata della verosimiglianza binomiale per ciascun valore del vettore \texttt{param} in input.
 
-\hypertarget{distribuzione-a-priori}{%
-\subsubsection{Distribuzione a priori}\label{distribuzione-a-priori}}
-
-Quale distribuzione a priori utilizzeremo una \(\mbox{Beta}(2, 10)\) implementata nella funzione \texttt{prior()}:
+La distribuzione a priori \(\mbox{Beta}(2, 10)\) è implementata nella funzione \texttt{prior()}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1032,52 +1017,23 @@ Quale distribuzione a priori utilizzeremo una \(\mbox{Beta}(2, 10)\) implementat
 \NormalTok{  param\_vals }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{100}\NormalTok{)}
   \FunctionTok{dbeta}\NormalTok{(param, alpha, beta) }\CommentTok{\# / sum(dbeta(param\_vals, alpha, beta))}
 \NormalTok{\}}
-
-\FunctionTok{tibble}\NormalTok{(}
-  \AttributeTok{x =}\NormalTok{ param, }
-  \AttributeTok{y =} \FunctionTok{prior}\NormalTok{(param)}
-\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(x, y)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}
-    \AttributeTok{x =} \FunctionTok{expression}\NormalTok{(theta),}
-    \AttributeTok{y =} \StringTok{"Densità"}
-\NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{035_approx_posterior_files/figure-latex/unnamed-chunk-20-1} \end{center}
-
-\hypertarget{distribuzione-a-posteriori}{%
-\subsubsection{Distribuzione a posteriori}\label{distribuzione-a-posteriori}}
-
-La funzione a posteriori è data dal prodotto della densità a priori e della verosimiglianza ed è implementata nella funzione \texttt{posterior()}:
+Il prodotto della densità a priori e della verosimiglianza è implementato nella funzione \texttt{posterior()}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{posterior }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(param) \{}
   \FunctionTok{likelihood}\NormalTok{(param) }\SpecialCharTok{*} \FunctionTok{prior}\NormalTok{(param)}
 \NormalTok{\}}
-
-\FunctionTok{tibble}\NormalTok{(}
-  \AttributeTok{x =}\NormalTok{ param, }
-  \AttributeTok{y =} \FunctionTok{posterior}\NormalTok{(param)}
-\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(x, y)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}
-    \AttributeTok{x =} \FunctionTok{expression}\NormalTok{(theta),}
-    \AttributeTok{y =} \StringTok{"Densità"}
-\NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{035_approx_posterior_files/figure-latex/unnamed-chunk-21-1} \end{center}
-
-Il risultato della figura precedente è stato ottenuto con il metodo basato su griglia. Vogliamo ora replicare tale risultato usando l'algoritmo di Metropolis. La figura indica che la media a posteriori è pari a circa 0.6. Questo è il valore a posteriori più verosimile per il parametro \(\theta\) alla luce dei dati osservati se assumiamo una distribuzione a priori \(\mbox{Beta}(2, 10)\). Ci poniamo ora il problema di replicare tale risultato usando l'algoritmo di Metropolis.
+L'Appendice \ref{es-pratico-zetsche-funzioni} fornisce un'illustrazione dell'utilizzo di queste funzioni per generare un'approssimazione della distribuzione a posteriori \(p(\theta \mid y)\) mediante il metodo basato su griglia. Ci poniamo ora il problema di replicare tale risultato usando l'algoritmo di Metropolis.
 
 \hypertarget{implementazione}{%
-\subsubsection{Implementazione}\label{implementazione}}
+\subsection{Implementazione}\label{implementazione}}
 
 Per implementare l'algoritmo di Metropolis utilizzeremo una distribuzione proposta Normale. Il valore candidato sarà dunque un valore selezionato a caso da una Normale di parametri \(\mu\) uguale al valore corrente nella catena e \(\sigma = 0.9\). In questo esempio, la deviazione standard \(\sigma\) è stata scelta empiricamente in modo tale da ottenere una accettanza adeguata. L'accettanza ottimale è di circa 0.20 e 0.30 --- se l'accettanza è troppo grande, l'algoritmo esplora uno spazio troppo ristretto della distribuzione a posteriori.\footnote{L'accettanza dipende dalla distribuzione proposta: in generale, tanto più la distribuzione proposta è simile alla distribuzione target, tanto più alta diventa l'accettanza.}
 
@@ -1194,11 +1150,11 @@ Una figura che mostra l'approssimazione di \(p(\theta \mid y)\) ottenuta con l'a
 
 \begin{figure}
 
-{\centering \includegraphics{035_approx_posterior_files/figure-latex/sim-markov-chain-zetsche-1} 
+{\centering \includegraphics{036_approx_posterior_files/figure-latex/sim-markov-chain-zetsche-1} 
 
 }
 
-\caption{Sinistra. Stima della distribuzione a posteriori della probabilità di una aspettativa futura distorta negativamente per i dati di @zetschefuture2019. Destra. Trace plot dei valori della catena di Markov escludendo il periodo di burn-in.}\label{fig:sim-markov-chain-zetsche}
+\caption{Sinistra. Stima della distribuzione a posteriori della probabilità di una aspettativa futura distorta negativamente per i dati di Zetsche et al. (2019). Destra. Trace plot dei valori della catena di Markov escludendo il periodo di burn-in.}\label{fig:sim-markov-chain-zetsche}
 \end{figure}
 
 \hypertarget{input}{%
@@ -1253,7 +1209,7 @@ Il Correlogramma è uno strumento grafico usato per la valutazione della tendenz
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{035_approx_posterior_files/figure-latex/unnamed-chunk-29-1} \end{center}
+\begin{center}\includegraphics{036_approx_posterior_files/figure-latex/unnamed-chunk-29-1} \end{center}
 
 Il correlogramma precedente mostra come l'autocorrelazione di ordine 1 sia circa pari a 0.4 e diminuisce per lag maggiori; per lag di 4, l'autocorrelazione diventa negativa e aumenta progressivamente fino ad un lag di 8; eccetera.
 
@@ -1307,8 +1263,8 @@ Fissiamo una griglia di \(n = 50\) valori equispaziati nell'intervallo {[}0, 1{]
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{distribuzione-a-priori-1}{%
-\section{Distribuzione a priori}\label{distribuzione-a-priori-1}}
+\hypertarget{distribuzione-a-priori}{%
+\section{Distribuzione a priori}\label{distribuzione-a-priori}}
 
 Supponiamo di avere scarse credenze a priori sulla tendenza di un individuo clinicamente depresso a manifestare delle aspettative distorte negativamente circa il suo umore futuro. Imponiamo quindi una distribuzione non informativa sulla distribuzione a priori di \(\theta\) --- ovvero, una distribuzione uniforme nell'intervallo {[}0, 1{]}. Dato che consideriamo soltanto \(n = 50\) valori possibili per il parametro \(\theta\), creiamo un vettore di 50 elementi che conterrà i valori della distribuzione a priori scalando ciascun valore del vettore per \(n\) in modo tale che la somma di tutti i valori sia uguale a 1.0:
 
@@ -1429,8 +1385,8 @@ La chiamata a \texttt{dbinom()} produce dunque un vettore i cui valori corrispon
 \caption{Rappresentazione della funzione di verosimiglianza per il parametro $\theta$, ovvero la probabilità di aspettative future distorte negativamente.}\label{fig:gridappr2}
 \end{figure}
 
-\hypertarget{distribuzione-a-posteriori-1}{%
-\section{Distribuzione a posteriori}\label{distribuzione-a-posteriori-1}}
+\hypertarget{distribuzione-a-posteriori}{%
+\section{Distribuzione a posteriori}\label{distribuzione-a-posteriori}}
 
 L'approssimazione discretizzata della distribuzione a posteriori \(p(\theta \mid y)\) si ottiene facendo il prodotto della verosimiglianza e della distribuzione a priori per poi scalare tale prodotto per una costante di normalizzazione. Il prodotto \(p(\theta)\mathcal{L}(y \mid \theta)\) produce la distribuzione a posteriori \emph{non standardizzata}.
 
@@ -1733,6 +1689,91 @@ La stima della mediana a posteriori si ottiene con
 \[
 \Me = \frac{\alpha - \frac{1}{3}}{\alpha + \beta - \frac{2}{3}} \approx 0.5968.
 \]
+
+\hypertarget{es-pratico-zetsche-funzioni}{%
+\section{Versione 2}\label{es-pratico-zetsche-funzioni}}
+
+Possiamo semplificare i calcoli precedenti definendo le funzioni \texttt{likelihood()}, \texttt{prior()} e \texttt{posterior()}.
+
+Per calcolare la funzione di verosimiglianza per i 30 valori di \citet{zetschefuture2019} useremo la funzione \texttt{likelihood()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{23}
+\NormalTok{N }\OtherTok{\textless{}{-}} \DecValTok{30}
+\NormalTok{param }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{100}\NormalTok{)}
+
+\NormalTok{likelihood }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(param, }\AttributeTok{x =} \DecValTok{23}\NormalTok{, }\AttributeTok{N =} \DecValTok{30}\NormalTok{) \{}
+  \FunctionTok{dbinom}\NormalTok{(x, N, param)}
+\NormalTok{\}}
+
+\FunctionTok{tibble}\NormalTok{(}
+  \AttributeTok{x =}\NormalTok{ param, }
+  \AttributeTok{y =} \FunctionTok{likelihood}\NormalTok{(param)}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(x, y)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \FunctionTok{expression}\NormalTok{(theta),}
+    \AttributeTok{y =} \StringTok{"Verosimiglianza"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{910_grid_method_example_files/figure-latex/unnamed-chunk-20-1} \end{center}
+
+\noindent
+La funzione \texttt{likelihood()} ritorna l'ordinata della verosimiglianza binomiale per ciascun valore del vettore \texttt{param} in input.
+
+Quale distribuzione a priori utilizzeremo una \(\mbox{Beta}(2, 10)\) che è implementata nella funzione \texttt{prior()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prior }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(param, }\AttributeTok{alpha =} \DecValTok{2}\NormalTok{, }\AttributeTok{beta =} \DecValTok{10}\NormalTok{) \{}
+\NormalTok{  param\_vals }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{100}\NormalTok{)}
+  \FunctionTok{dbeta}\NormalTok{(param, alpha, beta) }\CommentTok{\# / sum(dbeta(param\_vals, alpha, beta))}
+\NormalTok{\}}
+
+\FunctionTok{tibble}\NormalTok{(}
+  \AttributeTok{x =}\NormalTok{ param, }
+  \AttributeTok{y =} \FunctionTok{prior}\NormalTok{(param)}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(x, y)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \FunctionTok{expression}\NormalTok{(theta),}
+    \AttributeTok{y =} \StringTok{"Densità"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{910_grid_method_example_files/figure-latex/unnamed-chunk-21-1} \end{center}
+
+La funzione \texttt{posterior()} ritorna il prodotto della densità a priori e della verosimiglianza:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{posterior }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(param) \{}
+  \FunctionTok{likelihood}\NormalTok{(param) }\SpecialCharTok{*} \FunctionTok{prior}\NormalTok{(param)}
+\NormalTok{\}}
+
+\FunctionTok{tibble}\NormalTok{(}
+  \AttributeTok{x =}\NormalTok{ param, }
+  \AttributeTok{y =} \FunctionTok{posterior}\NormalTok{(param)}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(x, y)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \FunctionTok{expression}\NormalTok{(theta),}
+    \AttributeTok{y =} \StringTok{"Densità"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{910_grid_method_example_files/figure-latex/unnamed-chunk-22-1} \end{center}
+
+\noindent
+La distribuzione a posteriori non normalizzata mostrata nella figura replica il risultato ottenuto con il codice utilizzato nella prima parte di questo Capitolo. Per l'implementazione dell'algoritmo di Metropolis non è necessaria la normalizzazione della distribuzione a posteriori.
 
   \bibliography{refs.bib,book.bib,packages.bib}
 
