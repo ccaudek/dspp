@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.1)  14 SEP 2021 12:45
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.1)  14 SEP 2021 13:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -942,140 +942,48 @@ Package: xfrac 2020-03-06 L3 Experimental split-level fractions
 Package xtemplate Info: Declaring object type 'xfrac' taking 3 argument(s) on
 (xtemplate)             line 80.
 
-) (/usr/local/texlive/2020/texmf-dist/tex/latex/multirow/multirow.sty
-Package: multirow 2019/05/31 v2.5 Span multiple rows of a table
-\multirow@colwidth=\skip265
-\multirow@cntb=\count372
-\multirow@dima=\skip266
-\bigstrutjot=\dimen296
-) (/usr/local/texlive/2020/texmf-dist/tex/latex/wrapfig/wrapfig.sty
-\wrapoverhang=\dimen297
-\WF@size=\dimen298
-\c@WF@wrappedlines=\count373
-\WF@box=\box65
-\WF@everypar=\toks32
-Package: wrapfig 2003/01/31  v 3.6
-) (/usr/local/texlive/2020/texmf-dist/tex/latex/float/float.sty
-Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count374
-\float@exts=\toks33
-\float@box=\box66
-\@float@everytoks=\toks34
-\@floatcapt=\box67
-) (/usr/local/texlive/2020/texmf-dist/tex/latex/colortbl/colortbl.sty
-Package: colortbl 2020/01/04 v1.0e Color table columns (DPC)
-\everycr=\toks35
-\minrowclearance=\skip267
-) (/usr/local/texlive/2020/texmf-dist/tex/latex/pdflscape/pdflscape.sty
-Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
-(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/lscape.sty
-Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
-)
-Package pdflscape Info: Auto-detected driver: dvipdfm (xetex) on input line 98.
-
-) (/usr/local/texlive/2020/texmf-dist/tex/latex/tabu/tabu.sty
-Package: tabu 2019/01/11 v2.9 - flexible LaTeX tabulars (FC+tabu-fixed)
-(/usr/local/texlive/2020/texmf-dist/tex/latex/varwidth/varwidth.sty
-Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
-\@vwid@box=\box68
-\sift@deathcycles=\count375
-\@vwid@loff=\dimen299
-\@vwid@roff=\dimen300
-)
-\c@taburow=\count376
-\tabu@nbcols=\count377
-\tabu@cnt=\count378
-\tabu@Xcol=\count379
-\tabu@alloc=\count380
-\tabu@nested=\count381
-\tabu@target=\dimen301
-\tabu@spreadtarget=\dimen302
-\tabu@naturalX=\dimen303
-\tabucolX=\dimen304
-\tabu@Xsum=\dimen305
-\extrarowdepth=\dimen306
-\abovetabulinesep=\dimen307
-\belowtabulinesep=\dimen308
-\tabustrutrule=\dimen309
-\tabu@thebody=\toks36
-\tabu@footnotes=\toks37
-\tabu@box=\box69
-\tabu@arstrutbox=\box70
-\tabu@hleads=\box71
-\tabu@vleads=\box72
-\tabu@cellskip=\skip268
-)
-(/usr/local/texlive/2020/texmf-dist/tex/latex/threeparttable/threeparttable.sty
-Package: threeparttable 2003/06/13  v 3.0
-\@tempboxb=\box73
-)
-(/usr/local/texlive/2020/texmf-dist/tex/latex/threeparttablex/threeparttablex.s
-ty
-Package: threeparttablex 2013/07/23 v0.3 by daleif
-(/usr/local/texlive/2020/texmf-dist/tex/latex/environ/environ.sty
-Package: environ 2014/05/04 v0.3 A new way to define environments
-(/usr/local/texlive/2020/texmf-dist/tex/latex/trimspaces/trimspaces.sty
-Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
-))
-\TPTL@width=\skip269
-) (/usr/local/texlive/2020/texmf-dist/tex/generic/ulem/ulem.sty
-\UL@box=\box74
-\UL@hyphenbox=\box75
-\UL@skip=\skip270
-\UL@hook=\toks38
-\UL@height=\dimen310
-\UL@pe=\count382
-\UL@pixel=\dimen311
-\ULC@box=\box76
-Package: ulem 2019/11/18
-\ULdepth=\dimen312
-) (/usr/local/texlive/2020/texmf-dist/tex/latex/makecell/makecell.sty
-Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
-\rotheadsize=\dimen313
-\c@nlinenum=\count383
-\TeXr@lab=\toks39
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/natbib/natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
-\bibhang=\skip271
-\bibsep=\skip272
+\bibhang=\skip265
+\bibsep=\skip266
 LaTeX Info: Redefining \cite on input line 694.
-\c@NAT@ctr=\count384
+\c@NAT@ctr=\count372
 )
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 (./Data-Science-per-psicologi.aux)
 \openout1 = `Data-Science-per-psicologi.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 186.
-LaTeX Font Info:    ... okay on input line 186.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 186.
-LaTeX Font Info:    ... okay on input line 186.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 186.
-LaTeX Font Info:    ... okay on input line 186.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 186.
-LaTeX Font Info:    ... okay on input line 186.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 186.
-LaTeX Font Info:    ... okay on input line 186.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 186.
-LaTeX Font Info:    ... okay on input line 186.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 186.
-LaTeX Font Info:    ... okay on input line 186.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 186.
-LaTeX Font Info:    ... okay on input line 186.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 186.
-LaTeX Font Info:    ... okay on input line 186.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 186.
-LaTeX Font Info:    ... okay on input line 186.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 172.
+LaTeX Font Info:    ... okay on input line 172.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 172.
+LaTeX Font Info:    ... okay on input line 172.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 172.
+LaTeX Font Info:    ... okay on input line 172.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 172.
+LaTeX Font Info:    ... okay on input line 172.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 172.
+LaTeX Font Info:    ... okay on input line 172.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 172.
+LaTeX Font Info:    ... okay on input line 172.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 172.
+LaTeX Font Info:    ... okay on input line 172.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 172.
+LaTeX Font Info:    ... okay on input line 172.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 172.
+LaTeX Font Info:    ... okay on input line 172.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 172.
+LaTeX Font Info:    ... okay on input line 172.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 186.
+(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 172.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 186.
+(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 172.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 186.
+(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 172.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 186.
+(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 172.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 186.
+(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 172.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -1104,7 +1012,7 @@ pt=math;language=dflt;"
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(0)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 186.
+(Font)              scaled to size 10.0pt on input line 172.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -1143,18 +1051,18 @@ pt=math;language=dflt;"
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 186.
+(Font)              scaled to size 10.0pt on input line 172.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 186.
+(Font)              `operators' in the math version `normal' on input line 172.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input
- line 186.
+ line 172.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 186.
+(Font)              `operators' in the math version `bold' on input line 172.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
 (Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on inpu
-t line 186.
+t line 172.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -1241,15 +1149,15 @@ t=math;language=dflt;"
 (fontspec)             \fontdimen 21\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `normal' on input line 186.
+(Font)              `symbols' in the math version `normal' on input line 172.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
 (Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on inpu
-t line 186.
+t line 172.
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `bold' on input line 186.
+(Font)              `symbols' in the math version `bold' on input line 172.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
 (Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on inpu
-t line 186.
+t line 172.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -1319,16 +1227,16 @@ pt=math;language=dflt;"
 
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
 (Font)              `largesymbols' in the math version `normal' on input line 1
-86.
+72.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
 (Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on inpu
-t line 186.
+t line 172.
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `bold' on input line 186
+(Font)              `largesymbols' in the math version `bold' on input line 172
 .
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
 (Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on inpu
-t line 186.
+t line 172.
 
 Package unicode-math Warning: Using \overbracket and \underbracket from
 (unicode-math)                `mathtools' package.
@@ -1347,7 +1255,7 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 (unicode-math)                colon-like commands, using them will lead to
 (unicode-math)                inconsistencies.
 
-LaTeX Info: Redefining \microtypecontext on input line 186.
+LaTeX Info: Redefining \microtypecontext on input line 172.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
 Package microtype Info: No adjustment of tracking.
@@ -1358,8 +1266,8 @@ Package microtype Info: No adjustment of kerning.
 File: mt-LatinModernRoman.cfg 2013/03/13 v1.0 microtype config. file: Latin Mod
 ern Roman (RS)
 )
-\AtBeginShipoutBox=\box77
-Package hyperref Info: Link coloring ON on input line 186.
+\AtBeginShipoutBox=\box65
+Package hyperref Info: Link coloring ON on input line 172.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
 (/usr/local/texlive/2020/texmf-dist/tex/latex/refcount/refcount.sty
@@ -1369,50 +1277,47 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count385
+\c@section@level=\count373
 )
 Redoing nameref's sectioning
 Redoing nameref's label
-LaTeX Info: Redefining \nameref on input line 186.
-LaTeX Info: Redefining \ref on input line 186.
-LaTeX Info: Redefining \pageref on input line 186.
-LaTeX Info: Redefining \nameref on input line 186.
+LaTeX Info: Redefining \nameref on input line 172.
+LaTeX Info: Redefining \ref on input line 172.
+LaTeX Info: Redefining \pageref on input line 172.
+LaTeX Info: Redefining \nameref on input line 172.
 Package caption Info: Begin \AtBeginDocument code.
-Package caption Info: float package is loaded.
-Package caption Info: threeparttable package is loaded.
-Package caption Info: wrapfig package is loaded.
 Package caption Info: End \AtBeginDocument code.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 10.95pt on input line 188.
+(Font)              scaled to size 10.95pt on input line 174.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 8.0pt on input line 188.
+(Font)              scaled to size 8.0pt on input line 174.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 6.0pt on input line 188.
+(Font)              scaled to size 6.0pt on input line 174.
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-88.
+74.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.95099pt on input line 188.
+(Font)              scaled to size 10.95099pt on input line 174.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 8.00073pt on input line 188.
+(Font)              scaled to size 8.00073pt on input line 174.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 6.00055pt on input line 188.
+(Font)              scaled to size 6.00055pt on input line 174.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 10.94882pt on input line 188.
+(Font)              scaled to size 10.94882pt on input line 174.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 7.99915pt on input line 188.
+(Font)              scaled to size 7.99915pt on input line 174.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 5.99936pt on input line 188.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 188
+(Font)              scaled to size 5.99936pt on input line 174.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 174
 .
 (/usr/local/texlive/2020/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 188
+LaTeX Font Info:    Trying to load font information for U+msb on input line 174
 .
 (/usr/local/texlive/2020/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -1439,236 +1344,79 @@ LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 
 ] [2]
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <12> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 201.
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 187.
+
+LaTeX Warning: Reference `chapter-distr-coniugate' on page 3 undefined on input
+ line 216.
+
 [3
 
 ]
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `lmss' (encoding: TU).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
-
-Class memoir Warning: The material used in the headers is too large
-(24.0pt) for the given head height (12.0pt), it is recommended to
-either increase the head height or redesign the header
-(in both cases you will find help in the memoir manual). on input line 259.
-
-
-Overfull \vbox (12.0pt too high) has occurred while \output is active []
-
-[4]
+LaTeX Font Info:    Font shape `TU/Inconsolata(0)/b/n' will be
+(Font)              scaled to size 10.32693pt on input line 231.
 LaTeX Font Info:    Font shape `TU/Inconsolata(0)/m/n' will be
-(Font)              scaled to size 9.431pt on input line 273.
-[5]
+(Font)              scaled to size 9.431pt on input line 233.
 
 LaTeX Font Warning: Font shape `TU/Inconsolata(0)/m/it' undefined
-(Font)              using `TU/Inconsolata(0)/m/n' instead on input line 315.
+(Font)              using `TU/Inconsolata(0)/m/n' instead on input line 240.
 
 LaTeX Font Info:    Font shape `TU/Inconsolata(0)/m/it' will be
-(Font)              scaled to size 9.431pt on input line 316.
-File: 036_approx_posterior_files/figure-latex/grid-method-6points-posterior-plo
-t-1.pdf Graphic file (type pdf)
-<use 036_approx_posterior_files/figure-latex/grid-method-6points-posterior-plot
--1.pdf>
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 366.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 9.00082pt on input line 366.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 8.99904pt on input line 366.
-
-Overfull \vbox (12.0pt too high) has occurred while \output is active []
-
-[6]
-File: 036_approx_posterior_files/figure-latex/grid-method-6points-posterior-plo
-t-sampling-1.pdf Graphic file (type pdf)
-<use 036_approx_posterior_files/figure-latex/grid-method-6points-posterior-plot
--sampling-1.pdf>
-[7]
-File: 036_approx_posterior_files/figure-latex/grid-method-100points-posterior-p
-lot-sampling-1.pdf Graphic file (type pdf)
-<use 036_approx_posterior_files/figure-latex/grid-method-100points-posterior-pl
-ot-sampling-1.pdf>
-
-Overfull \vbox (12.0pt too high) has occurred while \output is active []
-
-[8]
-File: 036_approx_posterior_files/figure-latex/grid-method-100points-posterior-p
-lot-and-correct-posterior-1.pdf Graphic file (type pdf)
-<use 036_approx_posterior_files/figure-latex/grid-method-100points-posterior-pl
-ot-and-correct-posterior-1.pdf>
-[9]
-Overfull \vbox (12.0pt too high) has occurred while \output is active []
-
-[10]
-LaTeX Font Info:    Font shape `TU/Inconsolata(0)/m/n' will be
-(Font)              scaled to size 7.5448pt on input line 515.
-[11]
-File: 036_approx_posterior_files/figure-latex/unnamed-chunk-10-1.pdf Graphic fi
-le (type pdf)
-<use 036_approx_posterior_files/figure-latex/unnamed-chunk-10-1.pdf>
-
-LaTeX Warning: Reference `chapter-distr-priori-coniugate' on page 12 undefined 
-on input line 566.
-
-
-Overfull \vbox (12.0pt too high) has occurred while \output is active []
-
-[12]
-
-LaTeX Warning: Reference `integration-mc' on page 13 undefined on input line 61
-8.
-
-File: /Users/corrado/Documents/teaching/2021-22/psicometria/dspp/images/mcmc-ch
-ains-1.png Graphic file (type bmp)
-</Users/corrado/Documents/teaching/2021-22/psicometria/dspp/images/mcmc-chains-
-1.png>
-[13]
-Overfull \vbox (12.0pt too high) has occurred while \output is active []
-
-[14]
-Underfull \hbox (badness 10000) in paragraph at lines 699--700
-
- []
-
-[15]
-Underfull \hbox (badness 1237) in paragraph at lines 722--723
-[]\TU/lmr/m/n/10 Senza entrare nei dettagli della simulazione, la figura [][]1.
-6[][] mostra i
- []
-
+(Font)              scaled to size 9.431pt on input line 241.
+[4]
 LaTeX Font Info:    Font shape `TU/Inconsolata(0)/b/n' will be
-(Font)              scaled to size 9.431pt on input line 729.
-
-Overfull \vbox (12.0pt too high) has occurred while \output is active []
-
-[16]
-File: 036_approx_posterior_files/figure-latex/markovsim-1.pdf Graphic file (typ
-e pdf)
-<use 036_approx_posterior_files/figure-latex/markovsim-1.pdf>
-[17]
-Overfull \vbox (12.0pt too high) has occurred while \output is active []
-
-[18]
-File: 036_approx_posterior_files/figure-latex/formetropolisdistr-1.pdf Graphic 
+(Font)              scaled to size 9.431pt on input line 280.
+[5] [6] [7]
+File: 040_modello_binomiale_files/figure-latex/trace-plot-gautret-1.pdf Graphic
+ file (type pdf)
+<use 040_modello_binomiale_files/figure-latex/trace-plot-gautret-1.pdf>
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 9.0pt on input line 479.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 9.00082pt on input line 479.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 8.99904pt on input line 479.
+[8]
+File: 040_modello_binomiale_files/figure-latex/hist-post-gautret-1.pdf Graphic 
 file (type pdf)
-<use 036_approx_posterior_files/figure-latex/formetropolisdistr-1.pdf>
-[19]
-Overfull \vbox (12.0pt too high) has occurred while \output is active []
+<use 040_modello_binomiale_files/figure-latex/hist-post-gautret-1.pdf>
+[9]
+File: 040_modello_binomiale_files/figure-latex/hist-post-gautret-plus-correct-1
+.pdf Graphic file (type pdf)
+<use 040_modello_binomiale_files/figure-latex/hist-post-gautret-plus-correct-1.
+pdf>
+[10] [11] [12] [13] [14]
+Underfull \hbox (badness 1092) in paragraph at lines 719--720
+\TU/lmr/m/n/10 with MCMC sampling (NUTS, HMC); approximate Bayesian
+ []
 
-[20]
-File: 036_approx_posterior_files/figure-latex/metropolishistogramsim-1.pdf Grap
-hic file (type pdf)
-<use 036_approx_posterior_files/figure-latex/metropolishistogramsim-1.pdf>
-[21]
-Overfull \vbox (12.0pt too high) has occurred while \output is active []
+[15
 
-[22] [23]
-Overfull \vbox (12.0pt too high) has occurred while \output is active []
+] [16] [17] [18] [19] [20] (./Data-Science-per-psicologi.bbl [21] [22
 
-[24] [25]
-Overfull \vbox (12.0pt too high) has occurred while \output is active []
-
-[26]
-File: 036_approx_posterior_files/figure-latex/sim-markov-chain-zetsche-1.pdf Gr
-aphic file (type pdf)
-<use 036_approx_posterior_files/figure-latex/sim-markov-chain-zetsche-1.pdf>
-
-Overfull \vbox (0.69003pt too high) has occurred while \output is active []
-
-[27]
-Overfull \vbox (12.0pt too high) has occurred while \output is active []
-
-[28]
-File: 036_approx_posterior_files/figure-latex/unnamed-chunk-29-1.pdf Graphic fi
-le (type pdf)
-<use 036_approx_posterior_files/figure-latex/unnamed-chunk-29-1.pdf>
-
-Overfull \vbox (0.69003pt too high) has occurred while \output is active []
-
-[29]
-Overfull \vbox (12.0pt too high) has occurred while \output is active []
-
-[30] [31
-
-] [32]
-File: 910_grid_method_example_files/figure-latex/gridappr1-1.pdf Graphic file (
-type pdf)
-<use 910_grid_method_example_files/figure-latex/gridappr1-1.pdf>
-[33]
-File: 910_grid_method_example_files/figure-latex/gridappr2-1.pdf Graphic file (
-type pdf)
-<use 910_grid_method_example_files/figure-latex/gridappr2-1.pdf>
-[34] [35] [36]
-File: 910_grid_method_example_files/figure-latex/gridappr3-1.pdf Graphic file (
-type pdf)
-<use 910_grid_method_example_files/figure-latex/gridappr3-1.pdf>
-
-Overfull \vbox (12.0pt too high) has occurred while \output is active []
-
-[37]
-File: 910_grid_method_example_files/figure-latex/gridappr4-1.pdf Graphic file (
-type pdf)
-<use 910_grid_method_example_files/figure-latex/gridappr4-1.pdf>
-[38]
-File: 910_grid_method_example_files/figure-latex/gridappr5-1.pdf Graphic file (
-type pdf)
-<use 910_grid_method_example_files/figure-latex/gridappr5-1.pdf>
-
-Overfull \vbox (12.0pt too high) has occurred while \output is active []
-
-[39] [40]
-File: 910_grid_method_example_files/figure-latex/unnamed-chunk-16-1.pdf Graphic
- file (type pdf)
-<use 910_grid_method_example_files/figure-latex/unnamed-chunk-16-1.pdf>
-
-Overfull \vbox (12.0pt too high) has occurred while \output is active []
-
-[41]
-File: 910_grid_method_example_files/figure-latex/unnamed-chunk-20-1.pdf Graphic
- file (type pdf)
-<use 910_grid_method_example_files/figure-latex/unnamed-chunk-20-1.pdf>
-[42]
-File: 910_grid_method_example_files/figure-latex/unnamed-chunk-21-1.pdf Graphic
- file (type pdf)
-<use 910_grid_method_example_files/figure-latex/unnamed-chunk-21-1.pdf>
-[43]
-File: 910_grid_method_example_files/figure-latex/unnamed-chunk-22-1.pdf Graphic
- file (type pdf)
-<use 910_grid_method_example_files/figure-latex/unnamed-chunk-22-1.pdf>
-[44] (./Data-Science-per-psicologi.bbl [45] [46
-
-])
-
-Class memoir Warning: The material used in the headers is too large
-(24.0pt) for the given head height (12.0pt), it is recommended to
-either increase the head height or redesign the header
-(in both cases you will find help in the memoir manual). on input line 1780.
-
-[47]
+]) [23]
 \tf@toc=\write5
 \openout5 = `Data-Science-per-psicologi.toc'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1780.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1780.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 965.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 965.
 (./Data-Science-per-psicologi.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1780.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 1780.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 965.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 965.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1780.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 965.
  ) 
 Here is how much of TeX's memory you used:
- 27506 strings out of 479418
- 481913 string characters out of 5884586
- 1010374 words of memory out of 5000000
- 44541 multiletter control sequences out of 15000+600000
- 540049 words of font info for 108 fonts, out of 8000000 for 9000
+ 26023 strings out of 479418
+ 452667 string characters out of 5884586
+ 977126 words of memory out of 5000000
+ 43144 multiletter control sequences out of 15000+600000
+ 539903 words of font info for 102 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 60i,12n,121p,1714b,530s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,12n,121p,1214b,530s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on Data-Science-per-psicologi.pdf (47 pages).
+Output written on Data-Science-per-psicologi.pdf (23 pages).

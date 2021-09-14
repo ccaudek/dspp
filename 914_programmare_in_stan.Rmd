@@ -1,4 +1,4 @@
-# Programmare in Stan
+# Programmare in Stan {#intro-stan}
 
 <!-- http://avehtari.github.io/BDA_R_demos/demos_rstan/rstan_demo.html -->
 
