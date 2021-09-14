@@ -45,11 +45,11 @@ Ci sono molti pacchetti R che facilitano l'uso di Stan, tra cui
 
 ## CmdStan
 
-Negli esempi qui discusi verrà usato `CmdStanR`, ovvero un'interfaccia R per `CmdStan` che costituisce una recente alternativa alla tradizionale interfaccia `RStan`. `CmdStanR` non è ancora disponibile su CRAN, ma può essere installato come indicato su questo [link](https://mc-stan.org/docs/2_27/cmdstan-guide/cmdstan-installation.html). 
+Negli esempi qui discusi verrà usata `CmdStanR`, un'interfaccia R per `CmdStan` che costituisce una recente alternativa alla tradizionale interfaccia `RStan`. `CmdStanR` non è ancora disponibile su CRAN, ma può essere installato come indicato su questo [link](https://mc-stan.org/docs/2_27/cmdstan-guide/cmdstan-installation.html). 
 
 Una volta installato `CmdStanR`, il pacchetto `cmdstanr` può essere caricato come un qualsiasi altro pacchetto R.
 
-Si noti che `CmdStanR` richiede un'installazione funzionante di `CmdStan`, l'interfaccia shell per Stan. Se `CmdStan` non è installato, `CmdStanR` lo installerà automaticamente se il computer dispone di una __Toolchain__ adatta. Stan richiede infatti che sul computer su cui viene installato siano presenti alcuni strumenti necessari per gestire i file C++. Tra le altre ragioni, questo è dovuto al fatto che il codice Stan viene tradotto in codice C++ e compilato. Il modo migliore per ottenere il software necessario per un computer Windows o Mac è quello di installare `RTools`. Per un computer Linux, è necessario installare `build-essential` e una versione recente dei compilatori g++ o clang++. I requisiti sono descritti nella [Guida di CmdStan](https://mc-stan.org/docs/cmdstan-guide/cmdstan-installation.html).
+Si noti che `CmdStanR` richiede un'installazione funzionante di `CmdStan`, l'interfaccia shell per Stan. Se `CmdStan` non è installato, `CmdStanR` lo installerà automaticamente se il computer dispone di una _Toolchain_ adatta. Stan richiede infatti che sul computer su cui viene installato siano presenti alcuni strumenti necessari per gestire i file C++. Tra le altre ragioni, questo è dovuto al fatto che il codice Stan viene tradotto in codice C++ e compilato. Il modo migliore per ottenere il software necessario per un computer Windows o Mac è quello di installare `RTools`. Per un computer Linux, è necessario installare `build-essential` e una versione recente dei compilatori g++ o clang++. I requisiti sono descritti nella [Guida di CmdStan](https://mc-stan.org/docs/cmdstan-guide/cmdstan-installation.html).
 
 Per verificare che la Toolchain sia configurata correttamente è possibile utilizzare la funzione `check_cmdstan_toolchain()`:
 
@@ -85,7 +85,7 @@ cmdstan_version()
 
 ## Codice Stan 
 
-Qualunque sia l'interfaccia che viene usata, i modelli sottostanti sono sempre scritti nel linguaggio Stan, il che significa che lo stesso codice Stan sarà valido per tutte le interfacce possibili. Il codice Stan è costituito da una serie di blocchi che vengono usati per specificare un modello statistico. In ordine, questi blocchi sono: `data`, `transformed data`, `parameters`, `transformed parameters`, `model`, e `generated quantities`. 
+Qualunque sia l'interfaccia che viene usata, i modelli sottostanti sono sempre scritti nel linguaggio Stan, il che significa che lo stesso codice Stan è valido per tutte le interfacce possibili. Il codice Stan è costituito da una serie di blocchi che vengono usati per specificare un modello statistico. In ordine, questi blocchi sono: `data`, `transformed data`, `parameters`, `transformed parameters`, `model`, e `generated quantities`. 
 
 Un programma Stan contiene tre "blocchi" obbligatori: blocco `data`, blocco `parameters`, blocco `model`.
 
