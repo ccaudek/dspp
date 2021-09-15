@@ -166,7 +166,7 @@ nella prima estrazione è 2/7.
 :::
 
 
-## La regola di Bayes
+## La formula di Bayes
 
 Il teorema di Bayes rappresenta uno dei fondamenti della teoria della
 probabilità e della statistica. Lo presentiamo qui considerando un

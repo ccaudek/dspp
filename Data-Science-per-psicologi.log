@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.1)  14 SEP 2021 13:58
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.1)  15 SEP 2021 12:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -855,7 +855,7 @@ exlive/2020/texmf-dist/tex/generic/babel/txtbabel.def))
 \it@doublequoteactive=\count357
 \it@ISOcompliance=\count358
 ))
-Package hyperref Info: Option `colorlinks' set `true' on input line 126.
+Package hyperref Info: Option `colorlinks' set `true' on input line 125.
 
 Class memoir Warning: For the caption package to function properly with memoir,
  we will now reset\caption and friends to kernel defaults and then let the capt
@@ -948,42 +948,62 @@ Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibsep=\skip266
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count372
+) (/usr/local/texlive/2020/texmf-dist/tex/latex/amscls/amsthm.sty
+Package: amsthm 2017/10/31 v2.20.4
+\thm@style=\toks32
+\thm@bodyfont=\toks33
+\thm@headfont=\toks34
+\thm@notefont=\toks35
+\thm@headpunct=\toks36
+\thm@preskip=\skip267
+\thm@postskip=\skip268
+\thm@headsep=\skip269
+\dth@everypar=\toks37
 )
+\c@theorem=\count373
+\c@lemma=\count374
+\c@corollary=\count375
+\c@proposition=\count376
+\c@conjecture=\count377
+\c@definition=\count378
+\c@example=\count379
+\c@exercise=\count380
+\c@hypothesis=\count381
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 (./Data-Science-per-psicologi.aux)
 \openout1 = `Data-Science-per-psicologi.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 172.
-LaTeX Font Info:    ... okay on input line 172.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 172.
-LaTeX Font Info:    ... okay on input line 172.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 172.
-LaTeX Font Info:    ... okay on input line 172.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 172.
-LaTeX Font Info:    ... okay on input line 172.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 172.
-LaTeX Font Info:    ... okay on input line 172.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 172.
-LaTeX Font Info:    ... okay on input line 172.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 172.
-LaTeX Font Info:    ... okay on input line 172.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 172.
-LaTeX Font Info:    ... okay on input line 172.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 172.
-LaTeX Font Info:    ... okay on input line 172.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 172.
-LaTeX Font Info:    ... okay on input line 172.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 188.
+LaTeX Font Info:    ... okay on input line 188.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 188.
+LaTeX Font Info:    ... okay on input line 188.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 188.
+LaTeX Font Info:    ... okay on input line 188.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 188.
+LaTeX Font Info:    ... okay on input line 188.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 188.
+LaTeX Font Info:    ... okay on input line 188.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 188.
+LaTeX Font Info:    ... okay on input line 188.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 188.
+LaTeX Font Info:    ... okay on input line 188.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 188.
+LaTeX Font Info:    ... okay on input line 188.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 188.
+LaTeX Font Info:    ... okay on input line 188.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 188.
+LaTeX Font Info:    ... okay on input line 188.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 172.
+(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 188.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 172.
+(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 188.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 172.
+(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 188.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 172.
+(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 188.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 172.
+(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 188.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -1012,7 +1032,7 @@ pt=math;language=dflt;"
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(0)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 172.
+(Font)              scaled to size 10.0pt on input line 188.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -1051,18 +1071,18 @@ pt=math;language=dflt;"
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 172.
+(Font)              scaled to size 10.0pt on input line 188.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 172.
+(Font)              `operators' in the math version `normal' on input line 188.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input
- line 172.
+ line 188.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 172.
+(Font)              `operators' in the math version `bold' on input line 188.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
 (Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on inpu
-t line 172.
+t line 188.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -1149,15 +1169,15 @@ t=math;language=dflt;"
 (fontspec)             \fontdimen 21\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `normal' on input line 172.
+(Font)              `symbols' in the math version `normal' on input line 188.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
 (Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on inpu
-t line 172.
+t line 188.
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `bold' on input line 172.
+(Font)              `symbols' in the math version `bold' on input line 188.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
 (Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on inpu
-t line 172.
+t line 188.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -1227,16 +1247,16 @@ pt=math;language=dflt;"
 
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
 (Font)              `largesymbols' in the math version `normal' on input line 1
-72.
+88.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
 (Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on inpu
-t line 172.
+t line 188.
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `bold' on input line 172
+(Font)              `largesymbols' in the math version `bold' on input line 188
 .
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
 (Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on inpu
-t line 172.
+t line 188.
 
 Package unicode-math Warning: Using \overbracket and \underbracket from
 (unicode-math)                `mathtools' package.
@@ -1255,7 +1275,7 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 (unicode-math)                colon-like commands, using them will lead to
 (unicode-math)                inconsistencies.
 
-LaTeX Info: Redefining \microtypecontext on input line 172.
+LaTeX Info: Redefining \microtypecontext on input line 188.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
 Package microtype Info: No adjustment of tracking.
@@ -1267,7 +1287,7 @@ File: mt-LatinModernRoman.cfg 2013/03/13 v1.0 microtype config. file: Latin Mod
 ern Roman (RS)
 )
 \AtBeginShipoutBox=\box65
-Package hyperref Info: Link coloring ON on input line 172.
+Package hyperref Info: Link coloring ON on input line 188.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
 (/usr/local/texlive/2020/texmf-dist/tex/latex/refcount/refcount.sty
@@ -1277,47 +1297,47 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count373
+\c@section@level=\count382
 )
 Redoing nameref's sectioning
 Redoing nameref's label
-LaTeX Info: Redefining \nameref on input line 172.
-LaTeX Info: Redefining \ref on input line 172.
-LaTeX Info: Redefining \pageref on input line 172.
-LaTeX Info: Redefining \nameref on input line 172.
+LaTeX Info: Redefining \nameref on input line 188.
+LaTeX Info: Redefining \ref on input line 188.
+LaTeX Info: Redefining \pageref on input line 188.
+LaTeX Info: Redefining \nameref on input line 188.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 10.95pt on input line 174.
+(Font)              scaled to size 10.95pt on input line 190.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 8.0pt on input line 174.
+(Font)              scaled to size 8.0pt on input line 190.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 6.0pt on input line 174.
+(Font)              scaled to size 6.0pt on input line 190.
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-74.
+90.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.95099pt on input line 174.
+(Font)              scaled to size 10.95099pt on input line 190.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 8.00073pt on input line 174.
+(Font)              scaled to size 8.00073pt on input line 190.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 6.00055pt on input line 174.
+(Font)              scaled to size 6.00055pt on input line 190.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 10.94882pt on input line 174.
+(Font)              scaled to size 10.94882pt on input line 190.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 7.99915pt on input line 174.
+(Font)              scaled to size 7.99915pt on input line 190.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 5.99936pt on input line 174.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 174
+(Font)              scaled to size 5.99936pt on input line 190.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 190
 .
 (/usr/local/texlive/2020/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 174
+LaTeX Font Info:    Trying to load font information for U+msb on input line 190
 .
 (/usr/local/texlive/2020/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -1344,79 +1364,149 @@ LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 
 ] [2]
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <12> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 187.
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 203.
 
-LaTeX Warning: Reference `chapter-distr-coniugate' on page 3 undefined on input
- line 216.
+LaTeX Warning: Reference `es-pratico-zetsche' on page 3 undefined on input line
+ 222.
 
 [3
 
 ]
-LaTeX Font Info:    Font shape `TU/Inconsolata(0)/b/n' will be
-(Font)              scaled to size 10.32693pt on input line 231.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `lmss' (encoding: TU).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `TU/Inconsolata(0)/m/n' will be
-(Font)              scaled to size 9.431pt on input line 233.
+(Font)              scaled to size 9.431pt on input line 256.
 
 LaTeX Font Warning: Font shape `TU/Inconsolata(0)/m/it' undefined
-(Font)              using `TU/Inconsolata(0)/m/n' instead on input line 240.
+(Font)              using `TU/Inconsolata(0)/m/n' instead on input line 257.
 
 LaTeX Font Info:    Font shape `TU/Inconsolata(0)/m/it' will be
-(Font)              scaled to size 9.431pt on input line 241.
-[4]
+(Font)              scaled to size 9.431pt on input line 258.
 LaTeX Font Info:    Font shape `TU/Inconsolata(0)/b/n' will be
-(Font)              scaled to size 9.431pt on input line 280.
-[5] [6] [7]
-File: 040_modello_binomiale_files/figure-latex/trace-plot-gautret-1.pdf Graphic
- file (type pdf)
-<use 040_modello_binomiale_files/figure-latex/trace-plot-gautret-1.pdf>
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 479.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 9.00082pt on input line 479.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 8.99904pt on input line 479.
+(Font)              scaled to size 9.431pt on input line 260.
+[4]
+File: 046_ppc_files/figure-latex/unnamed-chunk-2-1.pdf Graphic file (type pdf)
+<use 046_ppc_files/figure-latex/unnamed-chunk-2-1.pdf>
+[5]
+File: 046_ppc_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
+<use 046_ppc_files/figure-latex/unnamed-chunk-3-1.pdf>
+[6]
+
+LaTeX Warning: Reference `mod-binom' on page 7 undefined on input line 342.
+
+
+Class memoir Warning: The material used in the headers is too large
+(24.0pt) for the given head height (12.0pt), it is recommended to
+either increase the head height or redesign the header
+(in both cases you will find help in the memoir manual). on input line 369.
+
+
+Overfull \vbox (12.0pt too high) has occurred while \output is active []
+
+[7]
+
+LaTeX Warning: Reference `inference-one-prop' on page 8 undefined on input line
+ 432.
+
 [8]
-File: 040_modello_binomiale_files/figure-latex/hist-post-gautret-1.pdf Graphic 
-file (type pdf)
-<use 040_modello_binomiale_files/figure-latex/hist-post-gautret-1.pdf>
+Overfull \vbox (12.0pt too high) has occurred while \output is active []
+
 [9]
-File: 040_modello_binomiale_files/figure-latex/hist-post-gautret-plus-correct-1
-.pdf Graphic file (type pdf)
-<use 040_modello_binomiale_files/figure-latex/hist-post-gautret-plus-correct-1.
-pdf>
-[10] [11] [12] [13] [14]
-Underfull \hbox (badness 1092) in paragraph at lines 719--720
-\TU/lmr/m/n/10 with MCMC sampling (NUTS, HMC); approximate Bayesian
- []
+File: 046_ppc_files/figure-latex/unnamed-chunk-11-1.pdf Graphic file (type pdf)
 
-[15
+<use 046_ppc_files/figure-latex/unnamed-chunk-11-1.pdf>
+[10]
+File: 046_ppc_files/figure-latex/unnamed-chunk-13-1.pdf Graphic file (type pdf)
 
-] [16] [17] [18] [19] [20] (./Data-Science-per-psicologi.bbl [21] [22
+<use 046_ppc_files/figure-latex/unnamed-chunk-13-1.pdf>
+File: 046_ppc_files/figure-latex/unnamed-chunk-14-1.pdf Graphic file (type pdf)
 
-]) [23]
+<use 046_ppc_files/figure-latex/unnamed-chunk-14-1.pdf>
+[11]
+File: 046_ppc_files/figure-latex/unnamed-chunk-15-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-15-1.pdf>
+File: 046_ppc_files/figure-latex/unnamed-chunk-16-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-16-1.pdf>
+[12] [13]
+File: 046_ppc_files/figure-latex/unnamed-chunk-18-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-18-1.pdf>
+[14]
+File: 046_ppc_files/figure-latex/unnamed-chunk-19-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-19-1.pdf>
+[15] [16]
+File: 046_ppc_files/figure-latex/unnamed-chunk-26-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-26-1.pdf>
+[17]
+File: 046_ppc_files/figure-latex/unnamed-chunk-28-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-28-1.pdf>
+File: 046_ppc_files/figure-latex/unnamed-chunk-29-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-29-1.pdf>
+File: 046_ppc_files/figure-latex/unnamed-chunk-30-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-30-1.pdf>
+[18]
+File: 046_ppc_files/figure-latex/unnamed-chunk-32-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-32-1.pdf>
+[19] [20] [21]
+File: 046_ppc_files/figure-latex/unnamed-chunk-37-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-37-1.pdf>
+File: 046_ppc_files/figure-latex/unnamed-chunk-38-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-38-1.pdf>
+[22]
+File: 046_ppc_files/figure-latex/unnamed-chunk-39-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-39-1.pdf>
+File: 046_ppc_files/figure-latex/unnamed-chunk-40-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-40-1.pdf>
+File: 046_ppc_files/figure-latex/unnamed-chunk-41-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-41-1.pdf>
+[23] (./Data-Science-per-psicologi.bbl [24])
+
+Class memoir Warning: The material used in the headers is too large
+(24.0pt) for the given head height (12.0pt), it is recommended to
+either increase the head height or redesign the header
+(in both cases you will find help in the memoir manual). on input line 982.
+
+[25
+
+]
 \tf@toc=\write5
 \openout5 = `Data-Science-per-psicologi.toc'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 965.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 965.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 982.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 982.
 (./Data-Science-per-psicologi.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 965.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 965.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 982.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 982.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 965.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 982.
  ) 
 Here is how much of TeX's memory you used:
- 26023 strings out of 479418
- 452667 string characters out of 5884586
- 977126 words of memory out of 5000000
- 43144 multiletter control sequences out of 15000+600000
- 539903 words of font info for 102 fonts, out of 8000000 for 9000
+ 26247 strings out of 479418
+ 459575 string characters out of 5884586
+ 984577 words of memory out of 5000000
+ 43350 multiletter control sequences out of 15000+600000
+ 538950 words of font info for 97 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 60i,12n,121p,1214b,530s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,15n,121p,920b,459s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on Data-Science-per-psicologi.pdf (23 pages).
+Output written on Data-Science-per-psicologi.pdf (25 pages).

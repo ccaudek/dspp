@@ -118,7 +118,6 @@
 
 \usepackage{mathtools}
 \usepackage[italian]{babel} 
-\usepackage{lmodern} 
 \usepackage{booktabs}
 \usepackage{hyperref}
 \hypersetup{
@@ -135,7 +134,7 @@
 
 \raggedbottom % allow variable (ragged) site heights
 \frenchspacing
-\setlength\parskip{1.5pt plus 1pt minus 0.5pt}
+% \setlength\parskip{1.5pt plus 1pt minus 0.5pt}
 
 
 \DeclareMathOperator{\Var}{Var} % Define variance operator
@@ -169,6 +168,23 @@
 \author{Corrado Caudek}
 \date{2021-09-13}
 
+\usepackage{amsthm}
+\newtheorem{theorem}{Teorema}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{corollary}{Corollario}[chapter]
+\newtheorem{proposition}{Proposizione}[chapter]
+\newtheorem{conjecture}{Congettura}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Definizione}[chapter]
+\theoremstyle{definition}
+\newtheorem{example}{Esempio}[chapter]
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercizio}[chapter]
+\theoremstyle{definition}
+\newtheorem{hypothesis}{Hypothesis}[chapter]
+\theoremstyle{remark}
+\newtheorem*{remark}{Osservazione}
+\newtheorem*{solution}{Soluzione}
 \begin{document}
 \maketitle
 
@@ -183,116 +199,147 @@
 
 \thispagestyle{empty}
 
-\hypertarget{mod-binom}{%
-\chapter{Modello Beta-Binomiale}\label{mod-binom}}
+\hypertarget{chapter-ppc}{%
+\chapter{Distribuzione predittiva a posteriori}\label{chapter-ppc}}
 
-\hypertarget{una-proporzione}{%
-\section{Una proporzione}\label{una-proporzione}}
+Oltre ad una sintesi della distribuzione a posteriori attraverso il computo di indici caratteristici e alla verifica delle ipotesi, un altro compito dell'analisi bayesiana è la predizione di nuovi dati futuri.
 
-Si considerino \(n\) variabili casuali Bernoulliane i.i.d.:
-
-\[
-y = (y_1, \dots, y_n) \stackrel{iid}{\sim} \mathcal{B}(\theta).
-\]
+\begin{definition}
+La \emph{distribuzione predittiva a posteriori} (\emph{posterior predictive distribution}, PPD)
+\begin{equation}
+p(\tilde{y} \mid y) = \int_{\theta} p(\tilde{y} \mid \theta) p(\theta \mid y) d\theta
+\label{eq:dist-pred-post}
+\end{equation}
 \noindent
-Vogliamo stimare \(\theta\) avendo osservato \(y\). Essendo i.i.d., i dati possono essere riassunti dal numero totale di successi nelle \(n\) prove, denotato da \(y\). Il modello binomiale è
+è la distribuzione di un nuovo campione di possibili osservazioni \(\tilde{Y}\) avendo già osservato \(n\) manifestazioni dello stesso fenomeno \(Y = y\).
+\end{definition}
+
+La \eqref{eq:dist-pred-post} descrive la nostra incertezza sui dati previsti futuri data la distribuzione a posteriori per \(\theta\) che abbiamo ottenuto, ovvero tenendo conto della scelta del modello e della stima dei parametri mediante i dati osservati. La distribuzione predittiva a posteriori viene usata per fare inferenze predittive, cioè per prevedere la distribuzione di nuovi dati non osservati.
+
+\hypertarget{schema-beta-bin-distr-pred-post}{%
+\section{Schema Beta-Binomiale}\label{schema-beta-bin-distr-pred-post}}
+
+Consideriamo un'altra volta il campione di pazienti clinici depressi di \citet{zetschefuture2019} -- si veda l'Appendice \ref{es-pratico-zetsche}. Supponiamo di volere esaminare in futuro altri 20 pazienti clinici e ci chiediamo quanti di essi (\(\tilde{y} \in \{0, 1, \dots, 20\}\)) manifesteranno una depressione grave.
+
+Se vogliamo fare predizioni su \(\tilde{y}\) dobbiamo innanzitutto riconoscere che i valori \(\tilde{y} \in [0, 20]\) non sono tutti egualmente plausibili. Sappiamo che \(\tilde{y}\) è una v.c. binomiale con distribuzione
 
 \begin{equation}
-p(y \mid \theta) = \Bin(y \mid n, \theta) = \binom{n}{y}\theta^y (1 -\theta)^{n-y},
+p(\tilde{y}\mid \theta) = \binom{20}{\tilde{y}} \theta^{\tilde{y}}(1-\theta)^{20 - \tilde{y}} \; .
+\label{eq:post-yprime}
 \end{equation}
 
 \noindent
-dove nel termine di sinistra dell'equazione abbiamo ignorato \(n\) in quanto viene considerato fisso per disegno.
-
-L'inferenza sul modello binomiale richiede di assegnare una distribuzione a priori su \(\theta\) che dipende dall'informazione disponibile a priori. Se sceglamo, ad esempio, una \(\Beta(2, 2)\) quale distribuzione a priori, il modello diventa:
+La v.c. \(\tilde{y}\) dipende da \(\theta\), ma \(\theta\) è essa stessa una variabile casuale. Avendo osservato \(y = 23\) successi in \(n = 30\) prove, e avendo assunto come distribuzione a priori per \(\theta\) una \(\mbox{Beta}(2, 10)\), la distribuzione a posteriori di \(\theta\) è una \(\mbox{Beta}(25, 17)\). Per trovare la distribuzione sui possibili dati previsti futuri \(\tilde{y}\) dobbiamo dunque applicare la \eqref{eq:dist-pred-post}:
 
 \begin{align}
-y &\sim \Bin(n, \theta) \notag\\
-\theta &\sim \Beta(2, 2),
-\label{eq:beta-binom-trump}
+p(\tilde{y} \mid y = 23) = \int_0^1 p(\tilde{y} \mid \theta) p(\theta \mid y = 23) d\theta \; .
+\label{eq:post-yprime-y17}
 \end{align}
 
-\noindent
-dove la prima riga definisce la funzione di verosimiglianza e la seconda riga definisce la distribuzione a priori. Sulla base di ciò che è stato detto nel Capitolo \ref{chapter-distr-coniugate}, sappiamo che le equazioni \eqref{eq:beta-binom-trump} definiscono il caso Beta-Binomiale.
+Per il modello Beta-Binomiale, che stiamo discutendo, è possibile trovare una soluzione analitica all'equazione \eqref{eq:dist-pred-post}:
+\begin{align}
+p(\tilde{y} \mid y) &= \int_0^1 p(\tilde{y} \mid \theta)
+p(\theta \mid y)\, d\theta \notag\\
+ &= \int_0^1 \begin{pmatrix}\tilde{n}\\\tilde{y}\end{pmatrix}
+ \theta^{\tilde{y}}
+(1-\theta)^{\tilde{n}-\tilde{y}} \mbox{Beta}(a+y,b+n-y) \, d\theta \notag\\
+&= \begin{pmatrix}{\tilde{n}}\\\tilde{y}\end{pmatrix} \int_0^1 \theta^{\tilde{y}}
+(1-\theta)^{\tilde{n}-\tilde{y}} \frac{1}{B(a+y, b+n-y)}\theta^{a+y-1}(1-\theta)^{b+n-y-1}\notag\\
+&= \begin{pmatrix}{\tilde{n}}\\\tilde{y}\end{pmatrix} \frac{1}{B(a+y, b+n-y)}\int_0^1 \theta^{\tilde{y}+a+y-1}(1-\theta)^{\tilde{n}-\tilde{y}+b+n-y-1}\notag\\
+&= \begin{pmatrix}{\tilde{n}}\\\tilde{y}\end{pmatrix} \frac{B(\tilde{y}+a+y,b+n-y+\tilde{n}-\tilde{y})}{B(a+y, b+n-y)} \; .
+\label{eq:post-yprime-an-sol-betabin}
+\end{align}
 
-\hypertarget{il-presidente-trump-e-lidrossiclorochina}{%
-\subsection{Il presidente Trump e l'idrossiclorochina}\label{il-presidente-trump-e-lidrossiclorochina}}
-
-Per fare un esempio concreto, consideriamo un set di dati reali. Cito dal \emph{Washington Post} del 7 aprile 2020:
-
-\begin{quote}
-One of the most bizarre and disturbing aspects of President Trump's nightly press briefings on the coronavirus pandemic is when he turns into a drug salesman. Like a cable TV pitchman hawking `male enhancement' pills, Trump regularly extols the virtues of taking hydroxychloroquine, a drug used to treat malaria and lupus, as a potential `game changer' that just might cure Covid-19.
-\end{quote}
-
-Tralasciamo qui il fatto che il presidente Trump non è un esperto in questo campo. Esaminiamo invece le evidenze iniziali a supporto dell'ipotesi che l'idrossiclorochina possa essere utile per la cura del Covid-19, ovvero le evidenze che erano disponibili nel momento in cui il presidente Trump ha fatto le affermazioni riportate sopra (in seguito, quest'idea è stata screditata). Tali evidenze sono state fornite da uno studio di \citet{Gautret_2020}.
-Il disegno sperimentale di \citet{Gautret_2020} comprende, tra le altre cose, il confronto tra una condizione sperimentale e una condizione di controllo. Il confronto importante è tra la proporzione di paziente positivi al virus SARS-CoV-2 nel gruppo sperimentale (a cui è stata somministrata l'idrossiclorochina; 6 su 14) e la proporzione di paziente positivi nel gruppo di controllo (a cui non è stata somministrata l'idrossiclorochina; ovvero 14 su 16). Obiettivo di questo Capitolo è mostrare come si possa fare inferenza sul modello \eqref{eq:beta-binom-trump} usando il linguaggio Stan.
-
-\hypertarget{cmdstanr-gautret}{%
-\subsection{\texorpdfstring{Interfaccia \texttt{cmdstanr}}{Interfaccia cmdstanr}}\label{cmdstanr-gautret}}
-
-Nella seguente discussione verrà ottenuta una stima bayesiana del parametro \(\theta\) usando l'interfaccia \texttt{cmdstanr} di CmdStan.\footnote{I modelli discussi in questo capitolo sono discussi da \citet{gelman1995bayesian} mentre il codice è stato ricavato dalla seguente \href{http://avehtari.github.io/BDA_R_demos/demos_rstan/rstan_demo.html}{pagina web}.}. Considereremo qui solo il gruppo di controllo. Iniziamo a caricare i pacchetti necessari:
+Svolgendo i calcoli in \(\R\), per i dati dell'esempio otteniamo:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(}\StringTok{"cmdstanr"}\NormalTok{)}
-\FunctionTok{set\_cmdstan\_path}\NormalTok{(}\StringTok{"/Users/corrado/.cmdstanr/cmdstan{-}2.27.0"}\NormalTok{)}
-\FunctionTok{library}\NormalTok{(}\StringTok{"posterior"}\NormalTok{)}
-\FunctionTok{rstan\_options}\NormalTok{(}\AttributeTok{auto\_write =} \ConstantTok{TRUE}\NormalTok{) }\CommentTok{\# avoid recompilation of models}
-\FunctionTok{options}\NormalTok{(}\AttributeTok{mc.cores =}\NormalTok{ parallel}\SpecialCharTok{::}\FunctionTok{detectCores}\NormalTok{()) }\CommentTok{\# parallelize across all CPUs}
-\FunctionTok{Sys.setenv}\NormalTok{(}\AttributeTok{LOCAL\_CPPFLAGS =} \StringTok{\textquotesingle{}{-}march=native\textquotesingle{}}\NormalTok{) }\CommentTok{\# improve execution time}
-\NormalTok{SEED }\OtherTok{\textless{}{-}} \DecValTok{374237} \CommentTok{\# set random seed for reproducibility}
+\CommentTok{\# Beta Binomial Predictive distribution function}
+\CommentTok{\# https://rpubs.com/FJRubio/BetaBinomialPred}
+\NormalTok{BetaBinom }\OtherTok{\textless{}{-}} \FunctionTok{Vectorize}\NormalTok{(}
+  \ControlFlowTok{function}\NormalTok{(rp)\{}
+\NormalTok{  log\_val }\OtherTok{\textless{}{-}} \FunctionTok{lchoose}\NormalTok{(np, rp) }\SpecialCharTok{+} 
+    \FunctionTok{lbeta}\NormalTok{(rp}\SpecialCharTok{+}\NormalTok{a}\SpecialCharTok{+}\NormalTok{y, b}\SpecialCharTok{+}\NormalTok{n}\SpecialCharTok{{-}}\NormalTok{y}\SpecialCharTok{+}\NormalTok{np}\SpecialCharTok{{-}}\NormalTok{rp) }\SpecialCharTok{{-}} 
+    \FunctionTok{lbeta}\NormalTok{(a}\SpecialCharTok{+}\NormalTok{y, b}\SpecialCharTok{+}\NormalTok{n}\SpecialCharTok{{-}}\NormalTok{y)}
+  \FunctionTok{return}\NormalTok{(}\FunctionTok{exp}\NormalTok{(log\_val))}
+\NormalTok{  \}}
+\NormalTok{)}
+
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{30}
+\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{23}
+\NormalTok{a }\OtherTok{\textless{}{-}} \DecValTok{2}
+\NormalTok{b }\OtherTok{\textless{}{-}} \DecValTok{10}
+\NormalTok{np }\OtherTok{\textless{}{-}} \DecValTok{20}
+\FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{heads =} \DecValTok{0}\SpecialCharTok{:}\DecValTok{20}\NormalTok{, }
+  \AttributeTok{pmf =} \FunctionTok{BetaBinom}\NormalTok{(}\DecValTok{0}\SpecialCharTok{:}\DecValTok{20}\NormalTok{)}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{factor}\NormalTok{(heads), }\AttributeTok{y =}\NormalTok{ pmf)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{label =} \FunctionTok{round}\NormalTok{(pmf, }\DecValTok{2}\NormalTok{), }\AttributeTok{y =}\NormalTok{ pmf }\SpecialCharTok{+} \FloatTok{0.01}\NormalTok{),}
+    \AttributeTok{position =} \FunctionTok{position\_dodge}\NormalTok{(}\FloatTok{0.9}\NormalTok{),}
+    \AttributeTok{size =} \DecValTok{3}\NormalTok{,}
+    \AttributeTok{vjust =} \DecValTok{0}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{title =} \StringTok{"Distribuzione predittiva a posteriori"}\NormalTok{,}
+    \AttributeTok{x =} \StringTok{"y\textquotesingle{}"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"P(Y = y\textquotesingle{} | Data)"}
+\NormalTok{  ) }
 \end{Highlighting}
 \end{Shaded}
 
-Ci sono due passaggi essenziali per le analisi svolte mediante \texttt{cmdstanr}:
+\begin{center}\includegraphics{046_ppc_files/figure-latex/unnamed-chunk-2-1} \end{center}
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
+È facile vedere che, in questo esempio, la distribuzione predittiva a posteriori \(p(\tilde{y} \mid y)\) è diversa dalla binomiale di parametro \(\theta = 23/30\):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{tibble}\NormalTok{(}
+  \AttributeTok{heads =} \DecValTok{0}\SpecialCharTok{:}\DecValTok{20}\NormalTok{, }
+  \AttributeTok{pmf =} \FunctionTok{dbinom}\NormalTok{(}\AttributeTok{x =} \DecValTok{0}\SpecialCharTok{:}\DecValTok{20}\NormalTok{, }\AttributeTok{size =} \DecValTok{20}\NormalTok{, }\AttributeTok{prob =} \DecValTok{23}\SpecialCharTok{/}\DecValTok{30}\NormalTok{)}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{factor}\NormalTok{(heads), }\AttributeTok{y =}\NormalTok{ pmf)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{label =} \FunctionTok{round}\NormalTok{(pmf, }\DecValTok{2}\NormalTok{), }\AttributeTok{y =}\NormalTok{ pmf }\SpecialCharTok{+} \FloatTok{0.01}\NormalTok{),}
+    \AttributeTok{position =} \FunctionTok{position\_dodge}\NormalTok{(}\FloatTok{0.9}\NormalTok{),}
+    \AttributeTok{size =} \DecValTok{3}\NormalTok{,}
+    \AttributeTok{vjust =} \DecValTok{0}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"p(y | theta = 0.77)"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"y"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Probabilità"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{046_ppc_files/figure-latex/unnamed-chunk-3-1} \end{center}
+
+In particolare, la \(p(\tilde{y} \mid y)\) ha una varianza maggiore di \(\Bin(y \mid \theta = 0.77, n = 20)\). Questa maggiore varianza riflette le due fonti di incertezza che sono presenti nella \eqref{eq:dist-pred-post}: l'incertezza sul valore del parametro (descritta dalla distribuzione a posteriori) e l'incertezza dovuta alla variabilità campionaria (descritta dalla funzione di verosimiglianza).
+
+Possiamo concludere la discussione di questo esempio dicendo che, nel caso di 20 nuovi pazienti clinici, ci aspettiamo di osservare 12 pazienti che manifestano una depressione severa, anche se è ragionevole aspettarci un numero compreso, diciamo, tra 8 e 16.
+
+Una volta trovata la distribuzione predittiva a posteriori \(p(\tilde{y} \mid y)\) diventa possibile rispondere a domande come: qual è la probabilità che almeno 10 dei 20 pazienti futuri mostrino una depressione grave? Rispondere a domande di questo tipo è possibile, ma richiede un po' di lavoro --- non ci sono funzioni \(\R\) che svolgano questi calcoli per noi. Tuttavia, non è importante imparare a risolvere problemi di questo tipo perché, in generale, anche per problemi solo leggermente più complessi di quello discusso qui, non sono disponibili espressioni analitiche della distribuzione predittiva a posteriori. Mediante simulazioni MCMC, invece, è possibile trovare una approssimazione numerica della \(p(\tilde{y} \mid y)\). In tali circostanze, è più facile rispondere alle domande che ci siamo posti.
+
+\hypertarget{metodi-mcmc-per-la-distribuzione-predittiva-a-posteriori}{%
+\section{Metodi MCMC per la distribuzione predittiva a posteriori}\label{metodi-mcmc-per-la-distribuzione-predittiva-a-posteriori}}
+
+Utilizzando la notazione di \citet{gelman2014understanding}, chiamiamo \(y^{rep}\) i dati previsti futuri che potrebbero venire osservati se l'esperimento casuale che ha prodotto \(y\) venisse ripetuto, ovvero una realizzazione futura del modello statistico con gli stessi valori dei parametri \(\theta\) che hanno prodotto \(y\). \citet{gelman2014understanding} distinguono \(y^{rep}\) (repliche sotto lo stesso modello statistico) da \(\tilde{y}\), che corrisponde invece ad un effettivo campione empirico di dati osservato in qualche futura occasione.
+
+Mostreremo qui come ottenere \(p(y^{rep} \mid y)\) quale stima di \(p(\tilde{y} \mid y)\). Se svolgiamo l'analisi bayesiana con il metodo MCMC, \(p(y^{rep} \mid y)\) può essere ottenuta nel modo seguente:
+
+\begin{itemize}
 \tightlist
 \item
-  definire la struttura del modello bayesiano nella notazione Stan;
+  campionare \(\theta_i \sim p(\theta \mid y)\), ovvero campionare un valore del parametro dalla distribuzione a posteriori;
 \item
-  eseguire il campionamento della distribuzione a posteriori.
-\end{enumerate}
+  campionare \(y^{rep} \sim p(y^{rep} \mid \theta_i)\), ovvero campionare il valore di un'osservazione dalla funzione di verosimiglianza condizionata al valore del parametro definito nel passo precedente.
+\end{itemize}
 
-Esaminiamo questi due passaggi nel contesto del modello Beta-Binomiale definito dalla \eqref{eq:beta-binom-trump}.
+Se i due passaggi descritti sopra vengono ripetuti un numero sufficiente di volte, l'istogramma risultante approssimerà la distribuzione predittiva a posteriori che, in teoria (ma non in pratica) potrebbe essere ottenuta per via analitica (si deva il Paragrafo \ref{schema-beta-bin-distr-pred-post}).
 
-\hypertarget{fase-1}{%
-\subsection{Fase 1}\label{fase-1}}
-
-È necessario definire i dati, i parametri e il modello. I \emph{dati} del gruppo di controllo, che verrà qui esaminato, devono essere contenuti in un oggetto di classe \texttt{list}:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{data1\_list }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
-  \AttributeTok{N =} \DecValTok{16}\NormalTok{,}
-  \AttributeTok{y =} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{14}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{2}\NormalTok{))}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-Il modello dipende dal \emph{parametro} \texttt{theta}. In Stan, dobbiamo specificare che \texttt{theta} può essere un qualsiasi numero reale compreso tra 0 e 1.
-
-Il \emph{modello} è \(\Bin(n, \theta)\) e, nel linguaggio Stan, può essere scritto come
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{N) \{}
-\NormalTok{  y[i] }\SpecialCharTok{\textasciitilde{}} \FunctionTok{bernoulli}\NormalTok{(theta);}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-ovvero come
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{y }\SpecialCharTok{\textasciitilde{}} \FunctionTok{bernoulli}\NormalTok{(theta);}
-\end{Highlighting}
-\end{Shaded}
-
-La struttura del modello Beta-Binomiale viene tradotta nella sintassi Stan\footnote{Si veda l'Appendice \ref{intro-stan}} e viene poi memorizzata come stringa di caratteri del file \texttt{oneprop1.stan}:
+Vediamo ora come calcolare \(p(y^{rep} \mid y)\) usando Stan. Qui di seguito è riportato il codice Stan per fare inferenza su una proporzione --- si veda il Capitolo \ref{mod-binom}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -305,23 +352,8 @@ La struttura del modello Beta-Binomiale viene tradotta nella sintassi Stan\footn
 \StringTok{  real\textless{}lower=0, upper=1\textgreater{} theta;}
 \StringTok{\}}
 \StringTok{model \{}
-\StringTok{  theta \textasciitilde{} beta(2, 2);}
+\StringTok{  theta \textasciitilde{} beta(2, 10);}
 \StringTok{  y \textasciitilde{} bernoulli(theta);}
-\StringTok{  // the notation using \textasciitilde{} is syntactic sugar for}
-\StringTok{  //  target += beta\_lpdf(theta | 1, 1);   // lpdf for continuous theta}
-\StringTok{  //  target += bernoulli\_lpmf(y | theta); // lpmf for discrete y}
-\StringTok{  // target is the log density to be sampled}
-\StringTok{  //}
-\StringTok{  // y is an array of integers and}
-\StringTok{  //  y \textasciitilde{} bernoulli(theta);}
-\StringTok{  // is equivalent to}
-\StringTok{  //  for (i in 1:N) \{}
-\StringTok{  //    y[i] \textasciitilde{} bernoulli(theta);}
-\StringTok{  //  \}}
-\StringTok{  // which is equivalent to}
-\StringTok{  //  for (i in 1:N) \{}
-\StringTok{  //    target += bernoulli\_lpmf(y[i] | theta); }
-\StringTok{  //  \}}
 \StringTok{\}}
 \StringTok{generated quantities \{}
 \StringTok{  int y\_rep[N];}
@@ -332,322 +364,35 @@ La struttura del modello Beta-Binomiale viene tradotta nella sintassi Stan\footn
 \StringTok{  \}}
 \StringTok{\}}
 \StringTok{"}
-\FunctionTok{writeLines}\NormalTok{(modelString, }\AttributeTok{con =} \StringTok{"code/oneprop1.stan"}\NormalTok{)}
+\FunctionTok{writeLines}\NormalTok{(modelString, }\AttributeTok{con =} \StringTok{"code/betabin23{-}30{-}2{-}10.stan"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{fase-2}{%
-\subsection{Fase 2}\label{fase-2}}
+Si noti che nel nel blocco \texttt{generated\ quantities} sono state aggiunte le istruzioni necessarie per simulare \(y^{rep}\), ovvero, \texttt{y\_rep{[}n{]}\ =\ bernoulli\_rng(theta);}.
 
-Leggiamo l'indirizzo del file che contiene il codice Stan:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(}\StringTok{"code"}\NormalTok{, }\StringTok{"oneprop1.stan"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Compiliamo il codice:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{cmdstan\_model}\NormalTok{(file)}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Il campionamento MCMC si realizza con la chiamata:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{fit1 }\OtherTok{\textless{}{-}}\NormalTok{ mod}\SpecialCharTok{$}\FunctionTok{sample}\NormalTok{(}
-  \AttributeTok{data =}\NormalTok{ data1\_list,}
-  \AttributeTok{iter\_sampling =}\NormalTok{ 4000L,}
-  \AttributeTok{iter\_warmup =}\NormalTok{ 2000L,}
-  \AttributeTok{seed =}\NormalTok{ SEED,}
-  \AttributeTok{chains =}\NormalTok{ 4L,}
-  \AttributeTok{parallel\_chains =}\NormalTok{ 4L,}
-  \AttributeTok{refresh =} \DecValTok{0}\NormalTok{,}
-  \AttributeTok{thin =} \DecValTok{1}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-Avendo assunto una distribuzione a priori per il parametro \(\theta\), l'algoritmo procede in maniera ciclica, correggendo la distribuzione a priori di \(\theta\) condizionandola ai valori già generati. Dopo un certo numero di cicli, necessari per portare l'algoritmo a convergenza, i valori estratti possono essere assunti come campionati dalla distribuzione a posteriori di \(\theta\).
-
-Si noti che \texttt{\$sample()} richiede due tipi di informazioni. Innanzitutto, dobbiamo specificare le informazioni sul modello in base a:
-
-\begin{itemize}
-\tightlist
-\item
-  \texttt{mod} = la stringa di caratteri che definisce il modello (qui \texttt{oneprop1.stan}),
-\item
-  \texttt{data} = i dati in formato lista (\texttt{data1\_list}).
-\end{itemize}
-
-Dobbiamo inoltre specificare le informazioni sul campionamento MCMC utilizzando tre argomenti aggiuntivi:
-
-\begin{itemize}
-\item
-  L'argomento \texttt{chains} specifica quante catene di Markov parallele eseguire. Eseguiamo qui quattro catene, quindi otteniamo quattro campioni distinti di valori \(\pi\).
-\item
-  L'argomento \texttt{iter} specifica il numero desiderato di iterazioni o la lunghezza di ciascuna catena di Markov. Per impostazione predefinita, la prima metà di queste iterazioni è costituita da campioni ``burn-in'' o ``warm-up'' che verranno ignorati. La seconda metà è conservata e costituisce un campione della distribuzione a posteriori.
-\item
-  L'argomento \texttt{seed} per impostare il numero casuale che genera il seme per una simulazione \texttt{cmdstanr}.
-\end{itemize}
-
-\hypertarget{burn-in}{%
-\subsection{Burn-in}\label{burn-in}}
-
-Al crescere del numero di passi della catena, la distribuzione di target viene sempre meglio approssimata. All'inizio del campionamento, però, la distribuzione può essere significativamente lontana da quella stazionaria, e ci vuole un certo tempo prima di raggiungere la distribuzione stazionaria di equilibrio, detto, appunto, periodo di \emph{burn-in}. I campioni provenienti da tale parte iniziale della catena vanno tipicamente scartati perché possono non rappresentare accuratamente la distribuzione a posteriori
-
-\hypertarget{inferenza}{%
-\subsection{Inferenza}\label{inferenza}}
-
-Un sommario della distribuzione a posteriori si ottiene con:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{fit1}\SpecialCharTok{$}\FunctionTok{summary}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"theta"}\NormalTok{))}
-\CommentTok{\#\textgreater{} \# A tibble: 1 x 10}
-\CommentTok{\#\textgreater{}   variable  mean median     sd    mad    q5   q95  rhat}
-\CommentTok{\#\textgreater{}   \textless{}chr\textgreater{}    \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}}
-\CommentTok{\#\textgreater{} 1 theta    0.802  0.813 0.0868 0.0867 0.644 0.928  1.00}
-\CommentTok{\#\textgreater{} \# ... with 2 more variables: ess\_bulk \textless{}dbl\textgreater{}, ess\_tail \textless{}dbl\textgreater{}}
-\end{Highlighting}
-\end{Shaded}
-
-Creiamo un oggetto di classe \texttt{stanfit}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{stanfit1 }\OtherTok{\textless{}{-}}\NormalTok{ rstan}\SpecialCharTok{::}\FunctionTok{read\_stan\_csv}\NormalTok{(fit1}\SpecialCharTok{$}\FunctionTok{output\_files}\NormalTok{())}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-di dimensioni
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{dim}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(stanfit1, }\AttributeTok{pars =} \StringTok{"theta"}\NormalTok{))}
-\CommentTok{\#\textgreater{} [1] 16000     1}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-I primi 10 valori sono presentati qui di seguito
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{as.matrix}\NormalTok{(stanfit1, }\AttributeTok{pars =} \StringTok{"theta"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{head}\NormalTok{(}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\textgreater{}           parameters}
-\CommentTok{\#\textgreater{} iterations    theta}
-\CommentTok{\#\textgreater{}       [1,] 0.757239}
-\CommentTok{\#\textgreater{}       [2,] 0.703550}
-\CommentTok{\#\textgreater{}       [3,] 0.772169}
-\CommentTok{\#\textgreater{}       [4,] 0.747881}
-\CommentTok{\#\textgreater{}       [5,] 0.765079}
-\CommentTok{\#\textgreater{}       [6,] 0.793709}
-\CommentTok{\#\textgreater{}       [7,] 0.857447}
-\CommentTok{\#\textgreater{}       [8,] 0.845012}
-\CommentTok{\#\textgreater{}       [9,] 0.824972}
-\CommentTok{\#\textgreater{}      [10,] 0.881219}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-La matrice precedente include i valori assunti dalla catena di Markov, ovvero un insieme di valori plausibili \(\theta\) estratti dalla distribuzione a posteriori.
-
-Un tracciato della catena di Markov illustra questa esplorazione rappresentando il valore \(\theta\) sulle ordinate e l'indice progressivo di in ogni iterazione sull'ascissa. Usiamo la funzione \texttt{mcmc\_trace()} del pacchetto \texttt{bayesplot} (Gabry et al.~2019) per costruire il grafico che include tutte e quattro le catene di Markov:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{stanfit1 }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mcmc\_trace}\NormalTok{(}\AttributeTok{pars =} \FunctionTok{c}\NormalTok{(}\StringTok{"theta"}\NormalTok{), }\AttributeTok{size =} \FloatTok{0.1}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}
-
-{\centering \includegraphics{040_modello_binomiale_files/figure-latex/trace-plot-gautret-1} 
-
-}
-
-\caption{Trace-plot per il parametro $\theta$ nel modello Beta-Binomiale.}\label{fig:trace-plot-gautret}
-\end{figure}
-
-\noindent
-La figura \ref{fig:trace-plot-gautret} mostra che le catene esplorano uno spazio compreso approssimativamenre tra 0.7 e 0.9; tale figura descrive il comportamento \emph{longitudinale} delle catene di Markov.
-
-Possiamo anche esaminare la distribuzione degli stati della catena di Markov, ovvero, dei valori che queste catene visitano lungo il loro percorso, ignorando l'ordine di queste visite. L'istogramma della figura \ref{fig:hist-post-gautret} fornisce una rappresentazione grafica di questa distribuzione per i 16000 valori complessivi delle quattro catene, ovvero per 4000 valori provienienti da ciascuna catena.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{mcmc\_hist}\NormalTok{(stanfit1, }\AttributeTok{pars =} \StringTok{"theta"}\NormalTok{) }\SpecialCharTok{+} 
-  \FunctionTok{yaxis\_text}\NormalTok{(}\ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{+} 
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"count"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}
-
-{\centering \includegraphics{040_modello_binomiale_files/figure-latex/hist-post-gautret-1} 
-
-}
-
-\caption{Istogramma che illustra l'approssimazione della distribuzione a posteriori per il parametro $\theta$ nel modello Beta-Binomiale.}\label{fig:hist-post-gautret}
-\end{figure}
-
-Nel modello Beta-Binomiale in cui la verosimiglianza è binomiale con 14 successi su 16 prove e in cui assumiamo una distribuzione a priori di tipo \(\mbox{Beta}(2, 2)\) sul parametro \(\theta\), la distribuzione a posteriori è ancora una distribuzione Beta di parametri \(\alpha\) = 2 + 14 e \(\beta\) = 2 + 16 - 14. La figura \ref{fig:hist-post-gautret-plus-correct} riporta un kernel density plot per i valori delle quattro catene di Markov con sovrapposta in nero la densità \(\mbox{Beta}(16, 4)\). Il punto importante è che la distribuzione dei valori delle catene di Markov produce un'eccellente approssimazione alla distribuzione bersaglio.\footnote{Nel caso presente, il risultato è poco utile dato che è disponibile una soluzione analitica. Tuttavia, questo esercizio mette in evidenza il fatto cruciale che, nei casi in cui possiamo verificarne la soluzione, il campionamento Monte Carlo a catena di Markov è in grado di trovare la risposta corretta. Di conseguenza, possiamo anche essere sicuri che fornirà un'approssimazione alla distribuzione a posteriori anche in quei casi in cui una soluzione analitica non è disponibile.}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{mcmc\_dens}\NormalTok{(stanfit1, }\AttributeTok{pars =} \StringTok{"theta"}\NormalTok{) }\SpecialCharTok{+} 
-  \FunctionTok{yaxis\_text}\NormalTok{(}\ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{+} 
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"density"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{stat\_function}\NormalTok{(}\AttributeTok{fun =}\NormalTok{ dbeta, }\AttributeTok{args =} \FunctionTok{list}\NormalTok{(}\AttributeTok{shape1 =} \DecValTok{16}\NormalTok{, }\AttributeTok{shape2=}\DecValTok{4}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}
-
-{\centering \includegraphics{040_modello_binomiale_files/figure-latex/hist-post-gautret-plus-correct-1} 
-
-}
-
-\caption{Istogramma che illustra l'approssimazione della distribuzione a posteriori per il parametro $\theta$ nel modello Beta-Binomiale. La curva nera rappresenta la corretta distribuzione a posteriori Beta(16, 4).}\label{fig:hist-post-gautret-plus-correct}
-\end{figure}
-
-Un intervallo di credibilità al 95\% per \(\theta\) si ottiene con la seguente chiamata:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{posterior1 }\OtherTok{\textless{}{-}} \FunctionTok{extract}\NormalTok{(stanfit1)}
-\NormalTok{rstantools}\SpecialCharTok{::}\FunctionTok{posterior\_interval}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(stanfit1), }\AttributeTok{prob =} \FloatTok{0.95}\NormalTok{)}
-\CommentTok{\#\textgreater{}                    2.5\%        97.5\%}
-\CommentTok{\#\textgreater{} theta         0.6107860   0.94402990}
-\CommentTok{\#\textgreater{} y\_rep[1]      0.0000000   1.00000000}
-\CommentTok{\#\textgreater{} y\_rep[2]      0.0000000   1.00000000}
-\CommentTok{\#\textgreater{} y\_rep[3]      0.0000000   1.00000000}
-\CommentTok{\#\textgreater{} y\_rep[4]      0.0000000   1.00000000}
-\CommentTok{\#\textgreater{} y\_rep[5]      0.0000000   1.00000000}
-\CommentTok{\#\textgreater{} y\_rep[6]      0.0000000   1.00000000}
-\CommentTok{\#\textgreater{} y\_rep[7]      0.0000000   1.00000000}
-\CommentTok{\#\textgreater{} y\_rep[8]      0.0000000   1.00000000}
-\CommentTok{\#\textgreater{} y\_rep[9]      0.0000000   1.00000000}
-\CommentTok{\#\textgreater{} y\_rep[10]     0.0000000   1.00000000}
-\CommentTok{\#\textgreater{} y\_rep[11]     0.0000000   1.00000000}
-\CommentTok{\#\textgreater{} y\_rep[12]     0.0000000   1.00000000}
-\CommentTok{\#\textgreater{} y\_rep[13]     0.0000000   1.00000000}
-\CommentTok{\#\textgreater{} y\_rep[14]     0.0000000   1.00000000}
-\CommentTok{\#\textgreater{} y\_rep[15]     0.0000000   1.00000000}
-\CommentTok{\#\textgreater{} y\_rep[16]     0.0000000   1.00000000}
-\CommentTok{\#\textgreater{} log\_lik[1]   {-}0.4930093  {-}0.05759735}
-\CommentTok{\#\textgreater{} log\_lik[2]   {-}0.4930093  {-}0.05759735}
-\CommentTok{\#\textgreater{} log\_lik[3]   {-}0.4930093  {-}0.05759735}
-\CommentTok{\#\textgreater{} log\_lik[4]   {-}0.4930093  {-}0.05759735}
-\CommentTok{\#\textgreater{} log\_lik[5]   {-}0.4930093  {-}0.05759735}
-\CommentTok{\#\textgreater{} log\_lik[6]   {-}0.4930093  {-}0.05759735}
-\CommentTok{\#\textgreater{} log\_lik[7]   {-}0.4930093  {-}0.05759735}
-\CommentTok{\#\textgreater{} log\_lik[8]   {-}0.4930093  {-}0.05759735}
-\CommentTok{\#\textgreater{} log\_lik[9]   {-}0.4930093  {-}0.05759735}
-\CommentTok{\#\textgreater{} log\_lik[10]  {-}0.4930093  {-}0.05759735}
-\CommentTok{\#\textgreater{} log\_lik[11]  {-}0.4930093  {-}0.05759735}
-\CommentTok{\#\textgreater{} log\_lik[12]  {-}0.4930093  {-}0.05759735}
-\CommentTok{\#\textgreater{} log\_lik[13]  {-}0.4930093  {-}0.05759735}
-\CommentTok{\#\textgreater{} log\_lik[14]  {-}0.4930093  {-}0.05759735}
-\CommentTok{\#\textgreater{} log\_lik[15]  {-}2.8829362  {-}0.94362543}
-\CommentTok{\#\textgreater{} log\_lik[16]  {-}2.8829362  {-}0.94362543}
-\CommentTok{\#\textgreater{} lp\_\_        {-}12.7342100 {-}10.00860000}
-\end{Highlighting}
-\end{Shaded}
-
-Svolgendo un'analisi bayesiana simile a questa, \citet{Gautret_2020} hanno trovato che gli intervalli di credibilità del gruppo di controllo e del gruppo sperimentale non si sovrappongono. Questo fatto viene interpretato dicendo che il parametro \(\theta\) è diverso nei due gruppi. Sulla base di queste evidenza, \citet{Gautret_2020} hanno concluso, con un grado di certezza soggettiva del 95\%, che nel gruppo sperimentale vi è una probabilità più bassa di risultare positivi al SARS-CoV-2 rispetto al gruppo di controllo. In altri termini, questa analisi dei dati suggerisce che l'idrossiclorochina sia efficace come terapia per il Covid-19.
-
-\hypertarget{la-critica-di-hulme_2020}{%
-\subsection{\texorpdfstring{La critica di \citet{Hulme_2020}}{La critica di @Hulme\_2020}}\label{la-critica-di-hulme_2020}}
-
-Un articolo pubblicato da \citet{Hulme_2020} si è posto il problema di rianalizzare i dati di \citet{Gautret_2020}.\footnote{Si veda \url{https://osf.io/5dgmx/}.} Tra gli autori di questo articolo figura anche Eric-Jan Wagenmakers, uno psicologo molto conosciuto per i suoi contributi metodologici.
-\citet{Hulme_2020} hanno osservato che, nelle analisi statistiche riportate, \citet{Gautret_2020} hanno escluso alcuni dati. Nel gruppo sperimentale, infatti, vi erano alcuni pazienti i quali, anziché migliorare, sono in realtà peggiorati. L'analisi statistica di \citet{Gautret_2020} ha escluso i dati di questi pazienti.
-Se consideriamo tutti i pazienti --- non solo quelli selezionati da \citet{Gautret_2020} --- la situazione diventa la seguente:
-
-\begin{itemize}
-\tightlist
-\item
-  gruppo sperimentale: 10 positivi su 18;
-\item
-  gruppo di controllo: 14 positivi su 16.
-\end{itemize}
-
-L'analisi dei dati proposta da \citet{Hulme_2020} richiede l'uso di alcuni strumenti statistici che, in queste dispense, non verranno discussi. Ma possiamo giungere alle stesse conclusioni raggiunte da questi ricercatori anche usando le procedure statistiche descritte nel Paragrafo successivo.
-
-\hypertarget{due-proporzioni}{%
-\section{Due proporzioni}\label{due-proporzioni}}
-
-Svolgiamo ora l'analisi considerando tutti i dati, come suggerito da \citet{Hulme_2020}. Per fare questo verrà creato un modello bayesiano per fare inferenza sulla differenza tra due proporzioni. Una volta generate le distribuzioni a posteriori per le proporzioni di ``successi'' nei due gruppi, verrà anche generata la quantità
-
-\[
-\omega = \frac{\theta_2 / (1-\theta_2)}{\theta_1 / (1-\theta_1)},
-\]
-\noindent
-ovvero il rapporto tra gli Odds di positività tra i pazienti del gruppo di controllo e gli Odds di positività tra i pazienti del gruppo sperimentale. Se il valore dell'OR è uguale a 1, significa che l'Odds di positività nel gruppo di controllo è uguale all'odds di positività nel gruppo sperimentale, cioè il fattore in esame (somministrazione dell'idrossiclorochina) è ininfluente sulla comparsa della malattia. L'inferenza statistica sull'efficacia dell'idrossiclorochina come terapia per il Covid-19 può dunque essere effettuata esaminando l'intervallo di credibilità al 95\% per l'OR: se tale intervallo include il valore 1, allora non vi è evidenza che l'idrossiclorochina sia efficace come terapia per il Covid-19.
-
-Nell'implementazione di questo modello, la quantità di interesse è dunque l'odds ratio; tale quantità viene calcolata nel blocco \texttt{generated\ quantities} del programma Stan. In questo esempio useremo delle distribuzioni a priori vagamente informative per i parametri \(\theta_1\) e \(\theta_1\).
+Svolgiamo ora la simulazione. I dati dell'esempio che stiamo discutendo sono:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{data\_list }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
-  \AttributeTok{N1 =} \DecValTok{18}\NormalTok{, }
-  \AttributeTok{y1 =} \DecValTok{10}\NormalTok{, }
-  \AttributeTok{N2 =} \DecValTok{16}\NormalTok{, }
-  \AttributeTok{y2 =} \DecValTok{14}
+  \AttributeTok{N =} \DecValTok{30}\NormalTok{,}
+  \AttributeTok{y =} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{23}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{7}\NormalTok{))}
 \NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{modelString }\OtherTok{=} \StringTok{"}
-\StringTok{//  Comparison of two groups with Binomial}
-\StringTok{data \{}
-\StringTok{  int\textless{}lower=0\textgreater{} N1;              // number of experiments in group 1}
-\StringTok{  int\textless{}lower=0\textgreater{} y1;              // number of deaths in group 1}
-\StringTok{  int\textless{}lower=0\textgreater{} N2;              // number of experiments in group 2}
-\StringTok{  int\textless{}lower=0\textgreater{} y2;              // number of deaths in group 2}
-\StringTok{\}}
-\StringTok{parameters \{}
-\StringTok{  real\textless{}lower=0,upper=1\textgreater{} theta1; // probability of death in group 1}
-\StringTok{  real\textless{}lower=0,upper=1\textgreater{} theta2; // probability of death in group 2}
-\StringTok{\}}
-\StringTok{model \{}
-\StringTok{  theta1 \textasciitilde{} beta(2, 2);          // prior}
-\StringTok{  theta2 \textasciitilde{} beta(2, 2);          // prior}
-\StringTok{  y1 \textasciitilde{} binomial(N1, theta1);    // observation model / likelihood}
-\StringTok{  y2 \textasciitilde{} binomial(N2, theta2);    // observation model / likelihood}
-\StringTok{\}}
-\StringTok{generated quantities \{}
-\StringTok{  // generated quantities are computed after sampling}
-\StringTok{  real oddsratio = (theta2/(1{-}theta2))/(theta1/(1{-}theta1));}
-\StringTok{\}}
-\StringTok{"}
-\FunctionTok{writeLines}\NormalTok{(modelString, }\AttributeTok{con =} \StringTok{"code/twoprop1.stan"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+\noindent
+Compiliamo il codice Stan
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(}\StringTok{"code"}\NormalTok{, }\StringTok{"twoprop1.stan"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
+\NormalTok{file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(}\StringTok{"code"}\NormalTok{, }\StringTok{"betabin23{-}30{-}2{-}10.stan"}\NormalTok{)}
 \NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{cmdstan\_model}\NormalTok{(file)}
 \end{Highlighting}
 \end{Shaded}
+
+\noindent
+ed eseguiamo il campionamento MCMC:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -664,301 +409,573 @@ Nell'implementazione di questo modello, la quantità di interesse è dunque l'od
 \end{Highlighting}
 \end{Shaded}
 
+\noindent
+Per comodità, trasformiamo l'oggetto \texttt{fit} in un oggetto di classe \texttt{stanfit}:
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{stanfit }\OtherTok{\textless{}{-}}\NormalTok{ rstan}\SpecialCharTok{::}\FunctionTok{read\_stan\_csv}\NormalTok{(fit}\SpecialCharTok{$}\FunctionTok{output\_files}\NormalTok{())}
 \end{Highlighting}
 \end{Shaded}
 
+\noindent
+Il contenuto dell'oggetto \texttt{stanfit} si può esaminare nel modo seguente:
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{print}\NormalTok{(}
-\NormalTok{  stanfit,}
-  \AttributeTok{pars =} \FunctionTok{c}\NormalTok{(}\StringTok{"theta1"}\NormalTok{, }\StringTok{"theta2"}\NormalTok{, }\StringTok{"oddsratio"}\NormalTok{),}
-  \AttributeTok{digits\_summary =}\NormalTok{ 3L}
-\NormalTok{)}
-\CommentTok{\#\textgreater{} Inference for Stan model: twoprop1{-}202109141358{-}1{-}94447a.}
-\CommentTok{\#\textgreater{} 4 chains, each with iter=6000; warmup=2000; thin=1; }
-\CommentTok{\#\textgreater{} post{-}warmup draws per chain=4000, total post{-}warmup draws=16000.}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}            mean se\_mean    sd  2.5\%   25\%   50\%   75\%}
-\CommentTok{\#\textgreater{} theta1    0.546   0.001 0.104 0.337 0.475 0.547 0.619}
-\CommentTok{\#\textgreater{} theta2    0.801   0.001 0.087 0.605 0.747 0.812 0.865}
-\CommentTok{\#\textgreater{} oddsratio 4.859   0.049 4.740 0.914 2.221 3.599 5.933}
-\CommentTok{\#\textgreater{}            97.5\% n\_eff  Rhat}
-\CommentTok{\#\textgreater{} theta1     0.743 11214 1.000}
-\CommentTok{\#\textgreater{} theta2     0.939 12359 1.000}
-\CommentTok{\#\textgreater{} oddsratio 16.251  9207 1.001}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Samples were drawn using NUTS(diag\_e) at Mar Set 14 13:58:01 2021.}
-\CommentTok{\#\textgreater{} For each parameter, n\_eff is a crude measure of effective sample size,}
-\CommentTok{\#\textgreater{} and Rhat is the potential scale reduction factor on split chains (at }
-\CommentTok{\#\textgreater{} convergence, Rhat=1).}
+\NormalTok{list\_of\_draws }\OtherTok{\textless{}{-}} \FunctionTok{extract}\NormalTok{(stanfit)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{names}\NormalTok{(list\_of\_draws))}
+\CommentTok{\#\textgreater{} [1] "theta"   "y\_rep"   "log\_lik" "lp\_\_"}
 \end{Highlighting}
 \end{Shaded}
 
-L'intervallo di credibilità del 95\% per l'OR include il valore di 1.0 (ovvero, il valore che indica che gli odds di positività sono uguali nei due gruppi). In base agli standard correnti, un risultato di questo tipo non viene considerato come evidenza sufficiente per potere concludere che il parametro \(\theta\) assume un valore diverso nei due gruppi. In altri termini, se consideriamo tutti i dati, e non solo quelli selezionati dagli autori della ricerca originaria, non vi è evidenza alcuna che l'idrossiclorochina sia efficace come terapia per il Covid-19.
+Occupiamoci ora della distribuzione predittiva a posteriori\footnote{Un approfondimento di questa analisi statistica è fornita nell'Appendice \ref{inference-one-prop}}. Usando l'oggetto \texttt{stanfit} creiamo \texttt{y\_bern}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y\_bern }\OtherTok{\textless{}{-}}\NormalTok{ list\_of\_draws}\SpecialCharTok{$}\NormalTok{y\_rep}
+\FunctionTok{dim}\NormalTok{(y\_bern)}
+\CommentTok{\#\textgreater{} [1] 16000    30}
+\FunctionTok{head}\NormalTok{(y\_bern)}
+\CommentTok{\#\textgreater{}           }
+\CommentTok{\#\textgreater{} iterations [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9]}
+\CommentTok{\#\textgreater{}       [1,]    0    1    0    0    0    1    1    0    1}
+\CommentTok{\#\textgreater{}       [2,]    1    0    1    1    1    1    1    1    0}
+\CommentTok{\#\textgreater{}       [3,]    1    1    1    1    1    0    1    0    0}
+\CommentTok{\#\textgreater{}       [4,]    1    0    0    1    1    1    0    1    1}
+\CommentTok{\#\textgreater{}       [5,]    0    1    1    1    1    1    1    1    0}
+\CommentTok{\#\textgreater{}       [6,]    0    0    1    1    0    1    1    0    1}
+\CommentTok{\#\textgreater{}           }
+\CommentTok{\#\textgreater{} iterations [,10] [,11] [,12] [,13] [,14] [,15] [,16] [,17]}
+\CommentTok{\#\textgreater{}       [1,]     1     0     0     1     1     1     1     1}
+\CommentTok{\#\textgreater{}       [2,]     0     0     0     1     0     1     1     1}
+\CommentTok{\#\textgreater{}       [3,]     1     1     0     1     1     1     1     1}
+\CommentTok{\#\textgreater{}       [4,]     1     1     0     1     0     0     0     1}
+\CommentTok{\#\textgreater{}       [5,]     0     1     1     1     0     1     0     1}
+\CommentTok{\#\textgreater{}       [6,]     1     0     1     0     1     1     0     0}
+\CommentTok{\#\textgreater{}           }
+\CommentTok{\#\textgreater{} iterations [,18] [,19] [,20] [,21] [,22] [,23] [,24] [,25]}
+\CommentTok{\#\textgreater{}       [1,]     0     0     0     0     0     1     0     0}
+\CommentTok{\#\textgreater{}       [2,]     1     1     1     0     1     1     0     0}
+\CommentTok{\#\textgreater{}       [3,]     1     1     1     1     0     1     0     1}
+\CommentTok{\#\textgreater{}       [4,]     0     0     1     1     1     1     0     0}
+\CommentTok{\#\textgreater{}       [5,]     0     1     1     1     0     1     1     1}
+\CommentTok{\#\textgreater{}       [6,]     1     0     0     0     0     1     0     1}
+\CommentTok{\#\textgreater{}           }
+\CommentTok{\#\textgreater{} iterations [,26] [,27] [,28] [,29] [,30]}
+\CommentTok{\#\textgreater{}       [1,]     1     1     0     1     0}
+\CommentTok{\#\textgreater{}       [2,]     0     1     1     1     0}
+\CommentTok{\#\textgreater{}       [3,]     1     1     1     1     1}
+\CommentTok{\#\textgreater{}       [4,]     0     0     1     0     1}
+\CommentTok{\#\textgreater{}       [5,]     0     0     0     1     1}
+\CommentTok{\#\textgreater{}       [6,]     1     1     0     1     1}
+\end{Highlighting}
+\end{Shaded}
+
+Dato che il codice Stan definisce un modello per i dati grezzi (ovvero, per ciascuna singola prova Bernoulliana del campione), ogni riga di \texttt{y\_bern} include 30 colonne, ciascuna delle quali è una stima di un nuovo futuro valore possibile \(y_i \in \{0, 1\}\). Per ottenere \texttt{y\_rep}, ovvero, il numero previsto di ``successi'' in nuove future \(N = 30\) prove è sufficiente calcolare la somma dei valori di ciascuna riga. Ripetendo questa operazione per tutte le 16000 righe otteniamo una stima della distribuzione predittiva a posteriori:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{y\_rep =} \FunctionTok{rowSums}\NormalTok{(y\_bern)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ y\_rep)) }\SpecialCharTok{+} 
+  \FunctionTok{stat\_count}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{046_ppc_files/figure-latex/unnamed-chunk-11-1} \end{center}
+
+Si noti che la simulazione di \texttt{y\_rep} assume che l'ampiezza del campione di dati futuri sia uguale all'ampiezza del campione di dati osservati --- nel caso presente \(n = 30\).
+
+\hypertarget{posterior-predictive-checks}{%
+\section{Posterior predictive checks}\label{posterior-predictive-checks}}
+
+La distribuzione predittiva a posteriori viene utilizzata per eseguire i cosiddetti \emph{Posterior Predictive Checks} (PPC). I PPC vengono utilizzati per valutare l'\emph{accuratezza predittiva} del modello, ovvero per confrontare con metodi grafici la distribuzione dei dati osservati \(y\) con la stima della distribuzione predittiva a posteriori \(p(y^{rep} \mid y)\). Confrontando visivamente gli aspetti chiave dei dati previsti futuri \(y^{rep}\) e dei dati osservati \(y\) possiamo determinare se il modello è adeguato. Se il modello si adatta bene ai dati, la distribuzione di \(y^{rep}\) è molto simile alla distribuzione dei dati osservati. In altre parole, i dati osservati devono risultare plausibili alla luce della distribuzione predittiva a posteriori.
+
+Oltre al confronto tra le distribuzioni di \(y\) e di \(y^{rep}\) è anche possibile un confronto tra la distribuzione di varie statistiche descrittive, i cui valori sono calcolati su diversi campioni \(y^{rep}\), e le corrispondenti statistiche descrittive calcolate sui dati osservati. Vengono solitamente considerate statistiche descrittive quali la media, la varianza, la deviazione standard, il minimo o il massimo. Ma confronti di questo tipo sono possibili per qualunque statistica descrittiva. Questi confronti sono appunto chiamati PPC.
+
+Per l'esempio presente, una volta eseguito il campionamento MCMC e ottenuto un oggetto di classe \texttt{stanfit}, è possibile usare le funzionalità del pacchetto \texttt{bayesplot} per eseguire i PPC. Nel caso presente, il campione di dati ha dimensioni esigue, per cui i PPC rifletteranno la grande incertenzza dell'inferenza.
+
+Dall'oggetto \texttt{stanfit} estraiamo \(y^{rep}\):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y\_rep }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(stanfit, }\AttributeTok{pars =} \StringTok{"y\_rep"}\NormalTok{)}
+\FunctionTok{dim}\NormalTok{(y\_rep)}
+\CommentTok{\#\textgreater{} [1] 16000    30}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Qui sotto esaminiamo la distribuzione della \(y\) insieme alla distribuzione di 8 campioni \(y^{rep}\):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ppc\_hist}\NormalTok{(data\_list}\SpecialCharTok{$}\NormalTok{y, y\_rep[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{8}\NormalTok{, ], }\AttributeTok{binwidth =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{046_ppc_files/figure-latex/unnamed-chunk-13-1} \end{center}
+
+La corrispondenza tra le distribuzioni della \(y\) e di \(y^{rep}\) è solo parziale. Il confronto è più facile se sovrapponiamo graficamente i kernel density plot della \(y\) e di \(y^{rep}\) (qui usiamo 50 campioni \(y^{rep}\)):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ppc\_dens\_overlay}\NormalTok{(data\_list}\SpecialCharTok{$}\NormalTok{y, y\_rep[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{50}\NormalTok{, ])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{046_ppc_files/figure-latex/unnamed-chunk-14-1} \end{center}
+
+Anche in questo caso c'è una corrispondenza solo approssimativa tra l'istogramma lisciato della \(y\) e quello di \(y^{rep}\) --- ciò è dovuto al fatto che il campione è molto piccolo.
+
+La distribuzione predittiva a posteriori è comunque in grado di rappresentare abbastanza bene la media di \(y\):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ppc\_stat}\NormalTok{(data\_list}\SpecialCharTok{$}\NormalTok{y, y\_rep, }\AttributeTok{stat =} \StringTok{"mean"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{046_ppc_files/figure-latex/unnamed-chunk-15-1} \end{center}
+
+\noindent
+Lo stesso si può dire della varianza:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ppc\_stat}\NormalTok{(data\_list}\SpecialCharTok{$}\NormalTok{y, y\_rep, }\AttributeTok{stat =} \StringTok{"var"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{046_ppc_files/figure-latex/unnamed-chunk-16-1} \end{center}
+
+Nell'esempio successivo considereremo un campione più grande e vedremo come i PPC possano fornirci delle indicazioni sulla mancanza di adattamento del modello ai dati.
+
+\hypertarget{ppc-per-il-modello-di-poisson}{%
+\subsection{PPC per il modello di Poisson}\label{ppc-per-il-modello-di-poisson}}
+
+Le istruzioni \(\R\) qui utilizzate sono state recuperate dalla seguente \href{http://avehtari.github.io/BDA_R_demos/demos_rstan/ppc/poisson-ppc.html\#}{pagina web}. Nell'esempio discusso da Jonah Gabry e Aki Vehtari vengono usati i seguenti dati:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(0L, 3L, 5L, 0L, 4L, 7L, 4L, 2L, 3L, }
+\NormalTok{       6L, 7L, 0L, 0L, 3L, 7L, 5L, 5L, 0L, }
+\NormalTok{       4L, 0L, 4L, 4L, 6L, 3L, 7L, 5L, 3L, }
+\NormalTok{       0L, 0L, 2L, 0L, 1L, 0L, 1L, 5L, 4L, }
+\NormalTok{       4L, 2L, 3L, 6L, 4L, 5L, 0L, 7L, 7L, }
+\NormalTok{       4L, 4L, 4L, 0L, 6L, 1L, 5L, 6L, 5L, }
+\NormalTok{       6L, 7L, 3L, 6L, 2L, 3L, 0L, 2L, 0L, }
+\NormalTok{       6L, 6L, 0L, 3L, 4L, 4L, 5L, 5L, 0L, }
+\NormalTok{       5L, 7L, 5L, 5L, 6L, 4L, 2L, 3L, 4L, }
+\NormalTok{       6L, 4L, 6L, 6L, 4L, 0L, 6L, 5L, 5L, }
+\NormalTok{       7L, 0L, 1L, 6L, 7L, 0L, 5L, 0L, 0L, }
+\NormalTok{       5L, 6L, 5L, 1L, 0L, 7L, 1L, 2L, 6L, }
+\NormalTok{       5L, 4L, 0L, 4L, 0L, 4L, 4L, 6L, 3L, }
+\NormalTok{       0L, 0L, 3L, 3L, 4L, 2L, 5L, 3L, 4L, }
+\NormalTok{       3L, 2L, 5L, 2L, 4L, 4L, 0L, 2L, 7L, }
+\NormalTok{       5L, 7L, 5L, 5L, 7L, 7L, 0L, 4L, 6L, }
+\NormalTok{       0L, 4L, 6L, 7L, 4L, 0L, 4L, 1L, 5L, }
+\NormalTok{       0L, 3L, 5L, 7L, 6L, 0L, 5L, 5L, 6L, }
+\NormalTok{       7L, 6L, 7L, 3L, 4L, 3L, 7L, 7L, 2L, }
+\NormalTok{       5L, 4L, 5L, 5L, 0L, 6L, 2L, 4L, 5L, }
+\NormalTok{       4L, 0L, 0L, 5L, 5L, 7L, 7L, 0L, 3L, }
+\NormalTok{       0L, 3L, 3L, 6L, 1L, 4L, 2L, 0L, 4L, }
+\NormalTok{       7L, 5L, 5L, 0L, 3L, 7L, 0L, 6L, 6L, }
+\NormalTok{       4L, 1L, 6L, 7L, 6L, 0L, 3L, 6L, 4L, }
+\NormalTok{       7L, 0L, 5L, 5L, 4L, 0L, 0L, 2L, 4L, }
+\NormalTok{       6L, 0L, 5L, 0L, 2L, 7L, 2L, 7L, 5L, }
+\NormalTok{       4L, 6L, 2L, 4L, 0L, 4L, 0L, 0L, 3L, }
+\NormalTok{       5L, 4L, 3L, 5L, 5L, 7L, 7L, 0L, 6L, }
+\NormalTok{       4L, 5L, 1L, 5L, 3L, 5L, 5L, 5L, 0L, }
+\NormalTok{       2L, 7L, 6L, 2L, 3L, 2L, 5L, 4L, 7L, }
+\NormalTok{       6L, 7L, 3L, 3L, 4L, 4L, 6L, 4L, 6L, }
+\NormalTok{       7L, 1L, 5L, 6L, 3L, 3L, 6L, 3L, 4L, }
+\NormalTok{       0L, 7L, 0L, 3L, 6L, 5L, 0L, 0L, 0L, }
+\NormalTok{       5L, 4L, 4L, 0L, 4L, 7L, 5L, 5L, 3L, }
+\NormalTok{       3L, 0L, 0L, 5L, 4L, 0L, 7L, 6L, 0L, }
+\NormalTok{       6L, 2L, 0L, 6L, 1L, 0L, 4L, 0L, 4L, }
+\NormalTok{       3L, 0L, 4L, 5L, 5L, 7L, 6L, 6L, 5L, }
+\NormalTok{       4L, 7L, 0L, 6L, 4L, 7L, 7L, 5L, 0L, }
+\NormalTok{       1L, 4L, 7L, 6L, 4L, 5L, 4L, 7L, 2L, }
+\NormalTok{       5L, 2L, 6L, 3L, 2L, 7L, 4L, 3L, 4L, }
+\NormalTok{       6L, 6L, 6L, 6L, 7L, 1L, 0L, 0L, 7L, }
+\NormalTok{       7L, 4L, 2L, 4L, 5L, 5L, 7L, 4L, 1L, }
+\NormalTok{       7L, 6L, 5L, 6L, 5L, 4L, 0L, 0L, 7L, }
+\NormalTok{       0L, 0L, 5L, 6L, 6L, 3L, 6L, 0L, 0L, }
+\NormalTok{       0L, 4L, 4L, 3L, 0L, 7L, 5L, 4L, 2L, }
+\NormalTok{       7L, 0L, 4L, 0L, 0L, 2L, 4L, 5L, 0L, }
+\NormalTok{       4L, 2L, 5L, 2L, 0L, 6L, 6L, 3L, 6L, }
+\NormalTok{       0L, 2L, 5L, 0L, 0L, 0L, 6L, 0L, 0L, }
+\NormalTok{       6L, 5L, 4L, 6L, 4L, 5L, 5L, 4L, 0L, }
+\NormalTok{       3L, 4L, 3L, 3L, 5L, 3L, 4L, 5L, 7L, }
+\NormalTok{       0L, 0L, 1L, 4L, 6L, 3L, 5L, 7L, 6L, }
+\NormalTok{       6L, 5L, 0L, 5L, 4L, 0L, 0L, 2L, 6L, }
+\NormalTok{       0L, 6L, 0L, 4L, 5L, 6L, 3L, 4L, 2L, }
+\NormalTok{       3L, 4L, 0L, 5L, 0L, 0L, 0L, 0L, 3L, }
+\NormalTok{       4L, 7L, 6L, 7L, 7L, 3L, 4L, 4L, 7L, }
+\NormalTok{       4L, 5L, 2L, 5L, 6L)}
+
+\NormalTok{N }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(y)}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Per questi dati sembra appropriato un modello di Poisson.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qplot}\NormalTok{(y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{046_ppc_files/figure-latex/unnamed-chunk-18-1} \end{center}
+
+\noindent
+Un istogramma di un campione casuale della stessa ampiezza di \(y\) tratto dalla distribuzione di Poisson è il seguente:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{rpois}\NormalTok{(N, }\FunctionTok{mean}\NormalTok{(y))}
+\FunctionTok{qplot}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{046_ppc_files/figure-latex/unnamed-chunk-19-1} \end{center}
+
+\noindent
+È chiaro però che i due istogrammi sono molto diversi.
+
+Anche se sospettiamo che non sarà un buon modello per questi dati, è comunque una buona idea iniziare adattando ai dati il modello più semplice, ovvero quello di Poisson. Partendo da lì possiamo poi cercare di capire in che modo il modello è inadeguato.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modelString }\OtherTok{\textless{}{-}} \StringTok{"}
+\StringTok{data \{}
+\StringTok{  int\textless{}lower=1\textgreater{} N;}
+\StringTok{  int\textless{}lower=0\textgreater{} y[N];}
+\StringTok{\}}
+\StringTok{parameters \{}
+\StringTok{  real\textless{}lower=0\textgreater{} lambda;}
+\StringTok{\}}
+\StringTok{model \{}
+\StringTok{  lambda \textasciitilde{} exponential(0.2);}
+\StringTok{  y \textasciitilde{} poisson(lambda);}
+\StringTok{\}}
+\StringTok{generated quantities \{}
+\StringTok{  int y\_rep[N];}
+\StringTok{  for (n in 1:N) \{}
+\StringTok{    y\_rep[n] = poisson\_rng(lambda);}
+\StringTok{  \}}
+\StringTok{\}}
+\StringTok{"}
+\FunctionTok{writeLines}\NormalTok{(modelString, }\AttributeTok{con =} \StringTok{"code/code\_poisson.stan"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Creiamo un oggetto di tipo \texttt{list} dove inserire i dati:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_list }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
+  \AttributeTok{y =}\NormalTok{ y,}
+  \AttributeTok{N =} \FunctionTok{length}\NormalTok{(y)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Adattando il modello ai dati
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(}\StringTok{"code"}\NormalTok{, }\StringTok{"code\_poisson.stan"}\NormalTok{)}
+\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{cmdstan\_model}\NormalTok{(file)}
+\NormalTok{fit }\OtherTok{\textless{}{-}}\NormalTok{ mod}\SpecialCharTok{$}\FunctionTok{sample}\NormalTok{(}
+  \AttributeTok{data =}\NormalTok{ data\_list,}
+  \AttributeTok{iter\_sampling =}\NormalTok{ 4000L,}
+  \AttributeTok{iter\_warmup =}\NormalTok{ 2000L,}
+  \AttributeTok{seed =}\NormalTok{ SEED,}
+  \AttributeTok{chains =}\NormalTok{ 4L,}
+  \AttributeTok{parallel\_chains =}\NormalTok{ 4L,}
+  \AttributeTok{refresh =} \DecValTok{0}\NormalTok{,}
+  \AttributeTok{thin =} \DecValTok{1}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+otteniamo la seguente stima del parametro \(\lambda\):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit}\SpecialCharTok{$}\FunctionTok{summary}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"lambda"}\NormalTok{))}
+\CommentTok{\#\textgreater{} \# A tibble: 1 x 10}
+\CommentTok{\#\textgreater{}   variable  mean median     sd    mad    q5   q95  rhat}
+\CommentTok{\#\textgreater{}   \textless{}chr\textgreater{}    \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 lambda    3.66   3.66 0.0839 0.0837  3.52  3.80  1.00}
+\CommentTok{\#\textgreater{} \# ... with 2 more variables: ess\_bulk \textless{}dbl\textgreater{}, ess\_tail \textless{}dbl\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Confrontiamo \(\lambda\) con la media di \(y\):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(y)}
+\CommentTok{\#\textgreater{} [1] 3.662}
+\end{Highlighting}
+\end{Shaded}
+
+Anche se trova la media giusta, il modello non è comunque adeguato a prevedere le altre proprietà della \(y\). Trasformiamo \texttt{fit} in un oggetto \texttt{stanfit}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{stanfit }\OtherTok{\textless{}{-}}\NormalTok{ rstan}\SpecialCharTok{::}\FunctionTok{read\_stan\_csv}\NormalTok{(fit}\SpecialCharTok{$}\FunctionTok{output\_files}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+La distribuzione a posteriori di \(\lambda\) è
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lambda\_draws }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(stanfit, }\AttributeTok{pars =} \StringTok{"lambda"}\NormalTok{)}
+\FunctionTok{mcmc\_areas}\NormalTok{(lambda\_draws, }\AttributeTok{prob =} \FloatTok{0.95}\NormalTok{) }\CommentTok{\# color 95\% interval}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{046_ppc_files/figure-latex/unnamed-chunk-26-1} \end{center}
+
+\noindent
+Estraiamo \(y^{rep}\) dall'oggetto \texttt{stanfit}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y\_rep }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(stanfit, }\AttributeTok{pars =} \StringTok{"y\_rep"}\NormalTok{)}
+\FunctionTok{dim}\NormalTok{(y\_rep) }
+\CommentTok{\#\textgreater{} [1] 16000   500}
+\end{Highlighting}
+\end{Shaded}
+
+Il confronto tra l'istogramma della \(y\) e gli istogrammi di diversi campioni \(y^{rep}\) mostra una scarsa corrispondenza tra i due:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ppc\_hist}\NormalTok{(y, y\_rep[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{8}\NormalTok{, ], }\AttributeTok{binwidth =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{046_ppc_files/figure-latex/unnamed-chunk-28-1} \end{center}
+
+Alla stessa conclusione si giunge tramite un confronto tra la funzione di densità empirica della \(y\) e quella di diversi campioni \(y^{rep}\):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ppc\_dens\_overlay}\NormalTok{(y, y\_rep[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{50}\NormalTok{, ])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{046_ppc_files/figure-latex/unnamed-chunk-29-1} \end{center}
+
+Eseguiamo ora i PPC per la media e la deviazine standard:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ppc\_stat\_2d}\NormalTok{(y, y\_rep, }\AttributeTok{stat =} \FunctionTok{c}\NormalTok{(}\StringTok{"mean"}\NormalTok{, }\StringTok{"sd"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{046_ppc_files/figure-latex/unnamed-chunk-30-1} \end{center}
+
+\noindent
+Mentre la media viene riprodotta accuratamente dal modello (come avevamo visto sopra), ciò non è vero per la deviazione stanard dei dati. La domanda è quale sia l'origine di questa mancanza di adattamento.
+
+Calcoliamo ora la proporzione di zeri in \(y\) e nei campioni \(y^{rep}\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prop\_zero }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{mean}\NormalTok{(x }\SpecialCharTok{==} \DecValTok{0}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{prop\_zero}\NormalTok{(y))}
+\CommentTok{\#\textgreater{} [1] 0.202}
+\end{Highlighting}
+\end{Shaded}
+
+Eseguendo il PPC sulla proporzione di zeri
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ppc\_stat}\NormalTok{(y, y\_rep, }\AttributeTok{stat =} \StringTok{"prop\_zero"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{046_ppc_files/figure-latex/unnamed-chunk-32-1} \end{center}
+
+\noindent 
+notiamo che il modello non è assolutamente in grado di catturare la proporzione di casi nei quali la variabile \(Y\) assume il valore 0. In altri termini, i dati presentano un'inflazione di valori 0 rispetto a quelli che sono previsti da un modello di Poisson. Questo è un problema che si verifica spesso nei dati empirici.
+
+Per ovviare al problema dell'inflazione di valori pari a 0 è possibile definire un modello di tipo ``hurdle'' che consente la presenza di una proporzione di valori pari a 0 maggiore di quanto normalmente previsto dalla distribuzione di Poisson. Senza entrare nei dettagli di come questo viene fatto, Gabry e Vehtari definiscono il seguente modello:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modelString2 }\OtherTok{\textless{}{-}} \StringTok{"}
+\StringTok{data \{}
+\StringTok{  int\textless{}lower=1\textgreater{} N;}
+\StringTok{  int\textless{}lower=0\textgreater{} y[N];}
+\StringTok{\}}
+\StringTok{transformed data \{}
+\StringTok{  int U = max(y);  // upper truncation point}
+\StringTok{\}}
+\StringTok{parameters \{}
+\StringTok{  real\textless{}lower=0,upper=1\textgreater{} theta; // Pr(y = 0)}
+\StringTok{  real\textless{}lower=0\textgreater{} lambda; // Poisson rate parameter (if y \textgreater{} 0)}
+\StringTok{\}}
+\StringTok{model \{}
+\StringTok{  lambda \textasciitilde{} exponential(0.2);}
+\StringTok{  }
+\StringTok{  for (n in 1:N) \{}
+\StringTok{    if (y[n] == 0) \{}
+\StringTok{      target += log(theta);  // log(Pr(y = 0))}
+\StringTok{    \} else \{}
+\StringTok{      target += log1m(theta);  // log(Pr(y \textgreater{} 0))}
+\StringTok{      y[n] \textasciitilde{} poisson(lambda) T[1,U];  // truncated poisson}
+\StringTok{    \}}
+\StringTok{  \}}
+\StringTok{\}}
+\StringTok{generated quantities \{}
+\StringTok{  real log\_lik[N];}
+\StringTok{  int y\_rep[N];}
+\StringTok{  for (n in 1:N) \{}
+\StringTok{    if (bernoulli\_rng(theta)) \{}
+\StringTok{      y\_rep[n] = 0;}
+\StringTok{    \} else \{}
+\StringTok{      int w;  // temporary variable}
+\StringTok{      w = poisson\_rng(lambda); }
+\StringTok{      while (w == 0 || w \textgreater{} U)}
+\StringTok{        w = poisson\_rng(lambda);}
+\StringTok{        }
+\StringTok{      y\_rep[n] = w;}
+\StringTok{    \}}
+\StringTok{    if (y[n] == 0) \{}
+\StringTok{      log\_lik[n] = log(theta);}
+\StringTok{    \} else \{}
+\StringTok{      log\_lik[n] = log1m(theta)}
+\StringTok{    + poisson\_lpmf(y[n] | lambda)}
+\StringTok{    {-} log\_diff\_exp(poisson\_lcdf(U | lambda),}
+\StringTok{                       poisson\_lcdf(0 | lambda));}
+\StringTok{    \}}
+\StringTok{  \}}
+\StringTok{\}}
+\StringTok{"}
+\FunctionTok{writeLines}\NormalTok{(modelString2, }\AttributeTok{con =} \StringTok{"code/code\_poisson\_hurdle.stan"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Adattiamo il modello ai dati:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file2 }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(}\StringTok{"code"}\NormalTok{, }\StringTok{"code\_poisson\_hurdle.stan"}\NormalTok{)}
+\NormalTok{mod2 }\OtherTok{\textless{}{-}} \FunctionTok{cmdstan\_model}\NormalTok{(file2)}
+
+\NormalTok{fit2 }\OtherTok{\textless{}{-}}\NormalTok{ mod2}\SpecialCharTok{$}\FunctionTok{sample}\NormalTok{(}
+  \AttributeTok{data =}\NormalTok{ data\_list,}
+  \AttributeTok{iter\_sampling =}\NormalTok{ 4000L,}
+  \AttributeTok{iter\_warmup =}\NormalTok{ 2000L,}
+  \AttributeTok{seed =}\NormalTok{ SEED,}
+  \AttributeTok{chains =}\NormalTok{ 4L,}
+  \AttributeTok{parallel\_chains =}\NormalTok{ 4L,}
+  \AttributeTok{refresh =} \DecValTok{0}\NormalTok{,}
+  \AttributeTok{thin =} \DecValTok{1}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+In questo caso otteniamo una stima di \(\lambda\) diversa da quella ottenuta in precedenza:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit2}\SpecialCharTok{$}\FunctionTok{summary}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"lambda"}\NormalTok{, }\StringTok{"theta"}\NormalTok{))}
+\CommentTok{\#\textgreater{} \# A tibble: 2 x 10}
+\CommentTok{\#\textgreater{}   variable  mean median     sd    mad    q5   q95  rhat}
+\CommentTok{\#\textgreater{}   \textless{}chr\textgreater{}    \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 lambda   5.31   5.30  0.163  0.164  5.05  5.58   1.00}
+\CommentTok{\#\textgreater{} 2 theta    0.203  0.203 0.0177 0.0179 0.175 0.233  1.00}
+\CommentTok{\#\textgreater{} \# ... with 2 more variables: ess\_bulk \textless{}dbl\textgreater{}, ess\_tail \textless{}dbl\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Si noti che il parametro \(\theta\) viene usato per modellizzare l'eccesso di valori 0.
+
+Eseguiamo un confronto tra le distribuzioni a posteriori di \(\lambda\) per i due modelli si ottiene nel modo seguente:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{stanfit2 }\OtherTok{\textless{}{-}}\NormalTok{ rstan}\SpecialCharTok{::}\FunctionTok{read\_stan\_csv}\NormalTok{(fit2}\SpecialCharTok{$}\FunctionTok{output\_files}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lambda\_draws2 }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(stanfit2, }\AttributeTok{pars =} \StringTok{"lambda"}\NormalTok{)}
+
+\NormalTok{lambdas }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}\AttributeTok{lambda\_fit1 =}\NormalTok{ lambda\_draws[, }\DecValTok{1}\NormalTok{],}
+                 \AttributeTok{lambda\_fit2 =}\NormalTok{ lambda\_draws2[, }\DecValTok{1}\NormalTok{])}
+\FunctionTok{mcmc\_areas}\NormalTok{(lambdas, }\AttributeTok{prob =} \FloatTok{0.95}\NormalTok{) }\CommentTok{\# color 95\% interval}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{046_ppc_files/figure-latex/unnamed-chunk-37-1} \end{center}
+
+Rifacciamo i grafici esaminati in precedenza (e alcuni altri), ma questa volta eatraendo \(y^{rep}\) da \texttt{fit2}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y\_rep2 }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(stanfit2, }\AttributeTok{pars =} \StringTok{"y\_rep"}\NormalTok{)}
+\FunctionTok{ppc\_hist}\NormalTok{(y, y\_rep2[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{8}\NormalTok{, ], }\AttributeTok{binwidth =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{046_ppc_files/figure-latex/unnamed-chunk-38-1} \end{center}
+
+\noindent
+In questo caso la distribuzione di \(y^{rep}\) è molto simile alla distribuzione di \(y\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ppc\_dens\_overlay}\NormalTok{(y, y\_rep2[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{50}\NormalTok{, ])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{046_ppc_files/figure-latex/unnamed-chunk-39-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ppc\_stat}\NormalTok{(y, y\_rep2, }\AttributeTok{stat =} \StringTok{"prop\_zero"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{046_ppc_files/figure-latex/unnamed-chunk-40-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ppc\_stat\_2d}\NormalTok{(y, y\_rep2, }\AttributeTok{stat =} \FunctionTok{c}\NormalTok{(}\StringTok{"mean"}\NormalTok{, }\StringTok{"sd"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{046_ppc_files/figure-latex/unnamed-chunk-41-1} \end{center}
+
+In conclusione, l'accuratezza predittiva del modello ``hurdle'' è chiaramente migliore di quella del modello di Poisson.
 
 \hypertarget{considerazioni-conclusive}{%
 \section*{Considerazioni conclusive}\label{considerazioni-conclusive}}
 \addcontentsline{toc}{section}{Considerazioni conclusive}
 
-Concludiamo questa discussione dicendo che ciò che è stato presentato in questo capitolo è un esercizio didattico: la ricerca di \citet{Gautret_2020} include tante altre informazioni che non sono state qui considerate. Tuttavia, notiamo che la semplice analisi statistica che abbiamo qui descritto è stata in grado di replicare le conclusioni a cui sono giunti (per altra via) \citet{Hulme_2020}.
-
-\hypertarget{intro-stan}{%
-\chapter{Programmare in Stan}\label{intro-stan}}
-
-\hypertarget{che-cosuxe8-stan}{%
-\section{Che cos'è Stan?}\label{che-cosuxe8-stan}}
-
-\href{http://mc-stan.org/}{STAN} è un linguaggio di programmazione probabilistico usato per l'inferenza bayesiana \citep{carpenter2017stan}. Prende il nome da uno dei creatori del metodo Monte Carlo, Stanislaw Ulam \citep{Eckhardt1987stan}. Stan consente di generare campioni da distribuzioni di probabilità basati sulla costruzione di una catena di Markov avente come distribuzione di equilibrio (o stazionaria) la distribuzione desiderata.
-
-Nelle parole degli autori:
-
-\begin{quote}
-Stan is a state-of-the-art platform for statistical modeling and high-performance statistical computation. Thousands of users rely on Stan for statistical modeling, data analysis, and prediction in the social, biological, and physical sciences, engineering, and business. Users specify log density functions in Stan's probabilistic programming language and get: full Bayesian statistical inference with MCMC sampling (NUTS, HMC); approximate Bayesian inference with variational inference (ADVI): penalized maximum likelihood estimation with optimization (L-BFGS).
-\end{quote}
-
-Esistono varie interfacce di STAN per diversi programmi, tra cui R, interfaccia a riga di comando (\emph{command line}), Python, MATLAB, Julia, Stata e Mathematica.
-
-\hypertarget{post-processing}{%
-\subsection{Post-processing}\label{post-processing}}
-
-Ci sono molti pacchetti R che facilitano l'uso di Stan, tra cui
-
-\begin{itemize}
-\tightlist
-\item
-  \texttt{rstan}: General R Interface to Stan
-\item
-  \texttt{shinystan}: Interactive Visual and Numerical Diagnostics and Posterior Analysis for Bayesian Models
-\item
-  \texttt{bayesplot}: Plotting functions for posterior analysis, model checking, and MCMC diagnostics.
-\item
-  \texttt{brms}: Bayesian Regression Models using `Stan', covering a growing number of model types
-\item
-  \texttt{rstanarm}: Bayesian Applied Regression Modeling via Stan, with an emphasis on hierarchical/multilevel models
-\item
-  \texttt{edstan}: Stan Models for Item Response Theory
-\item
-  \texttt{rstantools}: Tools for Developing R Packages Interfacing with Stan
-\end{itemize}
-
-\hypertarget{cmdstan}{%
-\section{CmdStan}\label{cmdstan}}
-
-Negli esempi qui discusi verrà usata \texttt{CmdStanR}, un'interfaccia R per \texttt{CmdStan} che costituisce una recente alternativa alla tradizionale interfaccia \texttt{RStan}. \texttt{CmdStanR} non è ancora disponibile su CRAN, ma può essere installato come indicato su questo \href{https://mc-stan.org/docs/2_27/cmdstan-guide/cmdstan-installation.html}{link}.
-
-Una volta installato \texttt{CmdStanR}, il pacchetto \texttt{cmdstanr} può essere caricato come un qualsiasi altro pacchetto R.
-
-Si noti che \texttt{CmdStanR} richiede un'installazione funzionante di \texttt{CmdStan}, l'interfaccia shell per Stan. Se \texttt{CmdStan} non è installato, \texttt{CmdStanR} lo installerà automaticamente se il computer dispone di una \emph{Toolchain} adatta. Stan richiede infatti che sul computer su cui viene installato siano presenti alcuni strumenti necessari per gestire i file C++. Tra le altre ragioni, questo è dovuto al fatto che il codice Stan viene tradotto in codice C++ e compilato. Il modo migliore per ottenere il software necessario per un computer Windows o Mac è quello di installare \texttt{RTools}. Per un computer Linux, è necessario installare \texttt{build-essential} e una versione recente dei compilatori g++ o clang++. I requisiti sono descritti nella \href{https://mc-stan.org/docs/cmdstan-guide/cmdstan-installation.html}{Guida di CmdStan}.
-
-Per verificare che la Toolchain sia configurata correttamente è possibile utilizzare la funzione \texttt{check\_cmdstan\_toolchain()}:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{check\_cmdstan\_toolchain}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Se la toolchain è configurata correttamente, \texttt{CmdStan} può essere installato mediante la funzione \texttt{install\_cmdstan()}:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# do not run!}
-\CommentTok{\# install\_cmdstan(cores = 2)}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Prima di poter utilizzare \texttt{CmdStanR}, è necessario specificare dove si trova l'installazione di \texttt{CmdStan}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# do not run!}
-\CommentTok{\# set\_cmdstan\_path(PATH\_TO\_CMDSTAN)}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Sul mio computer \texttt{PATH\_TO\_CMDSTAN} è la seguente stringa (incluse le virgolette):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{cmdstan\_path}\NormalTok{()}
-\CommentTok{\#\textgreater{} [1] "/Users/corrado/.cmdstanr/cmdstan{-}2.27.0"}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-La versione installata di \texttt{CmdStan} si ottiene con:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{cmdstan\_version}\NormalTok{()}
-\CommentTok{\#\textgreater{} [1] "2.27.0"}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{codice-stan}{%
-\section{Codice Stan}\label{codice-stan}}
-
-Qualunque sia l'interfaccia che viene usata, i modelli sottostanti sono sempre scritti nel linguaggio Stan, il che significa che lo stesso codice Stan è valido per tutte le interfacce possibili. Il codice Stan è costituito da una serie di blocchi che vengono usati per specificare un modello statistico. In ordine, questi blocchi sono: \texttt{data}, \texttt{transformed\ data}, \texttt{parameters}, \texttt{transformed\ parameters}, \texttt{model}, e \texttt{generated\ quantities}.
-
-Un programma Stan contiene tre ``blocchi'' obbligatori: blocco \texttt{data}, blocco \texttt{parameters}, blocco \texttt{model}.
-
-\hypertarget{blocco-data}{%
-\subsection{\texorpdfstring{Blocco \texttt{data}}{Blocco data}}\label{blocco-data}}
-
-Qui vengono dichiarate le variabili che saranno passate a Stan. Devono essere elencati i nomi delle variabili che saranno utilizzate nel programma, il \emph{tipo di dati} da registrare per ciascuna variabile, per esempio:
-- \emph{int} = intero,
-- \emph{real} = numeri reali (ovvero, numeri con cifre decimali),
-- \emph{vector} = sequenze ordinate di numeri reali unidimensionali,
-- \emph{matrix} = matrici bidimensionali di numeri reali,
-- \emph{array} = sequenze ordinate di dati multidimensionali.
-
-Devono anche essere dichiarate le dimensioni delle variabili e le eventuali restrizioni sulle variabili (es. \texttt{upper\ =\ 1} \texttt{lower\ =\ 0}, che fungono da controlli per Stan). Tutti i nomi delle variabili assegnate qui saranno anche usati negli altri blocchi del programma.
-
-Per esempio, l'istruzione seguente dichiaria la variabile \texttt{Y} -- la quale rappresenta, ad esempio, l'altezza di 10 persone -- come una variabile di tipo \texttt{real{[}10{]}}. Ciò significa che specifichiamo un array di lunghezza 10, i cui elementi sono variabili continue definite sull'intervallo dei numeri reali \([-\infty, +\infty]\).
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{data \{}
-\NormalTok{  real Y[}\DecValTok{10}\NormalTok{]; }\SpecialCharTok{/}\ErrorTok{/}\NormalTok{ heights }\ControlFlowTok{for} \DecValTok{10}\NormalTok{ people}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-Invece, con l'istruzione
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{data \{}
-\NormalTok{  int Y[}\DecValTok{10}\NormalTok{]; }\SpecialCharTok{/}\ErrorTok{/}\NormalTok{ qi }\ControlFlowTok{for} \DecValTok{10}\NormalTok{ people}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-dichiariamo la variabile \texttt{Y} -- la quale rappresenta, ad esempio, il QI di 10 persone -- come una variabile di tipo \texttt{int{[}10{]}}, ovvero un array di lunghezza 10, i cui elementi sono numeri naturali, cioè numeri interi non negativi \(\{0, +1, +2, +3, +4, \dots\}\).
-
-Un altro esempio è
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{data \{}
-\NormalTok{  real}\SpecialCharTok{\textless{}}\NormalTok{lower}\OtherTok{=}\DecValTok{0}\NormalTok{, upper}\OtherTok{=}\DecValTok{1}\SpecialCharTok{\textgreater{}}\NormalTok{ Y[}\DecValTok{10}\NormalTok{]; }\SpecialCharTok{/}\ErrorTok{/} \DecValTok{10}\NormalTok{ proportions}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-nel quale viene specificato un array di lunghezza 10, i cui elementi sono delle variabili continue definite sull'intervallo dei numeri reali \([0, 1]\) --- per esempio, delle proporzioni.
-
-Si noti che i tipi \texttt{vector} e \texttt{matrix} contengono solo elementi di tipo \texttt{real}, ovvero variabili continue, mentre gli \texttt{array} possono contenere dati di qualsiasi tipo. I dati passati a Stan devono essere contenuti in un oggetto del tipo \texttt{list}.
-
-\hypertarget{blocco-parameters}{%
-\subsection{\texorpdfstring{Blocco \texttt{parameters}}{Blocco parameters}}\label{blocco-parameters}}
-
-I parametri che vengono stimati sono dichiarati nel blocco \texttt{parameters}. Per esempio, l'istruzione
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{parameters \{}
-\NormalTok{  real mu; }\SpecialCharTok{/}\ErrorTok{/}\NormalTok{ mean height }\ControlFlowTok{in}\NormalTok{ population}
-\NormalTok{  real}\SpecialCharTok{\textless{}}\NormalTok{lower}\OtherTok{=}\DecValTok{0}\SpecialCharTok{\textgreater{}}\NormalTok{ sigma; }\SpecialCharTok{/}\ErrorTok{/}\NormalTok{ sd of height distribution}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-dichiaria la variabile \texttt{mu} che codifica l'altezza media nella popolazione, che è una variabile continua in un intervallo illimitato di valori, e la deviazione standard \texttt{sigma}, che è una variabile continua non negativa. Avremmo anche potuto specificare un limite inferiore di zero su \texttt{mu} perché deve essere non negativo.
-
-Per una regressione lineare semplice, ad esempio, devono essere dichiarate le variabili corrispondenti all'intercetta (\texttt{alpha}), alla pendenza (\texttt{beta}) e alla deviazione standard degli errori attorno alla linea di regressione (\texttt{sigma}). In altri termini, nel blocco \texttt{parameters} devono essere elencati tutti i parametri che dovranno essere stimati dal modello. Si noti che parametri discreti non sono possibili. Infatti, Stan attualmente non supporta i parametri con valori interi, almeno non direttamente.
-
-\hypertarget{blocco-model}{%
-\subsection{\texorpdfstring{Blocco \texttt{model}}{Blocco model}}\label{blocco-model}}
-
-Nel blocco \texttt{model} vengono elencate le dichiarazioni relative alla verosimiglianza dei dati e alle distribuzioni a priori dei parametri, come ad esempio, nelle istruzioni seguenti.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{model \{}
-  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{) \{}
-\NormalTok{    Y[i] }\SpecialCharTok{\textasciitilde{}} \FunctionTok{normal}\NormalTok{(mu, sigma);}
-\NormalTok{  \}}
-\NormalTok{  mu }\SpecialCharTok{\textasciitilde{}} \FunctionTok{normal}\NormalTok{(}\DecValTok{170}\NormalTok{, }\DecValTok{15}\NormalTok{); }\SpecialCharTok{/}\ErrorTok{/}\NormalTok{ prior }\ControlFlowTok{for}\NormalTok{ mu}
-\NormalTok{  sigma }\SpecialCharTok{\textasciitilde{}} \FunctionTok{cauchy}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{); }\SpecialCharTok{/}\ErrorTok{/}\NormalTok{ prior }\ControlFlowTok{for}\NormalTok{ sigma}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Mediante l'istruzione all'interno del ciclo \texttt{for}, ciascun valore dell'altezza viene concepito come una variable casuale proveniente da una distribuzione Normale di parametri \(\mu\) e \(\sigma\) (i parametri di interesse nell'inferenza). Il ciclo \texttt{for} viene ripetuto 10 volte perché i dati sono costituiti da un array di 10 elementi (ovvero, il campione è costituito da 10 osservazioni).
-
-Le due righe che seguno il ciclo \texttt{for} specificano le distribuzioni a priori dei parametri su cui vogliamo effettuare l'inferenza. Per \(\mu\) assumiamo una distribuzione a priori Normale di parametri \(\mu = 170\) e \(\sigma = 15\); per \(\sigma\) assumiamo una distribuzione a priori Cauchy(0, 20).
-
-Se non viene definita alcuna distribuzione a priori, Stan utilizzerà la distribuzione a priori predefinita \(Unif(-\infty, +\infty)\). Raccomandazioni sulle distribuzioni a priori sono fornite in questo \href{https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations}{link}.
-
-La precedente notazione di campionamento può anche essere espressa usando la seguente notazione alternativa:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{) \{}
-\NormalTok{    target }\SpecialCharTok{+}\ErrorTok{=} \FunctionTok{normal\_lpdf}\NormalTok{(Y[i] }\SpecialCharTok{|}\NormalTok{ mu, sigma);}
-\NormalTok{  \}}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Questa notazione rende trasparente il fatto che, in pratica, Stan esegue un campionamento nello spazio
-
-\[
-\log p(\theta \mid y) \propto \log p(y \mid \theta) + \log p(\theta) = \sum_{i=1}^n \log p(y_i \mid \theta) + \log p(\theta).
-\]
-Per ogni passo MCMC, viene ottenuto un nuovo valore di \(\mu\) e \(\sigma\) eviene valutata la log densità a posteriori non normalizzata. Ad ogni passo MCMC, Stan calcola un nuovo valore della densità a posteriori su scala logaritmica partendo da un valore di 0 e incrementandola ogni volta che incontra un'istruzione \texttt{\textasciitilde{}}. Quindi, le istruzioni precedenti aumentano la log-densità di una quantità pari a \(\log (p(Y[i])) \propto -\frac{1}{2} \log(\sigma^2) - (Y[i]-\mu)^2 / 2\sigma^2\) per le altezze si ciascuno degli \(i=1 \dots, 10\) individui -- laddove la formula esprime, in termini logaritmici, la densità Normale da cui sono stati esclusi i termini costanti.
-
-Oppure, in termini vettorializzati, il modello descritto sopra può essere espresso come
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{model \{}
-\NormalTok{  Y }\SpecialCharTok{\textasciitilde{}} \FunctionTok{normal}\NormalTok{(mu, sigma);}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-dove il termine a sinistra di \(\sim\) è un array. Questa notazione più compatta è anche la più efficiente.
-
-\hypertarget{blocchi-opzionali}{%
-\subsection{Blocchi opzionali}\label{blocchi-opzionali}}
-
-Ci sono inoltre tre blocchi opzionali:
-
-\begin{itemize}
-\item
-  Il blocco \texttt{transformed\ data} consente il pre-processing dei dati. È possibile trasformare i parametri del modello; solitamente ciò viene fatto nel caso dei modelli più avanzati per consentire un campionamento MCMC più efficiente.
-\item
-  Il blocco \texttt{transformed\ parameters} consente la manipolazione dei parametri prima del calcolo della distribuzione a posteriori.
-\item
-  Il blocco \texttt{generated\ quantities} consente il post-processing riguardante qualsiasi quantità che non fa parte del modello ma può essere calcolata a partire dai parametri del modello, per ogni iterazione dell'algoritmo. Esempi includono la generazione dei campioni a posteriori e le dimensioni degli effetti.
-\end{itemize}
-
-\hypertarget{sintassi}{%
-\subsection{Sintassi}\label{sintassi}}
-
-Si noti che il codice Stan richiede i punti e virgola (;) alla fine di ogni istruzione di assegnazione. Questo accade per le dichiarazioni dei dati, per le dichiarazioni dei parametri e ovunque si acceda ad un elemento di un tipo \texttt{data} e lo si assegni a qualcos'altro. I punti e virgola non sono invece richiesti all'inizio di un ciclo o di un'istruzione condizionale, dove non viene assegnato nulla.
-
-In STAN, qualsiasi stringa che segue \texttt{//} denota un commento e viene ignorata dal programma.
-
-Stan è un linguaggio estremamente potente e consente di implementare quasi tutti i modelli statistici, ma al prezzo di un certo sforzo di programmazione. Anche l'adattamento di semplici modelli statistici mediante il linguaggio STAN a volte può essere laborioso. Per molti modelli comunemente usati, come i modelli di regressione e multilivello, tale processo può essere semplificato usando le funzioni del pacchetto \texttt{brms}. D'altra parte, per modelli veramente complessi, non ci sono molte alternative all'uso di STAN. Per chi è curioso, il manuale del linguaggio Stan è accessibile al seguente \href{https://mc-stan.org/docs/2_27/stan-users-guide/index.html}{link}.
-
-\hypertarget{workflow}{%
-\section{Workflow}\label{workflow}}
-
-Se usiamo \texttt{CmdStan}, dobbiamo prima scrivere il codice con il modello, poi compilare il codice con la funzione \texttt{cmdstan\_model()}, poi eseguire il campionamento MCMC con il metodo \texttt{\$sample()} e, infine, creare un sommario dei risultati usando, per esempio, usando il metodo \texttt{\$summary()}.
+Questo capitolo abbiamo discusso i controlli predittivi a posteriori. A questo proposito è necessario notare un punto importante: i controlli predittivi a posteriori, quando suggeriscono un buon adattamento del modello alle caratterische dei dati previsti futuri \(y^{rep}\), non forniscono una forte evidenza della capacità del modello di generalizzarsi a nuovi campioni di dati. Infatti, una tale evidenza sulla generalizzabilità del modello può essere solo fornita da studi di \emph{cross-validation}, ovvero da studi nei quali viene utilizzato un \emph{nuovo} campione di dati. D'altra parte, invece, se i PPC mostrano un cattivo adattamento del modello ai dati previsti futuri, questo fornisce una forte evidenza di una errata specificazione del modello.
 
   \bibliography{refs.bib,book.bib,packages.bib}
 

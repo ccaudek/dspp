@@ -15,60 +15,35 @@ knitr::opts_chunk$set(
 
 ## Il denominatore bayesiano
 
-In generale, in un problema bayesiano i dati $y$ provengono da una densità $p(y \mid \theta)$ e al parametro $\theta$ viene assegnata una densità a priori $p(\theta)$. La scelta della distribuzione a priori per i parametri è l'aspetto cruciale dell'impostazione bayesiana in quanto la distribuzione a priori è lo strumento attraverso cui le informazioni extra-sperimentali vengono inserite nel procedimento induttivo. La scelta della distribuzione a priori che meglio rappresenta le credenze iniziali implica che agenti diversi possono specificare sia le stesse distribuzioni di probabilità ma con diversi  valori dei parametri, sia diverse distribuzioni di probabilità. Da ciò deriva una componente soggettiva. La scelta della distribuzione a priori ha inoltre importanti conseguenze di tipo computazionale. A meno di non utilizzare particolari forme analitiche, in generale risulta impossibile ottenere espressioni analitiche in forma esplicita per le distribuzioni a posteriori. Ciò dipende dal denominatore del rapporto di Bayes. 
+In un problema bayesiano i dati $y$ provengono da una distribuzione $p(y \mid \theta)$ e al parametro $\theta$ viene assegnata una distribuzione a priori $p(\theta)$.^[La scelta della distribuzione a priori è l'aspetto cruciale dell'impostazione bayesiana in quanto essa è lo strumento attraverso cui le informazioni extra-sperimentali vengono inserite nel procedimento induttivo. La scelta della distribuzione a priori che meglio rappresenta le credenze iniziali implica che agenti diversi possono specificare sia le stesse distribuzioni di probabilità ma con diversi valori dei parametri, sia diverse distribuzioni di probabilità. Da ciò deriva una componente soggettiva.] La scelta della distribuzione a priori ha importanti conseguenze di tipo computazionale. Infatti, a meno di non utilizzare particolari forme analitiche, risulta impossibile ottenere espressioni esplicite per la distribuzione a posteriori. Ciò dipende dall'espressione a denominatore della formula di Bayes
+<!-- Dopo che è stato osservato un campione $Y = y$, la funzione di verosimiglianza è uguale a $\mathcal{L}(\theta) = p(y \mid \theta)$ e la densità a posteriori è -->
 
-Dopo che un campione $Y = y$ è stato osservato, la funzione di verosimiglianza è uguale a $\mathcal{L}(\theta) = p(y \mid \theta)$ e la densità a posteriori è
-
-$$
-p(\theta \mid y) = \frac{p(\theta) p(y \mid \theta)}{\int p(\theta) p(y \mid \theta) d \theta}.
-$$
-Si noti che al denominatore troviamo un integrale. Tale integrale può essere risolto per via analitica solo se vengono usate le cosiddette _distribuzioni a priori coniugate per la verosimiglianza_. 
-
-Inoltre, i sommari della distribuzione a posteriori sono espressi come rapporto di integrali. Ad esempio, la media a posteriori di $\theta$ è data da
-
+\begin{equation}
+p(\theta \mid y) = \frac{p(\theta) p(y \mid \theta)}{\int p(\theta) p(y \mid \theta) d \theta}
+\end{equation}
+il cui calcolo non è eseguibile in modo analitico in forma chiusa.^[Inoltre, i sommari della distribuzione a posteriori sono espressi come rapporto di integrali. Ad esempio, la media a posteriori di $\theta$ è data da
 $$
 \E(\theta \mid y) = \frac{\int \theta \pi(\theta) p(y \mid \theta) d \theta}{\int \pi(\theta) p(y \mid \theta) d \theta}.
 $$
-Il calcolo del valore atteso a posteriori richiede dunque la valutazione di due integrali, ciascuno dei quali non esprimibile in forma chiusa. 
+Il calcolo del valore atteso a posteriori richiede dunque la valutazione di due integrali, ciascuno dei quali non esprimibile in forma chiusa.] Per non incorrere in problemi nel calcolo della distribuzione a posteriori vengono usate le distribuzioni provenienti da famiglie coniugate.
 
-Per questa ragione, la strada principale che viene seguita nella modellistica bayesiana è quella che porta a determinare la distribuzione a posteriori non per via analitica, ma bensì mediante metodi numerici. La simulazione fornisce dunque la strategia generale del calcolo bayesiano. A questo fine vengono usati i metodi di campionamento detti Monte-Carlo Markov-Chain (MCMC). Tali metodi costituiscono una potente e praticabile alternativa per la costruzione della distribuzione a posteriori per modelli complessi e consentono di decidere quali distribuzioni a priori e quali distribuzioni di verosimiglianza usare sulla base di considerazioni teoriche soltanto, senza dovere preoccuparsi di altri vincoli. Dato che è basata su metodi computazionalmente intensivi, la stima numerica della funzione a posteriori può essere svolta soltanto mediante software. In anni recenti i metodi bayesiani di analisi dei dati sono diventati sempre più popolari proprio perché la potenza di calcolo necessaria per svolgere tali calcoli è ora alla portata di tutti. Questo non era vero solo pochi decenni fa.
+Una distribuzione di probabilità a priori $p(\theta)$ si dice *coniugata* al modello usato se la distribuzione a priori e la distribuzione a posteriori hanno la stessa forma funzionale. Dunque, le due distribuzioni differiscono solo per il valore dei parametri.
 
+L'uso di distribuzioni a priori coniugate, pur consentendo di determinare la distribuzione a posteriori per via analitica, limita però di molto le possibili scelte del ricercatore. Nel senso che non è sempre sensato, dal punto di vista teorico, utilizzare distribuzioni a priori coniugate per la verosimiglianza per i parametri di interesse. Detto in altre parole: è possibile ottenere la distribuzione posteriore per via analitica solo per alcune specifiche combinazioni di distribuzione a priori e verosimiglianza, ma questo limita considerevolmente la flessibilità della modellizzazione.^[Per questa ragione, la strada principale che viene seguita nella modellistica bayesiana è quella che porta a determinare la distribuzione a posteriori non per via analitica, ma bensì mediante metodi numerici. La simulazione fornisce dunque la strategia generale del calcolo bayesiano. A questo fine vengono usati i metodi di campionamento detti Monte-Carlo Markov-Chain (MCMC). Tali metodi costituiscono una potente e praticabile alternativa per la costruzione della distribuzione a posteriori per modelli complessi e consentono di decidere quali distribuzioni a priori e quali distribuzioni di verosimiglianza usare sulla base di considerazioni teoriche soltanto, senza dovere preoccuparsi di altri vincoli. Dato che è basata su metodi computazionalmente intensivi, la stima numerica della funzione a posteriori può essere svolta soltanto mediante software. In anni recenti i metodi bayesiani di analisi dei dati sono diventati sempre più popolari proprio perché la potenza di calcolo necessaria per svolgere tali calcoli è ora alla portata di tutti. Questo non era vero solo pochi decenni fa.]
 
-## Le distribuzioni coniugate
-
-Una distribuzione di probabilità a priori si dice coniugata al modello utilizzato se appartiene alla stessa classe di distribuzioni della distribuzione a posteriori; in tali circostanze la distribuzione a priori e la distribuzione a posteriori differiscono solo per il valore dei parametri.
-
-::: {.definition}
-Sia data la funzione di verosimiglianza $p(\theta \mid y)$ e sia $\mathcal{D}$ una classe di densità a priori per $\theta$. La famiglia di distribuzioni a priori $\mathcal{D}$ è coniugata al modello se avviene che
-
-$$
-p(\theta \mid y) \in \mathcal{D}.
-$$
-
-\noindent
-Pertanto ciò che cambia nella distribuzione a posteriori non è la forma della distribuzione ma solo i parametri. 
-:::
-
-L'uso di distribuzioni a priori coniugate consente di determinare la distribuzione a posteriori per via analitica. Per quanto "semplice" in termini formali, questo approccio, però, limita di molto le possibili scelte del ricercatore. Nel senso che non è sempre sensato, dal punto di vista teorico, utilizzare distribuzioni a priori coniugate per la verosimiglianza per i parametri di interesse. 
-Detto in altre parole: è possibile ottenere la distribuzione posteriore per via analitica solo per alcune specifiche combinazioni di distribuzione a priori e verosimiglianza, ma questo limita considerevolmente la flessibilità della modellizzazione. 
+Obiettivo di questo Capitolo è fornire un esempio di derivazione della distribuzione a posteriori scegliendo quale distribuzione a priori una distribuzione coniugata. Esamineremo qui il caso più semplice, ovvero il modello Beta-Binomiale.
 
 
 ## Il modello Beta-Binomiale  {#chapter-distr-priori-coniugate}
 
-Obiettivo di questo Capitolo è mostrare come sia possibile calcolare in maniera esatta la distribuzione a posteriori mediante l'uso di una distribuzione a priori coniugata. Esamineremo qui il caso più semplice, ovvero quello Beta-Binomiale.
-
-Per fare un esempio concreto, verranno qui considerati i dati di @zetschefuture2019. Questi ricercatori si sono chiesti se gli individui depressi manifestino delle aspettative accurate circa il loro umore futuro, oppure se tali aspettative risultino distorte negativamente. Nell'esempio considereremo i 30 partecipanti dello studio di @zetschefuture2019 che hanno riportato la presenza di un episodio di depressione maggiore in atto. All'inizio della settimana di test, a questi pazienti è stato chiesto di valutare l'umore che si aspettavano di esperire nei giorni seguenti della settimana. Mediante una app, i partecipanti dovevano poi valutare il proprio umore in cinque momenti diversi di cinque giorni successivi. Lo studio prende in esame diverse emozioni, ma qui ci concentreremo unicamente sulla tristezza.
-
-Utilizzando i dati forniti dagli autori, è stata calcolata la media dei giudizi relativi al livello di tristezza raccolti da ciascun partecipante tramite la app. Tale media è stata poi sottratta dall'aspettativa del livello di tristezza fornita all'inizio della settimana. La discrepanza tra aspettative e realtà è stata considerata come un evento dicotomico: valori positivi di tale differenza indicano che le aspettative circa il livello di tristezza erano maggiori del livello di tristezza effettivamente esperito --- ciò significa che le aspettative future risultano negativamente distorte (evento codificato con "1"). Viceversa, si ha che le aspettative risultano positivamente distorte se la differenza descritta in precedenza assume un valore negativo (evento codificato con "0"). Nel campione dei 30 partecipanti clinici di @zetschefuture2019, le aspettative future di 23 partecipanti risultano distorte negativamente e quelle di 7 partecipanti risultano distorte positivamente. 
-
-Nel seguito, indicherò con $\theta$ la probabilità che le aspettative del partecipante siano distorte negativamente (ovvero, la probabilità dell'evento codificato con "1"). Il problema dell'esercizio è quello di ottenere la stima a posteriori di $\theta$ alla luce dei dati corrispondenti a 23 "successi" in 30 prove.^[Si noti un punto importante: dire semplicemente che la stima di $\theta$ è uguale a 23/30 = 0.77 ci porta ad ignorare il livello di incertezza associato a tale stima. Infatti, lo stesso valore (0.77) si può ottenere come 23/30, o  230/300, o 2300/3000, o 23000/30000, ma l'incertezza di una stima pari a 0.77 è molto diversa nei quattro casi. Quando si traggono conclusioni dai dati è invece necessario quantificare il livello della nostra incertezza relativamente alla stima del parametro di interesse (nel caso presente, $\theta$). Lo strumento ci consente di quantificare tale incertezza è la distribizione a posteriori $p(\theta \mid y)$. Ovviamente, $p(\theta \mid y)$ assume forme molto diverse nei quattro casi descritti sopra.]
+Per fare un esempio concreto, considereremo qui i dati di @zetschefuture2019 -- per una descrizione di tale ricerca si veda l'Appendice \@ref(es-pratico-zetsche). Nel campione dei 30 partecipanti clinici di @zetschefuture2019, le aspettative future di 23 partecipanti risultano distorte negativamente e quelle di 7 partecipanti risultano distorte positivamente. Nel seguito, indicheremo con $\theta$ la probabilità che le aspettative di un paziente clinico siano distorte negativamente. Ci poniamo il problema di ottenere una stima a posteriori di $\theta$ avendo osservato 23 "successi" in 30 prove.^[Si noti un punto importante: dire semplicemente che la stima di $\theta$ è uguale a 23/30 = 0.77 ci porta ad ignorare il livello di incertezza associato a tale stima. Infatti, lo stesso valore (0.77) si può ottenere come 23/30, o  230/300, o 2300/3000, o 23000/30000, ma l'incertezza di una stima pari a 0.77 è molto diversa nei quattro casi. Quando si traggono conclusioni dai dati è invece necessario quantificare il livello della nostra incertezza relativamente alla stima del parametro di interesse (nel caso presente, $\theta$). Lo strumento ci consente di quantificare tale incertezza è la distribizione a posteriori $p(\theta \mid y)$. Ovviamente, $p(\theta \mid y)$ assume forme molto diverse nei quattro casi descritti sopra.]
  
-Nel caso presente, i dati (23 "successi" in 30 prove) possono essere considerati come realizzazioni indipendenti di una variabile casuale Bernoulliana. In tali circostanze, esiste una famiglia di distribuzioni che, qualora venga scelta per la distribuzione a priori, fa sì che la distribuzione a posteriori abbia la stessa forma funzionale della distribuzione a priori. Questo consente una soluzione analitica dell'integrale che compare nel denominatore bayesiano. Nel caso del modello binomiale, la famiglia di distribuzioni che ha questa proprietà è la distribuzione Beta.
+I dati osservati ($y = 23$) possono essere considerati la manifestazione di una variabile casuale Bernoulliana. In tali circostanze, esiste una famiglia di distribuzioni che, qualora venga scelta per la distribuzione a priori, fa sì che la distribuzione a posteriori abbia la stessa forma funzionale della distribuzione a priori. Questo consente una soluzione analitica dell'integrale che compare a denominatore nella formula di Bayes. Nel caso presente, la famiglia di distribuzioni che ha questa proprietà è la distribuzione Beta.
 
 
 ### Parametri della distribuzione Beta
 
-Usando la distribuzione Beta è possibile esprimere diverse credenze iniziali rispetto a $\theta$. Scegliere $a=4$ e $b=4$ per la distribuzione a priori Beta significa dire che, prima di avere esaminato i dati, una "aspettativa futura distorta negativamente" è tanto probabile quanto una "aspettativa futura non distorta negativamente"; tuttavia, ad una tale proposizione è associato un livello di certezza piuttosto basso. Possiamo esprimere la nostra incertezza calcolando, con un grado di fiducia del 95%, la regione nella quale, in base a tale ipotesi a priori, si trova il valore del parametro. Per ottenere tale intervallo di credibilità a priori, usiamo la funzione `qbeta()` di $\R$. In `qbeta()` i parametri $a$ e $b$ sono chiamati `shape1` e `shape2`:
+Usando la distribuzione Beta è possibile esprimere diverse credenze iniziali rispetto a $\theta$. La scelta di $a=4$ e $b=4$ quali parametri per la distribuzione a priori Beta corrisponde alla credenza a priori che una "aspettativa futura distorta negativamente" sia tanto probabile quanto una "aspettativa futura distorta positivamente". Tuttavia, ad una tale credenza è associato un livello di certezza piuttosto basso. Possiamo quantificare tale incertezza calcolando, con un grado di fiducia del 95%, la regione nella quale, in base a tale credenza a priori, si trova il valore del parametro. Per ottenere tale intervallo di credibilità a priori, usiamo la funzione `qbeta()` di $\R$. In `qbeta()` i parametri $a$ e $b$ sono chiamati `shape1` e `shape2`:
 
 ```{r}
 qbeta(c(0.025, 0.975), shape1 = 4, shape2 = 4)
@@ -80,9 +55,9 @@ Se scegliamo $a=10$ e $b=10$ supponiamo ancora a priori che una "aspettativa fut
 qbeta(c(0.025, 0.975), shape1 = 10, shape2 = 10)
 ```
 
-Quale distribuzione a priori dobbiamo scegliere? In un problema concreto di analisi dei dati, la scelta della distribuzione a priori dipende da quali sono le credenze a priori vogliamo includere nell'analisi dei dati. Se non abbiamo alcuna informazione a priori, potremmo usare $a=1$ e $b=1$, il che produce una distribuzione a priori uniforme. Questa, tuttavia, è una cattiva idea, se pensiamo al problema della riparametrizzazione. In tali circostanze è invece raccomandato usare una distribuzione a priori vagamente informativa, come $\text{Beta}(2, 2)$.
+Quale distribuzione a priori dobbiamo scegliere? In un problema concreto di analisi dei dati, la scelta della distribuzione a priori dipende dalle credenze a priori che vogliamo includere nell'analisi dei dati. Se non abbiamo alcuna informazione a priori, possiamo usare $a=1$ e $b=1$, che produce una distribuzione a priori uniforme. Questa, tuttavia, è una cattiva idea, se pensiamo al problema della riparametrizzazione. In tali circostanze è invece raccomandato usare una distribuzione a priori vagamente informativa, come $\text{Beta}(2, 2)$.
 
-Nella successiva discussione, per fare un esempio, useremo una $\text{Beta}(2, 10)$ quale distribuzione a priori, ovvero:
+Nella successiva discussione, per fare un esempio, quale distribuzione a priori useremo una $\mbox{Beta}(2, 10)$, ovvero:
 
 $$
 p(\theta) = \frac{\Gamma(12)}{\Gamma(2)\Gamma(10)}\theta^{2-1} (1-\theta)^{10-1}.
@@ -91,7 +66,7 @@ $$
 
 ### La specificazione della distribuzione a posteriori
 
-Una volta scelta la distribuzione a priori di tipo Beta, i cui  parametri rispecchiano il giudizio a priori di probabilità, la distribuzione a posteriori viene specificata dalla regola di Bayes: 
+Una volta scelta la distribuzione a priori di tipo Beta, i cui  parametri rispecchiano le nostre credenze a priori su $\theta$, la distribuzione a posteriori viene specificata dalla formula di Bayes: 
 
 $$
 \text{distribuzione a posteriori} = \frac{\text{verosimiglianza}\cdot\text{distribuzione a priori}}{\text{verosimiglianza marginale}}.
