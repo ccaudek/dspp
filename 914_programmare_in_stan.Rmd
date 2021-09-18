@@ -5,18 +5,7 @@
 
 ```{r setup, include = FALSE}
 source("_common.R")
-library("patchwork")
-theme_set(bayesplot::theme_default())
-bayesplot::color_scheme_set("brightblue") 
-library("rstan")
-library("cmdstanr")
-set_cmdstan_path("/Users/corrado/.cmdstanr/cmdstan-2.27.0")
-knitr::opts_chunk$set(
-  message = FALSE, 
-  warning = FALSE,
-  error = FALSE,
-  fig.align = "center"
-)
+source("_stan_options.R")
 ```
 
 
@@ -28,28 +17,30 @@ Nelle parole degli autori:
 
 > Stan is a state-of-the-art platform for statistical modeling and high-performance statistical computation. Thousands of users rely on Stan for statistical modeling, data analysis, and prediction in the social, biological, and physical sciences, engineering, and business. Users specify log density functions in Stan's probabilistic programming language and get: full Bayesian statistical inference with MCMC sampling (NUTS, HMC); approximate Bayesian inference with variational inference (ADVI): penalized maximum likelihood estimation with optimization (L-BFGS).
 
-Esistono varie interfacce di STAN per diversi programmi, tra cui R, interfaccia a riga di comando (_command line_), Python, MATLAB, Julia, Stata e Mathematica. 
+È possibile accedere al linguaggio Stan tramite diverse interfacce:
 
-### Post-processing
+- `CmdStan`: eseguibile da riga di comando,
+- `RStan` - integrazione con il linguaggio \R;
+- `PyStan` - integrazione con il linguaggio di programmazione Python;
+- `MatlabStan` - integrazione con MATLAB;
+- `Stan.jl` - integrazione con il linguaggio di programmazione Julia;
+- `StataStan` - integrazione con Stata.
 
-Ci sono molti pacchetti R che facilitano l'uso di Stan, tra cui
+Inoltre, vengono fornite interfacce di livello superiore con i pacchetti che utilizzano Stan come backend, principalmente in Linguaggio \R:
 
-- `rstan`: General R Interface to Stan
-- `shinystan`: Interactive Visual and Numerical Diagnostics and Posterior Analysis for Bayesian Models
-- `bayesplot`: Plotting functions for posterior analysis, model checking, and MCMC diagnostics.
-- `brms`: Bayesian Regression Models using ‘Stan’, covering a growing number of model types
-- `rstanarm`: Bayesian Applied Regression Modeling via Stan, with an emphasis on hierarchical/multilevel models
-- `edstan`: Stan Models for Item Response Theory
-- `rstantools`: Tools for Developing R Packages Interfacing with Stan
+- `shinystan`: interfaccia grafica interattiva per l'analisi della distribuzione a posteriori e le diagnostiche MCMC;  
+- `bayesplot`: insieme di funzioni utilizzabili per creare grafici relativi all'analisi della distribuzione a posteriori, ai test del modello e alle diagnostiche MCMC;  
+- `brms`: fornisce un'ampia gamma di modelli lineari e non lineari specificando i modelli statistici mediante la sintassi usata in \R;
+- `rstanarm`: fornisce un sostituto per i modelli frequentisti forniti da base $\R$ e `lme4` utilizzando la sintassi usata in $\R$ per la specificazione dei modelli statistici;
+- `edstan`: modelli Stan per la Item Response Theory;
+- `cmdstanr`, un'interfaccia $\R$ per `CmdStan`.
 
 
-## CmdStan
+## Interfaccia `cmdstanr`
 
-Negli esempi qui discusi verrà usata `CmdStanR`, un'interfaccia R per `CmdStan` che costituisce una recente alternativa alla tradizionale interfaccia `RStan`. `CmdStanR` non è ancora disponibile su CRAN, ma può essere installato come indicato su questo [link](https://mc-stan.org/docs/2_27/cmdstan-guide/cmdstan-installation.html). 
+Negli esempi di questa dispensa verrà usata l'interfaccia `cmdstanr`. Il pacchetto `cmdstanr` non è ancora disponibile su CRAN, ma può essere installato come indicato su questo [link](https://mc-stan.org/docs/2_27/cmdstan-guide/cmdstan-installation.html). Una volta che è stato installato, il pacchetto `cmdstanr` può essere caricato come un qualsiasi altro pacchetto R.
 
-Una volta installato `CmdStanR`, il pacchetto `cmdstanr` può essere caricato come un qualsiasi altro pacchetto R.
-
-Si noti che `CmdStanR` richiede un'installazione funzionante di `CmdStan`, l'interfaccia shell per Stan. Se `CmdStan` non è installato, `CmdStanR` lo installerà automaticamente se il computer dispone di una _Toolchain_ adatta. Stan richiede infatti che sul computer su cui viene installato siano presenti alcuni strumenti necessari per gestire i file C++. Tra le altre ragioni, questo è dovuto al fatto che il codice Stan viene tradotto in codice C++ e compilato. Il modo migliore per ottenere il software necessario per un computer Windows o Mac è quello di installare `RTools`. Per un computer Linux, è necessario installare `build-essential` e una versione recente dei compilatori g++ o clang++. I requisiti sono descritti nella [Guida di CmdStan](https://mc-stan.org/docs/cmdstan-guide/cmdstan-installation.html).
+Si noti che `cmdstanr` richiede un'installazione funzionante di `CmdStan`, l'interfaccia shell per Stan. Se `CmdStan` non è installato, `cmdstanr` lo installerà automaticamente se il computer dispone di una _Toolchain_ adatta. Stan richiede infatti che sul computer su cui viene installato siano presenti alcuni strumenti necessari per gestire i file C++. Tra le altre ragioni, questo è dovuto al fatto che il codice Stan viene tradotto in codice C++ e compilato. Il modo migliore per ottenere il software necessario per un computer Windows o Mac è quello di installare `RTools`. Per un computer Linux, è necessario installare `build-essential` e una versione recente dei compilatori g++ o clang++. I requisiti sono descritti nella [Guida di CmdStan](https://mc-stan.org/docs/cmdstan-guide/cmdstan-installation.html).
 
 Per verificare che la Toolchain sia configurata correttamente è possibile utilizzare la funzione `check_cmdstan_toolchain()`:
 
@@ -116,7 +107,6 @@ data {
   int Y[10]; // qi for 10 people
 }
 ```
-
 \noindent
 dichiariamo la variabile `Y` -- la quale rappresenta, ad esempio, il QI di 10 persone -- come una variabile di tipo `int[10]`, ovvero un array di lunghezza 10, i cui elementi sono numeri naturali, cioè numeri interi non negativi $\{0, +1, +2, +3, +4, \dots\}$. 
 
@@ -135,14 +125,12 @@ Si noti che i tipi `vector` e `matrix` contengono solo elementi di tipo `real`, 
 ### Blocco `parameters`
 
 I parametri che vengono stimati sono dichiarati nel blocco `parameters`. Per esempio, l'istruzione
-
 ```{r, eval = FALSE}
 parameters {
   real mu; // mean height in population
   real<lower=0> sigma; // sd of height distribution
 }
 ```
-
 \noindent
 dichiaria la variabile `mu` che codifica l'altezza media nella popolazione, che è una variabile continua in un intervallo illimitato di valori, e la deviazione standard `sigma`, che è una variabile continua non negativa. Avremmo anche potuto specificare un limite inferiore di zero su `mu` perché deve essere non negativo.
 
@@ -152,7 +140,6 @@ Per una regressione lineare semplice, ad esempio, devono essere dichiarate le va
 ### Blocco `model`
 
 Nel blocco `model` vengono elencate le dichiarazioni relative alla verosimiglianza dei dati e alle distribuzioni a priori dei parametri, come ad esempio, nelle istruzioni seguenti.
-
 ```{r, eval = FALSE}
 model {
   for(i in 1:10) {
@@ -162,7 +149,6 @@ model {
   sigma ~ cauchy(0, 20); // prior for sigma
 }
 ```
-
 \noindent
 Mediante l'istruzione all'interno del ciclo `for`, ciascun valore dell'altezza viene concepito come una variable casuale proveniente da una distribuzione Normale di parametri $\mu$ e $\sigma$ (i parametri di interesse nell'inferenza). Il ciclo `for` viene ripetuto 10 volte perché i dati sono costituiti da un array di 10 elementi (ovvero, il campione è costituito da 10 osservazioni).
 
@@ -171,29 +157,24 @@ Le due righe che seguno il ciclo `for` specificano le distribuzioni a priori dei
 Se non viene definita alcuna distribuzione a priori, Stan utilizzerà la distribuzione a priori predefinita $Unif(-\infty, +\infty)$.  Raccomandazioni sulle distribuzioni a priori sono fornite in questo [link](https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations).
 
 La precedente notazione di campionamento può anche essere espressa usando la seguente notazione alternativa:
-
 ```{r, eval = FALSE}
   for(i in 1:10) {
     target += normal_lpdf(Y[i] | mu, sigma);
   }
 ```
-
 \noindent
 Questa notazione rende trasparente il fatto che, in pratica, Stan esegue un campionamento nello spazio
-
 $$
 \log p(\theta \mid y) \propto \log p(y \mid \theta) + \log p(\theta) = \sum_{i=1}^n \log p(y_i \mid \theta) + \log p(\theta).
 $$
 Per ogni passo MCMC, viene ottenuto un nuovo valore di $\mu$ e $\sigma$ eviene valutata la log densità a posteriori non normalizzata. Ad ogni passo MCMC, Stan calcola un nuovo valore della densità a posteriori su scala logaritmica partendo da un valore di 0 e incrementandola ogni volta che incontra un'istruzione `~`. Quindi, le istruzioni precedenti aumentano la log-densità di una quantità pari a $\log (p(Y[i])) \propto -\frac{1}{2} \log(\sigma^2) - (Y[i]-\mu)^2 / 2\sigma^2$ per le altezze si ciascuno degli $i=1 \dots, 10$ individui -- laddove la formula esprime, in termini logaritmici, la densità Normale da cui sono stati esclusi i termini costanti.
 
 Oppure, in termini vettorializzati, il modello descritto sopra può essere espresso come
-
 ```{r, eval = FALSE}
 model {
   Y ~ normal(mu, sigma);
 }
 ```
-
 \noindent
 dove il termine a sinistra di $\sim$ è un array. Questa notazione più compatta è anche la più efficiente.
 
@@ -219,6 +200,6 @@ Stan è un linguaggio estremamente potente e consente di implementare quasi tutt
 
 ## Workflow
 
-Se usiamo `CmdStan`, dobbiamo prima scrivere il codice con il modello, poi compilare il codice con la funzione `cmdstan_model()`, poi eseguire il campionamento MCMC con il metodo `$sample()` e, infine, creare un sommario dei risultati usando, per esempio, usando il metodo `$summary()`.
+Se usiamo `cmdstanr`, dobbiamo prima scrivere il codice con il modello, poi compilare il codice con la funzione `cmdstan_model()`, poi eseguire il campionamento MCMC con il metodo `$sample()` e, infine, creare un sommario dei risultati usando, per esempio, usando il metodo `$summary()`.
 
 

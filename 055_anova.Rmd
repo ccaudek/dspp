@@ -2,38 +2,22 @@
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
 source("_common.R")
-suppressPackageStartupMessages(library("rstan")) 
-suppressPackageStartupMessages(library("cmdstanr"))
-set_cmdstan_path("/Users/corrado/.cmdstanr/cmdstan-2.27.0")
-suppressPackageStartupMessages(library("posterior"))
-suppressPackageStartupMessages(library("loo"))
-rstan_options(auto_write = TRUE) # avoid recompilation of models
-options(mc.cores = parallel::detectCores()) # parallelize across all CPUs
-Sys.setenv(LOCAL_CPPFLAGS = '-march=native') # improve execution time
-SEED <- 374237 # set random seed for reproducibility
-theme_set(bayesplot::theme_default())
-bayesplot::color_scheme_set("brightblue") 
-knitr::opts_chunk$set(
-  message = FALSE, 
-  warning = FALSE,
-  error = FALSE,
-  fig.align = "center"
-)
+source("_stan_options.R")
 ```
 
-L'analisi della varianza (ANOVA) consente ai ricercatori di valutare gli effetti di predittori categoriali su una variabile di esito continua. 
+L'Analisi della Varianza (ANOVA) consente ai ricercatori di valutare gli effetti di predittori categoriali su una variabile di esito continua. L'ANOVA è un'analisi di regressione nella quale tutte le variabili indipendenti sono qualitative. 
 
 
 ## Le abilità sociali di un robot
 
-Le persone impiegano più tempo a spegnere un robot quando questo mostra abilità sociali? Questa domanda è stata studiata da @horstmann2018robot e qui useremo i loro dati per illustrare i concetti chiave di un'ANOVA bayesiana. Nell'esperimento di @horstmann2018robot, 85 partecipanti hanno interagito con un robot per un certo tempo. Ai partecipanti è stato detto che lo scopo della loro interazione con il robot era testare un nuovo algoritmo. Dopo il completamento di due compiti fittizi, ai partecipanti veniva detto che, se volevano, potevano spegnere il robot. La variabile di interesse dell'esperimento era, appunto, il tempo impiegato dai partecipanti per spegnere il robot. Seguendo @van2020tutorial, qui analizzeremo i tempi di spegnimento trasformati su scala logaritmica perché tale variabile mostra una chiara asimmetria positiva. 
+Per illustrare i concetti chiave dell'ANOVA bayesiana considereremo qui una ricerca di @horstmann2018robot. I ricercatori si sono chiesti se le persone impiegano più tempo a spegnere un robot quando questo mostra abilità sociali. Nell'esperimento di @horstmann2018robot, 85 partecipanti hanno interagito con un robot per un certo tempo. Ai partecipanti è stato detto che lo scopo della loro interazione con il robot era quella di testare un nuovo algoritmo. Dopo il completamento di due compiti fittizi, ai partecipanti veniva detto che, se volevano, potevano spegnere il robot. La variabile di interesse dell'esperimento era il tempo impiegato dai partecipanti per spegnere il robot. Seguendo @van2020tutorial, analizzeremo i tempi di spegnimento trasformati su scala logaritmica perché tale variabile mostra una chiara asimmetria positiva. 
 
 @horstmann2018robot hanno manipolato due variabili in un disegno tra i soggetti.
 
 - _Interaction type_. Le risposte verbali dei robot potevano essere o sociali (ad esempio, "Oh sì, la pizza è ottima. Una volta ho mangiato una pizza grande come me.") o funzionali (ad esempio, "Preferisci la pizza. Ha funzionato bene. Continuiamo.”). 
 - _Robot's objection_. Il robot poteva protestare quando stava per essere spento (ad esempio, "No! Per favore, non spegnermi! Ho paura di non riuscire ad accendermi di nuovo!") oppure no. 
 
-Pertanto, il disegno di questo studio è un'ANOVA $2\times 2$ tra i soggetti. 
+Pertanto, il disegno di questo studio è un'ANOVA tra i soggetti 2 (_Interaction type_) $\times$ 2 (_Robot's objection_). 
 
 Iniziamo a leggere i dati
 
@@ -71,20 +55,24 @@ dd %>%
   )
 ```
 
-Le seguenti istruzioni R producono un boxplot:
+Visualizziamo i dati con un boxplot:
 
 ```{r}
-boxplot(dd$SwitchOff_Time ~ dd$cond)
+dd %>% 
+  ggplot(aes(x=cond, y=SwitchOff_Time)) + 
+  geom_boxplot(fill=colors[1]) 
 ```
 
-Se usiamo una scala logaritmica, l'asimmetria positiva viene ridotta:
+Su scala logaritmica, l'asimmetria positiva della variabile `dd$SwitchOff_Time` viene ridotta:
 
 ```{r}
 dd$y <- log(dd$SwitchOff_Time + 0.01)
-boxplot(dd$y ~ dd$cond)
+dd %>% 
+  ggplot(aes(x=cond, y=y)) + 
+  geom_boxplot(fill=colors[1]) 
 ```
 
-Con questa trasformazione dei dati è comunque presente un outlier nella condizione `SO`, quindi per l'analisi dei dati sarà opportuno usare un modello 'robusto'. Per i dati trasformati, la mediana in ciascuna condizione è:
+Anche con una trasformazione logaritmica, comunque, rimane un outlier nella condizione `SO`. Quindi verrà usato un modello 'robusto'. Per i dati trasformati, la mediana in ciascuna condizione è:
 
 ```{r}
 dd %>% 
@@ -93,14 +81,15 @@ dd %>%
     avg_y = median(y)
   )
 ```
-Creo la variabile `x` che indicizza le quattro condizioni (la variabile `x` verrà usata dal modello Stan):
+
+Creiamo ora la variabile `x` che indicizza le quattro condizioni (la variabile `x` verrà usata nel modello Stan):
 
 ```{r}
 dd$x <- as.numeric(dd$cond)
 head(dd)
 ```
 
-Il modello bayesiano che usiamo qui per il confronto tra le medie dei quattro gruppi è una semplice estensione del modello per la media di un solo gruppo. Il codice Stan qui usato è ispirato a quello fornito nella seguente [pagina web](http://avehtari.github.io/BDA_R_demos/demos_rstan/rstan_demo.html#8_Comparison_of_(k)_groups_with_hierarchical_models). Per accomodare gli outlier, il modello ipotizza che la `y` segua una distribuzione $t$ di Student con un numero di gradi di libertà stimato dal modello.
+Il modello bayesiano che usiamo qui per il confronto tra le medie dei quattro gruppi è una semplice estensione del modello per la media di un solo gruppo. Il codice usato è ispirato da quello fornito nella seguente [pagina web](http://avehtari.github.io/BDA_R_demos/demos_rstan/rstan_demo.html#8_Comparison_of_(k)_groups_with_hierarchical_models). Come abbiamo detto in precedenza, per accomodare gli outlier, ipotizzeremo che la `y` segua una distribuzione $t$ di Student con un numero di gradi di libertà stimato dal modello.
 
 Il modello classico dell'ANOVA è basato sulle seguenti assunzioni:
 
@@ -109,7 +98,6 @@ Il modello classico dell'ANOVA è basato sulle seguenti assunzioni:
 - il disegno sperimentale utilizzato per raccogliere i dati deve garantire l'indipendenza dei residui.
 
 Nella presenta formulazione dell'ANOVA bayesiana, l'assunto di normalità non è richiesto, mentre devono essere soddisfatte le condizioni di omoschedasticità e indipendenza. L'ANOVA bayesiana può comunque essere estesa a condizioni che violano sia l'assunto di omoschedasticità sia quello di indipendenza. Ma qui ci limitiamo a discutere il caso più semplice.
-
 
 ```{r}
 modelString = "
@@ -122,7 +110,7 @@ data {
 }
 parameters {
   vector[K] mu;        // group means
-  real<lower=0> sigma; // common standard deviation constrained to be positive
+  real<lower=0> sigma; // common standard deviation 
   real<lower=1> nu; 
 }
 model {
@@ -155,7 +143,7 @@ mod <- cmdstan_model(file)
 
 Eseguiamo il campionamento MCMC:
 
-```{r, message=FALSE, warning=FALSE, error=FALSE}
+```{r, message=FALSE, warning=FALSE, error=FALSE, results='hide'}
 fit <- mod$sample(
   data = data_grp,
   iter_sampling = 4000L,
@@ -168,13 +156,13 @@ fit <- mod$sample(
 )
 ```
 
-Esaminiamo i risultati:
+Esaminando i risultati
 
 ```{r}
 fit$summary()
 ```
-
-C'è una buona corrispondenza tra le medie a posteriori e le medie campionarie.
+\noindent
+ci rendiamo conto che cìè una buona corrispondenza tra le medie a posteriori e le medie campionarie.
 
 Trasformiamo l'oggetto `fit` in un oggetto di classe `stanfit`:
 
@@ -210,7 +198,8 @@ ci95 <- rstanarm::posterior_interval(
 round(ci95, 2)
 ```
 
-## I test statistici dell'ANOVA
+
+## I test statistici dell'Analisi della Varianza {#anova-stan}
 
 L'ANOVA include test statistici di due tipi: i test sull'interazione tra i fattori e i test sugli effetti principali. Per chiarire il significato di "interazione" e di "effetto principale" è necessario prima definire il significato di "effetto statistico".
 
@@ -330,7 +319,7 @@ transformed data {
 }
 parameters {
   vector[K] mu_std;        // group means
-  real<lower=0> sigma_std; // common standard deviation constrained to be positive
+  real<lower=0> sigma_std; // common standard deviation 
   real<lower=1> nu;
 }
 model {
@@ -358,7 +347,7 @@ mod <- cmdstan_model(file)
 
 Eseguiamo il campionamento MCMC usando gli stessi dati discussi in precedenza:
 
-```{r, message=FALSE, warning=FALSE, error=FALSE}
+```{r, message=FALSE, warning=FALSE, error=FALSE, results='hide'}
 fit2 <- mod$sample(
   data = data_grp,
   iter_sampling = 4000L,
@@ -371,7 +360,7 @@ fit2 <- mod$sample(
 )
 ```
 
-I risultati sono equivalenti a quelli trovati prima:
+I risultati sono equivalenti a quelli trovati in precedenza:
 
 ```{r}
 fit2$summary(c("mu", "sigma", "nu"))

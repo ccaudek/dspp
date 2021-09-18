@@ -1,6 +1,6 @@
 # (PART\*) Verosimiglianza {-}
 
-# La funzione di verosimiglianza 
+# La funzione di verosimiglianza {#likelihood-func}
 
 
 
@@ -66,6 +66,8 @@ Ma cosa dobbiamo fare, in pratica, per generare le funzioni di verosimiglianza c
 ::: {.definition}
 La *funzione di verosimiglianza* $\mathcal{L}(\theta \mid y) = f(y \mid \theta), \theta \in \Theta,$ è la funzione di massa o di densità di probabilità dei dati $y$ vista come una funzione del parametro sconosciuto $\theta$.
 :::
+
+In altri termini, le funzioni di verosimiglianza e di (massa o densità di) probabilità sono formalmente identiche, ma è completamente diversa la loro interpretazione. Nel caso della funzione di massa o di densità di probabilità la distribuzione del vettore casuale delle osservazioni campionarie $y$  dipende dai valori assunti dal parametro $\theta$; nel caso della la funzione di verosimiglianza la credibilità assegnata a ciascun possibile valore $\theta$ viene determinata avendo acquisita l'informazione campionaria $y$ che rappresenta l'elemento condizionante.
 
 Spesso per indicare la verosimiglianza si scrive $\mathcal{L}(\theta)$ se è chiaro a quali valori $y$ ci si riferisce. La verosimiglianza $\mathcal{L}$ è una curva (in generale, una superficie) nello spazio $\Theta$ del parametro (in generale, dei parametri $\boldsymbol\theta$) che riflette la credibilità relativa dei valori $\theta$ alla luce dei dati osservati. Notiamo un punto importante: la funzione $\mathcal{L}(\theta \mid y)$ non è una funzione di densità. Infatti, essa non racchiude un'area unitaria.
 

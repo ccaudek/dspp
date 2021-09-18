@@ -1,4 +1,4 @@
-# Distribuzioni di v.c. discrete
+# Distribuzioni di v.c. discrete {#distr-rv-discr}
 
 
 

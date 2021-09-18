@@ -1,34 +1,21 @@
-# Regressione lineare con Stan
+# Regressione lineare in Stan {#reg-lin-stan}
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
 source("_common.R")
-suppressPackageStartupMessages(library("rstan")) 
-suppressPackageStartupMessages(library("cmdstanr"))
-set_cmdstan_path("/Users/corrado/.cmdstanr/cmdstan-2.27.0")
-suppressPackageStartupMessages(library("posterior"))
-suppressPackageStartupMessages(library("loo"))
-rstan_options(auto_write = TRUE) # avoid recompilation of models
-options(mc.cores = parallel::detectCores()) # parallelize across all CPUs
-Sys.setenv(LOCAL_CPPFLAGS = '-march=native') # improve execution time
-SEED <- 374237 # set random seed for reproducibility
-theme_set(bayesplot::theme_default())
-bayesplot::color_scheme_set("brightblue") 
-knitr::opts_chunk$set(
-  message = FALSE, 
-  warning = FALSE,
-  error = FALSE,
-  fig.align = "center"
-)
+source("_stan_options.R")
 ```
 
-Obiettivo di questo Capitolo è illustrare come può essere svolta in pratica l'analisi di regressione lineare bayesiana usando il linguaggio Stan. Per fare un esempio concreto useremo un famoso dataset chiamaro `kidiq` [@gelman2020regression] che riporta i dati di un'indagine del 2007 su un campione di donne americane adulte e sui loro bambini di età compres tra i 3 e i 4 anni. I dati sono costituiti da 434 osservazioni e 4 variabili:
+
+## La specificazione del modello in linguaggio Stan
+
+Obiettivo di questo Capitolo è illustrare come svolgere l'analisi di regressione  bayesiana usando il linguaggio Stan.^[Una descrizione dell'approccio frequentista all'analisi di regressione è fornita nell'Appendice \@ref(regr-lin-frequentista).] Per fare un esempio concreto useremo un famoso dataset chiamato `kidiq` [@gelman2020regression] che riporta i dati di un'indagine del 2007 su un campione di donne americane adulte e sui loro bambini di età compres tra i 3 e i 4 anni. I dati sono costituiti da 434 osservazioni e 4 variabili:
 
 - `kid_score`: QI del bambino; è il punteggio totale del _Peabody Individual Achievement Test_ (PIAT) costituito dalla somma dei punteggi di tre sottoscale (Mathematics, Reading comprehension, Reading recognition);
 - `mom_hs`: variabile dicotomica (0 or 1) che indica se la madre del bambino ha completato le scuole superiori (1) oppure no (0);
 - `mom_iq`: QI della madre;
 - `mom_age`: età della madre.
 
-Leggiamo i dati con le seguenti istruzioni R:
+Leggiamo i dati in \R:
 
 ```{r}
 library("foreign")
@@ -36,26 +23,21 @@ df <- read.dta(here("data", "kidiq.dta"))
 head(df)
 ```
 
-Calcoliamo alcune statistiche descrittive usando la funzione `skimr::skim()`:
+Calcoliamo alcune statistiche descrittive:
 
 ```{r}
-df %>% 
-  skimr::skim() %>%
-  skimr::yank("numeric")
+summary(df)
 ```
 
-Dall'output di `skim()` vediamo che il QI medio dei bambini è di circa 87 mentre quello della madre è di 100. La gamma di età delle madri va da 17 a 29 anni con una media di circa 23 anni. Si noti infine che il 79% delle mamme ha un diploma di scuola superiore.
+Il QI medio dei bambini è di circa 87 mentre quello della madre è di 100. La gamma di età delle madri va da 17 a 29 anni con una media di circa 23 anni. Si noti infine che il 79% delle mamme ha un diploma di scuola superiore.
 
-Ci poniamo il problema di descrivere l'associazione tra il QI dei figli e il QI delle madri mediante un modello di regressione lineare. 
-
-Per farci un'idea del valore dei parametri, iniziamo ad adattare il modello di regressione usando la procedura di massima verosimiglianza:
+Ci poniamo il problema di descrivere l'associazione tra il QI dei figli e il QI delle madri mediante un modello di regressione lineare. Per farci un'idea del valore dei parametri, adattiamo il modello di regressione ai dati mediante la procedura di massima verosimiglianza:
 
 ```{r}
-summary(lm(kid_score ~ mom_iq, data = df))
+coef(lm(kid_score ~ mom_iq, data = df))
 ```
 
-Il modello statistico diventa:
-
+Il modello statistico bayesiano di regressione lineare è:
 $$
 \begin{aligned}
 y_i &\sim \mathcal{N}(\mu_i, \sigma) \\
@@ -65,12 +47,11 @@ y_i &\sim \mathcal{N}(\mu_i, \sigma) \\
 \sigma &\sim \text{Cauchy}(18, 5) 
 \end{aligned}
 $$
-dove la prima riga definisce la funzione di verosimiglianza e righe successive definiscono le distribuzioni a priori dei parametri. Il segno $\sim$ (tilde) si può leggere "si distribuisce come". La prima riga, dunque, ci dice che ciascuna osservazione $y_i$ è una variabile casuale che segue la distribuzione Normale di parametri $\mu_i$ e $\sigma$. La seconda riga specifica, in maniera deterministica, che ciascun $\mu_i$ è una funzione lineare di $x_i$, con parametri $\alpha$ e $\beta$. Le due righe successive specificano le distribuzioni a priori per $\alpha$ e $\beta$. Per $\alpha$, la distribuzione a priori è una distribuzione Normale di parametri $\mu_{\alpha} = 25$ e deviazione standard $\sigma_{\alpha} = 10$. Per  $\beta$, la distribuzione a priori è una distribuzione Normale standardizzata. L'ultima riga definisce la la distribuzione a priori di $\sigma$, ovvero una Cauchy di parametri 18 e 5.
+La prima riga definisce la funzione di verosimiglianza e righe successive definiscono le distribuzioni a priori dei parametri. Il segno $\sim$ (tilde) si può leggere "si distribuisce come". La prima riga, dunque, ci dice che ciascuna osservazione $y_i$ è una variabile casuale che segue la distribuzione Normale di parametri $\mu_i$ e $\sigma$. La seconda riga specifica, in maniera deterministica, che ciascun $\mu_i$ è una funzione lineare di $x_i$, con parametri $\alpha$ e $\beta$. Le due righe successive specificano le distribuzioni a priori per $\alpha$ e $\beta$; per $\alpha$, la distribuzione a priori è una distribuzione Normale di parametri $\mu_{\alpha} = 25$ e deviazione standard $\sigma_{\alpha} = 10$; per  $\beta$, la distribuzione a priori è una distribuzione Normale standardizzata. L'ultima riga definisce la la distribuzione a priori di $\sigma$, ovvero una Cauchy di parametri 18 e 5.
 
-Il modello bayesiano descritto sopra può essere specificato usando il  linguaggio Stan^[Nella discussione che segue ripeto pari pari ciò che è riportato nel manuale del linguaggio [Stan](https://mc-stan.org/docs/2_27/stan-users-guide/standardizing-predictors-and-outputs.html).]. Il codice Stan viene eseguito più velocemente se l'input è standardizzato così da avere una media pari a zero e una varianza unitaria. Poniamoci dunque il problema di eseguire il campionamento MCMC sulle variabili standardizzate per poi riconvertire i parametri trovati sulla stessa scala di misura dei punteggi grezzi.
-
+Poniamoci ora il problema di specificare il modello bayesiano descritto sopra in linguaggio Stan^[Nella discussione che segue ripeto pari pari ciò che è riportato nel manuale del linguaggio [Stan](https://mc-stan.org/docs/2_27/stan-users-guide/standardizing-predictors-and-outputs.html).]. Il codice Stan viene eseguito più velocemente se l'input è standardizzato così da avere una media pari a zero e una varianza unitaria.^[Si noti un punto importante. Il fatto di standardizzare i dati fa in modo che le distribuzioni a priori sui parametri andranno espresse sulla scala delle v.c. normali standardizzate.  Se centriamo sullo 0 tali distribuzioni a priori, con una deviazione standard dell'ordine di grandezza dell'unità, i discorsi sull'arbitrarietà delle distribuzioni a priori perdono di significato: nel caso di dati standardizzati le distribuzioni a priori formulate come indicato sopra sono sicuramente distribuzioni vagamente informative il cui unico scopo è quello della regolarizzazione dei dati, ovvero l'obiettivo di mantenere le inferenze in una gamma ragionevole di valori; ciò contribuisce nel contempo a limitare l'influenza eccessiva delle osservazioni estreme (valori anomali) --- certamente tali distribuzioni a priori non introducono alcuna distorsione sistematica nella stima a posteriori.] 
+<!-- Poniamoci dunque il problema di eseguire il campionamento MCMC sulle variabili standardizzate per poi riconvertire i parametri trovati sulla stessa scala di misura dei punteggi grezzi.  -->
 Ponendo $y = (y_1, \dots, y_n)$ e $x = (x_1, \dots, x_n)$, il modello di regressione può essere scritto come 
-
 $$
 y_i = \alpha + \beta x_i + \varepsilon_i,
 $$
@@ -80,31 +61,29 @@ $$
 \varepsilon_i \sim \mathcal{N}(0, \sigma).
 $$
 
-\noindent
-Se uno dei due vettori $x$ o $y$ ha valori molto grandi o molto piccoli o se la media campionaria dei valori è lontana da 0, allora può essere più efficiente standardizzare la variabile risposta $y$ e i predittori $x$. I dati vengono prima centrati sottraendo la media campionaria, quindi scalati dividendo per la deviazione standard campionaria. Quindi un'osservazione $u$ viene standardizzata dalla funzione $z$ definita da
-
+<!-- Se uno dei due vettori $x$ o $y$ ha valori molto grandi o molto piccoli o se la media campionaria dei valori è lontana da 0, allora può essere più efficiente standardizzare la variabile risposta $y$ e i predittori $x$.  -->
+I dati devono essere prima centrati sottraendo la media campionaria, quindi scalati dividendo per la deviazione standard campionaria. Quindi un'osservazione $u$ viene standardizzata dalla funzione $z$ definita da
 $$
 z_y(u) = \frac{u - \bar{y}}{\texttt{sd}(y)}
 $$
 \noindent
 dove la media $\bar{y}$ è
-
 $$
 \bar{y} = \frac{1}{n} \sum_{i=1}^n y_i,
 $$
 \noindent
 e la deviazione standard è
-
 $$
 \texttt{sd} = \left(\frac{1}{n}\sum_{i=1}^n(y_i - \bar{y})^2\right)^{-\frac{1}{2}}.
 $$
 
 La trasformata inversa è definita invertendo i due passaggi precedenti, ovvero usando la deviazione standard per scalare di nuovo i valori $u$ per poi traslarli con la media campionaria:
-
 $$
 z_y^{-1}(u) = \texttt{sd}(y)u + \bar{y}.
 $$
-Per eseguire la standardizzare all'interno di un'analisi di regressione, i predittori e la variabile risposta vengono standardizzati. Questa trasformazione cambia la scala delle variabili, e quindi cambia anche la scala delle distribuzioni a priori dei parametri. Consideriamo il seguente modello iniziale specificato con la sintassi richiesta dal linguaggio Stan:
+
+<!-- La standardizzazione eseguita all'interno del codice Stan per l'analisi di regressione cambia la scala delle variabili, e quindi cambia anche la scala delle distribuzioni a priori dei parametri.  -->
+Consideriamo il seguente modello iniziale nel linguaggio Stan:
 
 ```{r}
 modelString = "
@@ -130,10 +109,10 @@ model {
 "
 writeLines(modelString, con = "code/simpleregkidiq.stan")
 ```
-
+\noindent
 La funzione `modelString()` registra una stringa di testo mentre `writeLines()` crea un file nell'indirizzo specificato. Tale file deve avere l'estensione `.stan`. 
 
-Il blocco _data_ per il modello standardizzato è identico a quello del caso precedente. I predittori e la risposta standardizzati sono definiti nel blocco _transformed data_. Inoltre, per semplificare la notazione (e per velocizzare l'esecuzione), nel blocco _model_ l'istruzione di campionamento è espressa in forma vettorializzata: `y_std ~ normal(alpha_std + beta_std * x_std, sigma_std);`.
+Qui sotto è invece riportato il modello per i dati standardizzati. Il blocco `data` è identico a quello del caso precedente. I predittori e la risposta standardizzati sono definiti nel blocco `transformed data`. Per semplificare la notazione (e per velocizzare l'esecuzione), nel blocco `model` l'istruzione di campionamento è espressa in forma vettorializzata: `y_std ~ normal(alpha_std + beta_std * x_std, sigma_std);`.
 
 ```{r}
 modelString = "
@@ -171,8 +150,9 @@ generated quantities {
 "
 writeLines(modelString, con = "code/simpleregstd.stan")
 ```
+Si noti che i parametri vengono rinominati per indicare che non sono i parametri "naturali", ma per il resto il modello è identico. Le distribuzioni a priori per i parametri sono vagamente informative. 
 
-I parametri vengono rinominati per indicare che non sono i parametri "naturali", ma per il resto il modello è identico. Le distribuzioni a priori per i parametri sono vagamente informative. I parametri originali possono essere recuperati con un po' di algebra. 
+I parametri originali possono essere recuperati con un po' di algebra. 
 
 \begin{align}
 y_n &= \textrm{z}_y^{-1}(\textrm{z}_y(y_n)) \notag\\
@@ -190,7 +170,6 @@ y_n &= \textrm{z}_y^{-1}(\textrm{z}_y(y_n)) \notag\\
 
 \noindent
 da cui
-
 $$
 \alpha
 =
@@ -206,11 +185,9 @@ $$
 \sigma = \texttt{sd}(y) \sigma'.
 $$
 \noindent
-I valori dei parametri sulle scale originali possono essere calcolati all'interno di Stan utilizzando il blocco _generated quantities_ che segue il blocco _model_.
+I valori dei parametri sulle scale originali vengono calcolati nel blocco `generated quantities`.
 
-\noindent
-Sistemiamo i dati nel formato appropriato per Stan:
-
+Per svolgere l'analisi bayesiana sistemiamo i dati nel formato appropriato per Stan:
 ```{r}
 data_list <- list(
   N = length(df$kid_score),
@@ -218,39 +195,29 @@ data_list <- list(
   x = df$mom_iq
 )
 ```
-
 \noindent
 La funzione `file.path()` ritorna l'indirizzo del file con il codice Stan:
-
 ```{r}
 file <- file.path("code", "simpleregstd.stan")
 ```
-
 \noindent
 Prendendo come input un file contenente un programma Stan, la funzione `cmdstan_model()` ritorna un oggetto di classe `CmdStanModel`. In pratica, `CmdStan` traduce un programma Stan in C++ e crea un eseguibile compilato. 
-
 ```{r}
 mod <- cmdstan_model(file)
 ```
-
 \noindent
 Il codice Stan può essere stampato usando il metodo `$print()`:
-
 ```{r}
 mod$print()
 ```
-
 \noindent
 L'indirizzo dell'eseguibile compilato viene ritornato da `$exe_file()`:
-
 ```{r}
 mod$exe_file()
 ```
 
-\noindent
 Applicando il metodo `$sample()` ad un oggetto `CmdStanModel` eseguiamo il campionamento MCMC: 
-
-```{r, message = FALSE, warning=FALSE}
+```{r, message = FALSE, warning=FALSE, results='hide'}
 fit <- mod$sample(
   data = data_list,
   iter_sampling = 4000L,
@@ -262,61 +229,46 @@ fit <- mod$sample(
   thin = 1
 )
 ```
-
 \noindent
 Al metodo `$sample()` possono essere passati molti argomenti. La pagina di documentazione è disponibile al seguente [link](https://mc-stan.org/cmdstanr/reference/model-method-sample.html).
 
-\noindent
 Un sommario della distribuzione a posteriori per i parametri stimati si ottiene con il metodo `$summary()`, il quale chiama la funzione `summarise_draws()` del pacchetto `posterior`:
-
 ```{r}
 fit$summary(c("alpha", "beta", "sigma"))
 ```
-
 \noindent
-Oppure è possibile usare:
+Da questo output possiamo valutare rapidamente la convergenza del modello osservando i valori di Rhat per ciascun parametro. Quando questi sono pari o vicini a 1, le catene hanno realizzato la convergenza. Ci sono molti altri test diagnostici, ma questo test è importante per Stan.
 
-```{r}
+Oppure è possibile usare:
+```{r eval=FALSE}
 fit$cmdstan_summary()
 ```
 
-\noindent
 Le statistiche diagnostiche sono fornite dal metodo `$cmdstan_diagnose()`:
-
 ```{r}
 fit$cmdstan_diagnose()
 ```
 
-\noindent
 È anche possibile creare un oggetto di classe `stanfit`
-
 ```{r}
 stanfit <- rstan::read_stan_csv(fit$output_files())
 ```
-
 \noindent
 per poi utilizzare le funzioni del pacchetto `bayesplot`:
-
 ```{r}
 stanfit %>% 
   mcmc_trace(pars = c("alpha", "beta", "sigma"))
 ```
 
-\noindent
-Eseguendo la funzione `launch_shinystan(fit)` è possibile analizzare oggetti di classe `stanfit` mediante le funzionalità del pacchetto `ShinyStan`.
-
-::: {.rmdimportant}
-Si noti un aspetto importante. Il fatto di standardizzare i dati fa in modo che le distribuzioni a priori sui parametri andranno espresse sulla scala delle v.c. normali standardizzate.  Se centriamo sullo 0 tali distribuzioni a priori, con una deviazione standard dell'ordine di grandezza dell'unità, i discorsi sull'arbitrarietà delle distribuzioni a priori perdono di significato: nel caso di dati standardizzati le distribuzioni a priori formulate come indicato sopra sono sicuramente distribuzioni vagamente informative il cui unico scopo è quello della regolarizzazione dei dati, ovvero l'obiettivo di mantenere le inferenze in una gamma ragionevole di valori; ciò contribuisce nel contempo a limitare l'influenza eccessiva delle osservazioni estreme (valori anomali) --- certamente tali distribuzioni a priori non introducono alcuna distorsione sistematica nella stima a posteriori.
-:::
+Infine, eseguendo la funzione `launch_shinystan(fit)` è possibile analizzare oggetti di classe `stanfit` mediante le funzionalità del pacchetto `ShinyStan`.
 
 
 ## Interpretazione dei parametri
 
 Assegnamo ai parametri la seguente interpretazione.
 
-- L'intercetta pari a 25.8 indica il QI medio dei bamini la cui madre ha un QI = 0. Ovviamente questo non ha alcun significato. Vedremo nel modello successivo come trasformare l'intercetta in modo tale che possa essere interpretabile.
-- La pendenza di 0.61 indica che, all'aumentare di un punto del QI delle madri, il QI medio dei loro bambini aumenta di 0.61 unità. Se consideriamo la gamma di variazione del QI delle madri nel campione, il QI medio dei bambini cambia di 41 punti, il che indica un sostanziale effetto del QI delle madri sul QI dei loro bambini:
-
+- L'intercetta pari a 25.8 indica il QI medio dei bamini la cui madre ha un QI = 0. Ovviamente questo non ha alcun significato. Vedremo nel modello successivo come trasformare il modello in modo da potere assegnare all'intercetta un'interpretazione sensata.
+- La pendenza di 0.61 indica che, all'aumentare di un punto del QI delle madri, il QI medio dei loro bambini aumenta di 0.61 unità. Se consideriamo la gamma di variazione del QI delle madri nel campione, il QI medio dei bambini cambia di 41 punti. Questo  indica un sostanziale effetto del QI delle madri sul QI dei loro bambini:
 ```{r}
 (138.89 - 71.04) * 0.61
 ```
@@ -339,7 +291,7 @@ data2_list <- list(
 \noindent
 Adattiamo il modello:
 
-```{r, message = FALSE, warning=FALSE}
+```{r, message = FALSE, warning=FALSE, results='hide'}
 fit2 <- mod$sample(
   data = data2_list,
   iter_sampling = 4000L,
@@ -351,140 +303,49 @@ fit2 <- mod$sample(
   thin = 1
 )
 ```
-
 \noindent
 Trasformiamo l'oggetto `fit` in un oggetto di classe `stanfit`:
-
 ```{r}
 stanfit <- rstan::read_stan_csv(fit2$output_files())
 ```
-
 \noindent
 Le stime a posteriori dei parametri si ottengono con
-
 ```{r}
 fit2$summary(c("alpha", "beta", "sigma"))
 ```
-
 \noindent
-Da questo output possiamo valutare rapidamente la convergenza del modello osservando i valori di Rhat per ciascun parametro. Quando questi sono pari o vicini a 1, le catene hanno realizzato la convergenza. Ci sono molti altri test diagnostici, ma questo test è importante per Stan.
-
-\noindent
-Si noti che la nuova intercetta, 86.8, corrisponde al QI medio dei bambini le cui madri hanno un QI pari alla media del campione. Centrare i dati consente dunque di assegnare un'interpretazione utile all'intercetta.
+Si noti che la nuova intercetta, ovvero 86.8, corrisponde al QI medio dei bambini le cui madri hanno un QI pari alla media del campione. Centrare i dati consente dunque di assegnare un'interpretazione utile all'intercetta.
 
 
-### Rappresentazione grafica dell'incertezza della stima
+<!-- ### Rappresentazione grafica dell'incertezza della stima -->
 
-Mediante la funzione `extract()` salvo le stime a posteriori dei parametri in  formato `list`:
-
-```{r}
-stanfit <- rstan::read_stan_csv(fit2$output_files())
-posterior <- extract(stanfit)
-```
-
-\noindent
-Un diagramma a dispersione dei dati con sovrapposto il valore atteso della $y$ in base al modello bayesiano si ottiene nel modo seguente:
-
-```{r}
-plot(
-  df$kid_score ~ I(df$mom_iq - mean(df$mom_iq)), 
-  pch = 20,
-  xlab = "mom_iq (centered)",
-  ylab = "kid_score"
-)
-abline(mean(posterior$alpha), mean(posterior$beta), col = 6, lw = 2)
-```
-
-\noindent
-Un modo per visualizzare l'incertezza della stima della retta di regressione è quello di tracciare molteplici rette di regressione, ciascuna delle quali definita da una diversa stima dei parametri $\alpha$ e $\beta$ che vengono estratti a caso dalle rispettive distribuzioni a posteriori.
-
-```{r}
-plot(
-  df$kid_score ~ I(df$mom_iq - mean(df$mom_iq)), 
-  pch = 20,
-  xlab = "mom_iq (centered)",
-  ylab = "kid_score"
-)
-for (i in 1:50) {
- abline(posterior$alpha[i], posterior$beta[i], col = "gray", lty = 1)
-}
-abline(mean(posterior$alpha), mean(posterior$beta), col = 6, lw = 2)
-```
-
-
-## Minimi quadrati
-
-Nella trattazione classica del modello di regressione, $y_i = \alpha + \beta x_i + e_i$, i coefficienti $a = \hat{\alpha}$ e $b = \hat{\beta}$ vengono stimati in modo tale da minimizzare i residui 
-
-\begin{equation}
-e_i = y_i - \hat{\alpha} - \hat{\beta} x_i.
-(\#eq:residuals)
-\end{equation}
-
-\noindent
-In altri termini, il residuo $i$-esimo è la differenza fra l'ordinata del punto ($x_i$, $y_i$) e quella del punto di ascissa $x_i$ sulla retta di regressione campionaria. 
-
-\noindent
-Per determinare i coefficienti $a$ e $b$ della retta $y_i = a + b x_i + e_i$ non è sufficiente minimizzare la somma dei residui $\sum_{i=1}^{n}e_i$, in quanto i residui possono essere sia positivi che negativi e la loro somma può essere molto prossima allo zero anche per differenze molto grandi tra i valori osservati e la retta di  regressione. Infatti, ciascuna retta passante per il punto ($\bar{x}, \bar{y}$) ha $\sum_{i=1}^{n}e_i=0$. 
-
-::: {.rmdnote}
-Una retta passante per il punto ($\bar{x}, \bar{y}$) soddisfa l'equazione $\bar{y} = a + b \bar{x}$. 
-Sottraendo tale equazione dall'equazione $y_i = a + b x_i + e_i$ otteniamo
-\[
-y_i - \bar{y} =  b (x_i - \bar{x}) + e_i. 
-\]
-
-Sommando su tutte le osservazioni, si ha che
-\begin{equation}
-\sum_{i=1}^n e_i = \sum_{i=1}^n (y_i - \bar{y} ) -  b \sum_{i=1}^n (x_i - \bar{x}) = 0 - b(0) = 0. 
-(\#eq:res-sum-zero)
-\end{equation}
-::: 
-
-\noindent
-Questo problema viene risolto scegliendo i coefficienti $a$ e $b$ che minimizzano, non tanto la somma dei residui, ma bensì l'_errore quadratico_, cioè la somma dei quadrati degli errori:
-
-\begin{equation}
-S(a, b) = \sum_{i=1}^{n} e_i^2 = \sum (y_i - a - b x_i)^2.
-\end{equation}
-
-\noindent
-Il metodo più diretto per determinare quelli che vengono chiamati i _coefficienti dei minimi quadrati_ è quello di trovare le derivate parziali della funzione $S(a, b)$ rispetto ai coefficienti $a$ e $b$:
-
-\begin{align}
-\frac{\partial S(a,b)}{\partial a} &= \sum (-1)(2)(y_i - a - b x_i), \notag \\
-\frac{\partial S(a,b)}{\partial b} &= \sum (-x_i)(2)(y_i - a - b x_i).
-\end{align}
-
-\noindent
-Ponendo le derivate uguali a zero e dividendo entrambi i membri per $-2$ si ottengono le _equazioni normali_
-
-\begin{align}
- an + b \sum x_i &= \sum y_i, \notag \\
- a \sum x_i + b \sum x_i^2 &= \sum x_i y_i. 
- (\#eq:eq-normali)
-\end{align}
-
-\noindent
-I coefficienti dei minimi quadrati $a$ e $b$ si trovano risolvendo le \@ref(eq:eq-normali) e sono uguali a:
-
-\begin{align}
-a &= \bar{y} - b \bar{x},\\
-b &= \frac{\sum (x_i - \bar{x}) (y_i - \bar{y})}{\sum (x_i - \bar{x})^2}.
-(\#eq:minsq-ab)
-\end{align}
-
-
-### Massima verosimiglianza
-
-Se gli errori del modello lineare sono indipendenti e distribuiti secondo una Normale, così che $y_i \sim \mathcal{N}(\alpha + \beta x, \sigma^2)$ per ciascun $i$, allora le stime dei minimi quadrati di $\alpha$ e $\beta$ corrispondono alla stima di massima verosimiglianza. La funzione di verosimiglianza del modello di regressione è definita come la funzione di densità di probabilità dei dati, dati i parametri e i predittori: 
-
-\begin{equation}
-p(y \mid \alpha, \beta, \sigma, x) = \prod_{i=1}^n \mathcal{N}(y_i \mid \alpha, \beta x_i, \sigma^2). 
-(\#eq:ml-reg)
-\end{equation}
-
-\noindent
-Massimizzare la \@ref(eq:ml-reg) conduce alle stime dei minimi quadrati  \@ref(eq:minsq-ab).
-
-
+<!-- Mediante la funzione `extract()` salvo le stime a posteriori dei parametri in  formato `list`: -->
+<!-- ```{r} -->
+<!-- stanfit <- rstan::read_stan_csv(fit2$output_files()) -->
+<!-- posterior <- extract(stanfit) -->
+<!-- ``` -->
+<!-- \noindent -->
+<!-- Un diagramma a dispersione dei dati con sovrapposto il valore atteso della $y$ in base al modello bayesiano si ottiene nel modo seguente: -->
+<!-- ```{r} -->
+<!-- plot( -->
+<!--   df$kid_score ~ I(df$mom_iq - mean(df$mom_iq)),  -->
+<!--   pch = 20, -->
+<!--   xlab = "mom_iq (centered)", -->
+<!--   ylab = "kid_score" -->
+<!-- ) -->
+<!-- abline(mean(posterior$alpha), mean(posterior$beta), col = 6, lw = 2) -->
+<!-- ``` -->
+<!-- \noindent -->
+<!-- Un modo per visualizzare l'incertezza della stima della retta di regressione è quello di tracciare molteplici rette di regressione, ciascuna delle quali definita da una diversa stima dei parametri $\alpha$ e $\beta$ che vengono estratti a caso dalle rispettive distribuzioni a posteriori. -->
+<!-- ```{r} -->
+<!-- plot( -->
+<!--   df$kid_score ~ I(df$mom_iq - mean(df$mom_iq)),  -->
+<!--   pch = 20, -->
+<!--   xlab = "mom_iq (centered)", -->
+<!--   ylab = "kid_score" -->
+<!-- ) -->
+<!-- for (i in 1:50) { -->
+<!--  abline(posterior$alpha[i], posterior$beta[i], col = "gray", lty = 1) -->
+<!-- } -->
+<!-- abline(mean(posterior$alpha), mean(posterior$beta), col = 6, lw = 2) -->
+<!-- ``` -->

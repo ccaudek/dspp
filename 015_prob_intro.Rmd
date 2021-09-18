@@ -1,18 +1,9 @@
 # (PART\*) Nozioni di base {-}
 
-# Il calcolo delle probabilità 
+# Il calcolo delle probabilità {#intro-prob-1}
 
 ```{r setup, include = FALSE}
 source("_common.R")
-library("patchwork")
-theme_set(bayesplot::theme_default())
-bayesplot::color_scheme_set("brightblue") 
-knitr::opts_chunk$set(
-  message = FALSE, 
-  warning = FALSE,
-  error = FALSE,
-  fig.align = "center"
-)
 ```
 
 È normale fare delle congetture rispetto a ciò di cui non siamo sicuri.

@@ -1,6 +1,6 @@
 # (PART\*) Nozioni di base {-}
 
-# Il calcolo delle probabilità 
+# Il calcolo delle probabilità {#intro-prob-1}
 
 
 
@@ -123,7 +123,7 @@ In maniera equivalente, lo stesso risultato si ottiene mediante l'istruzione
 
 ```r
 rbinom(1, 1, 0.5)
-#> [1] 1
+#> [1] 0
 ```
 
 Supponiamo di ripetere questo esperimento casuale 100 volte e di registrare i risultati così ottenuti. La stima della probabilità dell'evento $Pr[Y = 1]$ è data dalla frequenza relativa del numero di volte in cui abbiamo osservato l'evento di interesse ($Y = 1$):
@@ -163,14 +163,14 @@ for(i in 1:10) {
 }
 #> estimated Pr[Y = 1] = 0.4 
 #> estimated Pr[Y = 1] = 0.7 
+#> estimated Pr[Y = 1] = 0.8 
+#> estimated Pr[Y = 1] = 0.1 
+#> estimated Pr[Y = 1] = 0.8 
+#> estimated Pr[Y = 1] = 0.6 
 #> estimated Pr[Y = 1] = 0.7 
-#> estimated Pr[Y = 1] = 0.3 
-#> estimated Pr[Y = 1] = 0.5 
 #> estimated Pr[Y = 1] = 0.4 
-#> estimated Pr[Y = 1] = 0.5 
-#> estimated Pr[Y = 1] = 0.9 
-#> estimated Pr[Y = 1] = 0.7 
-#> estimated Pr[Y = 1] = 0.4
+#> estimated Pr[Y = 1] = 0.4 
+#> estimated Pr[Y = 1] = 0.6
 ```
 
 \noindent
@@ -181,16 +181,16 @@ Dato che la moneta è equilibrata, la stima delle probabilità dell'evento $Pr[Y
 for(i in 1:10) {
   flip_coin(100)
 }
-#> estimated Pr[Y = 1] = 0.47 
-#> estimated Pr[Y = 1] = 0.49 
-#> estimated Pr[Y = 1] = 0.57 
-#> estimated Pr[Y = 1] = 0.48 
-#> estimated Pr[Y = 1] = 0.48 
-#> estimated Pr[Y = 1] = 0.49 
+#> estimated Pr[Y = 1] = 0.44 
 #> estimated Pr[Y = 1] = 0.53 
-#> estimated Pr[Y = 1] = 0.53 
+#> estimated Pr[Y = 1] = 0.46 
+#> estimated Pr[Y = 1] = 0.5 
 #> estimated Pr[Y = 1] = 0.51 
-#> estimated Pr[Y = 1] = 0.51
+#> estimated Pr[Y = 1] = 0.47 
+#> estimated Pr[Y = 1] = 0.55 
+#> estimated Pr[Y = 1] = 0.52 
+#> estimated Pr[Y = 1] = 0.55 
+#> estimated Pr[Y = 1] = 0.54
 ```
 
 \noindent
@@ -201,16 +201,16 @@ In questo secondo caso, gli errori tendono ad essere più piccoli della simulazi
 for(i in 1:10) {
   flip_coin(1e4)
 }
-#> estimated Pr[Y = 1] = 0.5018 
+#> estimated Pr[Y = 1] = 0.4961 
+#> estimated Pr[Y = 1] = 0.4921 
+#> estimated Pr[Y = 1] = 0.4953 
+#> estimated Pr[Y = 1] = 0.4964 
+#> estimated Pr[Y = 1] = 0.4875 
+#> estimated Pr[Y = 1] = 0.503 
+#> estimated Pr[Y = 1] = 0.5111 
+#> estimated Pr[Y = 1] = 0.4993 
 #> estimated Pr[Y = 1] = 0.5019 
-#> estimated Pr[Y = 1] = 0.5023 
-#> estimated Pr[Y = 1] = 0.4944 
-#> estimated Pr[Y = 1] = 0.5001 
-#> estimated Pr[Y = 1] = 0.5012 
-#> estimated Pr[Y = 1] = 0.4916 
-#> estimated Pr[Y = 1] = 0.4954 
-#> estimated Pr[Y = 1] = 0.5007 
-#> estimated Pr[Y = 1] = 0.5
+#> estimated Pr[Y = 1] = 0.5003
 ```
 
 \noindent

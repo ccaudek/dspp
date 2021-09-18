@@ -88,7 +88,7 @@ Possiamo estrarre i campioni della distribuzione a posteriori nel modo seguente:
 
 ```r
 head(list_of_draws$theta)
-#> [1] 0.543056 0.773923 0.691257 0.589060 0.705326 0.508107
+#> [1] 0.523084 0.572367 0.701336 0.611679 0.632967 0.618279
 ```
 
 \noindent

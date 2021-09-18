@@ -8,7 +8,7 @@ data {
 }
 parameters {
   vector[K] mu;        // group means
-  real<lower=0> sigma; // common standard deviation constrained to be positive
+  real<lower=0> sigma; // common standard deviation 
   real<lower=1> nu; 
 }
 model {

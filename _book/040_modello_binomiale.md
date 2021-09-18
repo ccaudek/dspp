@@ -6,28 +6,23 @@
 ## Una proporzione 
 
 Si considerino $n$ variabili casuali Bernoulliane i.i.d.: 
-
 $$
 y = (y_1, \dots, y_n) \stackrel{iid}{\sim} \mathcal{B}(\theta).
 $$ 
 \noindent
 Vogliamo stimare $\theta$ avendo osservato $y$. Essendo i.i.d., i dati possono essere riassunti dal numero totale di successi nelle $n$ prove, denotato da $y$. Il modello binomiale è
-
 \begin{equation}
 p(y \mid \theta) = \Bin(y \mid n, \theta) = \binom{n}{y}\theta^y (1 -\theta)^{n-y},
 \end{equation}
-
 \noindent
 dove nel termine di sinistra dell'equazione abbiamo ignorato $n$ in quanto viene considerato fisso per disegno.
 
 L'inferenza sul modello binomiale richiede di assegnare una distribuzione a priori su $\theta$ che dipende dall'informazione disponibile a priori. Se sceglamo, ad esempio, una $\Beta(2, 2)$ quale distribuzione a priori, il modello diventa:
-  
 \begin{align}
 y &\sim \Bin(n, \theta) \notag\\
 \theta &\sim \Beta(2, 2),
 (\#eq:beta-binom-trump)
 \end{align}
-
 \noindent
 dove la prima riga definisce la funzione di verosimiglianza e la seconda riga definisce la distribuzione a priori. Sulla base di ciò che è stato detto nel Capitolo \@ref(chapter-distr-coniugate), sappiamo che le equazioni \@ref(eq:beta-binom-trump) definiscono il caso Beta-Binomiale.
 
@@ -368,7 +363,6 @@ L'analisi dei dati proposta da @Hulme_2020 richiede l'uso di alcuni strumenti st
 ## Due proporzioni
 
 Svolgiamo ora l'analisi considerando tutti i dati, come suggerito da @Hulme_2020. Per fare questo verrà creato un modello bayesiano per fare inferenza sulla differenza tra due proporzioni. Una volta generate le distribuzioni a posteriori per le proporzioni di "successi" nei due gruppi, verrà anche generata la quantità
-
 $$
 \omega = \frac{\theta_2 / (1-\theta_2)}{\theta_1 / (1-\theta_1)},
 $$
@@ -451,7 +445,7 @@ print(
   pars = c("theta1", "theta2", "oddsratio"),
   digits_summary = 3L
 )
-#> Inference for Stan model: twoprop1-202109141358-1-94447a.
+#> Inference for Stan model: twoprop1-202109180459-1-524b1e.
 #> 4 chains, each with iter=6000; warmup=2000; thin=1; 
 #> post-warmup draws per chain=4000, total post-warmup draws=16000.
 #> 
@@ -464,7 +458,7 @@ print(
 #> theta2     0.939 12359 1.000
 #> oddsratio 16.251  9207 1.001
 #> 
-#> Samples were drawn using NUTS(diag_e) at Mar Set 14 13:58:01 2021.
+#> Samples were drawn using NUTS(diag_e) at Sab Set 18 04:59:58 2021.
 #> For each parameter, n_eff is a crude measure of effective sample size,
 #> and Rhat is the potential scale reduction factor on split chains (at 
 #> convergence, Rhat=1).

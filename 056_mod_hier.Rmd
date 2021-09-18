@@ -1,25 +1,10 @@
-# Modello gerarchico
+# Modello gerarchico {#mod-hier-stan}
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
 source("_common.R")
+source("_stan_options.R")
 suppressPackageStartupMessages(library("brms")) 
 suppressPackageStartupMessages(library("rstan")) 
-suppressPackageStartupMessages(library("cmdstanr"))
-set_cmdstan_path("/Users/corrado/.cmdstanr/cmdstan-2.27.0")
-suppressPackageStartupMessages(library("posterior"))
-suppressPackageStartupMessages(library("loo"))
-rstan_options(auto_write = TRUE) # avoid recompilation of models
-options(mc.cores = parallel::detectCores()) # parallelize across all CPUs
-Sys.setenv(LOCAL_CPPFLAGS = '-march=native') # improve execution time
-SEED <- 374237 # set random seed for reproducibility
-theme_set(bayesplot::theme_default())
-bayesplot::color_scheme_set("brightblue") 
-knitr::opts_chunk$set(
-  message = FALSE, 
-  warning = FALSE,
-  error = FALSE,
-  fig.align = "center"
-)
 ```
 
 ## Modello gerarchico
@@ -33,9 +18,9 @@ rdat <- read.table(here::here("data", "gibsonwu2012data.txt"))
 rdat$so <- ifelse(rdat$type == "subj-ext", -0.5, 0.5)
 head(rdat)
 ```
-La variabile di interesse che corrisponde alla manipolazione sperimentale è chiamata `so` ed è stata codificata con -0.5 se il sostantivo era riferito al soggetto e con +0.5 se il sostantivo era riferito all'ggetto.
+La variabile di interesse che corrisponde alla manipolazione sperimentale è chiamata `so` ed è stata codificata con -0.5 se il sostantivo era riferito al soggetto e con +0.5 se il sostantivo era riferito all'oggetto della frase.
 
-Calcolando la media dei tempi di reazione su scala logaritmica e poi ritrasformiamo la media sulla scala originale, otteniamo:
+Calcoliamo la media dei tempi di reazione su scala logaritmica e per poi ritrasformare il risultato sulla scala originale:
 
 ```{r}
 rdat %>% 
@@ -53,21 +38,16 @@ Quando il sostantivo si riferisce al soggetto, i tempi di reazione sono più len
 Iniziamo con il modello "ad effetti fissi" che non tiene conto della struttura gerarchica dei dati, ovvero del fatto che c'è una covariazione all'interno dei cluster di dati definiti dalle variabili "soggetto" e "item".
 
 Assumiamo che la variabile dipendente `rt` (del tempo di lettura) sia approssimativamente distribuita in modo logaritmico [@rouder2005unshifted]. Ciò presuppone che il logaritmo di `rt` sia distribuito approssimativamente in maniera normale. Il modello per il logaritmo dei tempi di lettura, $\log$ `rt`, diventa
-
 \begin{equation}
 \log rt_i = \beta_0 + \beta_1 so_i + \varepsilon_i,
 \end{equation}
-
 ovvero
-
 \begin{equation}
 rt \sim LogNormal(\beta_0 + \beta_1 so,\sigma)
 \end{equation}
-
 dove $\beta_0$ è la media generale di $\log$ `rt` e $\beta_1 so$ codifica la differenza $\E(\log rt_{o}) - \E(\log rt_{s})$ quando si passa dalla condizione nella quale il sostantivo è riferito all'oggetto alla condizione nella quale il sostantivo è riferito all'soggetto -- valori negativi significano che i tempi di reazioni sono maggiori nella condizione `s` che nella condizione `o`.
 
 Nel modello useremo le seguenti distribuzioni a priori:
-
 \begin{equation}
 \begin{aligned}
 \beta[1] &\sim Normal(6, 1.5) \\
@@ -106,14 +86,12 @@ model {
 }
 "
 writeLines(modelString, con = "code/fixeff_model.stan")
-```
 
-
-```{r}
 file <- file.path("code", "fixeff_model.stan")
 mod <- cmdstan_model(file)
 ```
 
+I dati sono contenuti nella lista `stan_dat`:
 ```{r}
 stan_dat <- list(
   rt = rdat$rt,
@@ -124,7 +102,7 @@ stan_dat <- list(
 
 Eseguiamo il campionamento MCMC:
 
-```{r, message=FALSE, warning=FALSE, error=FALSE}
+```{r, message=FALSE, warning=FALSE, error=FALSE, results='hide'}
 fit3 <- mod$sample(
   data = stan_dat,
   iter_sampling = 4000L,
@@ -137,10 +115,12 @@ fit3 <- mod$sample(
 )
 ```
 
+Otteniamo un oggetto di classe `stanfit`:
 ```{r}
 stanfit <- rstan::read_stan_csv(fit3$output_files())
 ```
 
+Calcoliamo gli intervalli di credibilità al 95%:
 ```{r}
 ci95 <- rstanarm::posterior_interval(
   as.matrix(stanfit),
@@ -149,8 +129,7 @@ ci95 <- rstanarm::posterior_interval(
 round(ci95, 3)
 ```
 
-L'effetto medio, sulla scala in millisecondi, si trova nel modo seguente:
-
+L'effetto medio, sulla scala in millisecondi, si trova nel modo seguente:x
 ```{r}
 posterior <- extract(stanfit, permuted = TRUE)
 exp(mean(posterior$beta[, 1] + posterior$beta[, 2])) - 
@@ -160,17 +139,16 @@ exp(mean(posterior$beta[, 1] + posterior$beta[, 2])) -
 
 ## Modello gerarchico
 
-Il modello a effetti fissi è inappropriato per i dati di @gibson2013processing perché non tiene conto del fatto che abbiamo più misure per ogni soggetto e per ogni item. In altre parole, il modello ad effetti fissi viola l'assunzione di indipendenza degli errori. Inoltre, i coefficienti di effetti fissi $\beta_0$ e $\beta_1$ rappresentano le medie su tutti i soggetti e gli item, ignorando il fatto che alcuni soggetti sono più veloci e altri più lenti della media; allo stesso modo, alcuni item sono stati letti più velocemente della media e altri più lentamente.
+Il modello a effetti fissi è inappropriato per i dati di @gibson2013processing perché non tiene conto del fatto che abbiamo più misure per ogni soggetto e per ogni item. In altre parole, il modello ad effetti fissi viola l'assunzione di indipendenza degli errori. Inoltre, i coefficienti di effetti fissi $\beta_0$ e $\beta_1$ rappresentano le medie calcolate su tutti i soggetti e tutti gli item, ignorando il fatto che alcuni soggetti sono più veloci e altri più lenti della media, e il fatto che alcuni item sono stati letti più velocemente della media e altri più lentamente.
 
-Nei modelli lineari misti, prendiamo in considerazione la variabilità dovuta alle differenze tra soggetti e tra item aggiungendo i termini $u_{0j}$ e $w_{0k}$ che aggiustano $\beta_0$ stimando una componente specifica al soggetto $j$ e all'item $k$. Questa formulazione del modello scompone parzialmente $\varepsilon_i$ in una somma dei termini $u_{0j}$ e $w_{0k}$ che, geometricamente, corrispondono a degli aggiustamenti dell'intercetta $\beta_0$ specifici per il soggetto $j$ e per l'item $k$. Se il soggetto $j$ è più lento della media di tutti i soggetti, $u_j$ sarà un numero positivo; se l'item $k$ viene letto più velocemente del tempo di lettura medio di tutti gli item, allora $w_k$ sarà un numero negativo. Per ogni soggetto $j$ viene stimato un aggiustamento $u_{0j}$ e per ogni item viene stimato un aggiustamento $w_{0k}$. Gli aggiustamenti $u_{0j}$ e $w_{0k}$ sono chiamati _random intercepts_ o _varying intercepts_ [@gelman2020regression]. La modifica di $\beta_0$ in base a $u_{0j}$ e $w_{0k}$ consente di tenere in considerazione la variabilità dovuta ai soggetti e agli item.
+Nei modelli lineari misti, teniamo in considerazione la variabilità dovuta alle differenze tra soggetti e tra item aggiungendo al modello i termini $u_{0j}$ e $w_{0k}$ che aggiustano $\beta_0$ stimando una componente specifica al soggetto $j$ e all'item $k$. Questa formulazione del modello scompone parzialmente $\varepsilon_i$ in una somma di termini $u_{0j}$ e $w_{0k}$ che, geometricamente, corrispondono a degli aggiustamenti dell'intercetta $\beta_0$ specifici per il soggetto $j$ e per l'item $k$. Se il soggetto $j$ è più lento della media di tutti i soggetti, $u_j$ sarà un numero positivo; se l'item $k$ viene letto più velocemente del tempo di lettura medio di tutti gli item, allora $w_k$ sarà un numero negativo. Viene stimato un aggiustamento $u_{0j}$ per ogni soggetto $j$ e un aggiustamento $w_{0k}$ per ogni item. Gli aggiustamenti $u_{0j}$ e $w_{0k}$ sono chiamati _random intercepts_ o _varying intercepts_ [@gelman2020regression]. La modifica di $\beta_0$ mediante  $u_{0j}$ e $w_{0k}$ consente dunque di tenere in considerazione la variabilità dovuta ai soggetti e agli item.
 
-Il random intercept model assume che gli aggiustamenti $u_{0j}$ e $w_{0k}$ siano  distribuiti normalmente attorno allo zero con deviazione standard sconosciuta: $u_0 ∼ \mathcal{N}(0, \sigma_u)$ e $w_0 ∼ \mathcal{N}(0, \sigma_w)$. Il modello include dunque tre fonti di varianza: la deviazione standard degli errori $\sigma_e$, la deviazione standard delle _random intercepts_ per i soggetti, $\sigma_u$, e la deviazione standard delle _random intercepts_ per gli item, $\sigma_w$. Queste tre fonti di variabilità sono dette _componenti della varianza_. Possiamo dunque scrivere:
-
+Il random intercept model assume che gli aggiustamenti $u_{0j}$ e $w_{0k}$ siano  distribuiti normalmente attorno allo zero con una deviazione standard sconosciuta: $u_0 ∼ \mathcal{N}(0, \sigma_u)$ e $w_0 ∼ \mathcal{N}(0, \sigma_w)$. Il modello include dunque tre fonti di varianza: la deviazione standard degli errori $\sigma_e$, la deviazione standard delle _random intercepts_ per i soggetti, $\sigma_u$, e la deviazione standard delle _random intercepts_ per gli item, $\sigma_w$. Queste tre fonti di variabilità sono dette _componenti della varianza_. Possiamo dunque scrivere:
 \begin{equation}
 \log rt_{ijk} = \beta_0 + \beta_1 so_i + u_{0j} + w_{0k} + \varepsilon_{ijk}.
 \end{equation}
 
-Il coefficiente $\beta_1$ è quello di interesse primario. Come conseguenza della codifica usata, avrà il valore $-\beta_1$ nella condizione in cui il sostantivo è riferito al soggetto e $+\beta_1$ nella condizione in cui il sostantivo è riferito all'oggetto.
+Il coefficiente $\beta_1$ è quello di interesse primario. Come conseguenza della codifica usata, avrà il valore $-\beta_1$ nella condizione in cui il sostantivo è riferito al soggetto e $+\beta_1$ nella condizione in cui il sostantivo è riferito all'oggetto della frase.
 
 In Stan il modello diventa:
 
@@ -206,9 +184,7 @@ model {
 }
 "
 writeLines(modelString, con = "code/random_intercepts_model.stan")
-```
 
-```{r}
 file <- file.path("code", "random_intercepts_model.stan")
 mod <- cmdstan_model(file)
 ```
@@ -229,7 +205,7 @@ stan_dat <- list(
 
 Eseguiamo il campionamento MCMC:
 
-```{r, message=FALSE, warning=FALSE, error=FALSE}
+```{r, message=FALSE, warning=FALSE, error=FALSE, results='hide'}
 fit4 <- mod$sample(
   data = stan_dat,
   iter_sampling = 4000L,
@@ -266,7 +242,7 @@ round(ci95, 3)
 
 Questi risultati replicano i risultati che si ottengono con la funzione `brms::brm`:
 
-```{r, warning=FALSE, message=FALSE, error=FALSE}
+```{r, warning=FALSE, message=FALSE, error=FALSE, results='hide'}
 M1 <- brm(
   rt ~ so + (1 | subj) + (1 | item),
   family = lognormal(),

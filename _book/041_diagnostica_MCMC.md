@@ -1,4 +1,4 @@
-# Diagnostica delle catene markoviane
+# Diagnostica delle catene markoviane {#diagn-markov-chains}
 
 
 
@@ -28,8 +28,7 @@ La convergenza e il "mixing" possono essere controllate mediante il _trace plot_
 \caption{Trace plot per il modello Beta-Binomiale dei dati di Gautret et al.(2020).}(\#fig:trace-plot-gautret-2)
 \end{figure}
 
-La figura \@ref(fig:trace-plot-gautret-2) fornisce un esempio perfetto di come dovrebbero apparire i _trace plot_. Quando le catene markoviane raggiungono uno stato stazionario e sono stabili ciò significa che hanno raggiunto la distribuzione stazionaria e il _trace plot_ rivela una assenza di struttura e assomiglia alla rappresentazione del rumore bianco, come nella figura \@ref(fig:trace-plot-gautret).
-<!-- Se la catena markoviana ha raggiunto la distribuzione stazionaria, allora il trace plot assomiglia alla  rappresentazione di rumore bianco, la cui assenza di struttura implica che le catene hanno raggiunto uno stato stazionario e sono stabili.  -->
+La figura \@ref(fig:trace-plot-gautret-2) fornisce un esempio perfetto di come dovrebbero apparire i _trace plot_. Quando le catene markoviane raggiungono uno stato stazionario e sono stabili ciò significa che hanno raggiunto la distribuzione stazionaria e il _trace plot_ rivela una assenza di struttura e assomiglia alla rappresentazione del rumore bianco, come nella figura \@ref(fig:trace-plot-gautret-2).
 Al contrario, la figura \@ref(fig:bad-trace-bayesrules) indica mancanza di convergenza^[Figura riprodotta da @Johnson2022bayesrules].
 
 \begin{figure}

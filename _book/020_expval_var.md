@@ -1,4 +1,4 @@
-# Valore atteso e varianza
+# Valore atteso e varianza {#exp-val-and-variance-rv}
 
 
 

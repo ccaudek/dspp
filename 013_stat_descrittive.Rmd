@@ -1,19 +1,9 @@
 # (PART\*) Statistica descrittiva ed analisi esplorativa dei dati {-}
 
-
-# Statistica descrittiva 
+# Statistica descrittiva {#descriptive-stats}
 
 ```{r, include = FALSE}
 source("_common.R")
-SEED <- 374237 # set random seed for reproducibility
-theme_set(bayesplot::theme_default())
-bayesplot::color_scheme_set("brightblue") 
-knitr::opts_chunk$set(
-  message = FALSE, 
-  warning = FALSE,
-  error = FALSE,
-  fig.align = "center"
-)
 ```
 
 
@@ -105,24 +95,11 @@ deviazione standard.
 
 ## Distribuzioni di frequenze 
 
-Per introdurre i principali strumenti della statistica descrittiva
-considereremo qui i dati raccolti da @zetschefuture2019. Questi autori
-hanno studiato le aspettative negative le quali sono state evidenziate
-come un meccanismo chiave nel mantenimento e nella reiterazione della
-depressione. @zetschefuture2019 hanno valutato le aspettative di
-individui depressi circa il loro umore futuro ed si sono chiesti se
-queste aspettative fossero accurate oppure distorte negativamente. 
+Per introdurre i principali strumenti della statistica descrittiva considereremo qui i dati raccolti da @zetschefuture2019^[Si veda l'Appendice \@ref(es-pratico-zetsche).]. Questi autori hanno studiato le aspettative negative le quali sono state evidenziate come un meccanismo chiave nel mantenimento e nella reiterazione della depressione. @zetschefuture2019 hanno valutato le aspettative di individui depressi circa il loro umore futuro ed si sono chiesti se queste aspettative fossero accurate oppure distorte negativamente. 
 
-In uno degli studi descritti viene esaminato un campione costituito da 30
-soggetti con almeno un episodio depressivo maggiore e da 37 controlli
-sani. Gli autori hanno misurato il livello depressivo con il *Beck
-Depression Inventory* (BDI-II). Ma qual è la la gravità della
-depressione riportata dai soggetti nel campione esaminato da
-@zetschefuture2019? 
+In uno degli studi descritti viene esaminato un campione costituito da 30 soggetti con almeno un episodio depressivo maggiore e da 37 controlli sani. Gli autori hanno misurato il livello depressivo con il *Beck Depression Inventory* (BDI-II). Ma qual è la la gravità della depressione riportata dai soggetti nel campione esaminato da @zetschefuture2019? 
 
-<!-- Dei 67 soggetti considerati, uno non ha completato il BDI-II e quindi abbiamo a disposizione 66 valori del BDI-II.  -->
-<!-- I dati sono riportati nella tabella \@ref(tab:bdi2_values) e, per semplicità, sono stati ordinati in ordine crescente.  -->
-Per rispondere a questa domanda, iniziamo a leggere in R i dati, assumendo che il file `data.mood.csv` si trovi nella cartella `data` contenuta nella _working directory_.
+Per rispondere a questa domanda, iniziamo a leggere in $\R$ i dati, assumendo che il file `data.mood.csv` si trovi nella cartella `data` contenuta nella _working directory_.
 
 ```{r}
 df <- read.csv(
@@ -156,18 +133,8 @@ Una distribuzione di frequenze è un riepilogo del conteggio della
 frequenza con cui le modalità osservate in un insieme di dati si
 verificano in un intervallo di valori.
 
-Per creare una distribuzione di frequenze possiamo procedere effettuando
-una partizione delle modalità della variabile di interesse in $m$ classi
-(denotate con $\Delta_i$) tra loro disgiunte. In tale partizione, la
-classe $i$-esima coincide con un intervallo di valori aperto a destra
-$[a_i, b_i)$ o aperto a sinistra $(a_i, b_i]$. Ad ogni classe
-$\Delta_i$ avente $a_i$ e $b_i$ come limite inferiore e superiore
-associamo l'ampiezza $b_i - a_i$ (non necessariamente uguale per ogni
-classe) e il valore centrale $\bar{x}_i$. La scelta delle classi è
-arbitraria, ma è buona norma non definire classi con un numero troppo
-piccolo (\< 5) di osservazioni. Poiché ogni elemento dell'insieme
-$\{x_i\}_{i=1}^n$ appartiene ad una ed una sola classe $\Delta_i$,
-possiamo calcolare le quantità elencate di seguito.
+Per creare una distribuzione di frequenze possiamo procedere effettuando una partizione delle modalità della variabile di interesse in $m$ classi (denotate con $\Delta_i$) tra loro disgiunte. In tale partizione, la classe $i$-esima coincide con un intervallo di valori aperto a destra $[a_i, b_i)$ o aperto a sinistra $(a_i, b_i]$. Ad ogni classe $\Delta_i$ avente $a_i$ e $b_i$ come limite inferiore e superiore associamo l'ampiezza $b_i - a_i$ (non necessariamente uguale per ogni
+classe) e il valore centrale $\bar{x}_i$. La scelta delle classi è arbitraria, ma è buona norma non definire classi con un numero troppo piccolo (\< 5) di osservazioni. Poiché ogni elemento dell'insieme $\{x_i\}_{i=1}^n$ appartiene ad una ed una sola classe $\Delta_i$, possiamo calcolare le quantità elencate di seguito.
 
 * La _frequenza assoluta_  $n_i$ di ciascuna classe, ovvero il numero di osservazioni che ricadono nella classe $\Delta_i$. 
 Proprietà: $n_1 + n_2 + \dots + n_m = n$.
@@ -179,14 +146,14 @@ Proprietà: $n_1 + n_2 + \dots + n_m = n$.
 * La _frequenza cumulata relativa_ $F_i$, ovvero 
 $F_i = f_1+f_2+\dots+f_m = \frac{N_i}{n} = \frac{1}{n} \sum_{i=1}^m f_i.$
 
-Calcoliamo ora la distribuzione di frequenza assoluta e la distribuzione di frequenza relativa per i valori del BDI-II del campione clinico di @zetschefuture2019. Per costruire una distribuzione di frequenza è innanzitutto necessario scegliere gli intervalli delle classi. Facendo riferimento ai cut-off usati per l'interpretazione del BDI-II, definiamo i seguenti __intervalli aperti a destra__: 
+Calcoliamo ora la distribuzione di frequenza assoluta e la distribuzione di frequenza relativa per i valori del BDI-II del campione clinico di @zetschefuture2019. Per costruire una distribuzione di frequenza è innanzitutto necessario scegliere gli intervalli delle classi. Facendo riferimento ai cut-off usati per l'interpretazione del BDI-II, definiamo i seguenti _intervalli aperti a destra_: 
 
 * depressione minima: \[0, 13.5), 
 * depressione lieve: \[13.5, 19.5), 
 * depressione moderata: \[19.5, 28.5), 
 * depressione severa: \[28.5, 63).
 
-Esaminando i dati, possiamo notare che 36 soggetti cadono nella prima classe, uno nella seconda classe, e così via. La distribuzione di frequenza della variabile `bdi2` è riportata nella tabella seguente. Questa distribuzione di frequenza ci aiuta a capire meglio cosa sta succedendo. Se consideriamo la frequenza relativa, ad esempio, possiamo notare che ci sono due valori maggiormente ricorrenti e tali valori corrispondono alle due classi più estreme. Questo ha senso nel caso presente, in quanto il campione esaminato da @zetschefuture2019 includeva due gruppi di soggetti: soggetti sani (con valori BDI-II bassi) e soggetti depressi (con valori BDI-II alti). In una distribuzione di frequenza tali valori tipici vanno sotto il nome di _mode_ della distribuzione.
+Esaminando i dati, possiamo notare che 36 soggetti cadono nella prima classe, uno nella seconda classe, e così via. La distribuzione di frequenza della variabile `bdi2` è riportata nella tabella seguente. Questa distribuzione di frequenza ci aiuta a capire meglio cosa sta succedendo. Se consideriamo la frequenza relativa, ad esempio, possiamo notare che ci sono due valori maggiormente ricorrenti e tali valori corrispondono alle due classi più estreme. Questo ha senso nel caso presente, in quanto il campione esaminato da @zetschefuture2019 includeva due gruppi di soggetti: soggetti sani (con valori BDI-II bassi) e soggetti depressi (con valori BDI-II alti).^[In una sezione successiva di questo capitolo discuteremo i principi che, secondo Edward Tufte, devono guidare la Data Science. Parlando delle rappresentazioni grafiche dei dati, Edward Tufte ci dice che la prima cosa da fare è "mostrare i dati". Questa può sembrare una tautologia, considerato che questo è lo scopo della statistica descrittiva: trasformare i dati attraverso vari indici riassuntivi o rappresentazioni grafiche, in modo tale da renderli _comprensibili_. Tuttavia, spesso le tecniche statistiche vengono usate per _nascondere_ e non per _mostrare_ i dati. L'uso delle frequenze relative offre un chiaro esempio di questo. Di questi tempi capita spesso di incontrare, sulla stampa, notizie a proposito un nuovo farmaco che, in una prova clinica, ha mostrato risultati incoraggianti che suggeriscono la sua efficacia come possibile trattamento del COVID-19. Alle volte i risultati della sperimentazione clinica sono riportati nei termini di una _frequenza relativa_. Ad esempio, potremmo leggere che l'uso del farmaco ha portato ad una riduzione del 21% dei ricoveri o dei decessi. Sembra tanto.  Ma è necessario guardare i dati!  Ovvero, molto spesso, quello che _non_ viene riportato dai comunicati stampa. Infatti, una riduzione del 21% può corrispondere ad un cambiamento dal 5% al 4%. E una riduzione del 44% può corrispondere ad una differenza di 10 contro 18, o di 5 contro 9, o di 15 contro 27. In altri termini, una proporzione, anche grande, può corrispondere ad una differenza _assoluta_ piuttosto piccola: un piccolo passo in avanti, ma non ad un balzo! Per questa ragione, per capire cosa i dati significano, è necessario guardare i dati da diversi punti di vista, utilizzando diverse statistiche descrittive, senza limitarci alla statistica descrittiva che racconta la storia che piace di più. Perché la scelta della statistica descrittiva da utilizzare per riassumere i dati dipende dagli scopi di chi esegue l'analisi statisica: il nostro scopo è quelloi di capire se il farmaco funziona; lo scopo delle compagnie farmaceutiche è quello di vendere il farmaco. Sono obiettivi molto diversi.] In una distribuzione di frequenza tali valori tipici vanno sotto il nome di _mode_ della distribuzione.
 
 ```{r tab:distr-freq,  echo=FALSE, results='asis'}
 cat('
@@ -199,7 +166,7 @@ cat('
 ')
 ```
 
-Poniamoci ora il problema di costruire la tabella precedente utilizzando R. Per fare questo useremo la funzione `cut()` che divide il *campo di variazione* (ovvero, la differenza tra il valore massimo di una distribuzione ed il valore minimo) di una variabile continua `x` in intervalli e codifica ciascun valore `x` nei termini dell'intervallo a cui appartiene. Così facendo otteniamo:
+Poniamoci ora il problema di costruire la tabella precedente utilizzando \R. Per fare questo useremo la funzione `cut()` che divide il *campo di variazione* (ovvero, la differenza tra il valore massimo di una distribuzione ed il valore minimo) di una variabile continua `x` in intervalli e codifica ciascun valore `x` nei termini dell'intervallo a cui appartiene. Così facendo otteniamo:
 
 ```{r}
 bysubj$bdi_level <- cut(
@@ -226,7 +193,6 @@ La distribuzione di frequenza relativa si ottiene dividendo ciascuna frequenza a
 ```{r}
 table(bysubj$bdi_level) / sum(table(bysubj$bdi_level))
 ```
-
 \noindent
 I risultati sono riportati qui sotto:
 
@@ -238,11 +204,6 @@ Limiti delle classi Frequenza assoluta  Frequenza relativa
 [28.5, 63]          17                  17/66
 
 
-### Quali frequenze riportare?
-
-In una sezione successiva di questo capitolo discuteremo i principi che, secondo Edward Tufte, devono guidare la Data Science. Parlando delle rappresentazioni grafiche dei dati, Edward Tufte ci dice che la prima cosa da fare è "mostrare i dati". Questa può sembrare una tautologia, considerato che questo è lo scopo della statistica descrittiva: trasformare i dati attraverso vari indici riassuntivi o rappresentazioni grafiche, in modo tale da renderli _comprensibili_. Tuttavia, spesso le tecniche statistiche vengono usate per _nascondere_ e non per _mostrare_ i dati. L'uso delle frequenze relative offre un chiaro esempio di questo. Di questi tempi capita spesso di incontrare, sulla stampa, notizie a proposito un nuovo farmaco che, in una prova clinica, ha mostrato risultati incoraggianti che suggeriscono la sua efficacia come possibile trattamento del COVID-19. Alle volte i risultati della sperimentazione clinica sono riportati nei termini di una _frequenza relativa_. Ad esempio, potremmo leggere che l'uso del farmaco ha portato ad una riduzione del 21% dei ricoveri o dei decessi. Sembra tanto.  Ma è necessario guardare i dati!  Ovvero, molto spesso, quello che _non_ viene riportato dai comunicati stampa. Infatti, una riduzione del 21% può corrispondere ad un cambiamento dal 5% al 4%. E una riduzione del 44% può corrispondere ad una differenza di 10 contro 18, o di 5 contro 9, o di 15 contro 27. In altri termini, una proporzione, anche grande, può corrispondere ad una differenza _assoluta_ piuttosto piccola: un piccolo passo in avanti, ma non ad un balzo! Per questa ragione, per capire cosa i dati significano, è necessario guardare i dati da diversi punti di vista, utilizzando diverse statistiche descrittive, senza limitarci alla statistica descrittiva che racconta la storia che piace di più. Perché la scelta della statistica descrittiva da utilizzare per riassumere i dati dipende dagli scopi di chi esegue l'analisi statisica: il nostro scopo è quelloi di capire se il farmaco funziona; lo scopo delle compagnie farmaceutiche è quello di vendere il farmaco. Sono obiettivi molto diversi.  
-
-
 ## Istogramma
 
 I dati che sono stati sintetizzati in una distribuzione di frequenze
@@ -250,11 +211,9 @@ possono essere rappresentati graficamente in un istogramma.
 Un istogramma si costruisce riportando sulle ascisse i limiti delle
 classi $\Delta_i$ e sulle ordinate i valori della funzione costante a
 tratti
-
 $$
 \varphi_n(x)= \frac{f_i}{b_i-a_i}, \quad x\in \Delta_i,\, i=1, \dots, m
 $$
-
 \noindent
 che misura la _densità della frequenza relativa_ della variabile $X$
 nella classe $\Delta_i$, ovvero il rapporto fra la frequenza relativa
@@ -264,33 +223,26 @@ proporzionale alla frequenza relativa $f_i$. Si noti che l'area totale
 dell'istogramma delle frequenze relative è data della somma delle aree
 dei singoli rettangoli e quindi vale 1.0.
 
- 
-
-<!-- L'istogramma rappresenta la frequenza relativa delle classi; nello specifico, l'area di ogni barra dell'istogramma è proporzionale alla frequenza relativa della classe che la barra rappresenta.  -->
-
-<!-- È dunque necessario trovare l'altezza delle barre dell'istogramma. Per la classe [0, 13.5), ad esempio, la frequenza relativa è 36/66. Sapendo che tale valore corrisponde all'_area_ del rettangolo, è facile stabilire che l'altezza è $(36/66) / 13.5$, ovvero `r round(36/66 / 13.5, 4)`, dato che la base del rettangolo è 13.5. Si procede nello stesso modo per le altre barre dell'istogramma. -->
-
 Poniamoci ora il problema di costruire in R un istogramma per i dati BDI-II di @zetschefuture2019. Per fare ciò è possibile usare le funzioni del pacchetto `ggplot2`, come indicato di seguito.
-<!-- Una rappresentazione grafica dell'istogramma delle frequenze relative si può ottenere con R utilizzando le funzioni del pacchetto `ggplot2`.  -->
-<!-- Il pacchetto `ggplot2` è un potente strumento per rappresentare graficamente i dati. Le iniziali del nome, `gg`, si riferiscono alla ''Grammar of Graphics'', che è un modo di pensare le figure come una serie di layer stratificati. Originariamente descritta da Leland Wilkinson, la grammatica dei grafici è stata aggiornata e applicata in R da Hadley Wickham, il creatore del pacchetto.  -->
 
-```{r hist1zetsche, out.width="80%", fig.cap="Istogramma per i valori BDI-II riportati da @zetschefuture2019."}
+```{r hist1zetsche, out.width="80%", fig.cap="Istogramma per i valori BDI-II riportati da Zetsche et al. (2019)."}
 bysubj %>%
   ggplot(aes(x = bdi)) +
   geom_histogram(
     aes(y = ..density..),
-    breaks = c(0, 13.5, 19.5, 28.5, 44.1) 
+    breaks = c(0, 13.5, 19.5, 28.5, 44.1), 
     # il valore BDI-II massimo è 44
+    fill = colors[1],
+    colour = "black"
   ) +
   scale_x_continuous(
-    breaks=c(0, 13.5, 19.5, 28.5, 44.1)
+    breaks = c(0, 13.5, 19.5, 28.5, 44.1)
   ) +
   labs(
     x = "BDI-II",
-    y = "Densità di frequenza"
+    y = "Densità di frequenza"
   ) 
 ```
-
 
 Con i quattro intervalli individuati dai cut-off del BDI-II otteniamo la
 rappresentazione riportata nella figura \@ref(fig:hist1zetsche). Per chiarezza, precisiamo che `ggplot()` utilizza intervalli aperti a destra.
@@ -304,7 +256,9 @@ bysubj %>%
   ggplot(aes(x = bdi)) +
   geom_histogram(
     aes(y = ..density..),
-    breaks = seq(0, 44.1, length.out = 7)
+    breaks = seq(0, 44.1, length.out = 7),
+    fill = colors[1],
+    colour = "black"
   ) +
   scale_x_continuous(
     breaks = c(0.00, 7.35, 14.70, 22.05, 
@@ -337,18 +291,20 @@ bysubj %>%
   ggplot(aes(x = bdi)) +
   geom_histogram(
     aes(y = ..density..), 
-    breaks = seq(0, 44.1, length.out = 7)
+    breaks = seq(0, 44.1, length.out = 7),
+    fill = colors[1],
+    colour = "black"
   ) +
   geom_density(
     aes(x = bdi), 
     adjust = 0.5, 
     size = 0.8, 
-    fill = "steelblue3", 
+    fill = colors[2],
     alpha = 0.5
   ) +
   labs(
     x = "BDI-II",
-    y = "Densità di frequenza"
+    y = "Densità di frequenza"
   ) 
 ```
 ::: 
@@ -501,7 +457,7 @@ bysubj <- df %>%
 
 bysubj %>% 
   ggplot(aes(x=group, y=bdi)) + 
-  geom_boxplot() +
+  geom_boxplot(fill = colors[1]) +
   labs(
     x = "Gruppo",
     y = "BDI-II"
@@ -528,7 +484,6 @@ p1 <- bysubj %>%
   labs(
     x = "Gruppo",
     y = "BDI-II"
-    #, caption = "Fonte: Zetsche, Buerkner, & Renneberg (2020)"
   ) 
 
 p2 <- bysubj %>% 
@@ -538,7 +493,6 @@ p2 <- bysubj %>%
   labs(
     x = "Gruppo",
     y = "BDI-II"
-    #, caption = "Fonte: Zetsche, Buerkner, & Renneberg (2020)"
   ) 
 
 p1 + p2
@@ -1058,16 +1012,10 @@ distribuzione di frequenze per le varie modalità della risposta.
 
 ### Correlazione nulla
 
-Un ultimo aspetto da mettere in evidenza a proposito della correlazione
-riguarda il fatto che la correlazione descrive la direzione e
-l'intensità della relazione lineare tra due variabili. Relazioni non
-lineari tra le variabili, anche se sono molto forti, non vengono catturate
-dalla correlazione. È importante rendersi conto che una correlazione
-pari a zero non significa che non c'è relazione tra le due variabili, ma
-solo che tra esse non c'è una relazione *lineare*. 
+Un ultimo aspetto da mettere in evidenza a proposito della correlazione riguarda il fatto che la correlazione descrive la direzione e l'intensità della relazione lineare tra due variabili. Relazioni non lineari tra le variabili, anche se sono molto forti, non vengono catturate dalla correlazione. È importante rendersi conto che una correlazione pari a zero non significa che non c'è relazione tra le due variabili, ma solo che tra esse non c'è una relazione *lineare*. 
 
 ::: {.example}
-Un esempio di questo fatto è fornito dalla figura \@ref(fig:zerocorr).
+Un esempio di correlazione nulla in presenza di una chiara relazione (non lineare) tra le variabili è fornito dalla figura \@ref(fig:zerocorr).
 
 ```{r zerocorr, out.width="80%", fig.cap = "Due insiemi di dati (fittizi) per i quali i coefficienti di correlazione di Pearson sono entrambi 0. Ma questo non significa che non vi sia alcuna relazione tra le variabili."}
 library("datasauRus")

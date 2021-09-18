@@ -2,15 +2,6 @@
 
 ```{r setup, include = FALSE}
 source("_common.R")
-library("patchwork")
-theme_set(bayesplot::theme_default())
-bayesplot::color_scheme_set("brightblue") 
-knitr::opts_chunk$set(
-  message = FALSE, 
-  warning = FALSE,
-  error = FALSE,
-  fig.align = "center"
-)
 ```
 
 La notazione $p(\theta \mid y) \propto p(\theta) \ p(y \mid \theta)$ rende particolarmente chiaro che la distribuzione a posteriori è un "miscuglio" della distribuzione a priori e della verosimiglianza. Prima di preoccuparci di come calcolare la distribuzione a posteriori, cerchiamo di capire meglio cosa significa "mescolare" la distribuzione a priori e la verosimiglianza. Considereremo qui un esempio fornito da @Johnson2022bayesrules. Nel fumetto di Alison Bechdel _The Rule_, un personaggio afferma di guardare un film solo se soddisfa le seguenti tre regole [@Bechdel1986dykes]:

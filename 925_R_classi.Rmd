@@ -2,15 +2,6 @@
 
 ```{r, include = FALSE}
 source("_common.R")
-SEED <- 374237 # set random seed for reproducibility
-theme_set(bayesplot::theme_default())
-bayesplot::color_scheme_set("brightblue") 
-knitr::opts_chunk$set(
-  message = FALSE, 
-  warning = FALSE,
-  error = FALSE,
-  fig.align = "center"
-)
 ```
 
 Solitamente gli psicologi raccolgono grandi quantità di dati. Tali dati

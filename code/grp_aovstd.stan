@@ -12,7 +12,7 @@ transformed data {
 }
 parameters {
   vector[K] mu_std;        // group means
-  real<lower=0> sigma_std; // common standard deviation constrained to be positive
+  real<lower=0> sigma_std; // common standard deviation 
   real<lower=1> nu;
 }
 model {

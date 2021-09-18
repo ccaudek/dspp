@@ -1,4 +1,4 @@
-## Scopi della regressione lineare
+## Scopi della regressione lineare {#regr-lin-frequentista}
 
 Il modello di regressione lineare si pone tre obiettivi:
 
@@ -146,6 +146,16 @@ b &= \frac{\sum (x_i - \bar{x}) (y_i - \bar{y})}{\sum (x_i - \bar{x})^2}.
 (\#eq:minsqab)
 \end{equation}
 
+
+### Massima verosimiglianza
+
+Se gli errori del modello lineare sono indipendenti e distribuiti secondo una Normale, così che $y_i \sim \mathcal{N}(\alpha + \beta x, \sigma^2)$ per ciascun $i$, allora le stime dei minimi quadrati di $\alpha$ e $\beta$ corrispondono alla stima di massima verosimiglianza. La funzione di verosimiglianza del modello di regressione è definita come la funzione di densità di probabilità dei dati, dati i parametri e i predittori: 
+\begin{equation}
+p(y \mid \alpha, \beta, \sigma, x) = \prod_{i=1}^n \mathcal{N}(y_i \mid \alpha, \beta x_i, \sigma^2). 
+(\#eq:ml-reg)
+\end{equation}
+\noindent
+Massimizzare la \@ref(eq:ml-reg) conduce alle stime dei minimi quadrati  \@ref(eq:minsq-ab).
 
 ### Un esempio concreto{#monotwinsiq}
 

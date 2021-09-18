@@ -1,4 +1,4 @@
-# Distribuzioni di v.c. continue 
+# Distribuzioni di v.c. continue {#distr-rv-cont}
 
 ```{r setup, include = FALSE}
 source("_common.R")
@@ -569,23 +569,36 @@ student_t_plot()
 ::: 
 
 
-## La distribuzione Beta
+## Funzione beta di Eulero
+
+La funzione beta di Eulero è una funzione matematica, *non* una densità di probabilità. La menzioniamo qui perché viene utilizzata nella distribuzione Beta.
+
+La funzione beta si può scrivere in molti modi; per i nostri scopi, può essere scritta nel modo seguente:
+
+\begin{equation}
+B(\alpha, \beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)},
+\end{equation}
+\noindent
+dove $\Gamma(x)$ è la funzione Gamma, ovvero il fattoriale discendente, cioè $x(x-1)(x-2)\ldots (x-n+1)$.
+
+
+## Distribuzione Beta
 
 :::{.definition}
 Sia $\pi$ una variabile casuale che può assumere qualsiasi valore compreso tra 0 e 1, cioè $\pi \in [0, 1]$. Diremo che $\pi$ segue la distribuzione Beta di parametri $\alpha$ e $\beta$, $\pi \sim \text{Beta}(\alpha, \beta)$, se la sua densità è
 \begin{equation}
-\text{Beta}(\pi \mid \alpha, \beta) = \frac{\Gamma(\alpha+b)}{\Gamma(\alpha)\Gamma(\beta)}\pi^{\alpha-1} (1-\pi)^{\beta-1} \quad \text{per } \theta \in [0, 1],
+\text{Beta}(\pi \mid \alpha, \beta) = \frac{1}{B(\alpha, \beta)}\pi^{\alpha-1} (1-\pi)^{\beta-1} =  \frac{\Gamma(\alpha+ \beta)}{\Gamma(\alpha)\Gamma(\beta)}\pi^{\alpha-1} (1-\pi)^{\beta-1} \quad \text{per } \theta \in [0, 1],
 \end{equation}
-laddove $\Gamma(\cdot)$ è la funzione Gamma. Per qualsiasi intero positivo, $\Gamma(n) = (n-1)!$.
+laddove $B(\alpha, \beta)$ è la funzione beta.
 :::
 
-I termini $\alpha$ e $\beta$ sono i parametri della distribuzione e devono essere entrambi positivi.^[I parametri $\alpha$ e $\beta$ della distribuzione Beta possono essere interpretati come l'espressione delle nostre credenze a priori relativamente alla probabilità di successo: il parametro $\alpha$ rappresenta il numero di "successi" e il parametro $\beta$ il numero di "insuccessi".] Il rapporto $\frac{\Gamma(\alpha+b)}{\Gamma(\alpha)\Gamma(\beta)}$ è una costante di normalizzazione:
+I termini $\alpha$ e $\beta$ sono i parametri della distribuzione Beta e devono essere entrambi positivi.^[I parametri $\alpha$ e $\beta$ della distribuzione Beta possono essere interpretati come l'espressione delle nostre credenze a priori relativamente alla probabilità di successo: il parametro $\alpha$ rappresenta il numero di "successi" e il parametro $\beta$ il numero di "insuccessi".] Il rapporto $\frac{1}{B(\alpha, \beta)} = \frac{\Gamma(\alpha+b)}{\Gamma(\alpha)\Gamma(\beta)}$ è una costante di normalizzazione:
 
 \begin{equation}
 \int_0^1 \pi^{\alpha-1} (1-\pi)^{\beta-1} = \frac{\Gamma(\alpha+b)}{\Gamma(\alpha)\Gamma(\beta)}.
 \end{equation}
 
-Il valore atteso, la moda e la varianza di una distribuzione Beta sono date dalle seguenti equazioni:
+Il valore atteso, la moda e la varianza di una distribuzione Beta sono dati dalle seguenti equazioni:
 
 \begin{equation}
 \E(\pi) = \frac{\alpha}{\alpha+\beta},
@@ -601,6 +614,12 @@ Il valore atteso, la moda e la varianza di una distribuzione Beta sono date dall
 \Var(\pi) = \frac{\alpha \beta}{(\alpha+\beta)^2 (\alpha+\beta+1)}.
 (\#eq:beta-var)
 \end{equation}
+
+*Attenzione alle parole.* In questo contesto, il termine "beta" viene utilizzato con tre significati diversi:
+
+- la distribuzione di densità Beta,
+- la funzione matematica beta,
+- il parametro $\beta$.
 
 
 ::: {.example}
@@ -667,6 +686,9 @@ beta_plot <- function(){
 beta_plot()
 ```
 :::
+
+
+
 
 <!-- ::: {.rmdnote} -->
 
@@ -745,6 +767,42 @@ sqrt((16 * 24) / ((16 + 24)^2 * (16 + 24 + 1)))
 \noindent
 uguale a circa 8 punti percentuali. Questo significa che le nostre credenze a priori rispetto la possibilità di recidiva tendono a deviare di circa 8 punti percentuali rispetto alla media della distribuzione a priori del 40%.
 :::
+
+
+## Distribuzione di Cauchy
+
+La distribuzione di Cauchy è un caso speciale della distribuzione di $t$ di Student con 1 grado di libertà. È definita da una densità di probabilità che corrisponde alla funzione, dipendente da due parametri $\theta$ e $d$ (con la condizione $d > 0$),
+
+\begin{equation}
+f(x; \theta, d) = \frac{1}{\pi d} \frac{1}{1 + \left(\frac{x - \theta}{d} \right)^2},
+\end{equation}
+dove $\theta$ è la mediana della distribuzione e $d$ ne misura la larghezza a metà altezza. 
+
+
+## Distribuzione log-normale
+
+Sia $y$ una variabile casuale avente distribuzione normale con media $\mu$ e varianza $\sigma^2$. Definiamo poi una nuova variabile casuale $x$ attraverso la relazione
+$$
+x = e^y \quad \Longleftrightarrow \quad y = \log x.
+$$
+Il dominio di definizione della $x$ è il semiasse $x > 0$ e la densità di probabilità $f(x)$ è data da
+\begin{equation}
+f(x) = \frac{1}{\sigma \sqrt{2 \pi}} \frac{1}{x} \exp \left\{-\frac{(\log x -  \mu)^2}{2 \sigma^2} \right\}.
+\end{equation}
+\noindent
+Questa funzione di densità si chiama log-normale.
+
+Il valore atteso e la varianza di una distribuzione log-normale sono dati dalle seguenti equazioni:
+\begin{equation}
+\E(x) = \exp \left\{\mu + \frac{\sigma^2}{2} \right\}.
+\end{equation}
+
+\begin{equation}
+\Var(x) = \exp \left\{2 \mu + \sigma^2 \right\} \left(\exp \left\{\sigma^2 \right\}  -1\right).
+\end{equation}
+
+Si può dimostrare che il prodotto di variabili casuali log-normali ed indipendenti segue una distribuzione log-normale.
+
 
 
 ## Distribuzione di Pareto

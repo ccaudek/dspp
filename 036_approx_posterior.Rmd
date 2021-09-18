@@ -1,16 +1,7 @@
-# Approssimazione della distribuzione a posteriori 
+# Approssimazione della distribuzione a posteriori {#metropolis}
 
 ```{r setup, include = FALSE}
 source("_common.R")
-library("patchwork")
-theme_set(bayesplot::theme_default())
-bayesplot::color_scheme_set("brightblue") 
-knitr::opts_chunk$set(
-  message = FALSE, 
-  warning = FALSE,
-  error = FALSE,
-  fig.align = "center"
-)
 ```
 
 In generale, in un problema bayesiano i dati $y$ provengono da una densità $p(y \mid \theta)$ e al parametro $\theta$ viene assegnata una densità a priori $p(\theta)$. Dopo avere osservato un campione $Y = y$, la funzione di verosimiglianza è uguale a $\mathcal{L}(\theta) = p(y \mid \theta)$ e la densità a posteriori diventa
@@ -274,13 +265,11 @@ Il grafico precedente mostra che l'approssimazione quadratica fornisce risultati
 Una verosimiglianza Binomiale e una distribuzione a priori Beta producono una distribuzione a posteriori Beta (si veda il capitolo \@ref(chapter-distr-priori-coniugate)). Con una simulazione $\R$ è dunque facile  ricavare dei campioni causali dalla distribuzione a posteriori. Maggiore è il numero di campioni, migliore sarà l'approssimazione della distribuzione a posteriori. 
 
 Continuando con l'esempio precedente,
-
 \begin{align}
 y \mid \theta, n &\sim \Bin(y = 23, n = 30 \mid \theta) \notag\\
 \theta_{prior} &\sim \mbox{Beta}(2, 10) \notag\\
 \theta_{post}  &\sim \mbox{Beta}(y + a = 23 + 2 = 25, n - y + b = 30 - 23 + 10 = 17), \notag
 \end{align}
-
 \noindent
 stimiamo, ad esempio, il valore della media a posteriori di $\theta$: 
 
@@ -306,7 +295,6 @@ print(mean(rbeta(1e5, shape1 = 25, shape2 = 17)), 6)
 
 \noindent
 È lo stesso ragionamento che abbiamo fatto in riferiento alla relazione tra campione e popolazione: al crescere della numerosità campionaria il campione approssima sempre meglio le proprietà della popolazione da cui è stato estratto (legge dei grandi numeri). Nel caso presente, il risultato esatto è
-
 $$
 \bar{\theta}_{post} = \frac{\alpha}{\alpha + \beta} = \frac{25}{25 + 17} \approx 0.5952.
 $$
@@ -329,7 +317,6 @@ Nel Paragrafo \@ref(chapter-simulazioneMC) la simulazione Monte Carlo funzionava
 
 \noindent
 Tuttavia, capita raramente di usare una distribuzione a priori coniugata alla verosimiglianza, quindi in generale non valgono né la condizione (a) né la condizione (b) descritte sopra. Ad esempio, nel caso di una verosimiglianza binomiale e una distribuzione a priori Normale, la distribuzione a posteriori di $\theta$ è
-
 $$
 p(\theta \mid y) = \frac{\mathrm{e}^{-(\theta - 1 / 2)^2} \theta^y (1 - \theta)^{n - y}} {\int_0^1 \mathrm{e}^{-(t - 1 / 2)^2} t^y (1 - t)^{n - y} dt}.
 $$
@@ -468,7 +455,6 @@ L'algoritmo di Metropolis corrisponde alla seguente passeggiata casuale.
 2. Per simulare il valore successivo della sequenza, lanciamo una moneta equilibrata. Se esce testa, consideriamo come valore candidato il valore immediatamente precedente al valore corrente nella sequenza $1, \dots, 8$; se esce croce, il valore candidato sarà il valore immediatamente successivo al valore corrente nella sequenza.
 
 3. Calcoliamo il rapporto tra la probabilità del valore candidato e la probabilità del valore corrente:
-
 $$
 R = \frac{pd(\text{valore candidato})}{pd(\text{valore corrente})}.
 $$

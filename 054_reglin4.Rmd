@@ -1,24 +1,8 @@
-# Confronto tra due gruppi indipendenti
+# Confronto tra due gruppi indipendenti {#comparison-two-means-stan}
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
 source("_common.R")
-suppressPackageStartupMessages(library("rstan")) 
-suppressPackageStartupMessages(library("cmdstanr"))
-set_cmdstan_path("/Users/corrado/.cmdstanr/cmdstan-2.27.0")
-suppressPackageStartupMessages(library("posterior"))
-suppressPackageStartupMessages(library("loo"))
-rstan_options(auto_write = TRUE) # avoid recompilation of models
-options(mc.cores = parallel::detectCores()) # parallelize across all CPUs
-Sys.setenv(LOCAL_CPPFLAGS = '-march=native') # improve execution time
-SEED <- 374237 # set random seed for reproducibility
-theme_set(bayesplot::theme_default())
-bayesplot::color_scheme_set("brightblue") 
-knitr::opts_chunk$set(
-  message = FALSE, 
-  warning = FALSE,
-  error = FALSE,
-  fig.align = "center"
-)
+source("_stan_options.R")
 ```
 
 Il problema del confronto tra due gruppi indipendenti può essere formulato nei termini di un modello di regressione nel quale la variabile $x$ è dicotomica, ovvero assume solo due valori. 
@@ -27,14 +11,19 @@ Il problema del confronto tra due gruppi indipendenti può essere formulato nei 
 ## Regressione lineare con una variabile dicotomica
 
 Se $x$ è una variabile dicotomica con valori 0 e 1, allora per il modello di regressione $\mu_i = \alpha + \beta x_i$ abbiamo quanto segue. Quando $x=0$, il modello diventa 
-
-$$\mu_i = \alpha$$
+$$
+\mu_i = \alpha
+$$
 \noindent
 mentre, quando $X=1$, il modello diventa
-
-$$\mu_i = \alpha + \beta.$$
+$$
+\mu_i = \alpha + \beta.
+$$
 \noindent
-Ciò significa che il parametro $\alpha$ è uguale alla media del gruppo codificato con $X=0$ e il parametro $\beta$ è uguale alla differenza tra le medie dei due gruppi (essendo la media del secondo gruppo uguale a $\alpha + \beta$). Il parametro $\beta$, dunque, codifica l'effetto di una manipolazione sperimentale o di un trattamento, e l'inferenza su $\beta$ corrisponde direttamente all'inferenza sull'efficacia di un trattamento. Per "effetto di un trattamento" si intende la differenza tra le medie di due gruppi (per esempio, il gruppo "sperimentale" e il gruppo "di controllo"). L'inferenza su $\beta$, dunque, viene utilizzata per capire quanto "robusto" può essere considerato l'effetto di un trattamento o di una manipolazione sperimentale.
+Ciò significa che il parametro $\alpha$ è uguale al valore atteso del gruppo codificato con $X=0$ e il parametro $\beta$ è uguale alla differenza tra le medie dei due gruppi (essendo la media del secondo gruppo uguale a $\alpha + \beta$). Il parametro $\beta$, dunque, codifica l'effetto di una manipolazione sperimentale o di un trattamento, e l'inferenza su $\beta$ corrisponde direttamente all'inferenza sull'efficacia di un trattamento o di un effetto sperimentale.^[Per "effetto di un trattamento" si intende la differenza tra le medie di due gruppi (per esempio, il gruppo "sperimentale" e il gruppo "di controllo").] L'inferenza su $\beta$, dunque, viene utilizzata per capire quanto "credibile" può essere considerato l'effetto di un trattamento o di una manipolazione sperimentale.
+
+
+### Un esempio concreto
 
 Esaminiamo nuovamente un sottoinsieme di dati tratto dal _National Longitudinal Survey of Youth_ i quali sono stati discussi da @gelman2020regression. I soggetti sono bambini di 3 e 4 anni. La variabile dipendente, `kid_score`, è il punteggio totale del _Peabody Individual Achievement Test_ (PIAT) costituito dalla somma dei punteggi di tre sottoscale (Mathematics, Reading comprehension, Reading recognition). La variabile indipendente, `mom_hs`, è il livello di istruzione della madre, codificato con due livelli: scuola media superiore completata oppure no. La domanda della ricerca è se il QI del figlio (misurato sulla scala PIAT) risulta o meno associato al livello di istruzione della madre.
 
@@ -126,7 +115,7 @@ mod <- cmdstan_model(file)
 \noindent
 Adattiamo il modello ai dati:
 
-```{r, results='hide'}
+```{r, results='hide', results='hide'}
 fit <- mod$sample(
   data = data_list,
   iter_sampling = 4000L,
@@ -161,20 +150,17 @@ Le stime a posteriori dei parametri si ottengono con:
 fit$summary(c("alpha", "beta", "sigma"))
 ```
 
-\noindent
 I risultati confermano ciò che ci aspettavamo: 
 
 - il coefficiente $\texttt{alpha} = 77.56$ corrisponde alla media del gruppo codificato con $x = 0$, ovvero la media dei punteggi PIAT per i bambini la cui madre non ha completato la scuola media superiore; 
 - il coefficiente $\texttt{beta} = 11.76$ corrisponde alla differenza tra le medie dei due gruppi, ovvero 89.32 - 77.55 = 11.77 (con piccoli errori di approssimazione). 
 
-\noindent
-Possiamo ottenere l'intervallo di credibilità al 95% per $\texttt{beta}$:
-
+La seguente chiamata ritorna l'intervallo di credibilità al 95% per tutti i parametri del modello:
 ```{r}
 rstantools::posterior_interval(as.matrix(stanfit), prob = 0.95)
 ```
 
-Il coefficiente $b$ ci dice che i bambini la cui madre ha completato la scuola superiore ottengono in media circa 12 punti in più rispetto ai bambini la cui madre non ha completato la scuola superiore. L'intervallo di credibilità al 95% ci dice che possiamo essere sicuri al 95% che tale differenza è di almeno 7 punti e può arrivare fino a ben 16 punti. Possiamo dunque concludere, con un grado di certezza soggettiva del 95%, che c'è un'associazione tra il livello di scolarità della madre e l'intelligenza del bambino: i bambini tendono ad avere un livello di intelligenza più elevato se le loro madri hanno un livello di istruzione maggiore.
+Possiamo dunque concludere che i bambini la cui madre ha completato la scuola superiore ottengono in media circa 12 punti in più rispetto ai bambini la cui madre non ha completato la scuola superiore. L'intervallo di credibilità al 95% ci dice che possiamo essere sicuri al 95% che tale differenza sia di almeno 7 punti e possa arrivare fino a ben 16 punti. Per riassumere, possiamo concludere, con un grado di certezza soggettiva del 95%, che c'è un'associazione positiva tra il livello di scolarità della madre e l'intelligenza del bambino: le madri che hanno livello di istruzione più alto della media tendo ad avere bambini il cui QI è anch'esso più alto della media.
 
 
 ## La dimensione dell'effetto
@@ -184,7 +170,6 @@ Avendo a disposizione le informazioni sulle distribuzioni a posteriori dei param
 ```{r}
 11.75398 / 19.90159	
 ```
-
 \noindent
-Nei termini del $d$ di Cohen possiamo dunque concludere che la grandezza dell'effetto è di entità "media" [$d$ > 0.5; x@sawilowsky2009new]. 
+Il $d$ di Cohen di entità "media" [$d$ > 0.5; @sawilowsky2009new] conferma l'importanza dell'influenza della scolarità delle madri sul QI dei bambini. 
 

@@ -2,25 +2,7 @@
 
 ```{r, include = FALSE}
 source("_common.R")
-theme_set(bayesplot::theme_default())
-bayesplot::color_scheme_set("brightblue") 
-library("rstan")
-library("cmdstanr")
-set_cmdstan_path("/Users/corrado/.cmdstanr/cmdstan-2.27.0")
-library("posterior")
-rstan_options(auto_write = TRUE) # avoid recompilation of models
-options(mc.cores = parallel::detectCores()) # parallelize across all CPUs
-Sys.setenv(LOCAL_CPPFLAGS = '-march=native') # improve execution time
-SEED <- 374237 # set random seed for reproducibility
-theme_set(bayesplot::theme_default())
-bayesplot::color_scheme_set("brightblue") 
-library("bayesrules")
-knitr::opts_chunk$set(
-  message = FALSE, 
-  warning = FALSE,
-  error = FALSE,
-  fig.align = "center"
-)
+source("_stan_options.R")
 ```
 
 Il Capitolo \@ref(chapter-ppc) discute il codice Stan necessario per calcolare $p(y^{rep} \mid y)$ nel caso dell'inferenza su una proporzione. Questa Appendice approfondisce alcuni aspetti di tale analisi statistica.
