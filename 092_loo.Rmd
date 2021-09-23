@@ -5,25 +5,25 @@ source("_common.R")
 source("_stan_options.R")
 ```
 
-Nel valutare qualsiasi modello, il ricercatore deve porsi tre domande critiche.
+Nel valutare un modello, il ricercatore deve porsi tre domande critiche.
 
 - Quali conseguenze più ampie derivano dall'inferenza? Come e chi ha raccolto i dati? Colui che svolge la ricerca otterrebbe di benefici manipolando i dati (escludendo delle osservazioni; selezionando il campione)? Che impatto hanno inferenze che vengono tratte dai dati sugli individui e sulla società? Quali pregiudizi o strutture di potere possono essere coinvolti in questa analisi?
 
-- Che tipo di distorsioni sistematiche potrebbero essere presenti nell'analisi statistica? Ricordiamo la famosa citazione di George Box: "Tutti i modelli sono sbagliati, ma alcuni sono utili". Ciò che è importante sapere allora è quanto è sbagliato il nostro modello. Le assunzioni che stanno alla base del modello sono ragionevoli? Il meccanismo generatore dei dati che è stato ipotizzato è adeguato per il fenomeno in esame?
+- Che tipo di distorsioni sistematiche potrebbero essere presenti nell'analisi statistica? Ricordiamo la famosa citazione di George Box: "Tutti i modelli sono sbagliati, ma alcuni sono utili". È dunque importante sapere quanto è sbagliato il  modello. Le assunzioni che stanno alla base del modello sono ragionevoli? Il meccanismo generatore dei dati che è stato ipotizzato è adeguato per il fenomeno in esame?
 
 - Quanto è accurato il modello? Quanto sono lontane dalla realtà le distribuzioni predittive a posteriori?
 
-Si rinvia al testo di @Johnson2022bayesrules per approfondire questi temi. Qui ci concentreremo sul tema della "validità" del modello.
+Per approfondire questi temi, si rinvia al testo di @Johnson2022bayesrules. Qui ci concentreremo sul tema della "validità" del modello.
 
 
 ## Capacità predittiva
 
-Il principio base del metodo scientifico è la replicabilità delle osservazioni: le osservazioni che non possono essere replicate sono poco interessanti.  Parallelamente, una caratteristica fondamentale di un modello scientifico è la generalizzabilità: se un modello è cacace di descrivere soltanto delle proprietà di un singolo campione di osservazioni, allora è poco utile. La domanda a cui si cerca di trovare una risposta in questo Capitolo è come si possa affrontare il tema della generalizzabilità di un modello statistico. 
+Il principio base del metodo scientifico è la replicabilità delle osservazioni: le osservazioni che non possono essere replicate sono poco interessanti.  Parallelamente, una caratteristica fondamentale di un modello scientifico è la generalizzabilità: se un modello è capace di descrivere soltanto le proprietà di uno specifico campione di osservazioni, allora è poco utile. Ma come è possibile valutare la generalizzabilità di un modello statistico? Questa è la domanda a cui cercheremo di rispondere in questo Capitolo.
 
-Nel framework bayesiano il problema della generalizzabilità del modello viene affrontato calcolandone la capacità predittiva, laddove per capacità predittiva si intende la capacità di un modello, i cui parametri sono stati stimati usando le informazioni di un campione, di ben adattarsi ad un campione di nuove osservazioni future. In particolare, in questo Capitolo cercheremo di rispondere a due tipi di domande.
+Nel framework bayesiano il problema della generalizzabilità del modello viene affrontato calcolando la capacità predittiva del modello, laddove per capacità predittiva si intende la capacità di un modello, i cui parametri sono stati stimati usando le informazioni di un campione, di ben adattarsi ad un campione di nuove osservazioni future. In particolare, in questo Capitolo cercheremo di rispondere a due tipi di domande.
 
 1. Quali criteri devono essere considerati se vogliamo valutare la capacità predittiva di un modello?
-1. Come è possibile misurare la capacità predittiva di un modello sulla base delle informazioni di un campione di osservazioni? Come possiamo confrontare la capacità predittiva di modelli alternativi?
+1. Come è possibile misurare la capacità predittiva di un modello sulla base delle informazioni di un campione di osservazioni? E, parallelamente, come possiamo confrontare la capacità predittiva di modelli alternativi?
 
 
 ## Il rasoio di Ockham

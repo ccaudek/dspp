@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Data Science per psicologi</title>
+  <meta name="description" content="Data Science per psicologi si propone di fornire un’introduzione all’analisi dei dati psicologici agli studenti del primo anno del Corso di Laurea in Scienze e Tecniche Psicologiche presso l’Università degli Studi di Firenze. Particolare attenzione sarà posta ai seguenti aspetti: l’uso del linguaggio R per lo svolgimento delle analisi statistiche, la rappresentazione grafica dei dati e l’inferenza Bayesiana." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Data Science per psicologi" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Data Science per psicologi si propone di fornire un’introduzione all’analisi dei dati psicologici agli studenti del primo anno del Corso di Laurea in Scienze e Tecniche Psicologiche presso l’Università degli Studi di Firenze. Particolare attenzione sarà posta ai seguenti aspetti: l’uso del linguaggio R per lo svolgimento delle analisi statistiche, la rappresentazione grafica dei dati e l’inferenza Bayesiana." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Data Science per psicologi" />
+  
+  <meta name="twitter:description" content="Data Science per psicologi si propone di fornire un’introduzione all’analisi dei dati psicologici agli studenti del primo anno del Corso di Laurea in Scienze e Tecniche Psicologiche presso l’Università degli Studi di Firenze. Particolare attenzione sarà posta ai seguenti aspetti: l’uso del linguaggio R per lo svolgimento delle analisi statistiche, la rappresentazione grafica dei dati e l’inferenza Bayesiana." />
+  
+
+<meta name="author" content="Corrado Caudek" />
+
+
+<meta name="date" content="2021-09-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Science per psicologi</a></li>
+
+<li class="divider"></li>
+<li class="part"><span><b>Inferenza Bayesiana</b></span></li>
+<li class="chapter" data-level="1" data-path="025_intro_bayes.html"><a href="#chapter-intro-bayes-inference"><i class="fa fa-check"></i><b>1</b> Il problema inverso</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="025_intro_bayes.html"><a href="#inferenza-statistica-come-un-problema-inverso"><i class="fa fa-check"></i><b>1.1</b> Inferenza statistica come un problema inverso</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="025_intro_bayes.html"><a href="#funzioni-di-probabilità"><i class="fa fa-check"></i><b>1.1.1</b> Funzioni di probabilità</a></li>
+<li class="chapter" data-level="1.1.2" data-path="025_intro_bayes.html"><a href="#la-regola-di-bayes"><i class="fa fa-check"></i><b>1.1.2</b> La regola di Bayes</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="025_intro_bayes.html"><a href="#inferenza-bayesiana"><i class="fa fa-check"></i><b>1.2</b> Inferenza bayesiana</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="025_intro_bayes.html"><a href="#notazione"><i class="fa fa-check"></i><b>1.2.1</b> Notazione</a></li>
+<li class="chapter" data-level="1.2.2" data-path="025_intro_bayes.html"><a href="#il-problema-inverso"><i class="fa fa-check"></i><b>1.2.2</b> Il problema inverso</a></li>
+<li class="chapter" data-level="1.2.3" data-path="025_intro_bayes.html"><a href="#cosè-un-parametro-del-modello"><i class="fa fa-check"></i><b>1.2.3</b> Cos’è un parametro del modello?</a></li>
+<li class="chapter" data-level="1.2.4" data-path="025_intro_bayes.html"><a href="#la-distribuzione-a-priori-sui-parametri"><i class="fa fa-check"></i><b>1.2.4</b> La distribuzione a priori sui parametri</a></li>
+<li class="chapter" data-level="1.2.5" data-path="025_intro_bayes.html"><a href="#scelta-della-distribuzione-a-priori"><i class="fa fa-check"></i><b>1.2.5</b> Scelta della distribuzione a priori</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="025_intro_bayes.html"><a href="#verosim-marginale"><i class="fa fa-check"></i><b>1.3</b> Verosimiglianza marginale</a></li>
+<li class="chapter" data-level="1.4" data-path="025_intro_bayes.html"><a href="#la-distribuzione-a-posteriori"><i class="fa fa-check"></i><b>1.4</b> La distribuzione a posteriori</a></li>
+<li class="chapter" data-level="" data-path=""><a href="#considerazioni-conclusive"><i class="fa fa-check"></i>Considerazioni conclusive</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Science per psicologi</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Data Science per psicologi</h1>
+<p class="author"><em>Corrado Caudek</em></p>
+<p class="date"><em>2021-09-23</em></p>
+</div>
+<div id="chapter-intro-bayes-inference" class="section level1" number="1">
+<h1><span class="header-section-number">Capitolo 1</span> Il problema inverso</h1>
+<p>La statistica descrittiva si occupa della descrizione, sintesi e presentazione delle informazioni contenute nei dati osservati. Essa spesso rappresenta la fase preliminare di uno studio e un ausilio per l’individuazione di possibili modelli da utilizzare nella successiva fase dell’analisi inferenziale. A differenza della statistica descrittiva, quella inferenziale assume che le osservazioni siano il risultato di un campionamento statistico e il suo obiettivo è ricavare informazioni circa l’intera popolazione a partire dall’osservazione di un suo sottoinsieme.</p>
+<p>L’aleatorietà del campione è l’aspetto sostanziale che distingue la statistica inferenziale dalla statistica descrittiva. Nel caso più semplice, il campione statistico è trattato come un insieme di realizzazioni di una variabile casuale assunta a modello del fenomeno oggetto di indagine. La natura del campionamento statistico e la distribuzione di tale variabile casuale determinano il modello statistico. La statistica inferenziale consente di stimare, verificare ipotesi, o effettuare previsioni sul fenomeno in esame.</p>
+<p>L’inferenza Bayesiana è un approccio all’inferenza statistica in cui le probabilità non sono interpretate come frequenze, proporzioni o concetti analoghi, ma piuttosto come il grado di fiducia che una singola persona attribuisce al verificarsi di un evento sulla base delle proprie conoscenze e delle informazioni di cui dispone.</p>
+<p>Nell’approccio bayesiano non si fa riferimento ad un modello probabilistico <span class="math inline">\(f(y \mid \theta)\)</span> rappresentativo del fenomeno d’interesse noto a meno del valore assunto dal parametro (o dei parametri) che lo caratterizza. Si fa invece riferimento ad una distribuzione congiunta (di massa o di densità di probabilità) <span class="math inline">\(f(y, \theta)\)</span>. Entrambi gli argomenti della funzione <span class="math inline">\(y\)</span> e <span class="math inline">\(\theta\)</span> hanno natura di variabili casuali, laddove la nostra incertezza relativa a <span class="math inline">\(y\)</span> è dovuta alla naturale variabilità del fenomeno indagato (<em>variabilità aleatoria</em>), mentre la nostra incertezza relativa a <span class="math inline">\(\theta\)</span> è dovuta alla mancata conoscenza del suo valore numerico (<em>variabilità epistemica</em>).</p>
+<div id="inferenza-statistica-come-un-problema-inverso" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Inferenza statistica come un problema inverso</h2>
+<ul>
+<li><p>L’<em>inferenza deduttiva</em> procede in maniera deterministica dai fatti verso le conclusioni. Ad esempio, se dico che tutti gli uomini sono mortali e che Socrate è un uomo, posso concludere deduttivamente che Socrate è mortale.</p></li>
+<li><p>L’<em>inferenza induttiva</em>, invece, procede dalle osservazioni ai fatti. Se pensiamo ai fatti come a ciò che governa o genera le osservazioni, allora l’induzione è una sorta di inferenza inversa.</p></li>
+<li><p>L’<em>inferenza statistica</em> è un tipo di inferenza induttiva che è specificamente formulata come un problema inverso.</p></li>
+</ul>
+<p>L’inferenza bayesiana è formulata nei termini di un problema inverso che segue la regola di Bayes. Per fissare la notazione, nel seguito <span class="math inline">\(y\)</span> rappresenterà le variabili osservate, ovvero i dati, e <span class="math inline">\(\theta\)</span> rappresenterà i parametri incogniti di un modello statistico. Sia <span class="math inline">\(y\)</span> che <span class="math inline">\(\theta\)</span> sono concepiti come delle variabili casuali. Con <span class="math inline">\(x\)</span> verranno invece denotate delle quantità note, come i predittori nel modello di regressione.</p>
+<div id="funzioni-di-probabilità" class="section level3" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> Funzioni di probabilità</h3>
+<p>L’inferenza bayesiana utilizza le seguenti distribuzioni di probabilità (o densità di probabilità):</p>
+<ul>
+<li>la <em>distribuzione a priori</em> <span class="math inline">\(p(\theta)\)</span> — la credenza iniziale riguardo alla credibilità di ciascun valore <span class="math inline">\(\theta\)</span>;</li>
+<li>la <em>funzione di verosimiglianza</em> <span class="math inline">\(p(y \mid \theta)\)</span> — la credibilità che il ricercatore assegnerebbe ai dati osservati se conoscesse il parametro di interesse <span class="math inline">\(\theta\)</span>;</li>
+<li>la <em>verosimiglianza marginale</em> <span class="math inline">\(p(y)\)</span> — quanto sono credibili i dati <span class="math inline">\(y\)</span> alla luce della nostra credenza a priori relativamente a <span class="math inline">\(\theta\)</span>. In termini formali:</li>
+</ul>
+<p><span class="math display">\[
+p(y) = \int_\theta p(y, \theta) d\theta = \int_\theta p(y \mid \theta) p(\theta) d\theta.
+\]</span></p>
+<ul>
+<li>la <em>distribuzione a posteriori</em> <span class="math inline">\(p(\theta \mid y)\)</span> — la nuova credenza a posteriori relativamente alla credibilità di ciascun valore <span class="math inline">\(\theta\)</span> alla luce dei dati <span class="math inline">\(Y = y\)</span>.</li>
+</ul>
+</div>
+<div id="la-regola-di-bayes" class="section level3" number="1.1.2">
+<h3><span class="header-section-number">1.1.2</span> La regola di Bayes</h3>
+<p>Nel contesto di un modello statistico, la formula di Bayes permette di giungere alla distribuzione a posteriori <span class="math inline">\(p(\theta \mid y)\)</span> per il parametro di interesse <span class="math inline">\(\theta\)</span>, come indicato dalla seguente catena di equazioni:</p>
+<p><span class="math display" id="eq:bayesmodel">\[\begin{align}
+p(\theta \mid y)  &amp;= \displaystyle \frac{p(\theta,y)}{p(y)}
+ \ \ \ \ \ \mbox{ [definizione di probabilità condizionata]}
+\\
+&amp;= \displaystyle \frac{p(y \mid \theta) \, p(\theta)}{p(y)}
+ \ \ \ \ \ \mbox{ [legge della probabilità composta]}
+\\
+&amp;=  \displaystyle \frac{p(y \mid\theta) \, p(\theta)}
+                        {\int_{\Theta} p(y,\theta) \, d\theta}
+ \ \ \ \ \ \mbox{ [legge della probabilità totale]}
+\\
+&amp;= \displaystyle \frac{p(y \mid\theta) \, p(\theta)}
+                        {\int_{\Theta} p(y \mid\theta) \, p(\theta) \, d\theta}
+ \ \ \ \ \ \mbox{ [legge della probabilità composta]}
+\\
+&amp; \propto \displaystyle p(y \mid\theta) \, p(\theta)
+\tag{1.1}
+\end{align}\]</span></p>
+<p>La regola di Bayes “inverte” la probabilità della distribuzione a posteriori <span class="math inline">\(p(\theta \mid y)\)</span>, esprimendola nei termini della funzione di verosimiglianza <span class="math inline">\(p(y \mid \theta)\)</span> e della distribuzione a priori <span class="math inline">\(p(\theta)\)</span>. L’ultimo passo è importante per la stima della distribuzione a posteriori mediante i metodi Monte Carlo a catena di Markov, in quanto per questi metodi richiedono soltanto che le funzioni di probabilità siano definite a meno di una costante di proporzionalità. In altri termini, per la maggior parte degli scopi dell’inferenza inversa, è sufficiente calcolare la densità a posteriori non normalizzata, ovvero è possibile ignorare il denominatore bayesiano <span class="math inline">\(p(y)\)</span>. La distribuzione a posteriori non normalizzata, dunque, si riduce al prodotto della varosimiglianza e della distribuzione a priori.</p>
+<p>Possiamo dire che la regola di Bayes viene usata per aggiornare le credenze a priori su <span class="math inline">\(\theta\)</span> (ovvero, la distribuzione a priori) in modo tale da produrre le nuove credenze a posteriori <span class="math inline">\(p(\theta \mid y)\)</span> che combinano le informazioni fornite dai dati <span class="math inline">\(y\)</span> con le credenze precedenti. La distribuzione a posteriori riflette dunque l’aggiornamento delle credenze del ricercatore alla luce dei dati.</p>
+<p>La <a href="#eq:bayesmodel">(1.1)</a> rende evidente che, in ottica bayesiana, la quantità di interesse <span class="math inline">\(\theta\)</span> non è fissata come nell’impostazione frequentista, ma è una variabile casuale la cui distribuzione di probabilità è influenzata sia dalle informazioni a priori sia dai dati a disposizione. In altre parole, nell’approccio bayesiano non esiste un valore vero di <span class="math inline">\(\theta\)</span>, ma vogliamo fornire invece un giudizio di probabilità. Prima delle osservazioni, sulla base delle nostre conoscenze assegniamo a <span class="math inline">\(\theta\)</span> una distribuzione a priori di probabilità. Dopo le osservazioni, correggiamo il nostro giudizio e assegniamo a <span class="math inline">\(\theta\)</span> una distribuzione a posteriori di probabilità. La distribuzione a posteriori <span class="math inline">\(p(\theta \mid y)\)</span> contiene tutta l’informazione riguardante il parametro <span class="math inline">\(\theta\)</span> e viene utilizzata per produrre indicatori sintetici, per la determinazione di stime puntuali o intervallari, e per la verifica d’ipotesi.</p>
+</div>
+</div>
+<div id="inferenza-bayesiana" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Inferenza bayesiana</h2>
+<p>Un esempio di inferenza bayesiana è quello nel quale i dati sono rappresentati da una proporzione. Per questo tipo di dati possiamo adottare il seguente modello statistico</p>
+<p><span class="math display" id="eq:binomialmodel">\[\begin{equation}
+y  \sim \mbox{Bin}(n, \theta),
+\tag{1.2}
+\end{equation}\]</span></p>
+<p>
+laddove <span class="math inline">\(\theta\)</span> è la probabiltà che una prova Bernoulliana assuma il valore 1 e <span class="math inline">\(n\)</span> corrisponde al numero di prove Bernoulliane. Questo modello assume che le prove Bernoulliane <span class="math inline">\(y_i\)</span> che costituiscono il campione <span class="math inline">\(y\)</span> siano tra loro indipendenti e che ciascuna abbia la stessa probabilità <span class="math inline">\(\theta \in [0, 1]\)</span> di essere un “successo” (valore 1). In altre parole, il modello generatore dei dati avrà una funzione di massa di probabilità</p>
+<p><span class="math display">\[
+p(y \mid \theta)
+\ = \
+\mbox{Bin}(y \mid n, \theta).
+\]</span></p>
+<p>Nei capitoli precedenti è stato mostrato come, sulla base del modello binomiale, sia possibile assegnare una probabilità a ciascun possibile valore <span class="math inline">\(y \in \{0, 1, \dots, n\}\)</span> <em>assumendo noto il valore del parametro</em> <span class="math inline">\(\theta\)</span>. Ma ora abbiamo il problema inverso, ovvero quello di fare inferenza su <span class="math inline">\(\theta\)</span> alla luce dei dati campionari <span class="math inline">\(y\)</span>. In altre parole, riteniamo di conoscere il modello probabilistico che ha generato i dati, ma di tale modello non conosciamo i parametri. Nel caso presente, il modello probabilistico è quello binomiale. Noi vogliamo ottenere informazioni sul valore di <span class="math inline">\(\theta\)</span> conoscendo il numero <span class="math inline">\(y\)</span> di successi osservati nel campione.</p>
+<div class="rmdnote">
+<p>La <a href="#eq:binomialmodel">(1.2)</a> è un <em>modello statistico</em>. Tale modello non spiega perché, in ciascuna realizzazione, <span class="math inline">\(Y\)</span> assuma un particolare valore. Questo modello deve piuttosto essere inteso come un costrutto matematico che ha lo scopo di riflettere alcune proprietà del processo corrispondente ad una sequenza di prove Bernoulliane. In questo senso, è simile al modello di Isaac Newton dei moti planetari che utilizza equazioni differenziali. Le equazioni non sono i pianeti, ma solo descrizioni di come si muovono i pianeti in risposta alle forze gravitazionali. Modelli come quello di Newton ci permettono di prevedere alcuni fenomeni, come il moto dei pianeti, ad esempio. Ma in generale i modelli sono solo delle approssimazioni del fenomeno che vogliono descrivere. Anche il modello di Newton, che produce previsioni estremamente accurate di ciò che possiamo osservare a occhio nudo a proposito del moto dei corpi celesti, è solo un’approssimazione dei modelli del moto e dei fenomeni gravitazionali che, in seguito, sono stati introdotti da Albert Einstein. E anche tali modelli successivi sono, a loro volta, solo un caso speciale della più generale teoria della relatività. In altre parole, modelli sempre migliori vengono proposti, laddove ogni successivo modello è migliore di quello precedente in quanto ne migliora le capacità di previsione, è più generale, o è più elegante.</p>
+<p>Una parte del lavoro della ricerca in tutte le scienze consiste nel verificare le assunzioni dei modelli e, se necessario, nel migliorare i modelli dei fenomeni considerati. Un modello viene giudicato in relazione al suo obiettivo. Se l’obiettivo del modello molto semplice che stiamo discutendo è quello di prevedere la proporzione di casi nei quali <span class="math inline">\(y_i = 1\)</span>, <span class="math inline">\(i = 1, \dots, n\)</span>, allora un modello con un solo parametro come quello che abbiamo introdotto sopra può essere sufficiente. Ma l’evento <span class="math inline">\(y_i=1\)</span> (supponiamo: superare l’esame di Psicometria, oppure risultare positivi al COVID-19) dipende da molti fattori e se vogliamo rendere conto di una tale complessità, un modello come quello che stiamo discutendo qui certamente non sarà sufficiente.</p>
+<p>Per concludere, un modello è un costrutto matematico il cui scopo è quello di rappresentare un qualche aspetto della realtà. Il valore di un tale strumento dipende dalla sua capacità di ottenere lo scopo per cui è stato costruito.</p>
+</div>
+<div id="notazione" class="section level3" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> Notazione</h3>
+<p>Per rappresentare in un modo conciso i modelli statistici viene usata una notazione particolare. Ad esempio, invece di scrivere</p>
+<p><span class="math display">\[
+p(\theta) = \text{Beta}(1, 1),
+\]</span>
+
+scriviamo:</p>
+<p><span class="math display">\[
+\theta \sim \text{Beta}(1, 1).
+\]</span></p>
+<p>Il simbolo “<span class="math inline">\(\sim\)</span>” viene spesso letto “è distribuito come”. Possiamo anche pensare che significhi che <span class="math inline">\(\theta\)</span> costituisce un campione casuale estratto dalla distribuzione Beta(1, 1). Allo stesso modo, per l’esempio presente, la verosimiglianza può essere scritta come:</p>
+<p><span class="math display">\[
+y \sim \text{Bin}(n, \theta).
+\]</span></p>
+</div>
+<div id="il-problema-inverso" class="section level3" number="1.2.2">
+<h3><span class="header-section-number">1.2.2</span> Il problema inverso</h3>
+<p>Nel modello statistico che stiamo esaminando, il termine <span class="math inline">\(n\)</span> viene trattato come una costante nota e <span class="math inline">\(\theta\)</span> come una <em>variabile casuale</em>. Il parametro <span class="math inline">\(\theta\)</span> del modello rappresenta la probabilità che ciascuna prova Bernoulliana sia un “successo”. Dato che <span class="math inline">\(\theta\)</span> è incognito, ma abbiamo a disposione un campione di dati, l’inferenza su <span class="math inline">\(\theta\)</span> può essere svolta, mediante la regola di Bayes, costruendo la distribuzione a posteriori <span class="math inline">\(p(\theta \mid y)\)</span>. Una volta ottenuta la distribuzione a posteriori possiamo riassumerla, ad esempio, riportando l’intervallo centrale al 95% della distribuzione di densità, ovvero</p>
+<p><span class="math display">\[
+\mbox{Pr}\left[ 0.025 \leq \theta \leq 0.975
+                \ \Big| \
+        Y = y
+         \right].
+\]</span></p>
+<p>Se vogliamo sapere, per esempio, se la probabilità di <span class="math inline">\(y_i=1\)</span> sia maggiore di 0.5, possiamo calcolare la probabilità dell’evento</p>
+<p><span class="math display">\[
+\mbox{Pr}\left[\theta &gt; \frac{1}{2}
+                \ \Bigg| \
+        Y = y
+         \right].
+\]</span></p>
+</div>
+<div id="cosè-un-parametro-del-modello" class="section level3" number="1.2.3">
+<h3><span class="header-section-number">1.2.3</span> Cos’è un parametro del modello?</h3>
+<p>Il parametro di un modello è un valore che influenza la credibilità dei dati. Ad esempio, il singolo parametro <span class="math inline">\(\theta\)</span> del modello binomiale determina la forma della funzione di verosimiglianza binomiale. Ricordiamo che, per il modello binomiale, la funzione di verosimiglianza è:</p>
+<p><span class="math display">\[
+p(y \mid \theta, n) = \text{Bin}(y, n, \theta) = \binom{n}{y}\theta^y(1-\theta)^{n-y}.
+\]</span></p>
+<!-- Per comprendere il ruolo del parametro $\theta$, possiamo generare un grafico della verosimiglianza dei dati come funzione di $\theta$. Poniamo $y = 23$ e $n = 30$. La figura mostra, per ogni possibile valore di $\theta \in [0, 1]$ (sull'asse orizzontale), la verosimiglianza dei dati (sull'asse verticale). Dalla figura notiamo che la credibilità dei dati dipende dal valore del parametro $\theta$: i dati risultano più o meno verosimili a seconda del valore di $\theta$. -->
+<!-- ```{r ch-03-02-LH-Binomial-Model, fig.cap= "Funzione di verosimiglianza per il modello binomiale con $y = 23$ e $n = 30$.", echo = FALSE} -->
+<!-- y <- 23 -->
+<!-- n <- 30 -->
+<!-- tibble( -->
+<!--   theta = seq(0, 1, length.out = 4001), -->
+<!--   L = dbinom(x = y, size = n, prob = theta) -->
+<!-- ) %>% -->
+<!--   ggplot(aes(x = theta, y = L)) + -->
+<!--   geom_line() + -->
+<!--   labs( -->
+<!--     x = latex2exp::TeX("Probabilità di $Y=1$, ovvero $\\theta$"), -->
+<!--     y = latex2exp::TeX("Verosimiglianza, $ Bin(k=23, N=30, \\theta)$") -->
+<!--   ) -->
+<!-- ``` -->
+</div>
+<div id="la-distribuzione-a-priori-sui-parametri" class="section level3" number="1.2.4">
+<h3><span class="header-section-number">1.2.4</span> La distribuzione a priori sui parametri</h3>
+<p>Quando adottiamo un approccio bayesiano, i parametri non più delle costanti incognite ma delle variabili casuali governate da una propria legge di distribuzione delle probabilità (probabilità a priori). La distribuzione a priori sui valori dei parametri <span class="math inline">\(p(\theta)\)</span> è parte integrante del modello statistico. Ciò implica che due modelli bayesiani possono condividere la stessa funzione di verosimiglianza, ma tuttavia devono essere considerati come modelli diversi se specificano diverse distribuzioni a priori. Ciò significa che, quando diciamo “Modello binomiale”, intendiamo in realtà un’intera classe di modelli, ovvero tutti i possibili modelli che hanno la stessa verosimiglianza ma diverse distribuzioni a priori su <span class="math inline">\(\theta\)</span>.</p>
+<p>Nell’analisi dei dati bayesiana, la distribuzione a priori <span class="math inline">\(p(\theta)\)</span> codifica le credenze del ricercatore a proposito dei valori dei parametri, prima di avere osservato i dati. Idealmente, le credenze a priori che supportano la specificazione di una distribuzione a priori dovrebbero essere supportate da una qualche motivazione, come ad esempio i risultati di ricerche precedenti, o altre motivazioni giustificabili.</p>
+<ul>
+<li>Quando una nuova osservazione (p. es., vedo un cigno bianco) corrisponde alle mie convinzioni precedenti (p. es., la maggior parte dei cigni sono bianchi) sto rafforzando le mie convinzioni precedenti: più nuove osservazioni (p. es., più cigni bianchi vedo), più forte è le mie credenze precedenti diventano.</li>
+<li>Tuttavia, quando una nuova osservazione (p. es., vedo un cigno nero) non corrisponde alle mie convinzioni precedenti, ciò dovrebbe diminuire la certezza delle mie convinzioni precedenti: più nuove osservazioni non corrispondenti raccolgo (p. es., più cigni neri vedo ), più deboli diventano le mie convinzioni precedenti. Fondamentalmente, più forti sono le credenze precedenti, più osservazioni non corrispondenti (ad esempio, cigni neri) dovrei raccogliere per cambiarle.</li>
+</ul>
+<p>Pertanto, da una prospettiva bayesiana, l’incertezza intorno ai parametri di un modello <em>dopo</em> aver visto i dati (ovvero le distribuzioni a posteriori) deve includere anche le credenze precedenti.</p>
+<p>Se questo modo di ragionare vi sembra molto intuitivo, non è una coincidenza: vi sono infatti diverse teorie psicologiche che prendono l’aggiornamento bayesiano come modello per il funzionamento di diversi processi cognitivi.</p>
+<!-- Tuttavia, le credenze soggettive sono solo uno dei possibili modi per giustificare le distribuzioni a priori sui parametri. -->
+<!-- Possiamo distinguere tre tipi principali di motivazioni per le distribuzioni a priori $p(\theta)$. -->
+<!-- 1. Le *distribuzioni a priori soggettive* catturano le credenze del ricercatore nel senso sopra descritto. -->
+<!-- 2. Le *distribuzioni a priori con finalità pratiche* sono distribuzioni a priori che vengono utilizzate pragmaticamente a causa di una loro utilità specifica, ad esempio, perché semplificano un calcolo matematico o una simulazione al computer, o perché aiutano nel ragionamento statistico, come ad esempio quando vengono formulate gli *skeptical priors* che hanno l'obiettivo di lavorare in senso contrario ad una particolare conclusione. -->
+<p>Oltre alla motivazione che giustifica una distribuzione a priori, possiamo distinguere tra diverse distribuzioni a priori in base a quanto fortemente impegnano il ricercatore a ritenere come plausibile un particolare intervallo di valori dei parametri. Il caso più estremo è quello che rivela una totale assenza di conoscenze a priori, il che conduce alle <em>distribuzioni a priori non informative</em>, ovvero quelle che assegnano lo stesso livello di credibilità a tutti i valori dei parametri. Le distribuzioni a priori informative, d’altra parte, possono essere <em>debolmente informative</em> o <em>fortemente informative</em>, a seconda della forza della credenza che esprimono. Il caso più estremo di credenza a priori è quello che riassume il punto di vista del ricercatore nei termini di un <em>unico valore</em> del parametro, il che assegna tutta la probabilità (massa o densità) su di un singolo valore di un parametro. Poiché questa non è più una distribuzione di probabilità, sebbene ne soddisfi la definizione, in questo caso si parla di una <em>distribuzione a priori degenerata</em>.</p>
+<p>La figura seguente mostra esempi di distribuzioni a priori non informative, debolmente o fortemente informative, così come una distribuzione a priori espressa nei termini di un valore puntuale per il modello Binomiale. Le distribuzione a priori illustrate di seguito sono le seguenti:</p>
+<ul>
+<li><em>non informativa</em> : <span class="math inline">\(\theta_c \sim \text{Beta}(1,1)\)</span>;</li>
+<li><em>debolmente informativa</em> : <span class="math inline">\(\theta_c \sim \text{Beta}(5,2)\)</span>;</li>
+<li><em>fortemente informativa</em> : <span class="math inline">\(\theta_c \sim \text{Beta}(50,20)\)</span>;</li>
+<li><em>valore puntuale</em> : <span class="math inline">\(\theta_c \sim \text{Beta}(\alpha, \beta)\)</span> con <span class="math inline">\(\alpha, \beta \rightarrow \infty\)</span> e <span class="math inline">\(\frac{\alpha}{\beta} = \frac{5}{2}\)</span>.</li>
+</ul>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch-03-02-models-types-of-priors"></span>
+<img src="025_intro_bayes_files/figure-html/ch-03-02-models-types-of-priors-1.png" alt="Esempi di distribuzioni a priori per il parametro $\theta_c$ nel Modello Binomiale." width="576" />
+<p class="caption">
+Figura 1.1: Esempi di distribuzioni a priori per il parametro <span class="math inline">\(\theta_c\)</span> nel Modello Binomiale.
+</p>
+</div>
+</div>
+<div id="scelta-della-distribuzione-a-priori" class="section level3" number="1.2.5">
+<h3><span class="header-section-number">1.2.5</span> Scelta della distribuzione a priori</h3>
+<p>La selezione delle distribuzioni a priori è stata spesso vista come una delle scelte più importanti che un ricercatore fa quando implementa un modello bayesiano in quanto può avere un impatto sostanziale sui risultati finali. La soggettività delle distribuzioni a priori è evidenziata dai critici come un potenziale svantaggio dei metodi bayesiani. A questa critica, <span class="citation">Schoot et al. (<a href="#ref-vandeSchoot2021modelling" role="doc-biblioref">2021</a>)</span> rispondono dicendo che, al di là della scelta delle distribuzioni a priori, ci sono molti elementi del processo di inferenza statistica che sono soggettivi, ovvero la scelta del modello statistico e le ipotesi sulla distribuzione degli errori. In secondo luogo, <span class="citation">Schoot et al. (<a href="#ref-vandeSchoot2021modelling" role="doc-biblioref">2021</a>)</span> notano come le distribuzioni a priori svolgono due importanti ruoli statistici: quello della “regolarizzazione della stima”, ovvero, il processo che porta ad indebolire l’influenza indebita di osservazioni estreme, e quello del miglioramento dell’efficienza della stima, ovvero, la facilitazione dei processi di calcolo numerico di stima della distribuzione a posteriori. L’effetto della distribuzione a priori sulla distribuzione a posteriori verrà discusso nel Capitolo <a href="#chapter-balance"><strong>??</strong></a>.</p>
+</div>
+</div>
+<div id="verosim-marginale" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Verosimiglianza marginale</h2>
+<p>Al denominatore della regola di Bayes abbiamo la verosimiglianza marginale <span class="math inline">\(p(y)\)</span>. Tale denominatore è espresso nei termini di un integrale che, tranne in pochi casi particolari, non ha una soluzione analitica.
+<!-- Per questa ragione, l'inferenza bayesiana procede calcolando una approssimazione della distribuzione a posteriori mediante metodi numerici. --></p>
+<!-- Obiettivo di questo Paragrafo è chiarire questo concetto in riferimento al caso più semplice, ovvero quello della distribuzione binomiale. -->
+<!-- Sia $Y$ una variabile casuale con funzione di massa di probabilità $p(Y)$. Iniziamo la discussione con un semplice esempio in cui supponiamo che la funzione di massa di probabilità della $Y$ sia definita nei termini del parametro $\theta$ e che $\theta$ possa assumere solo i valori 0.1, 0.5, 0.9, ciascuno con eguale probabilità. In altre parole, la probabilità che $\theta$ sia 0.1, 0.5, o 0.9 è sempre 1/3.  -->
+<!-- Ponendo $n = 30$ e $y = 23$, ad esempio, la funzione di verosimiglianza diventa -->
+<!-- $$ -->
+<!-- p(y = 23, n = 30 \mid \theta) = \binom{30}{23} \theta^{23} (1-\theta)^{7}. -->
+<!-- $$ -->
+<!-- La _verosimiglianza marginale_ $p(y = 23, n = 30)$ basata su $\theta$ si ottiene marginalizzando rispetto al parametro $\theta$: per ogni possibile valore del parametro $\theta$, calcoliamo il valore della verosimiglianza e lo moltiplichiamo per la probabilità di $\theta$; poi sommiamo tutti i prodotti ottenuti in questo modo. Matematicamente, ciò significa eseguire l'operazione descritta di seguito. -->
+<!-- Nell'esempio abbiamo tre possibili valori $\theta$ che chiameremo $\theta_1 = 0.1$, $\theta_2 = 0.5$ e $\theta_3 = 0.9$. Ciascuno ha probabilità 1/3, quindi $p(\theta_1) = p(\theta_2) = p(\theta_3) = 1/3$. Date queste informazioni possiamo calcolare la verosimiglianza marginale come segue: -->
+<!-- \begin{align} -->
+<!-- p(y = 23, n = 30) &= \binom{30}{23} \theta_1^{23} (1-\theta_1)^{7} \cdot p(\theta_1) \notag\\ -->
+<!-- &+ \binom{30}{23} \theta_2^{23} (1-\theta_2)^{7} \cdot p(\theta_2) \notag\\ -->
+<!-- &+ \binom{30}{23} \theta_3^{23} (1-\theta_3)^{7} \cdot p(\theta_3) \notag, -->
+<!-- \end{align} -->
+<!-- \noindent -->
+<!-- ovvero -->
+<!-- \begin{align} -->
+<!-- p(y = 23, n = 30) &= \binom{30}{23} 0.1^{23} (1-0.1)^{7} \cdot \frac{1}{3} \notag\\ -->
+<!-- &+ \binom{30}{23} 0.5^{23} (1-0.5)^{7} \cdot \frac{1}{3} \notag\\ -->
+<!-- &+ \binom{30}{23} 0.9^{23} (1-0.9)^{7} \cdot \frac{1}{3} \notag. -->
+<!-- \end{align} -->
+<!-- È dunque possibile considerare la verosimiglianza marginale come una sorta di media ponderata della verosimiglianza, nella quale i "pesi" dipendono dalla credibilità dei valori del parametro. -->
+<!-- L'esempio che abbiamo presentato sopra è artificiale perché al parametro $\theta$ abbiamo attribuito solo tre possibili valori. In  realtà, $\theta$ può assumere tutti i possibili valori compresi nell'intervallo [0, 1] e dunque la somma che dobbiamo calcolare avrà infiniti addendi. Dal punto di vista matematico, una tale somma corrisponde all'integrale: -->
+<!-- $$ -->
+<!-- p(y = 23, n = 30) = \int_0^1 \binom{30}{23} \theta^{23} (1-\theta)^{7} d\theta. -->
+<!-- $$ -->
+<!-- \noindent -->
+<!-- L'integrale precedente descrive esattamente le stesse operazioni che abbiamo discusso nell'esempio "artificiale" in cui $\theta$ poteva assumere solo tre valori, eccetto che ora dobbiamo eseguire la somma dei prodotti calcolati su tutti gli infiniti valori $\theta$. Questo integrale corrisponde alla "marginalizzazione" del parametro $\theta$. Non è tuttavia necessario eseguire una tale operazione di maginalizzazione in forma analitica in quanto il precedente integrale può essere calcolato con R: -->
+<!-- ```{r} -->
+<!-- BinLik <- function(theta) { -->
+<!--   choose(30, 23) * theta^23 * (1 - theta)^7 -->
+<!-- } -->
+<!-- integrate(BinLik, lower = 0, upper = 1)$value -->
+<!-- ``` -->
+<!-- ### Soluzione analitica -->
+<!-- Qui di seguito è riportata la derivazione analitica. Sia $\theta \sim \Beta(a, b)$ e sia $y = \{y_1, \dots, y_n\} \sim \Bin(\theta, n)$. Ponendo  -->
+<!-- $$ -->
+<!-- B(a, b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}, -->
+<!-- $$ -->
+<!-- \noindent -->
+<!-- la verosimiglianza marginale diventa -->
+<!-- \begin{align} -->
+<!-- p(y) &= \binom{n}{y} \int p(y \mid \theta) p(\theta) d\theta \notag\\ -->
+<!-- &= \binom{n}{y}\int_0^1 \theta^{y} (1 - \theta)^{n- y} \frac{1}{B(a,b)} \theta^{a-1} (1-\theta)^{b-1} d \theta \notag\\ -->
+<!-- &= \binom{n}{y}\frac{1}{B(a,b)} \int_0^1 \theta^{y + a - 1} (1-\theta)^{n- y + b-1} \notag\\ -->
+<!-- &= \binom{n}{y}\frac{B(y + a, n- y + b)}{B(a,b)}, -->
+<!-- \end{align} -->
+<!-- \noindent -->
+<!-- in quanto -->
+<!-- \begin{align} -->
+<!-- \int_0^1 \frac{1}{B(a,b)} \theta^{a-1} (1-\theta)^{b-1} d \theta &= 1\notag\\ -->
+<!-- \frac{1}{B(a,b)} \int_0^1  \theta^{a-1} (1-\theta)^{b-1} d \theta &= 1\notag\\ -->
+<!-- \int_0^1  \theta^{a-1} (1-\theta)^{b-1} d \theta &= B(a,b). \notag -->
+<!-- \end{align} -->
+<!-- \noindent -->
+<!-- Continuiamo con l'esempio precedente. Per replicare il risultato trovato per via numerica con R, assumiamo una distribuzione a priori uniforme, ovvero $\Beta(1, 1)$. I valori del problema sono i seguenti: -->
+<!-- ```{r} -->
+<!-- a <- 1 -->
+<!-- b <- 1 -->
+<!-- y <- 23 -->
+<!-- n <- 30 -->
+<!-- ``` -->
+<!-- \noindent -->
+<!-- e dunque -->
+<!-- ```{r} -->
+<!-- alpha <- y + a -->
+<!-- beta <- n - y + b -->
+<!-- ``` -->
+<!-- \noindent -->
+<!-- Definiamo -->
+<!-- ```{r} -->
+<!-- B <- function(a, b) { -->
+<!--   (gamma(a) * gamma(b)) / gamma(a + b) -->
+<!-- } -->
+<!-- ``` -->
+<!-- \noindent -->
+<!-- Il risultato cercato si ottiene con -->
+<!-- ```{r} -->
+<!-- choose(30, 23) * B(alpha, beta) / B(a, b) -->
+<!-- ``` -->
+<!-- In conclusione, nel caso di una verosimiglianza binomiale $y = \sim \Bin(\theta, n)$ e di una distribuzione a priori  $\theta \sim \Beta(a, b)$, la verosimiglianza marginale diventa -->
+<!-- \begin{equation} -->
+<!-- \binom{n}{y}\frac{B(y + a, n - y + b)}{B(a, b)}. -->
+<!-- (\#eq:constant-norm-beta-binom) -->
+<!-- \end{equation} -->
+</div>
+<div id="la-distribuzione-a-posteriori" class="section level2" number="1.4">
+<h2><span class="header-section-number">1.4</span> La distribuzione a posteriori</h2>
+<p>Ci sono due metodi principali per calcolare la distribuzione a posteriori <span class="math inline">\(p(\theta \mid y)\)</span>:</p>
+<ul>
+<li>una precisa derivazione matematica formulata nei termini della distribuzione a priori coniugata alla distribuzione a posteriori (si veda il Capitolo <a href="#chapter-distr-coniugate"><strong>??</strong></a>); tale procedura però ha un’applicabilità molto limitata;</li>
+<li>un metodo approssimato, molto facile da utilizzare in pratica, che dipende da metodi Monte Carlo basati su Catena di Markov (MCMC).</li>
+</ul>
+<p>Una volta calcolata la distribuzione a posteriori dobbiamo riassumerla in qualche modo. Questo problema verrà discusso nel Capitolo <a href="#chapter-sintesi-distr-post"><strong>??</strong></a>.</p>
+</div>
+<div id="considerazioni-conclusive" class="section level2 unnumbered">
+<h2>Considerazioni conclusive</h2>
+<p>In base all’approccio bayesiano, invece di dire che il parametro di interesse di un modello statistico ha un valore vero ma sconosciuto, diciamo che, prima di eseguire l’esperimento, è possibile assegnare una distribuzione di probabilità, che chiamano stato di credenza, a quello che è il vero valore del parametro. Questa distribuzione a priori può essere nota (per esempio, sappiamo che la distribuzione dei punteggi del QI è normale con media 100 e deviazione standard 15) o può essere del tutto arbitraria. L’inferenza bayesiana procede poi nel modo seguente: si raccolgono alcuni dati e si calcola la probabilità dei possibili valori del parametro alla luce dei dati osservati e delle credenze a priori. Questa nuova distribuzione di probabilità è chiamata “distribuzione a posteriori” e riassume l’incertezza dell’inferenza.</p>
+<!-- L'approccio bayesiano riassumere l'incertezza dell'inferenza fornendo un intervallo di valori sulla distribuzione di probabilità a posteriori che include il 95% della probabilità --- questo intervallo è chiamato "intervallo di credibilità del 95%". -->
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div class="csl-entry">
+Schoot, Rens van de, Sarah Depaoli, Ruth King, Bianca Kramer, Kaspar Märtens, Mahlet G. Tadesse, Marina Vannucci, et al. 2021. <span>“Bayesian Statistics and Modelling.”</span> <em>Nature Reviews Methods Primer</em> 1 (1): 1–26.
+</div>
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-vandeSchoot2021modelling" class="csl-entry">
+Schoot, Rens van de, Sarah Depaoli, Ruth King, Bianca Kramer, Kaspar Märtens, Mahlet G. Tadesse, Marina Vannucci, et al. 2021. <span>“Bayesian Statistics and Modelling.”</span> <em>Nature Reviews Methods Primer</em> 1 (1): 1–26.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/025_intro_bayes.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Data Science per psicologi.pdf", "Data Science per psicologi.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
