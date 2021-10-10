@@ -48,7 +48,7 @@ Nella seguente discussione verrà ottenuta una stima bayesiana del parametro $\t
 
 ```{r, message=FALSE, warning=FALSE, error=FALSE}
 library("cmdstanr")
-set_cmdstan_path("/Users/corrado/.cmdstanr/cmdstan-2.27.0")
+set_cmdstan_path("/Users/corrado/.cmdstanr/cmdstan-2.28.0")
 library("posterior")
 rstan_options(auto_write = TRUE) # avoid recompilation of models
 options(mc.cores = parallel::detectCores()) # parallelize across all CPUs

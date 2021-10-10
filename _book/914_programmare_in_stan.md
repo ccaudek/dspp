@@ -67,7 +67,7 @@ Sul mio computer `PATH_TO_CMDSTAN` è la seguente stringa (incluse le virgolette
 
 ```r
 cmdstan_path()
-#> [1] "/Users/corrado/.cmdstanr/cmdstan-2.28.0"
+#> [1] "/Users/corrado/.cmdstan/cmdstan-2.28.0"
 ```
 \noindent
 La versione installata di `CmdStan` si ottiene con:

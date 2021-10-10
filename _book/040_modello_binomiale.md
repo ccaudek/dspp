@@ -44,11 +44,11 @@ Nella seguente discussione verrà ottenuta una stima bayesiana del parametro $\t
 
 ```r
 library("cmdstanr")
-set_cmdstan_path("/Users/corrado/.cmdstanr/cmdstan-2.27.0")
+set_cmdstan_path("/Users/corrado/.cmdstanr/cmdstan-2.28.0")
 library("posterior")
 rstan_options(auto_write = TRUE) # avoid recompilation of models
 options(mc.cores = parallel::detectCores()) # parallelize across all CPUs
-Sys.setenv(LOCAL_CPPFLAGS = '-march=native') # improve execution time
+Sys.setenv(LOCAL_CPPFLAGS = "-march=native") # improve execution time
 SEED <- 374237 # set random seed for reproducibility
 ```
 
@@ -79,7 +79,7 @@ Il *modello* è $\Bin(n, \theta)$ e, nel linguaggio Stan, può essere scritto co
 
 ```r
 for (i in 1:N) {
-  y[i] ~ bernoulli(theta);
+  y[i] ~ bernoulli(theta)
 }
 ```
 
@@ -88,14 +88,14 @@ ovvero come
 
 
 ```r
-y ~ bernoulli(theta);
+y ~ bernoulli(theta)
 ```
 
 La struttura del modello Beta-Binomiale viene tradotta nella sintassi Stan^[Si veda l'Appendice \@ref(intro-stan)] e viene poi memorizzata come stringa di caratteri del file `oneprop1.stan`:
 
 
 ```r
-modelString = "
+modelString <- "
 data {
   int<lower=0> N;
   int<lower=0, upper=1> y[N];
@@ -119,7 +119,7 @@ model {
   //  }
   // which is equivalent to
   //  for (i in 1:N) {
-  //    target += bernoulli_lpmf(y[i] | theta); 
+  //    target += bernoulli_lpmf(y[i] | theta);
   //  }
 }
 generated quantities {
@@ -224,7 +224,7 @@ I primi 10 valori sono presentati qui di seguito
 
 
 ```r
-as.matrix(stanfit1, pars = "theta") %>% 
+as.matrix(stanfit1, pars = "theta") %>%
   head(10)
 #>           parameters
 #> iterations    theta
@@ -247,7 +247,7 @@ Un tracciato della catena di Markov illustra questa esplorazione rappresentando 
 
 
 ```r
-stanfit1 %>% 
+stanfit1 %>%
   mcmc_trace(pars = c("theta"), size = 0.1)
 ```
 
@@ -267,8 +267,8 @@ Possiamo anche esaminare la distribuzione degli stati della catena di Markov, ov
 
 
 ```r
-mcmc_hist(stanfit1, pars = "theta") + 
-  yaxis_text(TRUE) + 
+mcmc_hist(stanfit1, pars = "theta") +
+  yaxis_text(TRUE) +
   ylab("count")
 ```
 
@@ -285,10 +285,10 @@ Nel modello Beta-Binomiale in cui la verosimiglianza è binomiale con 14 success
 
 
 ```r
-mcmc_dens(stanfit1, pars = "theta") + 
-  yaxis_text(TRUE) + 
+mcmc_dens(stanfit1, pars = "theta") +
+  yaxis_text(TRUE) +
   ylab("density") +
-  stat_function(fun = dbeta, args = list(shape1 = 16, shape2=4))
+  stat_function(fun = dbeta, args = list(shape1 = 16, shape2 = 4))
 ```
 
 \begin{figure}
@@ -374,16 +374,16 @@ Nell'implementazione di questo modello, la quantità di interesse è dunque l'od
 
 ```r
 data_list <- list(
-  N1 = 18, 
-  y1 = 10, 
-  N2 = 16, 
+  N1 = 18,
+  y1 = 10,
+  N2 = 16,
   y2 = 14
 )
 ```
 
 
 ```r
-modelString = "
+modelString <- "
 //  Comparison of two groups with Binomial
 data {
   int<lower=0> N1;              // number of experiments in group 1
@@ -445,7 +445,7 @@ print(
   pars = c("theta1", "theta2", "oddsratio"),
   digits_summary = 3L
 )
-#> Inference for Stan model: twoprop1-202109180459-1-524b1e.
+#> Inference for Stan model: twoprop1-202110101000-1-60e488.
 #> 4 chains, each with iter=6000; warmup=2000; thin=1; 
 #> post-warmup draws per chain=4000, total post-warmup draws=16000.
 #> 
@@ -458,7 +458,7 @@ print(
 #> theta2     0.939 12359 1.000
 #> oddsratio 16.251  9207 1.001
 #> 
-#> Samples were drawn using NUTS(diag_e) at Sab Set 18 04:59:58 2021.
+#> Samples were drawn using NUTS(diag_e) at Dom Ott 10 10:00:03 2021.
 #> For each parameter, n_eff is a crude measure of effective sample size,
 #> and Rhat is the potential scale reduction factor on split chains (at 
 #> convergence, Rhat=1).
