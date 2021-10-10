@@ -35,7 +35,7 @@ sum_x <- 0
 for (x in x_list) {
   sum_x <- sum_x + x
   cat("L'indice corrente e'", x, "\n")
-  cat("La frequenza cumulata e'", sum_x, "\n") 
+  cat("La frequenza cumulata e'", sum_x, "\n")
 }
 #> L'indice corrente e' 1 
 #> La frequenza cumulata e' 1 
@@ -58,8 +58,9 @@ risposta a questa domanda viene fornita dalla funzione
 countEvenNumbers <- function(x) {
   count <- 0
   for (i in 1:length(x)) {
-    if (x[i] %% 2 == 0)  
-      count = count + 1
+    if (x[i] %% 2 == 0) {
+      count <- count + 1
+    }
   }
   count
 }

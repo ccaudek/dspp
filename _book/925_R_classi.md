@@ -34,7 +34,7 @@ I modi 'atomici' degli oggetti sono: `numeric`, `complex`, `character` e
 x <- c(4, 9)
 mode(x)
 #> [1] "numeric"
-cards <- c("9 of clubs", "10 of hearts", "jack of hearts") 
+cards <- c("9 of clubs", "10 of hearts", "jack of hearts")
 mode(cards)
 #> [1] "character"
 ```
@@ -143,7 +143,7 @@ argomento:
 
 ```r
 ar <- array(
-  c(11:14, 21:24, 31:34), 
+  c(11:14, 21:24, 31:34),
   dim = c(2, 2, 3)
 )
 ```
@@ -217,7 +217,7 @@ dimensioni $4 \times 5$, allora la seguente operazione
 
 
 ```r
-M <- 2 * (X + Y) - 3 
+M <- 2 * (X + Y) - 3
 ```
 
 crea una matrice `D` anch'essa di dimensioni $4 \times 5$ i cui elementi
@@ -286,7 +286,7 @@ una diversa variabile. Ad esempio,
 ```r
 df <- data.frame(
   face = c("ace", "two", "six"),
-  suit = c("clubs", "clubs", "clubs"), 
+  suit = c("clubs", "clubs", "clubs"),
   value = c(1, 2, 3)
 )
 df
@@ -327,25 +327,29 @@ valore di ciascuna carta. Quindi, il data.frame avrà 3 colonne.
 
 ```r
 deck <- data.frame(
-  face = c("king", "queen", "jack", "ten", "nine", "eight",
-  "seven", "six", "five", "four", "three", "two", "ace", 
-  "king", "queen", "jack", "ten", "nine", "eight", "seven", 
-  "six", "five", "four", "three", "two", "ace", "king", 
-  "queen", "jack", "ten", "nine", "eight", "seven", "six", 
-  "five", "four", "three", "two", "ace", "king", "queen", 
-  "jack", "ten", "nine", "eight", "seven", "six", "five", 
-  "four", "three", "two", "ace"), 
-  suit = c("spades", "spades", "spades", "spades", 
-  "spades", "spades", "spades", "spades", "spades", 
-  "spades", "spades", "spades", "spades", "clubs", "clubs", 
-  "clubs", "clubs", "clubs", "clubs", "clubs", "clubs", 
-  "clubs", "clubs", "clubs", "clubs", "clubs", "diamonds", 
-  "diamonds", "diamonds", "diamonds", "diamonds", 
-  "diamonds", "diamonds", "diamonds", "diamonds", 
-  "diamonds", "diamonds", "diamonds", "diamonds", "hearts", 
-  "hearts", "hearts", "hearts", "hearts", "hearts", 
-  "hearts", "hearts", "hearts", "hearts", "hearts", 
-  "hearts", "hearts"), 
+  face = c(
+    "king", "queen", "jack", "ten", "nine", "eight",
+    "seven", "six", "five", "four", "three", "two", "ace",
+    "king", "queen", "jack", "ten", "nine", "eight", "seven",
+    "six", "five", "four", "three", "two", "ace", "king",
+    "queen", "jack", "ten", "nine", "eight", "seven", "six",
+    "five", "four", "three", "two", "ace", "king", "queen",
+    "jack", "ten", "nine", "eight", "seven", "six", "five",
+    "four", "three", "two", "ace"
+  ),
+  suit = c(
+    "spades", "spades", "spades", "spades",
+    "spades", "spades", "spades", "spades", "spades",
+    "spades", "spades", "spades", "spades", "clubs", "clubs",
+    "clubs", "clubs", "clubs", "clubs", "clubs", "clubs",
+    "clubs", "clubs", "clubs", "clubs", "clubs", "diamonds",
+    "diamonds", "diamonds", "diamonds", "diamonds",
+    "diamonds", "diamonds", "diamonds", "diamonds",
+    "diamonds", "diamonds", "diamonds", "diamonds", "hearts",
+    "hearts", "hearts", "hearts", "hearts", "hearts",
+    "hearts", "hearts", "hearts", "hearts", "hearts",
+    "hearts", "hearts"
+  ),
   value = c(13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
 )
 ```
@@ -592,9 +596,9 @@ uguale alla dimensione del vettore che contiene gli indici da 1 a 52:
 ```r
 random <- sample(1:52, size = 52, replace = FALSE)
 random
-#>  [1] 27 13  2 12 10  9 19 49 38  6 41 15 51 36 33  3  8 17
-#> [19] 21 42 45 24 47 23 30 40 34 48 46 50 52 16 37  4 14 32
-#> [37]  7  1 18 39 20 44 35 25  5 11 22 31 26 29 28 43
+#>  [1] 49 37  1 25 10 36 18 24  7 47 52 51 20 26  3 42 27 31
+#> [19]  5 40  2 28  8 38 39 50 48 45 11 15 22 30  4 33 46 13
+#> [37] 12 34 19 32 21 17 29 16 44 43 23 41  6 14 35  9
 ```
 
 Utilizzando il vettore `random` di indici permutati otteniamo il
@@ -605,12 +609,12 @@ risultato cercato:
 deck_shuffled <- deck[random, ]
 head(deck_shuffled)
 #>     face     suit value
-#> 27  king diamonds    13
-#> 13   ace   spades     1
-#> 2  queen   spades    12
-#> 12   two   spades     2
+#> 49  four   hearts     4
+#> 37 three diamonds     3
+#> 1   king   spades    13
+#> 25   two    clubs     2
 #> 10  four   spades     4
-#> 9   five   spades     5
+#> 36  four diamonds     4
 ```
 
 Possiamo ora scrivere una funzione che include le precedenti istruzioni:
@@ -618,7 +622,7 @@ Possiamo ora scrivere una funzione che include le precedenti istruzioni:
 
 ```r
 shuffle <- function(cards) {
-  random <- sample(1:52, size = 52, replace = FALSE) 
+  random <- sample(1:52, size = 52, replace = FALSE)
   return(cards[random, ])
 }
 ```
@@ -637,12 +641,12 @@ di poker, per il primo giocatore avremo:
 
 ```r
 deck_shuffled[c(1, 3, 5, 7, 9), ]
-#>    face     suit value
-#> 30  ten diamonds    10
-#> 29 jack diamonds    11
-#> 12  two   spades     2
-#> 51  two   hearts     2
-#> 36 four diamonds     4
+#>     face     suit value
+#> 52   ace   hearts     1
+#> 21   six    clubs     6
+#> 38   two diamonds     2
+#> 40  king   hearts    13
+#> 33 seven diamonds     7
 ```
 
 e per il secondo:
@@ -651,11 +655,11 @@ e per il secondo:
 ```r
 deck_shuffled[c(2, 4, 6, 8, 10), ]
 #>     face     suit value
-#> 31  nine diamonds     9
 #> 3   jack   spades    11
-#> 22  five    clubs     5
-#> 50 three   hearts     3
-#> 7  seven   spades     7
+#> 2  queen   spades    12
+#> 10  four   spades     4
+#> 5   nine   spades     9
+#> 39   ace diamonds     1
 ```
 
 

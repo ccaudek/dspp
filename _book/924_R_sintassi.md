@@ -37,8 +37,8 @@ l'input finché il comando non è sintatticamente completo. Ad esempio,
 
 ```r
 4 -
-+ 
-+ 1
+  +
+    +1
 #> [1] 3
 ```
 
@@ -434,7 +434,7 @@ simula dieci lanci di un dado a sei facce:
 ```r
 roll <- sample(1:6, 10, replace = TRUE)
 roll
-#>  [1] 3 6 5 6 4 1 3 5 1 5
+#>  [1] 1 5 1 1 2 4 2 2 1 4
 ```
 
 Il primo argomento di `sample()` è il vettore da cui la funzione
@@ -459,8 +459,8 @@ le operazioni di "minore di," "maggiore di" e "uguale a". Se scriviamo
 
 ```r
 roll == 5
-#>  [1] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE
-#> [10]  TRUE
+#>  [1] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+#> [10] FALSE
 ```
 
 creiamo un vettore costituito da elementi `TRUE/FALSE` i quali
@@ -474,7 +474,7 @@ possiamo contare il numero di "5":
 
 ```r
 sum(roll == 5)
-#> [1] 3
+#> [1] 1
 ```
 
 ### Dati mancanti
@@ -509,7 +509,7 @@ dei livelli del fattore si usa la seguente sintassi:
 
 
 ```r
-soc_status <- 
+soc_status <-
   factor(soc_status, levels = c("low", "medium", "high"))
 levels(soc_status)
 #> [1] "low"    "medium" "high"
@@ -530,7 +530,7 @@ di elementi del vettore pari a `size`. Ad esempio
 
 ```r
 sample(die, 2, replace = TRUE)
-#> [1] 1 4
+#> [1] 1 5
 ```
 
 Assegnando `TRUE` all'argomento `replace` specifichiamo che vogliamo un
@@ -543,11 +543,11 @@ eseguiamo ripetutamente la funzione `sample()` ponendo `size` uguale a
 
 ```r
 sample(die, 1, replace = TRUE)
-#> [1] 5
+#> [1] 6
+sample(die, 1, replace = TRUE)
+#> [1] 4
 sample(die, 1, replace = TRUE)
 #> [1] 2
-sample(die, 1, replace = TRUE)
-#> [1] 6
 ```
 
 Come si fa a sapere quanti e quali argomenti sono richiesti da una
@@ -578,7 +578,7 @@ seguente simula i risultati di 10 lanci indipendenti di un dado:
 
 ```r
 sample(die, 10, replace = TRUE)
-#>  [1] 6 1 1 3 1 4 6 3 4 6
+#>  [1] 2 3 1 1 3 4 5 5 5 4
 ```
 
 Infine, `prob = NULL` specifica che non viene alterata la probabilità di
@@ -619,7 +619,7 @@ nome_funzione <- function(arg1, arg2, ...) {
   espressione1
   espressione2
   return(risultato)
-} 
+}
 ```
 
 Una chiamata di funzione è poi eseguita nel seguente modo:
@@ -661,12 +661,12 @@ risultato diverso ogni volta che viene usata:
 
 
 ```r
-two_rolls()   
-#> [1] 7
 two_rolls()
-#> [1] 4
+#> [1] 6
 two_rolls()
-#> [1] 8
+#> [1] 5
+two_rolls()
+#> [1] 3
 ```
 
 La formattazione del codice mediante l'uso di spazi e rientri non è

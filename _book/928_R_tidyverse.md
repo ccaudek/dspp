@@ -54,10 +54,10 @@ Il listato precedente descrive una serie di (pseudo) funzioni concatenate, le qu
 
 
 ```r
-me %>% 
-  wake_up(time = "8:00") %>% 
-  get_out_of_bed(side = "correct") %>% 
-  get_dressed(pants = TRUE, shirt = TRUE) %>% 
+me %>%
+  wake_up(time = "8:00") %>%
+  get_out_of_bed(side = "correct") %>%
+  get_dressed(pants = TRUE, shirt = TRUE) %>%
   leave_house(car = TRUE, bike = FALSE)
 ```
 
@@ -73,7 +73,7 @@ Ritorniamo ora all'esempio precedente e supponiamo di volere selezionare le vari
 dt <- msleep %>%
   dplyr::select(name, vore, sleep_total)
 dt
-#> # A tibble: 83 x 3
+#> # A tibble: 83 × 3
 #>    name                       vore  sleep_total
 #>    <chr>                      <chr>       <dbl>
 #>  1 Cheetah                    carni        12.1
@@ -86,7 +86,7 @@ dt
 #>  8 Vesper mouse               <NA>          7  
 #>  9 Dog                        carni        10.1
 #> 10 Roe deer                   herbi         3  
-#> # ... with 73 more rows
+#> # … with 73 more rows
 ```
 
 laddove la sequenza di istruzioni precedenti significa che il data.frame `dt` è stato passato alla funzione `select()` contenuta nel pacchetto `dplyr`.
@@ -102,7 +102,7 @@ questo modo (ovvero, tutti i carnivori):
 ```r
 dt %>%
   dplyr::filter(vore == "carni")
-#> # A tibble: 19 x 3
+#> # A tibble: 19 × 3
 #>    name                       vore  sleep_total
 #>    <chr>                      <chr>       <dbl>
 #>  1 Cheetah                    carni        12.1
@@ -137,10 +137,10 @@ per 60:
 
 
 ```r
-dt %>% 
+dt %>%
   mutate(sleep_minutes = sleep_total * 60) %>%
   dplyr::select(sleep_total, sleep_minutes)
-#> # A tibble: 83 x 2
+#> # A tibble: 83 × 2
 #>    sleep_total sleep_minutes
 #>          <dbl>         <dbl>
 #>  1        12.1           726
@@ -153,7 +153,7 @@ dt %>%
 #>  8         7             420
 #>  9        10.1           606
 #> 10         3             180
-#> # ... with 73 more rows
+#> # … with 73 more rows
 ```
 
 
@@ -165,9 +165,9 @@ o più variabili. Per esempio, possiamo ordinare la variabile
 
 
 ```r
-dt %>% 
+dt %>%
   arrange(desc(sleep_total))
-#> # A tibble: 83 x 3
+#> # A tibble: 83 × 3
 #>    name                           vore    sleep_total
 #>    <chr>                          <chr>         <dbl>
 #>  1 Little brown bat               insecti        19.9
@@ -180,7 +180,7 @@ dt %>%
 #>  8 Arctic ground squirrel         herbi          16.6
 #>  9 Golden-mantled ground squirrel herbi          15.9
 #> 10 Tiger                          carni          15.8
-#> # ... with 73 more rows
+#> # … with 73 more rows
 ```
 
 
@@ -199,10 +199,10 @@ media del tempo totale del sonno è
 
 
 ```r
-dt %>% 
+dt %>%
   summarise(
-  m_sleep = mean(sleep_total, na.rm = TRUE)
-  ) %>% 
+    m_sleep = mean(sleep_total, na.rm = TRUE)
+  ) %>%
   unlist()
 #>  m_sleep 
 #> 10.43373
@@ -220,10 +220,10 @@ media, 10.4 ore al giorno. Troviamo ora il sonno medio in funzione di
 dt %>%
   group_by(vore) %>%
   summarise(
-    m_sleep = mean(sleep_total, na.rm = TRUE), 
+    m_sleep = mean(sleep_total, na.rm = TRUE),
     n = n()
   )
-#> # A tibble: 5 x 3
+#> # A tibble: 5 × 3
 #>   vore    m_sleep     n
 #>   <chr>     <dbl> <int>
 #> 1 carni     10.4     19
@@ -270,14 +270,15 @@ Supponiamo di volere che i livelli del fattore `f_1` abbiano le etichette `new_1
 
 ```r
 df <- df %>%
-  mutate(f_1 =
-    dplyr::recode(f_1,
-      "old_1" = "new_poco",
-      "old_2" = "new_medio",
-      "old_3" = "new_tanto",
-      "old_4" = "new_massimo",
-     )
-   )
+  mutate(
+    f_1 =
+      dplyr::recode(f_1,
+        "old_1" = "new_poco",
+        "old_2" = "new_medio",
+        "old_3" = "new_tanto",
+        "old_4" = "new_massimo",
+      )
+  )
 df
 #>           f_1 y
 #> 1   new_tanto 1
@@ -335,7 +336,7 @@ Un comando generico ha la seguente forma:
 
 
 ```r
-my_graph <- my_data %>% 
+my_graph <- my_data %>%
   ggplot(aes(x_var, y_var)) +
   geom_...()
 ```
@@ -363,7 +364,7 @@ Consideriamo nuovamenti i dati contenuti nel data frame `msleep` e poniamoci il 
 
 ```r
 data(msleep)
-p <- msleep %>% 
+p <- msleep %>%
   ggplot(
     aes(x = bodywt, y = sleep_total)
   ) +
@@ -371,15 +372,13 @@ p <- msleep %>%
 print(p)
 ```
 
-
-
-\begin{center}\includegraphics{928_R_tidyverse_files/figure-latex/unnamed-chunk-17-1} \end{center}
+<img src="928_R_tidyverse_files/figure-epub3/unnamed-chunk-17-1.png" style="display: block; margin: auto;" />
 
 Coloriamo ora in maniera diversa i punti che rappresentano animali carnivori, erbivori, ecc.
 
 
 ```r
-p <- msleep %>% 
+p <- msleep %>%
   ggplot(
     aes(x = bodywt, y = sleep_total, col = vore)
   ) +
@@ -387,15 +386,13 @@ p <- msleep %>%
 print(p)
 ```
 
-
-
-\begin{center}\includegraphics{928_R_tidyverse_files/figure-latex/unnamed-chunk-18-1} \end{center}
+<img src="928_R_tidyverse_files/figure-epub3/unnamed-chunk-18-1.png" style="display: block; margin: auto;" />
 
 È chiaro, senza fare alcuna analisi statistica, che la relazione tra le due variabili non è lineare. Trasformando in maniera logaritmica i valori dell'asse $x$ la relazione si linearizza.
 
 
 ```r
-p <- msleep %>% 
+p <- msleep %>%
   ggplot(
     aes(x = log(bodywt), y = sleep_total, col = vore)
   ) +
@@ -403,31 +400,27 @@ p <- msleep %>%
 print(p)
 ```
 
-
-
-\begin{center}\includegraphics{928_R_tidyverse_files/figure-latex/unnamed-chunk-19-1} \end{center}
+<img src="928_R_tidyverse_files/figure-epub3/unnamed-chunk-19-1.png" style="display: block; margin: auto;" />
 
 Infine, aggiustiamo il "tema" del grafico, aggiungiamo le etichette sugli assi e il titolo.
 
 
 ```r
-msleep %>% 
+msleep %>%
   ggplot(
     aes(x = log(bodywt), y = sleep_total, col = vore)
   ) +
   geom_point(size = 2) +
-    theme(legend.title = element_blank()) +
-    labs(
-      x = "Log Peso Corporeo",
-      y = "Totale Ore di Sonno",
-      title = "Il sonno in 83 specie di mammiferi",
-      subtitle = "Savage e West (2007)"
-     )
+  theme(legend.title = element_blank()) +
+  labs(
+    x = "Log Peso Corporeo",
+    y = "Totale Ore di Sonno",
+    title = "Il sonno in 83 specie di mammiferi",
+    subtitle = "Savage e West (2007)"
+  )
 ```
 
-
-
-\begin{center}\includegraphics{928_R_tidyverse_files/figure-latex/unnamed-chunk-20-1} \end{center}
+<img src="928_R_tidyverse_files/figure-epub3/unnamed-chunk-20-1.png" style="display: block; margin: auto;" />
 
 
 #### Istogramma
@@ -436,7 +429,7 @@ Creiamo ora un istogramma che rappresenta la distribuzione del (logaritmo del) p
 
 
 ```r
-msleep %>% 
+msleep %>%
   ggplot(
     aes(log(brainwt))
   ) +
@@ -448,9 +441,7 @@ msleep %>%
   theme(legend.title = element_blank())
 ```
 
-
-
-\begin{center}\includegraphics{928_R_tidyverse_files/figure-latex/unnamed-chunk-21-1} \end{center}
+<img src="928_R_tidyverse_files/figure-epub3/unnamed-chunk-21-1.png" style="display: block; margin: auto;" />
 
 L'argomento `aes(y=..density..)` in `geom_histogram()` produce le frequenze relative. L'opzione di default (senza questo argomento) porta `ggplot()` a rappresentare le frequenze assolute.
 

@@ -254,14 +254,10 @@ misura viene definita:
 
 La metafora del tiro a bersaglio illustra la relazione tra precisione e accuratezza.
 
-\begin{figure}
-
-{\centering \includegraphics[width=32.81in]{images/misurazione_4} 
-
-}
-
-\caption{Metafora del tiro al bersaglio.}(\#fig:fig-tiro-bersaglio)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="images/misurazione_4.png" alt="Metafora del tiro al bersaglio." width="2362" />
+<p class="caption">(\#fig:fig-tiro-bersaglio)Metafora del tiro al bersaglio.</p>
+</div>
 
 Per tenere sotto controllo l'incidenza degli errori, sono stati
 introdotti in psicologia i concetti di attendibilità e validità.

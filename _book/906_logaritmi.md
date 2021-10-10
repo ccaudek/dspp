@@ -19,41 +19,43 @@ Per esempio, un grafico della funzione esponenziale di base 2 si trova con
 
 
 ```r
-exp_base2 = function(x){2^x}
-tibble(x = c(-5, 5)) %>% 
-ggplot(aes(x = x)) + 
+exp_base2 <- function(x) {
+  2^x
+}
+tibble(x = c(-5, 5)) %>%
+  ggplot(aes(x = x)) +
   stat_function(fun = exp_base2)
 ```
 
-
-
-\begin{center}\includegraphics{906_logaritmi_files/figure-latex/unnamed-chunk-1-1} \end{center}
+<img src="906_logaritmi_files/figure-epub3/unnamed-chunk-1-1.png" style="display: block; margin: auto;" />
 Se usiamo la base 4 troviamo
 
 
 ```r
-exp_base4 = function(x){4^x}
-tibble(x = c(-5, 5)) %>% 
-ggplot(aes(x = x)) + 
+exp_base4 <- function(x) {
+  4^x
+}
+tibble(x = c(-5, 5)) %>%
+  ggplot(aes(x = x)) +
   stat_function(fun = exp_base4)
 ```
 
-
-
-\begin{center}\includegraphics{906_logaritmi_files/figure-latex/unnamed-chunk-2-1} \end{center}
+<img src="906_logaritmi_files/figure-epub3/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
 Oppure
 
 
 ```r
-exp_base4 = function(x){4^-{x}}
-tibble(x = c(-5, 5)) %>% 
-ggplot(aes(x = x)) + 
+exp_base4 <- function(x) {
+  4^-{
+    x
+  }
+}
+tibble(x = c(-5, 5)) %>%
+  ggplot(aes(x = x)) +
   stat_function(fun = exp_base4)
 ```
 
-
-
-\begin{center}\includegraphics{906_logaritmi_files/figure-latex/unnamed-chunk-3-1} \end{center}
+<img src="906_logaritmi_files/figure-epub3/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
 In molte applicazioni la scelta più conveniente per la base è il numero irrazionale $e = 2.718281828\dots. Questo numero è chiamato la base naturale.  La funzione $f(x) = e^x$ è chiamata funzione esponenziale naturale.
 
@@ -61,15 +63,15 @@ Per esempio, abbiamo
 
 
 ```r
-exp_base_e= function(x){exp(x)}
-tibble(x = c(-2, 1.5)) %>% 
-ggplot(aes(x = x)) + 
+exp_base_e <- function(x) {
+  exp(x)
+}
+tibble(x = c(-2, 1.5)) %>%
+  ggplot(aes(x = x)) +
   stat_function(fun = exp_base_e)
 ```
 
-
-
-\begin{center}\includegraphics{906_logaritmi_files/figure-latex/unnamed-chunk-4-1} \end{center}
+<img src="906_logaritmi_files/figure-epub3/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
 
 ## Funzione logaritmica

@@ -94,26 +94,18 @@ I diagrammi di Venn sono così nominati in onore del matematico inglese del dici
 In tale rappresentazione, gli insiemi sono individuati da regioni del piano delimitate da una curva chiusa. Nel caso di insiemi finiti, è possibile evidenziare esplicitamente alcuni elementi di un insieme mediante punti, quando si
 possono anche evidenziare tutti gli elementi degli insiemi considerati.
 
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{images/sets-venn-diagrams} 
-
-}
-
-\caption{In tutte le figure $S$ è la regione delimitata dal rettangolo, $L$ è la regione all'interno del cerchio di sinistra e $R$ è la regione all'interno del cerchio di destra. La regione evidenziata mostra l'insieme indicato sotto ciascuna figura.}(\#fig:sets-venn-diagrams)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="images/sets-venn-diagrams.pdf" alt="In tutte le figure $S$ è la regione delimitata dal rettangolo, $L$ è la regione all'interno del cerchio di sinistra e $R$ è la regione all'interno del cerchio di destra. La regione evidenziata mostra l'insieme indicato sotto ciascuna figura." width="100%" />
+<p class="caption">(\#fig:sets-venn-diagrams)In tutte le figure $S$ è la regione delimitata dal rettangolo, $L$ è la regione all'interno del cerchio di sinistra e $R$ è la regione all'interno del cerchio di destra. La regione evidenziata mostra l'insieme indicato sotto ciascuna figura.</p>
+</div>
 
 I diagrammi di Eulero-Venn che forniscono una dimostrazione delle leggi
 di DeMorgan sono forniti nella figura \@ref(fig:demorgan). 
 
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{images/demorgan} 
-
-}
-
-\caption{Dimostrazione delle leggi di DeMorgan.}(\#fig:demorgan)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="images/demorgan.pdf" alt="Dimostrazione delle leggi di DeMorgan." width="100%" />
+<p class="caption">(\#fig:demorgan)Dimostrazione delle leggi di DeMorgan.</p>
+</div>
 
 
 ## Coppie ordinate e prodotto cartesiano
