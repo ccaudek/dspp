@@ -171,6 +171,23 @@
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
 
+\usepackage{amsthm}
+\newtheorem{theorem}{Teorema}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{corollary}{Corollario}[chapter]
+\newtheorem{proposition}{Proposizione}[chapter]
+\newtheorem{conjecture}{Congettura}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Definizione}[chapter]
+\theoremstyle{definition}
+\newtheorem{example}{Esempio}[chapter]
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercizio}[chapter]
+\theoremstyle{definition}
+\newtheorem{hypothesis}{Hypothesis}[chapter]
+\theoremstyle{remark}
+\newtheorem*{remark}{Osservazione}
+\newtheorem*{solution}{Soluzione}
 \begin{document}
 \maketitle
 
@@ -185,516 +202,199 @@
 
 \thispagestyle{empty}
 
-\hypertarget{chapter-intro-density-function}{%
-\chapter{Funzione di densità di probabilità}\label{chapter-intro-density-function}}
+\hypertarget{sommatorie}{%
+\chapter{Simbolo di somma (sommatorie)}\label{sommatorie}}
 
-Finora abbiamo considerato solo variabili casuali discrete, cioè variabili che assumono solo valori interi. Ma cosa succede se vogliamo usare variabili casuali per rappresentare lunghezze o volumi o distanze una qualsiasi delle altre proprietà continue nel mondo fisico (o psicologico)? È necessario generalizzare l'approccio usato finora.
-
-Le variabili casuali continue assumono valori reali. L'insieme dei numeri reali è \emph{non numerabile} perché è più grande dell'insieme degli interi.\footnote{Georg Cantor dimostrò che era impossibile mappare uno a uno i reali negli interi, dimostrando così che l'insieme dei reali è non numerabile.} Le leggi della probabilità sono le stessa per le variabili casuali discrete e quelle continue. La nozione di funzione di massa di probabilità, invece, deve essere sostituita dal suo equivalente continuo, ovvero dalla funzione di densità di probabilità. Lo scopo di questo Capitolo è quello di chiarire il significato di questa nozione, usando un approccio basato sulle simulazioni.
-
-\hypertarget{spinner-e-variabili-casuali-continue-uniformi}{%
-\section{Spinner e variabili casuali continue uniformi}\label{spinner-e-variabili-casuali-continue-uniformi}}
-
-Consideriamo il seguente esperimento casuale. Facciamo ruotare ad alta velocità uno spinner simmetrico imperniato su un goniometro e osserviamo la posizione in cui si ferma (individuata dall'angolo acuto con segno tra il suo asse e l'asse orizzontale del goniometro). Chiamiamo \(\Theta\) la variabile casuale ``pendenza dello spinner''. Nella trattazione seguente useremo i gradi e, di conseguenza, \(\Theta \in [0, 360]\).
-
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{019_density_func_files/figure-latex/unnamed-chunk-1-1} 
-
-}
-
-\caption{Uno spinner che riposa a 36 gradi, o il dieci percento del percorso intorno al cerchio. La pendenza dello spinner può assumere qualunque valore tra 0 e 360 gradi.}\label{fig:unnamed-chunk-1}
-\end{figure}
-
-Cosa implica per \(\Theta\) dire che lo spinner è simmetrico? Possiamo dire che, in ciascuna prova, la rotazione dello spinner produce un angolo qualunque da 0 a 360 gradi. In altri termini, un valore \(\Theta\) compreso tra 0 e 36 gradi ha la stessa probabilità di essere osservato di un valore \(\Theta\) compreso tra 200 e 236 gradi. Inoltre, poiché 36 gradi è un decimo del percorso intorno al cerchio, la probabilità di ottenere un qualsiasi intervallo di 36 gradi sarà sempre uguale al 10\%. Ovvero
-
-\[
-\mbox{P}[0 \leq \Theta \leq 36]
-\ = \
-\frac{1}{10}
-\]
-\noindent 
-e
-
-\[
-\mbox{P}[200 \leq \Theta \leq 236]
-\ = \
-\frac{1}{10}.
-\]
-
-È importante notare che le considerazioni precedenti non si riferiscono al fatto che \(\Theta\) può assumere uno specifico valore, ma piuttosto alla probabilità di osservare \(\Theta\) in un particolare intervallo di valori. In generale, la probabilità che la pendenza \(\Theta\) dello spinner cada in intervallo è la frazione del cerchio rappresentata dall'intervallo, cioè,
-
-\[
-\mbox{P}[\theta_1 \leq \Theta \leq \theta_2] = \frac{\theta_2 - \theta_1}{360}, \qquad 0 \leq \theta_1 \leq \theta_2 \leq 360.
-\]
+Le somme si incontrano costantemente in svariati contesti matematici e statistici quindi abbiamo bisogno di una notazione adeguata che ci consenta di gestirle. La somma dei primi \(n\) numeri interi può essere scritta come \(1+2+\dots+(n-1)+n\), dove `\(\dots\)' ci dice di completare la sequenza definita dai termini che vengono prima e dopo. Ovviamente, una notazione come \(1+7+\dots+73.6\) non avrebbe alcun senso senza qualche altro tipo di precisazione. In generale, nel seguito incontreremo delle somme nella forma
+\begin{equation}
+x_1+x_2+\dots+x_n,\notag
+\end{equation}
+dove \(x_i\) è un numero che è stato definito altrove. La notazione precedente, che fa uso dei tre puntini di sospensione, è utile in alcuni contesti ma in altri risulta ambigua. Pertanto la notazione di uso corrente è del tipo
+\begin{equation}
+  \sum_{i=1}^n x_i\notag
+\end{equation}
 \noindent
-La ragione di questo è che le variabili casuali continue non hanno una massa di probabilità. Invece, una massa di probabilità viene assegnata alla realizzazione della variabile casuale in un intervallo di valori.
-
-\hypertarget{il-paradosso-delle-variabili-casuali-continue}{%
-\subsection{Il paradosso delle variabili casuali continue}\label{il-paradosso-delle-variabili-casuali-continue}}
-
-Nel nostro esempio, la pendenza dello spinner è esattamente 36 gradi; ma avrebbe potuto anche essere 36.0376531 gradi o qualunque altro valore in quell'intorno. Qual è la probabilità che la pendenza dello spinner sia esattamente 36? Paradossalmente, la risposta è zero:
-
+e si legge ``sommatoria per \(i\) che va da \(1\) a \(n\) di \(x_i\).'\,' Il simbolo \(\sum\) (lettera sigma maiuscola dell'alfabeto greco) indica l'operazione di somma, il simbolo \(x_i\) indica il generico addendo della sommatoria, le lettere \(1\) ed \(n\) indicano i cosiddetti \emph{estremi della sommatoria}, ovvero l'intervallo (da \(1\) fino a \(n\) estremi inclusi) in cui deve variare l'indice \(i\) allorché si sommano gli addendi \(x_i\).
+Solitamente l'estremo inferiore è \(1\) ma potrebbe essere qualsiasi altri numero \(m < n\). Quindi
 \[
-\mbox{P}[\Theta = 36] = 0.
+  \sum_{i=1}^n x_i = x_1 + x_{2} + \dots + x_{n}.
+\]
+Per esempio, se i valori \(x\) sono \(\{3, 11, 4, 7\}\), si avrà
+\[
+  \sum_{i=1}^4 x_i = 3+11+4+7 = 25 
+\]
+laddove \(x_1 = 3\), \(x_2 = 11\), eccetera. La quantità \(x_i\) nella formula precedente si dice l'\emph{argomento} della sommatoria, mentre la variabile \(i\), che prende i valori naturali successivi indicati nel simbolo, si dice \emph{indice} della sommatoria.
+
+La notazione di sommatoria può anche essere fornita nella forma seguente
+\begin{equation}
+  \sum_{P(i)} x_i\notag
+\end{equation}
+dove \(P(i)\) è qualsiasi proposizione riguardante \(i\) che può essere vera o falsa. Quando è ovvio che si vogliono sommare tutti i valori di \(n\) osservazioni, la notazione può essere semplificata nel modo seguente: \(\sum_{i} x_i\) oppure \(\sum x_i\). Al posto di \(i\) si possono trovare altre lettere: \(k, j, l, \dots\),.
+
+\hypertarget{manipolazione-di-somme}{%
+\section{Manipolazione di somme}\label{manipolazione-di-somme}}
+
+È conveniente utilizzare le seguenti regole per semplificare i calcoli che coinvolgono l'operatore della sommatoria.
+
+\hypertarget{proprietuxe0-1}{%
+\subsection{Proprietà 1}\label{proprietuxe0-1}}
+
+La sommatoria di \(n\) valori tutti pari alla stessa costante \(a\) è pari a \(n\) volte la costante stessa:
+\[
+  \sum_{i=1}^{n} a =  \underbrace{a + a + \dots + a}_{n~\text{volte}} = n a.
+  \]
+
+\hypertarget{proprietuxe0-2-proprietuxe0-distributiva}{%
+\subsection{Proprietà 2 (proprietà distributiva)}\label{proprietuxe0-2-proprietuxe0-distributiva}}
+
+Nel caso in cui l'argomento contenga una costante, è possibile riscrivere la sommatoria. Ad esempio con
+\[
+  \sum_{i=1}^{n} a x_i =  a x_1 + a x_2 + \dots + a x_n
+  \]
+è possibile raccogliere la costante \(a\) e fare \(a(x_1 +x_2 + \dots + x_n)\). Quindi possiamo scrivere
+\[
+  \sum_{i=1}^{n} a x_i =  a  \sum_{i=1}^{n} x_i.
+  \]
+
+\hypertarget{proprietuxe0-3-proprietuxe0-associativa}{%
+\subsection{Proprietà 3 (proprietà associativa)}\label{proprietuxe0-3-proprietuxe0-associativa}}
+
+Nel caso in cui
+\[
+  \sum_{i=1}^{n} (a + x_i) =  (a + x_1) +  (a + x_1) + \dots  (a + x_n)
+  \]
+si ha che
+\[
+  \sum_{i=1}^{n} (a + x_i) =  n a + \sum_{i=1}^{n} x_i.
+  \]
+È dunque chiaro che in generale possiamo scrivere
+\[
+  \sum_{i=1}^{n} (x_i + y_i) =  \sum_{i=1}^{n} x_i + \sum_{i=1}^{n} y_i.
+  \]
+
+\hypertarget{proprietuxe0-4}{%
+\subsection{Proprietà 4}\label{proprietuxe0-4}}
+
+Se deve essere eseguita un'operazione algebrica (innalzamento a potenza, logaritmo, ecc.) sull'argomento della sommatoria, allora tale operazione algebrica deve essere eseguita prima della somma. Per esempio,
+\[
+\sum_{i=1}^{n} x_i^2 = x_1^2 + x_2^2 + \dots + x_n^2 \neq \left(\sum_{i=1}^{n} x_i \right)^2.
 \]
 
-Infatti, se la probabilità di un qualunque valore fosse maggiore di zero, ogni altro possibile valore dovrebbe avere la stessa probabilità, dato che abbiamo assumiamo che tutti i valori \(\Theta\) sono egualmente probabili. Ma se poi andiamo a sommare tutte queste probabilità il totale diventerà maggiore di uno, il che non è possibile.
+\hypertarget{proprietuxe0-5}{%
+\subsection{Proprietà 5}\label{proprietuxe0-5}}
 
-Nel caso delle variabili casuali continue dobbiamo dunque rinunciare a qualcosa, e quel qualcosa è l'idea che, in una distribuzione continua, ciascun valore puntuale della variabile casuale possa avere una massa di probabilità maggiore di zero. Il paradosso sorge perché una realizzazione della variabile casuale conrtinua produce sempre un qualche numero, ma ciscuno di tali numeri ha probabilità nulla.
-
-\hypertarget{la-funzione-di-ripartizione-per-una-variabile-casuale-continua}{%
-\section{La funzione di ripartizione per una variabile casuale continua}\label{la-funzione-di-ripartizione-per-una-variabile-casuale-continua}}
-
-Supponiamo che \(\Theta \sim \mbox{uniform}(0, 360)\) sia la pendenza dello spinner. La funzione di ripartizione (ovvero, la distribuzione cumulativa) è definita esattamente come nel caso delle variabili casuali discrete:
-
+Nel caso si voglia calcolare \(\sum_{i=1}^{n} x_i y_i\), il prodotto tra i punteggi appaiati deve essere eseguito prima e la somma dopo:
 \[
-F_{\Theta}(\theta) = \mbox{P}[\Theta \leq \theta].
+\sum_{i=1}^{n} x_i y_i = x_1 y_1 + x_2 y_2 + \dots + x_n y_n,
+\]
+infatti, \(a_1 b_1 + a_2 b_2 \neq (a_1 + a_2)(b_1 + b_2)\).
+
+\hypertarget{doppia-sommatoria}{%
+\section{Doppia sommatoria}\label{doppia-sommatoria}}
+
+È possibile incontrare la seguente espressione in cui figurano una doppia sommatoria e un doppio indice:
+\[
+\sum_{i=1}^{n}\sum_{j=1}^{m} x_{ij}.
+\]
+La doppia sommatoria comporta che per ogni valore dell'indice esterno, \(i\) da \(1\) ad \(n\), occorre sviluppare la seconda sommatoria per \(j\) da \(1\) ad \(m\). Quindi,
+\[
+\sum_{i=1}^{3}\sum_{j=4}^{6} x_{ij} = (x_{1, 4} + x_{1, 5} + x_{1, 6}) + (x_{2, 4} + x_{2, 5} + x_{2, 6}) + (x_{3, 4} + x_{3, 5} + x_{3, 6}).
 \]
 
-\noindent
-Cioè, è la probabilità che la variabile casuale \(\Theta\) assuma un valore minore di o uguale a \(\theta\). In questo caso, poiché si presume che lo spinner sia simmetrico, la funzione di distribuzione cumulativa è
-
+Un caso particolare interessante di doppia sommatoria è il seguente:
 \[
-F_{\Theta}(\theta) = \frac{\theta}{360}.
+\sum_{i=1}^{n}\sum_{j=1}^{n} x_i y_j
 \]
-\noindent
-Questa è una funzione lineare di \(\theta\), cioè \(\frac{1}{360} \times \theta\), come indicato dal grafico della figura \ref{fig:spinner-cdf}.
+Si può osservare che nella sommatoria interna (quella che dipende dall'indice \(j\)), la quantità \(x_i\) è costante, ovvero non dipende dall'indice (che è \(j\)). Allora possiamo estrarre \(x_i\) dall'operatore di sommatoria interna e scrivere
+\[
+\sum_{i=1}^{n} \left( x_i \sum_{j=1}^{n} y_j \right).
+\]
+Allo stesso modo si può osservare che nell'argomento della sommatoria esterna la quantità costituita dalla sommatoria in \(j\) non dipende dall'indice \(i\) e quindi questa quantità può essere estratta dalla sommatoria esterna. Si ottiene quindi
+\[
+\sum_{i=1}^{n}\sum_{j=1}^{n} x_i y_j = \sum_{i=1}^{n} \left( x_i \sum_{j=1}^{n} y_j \right) = \sum_{i=1}^{n}\ x_i \sum_{j=1}^{n} y_j.
+\]
 
-\begin{figure}
-
-{\centering \includegraphics{019_density_func_files/figure-latex/spinner-cdf-1} 
-
-}
-
-\caption{Funzione di distribuzione cumulativa per l'angolo $\theta$ (in gradi) risultante da una rotazione di uno spinner simmetrico. La linea tratteggiata mostra il valore a 180 gradi, che corrisponde ad una probabilità di 0.5, e la linea tratteggiata a 270 gradi, che corrisponde ad una probabilità di 0.75.}\label{fig:spinner-cdf}
-\end{figure}
-
-Possiamo verificare questo risultato mediante simulazione. Per stimare la funzione di ripartizione, simuliamo \(M\) valori \(\theta^{(m)}\) e poi li ordiniamo in ordine crescente.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{M }\OtherTok{\textless{}{-}} \DecValTok{1000}
-\NormalTok{theta }\OtherTok{\textless{}{-}} \FunctionTok{runif}\NormalTok{(M, }\DecValTok{0}\NormalTok{, }\DecValTok{360}\NormalTok{)}
-\NormalTok{theta\_asc }\OtherTok{\textless{}{-}} \FunctionTok{sort}\NormalTok{(theta)}
-\NormalTok{prob }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{:}\NormalTok{M) }\SpecialCharTok{/}\NormalTok{ M}
-\NormalTok{unif\_cdf\_df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
-  \AttributeTok{theta =}\NormalTok{ theta\_asc,}
-  \AttributeTok{prob =}\NormalTok{ prob}
-\NormalTok{)}
-\NormalTok{unif\_cdf\_plot }\OtherTok{\textless{}{-}}
-\NormalTok{  unif\_cdf\_df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ theta, }\AttributeTok{y =}\NormalTok{ prob)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{90}\NormalTok{, }\DecValTok{180}\NormalTok{, }\DecValTok{270}\NormalTok{, }\DecValTok{360}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.25}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\FloatTok{0.75}\NormalTok{, }\FloatTok{1.0}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\FunctionTok{expression}\NormalTok{(theta)) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\FunctionTok{expression}\NormalTok{(F[Theta](theta)))}
-\NormalTok{unif\_cdf\_plot}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}
-
-{\centering \includegraphics{019_density_func_files/figure-latex/unnamed-chunk-2-1} 
-
-}
-
-\caption{Grafico della funzione di ripartizione di una variabile casuale $\Theta$ che rappresenta il risultato di una rotazione di uno spinner simmetrico. Come previsto, tale funzione è una semplice funzione lineare perché la variabile sottostante $\Theta$ ha una distribuzione uniforme.}\label{fig:unnamed-chunk-2}
-\end{figure}
-
-\noindent
-Anche con \emph{M} = 1000, tale grafico è praticamente indistinguibile da quello prodotto per via analitica.
-
-Come nel caso delle variabili casuali discrete, la funzione di ripartizione può essere utilizzata per calcolare le probabilità che la variabile casuale assuma valori in un intervallo. Ad esempio
+\begin{example}
+Si verifichi quanto detto sopra nel caso particolare di \(x = \{2, 3, 1\}\) e \(y = \{1, 4, 9\}\), svolgendo prima la doppia sommatoria per poi verificare che quanto così ottenuto sia uguale al prodotto delle due sommatorie.
 
 \begin{align}
-\mbox{P}[180 < \Theta \leq 270] &= \mbox{P}[\Theta \leq 270] \ - \ \mbox{P}[\Theta \leq 180] \notag\\
-&= F_{\Theta}(270) - F_{\Theta}(180)\notag\\
-&= \frac{3}{4} - \frac{1}{2} \notag\\
-&= \frac{1}{4}.
+\sum_{i=1}^3 \sum_{j=1}^3 x_i y_j &= x_1y_1 + x_1y_2 + x_1y_3 + 
+x_2y_1 + x_2y_2 + x_2y_3 + 
+x_3y_1 + x_3y_2 + x_3y_3 \notag\\
+&= 2 \times (1+4+9) + 3 \times (1+4+9) + 2 \times (1+4+9) = 84,\notag
 \end{align}
-
-\hypertarget{la-distribuzione-uniforme}{%
-\section{La distribuzione uniforme}\label{la-distribuzione-uniforme}}
-
-Dopo avere visto come generare numeri casuali uniformi da 0 a 360, ora consideriamo una variabile casuale che assume valori nell'intervallo da 0 a 1. Chiamiamo sempre \(\Theta\) tale variabile casuale, ma assumiamo ora che abbia una distribuzione continua uniforme sull'intervallo {[}0, 1{]}:
-
+ovvero
 \[
-\Theta \sim Uniform(0, 1).
+(2 + 3 + 1) \times (1+4+9) = 84.
 \]
-\noindent
-Poiché le probabilità assumono valori nell'intervallo {[}0, 1{]}, possiamo pensare a \(\Theta\) come ad un valore di probabilità preso a caso in ciascuna realizzazione dell'esperimento casuale.
+\end{example}
 
-La distribuzione uniforme è la più semplice delle distribuzioni di densità di probabilità. Per chiarire le proprietà di tale distribuzione, iniziamo con una simulazione e generiamo 10,000 valori casuali di \(\Theta\). I primi 10 di tali valori sono stampati qui di seguito:
+\hypertarget{sommatorie-e-produttorie-e-operazioni-vettoriali-in-r}{%
+\section{\texorpdfstring{Sommatorie (e produttorie) e operazioni vettoriali in \texttt{R}}{Sommatorie (e produttorie) e operazioni vettoriali in R}}\label{sommatorie-e-produttorie-e-operazioni-vettoriali-in-r}}
+
+Si noti che la notazione
+\[
+\sum_{n=0}^4 3n
+\]
+non è altro che un ciclo \texttt{for}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
-\NormalTok{M }\OtherTok{\textless{}{-}} \DecValTok{10000}
-\NormalTok{logit }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{log}\NormalTok{(x }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ x))}
-\NormalTok{theta }\OtherTok{\textless{}{-}} \FunctionTok{runif}\NormalTok{(M)}
-\NormalTok{alpha }\OtherTok{\textless{}{-}} \FunctionTok{logit}\NormalTok{(theta)}
-\ControlFlowTok{for}\NormalTok{ (m }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{) \{}
-  \FunctionTok{print}\NormalTok{(alpha[m])}
+\NormalTok{sum }\OtherTok{=} \DecValTok{0}\NormalTok{;}
+\ControlFlowTok{for}\NormalTok{ (}\AttributeTok{n =} \DecValTok{0}\NormalTok{; n }\SpecialCharTok{\textless{}=} \DecValTok{4}\NormalTok{; n}\SpecialCharTok{++}\NormalTok{) \{}
+\NormalTok{  sum }\SpecialCharTok{+}\ErrorTok{=} \DecValTok{3} \SpecialCharTok{*}\NormalTok{ n;}
 \NormalTok{\}}
-\CommentTok{\#\textgreater{} [1] {-}2.053458}
-\CommentTok{\#\textgreater{} [1] 0.4993195}
-\CommentTok{\#\textgreater{} [1] 0.4442646}
-\CommentTok{\#\textgreater{} [1] 0.5039172}
-\CommentTok{\#\textgreater{} [1] 1.822914}
-\CommentTok{\#\textgreater{} [1] 0.5767125}
-\CommentTok{\#\textgreater{} [1] {-}4.647369}
-\CommentTok{\#\textgreater{} [1] {-}1.193965}
-\CommentTok{\#\textgreater{} [1] 0.6905252}
-\CommentTok{\#\textgreater{} [1] 0.05702001}
 \end{Highlighting}
 \end{Shaded}
 
-Creaiamo ora un istogramma che descrive la distribuzione delle 10,000 realizzazioni \(\Theta\) che abbiamo trovato:
+scritto in C, oppure
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{df\_prob\_unif }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{theta =}\NormalTok{ theta)}
-\NormalTok{unif\_prob\_plot }\OtherTok{\textless{}{-}}
-  \FunctionTok{ggplot}\NormalTok{(df\_prob\_unif, }\FunctionTok{aes}\NormalTok{(theta)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_histogram}\NormalTok{(}
-    \AttributeTok{binwidth =} \DecValTok{1} \SpecialCharTok{/} \DecValTok{34}\NormalTok{, }\AttributeTok{center =} \DecValTok{1} \SpecialCharTok{/} \DecValTok{68}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
-    \AttributeTok{size =} \FloatTok{0.25}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.25}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\FloatTok{0.75}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{lim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1300}\NormalTok{), }\AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\DecValTok{500}\NormalTok{, }\DecValTok{1000}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\FunctionTok{expression}\NormalTok{(}\FunctionTok{paste}\NormalTok{(Theta, }\StringTok{" \textasciitilde{} Uniform(0, 1)"}\NormalTok{)))}
-\NormalTok{unif\_prob\_plot}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}
-
-{\centering \includegraphics{019_density_func_files/figure-latex/unnamed-chunk-4-1} 
-
-}
-
-\caption{Istogramma di $10\,000$ realizzazioni $\Theta \sim \mbox{Uniform}(0, 1)$. }\label{fig:unnamed-chunk-4}
-\end{figure}
-
-È chiaro che, all'aumentare del numero delle realizzazioni \(\Theta\), il profilo dell'istogramma tenderà a diventare una linea retta. Ciò significa che la funzione di densità di una variabile casuale uniforme continua è una costante. Cioè, se \(\Theta \sim \mbox{Uniform} (a, b)\), allora \(p_{\Theta}(\theta) = c\), dove \(c\) è una costante.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{uniform\_pdf\_df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{y =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\AttributeTok{p\_y =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{))}
-\NormalTok{uniform\_pdf\_plot }\OtherTok{\textless{}{-}}
-  \FunctionTok{ggplot}\NormalTok{(uniform\_pdf\_df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ y, }\AttributeTok{y =}\NormalTok{ p\_y)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{color =} \StringTok{"\#333333"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \FloatTok{1.5}\NormalTok{, }\AttributeTok{color =} \StringTok{"\#333333"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{scale\_y\_continuous}\NormalTok{(}
-    \AttributeTok{lim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{),}
-    \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"0"}\NormalTok{, }\StringTok{"c"}\NormalTok{)}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\FunctionTok{expression}\NormalTok{(theta)) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\FunctionTok{expression}\NormalTok{(}\FunctionTok{paste}\NormalTok{(p[Theta], }\StringTok{"("}\NormalTok{, theta, }\StringTok{" | a, b)"}\NormalTok{))) }\SpecialCharTok{+}
-  \FunctionTok{geom\_segment}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \DecValTok{0}\NormalTok{, }\AttributeTok{y =} \DecValTok{0}\NormalTok{, }\AttributeTok{xend =} \DecValTok{0}\NormalTok{, }\AttributeTok{yend =} \DecValTok{1}\NormalTok{), }\AttributeTok{linetype =} \StringTok{"dotted"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_segment}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \DecValTok{1}\NormalTok{, }\AttributeTok{y =} \DecValTok{0}\NormalTok{, }\AttributeTok{xend =} \DecValTok{1}\NormalTok{, }\AttributeTok{yend =} \DecValTok{1}\NormalTok{), }\AttributeTok{linetype =} \StringTok{"dotted"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_segment}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \DecValTok{0}\NormalTok{, }\AttributeTok{y =} \DecValTok{0}\NormalTok{, }\AttributeTok{xend =} \DecValTok{1}\NormalTok{, }\AttributeTok{yend =} \DecValTok{0}\NormalTok{), }\AttributeTok{linetype =} \StringTok{"dotted"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_segment}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \SpecialCharTok{{-}}\FloatTok{0.25}\NormalTok{, }\AttributeTok{y =} \DecValTok{0}\NormalTok{, }\AttributeTok{xend =} \DecValTok{0}\NormalTok{, }\AttributeTok{yend =} \DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_segment}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \DecValTok{1}\NormalTok{, }\AttributeTok{y =} \DecValTok{0}\NormalTok{, }\AttributeTok{xend =} \FloatTok{1.25}\NormalTok{, }\AttributeTok{yend =} \DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \DecValTok{0}\NormalTok{, }\AttributeTok{y =} \DecValTok{0}\NormalTok{), }\AttributeTok{size =} \FloatTok{1.5}\NormalTok{, }\AttributeTok{shape =} \DecValTok{21}\NormalTok{, }\AttributeTok{fill =} \StringTok{"\#ffffe6"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \DecValTok{1}\NormalTok{, }\AttributeTok{y =} \DecValTok{0}\NormalTok{), }\AttributeTok{size =} \FloatTok{1.5}\NormalTok{, }\AttributeTok{shape =} \DecValTok{21}\NormalTok{, }\AttributeTok{fill =} \StringTok{"\#ffffe6"}\NormalTok{)}
-\NormalTok{uniform\_pdf\_plot}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics{019_density_func_files/figure-latex/unnamed-chunk-5-1} \end{center}
-
-\noindent
-Dal grafico vediamo che l'area sottesa alla funzione di densità è \((b - a)\times c\). Dato che tale area deve essere unitaria, ovvero, \((b - a) \times c = 1\), possiamo trovare \(c\) dividendo entrambi i termini per \(b - a\),
-
-\[
-c  = \frac{\displaystyle{1}}{\displaystyle b - a}.
-\]
-
-\noindent
-Ovvero, se \(\Theta \sim \mbox{Uniform}(a, b)\), allora
-
-\[
-p_{\Theta}(\theta) = \mbox{Uniform}(\theta \mid a, b),
-\]
-
-\noindent
-laddove
-
-\[
-\mbox{Uniform}(\theta \mid a, b) = \frac{1}{b - a}.
-\]
-
-In conclusione, la densità di una variabile casuale uniforme continua non dipende da \(\theta\) --- è costante e identica per ogni possibile valore \(\theta\).\footnote{Per comodità, possiamo assumere che i valori impossibili di \(\theta\) abbiano una densità uguale a zero.} Vedremo nel prossimo Paragrafo che, eseguendo una trasformazione su questa variabile casuale uniforme, possiamo creare altre variabili casuali di interesse.
-
-\hypertarget{la-trasformazione-logit}{%
-\section{La trasformazione logit}\label{la-trasformazione-logit}}
-
-Supponiamo che \(\Theta\) sia una variabile casuale con una distribuzione continua uniforme sull'intervallo {[}0, 1{]}, cioè \(\Theta \sim Uniform(0, 1)\). Vedremo ora come, partendo dalla distribuzione uniforme, sia possibile generare una nuova variable casuale la cui funzione di densità si chiama distribuzione logistica.
-
-Data una variabile casuale uniforme continua \(\Theta \in (0, 1)\), possiamo definire i suoi log odds come
-
-\begin{equation}
-\mbox{logit}(\theta) = \log \frac{\theta}{1 - \theta},
-\label{eq:def-logit}
-\end{equation}
-
-\noindent
-ovvero come il logaritmo naturale degli odds, \(\frac{\theta}{1 -\theta}\).
-
-Chiameremo
-
-\[
-\Phi = \mbox{logit}(\Theta)
-\]
-
-\noindent
-la variabile casuale le cui realizzazoni sono i logit (log odds) di \(\Theta\).
-
-Per comprendere la distribuzione di \(\Phi\) facciamo nuovamente ricorso alla simulazione. Iniziamo con il generare un certo numero di realizzazioni \(\Theta\) dalle quali otteniamo \(\Phi = \mathrm{logit}(\Theta)\). Mediante un istogramma esaminiamo la distribuzione dei valori \(\Phi\) che abbiamo trovato. Notiamo che, anche se \(\Theta \sim \mbox{Uniform}(0, 1)\), la variabile casuale \(\Phi = \mbox{logit}(\Theta)\) non è distribuita in maniera uniforme. Un'altra caratteristica di \(\Phi\) è che la distribuzione dei suoi valori è simmetrica intorno allo zero. Infine, dall'istogramma vediamo che la distribuzione di \(\Phi\) è quasi completamente contenuta nell'intervallo \(\pm 6\) dall'origine.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{df\_log\_odds }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{alpha =}\NormalTok{ alpha)}
-\NormalTok{log\_odds\_plot }\OtherTok{\textless{}{-}}
-  \FunctionTok{ggplot}\NormalTok{(df\_log\_odds, }\FunctionTok{aes}\NormalTok{(alpha)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_histogram}\NormalTok{(}
-    \AttributeTok{binwidth =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.25}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{scale\_x\_continuous}\NormalTok{(}
-    \AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{6}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{4}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{6}\NormalTok{)}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{scale\_y\_continuous}\NormalTok{(}
-    \AttributeTok{lim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1300}\NormalTok{), }\AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\DecValTok{500}\NormalTok{, }\DecValTok{1000}\NormalTok{)}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}
-    \FunctionTok{expression}\NormalTok{(}\FunctionTok{paste}\NormalTok{(Phi, }\StringTok{" = "}\NormalTok{, }\FunctionTok{logit}\NormalTok{(Theta)))}
-\NormalTok{  )}
-\NormalTok{log\_odds\_plot}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}
-
-{\centering \includegraphics{019_density_func_files/figure-latex/unnamed-chunk-6-1} 
-
-}
-
-\caption{Istogramma di $10\,000$ realizzazioni $\Theta \sim \mbox{Uniform}(0, 1)$ trasformate mediante la funzione logit $\Phi = \mbox{logit}(\Theta).$}\label{fig:unnamed-chunk-6}
-\end{figure}
-
-Lo zero sulla scala dei logit corrisponde a 0.5 sulla scala delle probabilità, cioè
-
-\[
-0 = \mbox{logit}(0.5),
-\]
-\noindent
-o equivalenteente,
-\[
-\mbox{logit}^{-1}(0) = 0.5.
-\]
-L'inverso della funzione logit è dato dalla \emph{funzione logistica}
-
-\begin{equation}
-\mbox{logit}^{-1}(u) = \frac{1}{1 + \exp(-u)}.
-\label{eq:def-logistic-fun}
-\end{equation}
-\noindent
-Questo non è sorprendente dato che
-
-\[
-\mbox{logit}^{-1}(-6) = 0.0025
-\]
-\noindent
-e
-
-\[
-\mbox{logit}^{-1}(6) = 0.9975
-\]
-\noindent
-sulla scala delle probabilità.
-
-Possiamo anche fare quello che abbiamo fatto per le distribuzioni uniformi e, mediante simulazione, generare la funzione di ripartizione di \(\Phi\) (figura \ref{fig:logistic-cdf}).
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{logit }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(u) }\FunctionTok{log}\NormalTok{(u }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ u))}
-\NormalTok{M }\OtherTok{\textless{}{-}} \DecValTok{1000}
-\NormalTok{phi }\OtherTok{\textless{}{-}} \FunctionTok{logit}\NormalTok{(}\FunctionTok{runif}\NormalTok{(M))}
-\NormalTok{phi\_asc }\OtherTok{\textless{}{-}} \FunctionTok{sort}\NormalTok{(phi)}
-\NormalTok{prob }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{:}\NormalTok{M) }\SpecialCharTok{/}\NormalTok{ M}
-\NormalTok{logistic\_cdf\_df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{phi =}\NormalTok{ phi\_asc, }\AttributeTok{prob =}\NormalTok{ prob)}
-\NormalTok{logistic\_cdf\_plot }\OtherTok{\textless{}{-}}
-  \FunctionTok{ggplot}\NormalTok{(logistic\_cdf\_df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ phi, }\AttributeTok{y =}\NormalTok{ prob)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_hline}\NormalTok{(}
-    \AttributeTok{yintercept =} \DecValTok{1}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.3}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{,}
-    \AttributeTok{color =} \StringTok{"\#333333"}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_hline}\NormalTok{(}
-    \AttributeTok{yintercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.3}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{,}
-    \AttributeTok{color =} \StringTok{"\#333333"}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_vline}\NormalTok{(}
-    \AttributeTok{xintercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.3}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dotted"}\NormalTok{,}
-    \AttributeTok{color =} \StringTok{"\#333333"}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_hline}\NormalTok{(}
-    \AttributeTok{yintercept =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.3}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dotted"}\NormalTok{,}
-    \AttributeTok{color =} \StringTok{"\#333333"}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{scale\_x\_continuous}\NormalTok{(}
-    \AttributeTok{lim =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{7}\NormalTok{, }\DecValTok{7}\NormalTok{),}
-    \AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{6}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{4}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{6}\NormalTok{)}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.25}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\FloatTok{0.75}\NormalTok{, }\FloatTok{1.0}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\FunctionTok{expression}\NormalTok{(phi)) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\FunctionTok{expression}\NormalTok{(F[Phi](phi)))}
-\NormalTok{logistic\_cdf\_plot}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}
-
-{\centering \includegraphics{019_density_func_files/figure-latex/logistic-cdf-1} 
-
-}
-
-\caption{Grafico della funzione di distribuzione cumulativa di una variabile casuale $\Phi = \mbox{logit}(\Theta)$ che rappresenta la trasformazione logaritmica di una variabile casuale distribuita uniformemente $\Theta \sim \mbox{uniform }(0, 1)$. La curva ha una forma sigmoidale. Gli asintoti a 0 e 1 sono indicati con linee tratteggiate; la curva è simmetrica intorno allo 0 sull'asse $x$ e a 0.5 sull'asse $y$, come evidenziato dalle linee punteggiate.}\label{fig:logistic-cdf}
-\end{figure}
-
-\noindent
-Il risultato è una funzione a forma sigmoidale i cui valori sono compresi tra 0 e 1, con asintoti a uno quando \(\theta\) tende a \(+\infty\) e a zero quando \(\theta\) tende a \(-\infty\). In corrispondenza di \(\Phi\) = 0 troviamo il valore 0.5. La curva prodotta dalla simulazione è una curva molto nota chiamata \emph{funzione logistica}. In termini analitici, la funzione logistica viene espressa come segue:
-
-\begin{equation}
-F_{\Theta}(\theta) = \mathrm{logit}^{-1}(\theta) = \frac{1}{1 + \exp(-\theta)},
-\label{eq:def-logistic-analitic}
-\end{equation}
-
-\noindent
-con \(\theta \in [0, 1].\)
-
-\hypertarget{dagli-istogrammi-alle-densituxe0}{%
-\section{Dagli istogrammi alle densità}\label{dagli-istogrammi-alle-densituxe0}}
-
-Non esiste l'equivalente di una funzione di massa di probabilità per le variabili casuali continue. Esiste invece una \emph{funzione di densità di probabilità} la quale, nei termini di una simulazione, può essere concepita nel modo seguente: avendo a disposizione un numero enorme di casi, quando l'intervallo \(\Delta\) di ciascuna classe \(\rightarrow\) 0, la spezzata tende a diventare una curva continua. Tale curva continua \(f(x)\) è detta funzione di densità di probabilità.
-
-Come si trasformano gli istogrammi all'aumentare del numero di osservazioni? Nei grafici seguenti, la numerosità cresce da \(10\) a \(1\,000\,000\).
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
-\NormalTok{df\_log\_odds\_growth }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{()}
-\ControlFlowTok{for}\NormalTok{ (log10M }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{) \{}
-\NormalTok{  M }\OtherTok{\textless{}{-}} \DecValTok{10}\SpecialCharTok{\^{}}\NormalTok{log10M}
-\NormalTok{  alpha }\OtherTok{\textless{}{-}} \FunctionTok{logit}\NormalTok{(}\FunctionTok{runif}\NormalTok{(M))}
-\NormalTok{  df\_log\_odds\_growth }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(}
-\NormalTok{    df\_log\_odds\_growth,}
-    \FunctionTok{data.frame}\NormalTok{(}
-      \AttributeTok{alpha =}\NormalTok{ alpha,}
-      \AttributeTok{M =} \FunctionTok{rep}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"M = \%d"}\NormalTok{, M), M)}
-\NormalTok{    )}
-\NormalTok{  )}
+\NormalTok{sum }\OtherTok{\textless{}{-}} \DecValTok{0}
+\ControlFlowTok{for}\NormalTok{ (n }\ControlFlowTok{in} \DecValTok{0}\SpecialCharTok{:}\DecValTok{4}\NormalTok{) \{}
+\NormalTok{  sum }\OtherTok{=}\NormalTok{ sum }\SpecialCharTok{+} \DecValTok{3} \SpecialCharTok{*}\NormalTok{ n}
 \NormalTok{\}}
-\NormalTok{log\_odds\_growth\_plot }\OtherTok{\textless{}{-}}
-\NormalTok{  df\_log\_odds\_growth }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(alpha)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{bins =} \DecValTok{75}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{M, }\AttributeTok{scales =} \StringTok{"free"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{scale\_x\_continuous}\NormalTok{(}
-    \AttributeTok{lim =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{8.5}\NormalTok{, }\FloatTok{8.5}\NormalTok{), }\AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{5}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{)}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\FunctionTok{expression}\NormalTok{(}\FunctionTok{paste}\NormalTok{(Phi, }\StringTok{" = "}\NormalTok{, }\FunctionTok{logit}\NormalTok{(Theta)))) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"proportion of draws"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}
-    \AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{(),}
-    \AttributeTok{axis.ticks.y =} \FunctionTok{element\_blank}\NormalTok{(),}
-    \AttributeTok{panel.spacing.x =} \FunctionTok{unit}\NormalTok{(}\DecValTok{2}\NormalTok{, }\StringTok{"lines"}\NormalTok{),}
-    \AttributeTok{panel.spacing.y =} \FunctionTok{unit}\NormalTok{(}\DecValTok{2}\NormalTok{, }\StringTok{"lines"}\NormalTok{)}
-\NormalTok{  )}
-\NormalTok{log\_odds\_growth\_plot}
+\NormalTok{sum}
+\CommentTok{\#\textgreater{} [1] 30}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{019_density_func_files/figure-latex/unnamed-chunk-7-1} 
-
-}
-
-\caption{Istogramma di $M$ campioni casuali $\Theta \sim \mbox{Uniform}(0, 1)$ trasformati in valori $\Phi = \mbox{logit}(\Theta).$ Il profilo limite dell'istogramma è evidenziato nella figura in basso a destra che è stata costruita usando $1\,000\,000$ di osservazioni.}\label{fig:unnamed-chunk-7}
-\end{figure}
-
-In un istogramma, l'area di ciascuna barra è proporzionale alla frequenza relativa delle osservazioni in quel'intervallo. Perché tutti gli intervalli hanno la stessa ampiezza, anche l'altezza di ciascuna barra sarà proporzionale alla frequenza relativa delle osservazioni in quel'intervallo.
-
-Nella simulazione, possiamo pensare all'area di ciascuna barra dell'istogramma come alla stima della probabilità che la variabile casuale assuma un valore compreso nell'intervallo considerato. All'aumentare del numero \(M\) di osservazioni, le probabilità stimate si avvicinano sempre di più ai veri valori della probabilità. All'aumentare del numero degli intervalli (quando l'ampiezza \(\Delta\) dell'intervallo \(\rightarrow\) 0), il profilo dell'istogramma tende a diventare una curva continua. Tale curva continua è la funzione di densità di probabilità della variabile casuale. Per l'esempio presente, con \(M =1\,000\,000\), otteniamo il grafico riportato nella figura \ref{fig:hist-dens-example}.
+scritto in \texttt{R}. In maniera equivalente, e più semplice, possiamo scrivere
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
-\NormalTok{M }\OtherTok{\textless{}{-}} \FloatTok{1e6}
-\NormalTok{alpha }\OtherTok{\textless{}{-}} \FunctionTok{logit}\NormalTok{(}\FunctionTok{runif}\NormalTok{(M))}
-\NormalTok{density\_limit\_df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{alpha =}\NormalTok{ alpha)}
-\NormalTok{density\_limit\_plot }\OtherTok{\textless{}{-}}
-\NormalTok{  density\_limit\_df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(alpha)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_histogram}\NormalTok{(}
-    \AttributeTok{stat =} \StringTok{"density"}\NormalTok{, }\AttributeTok{n =} \DecValTok{75}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
-    \AttributeTok{size =} \FloatTok{0.15}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{stat\_function}\NormalTok{(}
-    \AttributeTok{fun =}\NormalTok{ dlogis,}
-    \AttributeTok{args =} \FunctionTok{list}\NormalTok{(}\AttributeTok{location =} \DecValTok{0}\NormalTok{, }\AttributeTok{scale =} \DecValTok{1}\NormalTok{),}
-    \AttributeTok{col =} \StringTok{"black"}\NormalTok{,}
-    \AttributeTok{size =} \FloatTok{0.3}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{scale\_x\_continuous}\NormalTok{(}
-    \AttributeTok{lim =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{9}\NormalTok{, }\DecValTok{9}\NormalTok{),}
-    \AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{6}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{4}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{6}\NormalTok{)}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}
-    \FunctionTok{expression}\NormalTok{(}\FunctionTok{paste}\NormalTok{(Phi, }\StringTok{" = "}\NormalTok{, }\FunctionTok{logit}\NormalTok{(Theta)))}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"frequenza relativa"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}
-    \AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{(),}
-    \AttributeTok{axis.ticks.y =} \FunctionTok{element\_blank}\NormalTok{()}
-\NormalTok{  )}
-\NormalTok{density\_limit\_plot}
+\FunctionTok{sum}\NormalTok{(}\DecValTok{3} \SpecialCharTok{*}\NormalTok{ (}\DecValTok{0}\SpecialCharTok{:}\DecValTok{4}\NormalTok{))}
+\CommentTok{\#\textgreater{} [1] 30}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{figure}
+Allo stesso modo, la notazione
+\[
+\prod_{n=1}^{4} 2n
+\]
+è equivalente al ciclo \texttt{for}
 
-{\centering \includegraphics[width=1\linewidth]{019_density_func_files/figure-latex/hist-dens-example-1} 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prod }\OtherTok{\textless{}{-}} \DecValTok{1}
+\ControlFlowTok{for}\NormalTok{ (n }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{) \{}
+\NormalTok{  prod }\OtherTok{\textless{}{-}}\NormalTok{ prod }\SpecialCharTok{*} \DecValTok{2} \SpecialCharTok{*}\NormalTok{ n}
+\NormalTok{\}}
+\NormalTok{prod}
+\CommentTok{\#\textgreater{} [1] 384}
+\end{Highlighting}
+\end{Shaded}
 
-}
+il che si può scrivere, più semplicemente, come
 
-\caption{Istogramma di $M = 1\,000\,000$ campioni casuali $\Theta \sim \mbox{Uniform}(0,1)$ trasformati in valori $\Phi = \mbox{logit}(\Theta)$. La spezzata nera congiunge i punti centrali superiori delle barre dell'istogramma. Nel limite, quando il numero di osservazioni e di barre tende all'infinito, tale spezzata approssima la funzione di densità di probabilità della variabile casuale.}\label{fig:hist-dens-example}
-\end{figure}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{prod}\NormalTok{(}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{))}
+\CommentTok{\#\textgreater{} [1] 384}
+\end{Highlighting}
+\end{Shaded}
 
-Nella statistica descrittiva abbiamo già incontrato una rappresentazione che ha lo stesso significato della funzione di densità, ovvero il kernel density plot. La stima della densità del kernel (KDE), infatti, è un modo non parametrico per stimare la funzione di densità di probabilità di una variabile casuale.
-
-\hypertarget{considerazioni-conclusive}{%
-\section*{Considerazioni conclusive}\label{considerazioni-conclusive}}
-\addcontentsline{toc}{section}{Considerazioni conclusive}
-
-Sia \(y\) una variabile casuale continua con funzione di densità di probabilità \(p(y)\). Allora \(p(y)\) ha le seguenti proprietà:
-
-\begin{itemize}
-\tightlist
-\item
-  \(p(y) \geq 0\), ovvero, l'ordinata della funzione di densità è 0 o positiva;
-\item
-  \(\int_y p(y) dy = 1\), ovvero, l'area sottesa dalla \(p(y)\) è unitaria\footnote{Per quel che riguarda la notazione dell'integrale, ovvero \(\int_x dx\), rimando alla discussione di S.P. Thompson: \url{https://calculusmadeeasy.org/1.html}};
-\item
-  \(P(a < y < b) = \int_a^b p(y) dy\), se \(a \leq b\), ovvero, l'area sottesa dalla \(p(y)\) tra due punti \(a\) e \(b\) corrisponde alla probabilità che la v.c. \(y\) assuma un valore compresto tra questi due estremi.
-\end{itemize}
-
-\textbf{Interpretazione.} È possibile che \(p(y) > 1\), quindi una densità di probabilità non può essere interpretata come una probabilità. Piuttosto, la densità \(p(y)\) può essere utilizzata per confrontare la plausibilità relativa di diversi valori \(Y\). Considerata una variabile casuale \(Y\) di cui è disponibile un insieme di realizzazioni, tanto maggiore è \(p(y_k)\) rispetto a \(p(y_l)\), tanto più grande sarà la nostra certezza che valori nell'intorno di \(y_k\) verranno osservati con maggiore frequenza di valori nell'intorno di \(y_l\).
 
   \bibliography{refs.bib,book.bib,packages.bib}
 
