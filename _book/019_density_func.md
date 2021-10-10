@@ -11,14 +11,10 @@ Le variabili casuali continue assumono valori reali. L'insieme dei numeri reali 
 
 Consideriamo il seguente esperimento casuale. Facciamo ruotare ad alta velocità uno spinner simmetrico imperniato su un goniometro e osserviamo la posizione in cui si ferma (individuata dall'angolo acuto con segno tra il suo asse e l'asse orizzontale del goniometro). Chiamiamo $\Theta$ la variabile casuale "pendenza dello spinner". Nella trattazione seguente useremo i gradi e, di conseguenza, $\Theta \in [0, 360]$.
 
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{019_density_func_files/figure-latex/unnamed-chunk-1-1} 
-
-}
-
-\caption{Uno spinner che riposa a 36 gradi, o il dieci percento del percorso intorno al cerchio. La pendenza dello spinner può assumere qualunque valore tra 0 e 360 gradi.}(\#fig:unnamed-chunk-1)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="019_density_func_files/figure-epub3/unnamed-chunk-1-1.png" alt="Uno spinner che riposa a 36 gradi, o il dieci percento del percorso intorno al cerchio. La pendenza dello spinner può assumere qualunque valore tra 0 e 360 gradi." width="100%" />
+<p class="caption">(\#fig:unnamed-chunk-1)Uno spinner che riposa a 36 gradi, o il dieci percento del percorso intorno al cerchio. La pendenza dello spinner può assumere qualunque valore tra 0 e 360 gradi.</p>
+</div>
 
 Cosa implica per $\Theta$ dire che lo spinner è simmetrico? Possiamo dire che, in ciascuna prova, la rotazione dello spinner produce un angolo qualunque da 0 a 360 gradi. In altri termini, un valore $\Theta$ compreso tra 0 e 36 gradi ha la stessa probabilità di essere osservato di un valore $\Theta$ compreso tra 200 e 236 gradi. Inoltre, poiché 36 gradi è un decimo del percorso intorno al cerchio, la probabilità di ottenere un qualsiasi intervallo di 36 gradi sarà sempre uguale al 10%. Ovvero
 
@@ -75,14 +71,10 @@ $$
 \noindent
 Questa è una funzione lineare di $\theta$, cioè $\frac{1}{360} \times \theta$, come indicato dal grafico della figura \@ref(fig:spinner-cdf).
 
-\begin{figure}
-
-{\centering \includegraphics{019_density_func_files/figure-latex/spinner-cdf-1} 
-
-}
-
-\caption{Funzione di distribuzione cumulativa per l'angolo $\theta$ (in gradi) risultante da una rotazione di uno spinner simmetrico. La linea tratteggiata mostra il valore a 180 gradi, che corrisponde ad una probabilità di 0.5, e la linea tratteggiata a 270 gradi, che corrisponde ad una probabilità di 0.75.}(\#fig:spinner-cdf)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="019_density_func_files/figure-epub3/spinner-cdf-1.png" alt="Funzione di distribuzione cumulativa per l'angolo $\theta$ (in gradi) risultante da una rotazione di uno spinner simmetrico. La linea tratteggiata mostra il valore a 180 gradi, che corrisponde ad una probabilità di 0.5, e la linea tratteggiata a 270 gradi, che corrisponde ad una probabilità di 0.75."  />
+<p class="caption">(\#fig:spinner-cdf)Funzione di distribuzione cumulativa per l'angolo $\theta$ (in gradi) risultante da una rotazione di uno spinner simmetrico. La linea tratteggiata mostra il valore a 180 gradi, che corrisponde ad una probabilità di 0.5, e la linea tratteggiata a 270 gradi, che corrisponde ad una probabilità di 0.75.</p>
+</div>
 
 Possiamo verificare questo risultato mediante simulazione. Per stimare la funzione di ripartizione, simuliamo $M$ valori $\theta^{(m)}$ e poi li ordiniamo in ordine crescente.
 
@@ -103,18 +95,14 @@ unif_cdf_plot <-
   scale_x_continuous(breaks = c(0, 90, 180, 270, 360)) +
   scale_y_continuous(breaks = c(0, 0.25, 0.5, 0.75, 1.0)) +
   xlab(expression(theta)) +
-  ylab(expression(F[Theta](theta))) 
+  ylab(expression(F[Theta](theta)))
 unif_cdf_plot
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{019_density_func_files/figure-latex/unnamed-chunk-2-1} 
-
-}
-
-\caption{Grafico della funzione di ripartizione di una variabile casuale $\Theta$ che rappresenta il risultato di una rotazione di uno spinner simmetrico. Come previsto, tale funzione è una semplice funzione lineare perché la variabile sottostante $\Theta$ ha una distribuzione uniforme.}(\#fig:unnamed-chunk-2)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="019_density_func_files/figure-epub3/unnamed-chunk-2-1.png" alt="Grafico della funzione di ripartizione di una variabile casuale $\Theta$ che rappresenta il risultato di una rotazione di uno spinner simmetrico. Come previsto, tale funzione è una semplice funzione lineare perché la variabile sottostante $\Theta$ ha una distribuzione uniforme."  />
+<p class="caption">(\#fig:unnamed-chunk-2)Grafico della funzione di ripartizione di una variabile casuale $\Theta$ che rappresenta il risultato di una rotazione di uno spinner simmetrico. Come previsto, tale funzione è una semplice funzione lineare perché la variabile sottostante $\Theta$ ha una distribuzione uniforme.</p>
+</div>
 
 \noindent
 Anche con _M_ = 1000, tale grafico è praticamente indistinguibile da quello prodotto per via analitica. 
@@ -148,8 +136,9 @@ M <- 10000
 logit <- function(x) log(x / (1 - x))
 theta <- runif(M)
 alpha <- logit(theta)
-for (m in 1:10)
+for (m in 1:10) {
   print(alpha[m])
+}
 #> [1] -2.053458
 #> [1] 0.4993195
 #> [1] 0.4442646
@@ -169,22 +158,20 @@ Creaiamo ora un istogramma che descrive la distribuzione delle 10,000 realizzazi
 df_prob_unif <- data.frame(theta = theta)
 unif_prob_plot <-
   ggplot(df_prob_unif, aes(theta)) +
-  geom_histogram(binwidth = 1/34, center = 1/68, color = "black",
-                 size = 0.25) +
+  geom_histogram(
+    binwidth = 1 / 34, center = 1 / 68, color = "black",
+    size = 0.25
+  ) +
   scale_x_continuous(breaks = c(0, 0.25, 0.5, 0.75, 1)) +
   scale_y_continuous(lim = c(0, 1300), breaks = c(500, 1000)) +
-  xlab(expression(paste(Theta, " ~ Uniform(0, 1)"))) 
+  xlab(expression(paste(Theta, " ~ Uniform(0, 1)")))
 unif_prob_plot
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{019_density_func_files/figure-latex/unnamed-chunk-4-1} 
-
-}
-
-\caption{Istogramma di $10\,000$ realizzazioni $\Theta \sim \mbox{Uniform}(0, 1)$. }(\#fig:unnamed-chunk-4)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="019_density_func_files/figure-epub3/unnamed-chunk-4-1.png" alt="Istogramma di $10\,000$ realizzazioni $\Theta \sim \mbox{Uniform}(0, 1)$. "  />
+<p class="caption">(\#fig:unnamed-chunk-4)Istogramma di $10\,000$ realizzazioni $\Theta \sim \mbox{Uniform}(0, 1)$. </p>
+</div>
 
 È chiaro che, all'aumentare del numero delle realizzazioni $\Theta$, il profilo dell'istogramma tenderà a diventare una linea retta. Ciò significa che la funzione di densità di una variabile casuale uniforme continua è una costante. Cioè, se $\Theta \sim \mbox{Uniform} (a, b)$, allora $p_{\Theta}(\theta) = c$, dove $c$ è una costante.
 
@@ -193,26 +180,26 @@ unif_prob_plot
 uniform_pdf_df <- data.frame(y = c(0, 1), p_y = c(1, 1))
 uniform_pdf_plot <-
   ggplot(uniform_pdf_df, aes(x = y, y = p_y)) +
-  geom_line(size = 0.5, color = '#333333') +
-  geom_point(size = 1.5, color = '#333333') +
+  geom_line(size = 0.5, color = "#333333") +
+  geom_point(size = 1.5, color = "#333333") +
   scale_x_continuous(breaks = c(0, 1), labels = c("a", "b")) +
-  scale_y_continuous(lim = c(0, 1), breaks = c(0, 1),
-                     labels = c("0", "c")) +
+  scale_y_continuous(
+    lim = c(0, 1), breaks = c(0, 1),
+    labels = c("0", "c")
+  ) +
   xlab(expression(theta)) +
   ylab(expression(paste(p[Theta], "(", theta, " | a, b)"))) +
-  geom_segment(aes(x = 0, y = 0, xend = 0, yend = 1), linetype = 'dotted') +
-  geom_segment(aes(x = 1, y = 0, xend = 1, yend = 1), linetype = 'dotted') +
-  geom_segment(aes(x = 0, y = 0, xend = 1, yend = 0), linetype = 'dotted') +
+  geom_segment(aes(x = 0, y = 0, xend = 0, yend = 1), linetype = "dotted") +
+  geom_segment(aes(x = 1, y = 0, xend = 1, yend = 1), linetype = "dotted") +
+  geom_segment(aes(x = 0, y = 0, xend = 1, yend = 0), linetype = "dotted") +
   geom_segment(aes(x = -0.25, y = 0, xend = 0, yend = 0)) +
   geom_segment(aes(x = 1, y = 0, xend = 1.25, yend = 0)) +
-  geom_point(aes(x = 0, y = 0), size = 1.5, shape = 21, fill = '#ffffe6') +
-  geom_point(aes(x = 1, y = 0), size = 1.5, shape = 21, fill = '#ffffe6') 
+  geom_point(aes(x = 0, y = 0), size = 1.5, shape = 21, fill = "#ffffe6") +
+  geom_point(aes(x = 1, y = 0), size = 1.5, shape = 21, fill = "#ffffe6")
 uniform_pdf_plot
 ```
 
-
-
-\begin{center}\includegraphics{019_density_func_files/figure-latex/unnamed-chunk-5-1} \end{center}
+<img src="019_density_func_files/figure-epub3/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 
 \noindent
 Dal grafico vediamo che l'area sottesa alla funzione di densità è $(b - a)\times c$. Dato che tale area deve essere unitaria, ovvero, $(b - a) \times c = 1$, possiamo trovare $c$ dividendo entrambi i termini per $b - a$,
@@ -279,18 +266,14 @@ log_odds_plot <-
   ) +
   xlab(
     expression(paste(Phi, " = ", logit(Theta)))
-  ) 
+  )
 log_odds_plot
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{019_density_func_files/figure-latex/unnamed-chunk-6-1} 
-
-}
-
-\caption{Istogramma di $10\,000$ realizzazioni $\Theta \sim \mbox{Uniform}(0, 1)$ trasformate mediante la funzione logit $\Phi = \mbox{logit}(\Theta).$}(\#fig:unnamed-chunk-6)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="019_density_func_files/figure-epub3/unnamed-chunk-6-1.png" alt="Istogramma di $10\,000$ realizzazioni $\Theta \sim \mbox{Uniform}(0, 1)$ trasformate mediante la funzione logit $\Phi = \mbox{logit}(\Theta).$"  />
+<p class="caption">(\#fig:unnamed-chunk-6)Istogramma di $10\,000$ realizzazioni $\Theta \sim \mbox{Uniform}(0, 1)$ trasformate mediante la funzione logit $\Phi = \mbox{logit}(\Theta).$</p>
+</div>
 
 Lo zero sulla scala dei logit corrisponde a 0.5 sulla scala delle probabilità, cioè
 
@@ -331,35 +314,41 @@ logit <- function(u) log(u / (1 - u))
 M <- 1000
 phi <- logit(runif(M))
 phi_asc <- sort(phi)
-prob <- (1:M)/M
+prob <- (1:M) / M
 logistic_cdf_df <- data.frame(phi = phi_asc, prob = prob)
 logistic_cdf_plot <-
   ggplot(logistic_cdf_df, aes(x = phi, y = prob)) +
   geom_line() +
-  geom_hline(yintercept = 1, size = 0.3, linetype = "dashed",
-             color = "#333333") +
-  geom_hline(yintercept = 0, size = 0.3, linetype = "dashed",
-             color = "#333333") +
-  geom_vline(xintercept = 0, size = 0.3, linetype = "dotted",
-             color = "#333333") +
-  geom_hline(yintercept = 0.5, size = 0.3, linetype = "dotted",
-             color = "#333333") +
-  scale_x_continuous(lim = c(-7, 7),
-                     breaks = c(-6, -4, -2, 0, 2, 4, 6)) +
+  geom_hline(
+    yintercept = 1, size = 0.3, linetype = "dashed",
+    color = "#333333"
+  ) +
+  geom_hline(
+    yintercept = 0, size = 0.3, linetype = "dashed",
+    color = "#333333"
+  ) +
+  geom_vline(
+    xintercept = 0, size = 0.3, linetype = "dotted",
+    color = "#333333"
+  ) +
+  geom_hline(
+    yintercept = 0.5, size = 0.3, linetype = "dotted",
+    color = "#333333"
+  ) +
+  scale_x_continuous(
+    lim = c(-7, 7),
+    breaks = c(-6, -4, -2, 0, 2, 4, 6)
+  ) +
   scale_y_continuous(breaks = c(0, 0.25, 0.5, 0.75, 1.0)) +
   xlab(expression(phi)) +
-  ylab(expression(F[Phi](phi))) 
+  ylab(expression(F[Phi](phi)))
 logistic_cdf_plot
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{019_density_func_files/figure-latex/logistic-cdf-1} 
-
-}
-
-\caption{Grafico della funzione di distribuzione cumulativa di una variabile casuale $\Phi = \mbox{logit}(\Theta)$ che rappresenta la trasformazione logaritmica di una variabile casuale distribuita uniformemente $\Theta \sim \mbox{uniform }(0, 1)$. La curva ha una forma sigmoidale. Gli asintoti a 0 e 1 sono indicati con linee tratteggiate; la curva è simmetrica intorno allo 0 sull'asse $x$ e a 0.5 sull'asse $y$, come evidenziato dalle linee punteggiate.}(\#fig:logistic-cdf)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="019_density_func_files/figure-epub3/logistic-cdf-1.png" alt="Grafico della funzione di distribuzione cumulativa di una variabile casuale $\Phi = \mbox{logit}(\Theta)$ che rappresenta la trasformazione logaritmica di una variabile casuale distribuita uniformemente $\Theta \sim \mbox{uniform }(0, 1)$. La curva ha una forma sigmoidale. Gli asintoti a 0 e 1 sono indicati con linee tratteggiate; la curva è simmetrica intorno allo 0 sull'asse $x$ e a 0.5 sull'asse $y$, come evidenziato dalle linee punteggiate."  />
+<p class="caption">(\#fig:logistic-cdf)Grafico della funzione di distribuzione cumulativa di una variabile casuale $\Phi = \mbox{logit}(\Theta)$ che rappresenta la trasformazione logaritmica di una variabile casuale distribuita uniformemente $\Theta \sim \mbox{uniform }(0, 1)$. La curva ha una forma sigmoidale. Gli asintoti a 0 e 1 sono indicati con linee tratteggiate; la curva è simmetrica intorno allo 0 sull'asse $x$ e a 0.5 sull'asse $y$, come evidenziato dalle linee punteggiate.</p>
+</div>
 
 \noindent
 Il risultato è una funzione a forma sigmoidale i cui valori sono compresi tra 0 e 1, con asintoti a uno quando $\theta$ tende a $+\infty$ e a zero quando $\theta$ tende a $-\infty$. In corrispondenza di $\Phi$ = 0 troviamo il valore  0.5. La curva prodotta dalla simulazione è una curva molto nota chiamata *funzione logistica*. In termini analitici, la funzione logistica viene espressa come segue:
@@ -386,19 +375,19 @@ df_log_odds_growth <- data.frame()
 for (log10M in 1:6) {
   M <- 10^log10M
   alpha <- logit(runif(M))
-  df_log_odds_growth = rbind(
+  df_log_odds_growth <- rbind(
     df_log_odds_growth,
     data.frame(
       alpha = alpha,
-			M = rep(sprintf("M = %d", M), M)
-		)
+      M = rep(sprintf("M = %d", M), M)
+    )
   )
 }
 log_odds_growth_plot <-
   df_log_odds_growth %>%
   ggplot(aes(alpha)) +
   geom_histogram(color = "black", bins = 75) +
-  facet_wrap(~ M, scales = "free") +
+  facet_wrap(~M, scales = "free") +
   scale_x_continuous(
     lim = c(-8.5, 8.5), breaks = c(-5, 0, 5)
   ) +
@@ -413,14 +402,10 @@ log_odds_growth_plot <-
 log_odds_growth_plot
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{019_density_func_files/figure-latex/unnamed-chunk-7-1} 
-
-}
-
-\caption{Istogramma di $M$ campioni casuali $\Theta \sim \mbox{Uniform}(0, 1)$ trasformati in valori $\Phi = \mbox{logit}(\Theta).$ Il profilo limite dell'istogramma è evidenziato nella figura in basso a destra che è stata costruita usando $1\,000\,000$ di osservazioni.}(\#fig:unnamed-chunk-7)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="019_density_func_files/figure-epub3/unnamed-chunk-7-1.png" alt="Istogramma di $M$ campioni casuali $\Theta \sim \mbox{Uniform}(0, 1)$ trasformati in valori $\Phi = \mbox{logit}(\Theta).$ Il profilo limite dell'istogramma è evidenziato nella figura in basso a destra che è stata costruita usando $1\,000\,000$ di osservazioni." width="100%" />
+<p class="caption">(\#fig:unnamed-chunk-7)Istogramma di $M$ campioni casuali $\Theta \sim \mbox{Uniform}(0, 1)$ trasformati in valori $\Phi = \mbox{logit}(\Theta).$ Il profilo limite dell'istogramma è evidenziato nella figura in basso a destra che è stata costruita usando $1\,000\,000$ di osservazioni.</p>
+</div>
 
 In un istogramma, l'area di ciascuna barra è proporzionale alla frequenza relativa delle osservazioni in quel'intervallo. Perché tutti gli intervalli hanno la stessa ampiezza, anche l'altezza di ciascuna barra sarà proporzionale alla frequenza relativa delle osservazioni in quel'intervallo.
 
@@ -431,7 +416,7 @@ Nella simulazione, possiamo pensare all'area di ciascuna barra dell'istogramma c
 set.seed(1234)
 M <- 1e6
 alpha <- logit(runif(M))
-density_limit_df = data.frame(alpha = alpha)
+density_limit_df <- data.frame(alpha = alpha)
 density_limit_plot <-
   density_limit_df %>%
   ggplot(aes(alpha)) +
@@ -442,12 +427,12 @@ density_limit_plot <-
   stat_function(
     fun = dlogis,
     args = list(location = 0, scale = 1),
-    col = 'black',
+    col = "black",
     size = 0.3
   ) +
   scale_x_continuous(
     lim = c(-9, 9),
-    breaks = c(-6, -4, -2, 0, 2, 4,  6)
+    breaks = c(-6, -4, -2, 0, 2, 4, 6)
   ) +
   xlab(
     expression(paste(Phi, " = ", logit(Theta)))
@@ -460,14 +445,10 @@ density_limit_plot <-
 density_limit_plot
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{019_density_func_files/figure-latex/hist-dens-example-1} 
-
-}
-
-\caption{Istogramma di $M = 1\,000\,000$ campioni casuali $\Theta \sim \mbox{Uniform}(0,1)$ trasformati in valori $\Phi = \mbox{logit}(\Theta)$. La spezzata nera congiunge i punti centrali superiori delle barre dell'istogramma. Nel limite, quando il numero di osservazioni e di barre tende all'infinito, tale spezzata approssima la funzione di densità di probabilità della variabile casuale.}(\#fig:hist-dens-example)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="019_density_func_files/figure-epub3/hist-dens-example-1.png" alt="Istogramma di $M = 1\,000\,000$ campioni casuali $\Theta \sim \mbox{Uniform}(0,1)$ trasformati in valori $\Phi = \mbox{logit}(\Theta)$. La spezzata nera congiunge i punti centrali superiori delle barre dell'istogramma. Nel limite, quando il numero di osservazioni e di barre tende all'infinito, tale spezzata approssima la funzione di densità di probabilità della variabile casuale." width="100%" />
+<p class="caption">(\#fig:hist-dens-example)Istogramma di $M = 1\,000\,000$ campioni casuali $\Theta \sim \mbox{Uniform}(0,1)$ trasformati in valori $\Phi = \mbox{logit}(\Theta)$. La spezzata nera congiunge i punti centrali superiori delle barre dell'istogramma. Nel limite, quando il numero di osservazioni e di barre tende all'infinito, tale spezzata approssima la funzione di densità di probabilità della variabile casuale.</p>
+</div>
 
 Nella statistica descrittiva abbiamo già incontrato una rappresentazione che ha lo stesso significato della funzione di densità, ovvero il kernel density plot. La stima della densità del kernel (KDE), infatti, è un modo non parametrico per stimare la funzione di densità di probabilità di una variabile casuale.
 
@@ -477,7 +458,7 @@ Nella statistica descrittiva abbiamo già incontrato una rappresentazione che ha
 Sia $y$ una variabile casuale continua con funzione di densità di probabilità $p(y)$. Allora $p(y)$ ha le seguenti proprietà:
 
 - $p(y) \geq 0$, ovvero, l'ordinata della funzione di densità è 0 o positiva;
-- $\int_y p(y) dy = 1$, ovvero, l'area sottesa dalla $p(y)$ è unitaria;
+- $\int_y p(y) dy = 1$, ovvero, l'area sottesa dalla $p(y)$ è unitaria^[Per quel che riguarda la notazione dell'integrale, ovvero $\int_x dx$, rimando alla discussione di S.P. Thompson: https://calculusmadeeasy.org/1.html];
 - $P(a < y < b) = \int_a^b p(y) dy$, se $a \leq b$, ovvero, l'area sottesa dalla $p(y)$ tra due punti $a$ e $b$ corrisponde alla probabilità che la v.c. $y$ assuma un valore compresto tra questi due estremi.
 
 **Interpretazione.** È possibile che $p(y) > 1$, quindi una densità di probabilità non può essere interpretata come una probabilità. Piuttosto, la densità $p(y)$ può essere utilizzata per confrontare la plausibilità relativa di diversi valori $Y$. Considerata una variabile casuale $Y$ di cui è disponibile un insieme di realizzazioni, tanto maggiore è $p(y_k)$ rispetto a $p(y_l)$, tanto più grande sarà la nostra certezza che valori nell'intorno di $y_k$ verranno osservati con maggiore frequenza di valori nell'intorno di $y_l$.
