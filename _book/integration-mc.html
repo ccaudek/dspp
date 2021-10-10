@@ -4,21 +4,21 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | Data Science per psicologi</title>
-  <meta name="description" content="Page not found | Data Science per psicologi si propone di fornire un’introduzione all’analisi dei dati psicologici agli studenti del primo anno del Corso di Laurea in Scienze e Tecniche Psicologiche presso l’Università degli Studi di Firenze. Particolare attenzione sarà posta ai seguenti aspetti: l’uso del linguaggio R per lo svolgimento delle analisi statistiche, la rappresentazione grafica dei dati e l’inferenza Bayesiana." />
+  <title>Appendice B Integrazione di Monte Carlo | Data Science per psicologi</title>
+  <meta name="description" content="Appendice B Integrazione di Monte Carlo | Data Science per psicologi si propone di fornire un’introduzione all’analisi dei dati psicologici agli studenti del primo anno del Corso di Laurea in Scienze e Tecniche Psicologiche presso l’Università degli Studi di Firenze. Particolare attenzione sarà posta ai seguenti aspetti: l’uso del linguaggio R per lo svolgimento delle analisi statistiche, la rappresentazione grafica dei dati e l’inferenza Bayesiana." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | Data Science per psicologi" />
+  <meta property="og:title" content="Appendice B Integrazione di Monte Carlo | Data Science per psicologi" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="Page not found | Data Science per psicologi si propone di fornire un’introduzione all’analisi dei dati psicologici agli studenti del primo anno del Corso di Laurea in Scienze e Tecniche Psicologiche presso l’Università degli Studi di Firenze. Particolare attenzione sarà posta ai seguenti aspetti: l’uso del linguaggio R per lo svolgimento delle analisi statistiche, la rappresentazione grafica dei dati e l’inferenza Bayesiana." />
+  <meta property="og:description" content="Appendice B Integrazione di Monte Carlo | Data Science per psicologi si propone di fornire un’introduzione all’analisi dei dati psicologici agli studenti del primo anno del Corso di Laurea in Scienze e Tecniche Psicologiche presso l’Università degli Studi di Firenze. Particolare attenzione sarà posta ai seguenti aspetti: l’uso del linguaggio R per lo svolgimento delle analisi statistiche, la rappresentazione grafica dei dati e l’inferenza Bayesiana." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | Data Science per psicologi" />
+  <meta name="twitter:title" content="Appendice B Integrazione di Monte Carlo | Data Science per psicologi" />
   
-  <meta name="twitter:description" content="Page not found | Data Science per psicologi si propone di fornire un’introduzione all’analisi dei dati psicologici agli studenti del primo anno del Corso di Laurea in Scienze e Tecniche Psicologiche presso l’Università degli Studi di Firenze. Particolare attenzione sarà posta ai seguenti aspetti: l’uso del linguaggio R per lo svolgimento delle analisi statistiche, la rappresentazione grafica dei dati e l’inferenza Bayesiana." />
+  <meta name="twitter:description" content="Appendice B Integrazione di Monte Carlo | Data Science per psicologi si propone di fornire un’introduzione all’analisi dei dati psicologici agli studenti del primo anno del Corso di Laurea in Scienze e Tecniche Psicologiche presso l’Università degli Studi di Firenze. Particolare attenzione sarà posta ai seguenti aspetti: l’uso del linguaggio R per lo svolgimento delle analisi statistiche, la rappresentazione grafica dei dati e l’inferenza Bayesiana." />
   
 
 <meta name="author" content="Corrado Caudek" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-
+<link rel="prev" href="es-pratico-zetsche.html"/>
+<link rel="next" href="intro-stan.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -204,19 +204,48 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="integration-mc" class="section level1" number="2">
+<h1><span class="header-section-number">Appendice B</span> Integrazione di Monte Carlo</h1>
+<p>Il termine Monte Carlo si riferisce al fatto che la computazione fa ricorso ad un ripetuto campionamento casuale attraverso la generazione di sequenze di numeri casuali. Una delle sue applicazioni più potenti è il calcolo degli integrali mediante simulazione numerica. Sia l’integrale da calcolare</p>
+<p><span class="math display">\[
+\int_a^b h(y) dy.
+\]</span>
+Se decomponiamo <span class="math inline">\(h(y)\)</span> nel prodotto di una funzione <span class="math inline">\(f(y)\)</span> e una funzione di densità
+di probabilità <span class="math inline">\(p(y)\)</span> definita nell’intervallo <span class="math inline">\((a, b)\)</span> avremo:</p>
+<p><span class="math display">\[
+\int_a^b h(y) dy = \int_a^b f(y) p(y) dy = \E[f(y)],
+\]</span>
+così che l’integrale può essere espresso come una funzione di aspettazione <span class="math inline">\(f(y)\)</span> sulla densità <span class="math inline">\(p(y)\)</span>. Se definiamo un gran numero di variabili casuali <span class="math inline">\(y_1, y_2, \dots, y_n\)</span> appartenenti alla densità di probabilità <span class="math inline">\(p(y)\)</span> allora avremo</p>
+<p><span class="math display">\[
+\int_a^b h(y) dy = \int_a^b f(y) p(y) dy = \E[f(y)] \approx \frac{1}{n}\sum_{i=1}^n f(y)
+\]</span>
+che è l’integrale di Monte Carlo.</p>
+<!-- Il calcolo del valore atteso richiede la somma dei prodotti $y p(y)$ per tutti gli infinitesimi "incrementi" $dy$ dei possibili valori $y$. -->
+<!-- Vediamo come si può risolvere questo problema senza dovere calcolare l'integrale esatto per via analitica. -->
+<p>L’integrazione con metodo Monte Carlo trova la sua giustificazione nella <em>Legge forte dei grandi numeri</em>. Data una successione di variabili casuali <span class="math inline">\(Y_{1}, Y_{2},\dots, Y_{n},\dots\)</span> indipendenti e identicamente distribuite con media <span class="math inline">\(\mu\)</span>, ne segue che</p>
+<p><span class="math display">\[
+P\left( \lim_{n \rightarrow \infty} \frac{1}{n} \sum_{i=1}^n Y_i = \mu \right) = 1.
+\]</span>
+Ciò significa che, al crescere di <span class="math inline">\(n\)</span>, la media delle realizzazioni di <span class="math inline">\(Y_{1}, Y_{2},\dots, Y_{n},\dots\)</span> converge con probabilità 1 al vero valore <span class="math inline">\(\mu\)</span>.</p>
+<p>Possiamo fornire un esempio intuitivo della legge forte dei grandi numeri facendo riferimento ad una serie di lanci di una moneta dove <span class="math inline">\(Y=1\)</span> significa “testa” e <span class="math inline">\(Y=0\)</span> significa “croce.” Per la legge forte dei grandi numeri, nel caso di una moneta equilibrata la proporzione di eventi “testa” converge alla vera probabilità dell’evento “testa”</p>
+<p><span class="math display">\[
+  \frac{1}{n} \sum_{i=1}^n Y_i \rightarrow \frac{1}{2}
+\]</span>
+con probabilità di uno.</p>
+<p>Quello che è stato detto sopra non è che un modo sofisticato per dire che, se vogliamo calcolare un’approssimazione del valore atteso di una variabile casuale, non dobbiamo fare altro che la media aritmetica di un grande numero di realizzazioni della variabile casuale. Come è facile intuire, l’approssimazione migliora al crescere del numero di dati che abbiamo a disposizione.</p>
+<!-- ::: {.rmdnote} -->
+<!-- Questa è la giustificazione dell'affermazione secondo la quale, nella statistica bayesiana, una stima del valore atteso di $p(\theta \mid y)$ può essere ottenuta mediante un grande numero di campioni casuali della distribuzionea a posteriori. -->
+<!-- :::  -->
+<p>L’integrazione di Monte Carlo può essere usata per approssimare la distribuzione a posteriori richiesta da una analisi Bayesiana: una stima di <span class="math inline">\(p(\theta \mid y)\)</span> può essere ottenuta mediante un grande numero di campioni casuali della distribuzionea a posteriori.</p>
+
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-
+<a href="es-pratico-zetsche.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="intro-stan.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -247,7 +276,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/%s",
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/912_integrazioneMC.Rmd",
 "text": "Edit"
 },
 "history": {

@@ -61,7 +61,7 @@ La distribuzione a priori così costruita è rappresentata nella figura \@ref(fi
 
 ```r
 p1 <- data.frame(p_grid, prior1) %>%
-  ggplot(aes(x=p_grid, xend=p_grid, y=0, yend=prior1)) +
+  ggplot(aes(x = p_grid, xend = p_grid, y = 0, yend = prior1)) +
   geom_line() +
   geom_segment() +
   ylim(0, 0.17) +
@@ -73,14 +73,10 @@ p1 <- data.frame(p_grid, prior1) %>%
 p1
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{910_grid_method_example_files/figure-latex/gridappr1-1} 
-
-}
-
-\caption{Rappresentazione grafica della distribuzione a priori per il parametro $	heta$, ovvero la probabilità di aspettative future distorte negativamente.}(\#fig:gridappr1)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="910_grid_method_example_files/figure-epub3/gridappr1-1.png" alt="Rappresentazione grafica della distribuzione a priori per il parametro $	heta$, ovvero la probabilità di aspettative future distorte negativamente."  />
+<p class="caption">(\#fig:gridappr1)Rappresentazione grafica della distribuzione a priori per il parametro $	heta$, ovvero la probabilità di aspettative future distorte negativamente.</p>
+</div>
 
 
 ## Funzione di verosimiglianza
@@ -128,7 +124,7 @@ La chiamata a `dbinom()` produce dunque un vettore i cui valori corrispondono al
 
 ```r
 p2 <- data.frame(p_grid, likelihood) %>%
-  ggplot(aes(x=p_grid, xend=p_grid, y=0, yend=likelihood)) +
+  ggplot(aes(x = p_grid, xend = p_grid, y = 0, yend = likelihood)) +
   geom_segment() +
   ylim(0, 0.17) +
   labs(
@@ -138,14 +134,10 @@ p2 <- data.frame(p_grid, likelihood) %>%
 p2
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{910_grid_method_example_files/figure-latex/gridappr2-1} 
-
-}
-
-\caption{Rappresentazione della funzione di verosimiglianza per il parametro $\theta$, ovvero la probabilità di aspettative future distorte negativamente.}(\#fig:gridappr2)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="910_grid_method_example_files/figure-epub3/gridappr2-1.png" alt="Rappresentazione della funzione di verosimiglianza per il parametro $\theta$, ovvero la probabilità di aspettative future distorte negativamente."  />
+<p class="caption">(\#fig:gridappr2)Rappresentazione della funzione di verosimiglianza per il parametro $\theta$, ovvero la probabilità di aspettative future distorte negativamente.</p>
+</div>
 
 
 ## Distribuzione a posteriori
@@ -216,7 +208,7 @@ La distribuzione a posteriori così trovata non è altro che la versione normali
 
 ```r
 p3 <- data.frame(p_grid, posterior) %>%
-  ggplot(aes(x=p_grid, xend=p_grid, y=0, yend=posterior)) +
+  ggplot(aes(x = p_grid, xend = p_grid, y = 0, yend = posterior)) +
   geom_segment() +
   ylim(0, 0.17) +
   labs(
@@ -226,14 +218,10 @@ p3 <- data.frame(p_grid, posterior) %>%
 p3
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{910_grid_method_example_files/figure-latex/gridappr3-1} 
-
-}
-
-\caption{Rappresentazione della distribuzione a posteriori per il parametro $\theta$, ovvero la probabilità di aspettative future distorte negativamente.}(\#fig:gridappr3)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="910_grid_method_example_files/figure-epub3/gridappr3-1.png" alt="Rappresentazione della distribuzione a posteriori per il parametro $\theta$, ovvero la probabilità di aspettative future distorte negativamente."  />
+<p class="caption">(\#fig:gridappr3)Rappresentazione della distribuzione a posteriori per il parametro $\theta$, ovvero la probabilità di aspettative future distorte negativamente.</p>
+</div>
 
 I grafici delle figure \@ref(fig:gridappr1), \@ref(fig:gridappr2) e \@ref(fig:gridappr3) sono state calcolati utilizzando una griglia di 50 valori equi-spaziati per il parametro $\theta$. I segmenti verticali rappresentano l'intensità della funzione in corrispondenza di ciascuna modalità parametro $\theta$. Nella figura \@ref(fig:gridappr1) e nella figura \@ref(fig:gridappr3) la somma delle lunghezze dei segmenti verticali è uguale a 1.0; ciò non si verifica, invece, nel caso della figura \@ref(fig:gridappr3) (la funzione di verosimiglianza non è mai una funzione di probabilità, né nel caso discreto né in quello continuo).
 
@@ -271,7 +259,7 @@ Tale distribuzione a priori è rappresentata nella figura \@ref(fig:gridappr4):
 ```r
 plot_df <- data.frame(p_grid, prior2)
 p4 <- plot_df %>%
-  ggplot(aes(x=p_grid, xend=p_grid, y=0, yend=prior2)) +
+  ggplot(aes(x = p_grid, xend = p_grid, y = 0, yend = prior2)) +
   geom_segment() +
   ylim(0, 0.17) +
   labs(
@@ -281,14 +269,10 @@ p4 <- plot_df %>%
 p4
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{910_grid_method_example_files/figure-latex/gridappr4-1} 
-
-}
-
-\caption{Rappresentazione di una funzione a priori informativa per il parametro $\theta$.}(\#fig:gridappr4)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="910_grid_method_example_files/figure-epub3/gridappr4-1.png" alt="Rappresentazione di una funzione a priori informativa per il parametro $\theta$."  />
+<p class="caption">(\#fig:gridappr4)Rappresentazione di una funzione a priori informativa per il parametro $\theta$.</p>
+</div>
 
 \noindent
 Calcoliamo il valore di verosimiglianza per ciascun punto della griglia:
@@ -340,14 +324,10 @@ p5 <- plot_df %>%
 p5
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{910_grid_method_example_files/figure-latex/gridappr5-1} 
-
-}
-
-\caption{Rappresentazione della funzione a posteriori per il parametro $\theta$ calcolata utilizzando una distribuzione a priori informativa.}(\#fig:gridappr5)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="910_grid_method_example_files/figure-epub3/gridappr5-1.png" alt="Rappresentazione della funzione a posteriori per il parametro $\theta$ calcolata utilizzando una distribuzione a priori informativa."  />
+<p class="caption">(\#fig:gridappr5)Rappresentazione della funzione a posteriori per il parametro $\theta$ calcolata utilizzando una distribuzione a priori informativa.</p>
+</div>
 
 Facendo un confronto tra le figure \@ref(fig:gridappr4) e \@ref(fig:gridappr5) notiamo una notevole differenza tra la distribuzione a priori e la distribuzione a posteriori. In particolare, la distribuzione a posteriori risulta spostata verso destra su posizioni più vicine a quelle della verosimiglianza [figura \@ref(fig:gridappr2)]. Si noti inoltre che, a causa dell'effetto della distribuzione a priori, le distribuzioni a posteriori delle figure \@ref(fig:gridappr3) e \@ref(fig:gridappr5) sono molto diverse tra loro.
 
@@ -365,10 +345,10 @@ df <- data.frame(
 # Step 4: sample from the discretized posterior
 post_samples <- df %>%
   slice_sample(
-  n = 1e5,
-  weight_by = posterior2,
-  replace = TRUE
-)
+    n = 1e5,
+    weight_by = posterior2,
+    replace = TRUE
+  )
 ```
 
 \noindent
@@ -379,17 +359,15 @@ Una rappresentazione grafica del campione casuale estratto dalla distribuzione a
 post_samples %>%
   ggplot(aes(x = p_grid)) +
   geom_histogram(
-    aes(y = ..density..), 
-    color = "white", 
+    aes(y = ..density..),
+    color = "white",
     binwidth = 0.05
   ) +
   stat_function(fun = dbeta, args = list(25, 17)) +
   lims(x = c(0, 1))
 ```
 
-
-
-\begin{center}\includegraphics{910_grid_method_example_files/figure-latex/unnamed-chunk-16-1} \end{center}
+<img src="910_grid_method_example_files/figure-epub3/unnamed-chunk-16-1.png" style="display: block; margin: auto;" />
 
 \noindent
 All'istogramma è stata sovrapposta la corretta distribuzione a posteriori, ovvero una Beta di parametri 25 ($y + \alpha$ = 23 + 2) e 17 ($n - y + \beta$ = 30 - 23 + 10).
@@ -454,7 +432,7 @@ likelihood <- function(param, x = 23, N = 30) {
 }
 
 tibble(
-  x = param, 
+  x = param,
   y = likelihood(param)
 ) %>%
   ggplot(aes(x, y)) +
@@ -465,9 +443,7 @@ tibble(
   )
 ```
 
-
-
-\begin{center}\includegraphics{910_grid_method_example_files/figure-latex/unnamed-chunk-20-1} \end{center}
+<img src="910_grid_method_example_files/figure-epub3/unnamed-chunk-20-1.png" style="display: block; margin: auto;" />
 
 \noindent
 La funzione `likelihood()` ritorna l'ordinata della verosimiglianza binomiale per ciascun valore del vettore `param` in input.
@@ -482,7 +458,7 @@ prior <- function(param, alpha = 2, beta = 10) {
 }
 
 tibble(
-  x = param, 
+  x = param,
   y = prior(param)
 ) %>%
   ggplot(aes(x, y)) +
@@ -493,9 +469,7 @@ tibble(
   )
 ```
 
-
-
-\begin{center}\includegraphics{910_grid_method_example_files/figure-latex/unnamed-chunk-21-1} \end{center}
+<img src="910_grid_method_example_files/figure-epub3/unnamed-chunk-21-1.png" style="display: block; margin: auto;" />
 
 La funzione `posterior()` ritorna il prodotto della densità a priori e della verosimiglianza:
 
@@ -506,7 +480,7 @@ posterior <- function(param) {
 }
 
 tibble(
-  x = param, 
+  x = param,
   y = posterior(param)
 ) %>%
   ggplot(aes(x, y)) +
@@ -517,9 +491,7 @@ tibble(
   )
 ```
 
-
-
-\begin{center}\includegraphics{910_grid_method_example_files/figure-latex/unnamed-chunk-22-1} \end{center}
+<img src="910_grid_method_example_files/figure-epub3/unnamed-chunk-22-1.png" style="display: block; margin: auto;" />
 
 \noindent
 La distribuzione a posteriori non normalizzata mostrata nella figura replica il risultato ottenuto con il codice utilizzato nella prima parte di questo Capitolo. Per l'implementazione dell'algoritmo di Metropolis non è necessaria la normalizzazione della distribuzione a posteriori.

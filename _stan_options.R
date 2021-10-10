@@ -3,7 +3,7 @@
 suppressPackageStartupMessages(library("bayesrules")) 
 suppressPackageStartupMessages(library("rstan")) 
 suppressPackageStartupMessages(library("cmdstanr"))
-set_cmdstan_path("/Users/corrado/.cmdstanr/cmdstan-2.27.0")
+set_cmdstan_path("/Users/corrado/.cmdstanr/cmdstan-2.28.0")
 suppressPackageStartupMessages(library("posterior"))
 suppressPackageStartupMessages(library("loo"))
 rstan_options(auto_write = TRUE) # avoid recompilation of models

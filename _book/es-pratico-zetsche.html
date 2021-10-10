@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Data Science per psicologi</title>
+  <meta name="description" content="Data Science per psicologi si propone di fornire un’introduzione all’analisi dei dati psicologici agli studenti del primo anno del Corso di Laurea in Scienze e Tecniche Psicologiche presso l’Università degli Studi di Firenze. Particolare attenzione sarà posta ai seguenti aspetti: l’uso del linguaggio R per lo svolgimento delle analisi statistiche, la rappresentazione grafica dei dati e l’inferenza Bayesiana." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Data Science per psicologi" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Data Science per psicologi si propone di fornire un’introduzione all’analisi dei dati psicologici agli studenti del primo anno del Corso di Laurea in Scienze e Tecniche Psicologiche presso l’Università degli Studi di Firenze. Particolare attenzione sarà posta ai seguenti aspetti: l’uso del linguaggio R per lo svolgimento delle analisi statistiche, la rappresentazione grafica dei dati e l’inferenza Bayesiana." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Data Science per psicologi" />
+  
+  <meta name="twitter:description" content="Data Science per psicologi si propone di fornire un’introduzione all’analisi dei dati psicologici agli studenti del primo anno del Corso di Laurea in Scienze e Tecniche Psicologiche presso l’Università degli Studi di Firenze. Particolare attenzione sarà posta ai seguenti aspetti: l’uso del linguaggio R per lo svolgimento delle analisi statistiche, la rappresentazione grafica dei dati e l’inferenza Bayesiana." />
+  
+
+<meta name="author" content="Corrado Caudek" />
+
+
+<meta name="date" content="2021-10-10" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+<link rel="next" href="integration-mc.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Science per psicologi</a></li>
+
+<li class="divider"></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="es-pratico-zetsche.html"><a href="es-pratico-zetsche.html"><i class="fa fa-check"></i><b>A</b> Aspettative degli individui depressi</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="es-pratico-zetsche.html"><a href="es-pratico-zetsche.html#la-griglia"><i class="fa fa-check"></i><b>A.1</b> La griglia</a></li>
+<li class="chapter" data-level="A.2" data-path="es-pratico-zetsche.html"><a href="es-pratico-zetsche.html#distribuzione-a-priori"><i class="fa fa-check"></i><b>A.2</b> Distribuzione a priori</a></li>
+<li class="chapter" data-level="A.3" data-path="es-pratico-zetsche.html"><a href="es-pratico-zetsche.html#funzione-di-verosimiglianza"><i class="fa fa-check"></i><b>A.3</b> Funzione di verosimiglianza</a></li>
+<li class="chapter" data-level="A.4" data-path="es-pratico-zetsche.html"><a href="es-pratico-zetsche.html#distribuzione-a-posteriori"><i class="fa fa-check"></i><b>A.4</b> Distribuzione a posteriori</a></li>
+<li class="chapter" data-level="A.5" data-path="es-pratico-zetsche.html"><a href="es-pratico-zetsche.html#es-depression-beta-2-10"><i class="fa fa-check"></i><b>A.5</b> La stima della distribuzione a posteriori (versione 2)</a></li>
+<li class="chapter" data-level="A.6" data-path="es-pratico-zetsche.html"><a href="es-pratico-zetsche.html#es-pratico-zetsche-funzioni"><i class="fa fa-check"></i><b>A.6</b> Versione 2</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="integration-mc.html"><a href="integration-mc.html"><i class="fa fa-check"></i><b>B</b> Integrazione di Monte Carlo</a></li>
+<li class="chapter" data-level="C" data-path="intro-stan.html"><a href="intro-stan.html"><i class="fa fa-check"></i><b>C</b> Programmare in Stan</a>
+<ul>
+<li class="chapter" data-level="C.1" data-path="intro-stan.html"><a href="intro-stan.html#che-cosè-stan"><i class="fa fa-check"></i><b>C.1</b> Che cos’è Stan?</a></li>
+<li class="chapter" data-level="C.2" data-path="intro-stan.html"><a href="intro-stan.html#interfaccia-cmdstanr"><i class="fa fa-check"></i><b>C.2</b> Interfaccia <code>cmdstanr</code></a></li>
+<li class="chapter" data-level="C.3" data-path="intro-stan.html"><a href="intro-stan.html#codice-stan"><i class="fa fa-check"></i><b>C.3</b> Codice Stan</a>
+<ul>
+<li class="chapter" data-level="C.3.1" data-path="intro-stan.html"><a href="intro-stan.html#blocco-data"><i class="fa fa-check"></i><b>C.3.1</b> Blocco <code>data</code></a></li>
+<li class="chapter" data-level="C.3.2" data-path="intro-stan.html"><a href="intro-stan.html#blocco-parameters"><i class="fa fa-check"></i><b>C.3.2</b> Blocco <code>parameters</code></a></li>
+<li class="chapter" data-level="C.3.3" data-path="intro-stan.html"><a href="intro-stan.html#blocco-model"><i class="fa fa-check"></i><b>C.3.3</b> Blocco <code>model</code></a></li>
+<li class="chapter" data-level="C.3.4" data-path="intro-stan.html"><a href="intro-stan.html#blocchi-opzionali"><i class="fa fa-check"></i><b>C.3.4</b> Blocchi opzionali</a></li>
+<li class="chapter" data-level="C.3.5" data-path="intro-stan.html"><a href="intro-stan.html#sintassi"><i class="fa fa-check"></i><b>C.3.5</b> Sintassi</a></li>
+</ul></li>
+<li class="chapter" data-level="C.4" data-path="intro-stan.html"><a href="intro-stan.html#workflow"><i class="fa fa-check"></i><b>C.4</b> Workflow</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Science per psicologi</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Data Science per psicologi</h1>
+<p class="author"><em>Corrado Caudek</em></p>
+<p class="date"><em>2021-10-10</em></p>
+</div>
+<div id="es-pratico-zetsche" class="section level1" number="1">
+<h1><span class="header-section-number">Appendice A</span> Aspettative degli individui depressi</h1>
+<p>Per fare pratica, applichiamo il metodo basato su griglia ad un campione di dati reali. <span class="citation"><a href="#ref-zetschefuture2019" role="doc-biblioref">Zetsche, Bürkner, and Renneberg</a> (<a href="#ref-zetschefuture2019" role="doc-biblioref">2019</a>)</span> si sono chiesti se gli individui depressi manifestino delle aspettative accurate circa il loro umore futuro, oppure se tali aspettative siano distorte negativamente. Esamineremo qui i 30 partecipanti dello studio di <span class="citation"><a href="#ref-zetschefuture2019" role="doc-biblioref">Zetsche, Bürkner, and Renneberg</a> (<a href="#ref-zetschefuture2019" role="doc-biblioref">2019</a>)</span> che hanno riportato la presenza di un episodio di depressione maggiore in atto. All’inizio della settimana di test, a questi pazienti è stato chiesto di valutare l’umore che si aspettavano di esperire nei giorni seguenti della settimana. Mediante una app, i partecipanti dovevano poi valutare il proprio umore in cinque momenti diversi di ciascuno dei cinque giorni successivi. Lo studio considera diverse emozioni, ma qui ci concentriamo solo sulla tristezza.</p>
+<p>Sulla base dei dati forniti dagli autori, abbiamo calcolato la media dei giudizi relativi al livello di tristezza raccolti da ciascun partecipante tramite la app. Tale media è stata poi sottratta dall’aspettativa del livello di tristezza fornita all’inizio della settimana. La discrepanza tra aspettative e realtà è stata considerata come un evento dicotomico: valori positivi di tale differenza indicano che le aspettative circa il livello di tristezza erano maggiori del livello di tristezza effettivamente esperito — ciò significa che le aspettative future risultano negativamente distorte (evento codificato con “1”). Viceversa, si ha che le aspettative risultano positivamente distorte se la differenza descritta in precedenza assume un valore negativo (evento codificato con “0”).</p>
+<p>Nel campione dei 30 partecipanti clinici di <span class="citation"><a href="#ref-zetschefuture2019" role="doc-biblioref">Zetsche, Bürkner, and Renneberg</a> (<a href="#ref-zetschefuture2019" role="doc-biblioref">2019</a>)</span>, le aspettative future di 23 partecipanti risultano distorte negativamente e quelle di 7 partecipanti risultano distorte positivamente. Chiameremo <span class="math inline">\(\theta\)</span> la probabilità dell’evento “le aspettative del partecipante sono distorte negativamente.” Ci poniamo il problema di ottenere una stima a posteriori di <span class="math inline">\(\theta\)</span> usando il metodo basato su griglia.</p>
+<div id="la-griglia" class="section level2" number="1.1">
+<h2><span class="header-section-number">A.1</span> La griglia</h2>
+<p>Fissiamo una griglia di <span class="math inline">\(n = 50\)</span> valori equispaziati nell’intervallo [0, 1] per il parametro <span class="math inline">\(\theta\)</span>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="es-pratico-zetsche.html#cb1-1" aria-hidden="true" tabindex="-1"></a>n_points <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb1-2"><a href="es-pratico-zetsche.html#cb1-2" aria-hidden="true" tabindex="-1"></a>p_grid <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">1</span>, <span class="at">length.out =</span> n_points)</span>
+<span id="cb1-3"><a href="es-pratico-zetsche.html#cb1-3" aria-hidden="true" tabindex="-1"></a>p_grid</span>
+<span id="cb1-4"><a href="es-pratico-zetsche.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 0.00000000 0.02040816 0.04081633 0.06122449 0.08163265</span></span>
+<span id="cb1-5"><a href="es-pratico-zetsche.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [6] 0.10204082 0.12244898 0.14285714 0.16326531 0.18367347</span></span>
+<span id="cb1-6"><a href="es-pratico-zetsche.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [11] 0.20408163 0.22448980 0.24489796 0.26530612 0.28571429</span></span>
+<span id="cb1-7"><a href="es-pratico-zetsche.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [16] 0.30612245 0.32653061 0.34693878 0.36734694 0.38775510</span></span>
+<span id="cb1-8"><a href="es-pratico-zetsche.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [21] 0.40816327 0.42857143 0.44897959 0.46938776 0.48979592</span></span>
+<span id="cb1-9"><a href="es-pratico-zetsche.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [26] 0.51020408 0.53061224 0.55102041 0.57142857 0.59183673</span></span>
+<span id="cb1-10"><a href="es-pratico-zetsche.html#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [31] 0.61224490 0.63265306 0.65306122 0.67346939 0.69387755</span></span>
+<span id="cb1-11"><a href="es-pratico-zetsche.html#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [36] 0.71428571 0.73469388 0.75510204 0.77551020 0.79591837</span></span>
+<span id="cb1-12"><a href="es-pratico-zetsche.html#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [41] 0.81632653 0.83673469 0.85714286 0.87755102 0.89795918</span></span>
+<span id="cb1-13"><a href="es-pratico-zetsche.html#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [46] 0.91836735 0.93877551 0.95918367 0.97959184 1.00000000</span></span></code></pre></div>
+</div>
+<div id="distribuzione-a-priori" class="section level2" number="1.2">
+<h2><span class="header-section-number">A.2</span> Distribuzione a priori</h2>
+<p>Supponiamo di avere scarse credenze a priori sulla tendenza di un individuo clinicamente depresso a manifestare delle aspettative distorte negativamente circa il suo umore futuro. Imponiamo quindi una distribuzione non informativa sulla distribuzione a priori di <span class="math inline">\(\theta\)</span> — ovvero, una distribuzione uniforme nell’intervallo [0, 1]. Dato che consideriamo soltanto <span class="math inline">\(n = 50\)</span> valori possibili per il parametro <span class="math inline">\(\theta\)</span>, creiamo un vettore di 50 elementi che conterrà i valori della distribuzione a priori scalando ciascun valore del vettore per <span class="math inline">\(n\)</span> in modo tale che la somma di tutti i valori sia uguale a 1.0:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="es-pratico-zetsche.html#cb2-1" aria-hidden="true" tabindex="-1"></a>prior1 <span class="ot">&lt;-</span> <span class="fu">dbeta</span>(p_grid, <span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">/</span> <span class="fu">sum</span>(<span class="fu">dbeta</span>(p_grid, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb2-2"><a href="es-pratico-zetsche.html#cb2-2" aria-hidden="true" tabindex="-1"></a>prior1</span>
+<span id="cb2-3"><a href="es-pratico-zetsche.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02</span></span>
+<span id="cb2-4"><a href="es-pratico-zetsche.html#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [12] 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02</span></span>
+<span id="cb2-5"><a href="es-pratico-zetsche.html#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [23] 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02</span></span>
+<span id="cb2-6"><a href="es-pratico-zetsche.html#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [34] 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02</span></span>
+<span id="cb2-7"><a href="es-pratico-zetsche.html#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [45] 0.02 0.02 0.02 0.02 0.02 0.02</span></span></code></pre></div>
+<p>
+Verifichiamo:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="es-pratico-zetsche.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(prior1)</span>
+<span id="cb3-2"><a href="es-pratico-zetsche.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<p>
+La distribuzione a priori così costruita è rappresentata nella figura <a href="es-pratico-zetsche.html#fig:gridappr1">A.1</a>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="es-pratico-zetsche.html#cb4-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(p_grid, prior1) <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="es-pratico-zetsche.html#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> p_grid, <span class="at">xend =</span> p_grid, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">yend =</span> prior1)) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="es-pratico-zetsche.html#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb4-4"><a href="es-pratico-zetsche.html#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>() <span class="sc">+</span></span>
+<span id="cb4-5"><a href="es-pratico-zetsche.html#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fl">0.17</span>) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="es-pratico-zetsche.html#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-7"><a href="es-pratico-zetsche.html#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Parametro \U03B8&quot;</span>,</span>
+<span id="cb4-8"><a href="es-pratico-zetsche.html#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Probabilità a priori&quot;</span>,</span>
+<span id="cb4-9"><a href="es-pratico-zetsche.html#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;50 punti&quot;</span></span>
+<span id="cb4-10"><a href="es-pratico-zetsche.html#cb4-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-11"><a href="es-pratico-zetsche.html#cb4-11" aria-hidden="true" tabindex="-1"></a>p1</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:gridappr1"></span>
+<img src="910_grid_method_example_files/figure-html/gridappr1-1.png" alt="Rappresentazione grafica della distribuzione a priori per il parametro $  heta$, ovvero la probabilità di aspettative future distorte negativamente." width="576" />
+<p class="caption">
+Figura A.1: Rappresentazione grafica della distribuzione a priori per il parametro $ heta$, ovvero la probabilità di aspettative future distorte negativamente.
+</p>
+</div>
+</div>
+<div id="funzione-di-verosimiglianza" class="section level2" number="1.3">
+<h2><span class="header-section-number">A.3</span> Funzione di verosimiglianza</h2>
+<p>Calcoliamo ora la funzione di verosimiglianza utilizzando i 50 valori <span class="math inline">\(\theta\)</span> definiti in precedenza. A ciascuno dei valori della griglia applichiamo la formula binomiale, tendendo costanti i dati (ovvero 23 “successi” in 30 prove). Ad esempio, in corrispondenza del valore <span class="math inline">\(\theta = 0.816\)</span>, l’ordinata della funzione di verosimiglianza diventa</p>
+<p><span class="math display">\[\begin{equation}
+\binom{30}{23} \cdot 0.816^{23} \cdot (1 - 0.816)^{7} = 0.135.\notag
+\end{equation}\]</span></p>
+<p>
+Per <span class="math inline">\(\theta = 0.837\)</span>, l’ordinata della funzione di verosimiglianza sarà</p>
+<p><span class="math display">\[\begin{equation}
+\binom{30}{23} \cdot 0.837^{23} \cdot (1 - 0.837)^{7} = 0.104.\notag
+\end{equation}\]</span></p>
+<p>
+Dobbiamo svolgere questo calcolo per tutti gli elementi della griglia. Usando <span class="math inline">\(\R\)</span>, tale risultato si trova nel modo seguente:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="es-pratico-zetsche.html#cb5-1" aria-hidden="true" tabindex="-1"></a>likelihood <span class="ot">&lt;-</span> <span class="fu">dbinom</span>(<span class="at">x =</span> <span class="dv">23</span>, <span class="at">size =</span> <span class="dv">30</span>, <span class="at">prob =</span> p_grid)</span>
+<span id="cb5-2"><a href="es-pratico-zetsche.html#cb5-2" aria-hidden="true" tabindex="-1"></a>likelihood</span>
+<span id="cb5-3"><a href="es-pratico-zetsche.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 0.000000e+00 2.352564e-33 1.703051e-26 1.644169e-22</span></span>
+<span id="cb5-4"><a href="es-pratico-zetsche.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [5] 1.053708e-19 1.525217e-17 8.602222e-16 2.528440e-14</span></span>
+<span id="cb5-5"><a href="es-pratico-zetsche.html#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [9] 4.606907e-13 5.819027e-12 5.499269e-11 4.105534e-10</span></span>
+<span id="cb5-6"><a href="es-pratico-zetsche.html#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [13] 2.520191e-09 1.311195e-08 5.919348e-08 2.362132e-07</span></span>
+<span id="cb5-7"><a href="es-pratico-zetsche.html#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [17] 8.456875e-07 2.749336e-06 8.196948e-06 2.259614e-05</span></span>
+<span id="cb5-8"><a href="es-pratico-zetsche.html#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [21] 5.798673e-05 1.393165e-04 3.148623e-04 6.720574e-04</span></span>
+<span id="cb5-9"><a href="es-pratico-zetsche.html#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [25] 1.359225e-03 2.611870e-03 4.778973e-03 8.340230e-03</span></span>
+<span id="cb5-10"><a href="es-pratico-zetsche.html#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [29] 1.390025e-02 2.214199e-02 3.372227e-02 4.909974e-02</span></span>
+<span id="cb5-11"><a href="es-pratico-zetsche.html#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [33] 6.830377e-02 9.068035e-02 1.146850e-01 1.378206e-01</span></span>
+<span id="cb5-12"><a href="es-pratico-zetsche.html#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [37] 1.568244e-01 1.681749e-01 1.688979e-01 1.575211e-01</span></span>
+<span id="cb5-13"><a href="es-pratico-zetsche.html#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [41] 1.348746e-01 1.043545e-01 7.133007e-02 4.165680e-02</span></span>
+<span id="cb5-14"><a href="es-pratico-zetsche.html#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [45] 1.972669e-02 6.936821e-03 1.535082e-03 1.473375e-04</span></span>
+<span id="cb5-15"><a href="es-pratico-zetsche.html#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [49] 1.868105e-06 0.000000e+00</span></span></code></pre></div>
+<p>
+La funzione <code>dbinom(x, size, prob)</code> richiede che vengano specificati tre parametri: il numero di “successi,” il numero di prove e la probabilità di successo. Nella chiamata precedente, <code>x</code> (numero di successi) e <code>size</code> (numero di prove bernoulliane) sono degli scalari e <code>prob</code> è il vettore <code>p_grid</code>. In tali circostanze, l’output di <code>dbinom()</code> è il vettore che abbiamo chiamato <code>likelihood</code>. Gli elementi di tale vettore sono stati calcolati applicando la formula della distribuzione binomiale a ciascuno dei 50 elementi della griglia, tenendo sempre costanti i dati [ovvero, <code>x</code> (il numero di successi) e <code>size</code> (numero di prove bernoulliane)]; ciò che varia è il valore <code>prob</code>, che assume valori diversi (<code>p_grid</code>) in ciascuna cella della griglia.</p>
+<p>La chiamata a <code>dbinom()</code> produce dunque un vettore i cui valori corrispondono all’ordinata della funzione di verosimiglianza per per ciascun valore <span class="math inline">\(\theta\)</span> specificato in <code>p_grid</code>. La verosimiglianza discretizzata così ottenuta è riportata nella figura <a href="es-pratico-zetsche.html#fig:gridappr2">A.2</a>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="es-pratico-zetsche.html#cb6-1" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(p_grid, likelihood) <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="es-pratico-zetsche.html#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> p_grid, <span class="at">xend =</span> p_grid, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">yend =</span> likelihood)) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="es-pratico-zetsche.html#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>() <span class="sc">+</span></span>
+<span id="cb6-4"><a href="es-pratico-zetsche.html#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fl">0.17</span>) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="es-pratico-zetsche.html#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-6"><a href="es-pratico-zetsche.html#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Parametro \U03B8&quot;</span>,</span>
+<span id="cb6-7"><a href="es-pratico-zetsche.html#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Verosimiglianza&quot;</span></span>
+<span id="cb6-8"><a href="es-pratico-zetsche.html#cb6-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-9"><a href="es-pratico-zetsche.html#cb6-9" aria-hidden="true" tabindex="-1"></a>p2</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:gridappr2"></span>
+<img src="910_grid_method_example_files/figure-html/gridappr2-1.png" alt="Rappresentazione della funzione di verosimiglianza per il parametro $\theta$, ovvero la probabilità di aspettative future distorte negativamente." width="576" />
+<p class="caption">
+Figura A.2: Rappresentazione della funzione di verosimiglianza per il parametro <span class="math inline">\(\theta\)</span>, ovvero la probabilità di aspettative future distorte negativamente.
+</p>
+</div>
+</div>
+<div id="distribuzione-a-posteriori" class="section level2" number="1.4">
+<h2><span class="header-section-number">A.4</span> Distribuzione a posteriori</h2>
+<p>L’approssimazione discretizzata della distribuzione a posteriori <span class="math inline">\(p(\theta \mid y)\)</span> si ottiene facendo il prodotto della verosimiglianza e della distribuzione a priori per poi scalare tale prodotto per una costante di normalizzazione. Il prodotto <span class="math inline">\(p(\theta)\mathcal{L}(y \mid \theta)\)</span> produce la distribuzione a posteriori <em>non standardizzata</em>.</p>
+<p>Nel caso di una distribuzione a priori non informativa (ovvero una distribuzione uniforme), per ottenere la funzione a posteriori non standardizzata è sufficiente moltiplicare ciascun valore della funzione di verosimiglianza per 0.02. Per esempio, per il primo valore della funzione di verosimiglianza usato quale esempio poco sopra, abbiamo <span class="math inline">\(0.135 \cdot 0.02\)</span>; per il secondo valore dell’esempio abbiamo <span class="math inline">\(0.104 \cdot 0.02\)</span>; e così via. Possiamo svolgere tutti i calcoli usando <span class="math inline">\(\R\)</span> nel modo seguente:<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="es-pratico-zetsche.html#cb7-1" aria-hidden="true" tabindex="-1"></a>unstd_posterior <span class="ot">&lt;-</span> likelihood <span class="sc">*</span> prior1</span>
+<span id="cb7-2"><a href="es-pratico-zetsche.html#cb7-2" aria-hidden="true" tabindex="-1"></a>unstd_posterior</span>
+<span id="cb7-3"><a href="es-pratico-zetsche.html#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 0.000000e+00 4.705127e-35 3.406102e-28 3.288337e-24</span></span>
+<span id="cb7-4"><a href="es-pratico-zetsche.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [5] 2.107415e-21 3.050433e-19 1.720444e-17 5.056880e-16</span></span>
+<span id="cb7-5"><a href="es-pratico-zetsche.html#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [9] 9.213813e-15 1.163805e-13 1.099854e-12 8.211068e-12</span></span>
+<span id="cb7-6"><a href="es-pratico-zetsche.html#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [13] 5.040382e-11 2.622390e-10 1.183870e-09 4.724263e-09</span></span>
+<span id="cb7-7"><a href="es-pratico-zetsche.html#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [17] 1.691375e-08 5.498671e-08 1.639390e-07 4.519229e-07</span></span>
+<span id="cb7-8"><a href="es-pratico-zetsche.html#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [21] 1.159735e-06 2.786331e-06 6.297247e-06 1.344115e-05</span></span>
+<span id="cb7-9"><a href="es-pratico-zetsche.html#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [25] 2.718450e-05 5.223741e-05 9.557946e-05 1.668046e-04</span></span>
+<span id="cb7-10"><a href="es-pratico-zetsche.html#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [29] 2.780049e-04 4.428398e-04 6.744454e-04 9.819948e-04</span></span>
+<span id="cb7-11"><a href="es-pratico-zetsche.html#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [33] 1.366075e-03 1.813607e-03 2.293700e-03 2.756411e-03</span></span>
+<span id="cb7-12"><a href="es-pratico-zetsche.html#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [37] 3.136488e-03 3.363497e-03 3.377958e-03 3.150422e-03</span></span>
+<span id="cb7-13"><a href="es-pratico-zetsche.html#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [41] 2.697491e-03 2.087091e-03 1.426601e-03 8.331361e-04</span></span>
+<span id="cb7-14"><a href="es-pratico-zetsche.html#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [45] 3.945339e-04 1.387364e-04 3.070164e-05 2.946751e-06</span></span>
+<span id="cb7-15"><a href="es-pratico-zetsche.html#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [49] 3.736209e-08 0.000000e+00</span></span></code></pre></div>
+<p>Avendo calcolato i valori della funzione a posteriori non standardizzata è poi necessario dividere per una costante di normalizzazione. Nel caso discreto, trovare il denominatore del teorema di Bayes è facile: esso è uguale alla somma di tutti i valori della distribuzione a posteriori non normalizzata. Per i dati presenti, tale costante di normalizzazione è uguale a 0.032:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="es-pratico-zetsche.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(unstd_posterior)</span>
+<span id="cb8-2"><a href="es-pratico-zetsche.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.0316129</span></span></code></pre></div>
+<p>La standardizzazione dei due valori usati come esempio è data da: <span class="math inline">\(0.135 \cdot 0.02 / 0.032\)</span> e da <span class="math inline">\(0.104 \cdot 0.02 / 0.032\)</span>. Usiamo <span class="math inline">\(\R\)</span> per svolgere questo calcolo su tutti i 50 valori di <code>unstd_posterior</code> così che la somma dei 50 i valori di <code>posterior</code> sia uguale a 1.0:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="es-pratico-zetsche.html#cb9-1" aria-hidden="true" tabindex="-1"></a>posterior <span class="ot">&lt;-</span> unstd_posterior <span class="sc">/</span> <span class="fu">sum</span>(unstd_posterior)</span>
+<span id="cb9-2"><a href="es-pratico-zetsche.html#cb9-2" aria-hidden="true" tabindex="-1"></a>posterior</span>
+<span id="cb9-3"><a href="es-pratico-zetsche.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 0.000000e+00 1.488357e-33 1.077440e-26 1.040188e-22</span></span>
+<span id="cb9-4"><a href="es-pratico-zetsche.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [5] 6.666313e-20 9.649330e-18 5.442222e-16 1.599625e-14</span></span>
+<span id="cb9-5"><a href="es-pratico-zetsche.html#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [9] 2.914574e-13 3.681425e-12 3.479129e-11 2.597379e-10</span></span>
+<span id="cb9-6"><a href="es-pratico-zetsche.html#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [13] 1.594406e-09 8.295316e-09 3.744893e-08 1.494410e-07</span></span>
+<span id="cb9-7"><a href="es-pratico-zetsche.html#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [17] 5.350268e-07 1.739376e-06 5.185824e-06 1.429552e-05</span></span>
+<span id="cb9-8"><a href="es-pratico-zetsche.html#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [21] 3.668548e-05 8.813904e-05 1.991986e-04 4.251792e-04</span></span>
+<span id="cb9-9"><a href="es-pratico-zetsche.html#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [25] 8.599178e-04 1.652408e-03 3.023432e-03 5.276472e-03</span></span>
+<span id="cb9-10"><a href="es-pratico-zetsche.html#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [29] 8.794033e-03 1.400820e-02 2.133450e-02 3.106310e-02</span></span>
+<span id="cb9-11"><a href="es-pratico-zetsche.html#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [33] 4.321259e-02 5.736920e-02 7.255582e-02 8.719259e-02</span></span>
+<span id="cb9-12"><a href="es-pratico-zetsche.html#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [37] 9.921545e-02 1.063963e-01 1.068538e-01 9.965619e-02</span></span>
+<span id="cb9-13"><a href="es-pratico-zetsche.html#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [41] 8.532881e-02 6.602021e-02 4.512719e-02 2.635430e-02</span></span>
+<span id="cb9-14"><a href="es-pratico-zetsche.html#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [45] 1.248015e-02 4.388601e-03 9.711744e-04 9.321354e-05</span></span>
+<span id="cb9-15"><a href="es-pratico-zetsche.html#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [49] 1.181862e-06 0.000000e+00</span></span></code></pre></div>
+<p>
+Verifichiamo:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="es-pratico-zetsche.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(posterior)</span>
+<span id="cb10-2"><a href="es-pratico-zetsche.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<p>La distribuzione a posteriori così trovata non è altro che la versione normalizzata della funzione di verosimiglianza: questo avviene perché la distribuzione a priori uniforme non ha aggiunto altre informazioni oltre a quelle che erano già fornite dalla funzione di verosimiglianza. L’approssimazione discretizzata di <span class="math inline">\(p(\theta \mid y)\)</span> che abbiamo appena trovato è riportata nella figura <a href="es-pratico-zetsche.html#fig:gridappr3">A.3</a>.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="es-pratico-zetsche.html#cb11-1" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(p_grid, posterior) <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="es-pratico-zetsche.html#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> p_grid, <span class="at">xend =</span> p_grid, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">yend =</span> posterior)) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="es-pratico-zetsche.html#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>() <span class="sc">+</span></span>
+<span id="cb11-4"><a href="es-pratico-zetsche.html#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fl">0.17</span>) <span class="sc">+</span></span>
+<span id="cb11-5"><a href="es-pratico-zetsche.html#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb11-6"><a href="es-pratico-zetsche.html#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Parametro \U03B8&quot;</span>,</span>
+<span id="cb11-7"><a href="es-pratico-zetsche.html#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Probabilità a posteriori&quot;</span></span>
+<span id="cb11-8"><a href="es-pratico-zetsche.html#cb11-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-9"><a href="es-pratico-zetsche.html#cb11-9" aria-hidden="true" tabindex="-1"></a>p3</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:gridappr3"></span>
+<img src="910_grid_method_example_files/figure-html/gridappr3-1.png" alt="Rappresentazione della distribuzione a posteriori per il parametro $\theta$, ovvero la probabilità di aspettative future distorte negativamente." width="576" />
+<p class="caption">
+Figura A.3: Rappresentazione della distribuzione a posteriori per il parametro <span class="math inline">\(\theta\)</span>, ovvero la probabilità di aspettative future distorte negativamente.
+</p>
+</div>
+<p>I grafici delle figure <a href="es-pratico-zetsche.html#fig:gridappr1">A.1</a>, <a href="es-pratico-zetsche.html#fig:gridappr2">A.2</a> e <a href="es-pratico-zetsche.html#fig:gridappr3">A.3</a> sono state calcolati utilizzando una griglia di 50 valori equi-spaziati per il parametro <span class="math inline">\(\theta\)</span>. I segmenti verticali rappresentano l’intensità della funzione in corrispondenza di ciascuna modalità parametro <span class="math inline">\(\theta\)</span>. Nella figura <a href="es-pratico-zetsche.html#fig:gridappr1">A.1</a> e nella figura <a href="es-pratico-zetsche.html#fig:gridappr3">A.3</a> la somma delle lunghezze dei segmenti verticali è uguale a 1.0; ciò non si verifica, invece, nel caso della figura <a href="es-pratico-zetsche.html#fig:gridappr3">A.3</a> (la funzione di verosimiglianza non è mai una funzione di probabilità, né nel caso discreto né in quello continuo).</p>
+</div>
+<div id="es-depression-beta-2-10" class="section level2" number="1.5">
+<h2><span class="header-section-number">A.5</span> La stima della distribuzione a posteriori (versione 2)</h2>
+<p>Continuiamo l’analisi di questi dati esaminiamo l’impatto di una distribuzione a priori informativa sulla distribuzione a posteriori. Una distribuzione a priori informativa riflette un alto grado di certezza a priori sui valori dei parametri del modello. Un ricercatore utilizza una distribuzione a priori informativa per introdurre nel processo di stima informazioni pre-esistenti alla raccolta dei dati, introducendo così delle restrizioni sulla possibile gamma di valori del parametro.</p>
+<p>Nel caso presente, supponiamo che la letteratura psicologica fornisca delle informazioni su <span class="math inline">\(\theta\)</span> (la probabilità che le aspettative future di un individuo clinicamente depresso siano distorte negativamente). Per fare un esempio, supponiamo (irrealisticamente) che tali conoscenze pregresse possano essere rappresentate da una Beta di parametri <span class="math inline">\(\alpha = 2\)</span> e <span class="math inline">\(\beta = 10\)</span>. Tali ipotetiche conoscenze pregresse ritengono molto plausibili valori <span class="math inline">\(\theta\)</span> bassi e considerano implausibili valori <span class="math inline">\(\theta &gt; 0.5\)</span>. Questo è equivalente a dire che ci aspettiamo che le aspettative relative all’umore futuro siano distorte negativamente solo per pochissimi individui clinicamente depressi — ovvero, ci aspettiamo che la maggioranza degli individui clinicamente depressi sia inguaribilmente ottimista. Questa è, ovviamente, una credenza a priori del tutto irrealistica. La esamino qui, non perché abbia alcun senso nel contesto dei dati di <span class="citation"><a href="#ref-zetschefuture2019" role="doc-biblioref">Zetsche, Bürkner, and Renneberg</a> (<a href="#ref-zetschefuture2019" role="doc-biblioref">2019</a>)</span>, ma soltanto per fare un esempio nel quale risulta chiaro come la distribuzione a posteriori sia una sorta di “compromesso” tra la distribuzione a priori e la verosimiglianza.</p>
+<p>Con calcoli del tutto simili a quelli descritti sopra si giunge alla distribuzione a posteriori rappresentata nella figura <a href="es-pratico-zetsche.html#fig:gridappr4">A.4</a>. Useremo ora una griglia di 100 valori per il parametro <span class="math inline">\(\theta\)</span>:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="es-pratico-zetsche.html#cb12-1" aria-hidden="true" tabindex="-1"></a>n_points <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb12-2"><a href="es-pratico-zetsche.html#cb12-2" aria-hidden="true" tabindex="-1"></a>p_grid <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">1</span>, <span class="at">length.out =</span> n_points)</span></code></pre></div>
+<p>
+Per la distribuzione a priori scegliamo una Beta(2, 10):</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="es-pratico-zetsche.html#cb13-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb13-2"><a href="es-pratico-zetsche.html#cb13-2" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb13-3"><a href="es-pratico-zetsche.html#cb13-3" aria-hidden="true" tabindex="-1"></a>prior2 <span class="ot">&lt;-</span> <span class="fu">dbeta</span>(p_grid, alpha, beta) <span class="sc">/</span> <span class="fu">sum</span>(<span class="fu">dbeta</span>(p_grid, alpha, beta))</span>
+<span id="cb13-4"><a href="es-pratico-zetsche.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(prior2)</span>
+<span id="cb13-5"><a href="es-pratico-zetsche.html#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<p>
+Tale distribuzione a priori è rappresentata nella figura <a href="es-pratico-zetsche.html#fig:gridappr4">A.4</a>:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="es-pratico-zetsche.html#cb14-1" aria-hidden="true" tabindex="-1"></a>plot_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(p_grid, prior2)</span>
+<span id="cb14-2"><a href="es-pratico-zetsche.html#cb14-2" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> plot_df <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="es-pratico-zetsche.html#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> p_grid, <span class="at">xend =</span> p_grid, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">yend =</span> prior2)) <span class="sc">+</span></span>
+<span id="cb14-4"><a href="es-pratico-zetsche.html#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>() <span class="sc">+</span></span>
+<span id="cb14-5"><a href="es-pratico-zetsche.html#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fl">0.17</span>) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="es-pratico-zetsche.html#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb14-7"><a href="es-pratico-zetsche.html#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb14-8"><a href="es-pratico-zetsche.html#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Probabilità a priori&quot;</span></span>
+<span id="cb14-9"><a href="es-pratico-zetsche.html#cb14-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-10"><a href="es-pratico-zetsche.html#cb14-10" aria-hidden="true" tabindex="-1"></a>p4</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:gridappr4"></span>
+<img src="910_grid_method_example_files/figure-html/gridappr4-1.png" alt="Rappresentazione di una funzione a priori informativa per il parametro $\theta$." width="576" />
+<p class="caption">
+Figura A.4: Rappresentazione di una funzione a priori informativa per il parametro <span class="math inline">\(\theta\)</span>.
+</p>
+</div>
+<p>
+Calcoliamo il valore di verosimiglianza per ciascun punto della griglia:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="es-pratico-zetsche.html#cb15-1" aria-hidden="true" tabindex="-1"></a>likelihood <span class="ot">&lt;-</span> <span class="fu">dbinom</span>(<span class="dv">23</span>, <span class="at">size =</span> <span class="dv">30</span>, <span class="at">prob =</span> p_grid)</span></code></pre></div>
+<p>
+Per ciascun punto della griglia, il prodotto tra la verosimiglianza e distribuzione a priori è dato da:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="es-pratico-zetsche.html#cb16-1" aria-hidden="true" tabindex="-1"></a>unstd_posterior2 <span class="ot">&lt;-</span> likelihood <span class="sc">*</span> prior2</span></code></pre></div>
+<p>
+È necessario normalizzare la distribuzione a posteriori discretizzata:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="es-pratico-zetsche.html#cb17-1" aria-hidden="true" tabindex="-1"></a>posterior2 <span class="ot">&lt;-</span> unstd_posterior2 <span class="sc">/</span> <span class="fu">sum</span>(unstd_posterior2)</span></code></pre></div>
+<p>
+Verifichiamo:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="es-pratico-zetsche.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(posterior2)</span>
+<span id="cb18-2"><a href="es-pratico-zetsche.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<p>
+La nuova funzione a posteriori discretizzata è rappresentata nella figura <a href="es-pratico-zetsche.html#fig:gridappr5">A.5</a>:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="es-pratico-zetsche.html#cb19-1" aria-hidden="true" tabindex="-1"></a>plot_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(p_grid, posterior2)</span>
+<span id="cb19-2"><a href="es-pratico-zetsche.html#cb19-2" aria-hidden="true" tabindex="-1"></a>p5 <span class="ot">&lt;-</span> plot_df <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="es-pratico-zetsche.html#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> p_grid, <span class="at">xend =</span> p_grid, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">yend =</span> posterior2)) <span class="sc">+</span></span>
+<span id="cb19-4"><a href="es-pratico-zetsche.html#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>() <span class="sc">+</span></span>
+<span id="cb19-5"><a href="es-pratico-zetsche.html#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fl">0.17</span>) <span class="sc">+</span></span>
+<span id="cb19-6"><a href="es-pratico-zetsche.html#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb19-7"><a href="es-pratico-zetsche.html#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Parametro \U03B8&quot;</span>,</span>
+<span id="cb19-8"><a href="es-pratico-zetsche.html#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Probabilità a posteriori&quot;</span></span>
+<span id="cb19-9"><a href="es-pratico-zetsche.html#cb19-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb19-10"><a href="es-pratico-zetsche.html#cb19-10" aria-hidden="true" tabindex="-1"></a>p5</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:gridappr5"></span>
+<img src="910_grid_method_example_files/figure-html/gridappr5-1.png" alt="Rappresentazione della funzione a posteriori per il parametro $\theta$ calcolata utilizzando una distribuzione a priori informativa." width="576" />
+<p class="caption">
+Figura A.5: Rappresentazione della funzione a posteriori per il parametro <span class="math inline">\(\theta\)</span> calcolata utilizzando una distribuzione a priori informativa.
+</p>
+</div>
+<p>Facendo un confronto tra le figure <a href="es-pratico-zetsche.html#fig:gridappr4">A.4</a> e <a href="es-pratico-zetsche.html#fig:gridappr5">A.5</a> notiamo una notevole differenza tra la distribuzione a priori e la distribuzione a posteriori. In particolare, la distribuzione a posteriori risulta spostata verso destra su posizioni più vicine a quelle della verosimiglianza [figura <a href="es-pratico-zetsche.html#fig:gridappr2">A.2</a>]. Si noti inoltre che, a causa dell’effetto della distribuzione a priori, le distribuzioni a posteriori delle figure <a href="es-pratico-zetsche.html#fig:gridappr3">A.3</a> e <a href="es-pratico-zetsche.html#fig:gridappr5">A.5</a> sono molto diverse tra loro.</p>
+<p>Campioniamo ora 10,000 punti dall’approssimazione discretizzata della distribuzione a posteriori:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="es-pratico-zetsche.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the seed</span></span>
+<span id="cb20-2"><a href="es-pratico-zetsche.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">84735</span>)</span>
+<span id="cb20-3"><a href="es-pratico-zetsche.html#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="es-pratico-zetsche.html#cb20-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb20-5"><a href="es-pratico-zetsche.html#cb20-5" aria-hidden="true" tabindex="-1"></a>  p_grid,</span>
+<span id="cb20-6"><a href="es-pratico-zetsche.html#cb20-6" aria-hidden="true" tabindex="-1"></a>  posterior2</span>
+<span id="cb20-7"><a href="es-pratico-zetsche.html#cb20-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-8"><a href="es-pratico-zetsche.html#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 4: sample from the discretized posterior</span></span>
+<span id="cb20-9"><a href="es-pratico-zetsche.html#cb20-9" aria-hidden="true" tabindex="-1"></a>post_samples <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb20-10"><a href="es-pratico-zetsche.html#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(</span>
+<span id="cb20-11"><a href="es-pratico-zetsche.html#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fl">1e5</span>,</span>
+<span id="cb20-12"><a href="es-pratico-zetsche.html#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">weight_by =</span> posterior2,</span>
+<span id="cb20-13"><a href="es-pratico-zetsche.html#cb20-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">replace =</span> <span class="cn">TRUE</span></span>
+<span id="cb20-14"><a href="es-pratico-zetsche.html#cb20-14" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p>
+Una rappresentazione grafica del campione casuale estratto dalla distribuzione a posteriori <span class="math inline">\(p(\theta \mid y)\)</span> è data da:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="es-pratico-zetsche.html#cb21-1" aria-hidden="true" tabindex="-1"></a>post_samples <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="es-pratico-zetsche.html#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> p_grid)) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="es-pratico-zetsche.html#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
+<span id="cb21-4"><a href="es-pratico-zetsche.html#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y =</span> ..density..),</span>
+<span id="cb21-5"><a href="es-pratico-zetsche.html#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;white&quot;</span>,</span>
+<span id="cb21-6"><a href="es-pratico-zetsche.html#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">binwidth =</span> <span class="fl">0.05</span></span>
+<span id="cb21-7"><a href="es-pratico-zetsche.html#cb21-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb21-8"><a href="es-pratico-zetsche.html#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dbeta, <span class="at">args =</span> <span class="fu">list</span>(<span class="dv">25</span>, <span class="dv">17</span>)) <span class="sc">+</span></span>
+<span id="cb21-9"><a href="es-pratico-zetsche.html#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lims</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span></code></pre></div>
+<p><img src="910_grid_method_example_files/figure-html/unnamed-chunk-16-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>
+All’istogramma è stata sovrapposta la corretta distribuzione a posteriori, ovvero una Beta di parametri 25 (<span class="math inline">\(y + \alpha\)</span> = 23 + 2) e 17 (<span class="math inline">\(n - y + \beta\)</span> = 30 - 23 + 10).</p>
+<p>La stima della moda a posteriori si ottiene con</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="es-pratico-zetsche.html#cb22-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>p_grid[<span class="fu">which.max</span>(df<span class="sc">$</span>posterior2)]</span>
+<span id="cb22-2"><a href="es-pratico-zetsche.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.5959596</span></span></code></pre></div>
+<p>e corrisponde a</p>
+<p><span class="math display">\[
+\Mo = \frac{\alpha -1}{\alpha + \beta - 2} = \frac{25 - 1}{25 + 17 - 2} = 0.6.
+\]</span></p>
+<p>La stima della media a posteriori si ottiene con</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="es-pratico-zetsche.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(post_samples<span class="sc">$</span>p_grid)</span>
+<span id="cb23-2"><a href="es-pratico-zetsche.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.5953337</span></span></code></pre></div>
+<p>e corrisponde a</p>
+<p><span class="math display">\[
+\bar{\theta} = \frac{\alpha}{\alpha + \beta} = \frac{25}{25 + 17} \approx 0.5952.
+\]</span></p>
+<p>La stima della mediana a posteriori si ottiene con</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="es-pratico-zetsche.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(post_samples<span class="sc">$</span>p_grid)</span>
+<span id="cb24-2"><a href="es-pratico-zetsche.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.5959596</span></span></code></pre></div>
+<p>e corrisponde a</p>
+<p><span class="math display">\[
+\Me = \frac{\alpha - \frac{1}{3}}{\alpha + \beta - \frac{2}{3}} \approx 0.5968.
+\]</span></p>
+</div>
+<div id="es-pratico-zetsche-funzioni" class="section level2" number="1.6">
+<h2><span class="header-section-number">A.6</span> Versione 2</h2>
+<p>Possiamo semplificare i calcoli precedenti definendo le funzioni <code>likelihood()</code>, <code>prior()</code> e <code>posterior()</code>.</p>
+<p>Per calcolare la funzione di verosimiglianza per i 30 valori di <span class="citation"><a href="#ref-zetschefuture2019" role="doc-biblioref">Zetsche, Bürkner, and Renneberg</a> (<a href="#ref-zetschefuture2019" role="doc-biblioref">2019</a>)</span> useremo la funzione <code>likelihood()</code>:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="es-pratico-zetsche.html#cb25-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">23</span></span>
+<span id="cb25-2"><a href="es-pratico-zetsche.html#cb25-2" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb25-3"><a href="es-pratico-zetsche.html#cb25-3" aria-hidden="true" tabindex="-1"></a>param <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb25-4"><a href="es-pratico-zetsche.html#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="es-pratico-zetsche.html#cb25-5" aria-hidden="true" tabindex="-1"></a>likelihood <span class="ot">&lt;-</span> <span class="cf">function</span>(param, <span class="at">x =</span> <span class="dv">23</span>, <span class="at">N =</span> <span class="dv">30</span>) {</span>
+<span id="cb25-6"><a href="es-pratico-zetsche.html#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dbinom</span>(x, N, param)</span>
+<span id="cb25-7"><a href="es-pratico-zetsche.html#cb25-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb25-8"><a href="es-pratico-zetsche.html#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="es-pratico-zetsche.html#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb25-10"><a href="es-pratico-zetsche.html#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> param,</span>
+<span id="cb25-11"><a href="es-pratico-zetsche.html#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">likelihood</span>(param)</span>
+<span id="cb25-12"><a href="es-pratico-zetsche.html#cb25-12" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-13"><a href="es-pratico-zetsche.html#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb25-14"><a href="es-pratico-zetsche.html#cb25-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb25-15"><a href="es-pratico-zetsche.html#cb25-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb25-16"><a href="es-pratico-zetsche.html#cb25-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">expression</span>(theta),</span>
+<span id="cb25-17"><a href="es-pratico-zetsche.html#cb25-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Verosimiglianza&quot;</span></span>
+<span id="cb25-18"><a href="es-pratico-zetsche.html#cb25-18" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="910_grid_method_example_files/figure-html/unnamed-chunk-20-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>
+La funzione <code>likelihood()</code> ritorna l’ordinata della verosimiglianza binomiale per ciascun valore del vettore <code>param</code> in input.</p>
+<p>Quale distribuzione a priori utilizzeremo una <span class="math inline">\(\mbox{Beta}(2, 10)\)</span> che è implementata nella funzione <code>prior()</code>:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="es-pratico-zetsche.html#cb26-1" aria-hidden="true" tabindex="-1"></a>prior <span class="ot">&lt;-</span> <span class="cf">function</span>(param, <span class="at">alpha =</span> <span class="dv">2</span>, <span class="at">beta =</span> <span class="dv">10</span>) {</span>
+<span id="cb26-2"><a href="es-pratico-zetsche.html#cb26-2" aria-hidden="true" tabindex="-1"></a>  param_vals <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb26-3"><a href="es-pratico-zetsche.html#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dbeta</span>(param, alpha, beta) <span class="co"># / sum(dbeta(param_vals, alpha, beta))</span></span>
+<span id="cb26-4"><a href="es-pratico-zetsche.html#cb26-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-5"><a href="es-pratico-zetsche.html#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="es-pratico-zetsche.html#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb26-7"><a href="es-pratico-zetsche.html#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> param,</span>
+<span id="cb26-8"><a href="es-pratico-zetsche.html#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">prior</span>(param)</span>
+<span id="cb26-9"><a href="es-pratico-zetsche.html#cb26-9" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb26-10"><a href="es-pratico-zetsche.html#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb26-11"><a href="es-pratico-zetsche.html#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb26-12"><a href="es-pratico-zetsche.html#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb26-13"><a href="es-pratico-zetsche.html#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">expression</span>(theta),</span>
+<span id="cb26-14"><a href="es-pratico-zetsche.html#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Densità&quot;</span></span>
+<span id="cb26-15"><a href="es-pratico-zetsche.html#cb26-15" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="910_grid_method_example_files/figure-html/unnamed-chunk-21-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>La funzione <code>posterior()</code> ritorna il prodotto della densità a priori e della verosimiglianza:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="es-pratico-zetsche.html#cb27-1" aria-hidden="true" tabindex="-1"></a>posterior <span class="ot">&lt;-</span> <span class="cf">function</span>(param) {</span>
+<span id="cb27-2"><a href="es-pratico-zetsche.html#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">likelihood</span>(param) <span class="sc">*</span> <span class="fu">prior</span>(param)</span>
+<span id="cb27-3"><a href="es-pratico-zetsche.html#cb27-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb27-4"><a href="es-pratico-zetsche.html#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="es-pratico-zetsche.html#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb27-6"><a href="es-pratico-zetsche.html#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> param,</span>
+<span id="cb27-7"><a href="es-pratico-zetsche.html#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">posterior</span>(param)</span>
+<span id="cb27-8"><a href="es-pratico-zetsche.html#cb27-8" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-9"><a href="es-pratico-zetsche.html#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb27-10"><a href="es-pratico-zetsche.html#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb27-11"><a href="es-pratico-zetsche.html#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb27-12"><a href="es-pratico-zetsche.html#cb27-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">expression</span>(theta),</span>
+<span id="cb27-13"><a href="es-pratico-zetsche.html#cb27-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Densità&quot;</span></span>
+<span id="cb27-14"><a href="es-pratico-zetsche.html#cb27-14" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="910_grid_method_example_files/figure-html/unnamed-chunk-22-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>
+La distribuzione a posteriori non normalizzata mostrata nella figura replica il risultato ottenuto con il codice utilizzato nella prima parte di questo Capitolo. Per l’implementazione dell’algoritmo di Metropolis non è necessaria la normalizzazione della distribuzione a posteriori.</p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-zetschefuture2019" class="csl-entry">
+Zetsche, Ulrike, Paul-Christian Bürkner, and Babette Renneberg. 2019. <span>“Future Expectations in Clinical Depression: <span>Biased</span> or Realistic?”</span> <em>Journal of Abnormal Psychology</em> 128 (7): 678–88.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Ricordiamo il principio dell’aritmetica vettorializzata: i vettori <code>likelihood</code> e <code>prior1</code> sono entrambi costituiti da 50 elementi. Se facciamo il prodotto tra i due vettori otteniamo un vettore di 50 elementi, ciascuno dei quali uguale al prodotto dei corrispondenti elementi dei vettori <code>likelihood</code> e <code>prior1</code>.<a href="es-pratico-zetsche.html#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="integration-mc.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/910_grid_method_example.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Data Science per psicologi.pdf", "Data Science per psicologi.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
