@@ -2,7 +2,6 @@ book_filename: "MyBook"
 output_dir: "docs"
 delete_merged_file: true
 new_session: true
-before_chapter_script: _common.R
 language:
   label:
     fig: 'Figura '
@@ -28,7 +27,7 @@ rmd_files:
     # - "001_data_science.Rmd"
     # - "005_misurazione.Rmd"
     # - "013_stat_descrittive.Rmd"
-    - "015_prob_intro.Rmd"
+    # - "015_prob_intro.Rmd"
     # - "016_prob_condiz.Rmd"
     # - "017_theo_bayes.Rmd"
     # - "018_prob_congiunta.Rmd"
@@ -37,13 +36,13 @@ rmd_files:
     # - "022_distr_rv_discr.Rmd"
     # - "023_distr_rv_cont.Rmd"
     # - "024_likelihood.Rmd"
-    - "025_intro_bayes.Rmd"
+    # - "025_intro_bayes.Rmd"
     # - "026_distr_coniugate.Rmd"
     # - "027_balance_prior_post.Rmd"
     # - "036_approx_posterior.Rmd"
-    # - "040_modello_binomiale.Rmd"
-    # - "041_diagnostica_MCMC.Rmd"
-    # - "045_summarize_posterior.Rmd"
+    - "040_modello_binomiale.Rmd"
+    - "041_diagnostica_MCMC.Rmd"
+    - "045_summarize_posterior.Rmd"
     # - "046_ppc.Rmd"
     # - "050_modello_normale.Rmd"
     # - "051_reglin1.Rmd"

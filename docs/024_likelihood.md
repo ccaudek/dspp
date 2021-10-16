@@ -2,9 +2,7 @@
 
 # La funzione di verosimiglianza {#likelihood-func}
 
-```{r setup, include = FALSE}
-source("_common.R")
-```
+
 
 Per introdurre la funzione di verosimiglianza utilizzeremo un esempio proposto da @McElreath_rethinking.^[Per una trattazione più formale, si consulti il tutorial di @etz2018introduction.] Supponiamo di tenere in mano un mappamondo e di chiederci: "qual'è la proporzione della superficie terreste ricoperta d'acqua?" Sembra una domanda a cui è difficile rispondere. Ma @McElreath_rethinking propone questa idea brillante: lanciamo in aria il mappamondo e, quando lo riprendiamo, osserviamo se la superfice del mappamondo sotto il nostro dito indice destro rappresenta acqua o terra. Possiamo ripetere questa procedura più volte, così da ottenere un campione causale di diverse porzioni della superficie dal mappamondo. Eseguiamo l'esperimento casuale nove volte e osserviamo i seguenti risultati: A, T, A, A, A, T, A, T, A, dove "A" indica acqua e "T" indica terra. 
 
@@ -27,10 +25,14 @@ Anche se il parametro $\theta$ non può essere direttamente osservato è possibi
 
 Prima di lanciare in aria il mappamondo e di ottenere il primo dato, non sappiamo nulla del parametro $\theta$. Dato che $\theta$ è una proporzione, i suoi valori possibili vanno da 0 a 1. Se non possediamo alcuna informazione su $\theta$, allora riteniamo che tutti i valori $\theta$ siano egualmente credibili. Rappresentiamo dunque la nostra incertezza a proposito del parametro $\theta$ mediante una distribuzione uniforme su tutti i valori $\theta$, come indicato dalla linea tratteggiata nel pannello $n = 1$ della figura \@ref(fig:rethinkingmodlearn).
 
-```{r rethinkingmodlearn, echo=FALSE, fig.cap="Come un modello statistico impara? Ciascun lancio del mappamondo produce un'osservazione: acqua (A) o terra (T). La stima della proporzione di acqua ($\\theta$) sulla superficie terreste prodotta dal modello è espressa nei termini del grado di credibilità (o Plausibilità, nella figura) di ciascun possibile valore $\\theta$. Le linee e le curve nella figura rappresentano il grado di credibilità dei valori $\\theta$ per diversi set di dati. In ogni pannello, le credibilità (curva tratteggiata) calcolate in base alle informazioni fornite dai lanci $1, \\dots, k$ vengono aggiornate a seguito dell'informazione fornita dal lancio $k + 1$. I nuovi valori di credibilità di $\\theta$ sono rappresentati dalla curva solida."}
+\begin{figure}
 
-knitr::include_graphics("images/rethinking_fig_2_5.pdf")
-```
+{\centering \includegraphics{images/rethinking_fig_2_5} 
+
+}
+
+\caption{Come un modello statistico impara? Ciascun lancio del mappamondo produce un'osservazione: acqua (A) o terra (T). La stima della proporzione di acqua ($\theta$) sulla superficie terreste prodotta dal modello è espressa nei termini del grado di credibilità (o Plausibilità, nella figura) di ciascun possibile valore $\theta$. Le linee e le curve nella figura rappresentano il grado di credibilità dei valori $\theta$ per diversi set di dati. In ogni pannello, le credibilità (curva tratteggiata) calcolate in base alle informazioni fornite dai lanci $1, \dots, k$ vengono aggiornate a seguito dell'informazione fornita dal lancio $k + 1$. I nuovi valori di credibilità di $\theta$ sono rappresentati dalla curva solida.}(\#fig:rethinkingmodlearn)
+\end{figure}
 
 Lanciamo in aria il mappamondo una prima volta e, quando lo riprendiamo, notiamo che sotto il nostro indice destro c'è "acqua". Dopo avere osservato il risultato del primo lancio, ovvero "A", il modello aggiorna le credibilità dei valori del parametro $\theta$ che ora sono rappresentate dalla linea continua nel pannello $n = 1$ della figura  \@ref(fig:rethinkingmodlearn). La credibilità associata all'evento $\theta = 0$ è scesa esattamente a zero, l'equivalente di "impossibile". Infatti, avendo osservato almeno un luogo sul mappamondo in cui c'è dell'acqua, possiamo dire che l'evento "non c'è acqua" (ovvero $\theta = 0$) è impossibile. Allo stesso modo, la credibilità di $\theta > 0.5$ è aumentata. Non abbiamo ancora evidenze che ci sia terra sul mappamondo, quindi le credibilità iniziali sono state modificate per essere coerenti con questa informazione: le credibilità associate a $\theta$ aumentano passando dal valore $\theta = 0$ a valore $\theta = 1$, in maniera coerente con i dati che abbiamo. Il punto importante è che le evidenze disponibili fino a questo momento vengono incorporata nelle credibilità attribuite a ciascun possibile valore $\theta$. Il modello implementa questa logica in maniera _automatica_. Non è necessario fornire al modello alcuna istruzione per ottenere questo risultato. La teoria della probabilità svolge tutti i
 calcoli necessari per noi.
@@ -104,27 +106,37 @@ La tabella seguente riportata alcuni valori rappresentativi della funzione di ve
 
 La figura \@ref(fig:likelihoodwater) fornisce una rappresentazione grafica della funzione di verosimiglianza -- la figura è stata costruita utilizzando 100 valori equispaziati $\theta \in [0, 1]$.
 
-```{r likelihoodwater, fig.cap="Funzione di verosimiglianza nel caso in cui l'esito acqua sia stato osservato 6 volte in 9 lanci del mappamondo."}
+
+```r
 n <- 9
 y <- 6
-theta <- seq(0, 1, length.out=100)
+theta <- seq(0, 1, length.out = 100)
 like <- choose(n, y) * theta^y * (1 - theta)^(n - y)
 plot(
-  theta, like, 
-  type = 'l', 
-  xaxt = "n", 
-  bty = 'l',
-  main = "Funzione di verosimiglianza", 
+  theta, like,
+  type = "l",
+  xaxt = "n",
+  bty = "l",
+  main = "Funzione di verosimiglianza",
   ylab = expression(L(theta)),
-  xlab = expression('Valori possibili di' ~ theta)
+  xlab = expression("Valori possibili di" ~ theta)
 )
 axis(side = 1, at = seq(0, 1, length.out = 11))
 segments(
-  0.67, 0, 0.67, 
-  choose(n, y) * 0.67^y * (1 - 0.67)^(n - y), 
+  0.67, 0, 0.67,
+  choose(n, y) * 0.67^y * (1 - 0.67)^(n - y),
   lty = 2
 )
 ```
+
+\begin{figure}
+
+{\centering \includegraphics{024_likelihood_files/figure-latex/likelihoodwater-1} 
+
+}
+
+\caption{Funzione di verosimiglianza nel caso in cui l'esito acqua sia stato osservato 6 volte in 9 lanci del mappamondo.}(\#fig:likelihoodwater)
+\end{figure}
 
 
 #### Interpretazione
@@ -201,26 +213,35 @@ ovvero la frequenza relativa dei successi nel campione.
 #### Calcolo numerico 
 
 In maniera più semplice, il risultato descritto nel Paragrafo \@ref(derivation-smv-prop) può essere ottenuto mediante una simulazione in \R. Iniziamo a definire un insieme di valori possibili per il parametro incognito $\theta$:
-```{r}
-theta <- seq(0, 1, length.out=1e3)
+
+```r
+theta <- seq(0, 1, length.out = 1e3)
 ```
 Sappiamo che la funzione di verosimiglianza è la funzione di massa di probabilità espressa in funzione del parametro sconosciuto $\theta$  assumendo come noti i dati. Questo si può esprimere in $\R$ nel modo seguente:
-```{r}
+
+```r
 like <- dbinom(x = 6, size = 9, prob = theta)
 ```
 Si noti che, nell'istruzione precedente, abbiamo passato alla funzione `dbinom()` i dati, ovvero `x = 6` successi in `size = 9` prove. Inoltre, abbiamo passato alla funzione il vettore `prob = theta` che contiene 1000 valori possibili per il parametro $\theta \in [0, 1]$. Per ciascuno dei valori $\theta$, la funzione `dbinom()` ritorna un valore che corrisopnde all'ordinata della funzione di verosimiglianza, tenendo sempre costanti i dati (ovvero, 6 successi in 9 prove). Un grafico della funzione di verosimiglianza è dato da:
-```{r}
-tibble(theta, like) %>% 
+
+```r
+tibble(theta, like) %>%
   ggplot(aes(x = theta, y = like)) +
   geom_line() +
   labs(
     y = expression(L(theta)),
-    x = expression('Valori possibili di' ~ theta)
+    x = expression("Valori possibili di" ~ theta)
   )
 ```
+
+
+
+\begin{center}\includegraphics{024_likelihood_files/figure-latex/unnamed-chunk-3-1} \end{center}
 Nella simulazione, il valore $\theta$ che massimizza la funzione di verosimiglianza può essere trovato nel modo seguente:
-```{r}
+
+```r
 theta[which.max(like)]
+#> [1] 0.6666667
 ```
 \noindent
 Il valore così trovato è uguale al valore definito dalla \@ref(eq:mlprop).
@@ -277,12 +298,15 @@ In altri termini, la s.m.v. del parametro $\mu$ è la media del campione e la s.
 
 Consideriamo ora un esempio che utilizza dei dati reali. I dati corrispondono ai valori BDI-II dei trenta soggetti del campione clinico di @zetschefuture2019:
 
-```{r}
+
+```r
 d <- tibble(
-  y = c(26, 35, 30, 25, 44, 30, 33, 43, 22, 43, 24, 
-        19, 39, 31, 25, 28, 35, 30, 26, 31, 41, 36, 
-        26, 35, 33, 28, 27, 34, 27, 22)
+  y = c(
+    26, 35, 30, 25, 44, 30, 33, 43, 22, 43, 24,
+    19, 39, 31, 25, 28, 35, 30, 26, 31, 41, 36,
+    26, 35, 33, 28, 27, 34, 27, 22
   )
+)
 ```
 
 Ci poniamo l'obiettivo di creare la funzione di verosimiglianza per questi dati, supponendo, in base ai risultati di ricerche precedenti, di sapere che i punteggi BDI-II si distribuiscono secondo una legge Normale. 
@@ -293,9 +317,11 @@ Per una singola osservazione, la funzione di verosimiglianza è la densità Norm
 
 Per semplicità, assumiamo  $\sigma$ noto e uguale alla deviazione standard del campione:
 
-```{r}
+
+```r
 true_sigma <- sd(d$y)
-true_sigma 
+true_sigma
+#> [1] 6.606858
 ```
 
 Avendo posto $\sigma = 6.61$, per una singola osservazione $y_i$ abbiamo
@@ -319,7 +345,8 @@ $$
 $$
 Poniamoci ora il problema di rappresentare graficamente la funzione di verosimiglianza per il parametro $\mu$. Avendo un solo parametro sconosciuto, possiamo rappresentare la verosimiglianza con una curva. In \R, definiamo la funzione di log-verosimiglianza nel modo seguente:
 
-```{r}
+
+```r
 log_likelihood <- function(y, mu, sigma = true_sigma) {
   sum(dnorm(y, mu, sigma, log = TRUE))
 }
@@ -336,11 +363,12 @@ Se applichiamo questa funzione ad un solo valore $\mu$ otteniamo l'ordinata dell
 Avendo trovato un singolo punto della funzione di log-verosimiglianza, dobbiamo ripetere i calcoli precedenti per tutti i possibili valori che $\mu$ può assumere. 
 Nel seguente ciclo `for()` viene calcolata la log-verosimiglianza di 100,000 valori possibili del parametro $\mu$:
 
-```{r}
+
+```r
 nrep <- 1e5
 mu <- seq(
-  mean(d$y) - sd(d$y), 
-  mean(d$y) + sd(d$y), 
+  mean(d$y) - sd(d$y),
+  mean(d$y) + sd(d$y),
   length.out = nrep
 )
 
@@ -354,18 +382,23 @@ Il vettore `mu` contiene 100,000 possibili valori del parametro $\mu$; tali valo
 
 I vettori `mu` e `ll` possono dunque essere usati per disegnare il grafico della funzione di log-verosimiglianza per il parametro $\mu$:
 
-```{r}
-tibble(mu, ll) %>% 
-ggplot(aes(x = mu, y = ll)) +
+
+```r
+tibble(mu, ll) %>%
+  ggplot(aes(x = mu, y = ll)) +
   geom_line() +
   vline_at(mean(d$y), color = "gray", linetype = "dashed") +
   labs(
     y = "Log-verosimiglianza",
-    x = expression("Parametro"~mu)
-  ) 
+    x = expression("Parametro" ~ mu)
+  )
 ```
 
-Dalla figura notiamo che, per i dati osservati, il massimo della funzione di log-verosimiglianza calcolata per via numerica, ovvero `r round(mean(d$y), 2)`, è identico alla media dei dati campionari e corrisponde al risultato teorico della \@ref(eq:lldepression).
+
+
+\begin{center}\includegraphics{024_likelihood_files/figure-latex/unnamed-chunk-9-1} \end{center}
+
+Dalla figura notiamo che, per i dati osservati, il massimo della funzione di log-verosimiglianza calcolata per via numerica, ovvero 30.93, è identico alla media dei dati campionari e corrisponde al risultato teorico della \@ref(eq:lldepression).
 
 
 ## Considerazioni conclusive {-}

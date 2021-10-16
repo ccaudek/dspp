@@ -49,7 +49,7 @@ source("_common.R")
 
 La figura \@ref(fig:cycle-of-science) fornisce una rappresentazione schematica del processo dell'indagine scientifica. Possiamo pensare al progresso scientifico come alla ripetizione di questo ciclo mentre i fenomeni naturali (e, ovviamente psicologici) vengono esplorati e i ricercatori imparano sempre di più sul loro funzionamento. Le caselle della figura riportano le varie fasi del processo di ingagine scientifica e lungo le frecce sono riportati i compiti che conducono i ricercatori da una fase alla successiva.
 
-```{r cycle-of-science, echo=FALSE, fig.cap="Rappresentazione schematica del processo scientifico (figura adattata dalla Fig. 1.1 di P. Gregory, Bayesian Logical Data Analysis for the Physical Sciences, Cambridge, 2005).", fig.align="center"}
+```{r cycle-of-science, echo=FALSE, fig.cap="Rappresentazione schematica del processo scientifico (figura adattata dalla Fig. 1.1 di P. Gregory, Bayesian Logical Data Analysis for the Physical Sciences, Cambridge, 2005)."}
 knitr::include_graphics("images/cycle_of_science.pdf")
 ```
 
@@ -107,23 +107,17 @@ Per facilitare la trattazione, le variabili casuali assumono solo valori numeric
 Nella teoria della probabilità il risultato "testa" nel lancio di una moneta è chiamato _evento_.^[Per un ripasso delle nozioni di base della teoria degli insiemi, si veda l'Appendice \@ref(insiemistica).] Ad esempio, _Y_ = 1 denota l'evento in cui il lancio di una moneta produce come risultato testa. 
 
 Il funzionale $Pr[·]$ definisce la probabilità di un evento. Ad esempio, per il lancio di una moneta equilibrata, la probabilità dell'evento "il risultato del lancio della moneta è testa" è scritta come
-
 $$
 Pr[Y = 1] = 0.5.
 $$
-
 Se la moneta è equilibrata dobbiamo anche avere $Pr[Y = 0] = 0.5$. I due eventi _Y_ = 1 e _Y_ = 0 sono _mutuamente esclusivi_ nel senso che  non possono entrambi verificarsi contemporaneamente. Nella notazione probabilistica,
-
 $$
 Pr[Y = 1\; e \; Y = 0] = 0.
 $$
-
 Gli eventi _Y_ = 1 e _Y_ = 0 di dicono _esaustivi_, nel senso che almeno uno di essi deve verificarsi e nessun altro tipo di evento è possibile. Nella notazione probabilistica,
-
 $$
 Pr[Y = 1\; o \; Y = 0] = 1.
 $$
-
 Il connettivo logico "e" specifica eventi _congiunti_, ovvero eventi che possono verificarsi contemporaneamente (eventi _compatibili_) e per i quali, perciò, la probabilità della loro congiunzione è $Pr(A \; e \; B) > 0$.
 Il connettivo logico "o" specifica eventi _disgiunti_, ovvero eventi che non possono verificarsi contemporaneamente (eventi _incompatibili_) e per i quali, perciò, la probabilità della loro congiunzione è $P(A \; e \; B) = 0$. 
 <!-- Le variabili casuali sono convenzionalmente scritte usando le lettere maiuscole.  -->
@@ -222,22 +216,18 @@ La visualizzazione mediante grafici contribuisce alla comprensione dei concetti 
 ```{r legge-grandi-n-1, cache=TRUE, fig.cap="Stima della probabilità di successo in funzione del numero di lanci di una moneta."}
 nrep <- 1e4
 estimate <- rep(NA, nrep)
-
 flip_coin <- function(m) {
   y <- rbinom(m, 1, 0.5)
   phat <- sum(y) / m
   phat
 }
-
 for(i in 1:nrep) {
   estimate[i] <- flip_coin(i)
 }
-
 d <- data.frame(
   n = 1:nrep, 
   estimate
 )
-
 d %>% 
   ggplot(
     aes(x = n, y = estimate)
@@ -276,7 +266,6 @@ La _legge dei grandi numeri_ ci dice che all'aumentare del numero di ripetizioni
 
 Le variabili casuali non esistono isolatamente. Abbiamo iniziato con una singola variabile casuale _Y_ che rappresenta il risultato di un singolo, specifico lancio di una moneta equlibrata. Ma supponiamo ora di lanciare la moneta tre volte. Ciò suggerisce che possiamo avere le variabili casuali $Y_1 , Y_2 , Y_3$ che rappresentano i risultati di ciascuno dei lanci. Possiamo assumere che ogni lancio sia indipendente, ovvero che non dipenda dal risultato degli altri lanci. Ognuna di queste variabili $Y_n$ per $n \in 1:3$ ha $Pr[Y_n =1]=0.5$ e $Pr[Y_n =0]=0.5$.
 Possiamo combinare più variabili casuali usando le operazioni aritmetiche. Se $Y_1 , Y_2, Y_3$ sono variabili casuali che rappresentano tre lanci di una moneta equilibrata (o un lancio di tre monete equilibrate), possiamo definire la somma di tali variabili casuali come
-
 $$
 Z = Y_1 + Y_2 + Y_3.
 $$
@@ -347,18 +336,15 @@ table(z) / M
 ```
 
 Viene detta _variabile casuale discreta_ una variabile casuale le cui modalità possono essere costituite solo da numeri interi:
-
 $$
 \mathbb{Z} = \dots, -2, -1, 0, 1, 2, \dots
 $$
-
 
 ## Funzione di massa di probabilità
 
 È conveniente avere una funzione che associa ogni possibile valore di una variabile casuale alla sua probabilità. In generale, ciò è possibile se e solo se la variabile casuale è discreta, così com'è stata definita nel Paragrafo precedente.
 
 Ad esempio, se consideriamo $Z = Y_1 + \dots + Y_4$ come il numero di risultati "testa" in 4 lanci della moneta, allora possiamo definire la seguente funzione:
-
 $$
 \begin{array}{rclll}
 p_Z(0) & = & 1/16 & & \mathrm{TTTT}
@@ -372,15 +358,12 @@ p_Z(3) & = & 4/16 & & \mathrm{HHHT, HHTH, HTHH, THHH}
 p_Z(4) & = & 1/16 & & \mathrm{HHHH}
 \end{array}
 $$
-
 Il lancio di quattro monete può produrre sedici possibili risultati. Dato che i lanci sono indipendenti e le monete sono equilibrate, ogni possibile risultato è ugualmente probabile. Nella tabella in alto, le sequenze dei risultati possibili del lancio delle 4 monete sono riportate nella colonna più a destra. Le probabilità si ottengono dividendo il numero di sequenze che producono lo stesso numero di eventi testa per il numero dei risultati possibili.
 
 La funzione $p_Z$ è stata costruita per mappare un valore $u$ per $Z$ alla probabilità dell'evento $Z = u$. Convenzionalmente, queste probabilità sono scritte come
-
 $$
 p_Z(z) = \mbox{Pr}[Z = z].
 $$ 
-\noindent
 La parte a destra dell'uguale si può leggere come: "la probabilità che la variabile casuale $Z$ assuma il valore $z$".
 
 Una funzione definita come sopra è detta _funzione di massa di probabilità_ della variabile casuale $Z$. Ad ogni variabile casuale discreta è associata un'unica funzione di massa di probabilità.
@@ -417,7 +400,6 @@ con $P_{z}(A)$ la probabilità assegnata ad $A$ dalla distribuzione
 $P_{z}$. Mediante una distribuzione di probabilità $P_{z}$ è dunque
 possibile determinare la probabilità di ciascun sottoinsieme
 $A \subset Z$ come 
-
 $$
 P_{z}(A) = \sum_{z \in A} P_{z}(Z).
 $$
@@ -425,7 +407,6 @@ $$
 ::: {.example}
 
 Per esempio, la probabilità che $Z$ sia un numero dispari è
-
 $$
 Pr(\text{Z è un numero dispari}) = P_{z}(Z = 1) + P_{z}(Z = 3) = \frac{4}{16} + \frac{4}{16} = \frac{1}{2}.
 $$
@@ -605,7 +586,6 @@ campionario di un esperimento casuale, quali sono le proprietà di base
 della probabilità e come si assegnano le probabilità agli eventi
 definiti sopra uno spazio campionario discreto. Abbiamo anche introdotto
 le nozioni di "variabile casuale", ovvero di una variabile che prende i suoi valori casualmente. E abbiamo descritto il modo di specificare la probabilità con cui sono presi i differenti valori, ovvero la funzione di distribuzione probabilistica
-
 $$
 F(X) = Pr(X < x),
 $$
