@@ -13,10 +13,6 @@ source("_stan_options.R")
 
 [STAN](http://mc-stan.org/) è un linguaggio di programmazione probabilistico usato per l'inferenza bayesiana [@carpenter2017stan]. Prende il nome da uno dei creatori del metodo Monte Carlo, Stanislaw Ulam [@Eckhardt1987stan]. Stan consente di generare campioni da distribuzioni di probabilità basati sulla costruzione di una catena di Markov avente come distribuzione di equilibrio (o stazionaria) la distribuzione desiderata.  
 
-Nelle parole degli autori:
-
-> Stan is a state-of-the-art platform for statistical modeling and high-performance statistical computation. Thousands of users rely on Stan for statistical modeling, data analysis, and prediction in the social, biological, and physical sciences, engineering, and business. Users specify log density functions in Stan's probabilistic programming language and get: full Bayesian statistical inference with MCMC sampling (NUTS, HMC); approximate Bayesian inference with variational inference (ADVI): penalized maximum likelihood estimation with optimization (L-BFGS).
-
 È possibile accedere al linguaggio Stan tramite diverse interfacce:
 
 - `CmdStan`: eseguibile da riga di comando,
@@ -43,33 +39,28 @@ Negli esempi di questa dispensa verrà usata l'interfaccia `cmdstanr`. Il pacche
 Si noti che `cmdstanr` richiede un'installazione funzionante di `CmdStan`, l'interfaccia shell per Stan. Se `CmdStan` non è installato, `cmdstanr` lo installerà automaticamente se il computer dispone di una _Toolchain_ adatta. Stan richiede infatti che sul computer su cui viene installato siano presenti alcuni strumenti necessari per gestire i file C++. Tra le altre ragioni, questo è dovuto al fatto che il codice Stan viene tradotto in codice C++ e compilato. Il modo migliore per ottenere il software necessario per un computer Windows o Mac è quello di installare `RTools`. Per un computer Linux, è necessario installare `build-essential` e una versione recente dei compilatori g++ o clang++. I requisiti sono descritti nella [Guida di CmdStan](https://mc-stan.org/docs/cmdstan-guide/cmdstan-installation.html).
 
 Per verificare che la Toolchain sia configurata correttamente è possibile utilizzare la funzione `check_cmdstan_toolchain()`:
-
 ```{r}
 check_cmdstan_toolchain()
 ```
 \noindent
 Se la toolchain è configurata correttamente, `CmdStan` può essere installato mediante la funzione `install_cmdstan()`:
-
 ```{r}
 # do not run!
 # install_cmdstan(cores = 2)
 ```
 \noindent
 Prima di poter utilizzare `CmdStanR`, è necessario specificare dove si trova l'installazione di `CmdStan`.
-
 ```{r}
 # do not run!
 # set_cmdstan_path(PATH_TO_CMDSTAN)
 ```
 \noindent
 Sul mio computer `PATH_TO_CMDSTAN` è la seguente stringa (incluse le virgolette):
-
 ```{r}
 cmdstan_path()
 ```
 \noindent
 La versione installata di `CmdStan` si ottiene con:
-
 ```{r}
 cmdstan_version()
 ```
@@ -84,6 +75,7 @@ Un programma Stan contiene tre "blocchi" obbligatori: blocco `data`, blocco `par
 ### Blocco `data`
 
 Qui vengono dichiarate le variabili che saranno passate a Stan. Devono essere elencati i nomi delle variabili che saranno utilizzate nel programma, il _tipo di dati_ da registrare per ciascuna variabile, per esempio:
+
 - _int_ = intero,
 - _real_ = numeri reali (ovvero, numeri con cifre decimali),
 - _vector_ = sequenze ordinate di numeri reali unidimensionali, 
@@ -93,15 +85,12 @@ Qui vengono dichiarate le variabili che saranno passate a Stan. Devono essere el
 Devono anche essere dichiarate le dimensioni delle variabili e le eventuali restrizioni sulle variabili (es. `upper = 1` `lower = 0`, che fungono da controlli per Stan). Tutti i nomi delle variabili assegnate qui saranno anche usati negli altri blocchi del programma. 
 
 Per esempio, l'istruzione seguente dichiaria la variabile `Y` -- la quale rappresenta, ad esempio, l'altezza di 10 persone -- come una variabile di tipo `real[10]`. Ciò significa che specifichiamo un array di lunghezza 10, i cui elementi sono variabili continue definite sull'intervallo dei numeri reali $[-\infty, +\infty]$. 
-
 ```{r, eval = FALSE}
 data {
   real Y[10]; // heights for 10 people
 }
 ```
-
 Invece, con l'istruzione  
-
 ```{r, eval = FALSE}
 data {
   int Y[10]; // qi for 10 people

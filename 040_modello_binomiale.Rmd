@@ -46,9 +46,9 @@ Il disegno sperimentale di @Gautret_2020 comprende, tra le altre cose, il confro
 
 Nella seguente discussione verrà ottenuta una stima bayesiana del parametro $\theta$ usando l'interfaccia `cmdstanr` di CmdStan.^[I modelli discussi in questo capitolo sono discussi da @gelman1995bayesian mentre il codice è stato ricavato dalla seguente [pagina web](http://avehtari.github.io/BDA_R_demos/demos_rstan/rstan_demo.html).]. Considereremo qui solo il gruppo di controllo. Iniziamo a caricare i pacchetti necessari:
 
-```{r, message=FALSE, warning=FALSE, error=FALSE}
+```{r, message=FALSE, warning=FALSE, error=FALSE, eval=FALSE}
 library("cmdstanr")
-set_cmdstan_path("/Users/corrado/.cmdstanr/cmdstan-2.28.0")
+set_cmdstan_path("/Users/corrado/.cmdstan/cmdstan-2.28.0")
 library("posterior")
 rstan_options(auto_write = TRUE) # avoid recompilation of models
 options(mc.cores = parallel::detectCores()) # parallelize across all CPUs

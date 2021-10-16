@@ -4,13 +4,14 @@
 source("_common.R")
 ```
 
+```{block, type='Summary'}
+La distribuzione a posteriori può essere approssimata con il metodo basato su griglia. A causa della maledizione della dimensionalità, tuttavia, questo metodo è di utilità limitata. I metodi Monte Carlo a catena di Markov consentono invece di trovare sempre una soluzione a questo problema. Esamineremo qui l'algoritmo di Metropolis.
+```
 
 In generale, in un problema bayesiano i dati $y$ provengono da una densità $p(y \mid \theta)$ e al parametro $\theta$ viene assegnata una densità a priori $p(\theta)$. Dopo avere osservato un campione $Y = y$, la funzione di verosimiglianza è uguale a $\mathcal{L}(\theta) = p(y \mid \theta)$ e la densità a posteriori diventa
-
 \begin{equation}
 p(\theta \mid y) = \frac{p(\theta) \mathcal{L}(\theta)}{\int p(\theta) \mathcal{L}(\theta) d \theta}.
 \end{equation}
-
 Si noti che, quando usiamo il teorema di Bayes per calcolare la distribuzione a posteriori del parametro di un modello statistico, al denominatore troviamo un integrale. Se vogliamo trovare la distribuzione a posteriori con metodi analitici è necessario usare distribuzioni a priori coniugate per la verosimiglianza. 
 Per quanto "semplice" in termini formali, questo approccio, però, limita di molto le possibili scelte del ricercatore. Nel senso che non è sempre sensato, dal punto di vista teorico, utilizzare distribuzioni a priori coniugate per la verosimiglianza per i parametri di interesse. Però, se usiamo delle distribuzioni a priori non coniutate per la verosimiglianza, ci troviamo in una condizione nella quale, per determinare la distribuzione a posteriori, è necessario calcolare un integrale che, nella maggior parte dei casi, non si può risolvere analiticamente. In altre parole: è possibile ottenere analiticamenre la distribuzione a posteriori solo per alcune specifiche combinazioni di distribuzioni a priori e verosimiglianza, il che limita considerevolmente la flessibilità della modellizzazione. 
 
@@ -47,19 +48,15 @@ valore $\theta$ della griglia; e (b) normalizzare i prodotti così ottenuti in m
 ### Modello Beta-Binomiale
 
 Supponiamo di avere osservato 9 sucessi in 10 prove Bernoulliane indipendenti.^[La discussione del modello Beta-Binomiale segue molto da vicino la presentazione di @Johnson2022bayesrules utilizzando anche lo stesso codice \R.] Imponiamo alla distribuzione a priori su $\theta$ (proabilità di successo in una singola prova) una Beta(2, 2) per descrivere la  nostra incertezza sul parametro prima di avere osservato i dati. Dunque, il modello diventa:
-
 \begin{align}
 Y \mid \theta & \sim \text{Bin}(10, \pi) \notag\\
 \theta & \sim \mbox{Beta}(2, 2).
 \end{align}
 In queste circostanze, l'aggiornamento bayesiano produce una distribuzione a posteriori Beta di parametri 11 ($y + \alpha$ = 9 + 2) e 3 ($n - y + \beta$ = 10 - 9 + 2):
-
 \begin{equation}
 \theta \mid (y = 9) \sim \mbox{Beta}(11, 3) \; .
 \end{equation}
-
 Per approssimare la distribuzione a posteriori, fissiamo una griglia di $n = 6$ valori equispaziati: $\theta \in \{0, 0.2, 0.4, 0.6, 0.8, 1\}$ (in seguito aumenteremo $n$):
-
 ```{r}
 grid_data <- tibble(
   theta_grid = seq(from = 0, to = 1, length = 6)
@@ -67,7 +64,6 @@ grid_data <- tibble(
 ```
 \noindent
 In corrispondenza di ciascun valore della griglia, valutiamo la distribuzione a priori $\mbox{Beta}(2, 2)$ e la verosimiglianza $\Bin(10, \theta)$ con $y = 9$.
-
 ```{r}
 grid_data <- grid_data %>%
   mutate(
@@ -75,10 +71,8 @@ grid_data <- grid_data %>%
     likelihood = dbinom(9, 10, theta_grid)
   )
 ```
-
 \noindent
 In ciascuna cella della griglia, calcoliamo il prodotto della verosimiglianza e della distribuzione a priori. Troviamo così un'approssimazione discreta e non normalizzata della distribuzione a posteriori (`unnormalized`). Normalizziamo poi questa approssimazione dividendo ciascun valore del vettore `unnormalized` per la  somma di tutti i valori del vettore:
-
 ```{r}
 grid_data <- grid_data %>%
   mutate(
@@ -94,16 +88,13 @@ grid_data %>%
     sum(posterior)
   )
 ```
-
 \noindent
 Abbiamo dunque ottenuto la seguente distribuzione a posteriori discretizzata $p(\theta \mid y)$:
-
 ```{r}
 round(grid_data, 2)
 ```
 \noindent
 La figura \@ref(fig:grid-method-6points-posterior-plot) mostra un grafico della distribuzione a posteriori discretizzata che è stata ottenuta:
-
 ```{r grid-method-6points-posterior-plot, fig.cap="Distribuzione a posteriori discretizzata ottenuta con il metodo grid-based per $y$ = 9 successi in 10 prove Bernoulliane, con distribuzione a priori $\\mbox{Beta}(2, 2)$. È stata utilizzata una griglia di solo $n$ = 6 punti."}
 grid_data %>% 
   ggplot(
@@ -120,7 +111,6 @@ grid_data %>%
 ```
 \noindent
 L'ultimo passo della simulazione è il campionamento dalla distribuzione a posteriori discretizzata:
-
 ```{r}
 set.seed(84735)
 post_sample <- sample_n(
@@ -132,34 +122,28 @@ post_sample <- sample_n(
 ```
 \noindent
 È facile intuire che i valori estratti con rimessa dalla distribuzione a posteriori discretizzata saranno quasi sempre uguali a 0.6 o 0.8. Questa intuizione è confermata dal grafico \@ref(fig:grid-method-6points-posterior-plot-sampling) a cui è stata sovrapposta la vera distribuzione a posteriori $\mbox{Beta}(11, 3)$:
-
 ```{r grid-method-6points-posterior-plot-sampling, fig.cap="Campionamento dalla  distribuzione a posteriori discretizzata ottenuta con il metodo grid-based per $y$ = 9 successi in 10 prove Bernoulliane, con distribuzione a priori $\\mbox{Beta}(2, 2)$. È stata utilizzata una griglia di solo $n$ = 6 punti."}
 ggplot(post_sample, aes(x = theta_grid)) +
   geom_histogram(aes(y = ..density..), color = "white") +
   stat_function(fun = dbeta, args = list(11, 3)) +
   lims(x = c(0, 1))
 ```
-
 \noindent
 La figura \@ref(fig:grid-method-6points-posterior-plot-sampling) mostra che, con una griglia così sparsa abbiamo ottenuto una versione estremamente approssimata della vera distribuzione a posteriori. Possiamo ottenere un risultato migliore con una griglia più densa, come indicato nella figura \@ref(fig:grid-method-100points-posterior-plot-sampling):
-
 ```{r grid-method-100points-posterior-plot-sampling, fig.cap="Distribuzione a posteriori discretizzata ottenuta con il metodo grid-based per $y$ = 9 successi in 10 prove Bernoulliane, con distribuzione a priori $\\mbox{Beta}(2, 2)$. È stata utilizzata una griglia di $n$ = 100 punti."}
 grid_data  <- tibble(
   theta_grid = seq(from = 0, to = 1, length.out = 100)
 )
-
 grid_data <- grid_data %>%
   mutate(
     prior = dbeta(theta_grid, 2, 2),
     likelihood = dbinom(9, 10, theta_grid)
   )
-
 grid_data <- grid_data %>%
   mutate(
     unnormalized = likelihood * prior,
     posterior = unnormalized / sum(unnormalized)
   )
-
 grid_data %>% 
 ggplot(
   aes(x = theta_grid, y = posterior)
@@ -173,10 +157,8 @@ ggplot(
       yend = posterior)
   )
 ```
-
 \noindent
 Campioniamo ora 10000 punti:
-
 ```{r}
 # Set the seed
 set.seed(84735)
@@ -187,10 +169,8 @@ post_sample <- sample_n(
   replace = TRUE
 )
 ```
-
 \noindent
 Con il campionamento dalla distribuzione a posteriori discretizzata costruita mediante una griglia più densa ($n = 100$) otteniamo un risultato soddisfacente (figura \@ref(fig:grid-method-100points-posterior-plot-and-correct-posterior)): la distribuzione dei valori prodotti dalla simulazione ora approssima molto bene la corretta distribuzione a posteriori $p(\theta \mid y) = \mbox{Beta}(11, 3)$.
-
 ```{r grid-method-100points-posterior-plot-and-correct-posterior, fig.cap="Campionamento dalla  distribuzione a posteriori discretizzata ottenuta con il metodo grid-based per $y$ = 9 successi in 10 prove Bernoulliane, con distribuzione a priori $\\mbox{Beta}(2, 2)$. È stata utilizzata una griglia di $n$ = 100 punti. All'istogramma è stata sovrapposta lacorretta distribuzione a posteriori, ovvero la densità $\\mbox{Beta}(11, 3)$."}
 post_sample %>%
   ggplot(aes(x = theta_grid)) +
@@ -461,7 +441,6 @@ R = \frac{pd(\text{valore candidato})}{pd(\text{valore corrente})}.
 $$
 4. Estraiamo un numero a caso $\in [0, 1]$. Se tale valore è minore di $R$ accettiamo il valore candidato come valore successivo della catena markoviana; altrimenti il valore successivo della catena rimane il valore corrente.
 
-\bigskip
 I passi da 1 a 4 definiscono una catena di Markov irriducibile e aperiodica sui valori di stato $\{1, 2,\dots, 8\}$, dove il passo 1 fornisce il valore iniziale della catena e i passi da 2 a 4 definiscono la matrice di transizione $P$. Un modo di campionare da una distribuzione di massa di probabilità `pd` consiste nell'iniziare da una posizione qualsiasi e eseguire una passeggiata casuale costituita da un grande numero di passi, ripetendo le fasi 2, 3 e 4 dell'algoritmo di Metropolis. Dopo un grande numero di passi, la distribuzione dei valori della catena markoviana approssimerà la distribuzione di probabilità `pd`.
 
 La funzione `random_walk()` implementa l'algoritmo di Metropolis. Tale funzione richiede in input la distribuzione di probabilità `pd`, la posizione di partenza `start` e il numero di passi dell'algoritmo `num_steps`.

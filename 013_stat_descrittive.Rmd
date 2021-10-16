@@ -273,7 +273,7 @@ bysubj %>%
 
 ## Kernel density plot
 
-Il confronto tra le figure \@ref(fig:hist1zetsche) e \@ref(fig:hist2zetsche) rende chiaro il limite degli istogrammi. È infatti ovvio che il profilo dell'istogramma è arbitrario: a seconda del numero e dei limiti delle classi che vengono scelte, cambiano sia il numero che la forma delle barre dell'istogramma. Questo rende difficile fornire un'interpretazione alle informazioni fornite da un istogramma.
+Il confronto tra le figure \@ref(fig:hist1zetsche) e \@ref(fig:hist2zetsche) rende chiaro il limite dell'istogramma: il profilo dell'istogramma è arbitrario, in quanto dipende dal numero e dall'ampiezza delle classi. Questo rende difficile l'interpretazione.
 
 Il problema precedente può essere alleviato utilizzando una
 rappresentazione alternativa della distribuzione di frequenza, ovvero la
@@ -312,7 +312,7 @@ bysubj %>%
 
 ## Forma di una distribuzione
 
-In generale, la forma di una distribuzione descrive come i dati si distribuiscono intorno ai valori centrali. Distinguiamo tra distribuzioni simmetriche e asimmetriche, e tra distribuzioni unimodali o multimodali. Un'illustrazione grafica è fornita nella figura \@ref(fig:distrib-shapes).
+In generale, la forma di una distribuzione descrive come i dati si distribuiscono intorno ai valori centrali. Distinguiamo tra distribuzioni simmetriche e asimmetriche, e tra distribuzioni unimodali o multimodali. Un'illustrazione grafica è fornita nella figura \@ref(fig:distrib-shapes). Nel pannello 1 la distribuzione è unimodale con asimmetria negativa; nel pannello 2 la distribuzione è unimodale con asimmetria positiva; nel pannello 3 la distribuzione è simmetrica e unimodale; nel pannello 4 la distribuzione è bimodale. 
 
 ```{tikz distrib-shapes, echo=FALSE, fig.cap = "1: Asimmetria negativa. 2: Asimmetria positiva. 3: Distribuzione unimodale. 4: Distribuzione bimodale.", fig.ext = 'png', cache=TRUE}
 \usetikzlibrary{
@@ -337,8 +337,6 @@ In generale, la forma di una distribuzione descrive come i dati si distribuiscon
 \draw [-stealth] (3,1) -- (3,5);
 \end{tikzpicture}
 ```
-
-Nel pannello 1 la distribuzione è unimodale con asimmetria negativa; nel pannello 2 la distribuzione è unimodale con asimmetria positiva; nel pannello 3 la distribuzione è simmetrica e unimodale; nel pannello 4 la distribuzione è bimodale. 
 
 ::: {.example}
 Il kernel density plot della figura \@ref(fig:zetschehist3) indica che la distribuzione dei valori del BDI-II nel campione di @zetschefuture2019 è bimodale. Ciò indica che le osservazioni della distribuzione si addensano in due cluster ben distinti: un gruppo di osservazioni tende ad avere valori BDI-II bassi, mentre l'altro gruppo tende ad avere BDI-II alti. Questi due cluster di osservazioni corrispondono al gruppo di controllo e al gruppo clinico nel campione di dati esaminato da @zetschefuture2019.
@@ -391,9 +389,9 @@ Per il calcolo del quantile (non interpolato) di ordine $p = 2/3$ dobbiamo consi
 ::: 
 
 
-### Box-plot
+### Diagramma a scatola 
 
-Il *box-plot* (o diagramma a scatola) è uno strumento grafico utile al
+Il *diagramma a scatola* (o box plot) è uno strumento grafico utile al
 fine di ottenere informazioni circa la dispersione e l'eventuale
 simmetria o asimmetria di una distribuzione. Per costruire un box-plot
 si rappresenta sul piano cartesiano un rettangolo (cioè la "scatola") di
@@ -468,7 +466,6 @@ La figura \@ref(fig:violin-zetsche) fornisce due rappresentazioni grafiche che p
 
 ```{r violin-zetsche, out.width="95%", fig.cap = "Due versioni di un violin plot per i valori BDI-II di ciascuno dei due gruppi di soggetti esaminati da @zetschefuture2019."}
 library("patchwork")
-
 bysubj <- df %>% 
   group_by(esm_id, group) %>% 
   summarise(
@@ -476,7 +473,6 @@ bysubj <- df %>%
     nr_of_episodes = mean(nr_of_episodes, na.rm = TRUE)
   ) %>% 
   na.omit()
-
 p1 <- bysubj %>% 
   ggplot(aes(x=group, y=bdi)) + 
   geom_violin(trim=FALSE) +
@@ -485,7 +481,6 @@ p1 <- bysubj %>%
     x = "Gruppo",
     y = "BDI-II"
   ) 
-
 p2 <- bysubj %>% 
   ggplot(aes(x=group, y=bdi)) + 
   geom_violin(trim=FALSE) +
@@ -494,7 +489,6 @@ p2 <- bysubj %>%
     x = "Gruppo",
     y = "BDI-II"
   ) 
-
 p1 + p2
 ```
 
@@ -532,8 +526,7 @@ inchiostro possibile, usando il minor spazio possibile. Secondo
     dei dati fornite nel testo.
 
 In base a questi principi, la funzione di densità empirica fornisce una
-rappresentazione migliore dei dati di @zetschefuture2019 di quanto lo faccia un istogramma. Inoltre, se oltre al grupppo di appartenenza non ci sono altre dimensioni importanti da mettere in evidenza, allora la nostra scelta dovrebbe
-ricadere sul pannello di sinistra della figura \@ref(fig:violin-zetsche). Il seguente [link](https://www.biostat.wisc.edu/~kbroman/presentations/graphs2018.pdf) fornisce diverse interessanti illustrazioni dei principi elencati sopra.
+rappresentazione migliore dei dati di @zetschefuture2019 di quanto lo faccia un istogramma. Inoltre, se oltre al grupppo di appartenenza non ci sono altre dimensioni importanti da mettere in evidenza, allora la nostra scelta dovrebbe ricadere sul pannello di sinistra della figura \@ref(fig:violin-zetsche). Il seguente [link](https://www.biostat.wisc.edu/~kbroman/presentations/graphs2018.pdf) fornisce diverse interessanti illustrazioni dei principi elencati sopra.
 
 
 ## Indici di tendenza centrale
@@ -571,7 +564,6 @@ $$
 &= \sum_i x_i - n \bar{x}\notag\\
 &= \sum_i x_i - \sum_i x_i = 0.\notag\end{aligned}
 $$ 
-
 Ciò ci consente di pensare alla media come al baricentro della distribuzione.
 
 Un'altra proprietà della media è la seguente. La somma dei quadrati
@@ -589,10 +581,8 @@ di una distribuzione. In particolare, ciò non accade quando la
 distribuzione è asimmetrica, o in presenza di valori anomali (_outlier_)
 -- si veda il pannello di destra della figura \@ref(fig:violin-zetsche). In tali circostanze, la tendenza centrale della distribuzione è meglio rappresentata dalla mediana o dalla media spuntata.
 
-
 ::: {.example}
 Calcoliamo la media dei valori BDI-II per i due gruppi di soggetti di @zetschefuture2019.
-
 ```{r}
 bysubj %>% 
   group_by(group) %>% 
@@ -614,7 +604,6 @@ ordinata. La media spuntata è data dalla media aritmetica dei dati rimanenti.
 
 ::: {.example}
 Calcoliamo la media spuntata dei valori BDI-II per i due gruppi di soggetti di @zetschefuture2019 escludendo il 10% dei valori più estremi in ciascun gruppo.
-
 ```{r}
 bysubj %>% 
   group_by(group) %>% 
@@ -623,7 +612,6 @@ bysubj %>%
   ) 
 ```
 ::: 
-
 
 ### Moda e mediana
 
@@ -636,7 +624,6 @@ $\tilde{x}$.
 
 ::: {.example}
 Calcoliamo i quantili di ordine 0.25, 0.5 e 0.75 dei valori BDI-II per i due gruppi di soggetti di @zetschefuture2019.
-
 ```{r}
 bysubj %>% 
   group_by(group) %>% 
@@ -693,12 +680,10 @@ s^2 = \frac{1}{n} \sum_{i=1}^n (x_i - \bar{x})^2
 (\#eq:var-descr)
 \end{equation}
 è la media dei quadrati degli scarti $x_i - \bar{x}$ tra ogni valore e la media della distribuzione. 
-La varianza è una misura di dispersione più complessa di quelle esaminate in precedenza. È appropriata solo nel caso di distribuzioni simmetriche e, anch'essa, è fortemente influenzata dai valori anomali. Inoltre, è espressa in
-un'unità di misura che è il quadrato dell'unità di misura dei dati originari e quindi ad essa non può essere assegnata un'interpretazione intuitiva.
+La varianza è una misura di dispersione più complessa di quelle esaminate in precedenza. È appropriata solo nel caso di distribuzioni simmetriche e, anch'essa, è fortemente influenzata dai valori anomali. Inoltre, è espressa in un'unità di misura che è il quadrato dell'unità di misura dei dati originari e quindi ad essa non può essere assegnata un'interpretazione intuitiva.
 
 ::: {.example}
 Calcoliamo la varianza dei punteggi BDI-II nei due gruppi di soggetti di @zetschefuture2019.
-
 ```{r}
 bysubj %>% 
   group_by(group) %>% 
@@ -717,7 +702,6 @@ Alla deviazione standard può essere assegnata una semplice interpretazione: la 
 
 ::: {.example}
 Calcoliamo la deviazione standard per il BDI-II dei due gruppi di soggetti di @zetschefuture2019.
-
 ```{r}
 bysubj %>% 
   group_by(group) %>% 
@@ -731,27 +715,21 @@ bysubj %>%
 ### Deviazione mediana assoluta 
 
 Una misura robusta della dispersione statistica di un campione è la deviazione mediana assoluta (Median Absolute Deviation, MAD) definita come la mediana del valore assoluto delle deviazioni dei dati dalla mediana, ovvero:
-
 $$
 {\displaystyle \operatorname {MAD} =\operatorname {median} \left(\ \left|X_{i}-\operatorname {median} (X)\right|\ \right)}
 $$
 Nel caso di una distribuzione dei dati unimodale simmetrica di forma campanulare (ovvero, normale) si ha che 
-
 $$
 {\displaystyle \text{deviazione standard} \approx 1.4826\ \operatorname {MAD} .\,}
 $$
-
 Pertanto, solitamente i software restituiscono il valore MAD moltiplicato per una tale costante.
 
 ::: {.example}
 Calcoliamo il valore MAD per il BDI-II dei due gruppi di soggetti di @zetschefuture2019.
-
 ```{r}
 1.4826 * median(abs(bysubj$bdi - median(bysubj$bdi)))
 ```
-
 Oppure, per i due gruppi:
-
 ```{r}
 bysubj %>% 
   group_by(group) %>% 
@@ -818,7 +796,6 @@ Il diagramma di dispersione è la rappresentazione grafica delle coppie di punti
 
 ::: {example}
 Il diagramma di dispersione per le variabili BDI-II e CES-D si ottiene ponendo, ad esempio, i valori BDI-II sull'asse delle ascisse e quelli del CES-D sull'asse delle ordinate. In tale grafico, fornito dalla figura \@ref(fig:zetsche-scatter), cascun punto corrisponde ad un individuo del quale, nel caso presente, conosciamo il livello di depressione misurato dalle due scale psicometriche. 
-
 ```{r}
 bysubj <- df %>% 
   group_by(esm_id, group) %>% 
@@ -851,7 +828,6 @@ bysubj %>%
   ) +
   theme(legend.position="none") 
 ```
-
 Dalla figura \@ref(fig:zetsche-scatter) possiamo vedere che i dati mostrano una tendenza a disporsi attorno ad una retta -- nel gergo statistico, questo fatto viene espresso dicendo che i punteggi CES-Dtendono ad essere linearmente associati ai punteggi BDI-II. È ovvio, tuttavia, che tale relazione lineare è lungi dall'essere perfetta -- se fosse perfetta, tutti i punti del diagramma a dispersione si disporrebbero esattamente lungo una retta.
 ::: 
 

@@ -9,4 +9,8 @@ purrr
 dplyr
 stringr
 forcats
+patchwork
 bayesplot
+ggExtra
+ggpubr
+khroma

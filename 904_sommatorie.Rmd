@@ -133,14 +133,7 @@ Si noti che la notazione
 $$
 \sum_{n=0}^4 3n
 $$
-non è altro che un ciclo `for`
-```{r, eval=FALSE}
-sum = 0;
-for (n = 0; n <= 4; n++) {
-  sum += 3 * n;
-}
-```
-scritto in C, oppure 
+non è altro che un ciclo `for`:
 ```{r}
 sum <- 0
 for (n in 0:4) {
@@ -148,7 +141,8 @@ for (n in 0:4) {
 }
 sum
 ```
-scritto in `R`. In maniera equivalente, e più semplice, possiamo scrivere
+\noindent
+In maniera equivalente, e più semplice, possiamo scrivere
 ```{r}
 sum(3 * (0:4))
 ```
@@ -157,7 +151,7 @@ Allo stesso modo, la notazione
 $$
 \prod_{n=1}^{4} 2n
 $$
-è equivalente al ciclo `for`
+è anch'essa equivalente al ciclo `for`
 ```{r}
 prod <- 1
 for (n in 1:4) {
@@ -165,9 +159,11 @@ for (n in 1:4) {
 }
 prod
 ```
-il che si può scrivere, più semplicemente, come
+che si può scrivere, più semplicemente, come
 ```{r}
 prod(2 * (1:4))
 ```
+
+In entrambi i casi precedenti, abbiamo sostituito le operazioni aritmetiche eseguite all'interno di un ciclo `for` con le stesse operazioni aritmetiche eseguite sui vettori elemento per elemento.
 
 

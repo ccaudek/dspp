@@ -15,5 +15,8 @@ purrr
 dplyr
 stringr
 forcats
-bayesplot
 patchwork
+bayesplot
+ggExtra
+ggpubr
+khroma

@@ -45,18 +45,43 @@ per cui studiamo le proprietà statistiche dei fenomeni casuali usando
 il lancio di una moneta quale esempio generico.
 
 
+## Inferenza statistica come un problema inverso {#inf-stat-probl-inv}
+
+- L'*inferenza deduttiva* procede in maniera deterministica dai fatti verso le conclusioni. Ad esempio, se dico che tutti gli uomini sono mortali e che Socrate è un uomo, posso concludere deduttivamente che Socrate è mortale. Quando i ricercatori progettano i loro esperimenti in base alle loro ipotesi, usano la logica deduttiva per dire: "Se A è vero, allora B è vero", dove A è l'ipotesi considerata e B è un'osservazione sperimentale.
+
+- L'*inferenza induttiva*, invece, procede dalle osservazioni ai fatti. Se pensiamo ai fatti come a ciò che governa o genera le osservazioni, allora l'induzione è una sorta di inferenza inversa. Supponiamo di avere osservato B. Questo rende A vero? Non necessariamente. Ma può rendere A più plausibile. Questo è un sillogismo debole. Ad esempio, si consideri la seguente coppia ipotesi/osservazioni.
+
+  - A = L'iniezione di acque reflue dopo la fratturazione idraulica, nota come fracking, può portare a una maggiore frequenza di terremoti.
+
+  - B = La frequenza dei terremoti in Oklahoma è aumentata di 100 volte dal 2010, quando il fracking è diventato una pratica comune.
+
+  - Poiché B è stato osservato, A è più plausibile. A non è necessariamente vero, ma decisamente più plausibile.
+
+- L'*inferenza statistica* è un tipo di inferenza induttiva che è specificamente formulata come un problema inverso. L'inferenza statistica è quell'insieme di procedure che hanno lo scopo di quantificare quanto più plausibile è A dopo aver osservato B. Per svolgere l'inferenza statistica, è necessario quantificare la plausibilità. Lo strumento che ci consente di fare questo è la teoria della probabilità.
+
+In conclusione, l'inferenza statistica richiede una teoria della probabilità, laddove la teoria della probabilità può essere vista come una generalizzazione della logica. A causa di questa connessione con la logica e del suo ruolo cruciale nella scienza, E. T. Jaynes afferma che la probabilità è la ``logica della scienza''.
+
+
 ## Che cos'è la probabilità?
 
 La definizione della probabilitè è un problema estremamente dibattuto ed aperto. Sono state fornite due possibili soluzioni al problema di definire il concetto di probabilità. 
 
 (a) La natura della probabilità è "ontologica" (ovvero, basata sulla metafisica): la probabilità è una proprietà della della realtà, del mondo, di come sono le cose, indipendentemente dalla nostra esperienza. È una visione che qualcuno chiama "oggettiva".
 
-(b) La natura della probabilitè è "epistemica" (ovvero, basata sulla conoscenza): la probabilità si riferisce alla conoscenza che abbiamo del mondo, non al mondo in sé. Di conseguenza è detta, in contrapposizione alla precedente definizione, "soggettiva".
+(b) La natura della probabilità è "epistemica" (ovvero, basata sulla conoscenza): la probabilità si riferisce alla conoscenza che abbiamo del mondo, non al mondo in sé. Di conseguenza è detta, in contrapposizione alla precedente definizione, "soggettiva".
 
-In termini epistemici, la probabilità fornisce una misura della nostra incertezza sul verificarsi di un fenomeno, alla luce delle informazioni disponibili. Potremmo dire che c'è una "scala" naturale che ha per estremi il vero (1: evento certo) da una parte ed il falso (0: evento impossibile) dall'altra. La probabilità è la quantificazione di questa scala: quantifica lo stato della nostra incertezza rispetto al contenuto di verità di una proposizione. 
+In termini epistemici, la probabilità fornisce una misura della nostra incertezza sul verificarsi di un fenomeno, alla luce delle informazioni disponibili. Potremmo dire che c'è una "scala" naturale che ha per estremi il vero (1: evento certo) da una parte ed il falso (0: evento impossibile) dall'altra. La probabilità è la quantificazione di questa scala: quantifica lo stato della nostra incertezza rispetto al contenuto di verità di una proposizione (ovvero, quantifica la plausibilità di una proposizione). 
+
+- Nell'interpretazione frequentista della probabilità, la probabilità $P(A)$ rappresenta la frequenza relativa a lungo termine nel caso di un grande numero di ripetizioni di un esperimento casuale sotto le medesime condizioni. L'evento $A$ deve essere una proposizione relativa alle variabili casuali^[Viene stressata qui l'idea che ciò di cui parliamo è qualcosa che emerge nel momento in cui è possibile ripetere l'esperimento casuale tante volte sotto le medesime condizioni. Le variabili casuali, infatti, forniscono una quantificazione dei risultati che si ottengono ripetendo tante volte l'esperimento casuale sotto le medesime condizioni.].
+
+- Nell'interpretazione bayesiana della probabilità $P(A)$ rappresenta direttamente il grado di credenza, o plausibilità, a proposito di $A$, dove $A$ può essere qualsiasi proposizione logica.
+
+In questo insegnamento utilizzeremo l'interpretazione bayesiana della probabilità.
 
 
 ## Variabili casuali e probabilità di un evento
+
+Esaminiamo qui di seguito alcuni concetti di base della teoria della probabilità.
 
 ### Variabili casuali
 

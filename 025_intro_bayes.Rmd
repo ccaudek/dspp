@@ -16,15 +16,23 @@ L'inferenza Bayesiana è un approccio all'inferenza statistica in cui le probabi
 Nell'approccio bayesiano non si fa riferimento ad un modello probabilistico $f(y \mid \theta)$ rappresentativo del fenomeno d'interesse noto a meno del valore assunto dal parametro (o dei parametri) che lo caratterizza. Si fa invece riferimento ad una distribuzione congiunta (di massa o di densità di probabilità) $f(y, \theta)$. Entrambi gli argomenti della funzione $y$ e $\theta$ hanno natura di variabili casuali, laddove la nostra incertezza relativa a $y$ è dovuta alla naturale variabilità del fenomeno indagato (_variabilità aleatoria_), mentre la nostra incertezza relativa a $\theta$ è dovuta alla mancata conoscenza del suo valore numerico (_variabilità epistemica_).
 
 
-## Inferenza statistica come un problema inverso
+## Inferenza bayesiana come un problema inverso
 
-- L'*inferenza deduttiva* procede in maniera deterministica dai fatti verso le conclusioni. Ad esempio, se dico che tutti gli uomini sono mortali e che Socrate è un uomo, posso concludere deduttivamente che Socrate è mortale. 
+<!-- - L'*inferenza deduttiva* procede in maniera deterministica dai fatti verso le conclusioni. Ad esempio, se dico che tutti gli uomini sono mortali e che Socrate è un uomo, posso concludere deduttivamente che Socrate è mortale. Quando i ricercatori progettano i loro esperimenti in base alle loro ipotesi, usano la logica deduttiva per dire: "Se A è vero, allora B è vero", dove A è l'ipotesi considerata e B è un'osservazione sperimentale. -->
 
-- L'*inferenza induttiva*, invece, procede dalle osservazioni ai fatti. Se pensiamo ai fatti come a ciò che governa o genera le osservazioni, allora l'induzione è una sorta di inferenza inversa. 
+<!-- - L'*inferenza induttiva*, invece, procede dalle osservazioni ai fatti. Se pensiamo ai fatti come a ciò che governa o genera le osservazioni, allora l'induzione è una sorta di inferenza inversa. Supponiamo di avere osservato B. Questo rende A vero? Non necessariamente. Ma può rendere A più plausibile. Questo è un sillogismo debole. Ad esempio, si consideri la seguente coppia ipotesi/osservazioni. -->
 
-- L'*inferenza statistica* è un tipo di inferenza induttiva che è specificamente formulata come un problema inverso.
+<!-- A = L'iniezione di acque reflue dopo la fratturazione idraulica, nota come fracking, può portare a una maggiore frequenza di terremoti. -->
 
-L'inferenza bayesiana è formulata nei termini di un problema inverso che segue la regola di Bayes. Per fissare la notazione, nel seguito $y$ rappresenterà le variabili osservate, ovvero i dati, e $\theta$ rappresenterà i parametri incogniti di un modello statistico. Sia $y$ che $\theta$ sono concepiti come delle variabili casuali. Con $x$ verranno invece denotate delle quantità note, come i predittori nel modello di regressione.
+<!-- B = La frequenza dei terremoti in Oklahoma è aumentata di 100 volte dal 2010, quando il fracking è diventato una pratica comune. -->
+
+<!-- Poiché B è stato osservato, A è più plausibile. A non è necessariamente vero, ma decisamente più plausibile. -->
+
+<!-- - L'*inferenza statistica* è un tipo di inferenza induttiva che è specificamente formulata come un problema inverso. L'inferenza statistica è quell'insieme di procedure che hanno lo scopo di quantificare quanto più plausibile è A dopo aver osservato B. Per svolgere l'inferenza statistica, è necessario quantificare la plausibilità. La probabilità ci fornisce lo strumento per fare questo. -->
+
+<!-- Quindi, l'inferenza statistica richiede una teoria della probabilità. La teoria della probabilità è una generalizzazione della logica. A causa di questa connessione logica e del suo ruolo cruciale nella scienza, E. T. Jaynes afferma che la probabilità è la ``logica della scienza''. -->
+
+L'inferenza bayesiana è formulata nei termini di un problema inverso che segue la regola di Bayes (si veda la Sezione \@ref(inf-stat-probl-inv)). Per fissare la notazione, nel seguito $y$ rappresenterà le variabili osservate, ovvero i dati, e $\theta$ rappresenterà i parametri incogniti di un modello statistico. Sia $y$ che $\theta$ sono concepiti come delle variabili casuali. Con $x$ verranno invece denotate le quantità note, come i predittori nel modello di regressione.
 
 
 ### Funzioni di probabilità
@@ -34,7 +42,6 @@ L'inferenza bayesiana utilizza le seguenti distribuzioni di probabilità (o dens
 - la *distribuzione a priori* $p(\theta)$ --- la credenza iniziale riguardo alla credibilità di ciascun valore $\theta$;
 - la *funzione di verosimiglianza* $p(y \mid \theta)$ --- la credibilità che il ricercatore assegnerebbe ai dati osservati se conoscesse il parametro di interesse $\theta$;
 - la *verosimiglianza marginale* $p(y)$ --- quanto sono credibili i dati $y$ alla luce della nostra credenza a priori relativamente a $\theta$. In termini formali:
-
 $$
 p(y) = \int_\theta p(y, \theta) d\theta = \int_\theta p(y \mid \theta) p(\theta) d\theta.
 $$
@@ -45,7 +52,6 @@ $$
 ### La regola di Bayes
 
 Nel contesto di un modello statistico, la formula di Bayes permette di giungere alla distribuzione a posteriori $p(\theta \mid y)$ per il parametro di interesse $\theta$, come indicato dalla seguente catena di equazioni:
-
 \begin{align}
 p(\theta \mid y)  &= \displaystyle \frac{p(\theta,y)}{p(y)}
  \ \ \ \ \ \mbox{ [definizione di probabilità condizionata]}
@@ -75,15 +81,11 @@ La \@ref(eq:bayesmodel) rende evidente che, in ottica bayesiana, la quantità di
 ## Inferenza bayesiana
 
 Un esempio di inferenza bayesiana è quello nel quale i dati sono rappresentati da una proporzione. Per questo tipo di dati possiamo adottare il seguente modello statistico 
-
 \begin{equation}
 y  \sim \mbox{Bin}(n, \theta),
 (\#eq:binomialmodel)
 \end{equation}
-
-\noindent
 laddove $\theta$ è la probabiltà che una prova Bernoulliana assuma il valore 1 e $n$ corrisponde al numero di prove Bernoulliane. Questo modello assume che le prove Bernoulliane $y_i$ che costituiscono il campione $y$ siano tra loro indipendenti e che ciascuna abbia la stessa probabilità $\theta \in [0, 1]$ di essere un "successo" (valore 1). In altre parole, il modello generatore dei dati avrà una funzione di massa di probabilità 
-
 $$
 p(y \mid \theta)
 \ = \
@@ -106,28 +108,21 @@ Per concludere, un modello è un costrutto matematico il cui scopo è quello di 
 ### Notazione
 
 Per rappresentare in un modo conciso i modelli statistici viene usata una notazione particolare. Ad esempio, invece di scrivere
-
 $$
 p(\theta) = \text{Beta}(1, 1),
 $$
-\noindent
 scriviamo:
-
 $$
 \theta \sim \text{Beta}(1, 1).
 $$
-
 Il simbolo "$\sim$" viene spesso letto "è distribuito come". Possiamo anche pensare che significhi che $\theta$ costituisce un campione casuale estratto dalla distribuzione Beta(1, 1). Allo stesso modo, per l'esempio presente, la verosimiglianza può essere scritta come:
-
 $$
 y \sim \text{Bin}(n, \theta).
 $$
 
-
 ### Il problema inverso
 
 Nel modello statistico che stiamo esaminando, il termine $n$ viene trattato come una costante nota e $\theta$ come una *variabile casuale*. Il parametro $\theta$ del modello rappresenta la probabilità che ciascuna prova Bernoulliana sia un "successo". Dato che $\theta$ è incognito, ma abbiamo a disposione un campione di dati, l'inferenza su $\theta$ può essere svolta, mediante la regola di Bayes, costruendo la distribuzione a posteriori $p(\theta \mid y)$. Una volta ottenuta la distribuzione a posteriori possiamo riassumerla, ad esempio, riportando l'intervallo centrale al 95% della distribuzione di densità, ovvero
-
 $$
 \mbox{Pr}\left[ 0.025 \leq \theta \leq 0.975
                 \ \Big| \
@@ -136,7 +131,6 @@ $$
 $$
 
 Se vogliamo sapere, per esempio, se la probabilità di $y_i=1$ sia maggiore di 0.5, possiamo calcolare la probabilità dell'evento
-
 $$
 \mbox{Pr}\left[\theta > \frac{1}{2}
                 \ \Bigg| \
@@ -148,7 +142,6 @@ $$
 ### Cos'è un parametro del modello?
 
 Il parametro di un modello è un valore che influenza la credibilità dei dati. Ad esempio, il singolo parametro $\theta$ del modello binomiale determina la forma della funzione di verosimiglianza binomiale. Ricordiamo che, per il modello binomiale, la funzione di verosimiglianza è:
-
 $$
 p(y \mid \theta, n) = \text{Bin}(y, n, \theta) = \binom{n}{y}\theta^y(1-\theta)^{n-y}.
 $$
