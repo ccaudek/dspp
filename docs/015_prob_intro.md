@@ -4,48 +4,65 @@
 
 
 
-È normale fare delle congetture rispetto a ciò di cui non siamo sicuri.
-Ma perché facciamo questo? Molto spesso perché, anche se sappiamo che le
-nostre conoscenze sono incomplete, dobbiamo comunque prendere delle
-decisioni. Ad esempio: "non so se tra qualche ora pioverà; devo o non
-devo prendere l'ombrello?" In maniera simile, anche se uno psicologo non
-sa in maniera certa quali sono i meccanismi che regolano i fenomeni
-psicologi, deve comunque decidere tra diverse alternative. Per esempio,
-deve fornire un parere, relativamente a chi, tra due genitori, sia più
-adatto per ottenere l'affidamento del figlio in caso di divorzio, oppure
-quale sia, in un caso specifico, l'approccio più efficace per il
-trattamento dei disturbi dell'alimentazione. Ovviamente la qualità delle
-congetture varia, così come varia la qualità delle decisioni che
-prendiamo. La teoria delle probabilità ci fornisce gli strumenti per
-prendere decisioni "razionali" in condizioni di incertezza, ovvero per
-formulare le migliori congetture possibili.
+<!-- È normale fare delle congetture rispetto a ciò di cui non siamo sicuri. -->
+<!-- Ma perché facciamo questo? Molto spesso perché, anche se sappiamo che le -->
+<!-- nostre conoscenze sono incomplete, dobbiamo comunque prendere delle -->
+<!-- decisioni. Ad esempio: "non so se tra qualche ora pioverà; devo o non -->
+<!-- devo prendere l'ombrello?" In maniera simile, anche se uno psicologo non -->
+<!-- sa in maniera certa quali sono i meccanismi che regolano i fenomeni -->
+<!-- psicologi, deve comunque decidere tra diverse alternative. Per esempio, -->
+<!-- deve fornire un parere, relativamente a chi, tra due genitori, sia più -->
+<!-- adatto per ottenere l'affidamento del figlio in caso di divorzio, oppure -->
+<!-- quale sia, in un caso specifico, l'approccio più efficace per il -->
+<!-- trattamento dei disturbi dell'alimentazione. Ovviamente la qualità delle -->
+<!-- congetture varia, così come varia la qualità delle decisioni che -->
+<!-- prendiamo. La teoria delle probabilità ci fornisce gli strumenti per -->
+<!-- prendere decisioni "razionali" in condizioni di incertezza, ovvero per -->
+<!-- formulare le migliori congetture possibili. -->
 
-La teoria delle probabilità ci consente di descrivere in maniera
-quantitativa quei fenomeni che, pur essendo altamente variabili,
-rivelano comunque una qualche coerenza a lungo termine. Il lancio
-ripetuto di una moneta è uno di questi fenomeni. È anche l'esempio
-tipico che viene usato per introdurre una discussione sulle probabilità.
-Sapere se una moneta sia onesta o meno, o calcolare la probabilità di
-ottenere testa un certo numero di volte può essere interessante nel
-mondo delle scommesse, ma nella vita quotidiana non ci capita spesso di
-lanciare una moneta per prendere una decisione. Allora perché ci
-preoccupiamo di studiare le proprietà statistiche dei lanci di una
-moneta? A questa domanda si può rispondere dicendo che l'esperimento
-(chiamato "casuale") che corrisponde al lancio di una moneta è il
-surrogato di una molteplicità di eventi che, della vita reale, sono
-molto importanti. Per esempio: qual è la probabilità di successo di un
-intervento psicologico? Qual è la probabilità che un test per l'HIV dia
-esito positivo in una persona che non ha l'HIV? Qual è la probabilità di
-essere occupato entro un anno dalla laurea? I lanci di una moneta
-costituiscono una rappresentazione generica di molteplici altri eventi
-che hanno un grande significato nella nostra vita. Questa è la ragione
-per cui studiamo le proprietà statistiche dei fenomeni casuali usando
-il lancio di una moneta quale esempio generico.
+<!-- La teoria delle probabilità ci consente di descrivere in maniera -->
+<!-- quantitativa quei fenomeni che, pur essendo altamente variabili, -->
+<!-- rivelano comunque una qualche coerenza a lungo termine. Il lancio -->
+<!-- ripetuto di una moneta è uno di questi fenomeni. È anche l'esempio -->
+<!-- tipico che viene usato per introdurre una discussione sulle probabilità. -->
+<!-- Sapere se una moneta sia onesta o meno, o calcolare la probabilità di -->
+<!-- ottenere testa un certo numero di volte può essere interessante nel -->
+<!-- mondo delle scommesse, ma nella vita quotidiana non ci capita spesso di -->
+<!-- lanciare una moneta per prendere una decisione. Allora perché ci -->
+<!-- preoccupiamo di studiare le proprietà statistiche dei lanci di una -->
+<!-- moneta? A questa domanda si può rispondere dicendo che l'esperimento -->
+<!-- (chiamato "casuale") che corrisponde al lancio di una moneta è il -->
+<!-- surrogato di una molteplicità di eventi che, della vita reale, sono -->
+<!-- molto importanti. Per esempio: qual è la probabilità di successo di un -->
+<!-- intervento psicologico? Qual è la probabilità che un test per l'HIV dia -->
+<!-- esito positivo in una persona che non ha l'HIV? Qual è la probabilità di -->
+<!-- essere occupato entro un anno dalla laurea? I lanci di una moneta -->
+<!-- costituiscono una rappresentazione generica di molteplici altri eventi -->
+<!-- che hanno un grande significato nella nostra vita. Questa è la ragione -->
+<!-- per cui studiamo le proprietà statistiche dei fenomeni casuali usando -->
+<!-- il lancio di una moneta quale esempio generico. -->
 
 
-## Inferenza statistica come un problema inverso {#inf-stat-probl-inv}
+## La probabilità come la logica della scienza {#inf-stat-probl-inv}
+
+La figura \@ref(fig:cycle-of-science) fornisce una rappresentazione schematica del processo dell'indagine scientifica. Possiamo pensare al progresso scientifico come alla ripetizione di questo ciclo mentre i fenomeni naturali (e, ovviamente psicologici) vengono esplorati e i ricercatori imparano sempre di più sul loro funzionamento. Le caselle della figura riportano le varie fasi del processo di ingagine scientifica e lungo le frecce sono riportati i compiti che conducono i ricercatori da una fase alla successiva.
+
+\begin{figure}
+
+{\centering \includegraphics{images/cycle_of_science} 
+
+}
+
+\caption{Rappresentazione schematica del processo scientifico (figura adattata dalla Fig. 1.1 di P. Gregory, Bayesian Logical Data Analysis for the Physical Sciences, Cambridge, 2005).}(\#fig:cycle-of-science)
+\end{figure}
+
+Consideriamo i compiti e le fasi dell'indagine scientifica. Iniziamo in basso a sinistra.
+
+- *Invenzione e perfezionamento delle ipotesi* In questa fase del processo scientifico, i ricercatori pensano ai fenomeni naturali, a ciò che è presente nella letteratura scientifica, anche ai risultati dei loro esperimenti, e formulano ipotesi o teorie che possono valutare con degli esperimenti. Questo passaggio richiede innovazione e creatività.
 
 - L'*inferenza deduttiva* procede in maniera deterministica dai fatti verso le conclusioni. Ad esempio, se dico che tutti gli uomini sono mortali e che Socrate è un uomo, posso concludere deduttivamente che Socrate è mortale. Quando i ricercatori progettano i loro esperimenti in base alle loro ipotesi, usano la logica deduttiva per dire: "Se A è vero, allora B è vero", dove A è l'ipotesi considerata e B è un'osservazione sperimentale.
+
+- *Esecuzione degli esperimenti.* Questa fase richiede molte risorse, di tempo e denaro. Richiede anche innovazione e creatività. Nello specifico, i ricercatori devono pensare attentamente a come costruire il loro esperimento per verificare l'ipotesi di interesse. Il risultato degli esperimenti sono i dati.
 
 - L'*inferenza induttiva*, invece, procede dalle osservazioni ai fatti. Se pensiamo ai fatti come a ciò che governa o genera le osservazioni, allora l'induzione è una sorta di inferenza inversa. Supponiamo di avere osservato B. Questo rende A vero? Non necessariamente. Ma può rendere A più plausibile. Questo è un sillogismo debole. Ad esempio, si consideri la seguente coppia ipotesi/osservazioni.
 
@@ -57,12 +74,12 @@ il lancio di una moneta quale esempio generico.
 
 - L'*inferenza statistica* è un tipo di inferenza induttiva che è specificamente formulata come un problema inverso. L'inferenza statistica è quell'insieme di procedure che hanno lo scopo di quantificare quanto più plausibile è A dopo aver osservato B. Per svolgere l'inferenza statistica, è necessario quantificare la plausibilità. Lo strumento che ci consente di fare questo è la teoria della probabilità.
 
-In conclusione, l'inferenza statistica richiede una teoria della probabilità, laddove la teoria della probabilità può essere vista come una generalizzazione della logica. A causa di questa connessione con la logica e del suo ruolo cruciale nella scienza, E. T. Jaynes afferma che la probabilità è la ``logica della scienza''.
+L'inferenza statistica è l'aspetto del processo dell'indagine scientifica che è l'oggetto centrale di questo insegnamento. Il risultato dell'inferenza statistica è la conoscenza di quanto siano plausibili le ipotesi e le stime dei parametri sotto le ipotesi considerate. Ma l'inferenza statistica richiede una teoria della probabilità, laddove la teoria della probabilità può essere vista come una generalizzazione della logica. A causa di questa connessione con la logica e del suo ruolo cruciale nella scienza, E. T. Jaynes afferma infatti che la probabilità è la "logica della scienza". È dunque necessario esaminare preliminarmente alcune nozioni di base della teoria della probabilità. 
 
 
 ## Che cos'è la probabilità?
 
-La definizione della probabilitè è un problema estremamente dibattuto ed aperto. Sono state fornite due possibili soluzioni al problema di definire il concetto di probabilità. 
+La definizione della probabilità è un problema estremamente dibattuto ed aperto. Sono state fornite due possibili soluzioni al problema di definire il concetto di probabilità. 
 
 (a) La natura della probabilità è "ontologica" (ovvero, basata sulla metafisica): la probabilità è una proprietà della della realtà, del mondo, di come sono le cose, indipendentemente dalla nostra esperienza. È una visione che qualcuno chiama "oggettiva".
 

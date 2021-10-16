@@ -26,7 +26,7 @@ knitr::opts_chunk$set(
   error = FALSE,
   tidy = "styler",
   fig.height = 3, 
-  fig.width = 6,
+  fig.width = 4.854,
   fig.align = "center",
   knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
   )

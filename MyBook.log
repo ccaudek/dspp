@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.6)  16 OCT 2021 10:05
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.6)  16 OCT 2021 12:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1955,12 +1955,12 @@ Package csquotes Info: ... found 'polyglossia' package.
 LaTeX Info: Redefining \rmfamily on input line 26.
 LaTeX Info: Redefining \sffamily on input line 26.
 LaTeX Info: Redefining \ttfamily on input line 26.
-LaTeX Info: Redefining \rmfamily on input line 124.
-LaTeX Info: Redefining \sffamily on input line 124.
-LaTeX Info: Redefining \ttfamily on input line 124.
-LaTeX Info: Redefining \rmfamily on input line 128.
-LaTeX Info: Redefining \sffamily on input line 128.
-LaTeX Info: Redefining \ttfamily on input line 128.
+LaTeX Info: Redefining \rmfamily on input line 126.
+LaTeX Info: Redefining \sffamily on input line 126.
+LaTeX Info: Redefining \ttfamily on input line 126.
+LaTeX Info: Redefining \rmfamily on input line 130.
+LaTeX Info: Redefining \sffamily on input line 130.
+LaTeX Info: Redefining \ttfamily on input line 130.
 )
 \openout1 = `MyBook.aux'.
 
@@ -2502,35 +2502,39 @@ Sidefootvsep and sidefootheight: 13.6pt and 594.32022pt
 
 ] [1
 
-] [2] [3
+] [2]
+File: images/cycle_of_science.pdf Graphic file (type pdf)
+<use images/cycle_of_science.pdf>
+[3
 
 ] [4]
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 649.
+(Font)              scaled to size 9.0pt on input line 628.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 649.
+(Font)              scaled to size 5.0pt on input line 628.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 9.00082pt on input line 649.
+(Font)              scaled to size 9.00082pt on input line 628.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00046pt on input line 649.
+(Font)              scaled to size 5.00046pt on input line 628.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 8.99904pt on input line 649.
+(Font)              scaled to size 8.99904pt on input line 628.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 649.
+(Font)              scaled to size 4.99947pt on input line 628.
+[5]
 
-LaTeX Warning: Reference `insiemistica' on page 5 undefined on input line 671.
+LaTeX Warning: Reference `insiemistica' on page 6 undefined on input line 650.
 
-[5] [6]
+[6]
 LaTeX Font Info:    Font shape `TU/Inconsolata(0)/m/n' will be
-(Font)              scaled to size 9.30756pt on input line 709.
+(Font)              scaled to size 9.30756pt on input line 688.
 
 LaTeX Font Warning: Font shape `TU/Inconsolata(0)/m/it' undefined
-(Font)              using `TU/Inconsolata(0)/m/n' instead on input line 720.
+(Font)              using `TU/Inconsolata(0)/m/n' instead on input line 699.
 
 LaTeX Font Info:    Font shape `TU/Inconsolata(0)/m/it' will be
-(Font)              scaled to size 9.30756pt on input line 730.
+(Font)              scaled to size 9.30756pt on input line 709.
 LaTeX Font Info:    Font shape `TU/Inconsolata(0)/b/n' will be
-(Font)              scaled to size 9.30756pt on input line 740.
+(Font)              scaled to size 9.30756pt on input line 719.
 [7] [8] [9]
 File: 015_prob_intro_files/figure-latex/legge-grandi-n-1-1.pdf Graphic file (ty
 pe pdf)
@@ -2544,17 +2548,17 @@ File: 015_prob_intro_files/figure-latex/barplot-mdf-4coins-1.pdf Graphic file (
 type pdf)
 <use 015_prob_intro_files/figure-latex/barplot-mdf-4coins-1.pdf>
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 1084.
+(Font)              scaled to size 10.0pt on input line 1063.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.0pt on input line 1084.
+(Font)              scaled to size 7.0pt on input line 1063.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.00092pt on input line 1084.
+(Font)              scaled to size 10.00092pt on input line 1063.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.00064pt on input line 1084.
+(Font)              scaled to size 7.00064pt on input line 1063.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 9.99893pt on input line 1084.
+(Font)              scaled to size 9.99893pt on input line 1063.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 6.99925pt on input line 1084.
+(Font)              scaled to size 6.99925pt on input line 1063.
 [14] [15] [16
 
 ] [17] [18] [19
@@ -2565,18 +2569,20 @@ Graphic file (type pdf)
 <use 025_intro_bayes_files/figure-latex/ch-03-02-models-types-of-priors-1.pdf>
 
 LaTeX Warning: Reference `chapter-balance' on page 24 undefined on input line 1
-299.
+270.
 
 [24]
 
 LaTeX Warning: Reference `chapter-distr-coniugate' on page 25 undefined on inpu
-t line 1314.
+t line 1285.
 
 
 LaTeX Warning: Reference `chapter-sintesi-distr-post' on page 25 undefined on i
-nput line 1319.
+nput line 1290.
 
-[25] [26]
+[25] [26
+
+]
 
 ******************************************************
 Stock height and width: 845.04684pt by 597.50787pt
@@ -2598,7 +2604,6 @@ Sidefootvsep and sidefootheight: 13.6pt and 594.32022pt
 ******************************************************
 
 [27
-
 
 
 ] [28
@@ -2629,12 +2634,12 @@ Sidefootvsep and sidefootheight: 13.6pt and 594.32022pt
 LaTeX Info: Redefining \rmfamily on input line 3.
 LaTeX Info: Redefining \sffamily on input line 3.
 LaTeX Info: Redefining \ttfamily on input line 3.
-LaTeX Info: Redefining \rmfamily on input line 19.
-LaTeX Info: Redefining \sffamily on input line 19.
-LaTeX Info: Redefining \ttfamily on input line 19.
 LaTeX Info: Redefining \rmfamily on input line 21.
 LaTeX Info: Redefining \sffamily on input line 21.
 LaTeX Info: Redefining \ttfamily on input line 21.
+LaTeX Info: Redefining \rmfamily on input line 23.
+LaTeX Info: Redefining \sffamily on input line 23.
+LaTeX Info: Redefining \ttfamily on input line 23.
 ) [29
 
 ]
@@ -2658,17 +2663,17 @@ Sidefoothsep and sidefootwidth: 7pt and 101pt
 Sidefootvsep and sidefootheight: 13.6pt and 594.32022pt
 ******************************************************
 
-LaTeX Info: Redefining \rmfamily on input line 1365.
-LaTeX Info: Redefining \sffamily on input line 1365.
-LaTeX Info: Redefining \ttfamily on input line 1365.
+LaTeX Info: Redefining \rmfamily on input line 1336.
+LaTeX Info: Redefining \sffamily on input line 1336.
+LaTeX Info: Redefining \ttfamily on input line 1336.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1369--1371
+Underfull \hbox (badness 10000) in paragraph at lines 1340--1342
 
  []
 
-LaTeX Info: Redefining \rmfamily on input line 1372.
-LaTeX Info: Redefining \sffamily on input line 1372.
-LaTeX Info: Redefining \ttfamily on input line 1372.
+LaTeX Info: Redefining \rmfamily on input line 1343.
+LaTeX Info: Redefining \sffamily on input line 1343.
+LaTeX Info: Redefining \ttfamily on input line 1343.
 The property list \polyglossia@langsetup contains the pairs (without outer
 braces):
 >  {latex/script}  =>  {latin}
@@ -2729,24 +2734,24 @@ braces):
 \tf@lof=\write9
 \openout9 = `MyBook.lof'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1377.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1377.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1348.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1348.
 (./MyBook.aux
 LaTeX Info: Redefining \rmfamily on input line 26.
 LaTeX Info: Redefining \sffamily on input line 26.
 LaTeX Info: Redefining \ttfamily on input line 26.
-LaTeX Info: Redefining \rmfamily on input line 125.
-LaTeX Info: Redefining \sffamily on input line 125.
-LaTeX Info: Redefining \ttfamily on input line 125.
-LaTeX Info: Redefining \rmfamily on input line 129.
-LaTeX Info: Redefining \sffamily on input line 129.
-LaTeX Info: Redefining \ttfamily on input line 129.
+LaTeX Info: Redefining \rmfamily on input line 127.
+LaTeX Info: Redefining \sffamily on input line 127.
+LaTeX Info: Redefining \ttfamily on input line 127.
+LaTeX Info: Redefining \rmfamily on input line 131.
+LaTeX Info: Redefining \sffamily on input line 131.
+LaTeX Info: Redefining \ttfamily on input line 131.
 )
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1377.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1377.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1348.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1348.
 
 Package rerunfilecheck Info: File `MyBook.out' has not changed.
-(rerunfilecheck)             Checksum: 231AF76AF3C88ED549B820F69C45A38C;6510.
+(rerunfilecheck)             Checksum: F91B467C6CB93AF4C1199F711817B813;6565.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -2758,11 +2763,11 @@ Package logreq Info: Writing requests to 'MyBook.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46764 strings out of 479418
- 900629 string characters out of 5884586
- 1776116 words of memory out of 5000000
- 63444 multiletter control sequences out of 15000+600000
- 552222 words of font info for 128 fonts, out of 8000000 for 9000
+ 46777 strings out of 479418
+ 901000 string characters out of 5884586
+ 1776524 words of memory out of 5000000
+ 63454 multiletter control sequences out of 15000+600000
+ 552230 words of font info for 129 fonts, out of 8000000 for 9000
  1350 hyphenation exceptions out of 8191
  75i,12n,121p,2167b,4816s stack positions out of 5000i,500n,10000p,200000b,80000s
 

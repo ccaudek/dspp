@@ -568,50 +568,29 @@ Febbraio 2022
 \hypertarget{intro-prob-1}{%
 \chapter{Il calcolo delle probabilità}\label{intro-prob-1}}
 
-È normale fare delle congetture rispetto a ciò di cui non siamo sicuri.
-Ma perché facciamo questo? Molto spesso perché, anche se sappiamo che le
-nostre conoscenze sono incomplete, dobbiamo comunque prendere delle
-decisioni. Ad esempio: ``non so se tra qualche ora pioverà; devo o non
-devo prendere l'ombrello?'' In maniera simile, anche se uno psicologo non
-sa in maniera certa quali sono i meccanismi che regolano i fenomeni
-psicologi, deve comunque decidere tra diverse alternative. Per esempio,
-deve fornire un parere, relativamente a chi, tra due genitori, sia più
-adatto per ottenere l'affidamento del figlio in caso di divorzio, oppure
-quale sia, in un caso specifico, l'approccio più efficace per il
-trattamento dei disturbi dell'alimentazione. Ovviamente la qualità delle
-congetture varia, così come varia la qualità delle decisioni che
-prendiamo. La teoria delle probabilità ci fornisce gli strumenti per
-prendere decisioni ``razionali'' in condizioni di incertezza, ovvero per
-formulare le migliori congetture possibili.
-
-La teoria delle probabilità ci consente di descrivere in maniera
-quantitativa quei fenomeni che, pur essendo altamente variabili,
-rivelano comunque una qualche coerenza a lungo termine. Il lancio
-ripetuto di una moneta è uno di questi fenomeni. È anche l'esempio
-tipico che viene usato per introdurre una discussione sulle probabilità.
-Sapere se una moneta sia onesta o meno, o calcolare la probabilità di
-ottenere testa un certo numero di volte può essere interessante nel
-mondo delle scommesse, ma nella vita quotidiana non ci capita spesso di
-lanciare una moneta per prendere una decisione. Allora perché ci
-preoccupiamo di studiare le proprietà statistiche dei lanci di una
-moneta? A questa domanda si può rispondere dicendo che l'esperimento
-(chiamato ``casuale'') che corrisponde al lancio di una moneta è il
-surrogato di una molteplicità di eventi che, della vita reale, sono
-molto importanti. Per esempio: qual è la probabilità di successo di un
-intervento psicologico? Qual è la probabilità che un test per l'HIV dia
-esito positivo in una persona che non ha l'HIV? Qual è la probabilità di
-essere occupato entro un anno dalla laurea? I lanci di una moneta
-costituiscono una rappresentazione generica di molteplici altri eventi
-che hanno un grande significato nella nostra vita. Questa è la ragione
-per cui studiamo le proprietà statistiche dei fenomeni casuali usando
-il lancio di una moneta quale esempio generico.
-
 \hypertarget{inf-stat-probl-inv}{%
-\section{Inferenza statistica come un problema inverso}\label{inf-stat-probl-inv}}
+\section{La probabilità come la logica della scienza}\label{inf-stat-probl-inv}}
+
+La figura \ref{fig:cycle-of-science} fornisce una rappresentazione schematica del processo dell'indagine scientifica. Possiamo pensare al progresso scientifico come alla ripetizione di questo ciclo mentre i fenomeni naturali (e, ovviamente psicologici) vengono esplorati e i ricercatori imparano sempre di più sul loro funzionamento. Le caselle della figura riportano le varie fasi del processo di ingagine scientifica e lungo le frecce sono riportati i compiti che conducono i ricercatori da una fase alla successiva.
+
+\begin{figure}
+
+{\centering \includegraphics{images/cycle_of_science} 
+
+}
+
+\caption{Rappresentazione schematica del processo scientifico (figura adattata dalla Fig. 1.1 di P. Gregory, Bayesian Logical Data Analysis for the Physical Sciences, Cambridge, 2005).}\label{fig:cycle-of-science}
+\end{figure}
+
+Consideriamo i compiti e le fasi dell'indagine scientifica. Iniziamo in basso a sinistra.
 
 \begin{itemize}
 \item
+  \emph{Invenzione e perfezionamento delle ipotesi} In questa fase del processo scientifico, i ricercatori pensano ai fenomeni naturali, a ciò che è presente nella letteratura scientifica, anche ai risultati dei loro esperimenti, e formulano ipotesi o teorie che possono valutare con degli esperimenti. Questo passaggio richiede innovazione e creatività.
+\item
   L'\emph{inferenza deduttiva} procede in maniera deterministica dai fatti verso le conclusioni. Ad esempio, se dico che tutti gli uomini sono mortali e che Socrate è un uomo, posso concludere deduttivamente che Socrate è mortale. Quando i ricercatori progettano i loro esperimenti in base alle loro ipotesi, usano la logica deduttiva per dire: ``Se A è vero, allora B è vero'', dove A è l'ipotesi considerata e B è un'osservazione sperimentale.
+\item
+  \emph{Esecuzione degli esperimenti.} Questa fase richiede molte risorse, di tempo e denaro. Richiede anche innovazione e creatività. Nello specifico, i ricercatori devono pensare attentamente a come costruire il loro esperimento per verificare l'ipotesi di interesse. Il risultato degli esperimenti sono i dati.
 \item
   L'\emph{inferenza induttiva}, invece, procede dalle osservazioni ai fatti. Se pensiamo ai fatti come a ciò che governa o genera le osservazioni, allora l'induzione è una sorta di inferenza inversa. Supponiamo di avere osservato B. Questo rende A vero? Non necessariamente. Ma può rendere A più plausibile. Questo è un sillogismo debole. Ad esempio, si consideri la seguente coppia ipotesi/osservazioni.
 
@@ -627,12 +606,12 @@ il lancio di una moneta quale esempio generico.
   L'\emph{inferenza statistica} è un tipo di inferenza induttiva che è specificamente formulata come un problema inverso. L'inferenza statistica è quell'insieme di procedure che hanno lo scopo di quantificare quanto più plausibile è A dopo aver osservato B. Per svolgere l'inferenza statistica, è necessario quantificare la plausibilità. Lo strumento che ci consente di fare questo è la teoria della probabilità.
 \end{itemize}
 
-In conclusione, l'inferenza statistica richiede una teoria della probabilità, laddove la teoria della probabilità può essere vista come una generalizzazione della logica. A causa di questa connessione con la logica e del suo ruolo cruciale nella scienza, E. T. Jaynes afferma che la probabilità è la ``logica della scienza'\,'.
+L'inferenza statistica è l'aspetto del processo dell'indagine scientifica che è l'oggetto centrale di questo insegnamento. Il risultato dell'inferenza statistica è la conoscenza di quanto siano plausibili le ipotesi e le stime dei parametri sotto le ipotesi considerate. Ma l'inferenza statistica richiede una teoria della probabilità, laddove la teoria della probabilità può essere vista come una generalizzazione della logica. A causa di questa connessione con la logica e del suo ruolo cruciale nella scienza, E. T. Jaynes afferma infatti che la probabilità è la ``logica della scienza''. È dunque necessario esaminare preliminarmente alcune nozioni di base della teoria della probabilità.
 
 \hypertarget{che-cosuxe8-la-probabilituxe0}{%
 \section{Che cos'è la probabilità?}\label{che-cosuxe8-la-probabilituxe0}}
 
-La definizione della probabilitè è un problema estremamente dibattuto ed aperto. Sono state fornite due possibili soluzioni al problema di definire il concetto di probabilità.
+La definizione della probabilità è un problema estremamente dibattuto ed aperto. Sono state fornite due possibili soluzioni al problema di definire il concetto di probabilità.
 
 \begin{enumerate}
 \def\labelenumi{(\alph{enumi})}
@@ -1117,25 +1096,17 @@ F(X) = Pr(X < x),
 \]
 e la funzione di massa di probabilità. Le procedure di analisi dei dati psicologici che discuteremo in seguito faranno un grande uso di questi concetti e della notazione qui introdotta.
 
-\hypertarget{part-inferenza-bayesiana}{%
-\part*{Inferenza Bayesiana}\label{part-inferenza-bayesiana}}
-\addcontentsline{toc}{part}{Inferenza Bayesiana}
+\hypertarget{part-inferenza-statistica-bayesiana}{%
+\part*{Inferenza statistica bayesiana}\label{part-inferenza-statistica-bayesiana}}
+\addcontentsline{toc}{part}{Inferenza statistica bayesiana}
 
 \hypertarget{chapter-intro-bayes-inference}{%
 \chapter{Il problema inverso}\label{chapter-intro-bayes-inference}}
 
-La statistica descrittiva si occupa della descrizione, sintesi e presentazione delle informazioni contenute nei dati osservati. Essa spesso rappresenta la fase preliminare di uno studio e un ausilio per l'individuazione di possibili modelli da utilizzare nella successiva fase dell'analisi inferenziale. A differenza della statistica descrittiva, quella inferenziale assume che le osservazioni siano il risultato di un campionamento statistico e il suo obiettivo è ricavare informazioni circa l'intera popolazione a partire dall'osservazione di un suo sottoinsieme.
-
-L'aleatorietà del campione è l'aspetto sostanziale che distingue la statistica inferenziale dalla statistica descrittiva. Nel caso più semplice, il campione statistico è trattato come un insieme di realizzazioni di una variabile casuale assunta a modello del fenomeno oggetto di indagine. La natura del campionamento statistico e la distribuzione di tale variabile casuale determinano il modello statistico. La statistica inferenziale consente di stimare, verificare ipotesi, o effettuare previsioni sul fenomeno in esame.
-
-L'inferenza Bayesiana è un approccio all'inferenza statistica in cui le probabilità non sono interpretate come frequenze, proporzioni o concetti analoghi, ma piuttosto come il grado di fiducia che una singola persona attribuisce al verificarsi di un evento sulla base delle proprie conoscenze e delle informazioni di cui dispone.
-
-Nell'approccio bayesiano non si fa riferimento ad un modello probabilistico \(f(y \mid \theta)\) rappresentativo del fenomeno d'interesse noto a meno del valore assunto dal parametro (o dei parametri) che lo caratterizza. Si fa invece riferimento ad una distribuzione congiunta (di massa o di densità di probabilità) \(f(y, \theta)\). Entrambi gli argomenti della funzione \(y\) e \(\theta\) hanno natura di variabili casuali, laddove la nostra incertezza relativa a \(y\) è dovuta alla naturale variabilità del fenomeno indagato (\emph{variabilità aleatoria}), mentre la nostra incertezza relativa a \(\theta\) è dovuta alla mancata conoscenza del suo valore numerico (\emph{variabilità epistemica}).
-
 \hypertarget{inferenza-bayesiana-come-un-problema-inverso}{%
 \section{Inferenza bayesiana come un problema inverso}\label{inferenza-bayesiana-come-un-problema-inverso}}
 
-L'inferenza bayesiana è formulata nei termini di un problema inverso che segue la regola di Bayes (si veda la Sezione \ref{inf-stat-probl-inv}). Per fissare la notazione, nel seguito \(y\) rappresenterà le variabili osservate, ovvero i dati, e \(\theta\) rappresenterà i parametri incogniti di un modello statistico. Sia \(y\) che \(\theta\) sono concepiti come delle variabili casuali. Con \(x\) verranno invece denotate le quantità note, come i predittori nel modello di regressione.
+L'inferenza bayesiana è formulata nei termini di un problema inverso che segue la regola di Bayes (si veda la Sezione \ref{inf-stat-probl-inv}).\footnote{Nell'approccio bayesiano non si fa riferimento ad un modello probabilistico \(f(y \mid \theta)\) rappresentativo del fenomeno d'interesse noto a meno del valore assunto dal parametro (o dei parametri) che lo caratterizza. Si fa invece riferimento ad una distribuzione congiunta (di massa o di densità di probabilità) \(f(y, \theta)\). Entrambi gli argomenti della funzione \(y\) e \(\theta\) hanno natura di variabili casuali, laddove la nostra incertezza relativa a \(y\) è dovuta alla naturale variabilità del fenomeno indagato (\emph{variabilità aleatoria}), mentre la nostra incertezza relativa a \(\theta\) è dovuta alla mancata conoscenza del suo valore numerico (\emph{variabilità epistemica}).} Per fissare la notazione, nel seguito \(y\) rappresenterà le variabili osservate, ovvero i dati, e \(\theta\) rappresenterà i parametri incogniti di un modello statistico. Sia \(y\) che \(\theta\) sono concepiti come delle variabili casuali. Con \(x\) verranno invece denotate le quantità note, come i predittori nel modello di regressione.
 
 \hypertarget{funzioni-di-probabilituxe0}{%
 \subsection{Funzioni di probabilità}\label{funzioni-di-probabilituxe0}}
