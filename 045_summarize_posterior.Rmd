@@ -36,12 +36,10 @@ Le procedure bayesiane basate sui metodi MCMC utilizzano un numero finito di cam
 ## Intervallo di credibilità 
 
 Molto spesso la stima puntuale è accompagnata da una stima intervallare. Nella statistica bayesiana, se il parametro $\theta \in \Theta$ è monodimensionale, si dice _intervallo di credibilità_ un intervallo di valori $I_{\alpha}$ che contiene la proporzione $1 - \alpha$ della massa di probabilità della funzione a posteriori:
-
 \begin{equation}
 p(\Theta \in I_{\alpha} \mid y) = 1 - \alpha.
 (\#eq:credibint)
 \end{equation}
-
 L'intervallo di credibilità ha lo scopo di esprimere il nostro grado di incertezza riguardo la stima del parametro. Se il parametro $\theta$ è multidimensionale, si parla invece di "regione di credibilità".
 
 La condizione \@ref(eq:credibint) non determina un unico intervallo di
@@ -56,11 +54,9 @@ Esaminiamo due delle condizioni aggiuntive più comuni.
 Un intervallo di credibilità *a code uguali* a livello $\alpha$ è un
 intervallo $$I_{\alpha} = [q_{\alpha/2}, 1 - q_{\alpha/2}],$$ dove $q_z$ è un quantile $z$ della distribuzione a posteriori. Per esempio,
 l'intervallo di credibilità a code uguali al 95% è un intervallo
-
 $$
 I_{0.05} = [q_{0.025}, q_{0.975}]
 $$ 
-
 che lascia il 2.5% della massa di densità a posteriori in ciascuna coda. 
 
 
@@ -107,15 +103,11 @@ sum(df$y > 29)
 Supponiamo di volere stimare la distribuzione a posteriori della probabilità $\theta$ di depressione "grave" nei pazienti clinici, così come viene misurata dal test BDI-II, imponendo su $\theta$ una distribuzione a priori $\mbox{Beta}(8, 2)$. 
 
 Sappiamo che il modello Beta-Binomiale può essere espresso nella forma seguente:
-
 \begin{align}
 Y | \theta & \sim \mbox{Bin}(30, \theta) \notag\\
 \theta & \sim \mbox{Beta}(8, 2) \notag
 \end{align} 
-
-\noindent
 con una corrispondente distribuzione a posteriori $\mbox{Beta}(25, 15)$:
-
 \begin{equation}
 f(\theta | y = 17) = \frac{\Gamma(25 + 15)}{\Gamma(25)\Gamma(15)}\theta^{25-1} (1-\theta)^{15-1} \;\; \text{ for } \theta \in [0,1] \; .
 (\#eq:post-beta-25-15)
@@ -133,17 +125,13 @@ sintesi è necessario riportare? Questa sembra una domanda innocente, ma
 in realtà è una domanda a cui è difficile rispondere. La stima bayesiana dei parametri è fornita dall'intera distribuzione a posteriori, che non è un singolo numero, ma una funzione che mappa ciascun valore del parametro ad un valore di plausibilità. Quindi non è necessario scegliere una stima puntuale. In linea di principio, una stima puntuale non è quasi mai necessaria ed è spesso dannosa in quanto comporta una perdita di informazioni.
 
 Tuttavia talvolta una tale sintesi è richiesta. Diverse risposte sono allora possibili. La media della distribuzione a posteriori per $\theta$ è
-
 $$
 \E(\pi \mid y = 17) = \frac{\alpha}{\alpha + \beta} = \frac{25}{25+15} = 0.625.
 $$
-
 Una stima del massimo della probabilità a posteriori, o brevemente massimo a posteriori, MAP (da *maximum a posteriori probability*), è la moda della distribuzione a posteriori. Nel caso presente, una stima del MAP può essere ottenuta nel modo seguente:
-
 $$
 \Mo(\pi \mid y = 17) = \frac{\alpha-1}{\alpha + \beta-2} = \frac{25-1}{25+15-2} = 0.6316.
 $$
-
 Gli stessi risultati si ottiengono usando la chiamata a `bayesrules::summarize_beta_binomial()`:
 
 ```{r}
@@ -173,12 +161,9 @@ qbeta(c(0.025, 0.975), 25, 15)
 ```
 \noindent
 Il calcolo precedente evidenzia l'interpretazione intuitiva dell'intervallo di credibilità. Tale intervallo, infatti, può essere interpretato come la probabilità che $\theta$ assuma valori compresi tra 0.472 e 0.766:
-
 $$
 P(\theta \in (0.472, 0.766) | Y = 17) = \int_{0.472}^{0.766} f(\theta \mid y=17) d\theta = 0.95,
 $$
-
-\noindent
 ovvero
 
 ```{r}
@@ -210,12 +195,9 @@ L'intervallo HPD risulta più semplice da determinare quando la distribuzione a 
 ### Probabilità della distribuzione a posteriori
 
 Il test di ipotesi è un compito comune dell'analisi della distribuzione a posteriori. Supponiamo che si voglia conoscere la probabilità a posteriori che $\theta$ sia superiore a 0.5. Per sapere quanto credibile sia l'evento $\theta > 0.5$ possiamo calcolare il seguente integrale:
-
 $$
 P(\theta > 0.5 \; \mid \; y = 17) = \int_{0.5}^{1}f(\theta \mid y=17)d\theta \;,
 $$
-
-\noindent
 dove $f(\cdot)$ è la distribuzione $\mbox{\Beta}(25, 15)$:
 
 ```{r}
@@ -237,12 +219,9 @@ integrate(
 ```
 
 È anche possibile formulare un test di ipotesi contrastando due ipotesi contrapposte. Per esempio, $H_1: \theta \geq 0.5$ e $H_2: \theta < 0.5$. Ciò consente di calcolare l'_odds a posteriori_ di $\theta > 0.5$:
-
 \begin{equation}
 \text{poterior odds} = \frac{H_1 \mid y = 17}{H_2 \mid y = 17}
 \end{equation}
-
-\noindent
 ovvero
 
 ```{r}
@@ -263,12 +242,9 @@ prior_odds
 ```
 
 Il _fattore di Bayes_ (_Bayes Factor_; BF) confronta gli odds a posteriori con gli odds a priori e quindi fornisce informazioni su quanto sia mutata la nostra comprensione relativa a $\theta$ dopo avere osservato i nostri dati del campione:
-
 $$
 \text{BF} = \frac{\text{odds a posteriori}}{\text{odds a priori}}.
 $$
-
-\noindent
 Nel caso presente abbiamo
 
 ```{r}
@@ -304,15 +280,12 @@ BF
 In alre parole, in questo secondo esempio gli odds a posteriori della nostra ipotesi a proposito di $\theta$ sono aumentati di 30 volte rispetto agli odds a priori.
 
 In generale, in un test di ipotesi che contrappone un'ipotesi sostantiva $H_a$ ad un'ipotesi nulla $H_0$ il BF è un rapporto di odds per l'ipotesi sostantiva:
-
 $$
 \text{Bayes Factor}
 = \frac{\text{posterior odds}}{\text{prior odds}}
 = \frac{P(H_a \mid Y) / P(H_0 \mid Y)}{P(H_a) / P(H_0)}
  \; .
 $$
-
-\noindent
 Essendo un rapporto, il BF deve esere valutato rispetto al valore di 1. Ci sono tre possibilità: 
 
 - BF = 1: La credibilità di $H_a$ non è cambiata dopo avere osservato i dati. 
