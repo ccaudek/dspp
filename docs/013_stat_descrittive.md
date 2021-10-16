@@ -237,7 +237,6 @@ tratti
 $$
 \varphi_n(x)= \frac{f_i}{b_i-a_i}, \quad x\in \Delta_i,\, i=1, \dots, m
 $$
-\noindent
 che misura la _densità della frequenza relativa_ della variabile $X$
 nella classe $\Delta_i$, ovvero il rapporto fra la frequenza relativa
 $f_i$ e l'ampiezza ($b_i - a_i$) della classe. In questo modo il
@@ -254,10 +253,8 @@ bysubj %>%
   ggplot(aes(x = bdi)) +
   geom_histogram(
     aes(y = ..density..),
-    breaks = c(0, 13.5, 19.5, 28.5, 44.1),
+    breaks = c(0, 13.5, 19.5, 28.5, 44.1)
     # il valore BDI-II massimo è 44
-    fill = colors[1],
-    colour = "black"
   ) +
   scale_x_continuous(
     breaks = c(0, 13.5, 19.5, 28.5, 44.1)
@@ -270,7 +267,7 @@ bysubj %>%
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{013_stat_descrittive_files/figure-latex/hist1zetsche-1} 
+{\centering \includegraphics{013_stat_descrittive_files/figure-latex/hist1zetsche-1} 
 
 }
 
@@ -290,9 +287,7 @@ bysubj %>%
   ggplot(aes(x = bdi)) +
   geom_histogram(
     aes(y = ..density..),
-    breaks = seq(0, 44.1, length.out = 7),
-    fill = colors[1],
-    colour = "black"
+    breaks = seq(0, 44.1, length.out = 7)
   ) +
   scale_x_continuous(
     breaks = c(
@@ -308,7 +303,7 @@ bysubj %>%
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{013_stat_descrittive_files/figure-latex/hist2zetsche-1} 
+{\centering \includegraphics{013_stat_descrittive_files/figure-latex/hist2zetsche-1} 
 
 }
 
@@ -337,15 +332,13 @@ bysubj %>%
   ggplot(aes(x = bdi)) +
   geom_histogram(
     aes(y = ..density..),
-    breaks = seq(0, 44.1, length.out = 7),
-    fill = colors[1],
-    colour = "black"
+    breaks = seq(0, 44.1, length.out = 7)
   ) +
   geom_density(
     aes(x = bdi),
     adjust = 0.5,
     size = 0.8,
-    fill = colors[2],
+    # fill = colors[2],
     alpha = 0.5
   ) +
   labs(
@@ -356,7 +349,7 @@ bysubj %>%
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{013_stat_descrittive_files/figure-latex/zetschehist3-1} 
+{\centering \includegraphics{013_stat_descrittive_files/figure-latex/zetschehist3-1} 
 
 }
 
@@ -456,32 +449,7 @@ Il valore adiacente superiore è il valore più grande tra le osservazioni che r
 
 ::: {.example}
 Consideriamo ora un caso concreto nel quale viene utilizzato un box-plot.
-Nel caso dei dati di @zetschefuture2019 ci chiediamo in che modo si differenziano le distribuzioni del BDI-II tra i due gruppi considerati, ovvero tra il gruppo dei pazienti e il gruppo di controllo.
-
-
-```r
-bysubj <- df %>%
-  group_by(esm_id, group) %>%
-  summarise(
-    bdi = mean(bdi),
-    nr_of_episodes = mean(nr_of_episodes, na.rm = TRUE)
-  ) %>%
-  na.omit()
-
-bysubj %>%
-  ggplot(aes(x = group, y = bdi)) +
-  geom_boxplot(fill = colors[1]) +
-  labs(
-    x = "Gruppo",
-    y = "BDI-II"
-  )
-```
-
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{013_stat_descrittive_files/figure-latex/unnamed-chunk-9-1} \end{center}
-
-La figura \@ref(fig:violin-zetsche) fornisce due rappresentazioni grafiche che possono essere utilizzate per rispondere a questa domanda.
+Nel caso dei dati di @zetschefuture2019 ci chiediamo in che modo si differenziano le distribuzioni del BDI-II tra i due gruppi considerati, ovvero tra il gruppo dei pazienti e il gruppo di controllo. La figura \@ref(fig:violin-zetsche) fornisce due rappresentazioni grafiche che possono essere utilizzate per rispondere a questa domanda.
 
 
 ```r
@@ -514,7 +482,7 @@ p1 + p2
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.95\linewidth]{013_stat_descrittive_files/figure-latex/violin-zetsche-1} 
+{\centering \includegraphics{013_stat_descrittive_files/figure-latex/violin-zetsche-1} 
 
 }
 
@@ -901,7 +869,7 @@ bysubj %>%
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.95\linewidth]{013_stat_descrittive_files/figure-latex/zetsche-scatter-1} 
+{\centering \includegraphics{013_stat_descrittive_files/figure-latex/zetsche-scatter-1} 
 
 }
 
@@ -1111,7 +1079,7 @@ slant + dino
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{013_stat_descrittive_files/figure-latex/zerocorr-1} 
+{\centering \includegraphics{013_stat_descrittive_files/figure-latex/zerocorr-1} 
 
 }
 

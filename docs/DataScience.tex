@@ -424,6 +424,23 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+\usepackage{amsthm}
+\newtheorem{theorem}{Teorema}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{corollary}{Corollario}[chapter]
+\newtheorem{proposition}{Proposizione}[chapter]
+\newtheorem{conjecture}{Congettura}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Definizione}[chapter]
+\theoremstyle{definition}
+\newtheorem{example}{Esempio}[chapter]
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercizio}[chapter]
+\theoremstyle{definition}
+\newtheorem{hypothesis}{Hypothesis}[chapter]
+\theoremstyle{remark}
+\newtheorem*{remark}{Osservazione}
+\newtheorem*{solution}{Soluzione}
 \begin{document}
 \frontmatter
 
@@ -542,402 +559,317 @@ Febbraio 2022
 
 \mainmatter
 
-\hypertarget{chapter-sintesi-distr-post}{%
-\chapter{Sintesi a posteriori}\label{chapter-sintesi-distr-post}}
+\hypertarget{chapter-distr-coniugate}{%
+\chapter{Distribuzioni a priori coniugate}\label{chapter-distr-coniugate}}
 
-La distribuzione a posteriori è un modo per descrivere il nostro grado
-di incertezza rispetto al parametro incognito (o rispetto ai parametri
-incogniti) oggetto dell'inferenza. La distribuzione a posteriori
-contiene tutte le informazioni disponibili sui possibili valori del
-parametro. Se il parametro esaminato è monodimensionale (o
-bidimensionale) è possibile fornire un grafico di tutta la distribuzione a posteriori \(p(\theta \mid y)\). Tuttavia, spesso vogliamo anche giungere ad una sintesi numerica della distribuzione a posteriori, soprattutto se il vettore dei parametri ha più di due dimensioni. A a questo proposito è possibile utilizzare le consuete statistiche descrittive, come media, mediana, moda, varianza, deviazione standard e i quantili. In alcuni casi, queste statistiche descrittive sono più facili da presentare e interpretare rispetto alla rappresentazione grafica della distribuzione a posteriori.
+\begin{Summary}
+Obiettivo di questo Capitolo è fornire un esempio di derivazione della
+distribuzione a posteriori scegliendo quale distribuzione a priori una
+distribuzione coniugata. Esamineremo qui il caso più semplice, ovvero il
+modello Beta-Binomiale.
+\end{Summary}
 
-La stima puntuale della tendenza centrale della distribuzione a posteriori fornisce informazioni su quello che può essere considerato come il ``valore più plausibile'' del parametro. L'intervallo di credibilità fornisce invece un'indicazione dell'ampiezza dell'intervallo che contiene una determinata quota della massa della distribuzione a posteriori del parametro.
+\hypertarget{il-denominatore-bayesiano}{%
+\section{Il denominatore bayesiano}\label{il-denominatore-bayesiano}}
 
-\hypertarget{stima-puntuale}{%
-\section{Stima puntuale}\label{stima-puntuale}}
-
-Per sintetizzare la distribuzione a posteriori in modo da giungere ad
-una stima puntuale di \(\theta\) si è soliti scegliere tra moda, mediana o media a seconda del tipo di distribuzione con cui si ha a che fare e
-della sua forma. Ogni stima puntuale ha una sua interpretazione.
-
-\begin{itemize}
-\tightlist
-\item
-  La media è il valore atteso a posteriori del parametro.
-\item
-  La moda può essere interpretata come il singolo valore più credibile (``più plausibile'') del parametro, alla luce dei dati, ovvero il valore per il parametro \(\theta\) che massimizza la distribuzione a posteriori. Per questa ragione la moda viene detta \emph{massimo a posteriori}, MAP. Il limite della moda quale statistica riassuntiva della distribuzione a posteriori è che, talvolta, tale distribuzione è multimodale e il MAP non è necessariamente il valore ``più credibile''.
-\item
-  La mediana è il valore del parametro tale per cui, su entrambi i lati di essa, giace il 50\% della massa di probabilità a posteriori.
-\end{itemize}
-
-La misura di variabilità del parametro è la \emph{varianza a posteriori}
-la quale, nel caso di una distribuzione a posteriori ottenuta per via
-numerica, si calcola con la formula della varianza che conosciamo
-rispetto alla tendenza centrale data dalla media a posteriori. La radice quadrata della varianza a posteriori è la \emph{deviazione standard a posteriori} che descrive l'incertezza a posteriori circa il parametro di interesse nella stessa unità di misura dei dati.
-
-Le procedure bayesiane basate sui metodi MCMC utilizzano un numero finito di campioni dalla distribuzione stazionaria, e una tale caratteristica della simulazione introduce un ulteriore livello di incertezza nella stima del parametro. L'\emph{errore standard della stima} (in inglese \emph{Monte Carlo standard error}, MCSE) misura l'accuratezza della simulazione. La deviazione standard a posteriori e l'errore standard della stima sono due concetti completamente diversi. La deviazione standard a posteriori descrive l'incertezza circa il parametro (l'ampiezza della distribuzione a posteriori) ed è una funzione della dimensione del campione; il MCSE descrive invece l'incertezza nella stima del parametro dovuta alla simulazione MCMC ed è una funzione del numero di iterazioni nella simulazione.
-
-\hypertarget{intervallo-di-credibilituxe0}{%
-\section{Intervallo di credibilità}\label{intervallo-di-credibilituxe0}}
-
-Molto spesso la stima puntuale è accompagnata da una stima intervallare. Nella statistica bayesiana, se il parametro \(\theta \in \Theta\) è monodimensionale, si dice \emph{intervallo di credibilità} un intervallo di valori \(I_{\alpha}\) che contiene la proporzione \(1 - \alpha\) della massa di probabilità della funzione a posteriori:
+In un problema bayesiano i dati \(y\) provengono da una distribuzione \(p(y \mid \theta)\) e al parametro \(\theta\) viene assegnata una distribuzione a priori \(p(\theta)\).\footnote{La scelta della distribuzione a priori è l'aspetto cruciale dell'impostazione bayesiana in quanto essa è lo strumento attraverso cui le informazioni extra-sperimentali vengono inserite nel procedimento induttivo. La scelta della distribuzione a priori che meglio rappresenta le credenze iniziali implica che agenti diversi possono specificare sia le stesse distribuzioni di probabilità ma con diversi valori dei parametri, sia diverse distribuzioni di probabilità. Da ciò deriva una componente soggettiva.} La scelta della distribuzione a priori ha importanti conseguenze di tipo computazionale. Infatti, a meno di non utilizzare particolari forme analitiche, risulta impossibile ottenere espressioni esplicite per la distribuzione a posteriori. Ciò dipende dall'espressione a denominatore della formula di Bayes
 \begin{equation}
-p(\Theta \in I_{\alpha} \mid y) = 1 - \alpha.
-\label{eq:credibint}
+p(\theta \mid y) = \frac{p(\theta) p(y \mid \theta)}{\int p(\theta) p(y \mid \theta) d \theta}
 \end{equation}
-L'intervallo di credibilità ha lo scopo di esprimere il nostro grado di incertezza riguardo la stima del parametro. Se il parametro \(\theta\) è multidimensionale, si parla invece di ``regione di credibilità''.
+il cui calcolo non è eseguibile in modo analitico in forma chiusa.
+Per non incorrere in problemi nel calcolo della distribuzione a posteriori vengono usate le distribuzioni provenienti da famiglie coniugate.
+Una distribuzione di probabilità a priori \(p(\theta)\) si dice \emph{coniugata} al modello usato se la distribuzione a priori e la distribuzione a posteriori hanno la stessa forma funzionale. Dunque, le due distribuzioni differiscono solo per il valore dei parametri.
 
-La condizione \eqref{eq:credibint} non determina un unico intervallo di
-credibilità al \((1 - \alpha) \cdot 100\%\). In realtà esiste un numero
-infinito di tali intervalli. Ciò significa che dobbiamo definire alcune
-condizioni aggiuntive per la scelta dell'intervallo di credibilità.
-Esaminiamo due delle condizioni aggiuntive più comuni.
+L'uso di distribuzioni a priori coniugate, pur consentendo di determinare la distribuzione a posteriori per via analitica, limita però di molto le possibili scelte del ricercatore. Nel senso che non è sempre sensato, dal punto di vista teorico, utilizzare distribuzioni a priori coniugate per la verosimiglianza per i parametri di interesse. Detto in altre parole: è possibile ottenere la distribuzione posteriore per via analitica solo per alcune specifiche combinazioni di distribuzione a priori e verosimiglianza, ma questo limita considerevolmente la flessibilità della modellizzazione.\footnote{Per questa ragione, la strada principale che viene seguita nella modellistica bayesiana è quella che porta a determinare la distribuzione a posteriori non per via analitica, ma bensì mediante metodi numerici. La simulazione fornisce dunque la strategia generale del calcolo bayesiano. A questo fine vengono usati i metodi di campionamento detti Monte-Carlo Markov-Chain (MCMC). Tali metodi costituiscono una potente e praticabile alternativa per la costruzione della distribuzione a posteriori per modelli complessi e consentono di decidere quali distribuzioni a priori e quali distribuzioni di verosimiglianza usare sulla base di considerazioni teoriche soltanto, senza dovere preoccuparsi di altri vincoli. Dato che è basata su metodi computazionalmente intensivi, la stima numerica della funzione a posteriori può essere svolta soltanto mediante software. In anni recenti i metodi bayesiani di analisi dei dati sono diventati sempre più popolari proprio perché la potenza di calcolo necessaria per svolgere tali calcoli è ora alla portata di tutti. Questo non era vero solo pochi decenni fa.}
 
-\hypertarget{intervallo-di-credibilituxe0-a-code-uguali}{%
-\subsection{Intervallo di credibilità a code uguali}\label{intervallo-di-credibilituxe0-a-code-uguali}}
+\hypertarget{chapter-distr-priori-coniugate}{%
+\section{Il modello Beta-Binomiale}\label{chapter-distr-priori-coniugate}}
 
-Un intervallo di credibilità \emph{a code uguali} a livello \(\alpha\) è un
-intervallo \[I_{\alpha} = [q_{\alpha/2}, 1 - q_{\alpha/2}],\] dove \(q_z\) è un quantile \(z\) della distribuzione a posteriori. Per esempio,
-l'intervallo di credibilità a code uguali al 95\% è un intervallo
-\[
-I_{0.05} = [q_{0.025}, q_{0.975}]
-\]
-che lascia il 2.5\% della massa di densità a posteriori in ciascuna coda.
+Per fare un esempio concreto, considereremo qui i dati di \textcite{zetschefuture2019} -- per una descrizione di tale ricerca si veda l'Appendice \ref{es-pratico-zetsche}. Nel campione dei 30 partecipanti clinici di \textcite{zetschefuture2019}, le aspettative future di 23 partecipanti risultano distorte negativamente e quelle di 7 partecipanti risultano distorte positivamente. Nel seguito, indicheremo con \(\theta\) la probabilità che le aspettative di un paziente clinico siano distorte negativamente. Ci poniamo il problema di ottenere una stima a posteriori di \(\theta\) avendo osservato 23 ``successi'' in 30 prove.\footnote{Si noti un punto importante: dire semplicemente che la stima di \(\theta\) è uguale a 23/30 = 0.77 ci porta ad ignorare il livello di incertezza associato a tale stima. Infatti, lo stesso valore (0.77) si può ottenere come 23/30, o 230/300, o 2300/3000, o 23000/30000, ma l'incertezza di una stima pari a 0.77 è molto diversa nei quattro casi. Quando si traggono conclusioni dai dati è invece necessario quantificare il livello della nostra incertezza relativamente alla stima del parametro di interesse (nel caso presente, \(\theta\)). Lo strumento ci consente di quantificare tale incertezza è la distribizione a posteriori \(p(\theta \mid y)\). Ovviamente, \(p(\theta \mid y)\) assume forme molto diverse nei quattro casi descritti sopra.}
 
-\hypertarget{intervallo-di-credibilituxe0-a-densituxe0-a-posteriori-piuxf9-alta}{%
-\subsection{Intervallo di credibilità a densità a posteriori più alta}\label{intervallo-di-credibilituxe0-a-densituxe0-a-posteriori-piuxf9-alta}}
+I dati osservati (\(y = 23\)) possono essere considerati la manifestazione di una variabile casuale Bernoulliana. In tali circostanze, esiste una famiglia di distribuzioni che, qualora venga scelta per la distribuzione a priori, fa sì che la distribuzione a posteriori abbia la stessa forma funzionale della distribuzione a priori. Questo consente una soluzione analitica dell'integrale che compare a denominatore nella formula di Bayes. Nel caso presente, la famiglia di distribuzioni che ha questa proprietà è la distribuzione Beta.
 
-Nell'intervallo di credibilità a code uguali alcuni valori del parametro che sono inclusi nell'intervallo possono avere una credibilità a posteriori più bassa rispetto a quelli esterni all'intervallo. L'intrevallo di credibilità \emph{a densità a posteriori più alta} (in inglese \emph{High Posterior Density Interval}, HPD) è invece costruito in modo tale da assicurare di includere nell'intervallo tutti i valori \(\theta\) che sono a posteriori maggiormente credibili. Graficamente questo intervallo può essere ricavato tracciando una linea orizzontale sulla rappresentazione della distribuzione a posteriori e regolando l'altezza della linea in modo tale che l'area sottesa alla curva sia pari a \(1 - \alpha\). Questo tipo di intervallo è il più stretto possibile, tra tutti i possibili intervalli di credibilità allo stesso livello di fiducia. Se la distribuzione a posteriori è simmetrica unimodale, l'intervallo di credibilità a densità a posteriori più alta corrisponde all'intervallo di credibilità a code uguali.
+\hypertarget{parametri-della-distribuzione-beta}{%
+\subsection{Parametri della distribuzione Beta}\label{parametri-della-distribuzione-beta}}
 
-\hypertarget{interpretazione}{%
-\subsection{Interpretazione}\label{interpretazione}}
-
-L'interpretazione dell'intervallo di credibilità è molto intuitiva:
-l'intervallo di credibilità è un intervallo di valori all'interno del
-quale cade il valore del parametro incognito con un particolare livello
-di probabilità soggettiva. Possiamo dire che, dopo aver visto i dati
-crediamo, con un determinato livello di probabilità soggettiva, che il
-valore del parametro (ad esempio, la dimensione dell'effetto di un
-trattamento) abbia un valore compreso all'interno dell'intervallo che è
-stato calcolato, laddove per probabilità soggettiva intendiamo ``il grado di fiducia che lo sperimentatore ripone nel verificarsi di un evento''. Gli intervalli di credibilità si calcolano con un software.
-
-\hypertarget{un-esempio-concreto}{%
-\section{Un esempio concreto}\label{un-esempio-concreto}}
-
-Per fare un esempio pratico, consideriamo nuovamente i valori del BDI-II dei 30 soggetti clinici di \textcite{zetschefuture2019}:
+Usando la distribuzione Beta è possibile esprimere diverse credenze iniziali rispetto a \(\theta\). La scelta di \(\alpha=4\) e \(\beta=4\) quali parametri per la distribuzione a priori Beta, ad esempio, corrisponde alla credenza a priori che associa all'evento ``presenza di una aspettativa futura distorta negativamente'' una grande incertezza: il valore 0.5 è il valore di \(\theta\) più plausibile, ma anche gli altri valori del parametro (tranne gli estremi) sono ritenuti piuttosto plausibili. Questa distribuzione a priori esprime la credenza che sia egualmente probabile osservare una ``aspettativa futura distorta negativamente'' oppure non osservarla.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{suppressPackageStartupMessages}\NormalTok{(}\FunctionTok{library}\NormalTok{(}\StringTok{"bayesrules"}\NormalTok{))}
+\FunctionTok{library}\NormalTok{(}\StringTok{"bayesrules"}\NormalTok{)}
+\FunctionTok{plot\_beta}\NormalTok{(}\AttributeTok{alpha =} \DecValTok{4}\NormalTok{, }\AttributeTok{beta =} \DecValTok{4}\NormalTok{, }\AttributeTok{mean =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{mode =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
-  \AttributeTok{y =} \FunctionTok{c}\NormalTok{(}
-    \DecValTok{26}\NormalTok{, }\DecValTok{35}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{44}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{33}\NormalTok{, }\DecValTok{43}\NormalTok{, }\DecValTok{22}\NormalTok{, }\DecValTok{43}\NormalTok{,}
-    \DecValTok{24}\NormalTok{, }\DecValTok{19}\NormalTok{, }\DecValTok{39}\NormalTok{, }\DecValTok{31}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{28}\NormalTok{, }\DecValTok{35}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{26}\NormalTok{, }\DecValTok{31}\NormalTok{,}
-    \DecValTok{41}\NormalTok{, }\DecValTok{36}\NormalTok{, }\DecValTok{26}\NormalTok{, }\DecValTok{35}\NormalTok{, }\DecValTok{33}\NormalTok{, }\DecValTok{28}\NormalTok{, }\DecValTok{27}\NormalTok{, }\DecValTok{34}\NormalTok{, }\DecValTok{27}\NormalTok{, }\DecValTok{22}
-\NormalTok{  )}
+\begin{center}\includegraphics{026_distr_coniugate_files/figure-latex/unnamed-chunk-2-1} \end{center}
+
+Possiamo quantificare la nostra incertezza calcolando, con un grado di fiducia del 95\%, la regione nella quale, in base a tale credenza a priori, si trova il valore del parametro. Per ottenere tale intervallo di credibilità a priori, usiamo la funzione \texttt{qbeta()} di \(\R\). In \texttt{qbeta()} i parametri \(\alpha\) e \(\beta\) sono chiamati \texttt{shape1} e \texttt{shape2}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qbeta}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FloatTok{0.025}\NormalTok{, }\FloatTok{0.975}\NormalTok{), }\AttributeTok{shape1 =} \DecValTok{4}\NormalTok{, }\AttributeTok{shape2 =} \DecValTok{4}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 0.1840516 0.8159484}
+\end{Highlighting}
+\end{Shaded}
+
+Se scegliamo \(\alpha=10\) e \(\beta=10\) supponiamo ancora a priori che sia tanto plausibile osservare come non osservare una ``aspettativa futura distorta negativamente''.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot\_beta}\NormalTok{(}\AttributeTok{alpha =} \DecValTok{10}\NormalTok{, }\AttributeTok{beta =} \DecValTok{10}\NormalTok{, }\AttributeTok{mean =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{mode =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{026_distr_coniugate_files/figure-latex/unnamed-chunk-4-1} \end{center}
+
+Ma ora la nostra certezza a priori sul valore del parametro è maggiore, come indicato dall'intervallo al 95\%:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qbeta}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FloatTok{0.025}\NormalTok{, }\FloatTok{0.975}\NormalTok{), }\AttributeTok{shape1 =} \DecValTok{10}\NormalTok{, }\AttributeTok{shape2 =} \DecValTok{10}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 0.2886432 0.7113568}
+\end{Highlighting}
+\end{Shaded}
+
+Quale distribuzione a priori dobbiamo scegliere? In un problema concreto di analisi dei dati, la scelta della distribuzione a priori dipende dalle credenze a priori che vogliamo includere nell'analisi dei dati. Se non abbiamo alcuna informazione a priori, possiamo usare \(\alpha=1\) e \(\beta=1\), che produce una distribuzione a priori uniforme. Questa, tuttavia, è una cattiva idea, se pensiamo al problema della riparametrizzazione. In tali circostanze è invece raccomandato usare una distribuzione a priori vagamente informativa, come \(\text{Beta}(2, 2)\).
+
+Nella successiva discussione, per fare un esempio, useremo quale distribuzione a priori una \(\mbox{Beta}(2, 10)\), ovvero:
+\[
+p(\theta) = \frac{\Gamma(12)}{\Gamma(2)\Gamma(10)}\theta^{2-1} (1-\theta)^{10-1}.
+\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot\_beta}\NormalTok{(}\AttributeTok{alpha =} \DecValTok{2}\NormalTok{, }\AttributeTok{beta =} \DecValTok{10}\NormalTok{, }\AttributeTok{mean =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{mode =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{026_distr_coniugate_files/figure-latex/unnamed-chunk-6-1} \end{center}
+
+La \(\mbox{Beta}(2, 10)\) esprime la credenza che \(\theta\) assume valori \(< 0.5\), con il valore più plausibile pari a cicrca 0.1.
+
+\hypertarget{la-specificazione-della-distribuzione-a-posteriori}{%
+\subsection{La specificazione della distribuzione a posteriori}\label{la-specificazione-della-distribuzione-a-posteriori}}
+
+Una volta scelta una distribuzione a priori di tipo Beta, i cui parametri rispecchiano le nostre credenze a priori su \(\theta\), la distribuzione a posteriori viene specificata dalla formula di Bayes:
+\[
+\text{distribuzione a posteriori} = \frac{\text{verosimiglianza}\cdot\text{distribuzione a priori}}{\text{verosimiglianza marginale}}.
+\]
+Nel caso presente abbiamo
+\[
+p(\theta \mid n=30, y=23) = \frac{\Big[\binom{30}{23}\theta^{23}(1-\theta)^{30-23}\Big]\Big[\frac{\Gamma(12)}{\Gamma(2)\Gamma(10)}\theta^{2-1} (1-\theta)^{10-1}\Big]}{p(y = 23)},
+\]
+laddove \(p(y = 23)\) è \(\int_0^1p(y = 23 \mid n = 30, \theta)\). Questo termine, ovvero la verosimiglianza marginale, è una costante di normalizzazione che fa sì che l'area sottesa alla densità a posteriori sia unitaria.
+Raccogliendo tutte le costanti dell'equazione precedente abbiamo:
+\[
+p(\theta \mid n=30, y=23) =\left[\frac{\binom{30}{23}\frac{\Gamma(12)}{\Gamma(2)\Gamma(10)}}{p(y = 23)}\right] \theta^{23}(1-\theta)^{7}\theta^{1} (1-\theta)^{9}.
+\]
+Se ignoriamo il termine costante all'interno della parentesi quadra otteniamo:
+\begin{align}
+p(\theta \mid n=30, y=23) &\propto \theta^{23}(1-\theta)^{7}\theta^{1} (1-\theta)^{9}\notag\\
+&\propto \theta^{24}(1-\theta)^{16}.\notag
+\end{align}
+Il termine di destra dell'equazione precedente corrisponde ad una distribuzione Beta di parametri \(\alpha=25\) e \(\beta = 17\). Il risultato così ottenuto individua il \emph{kernel} della distribuzione a posteriori, ovvero la distribuzione a posteriori non normalizzata. Infatti, l'area sotto la curva (AUC) non è 1:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{postFun }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(theta) \{}
+\NormalTok{  theta}\SpecialCharTok{\^{}}\DecValTok{24} \SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ theta)}\SpecialCharTok{\^{}}\DecValTok{16}
+\NormalTok{\}}
+\NormalTok{(AUC }\OtherTok{\textless{}{-}} \FunctionTok{integrate}\NormalTok{(postFun, }\AttributeTok{lower =} \DecValTok{0}\NormalTok{, }\AttributeTok{upper =} \DecValTok{1}\NormalTok{)}\SpecialCharTok{$}\NormalTok{value)}
+\CommentTok{\#\textgreater{} [1] 3.880577e{-}13}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Per ottenere una distribuzione di densità è necessario includere una costante di normalizzazione. In base alla definizione della distribuzione Beta, tale costante è
+\[
+\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)} = \frac{\Gamma(42)}{\Gamma(25)\Gamma(17)}.
+\]
+Questo termine non è altro che l'integrale della distribuzione a posteriori non normalizzata che è stato calcolato in precedenza:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{postFun }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(theta) \{}
+\NormalTok{  theta}\SpecialCharTok{\^{}}\DecValTok{24} \SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ theta)}\SpecialCharTok{\^{}}\DecValTok{16} \SpecialCharTok{/}\NormalTok{ AUC}
+\NormalTok{\}}
+\FunctionTok{integrate}\NormalTok{(postFun, }\AttributeTok{lower =} \DecValTok{0}\NormalTok{, }\AttributeTok{upper =} \DecValTok{1}\NormalTok{)}\SpecialCharTok{$}\NormalTok{value}
+\CommentTok{\#\textgreater{} [1] 1}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Infatti, l'area sottesa alla funzione
+\[
+p(\theta \mid n=30, y=23) =  \frac{\Gamma(42)}{\Gamma(25)\Gamma(17)}\theta^{25-1}(1-\theta)^{17-1} = \text{Beta}(y+a, n-y+b)
+\]
+\noindent
+somma ad 1, ovvero,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{postFunNor }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(theta) \{}
+\NormalTok{  (}\FunctionTok{factorial}\NormalTok{(}\DecValTok{42} \SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ (}\FunctionTok{factorial}\NormalTok{(}\DecValTok{25} \SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{*} \FunctionTok{factorial}\NormalTok{(}\DecValTok{17} \SpecialCharTok{{-}} \DecValTok{1}\NormalTok{))) }\SpecialCharTok{*}
+\NormalTok{    theta}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{25} \SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ theta)}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{17} \SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{(AUC2 }\OtherTok{\textless{}{-}} \FunctionTok{integrate}\NormalTok{(postFunNor, }\AttributeTok{lower =} \DecValTok{0}\NormalTok{, }\AttributeTok{upper =} \DecValTok{1}\NormalTok{)}\SpecialCharTok{$}\NormalTok{value)}
+\CommentTok{\#\textgreater{} [1] 1}
+\end{Highlighting}
+\end{Shaded}
+
+Possiamo quindi concludere dicendo che siamo partiti da una verosimiglianza \(\Bin(n = 30, y = 23 \mid \theta)\) e, moltiplicando la verosimiglianza per la distribuzione a priori \(\theta \sim \text{Beta}(2, 10)\), abbiamo ottenuto la distribuzione a posteriori \(p(\theta \mid n, y) \sim \text{Beta}(25, 17)\). Questo è un esempio di analisi coniugata: la distribuzione a posteriori del parametro ha la stessa forma funzionale della distribuzione a priori. La presente combinazione di verosimiglianza e distribuzione a priori è chiamata caso coniugato \emph{Beta-Binomiale} ed è descritto dal seguente teorema.
+
+\begin{theorem}
+\protect\hypertarget{thm:beta-binom}{}\label{thm:beta-binom}Sia data la funzione di verosimiglianza \(\Bin(n, y \mid \theta)\) e sia \(\mathrm{Beta}(\alpha, \beta)\) una distribuzione a priori. In tali circostanze, la distribuzione a posteriori del parametro \(\theta\) sarà una distribuzione \(\mathrm{Beta}(\alpha + y, \beta + n - y)\).
+\end{theorem}
+
+\noindent
+In particolare, possiamo calcolare qual è il valore atteso a posteriori di \(\theta\). Essendo \(\E[\text{Beta}(\alpha, \beta)] = \frac{\alpha}{\alpha + \beta}\), il valore atteso a posteriori di \(\theta\) sarà
+\begin{equation}
+\E_{\text{post}} [\mathrm{Beta}(\alpha + y, \beta + n - y)] = \frac{\alpha + y}{\alpha + \beta +n}.
+\label{eq:ev-post-beta-bin-1}
+\end{equation}
+
+\begin{example}
+
+Per i dati esaminati, usando la \ref{thm:beta-binom} possiamo ottenere l'intervallo di credibilità a posteriori del 95\% per il parametro \(\theta\) come:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qbeta}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FloatTok{0.025}\NormalTok{, }\FloatTok{0.975}\NormalTok{), }\AttributeTok{shape1 =} \DecValTok{25}\NormalTok{, }\AttributeTok{shape2 =} \DecValTok{17}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 0.4450478 0.7368320}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+La media della distribuzione a posteriori è
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{25} \SpecialCharTok{/}\NormalTok{ (}\DecValTok{25} \SpecialCharTok{+} \DecValTok{17}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 0.5952381}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+La moda della distribuzione a posteriori è
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\DecValTok{25} \SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{25} \SpecialCharTok{+} \DecValTok{17} \SpecialCharTok{{-}} \DecValTok{2}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 0.6}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+La deviazione standard della distribuzione a priori è
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sqrt}\NormalTok{((}\DecValTok{25} \SpecialCharTok{*} \DecValTok{17}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ ((}\DecValTok{25} \SpecialCharTok{+} \DecValTok{17}\NormalTok{)}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ (}\DecValTok{25} \SpecialCharTok{+} \DecValTok{17} \SpecialCharTok{+} \DecValTok{1}\NormalTok{)))}
+\CommentTok{\#\textgreater{} [1] 0.0748533}
+\end{Highlighting}
+\end{Shaded}
+
+\end{example}
+
+\begin{example}
+
+La funzione \(\R\) \texttt{plot\_beta\_binomial()} del pacchetto \texttt{bayesrules} descrive in maniera grafica l'aggiornamento bayesiano Beta-Binomiale:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bayesrules}\SpecialCharTok{::}\FunctionTok{plot\_beta\_binomial}\NormalTok{(}
+  \AttributeTok{alpha =} \DecValTok{2}\NormalTok{, }\AttributeTok{beta =} \DecValTok{10}\NormalTok{, }\AttributeTok{y =} \DecValTok{23}\NormalTok{, }\AttributeTok{n =} \DecValTok{30}
 \NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-Un valore BDI-II \(\geq 30\) indica la presenza di un livello ``grave'' di depressione. Nel campione clinico di \textcite{zetschefuture2019},
+\begin{center}\includegraphics{026_distr_coniugate_files/figure-latex/unnamed-chunk-14-1} \end{center}
+
+Un sommario delle distribuzioni a priori e a posteriori si ottiene usando la funzione \texttt{summarize\_beta\_binomial()}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{sum}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{y }\SpecialCharTok{\textgreater{}} \DecValTok{29}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 17}
+\NormalTok{bayesrules}\SpecialCharTok{:::}\FunctionTok{summarize\_beta\_binomial}\NormalTok{(}
+  \AttributeTok{alpha =} \DecValTok{2}\NormalTok{, }\AttributeTok{beta =} \DecValTok{10}\NormalTok{, }\AttributeTok{y =} \DecValTok{23}\NormalTok{, }\AttributeTok{n =} \DecValTok{30}
+\NormalTok{)}
+\CommentTok{\#\textgreater{}       model alpha beta      mean mode         var        sd}
+\CommentTok{\#\textgreater{} 1     prior     2   10 0.1666667  0.1 0.010683761 0.1033623}
+\CommentTok{\#\textgreater{} 2 posterior    25   17 0.5952381  0.6 0.005603016 0.0748533}
 \end{Highlighting}
 \end{Shaded}
 
+\end{example}
+
+\begin{example}
+
+Consideriamo un altro esempio discusso da \textcite{Johnson2022bayesrules}. Nel 1963, Stanley Milgram presentò una ricerca sulla propensione delle persone a obbedire agli ordini di figure di autorità, anche quando tali ordini possono danneggiare altre persone \autocite{milgram1963behavioral}. Nell'articolo, Milgram descrive lo studio come
+
+\begin{quote}
+consist{[}ing{]} of ordering a naive subject to administer electric shock to a victim. A simulated shock generator is used, with 30 clearly marked voltage levels that range from IS to 450 volts. The instrument bears verbal designations that range from Slight Shock to Danger: Severe Shock. The responses of the victim, who is a trained confederate of the experimenter, are standardized. The orders to administer shocks are given to the naive subject in the context of a `learning experiment' ostensibly set up to study the effects of punishment on memory. As the experiment proceeds the naive subject is commanded to administer increasingly more intense shocks to the victim, even to the point of reaching the level marked Danger: Severe Shock.
+\end{quote}
+
 \noindent
-17 pazienti su 30 manifestano un livello grave di depressione.
+All'insaputa del partecipante, gli shock elettrici erano falsi e l'attore stava solo fingendo di provare il dolore dello shock.
 
-Supponiamo di volere stimare la distribuzione a posteriori della probabilità \(\theta\) di depressione ``grave'' nei pazienti clinici, così come viene misurata dal test BDI-II, imponendo su \(\theta\) una distribuzione a priori \(\mbox{Beta}(8, 2)\).
-
-Sappiamo che il modello Beta-Binomiale può essere espresso nella forma seguente:
+\textcite{Johnson2022bayesrules} fanno inferenza sui risultati dello studio di Milgram mediante il modello Beta-Binomiale. Il parametro di interesse è \(\theta\), la probabiltà che una persona obbedisca all'autorità (in questo caso, somministrando lo shock più severo), anche se ciò significa recare danno ad altri. \textcite{Johnson2022bayesrules} ipotizzano che, prima di raccogliere dati, le credenze di Milgram relative a \(\theta\) possano essere rappresentate mediante una \(\text{Beta}(1, 10)\). Sia \(y = 26\) il numero di soggetti che, sui 40 partecipanti allo studio, aveva accettato di infliggere lo shock più severo. Assumendo che ogni partecipante si comporti indipendentemente dagli altri, possiamo modellare la dipendenza di \(y\) da \(\theta\) usando la distribuzione binomiale. Giungiamo dunque al seguente modello bayesiano Beta-Binomiale:
 \begin{align}
-Y | \theta & \sim \mbox{Bin}(30, \theta) \notag\\
-\theta & \sim \mbox{Beta}(8, 2) \notag
+y \mid \theta & \sim \Bin(n = 40, \theta) \notag\\
+\theta & \sim \text{Beta}(1, 10) \; . \notag
 \end{align}
-con una corrispondente distribuzione a posteriori \(\mbox{Beta}(25, 15)\):
-\begin{equation}
-f(\theta | y = 17) = \frac{\Gamma(25 + 15)}{\Gamma(25)\Gamma(15)}\theta^{25-1} (1-\theta)^{15-1} \;\; \text{ for } \theta \in [0,1] \; .
-\label{eq:post-beta-25-15}
-\end{equation}
+Usando le funzioni di \texttt{bayesrules} possiamo facilmente calcolare i parametri e le proprietà della distribuzione a posteriori:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{plot\_beta\_binomial}\NormalTok{(}\AttributeTok{alpha =} \DecValTok{8}\NormalTok{, }\AttributeTok{beta =} \DecValTok{2}\NormalTok{, }\AttributeTok{y =} \DecValTok{17}\NormalTok{, }\AttributeTok{n =} \DecValTok{30}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics{045_summarize_posterior_files/figure-latex/unnamed-chunk-4-1} \end{center}
-
-\hypertarget{stime-puntuali-della-distribuzione-a-posteriori}{%
-\subsection{Stime puntuali della distribuzione a posteriori}\label{stime-puntuali-della-distribuzione-a-posteriori}}
-
-Una volta trovata l'intera distribuzione a posteriori, quale valore di
-sintesi è necessario riportare? Questa sembra una domanda innocente, ma
-in realtà è una domanda a cui è difficile rispondere. La stima bayesiana dei parametri è fornita dall'intera distribuzione a posteriori, che non è un singolo numero, ma una funzione che mappa ciascun valore del parametro ad un valore di plausibilità. Quindi non è necessario scegliere una stima puntuale. In linea di principio, una stima puntuale non è quasi mai necessaria ed è spesso dannosa in quanto comporta una perdita di informazioni.
-
-Tuttavia talvolta una tale sintesi è richiesta. Diverse risposte sono allora possibili. La media della distribuzione a posteriori per \(\theta\) è
-\[
-\E(\pi \mid y = 17) = \frac{\alpha}{\alpha + \beta} = \frac{25}{25+15} = 0.625.
-\]
-Una stima del massimo della probabilità a posteriori, o brevemente massimo a posteriori, MAP (da \emph{maximum a posteriori probability}), è la moda della distribuzione a posteriori. Nel caso presente, una stima del MAP può essere ottenuta nel modo seguente:
-\[
-\Mo(\pi \mid y = 17) = \frac{\alpha-1}{\alpha + \beta-2} = \frac{25-1}{25+15-2} = 0.6316.
-\]
-Gli stessi risultati si ottiengono usando la chiamata a \texttt{bayesrules::summarize\_beta\_binomial()}:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{summarize\_beta\_binomial}\NormalTok{(}\AttributeTok{alpha =} \DecValTok{8}\NormalTok{, }\AttributeTok{beta =} \DecValTok{2}\NormalTok{, }\AttributeTok{y =} \DecValTok{17}\NormalTok{, }\AttributeTok{n =} \DecValTok{30}\NormalTok{)}
-\CommentTok{\#\textgreater{}       model alpha beta  mean      mode         var}
-\CommentTok{\#\textgreater{} 1     prior     8    2 0.800 0.8750000 0.014545455}
-\CommentTok{\#\textgreater{} 2 posterior    25   15 0.625 0.6315789 0.005716463}
-\CommentTok{\#\textgreater{}          sd}
-\CommentTok{\#\textgreater{} 1 0.1206045}
-\CommentTok{\#\textgreater{} 2 0.0756073}
-\end{Highlighting}
-\end{Shaded}
-
-La mediana si ottiene con
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{qbeta}\NormalTok{(.}\DecValTok{5}\NormalTok{, }\AttributeTok{shape1 =} \DecValTok{25}\NormalTok{, }\AttributeTok{shape2 =} \DecValTok{15}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.6271031}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{intervallo-di-credibilituxe0-1}{%
-\subsection{Intervallo di credibilità}\label{intervallo-di-credibilituxe0-1}}
-
-È più comune sintetizzare la distribuzione a posteriori mediante l'intervallo di credibilità. Per esempio, l'intervallo di credibilità a code uguali al 95\%
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{plot\_beta\_ci}\NormalTok{(}\AttributeTok{alpha =} \DecValTok{25}\NormalTok{, }\AttributeTok{beta =} \DecValTok{15}\NormalTok{, }\AttributeTok{ci\_level =} \FloatTok{0.95}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics{045_summarize_posterior_files/figure-latex/unnamed-chunk-7-1} \end{center}
-
-\noindent
-è dato dalla chiamata
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{qbeta}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FloatTok{0.025}\NormalTok{, }\FloatTok{0.975}\NormalTok{), }\DecValTok{25}\NormalTok{, }\DecValTok{15}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.4717951 0.7663607}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Il calcolo precedente evidenzia l'interpretazione intuitiva dell'intervallo di credibilità. Tale intervallo, infatti, può essere interpretato come la probabilità che \(\theta\) assuma valori compresi tra 0.472 e 0.766:
-\[
-P(\theta \in (0.472, 0.766) | Y = 17) = \int_{0.472}^{0.766} f(\theta \mid y=17) d\theta = 0.95,
-\]
-ovvero
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{postFun }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(theta) \{}
-  \FunctionTok{gamma}\NormalTok{(}\DecValTok{25} \SpecialCharTok{+} \DecValTok{15}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ (}\FunctionTok{gamma}\NormalTok{(}\DecValTok{25}\NormalTok{) }\SpecialCharTok{*} \FunctionTok{gamma}\NormalTok{(}\DecValTok{15}\NormalTok{)) }\SpecialCharTok{*}\NormalTok{ theta}\SpecialCharTok{\^{}}\DecValTok{24} \SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ theta)}\SpecialCharTok{\^{}}\DecValTok{14}
-\NormalTok{\}}
-\FunctionTok{integrate}\NormalTok{(}
-\NormalTok{  postFun,}
-  \AttributeTok{lower =} \FloatTok{0.4717951}\NormalTok{,}
-  \AttributeTok{upper =} \FloatTok{0.7663607}
-\NormalTok{)}\SpecialCharTok{$}\NormalTok{value}
-\CommentTok{\#\textgreater{} [1] 0.95}
-\end{Highlighting}
-\end{Shaded}
-
-Possiamo costruire diversi intervalli di credibilità a code equivalenti. Ad esempio, l'intervallo di credibilità compreso tra il 25-esimo e il 75-esimo percentile è
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{qbeta}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FloatTok{0.25}\NormalTok{, }\FloatTok{0.75}\NormalTok{), }\DecValTok{25}\NormalTok{, }\DecValTok{15}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.5743878 0.6778673}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-ovvero, abbiamo una certezza a posteriori del 50\% che la probabilità di depressione grave tra i pazienti clinici sia un valore compreso tra 0.57 e 0.68.
-
-Non esiste un livello credibile ``corretto''. I ricercatori, utilizzano vari livelli, ad esempio 50\%, 80\% o 95\%, a seconda del contesto dell'analisi. Ciascuno di questi intervalli fornisce un'immagine diversa della nostra comprensione della distribuzione a posteriori del parametro di interesse.
-
-Non è inoltre necessario riportare l'intervallo di credibilità a code uguali. Se la distribuzione a posteriori è fortemente asimmetrica è più sensato riportare l'intervallo di credibilità a densità a posteriori più alta.
-L'intervallo HPD risulta più semplice da determinare quando la distribuzione a posteriori viene approssimata con il metodo MCMC.
-
-\hypertarget{probabilituxe0-della-distribuzione-a-posteriori}{%
-\subsection{Probabilità della distribuzione a posteriori}\label{probabilituxe0-della-distribuzione-a-posteriori}}
-
-Il test di ipotesi è un compito comune dell'analisi della distribuzione a posteriori. Supponiamo che si voglia conoscere la probabilità a posteriori che \(\theta\) sia superiore a 0.5. Per sapere quanto credibile sia l'evento \(\theta > 0.5\) possiamo calcolare il seguente integrale:
-\[
-P(\theta > 0.5 \; \mid \; y = 17) = \int_{0.5}^{1}f(\theta \mid y=17)d\theta \;,
-\]
-dove \(f(\cdot)\) è la distribuzione \(\mbox{\Beta}(25, 15)\):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{pbeta}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\AttributeTok{shape1 =} \DecValTok{25}\NormalTok{, }\AttributeTok{shape2 =} \DecValTok{15}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.9459355}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-il che è equivalente a:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{postFun }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(theta) \{}
-  \FunctionTok{gamma}\NormalTok{(}\DecValTok{25} \SpecialCharTok{+} \DecValTok{15}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ (}\FunctionTok{gamma}\NormalTok{(}\DecValTok{25}\NormalTok{) }\SpecialCharTok{*} \FunctionTok{gamma}\NormalTok{(}\DecValTok{15}\NormalTok{)) }\SpecialCharTok{*}\NormalTok{ theta}\SpecialCharTok{\^{}}\DecValTok{24} \SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ theta)}\SpecialCharTok{\^{}}\DecValTok{14}
-\NormalTok{\}}
-\FunctionTok{integrate}\NormalTok{(}
-\NormalTok{  postFun,}
-  \AttributeTok{lower =} \FloatTok{0.5}\NormalTok{,}
-  \AttributeTok{upper =} \DecValTok{1}
-\NormalTok{)}\SpecialCharTok{$}\NormalTok{value}
-\CommentTok{\#\textgreater{} [1] 0.9459355}
-\end{Highlighting}
-\end{Shaded}
-
-È anche possibile formulare un test di ipotesi contrastando due ipotesi contrapposte. Per esempio, \(H_1: \theta \geq 0.5\) e \(H_2: \theta < 0.5\). Ciò consente di calcolare l'\emph{odds a posteriori} di \(\theta > 0.5\):
-\begin{equation}
-\text{poterior odds} = \frac{H_1 \mid y = 17}{H_2 \mid y = 17}
-\end{equation}
-ovvero
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{posterior\_odds }\OtherTok{\textless{}{-}}
-  \FunctionTok{pbeta}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\AttributeTok{shape1 =} \DecValTok{25}\NormalTok{, }\AttributeTok{shape2 =} \DecValTok{15}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{/}
-    \FunctionTok{pbeta}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\AttributeTok{shape1 =} \DecValTok{25}\NormalTok{, }\AttributeTok{shape2 =} \DecValTok{15}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{TRUE}\NormalTok{)}
-\NormalTok{posterior\_odds}
-\CommentTok{\#\textgreater{} [1] 17.49642}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-L'odds a posteriori rappresenta l'aggiornamento delle nostre credenze dopo avere osservato \(y = 17\) in \(n = 30\). L'odds a priori di \(\theta > 0.5\) era:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{prior\_odds }\OtherTok{\textless{}{-}}
-  \FunctionTok{pbeta}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\AttributeTok{shape1 =} \DecValTok{8}\NormalTok{, }\AttributeTok{shape2 =} \DecValTok{2}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{/}
-    \FunctionTok{pbeta}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\AttributeTok{shape1 =} \DecValTok{8}\NormalTok{, }\AttributeTok{shape2 =} \DecValTok{2}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{TRUE}\NormalTok{)}
-\NormalTok{prior\_odds}
-\CommentTok{\#\textgreater{} [1] 50.2}
-\end{Highlighting}
-\end{Shaded}
-
-Il \emph{fattore di Bayes} (\emph{Bayes Factor}; BF) confronta gli odds a posteriori con gli odds a priori e quindi fornisce informazioni su quanto sia mutata la nostra comprensione relativa a \(\theta\) dopo avere osservato i nostri dati del campione:
-\[
-\text{BF} = \frac{\text{odds a posteriori}}{\text{odds a priori}}.
-\]
-Nel caso presente abbiamo
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{BF }\OtherTok{\textless{}{-}}\NormalTok{ posterior\_odds }\SpecialCharTok{/}\NormalTok{ prior\_odds}
-\NormalTok{BF}
-\CommentTok{\#\textgreater{} [1] 0.3485343}
-\end{Highlighting}
-\end{Shaded}
-
-Quindi, dopo avere osservato i dati, gli odds a posteriori della nostra ipotesi a proposito di \(\theta\) sono pari a solo il 34\% degli odds a priori.
-
-Per fare un altro esempio, consideriamo invece il caso in cui le credenze a priori rivelano una credenza diametralmente opposta rispetto a \(\theta\) che nel caso considerato in precedenza, ovvero \(\mbox{Beta}(2, 8)\). In questo secondo caso, la distribuzione a posteriori diventa
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{summarize\_beta\_binomial}\NormalTok{(}\AttributeTok{alpha =} \DecValTok{2}\NormalTok{, }\AttributeTok{beta =} \DecValTok{8}\NormalTok{, }\AttributeTok{y =} \DecValTok{17}\NormalTok{, }\AttributeTok{n =} \DecValTok{30}\NormalTok{)}
-\CommentTok{\#\textgreater{}       model alpha beta  mean      mode         var}
-\CommentTok{\#\textgreater{} 1     prior     2    8 0.200 0.1250000 0.014545455}
-\CommentTok{\#\textgreater{} 2 posterior    19   21 0.475 0.4736842 0.006082317}
+\NormalTok{bayesrules}\SpecialCharTok{:::}\FunctionTok{summarize\_beta\_binomial}\NormalTok{(}
+  \AttributeTok{alpha =} \DecValTok{1}\NormalTok{, }\AttributeTok{beta =} \DecValTok{10}\NormalTok{, }\AttributeTok{y =} \DecValTok{26}\NormalTok{, }\AttributeTok{n =} \DecValTok{40}
+\NormalTok{)}
+\CommentTok{\#\textgreater{}       model alpha beta       mean      mode         var}
+\CommentTok{\#\textgreater{} 1     prior     1   10 0.09090909 0.0000000 0.006887052}
+\CommentTok{\#\textgreater{} 2 posterior    27   24 0.52941176 0.5306122 0.004791057}
 \CommentTok{\#\textgreater{}           sd}
-\CommentTok{\#\textgreater{} 1 0.12060454}
-\CommentTok{\#\textgreater{} 2 0.07798921}
+\CommentTok{\#\textgreater{} 1 0.08298827}
+\CommentTok{\#\textgreater{} 2 0.06921746}
 \end{Highlighting}
 \end{Shaded}
 
 \noindent
-e il BF è
+Il processo di aggiornamento bayesiano è descritto dalla figura seguente:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{posterior\_odds }\OtherTok{\textless{}{-}}
-  \FunctionTok{pbeta}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\AttributeTok{shape1 =} \DecValTok{19}\NormalTok{, }\AttributeTok{shape2 =} \DecValTok{21}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{/}
-    \FunctionTok{pbeta}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\AttributeTok{shape1 =} \DecValTok{19}\NormalTok{, }\AttributeTok{shape2 =} \DecValTok{21}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{TRUE}\NormalTok{)}
-
-\NormalTok{prior\_odds }\OtherTok{\textless{}{-}}
-  \FunctionTok{pbeta}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\AttributeTok{shape1 =} \DecValTok{2}\NormalTok{, }\AttributeTok{shape2 =} \DecValTok{8}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{/}
-    \FunctionTok{pbeta}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\AttributeTok{shape1 =} \DecValTok{2}\NormalTok{, }\AttributeTok{shape2 =} \DecValTok{8}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{TRUE}\NormalTok{)}
-
-\NormalTok{BF }\OtherTok{\textless{}{-}}\NormalTok{ posterior\_odds }\SpecialCharTok{/}\NormalTok{ prior\_odds}
-\NormalTok{BF}
-\CommentTok{\#\textgreater{} [1] 30.07239}
+\NormalTok{bayesrules}\SpecialCharTok{:::}\FunctionTok{plot\_beta\_binomial}\NormalTok{(}
+  \AttributeTok{alpha =} \DecValTok{1}\NormalTok{, }\AttributeTok{beta =} \DecValTok{10}\NormalTok{, }\AttributeTok{y =} \DecValTok{26}\NormalTok{, }\AttributeTok{n =} \DecValTok{40}
+\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\noindent
-In alre parole, in questo secondo esempio gli odds a posteriori della nostra ipotesi a proposito di \(\theta\) sono aumentati di 30 volte rispetto agli odds a priori.
+\begin{center}\includegraphics{026_distr_coniugate_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
-In generale, in un test di ipotesi che contrappone un'ipotesi sostantiva \(H_a\) ad un'ipotesi nulla \(H_0\) il BF è un rapporto di odds per l'ipotesi sostantiva:
-\[
-\text{Bayes Factor}
-= \frac{\text{posterior odds}}{\text{prior odds}}
-= \frac{P(H_a \mid Y) / P(H_0 \mid Y)}{P(H_a) / P(H_0)}
- \; .
-\]
-Essendo un rapporto, il BF deve esere valutato rispetto al valore di 1. Ci sono tre possibilità:
+\end{example}
+
+\hypertarget{principali-distribuzioni-coniugate}{%
+\section{Principali distribuzioni coniugate}\label{principali-distribuzioni-coniugate}}
+
+Esistono molte altre combinazioni simili di verosimiglianza e distribuzione a priori le quali producono una distribuzione a posteriori che ha la stessa densità della distribuzione a priori. Sono elencate qui sotto le più note coniugazioni tra modelli statistici e distribuzioni a priori.
 
 \begin{itemize}
-\tightlist
 \item
-  BF = 1: La credibilità di \(H_a\) non è cambiata dopo avere osservato i dati.
+  Per il modello Normale-Normale \(\mathcal{N}(\mu, \sigma^2_0)\), la distribizione iniziale è \(\mathcal{N}(\mu_0, \tau^2)\) e la distribuzione finale è \(\mathcal{N}\left(\frac{\mu_0\sigma^2 + \bar{y}n\tau^2}{\sigma^2 + n\tau^2}, \frac{\sigma^2\tau^2}{\sigma^2 + n\tau^2} \right)\).
 \item
-  BF \textgreater{} 1: La credibilità di \(H_a\) è aumentata dopo avere osservato i dati. Quindi maggiore è BF, più convincente risulta l'evidenza per \(H_a\).
+  Per il modello Poisson-gamma \(\text{Po}(\theta)\), la distribizione iniziale è \(\Gamma(\lambda, \delta)\) e la distribuzione finale è \(\Gamma(\lambda + n \bar{y}, \delta +n)\).
 \item
-  BF \textless{} 1: La credibilità di \(H_a\) è diminuita dopo avere osservato i dati.
+  Per il modello esponenziale \(\text{Exp}(\theta)\), la distribizione iniziale è \(\Gamma(\lambda, \delta)\) e la distribuzione finale è \(\Gamma(\lambda + n, \delta +n\bar{y})\).
+\item
+  Per il modello uniforme-Pareto \(\text{U}(0, \theta)\), la distribizione iniziale è \(\text{Pa}(\alpha, \varepsilon)\) e la distribuzione finale è \(\text{Pa}(\alpha + n, \max(y_{(n)}, \varepsilon))\).
 \end{itemize}
-
-Non ci sono delle soglie universalmente riconosciute per interpretare il BF. Per esempio, \textcite{lee2014bayesian} propongono il seguente schema:
-
-\begin{longtable}[]{@{}rl@{}}
-\toprule
-BF & Interpretation \\
-\midrule
-\endhead
-\textgreater{} 100 & Extreme evidence for \(H_a\) \\
-30 - 100 & Very strong evidence for \(H_a\) \\
-10 - 30 & Strong evidence for \(H_a\) \\
-3 - 10 & Moderate evidence for \(H_a\) \\
-1 - 3 & Anecdotal evidence for \(H_a\) \\
-1 & No evidence \\
-1/3 - 1 & Anecdotal evidence for \(H_0\) \\
-1/10 - 1/3 & Moderate evidence for \(H_0\) \\
-1/30 - 1/10 & Strong evidence for \(H_0\) \\
-1/100 - 1/30 & Very strong evidence for \(H_0\) \\
-\textless{} 1/100 & Extreme evidence for \(H_0\) \\
-\bottomrule
-\end{longtable}
-
-Tuttavia, è importante notare che l'opinione maggiormente diffusa nella comunità scientifica sia quella che incoraggia a non trarre conclusioni rigide dai dati utilizzando dei criteri fissati una volta per tutte. Pertanto, non esiste una soglia univoca per il BF che consente di classificare le ipotesi dei ricercatori nelle due categorie ``vero'' o ``falso''. Invece, è più utile adottare una pratica più flessibile capace di tenere in considerazione il contesto e le potenziali implicazioni di ogni singolo test di ipotesi. Inoltre, è stato molte volte ripetuto che la distribuzione a posteriori è molto più informativa di una decisione binaria: la rappresentazione di tutta la distribuzione a posteriori fornisce una misura olistica del nostro livello di incertezza riguardo all'affermazione (il parametro, ovvero l'ipotesi) che viene valutata.
 
 \hypertarget{considerazioni-conclusive}{%
 \section*{Considerazioni conclusive}\label{considerazioni-conclusive}}
 \addcontentsline{toc}{section}{Considerazioni conclusive}
 
-Questo capitolo introduce le procedure di base per la manipolazione
-della distribuzione a posteriori. Lo strumento fondamentale che è stato
-utilizzato è quello fornito dai campioni di valori del parametro che vengono estratti dalla distribuzione a posteriori. Lavorare con campioni di valori del parametro estratti dalla distribuzione a posteriori trasforma un problema di calcolo integrale in un problema di riepilogo dei dati. Abbiamo visto le procedure maggiormente usate che consentono di utilizzare i campioni a
-posteriori per produrre indici di sintesi della distribuzione a
-posteriori: gli intervalli di credibilità e le stime puntuali.
+Lo scopo di questa discussione è stato quello di mostrare come sia possibile combinare le nostre conoscenze a priori (espresse nei termini di una densità di probabilità) con le evidenze fornite dai dati (espresse nei termini della funzione di verosimiglianza), così da determinare, mediante il teorema di Bayes, una distribuzione a posteriori, la quale condensa l'incertezza che abbiamo sul parametro \(\theta\). Per illustrare tale problema, abbiamo considerato una situazione nella quale \(\theta\) corrisponde alla probabilità di successo in una sequenza di prove Bernoulliane. Abbiamo visto come, in queste circostanze, sia ragionevole esprimere le nostre credenze a priori mediante la densità Beta, con opportuni parametri. L'inferenza rispetto ad una proporzione rappresenta un caso particolare, ovvero un caso nel quale la distribuzione a priori è Beta e la verosimiglianza è Binomiale. In tali circostanze, la distribuzione a posteriori diventa una distribuzione Beta -- questo è il cosiddetto modello Beta-Binomiale. Dato che utilizza una distribuzione a priori coniugata, dunque, il modello Beta-Binomiale rende possibile la determinazione analitica dei parametri della distribuzione a posteriori.
 
 
 % Bibliography

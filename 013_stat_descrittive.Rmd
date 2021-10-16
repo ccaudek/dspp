@@ -214,7 +214,6 @@ tratti
 $$
 \varphi_n(x)= \frac{f_i}{b_i-a_i}, \quad x\in \Delta_i,\, i=1, \dots, m
 $$
-\noindent
 che misura la _densità della frequenza relativa_ della variabile $X$
 nella classe $\Delta_i$, ovvero il rapporto fra la frequenza relativa
 $f_i$ e l'ampiezza ($b_i - a_i$) della classe. In questo modo il
@@ -225,15 +224,13 @@ dei singoli rettangoli e quindi vale 1.0.
 
 Poniamoci ora il problema di costruire in R un istogramma per i dati BDI-II di @zetschefuture2019. Per fare ciò è possibile usare le funzioni del pacchetto `ggplot2`, come indicato di seguito.
 
-```{r hist1zetsche, out.width="80%", fig.cap="Istogramma per i valori BDI-II riportati da Zetsche et al. (2019)."}
+```{r hist1zetsche, fig.cap="Istogramma per i valori BDI-II riportati da Zetsche et al. (2019)."}
 bysubj %>%
   ggplot(aes(x = bdi)) +
   geom_histogram(
     aes(y = ..density..),
-    breaks = c(0, 13.5, 19.5, 28.5, 44.1), 
+    breaks = c(0, 13.5, 19.5, 28.5, 44.1)
     # il valore BDI-II massimo è 44
-    fill = colors[1],
-    colour = "black"
   ) +
   scale_x_continuous(
     breaks = c(0, 13.5, 19.5, 28.5, 44.1)
@@ -251,14 +248,12 @@ Nel caso della prima barra dell'istogramma, l'ampiezza dell'intervallo è pari a
 
 Anche se nel caso presente è sensato usare ampiezze diverse per gli intervalli delle classi, in generale gli istogrammi si costruiscono utilizzando intervalli riportati sulle ascisse con un'ampiezza uguale. Questo è il caso dell'istogramma della figura \@ref(fig:hist2zetsche).
 
-```{r hist2zetsche, out.width="80%", fig.cap="Una rappresentazione più comune per l'istogramma dei valori BDI-II nella quale gli intervalli delle classi hanno ampiezze uguali."}
+```{r hist2zetsche, fig.cap="Una rappresentazione più comune per l'istogramma dei valori BDI-II nella quale gli intervalli delle classi hanno ampiezze uguali."}
 bysubj %>%
   ggplot(aes(x = bdi)) +
   geom_histogram(
     aes(y = ..density..),
-    breaks = seq(0, 44.1, length.out = 7),
-    fill = colors[1],
-    colour = "black"
+    breaks = seq(0, 44.1, length.out = 7)
   ) +
   scale_x_continuous(
     breaks = c(0.00, 7.35, 14.70, 22.05, 
@@ -286,20 +281,18 @@ L'interpretazione che possiamo attribuire al kernel density plot è simile a que
 ::: {.example}
 Vediamo ora come rappresentare con R sia l'istogramma sia il kernel density plot di una variabile numerica impiegando i valori BDI-II di @zetschefuture2019.
 
-```{r zetschehist3, out.width="80%", fig.cap="Kernel density plot e corrispondente istogramma per i valori BDI-II."}
+```{r zetschehist3, fig.cap="Kernel density plot e corrispondente istogramma per i valori BDI-II."}
 bysubj %>% 
   ggplot(aes(x = bdi)) +
   geom_histogram(
     aes(y = ..density..), 
-    breaks = seq(0, 44.1, length.out = 7),
-    fill = colors[1],
-    colour = "black"
+    breaks = seq(0, 44.1, length.out = 7)
   ) +
   geom_density(
     aes(x = bdi), 
     adjust = 0.5, 
     size = 0.8, 
-    fill = colors[2],
+    #fill = colors[2],
     alpha = 0.5
   ) +
   labs(
@@ -442,29 +435,9 @@ Il valore adiacente superiore è il valore più grande tra le osservazioni che r
 
 ::: {.example}
 Consideriamo ora un caso concreto nel quale viene utilizzato un box-plot.
-Nel caso dei dati di @zetschefuture2019 ci chiediamo in che modo si differenziano le distribuzioni del BDI-II tra i due gruppi considerati, ovvero tra il gruppo dei pazienti e il gruppo di controllo.
+Nel caso dei dati di @zetschefuture2019 ci chiediamo in che modo si differenziano le distribuzioni del BDI-II tra i due gruppi considerati, ovvero tra il gruppo dei pazienti e il gruppo di controllo. La figura \@ref(fig:violin-zetsche) fornisce due rappresentazioni grafiche che possono essere utilizzate per rispondere a questa domanda.
 
-```{r, out.width="80%"}
-bysubj <- df %>% 
-  group_by(esm_id, group) %>% 
-  summarise(
-    bdi = mean(bdi),
-    nr_of_episodes = mean(nr_of_episodes, na.rm = TRUE)
-  ) %>% 
-  na.omit()
-
-bysubj %>% 
-  ggplot(aes(x=group, y=bdi)) + 
-  geom_boxplot(fill = colors[1]) +
-  labs(
-    x = "Gruppo",
-    y = "BDI-II"
-  ) 
-```
-
-La figura \@ref(fig:violin-zetsche) fornisce due rappresentazioni grafiche che possono essere utilizzate per rispondere a questa domanda.
-
-```{r violin-zetsche, out.width="95%", fig.cap = "Due versioni di un violin plot per i valori BDI-II di ciascuno dei due gruppi di soggetti esaminati da @zetschefuture2019."}
+```{r violin-zetsche, fig.cap = "Due versioni di un violin plot per i valori BDI-II di ciascuno dei due gruppi di soggetti esaminati da @zetschefuture2019."}
 library("patchwork")
 bysubj <- df %>% 
   group_by(esm_id, group) %>% 
@@ -807,7 +780,7 @@ bysubj <- df %>%
   ungroup()
 ```
 
-```{r, zetsche-scatter, out.width="95%", fig.cap = "Associazione tra le variabili BDI-II e CES-D nello studio di @zetschefuture2019. In rosso sono rappresentate le osservazioni del gruppo di controllo; in blu quelle dei pazienti."}
+```{r, zetsche-scatter, fig.cap = "Associazione tra le variabili BDI-II e CES-D nello studio di @zetschefuture2019. In rosso sono rappresentate le osservazioni del gruppo di controllo; in blu quelle dei pazienti."}
 m_cesd <- mean(bysubj$cesd)
 m_bdi <- mean(bysubj$bdi)
 FONT_SIZE <- 10
@@ -993,7 +966,7 @@ Un ultimo aspetto da mettere in evidenza a proposito della correlazione riguarda
 ::: {.example}
 Un esempio di correlazione nulla in presenza di una chiara relazione (non lineare) tra le variabili è fornito dalla figura \@ref(fig:zerocorr).
 
-```{r zerocorr, out.width="80%", fig.cap = "Due insiemi di dati (fittizi) per i quali i coefficienti di correlazione di Pearson sono entrambi 0. Ma questo non significa che non vi sia alcuna relazione tra le variabili."}
+```{r zerocorr, fig.cap = "Due insiemi di dati (fittizi) per i quali i coefficienti di correlazione di Pearson sono entrambi 0. Ma questo non significa che non vi sia alcuna relazione tra le variabili."}
 library("datasauRus")
 slant <- ggplot(
   datasaurus_dozen_wide, 
