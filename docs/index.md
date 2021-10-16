@@ -77,6 +77,7 @@ biblatexoptions:
   - maxbibnames=150
   - sorting=nyt
   - sortcites=false
+  - style=apa
 # Chapter summary text
 chaptersummary: In breve
 # Back Cover
