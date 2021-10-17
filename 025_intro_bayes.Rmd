@@ -24,12 +24,11 @@ L'inferenza bayesiana è formulata nei termini di un problema inverso che segue 
 L'inferenza bayesiana utilizza le seguenti distribuzioni di probabilità (o densità di probabilità): 
 
 - la *distribuzione a priori* $p(\theta)$ --- la credenza iniziale riguardo alla credibilità di ciascun valore $\theta$;
-- la *funzione di verosimiglianza* $p(y \mid \theta)$ --- la credibilità che il ricercatore assegnerebbe ai dati osservati se conoscesse il parametro di interesse $\theta$;
+- la *funzione di verosimiglianza* $p(y \mid \theta)$ --- descrive quanto sono compatibili i dati osservati $Y = y$ con i diversi valori possibili di $\theta$; quantifica la credibilità il ricercatore assegnerebbe ai dati osservati se conoscesse il "vero" valore del parametro di interesse $\theta$;
 - la *verosimiglianza marginale* $p(y)$ --- quanto sono credibili i dati $y$ alla luce della nostra credenza a priori relativamente a $\theta$. In termini formali:
 $$
 p(y) = \int_\theta p(y, \theta) d\theta = \int_\theta p(y \mid \theta) p(\theta) d\theta.
 $$
-
 - la *distribuzione a posteriori* $p(\theta \mid y)$ --- la nuova credenza a posteriori relativamente alla credibilità di ciascun valore $\theta$ alla luce dei dati $Y = y$.
 
 
