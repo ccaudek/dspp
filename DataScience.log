@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.6)  16 OCT 2021 16:25
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.6)  17 OCT 2021 07:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1978,12 +1978,12 @@ Package csquotes Info: ... found 'polyglossia' package.
 LaTeX Info: Redefining \rmfamily on input line 26.
 LaTeX Info: Redefining \sffamily on input line 26.
 LaTeX Info: Redefining \ttfamily on input line 26.
-LaTeX Info: Redefining \rmfamily on input line 97.
-LaTeX Info: Redefining \sffamily on input line 97.
-LaTeX Info: Redefining \ttfamily on input line 97.
-LaTeX Info: Redefining \rmfamily on input line 101.
-LaTeX Info: Redefining \sffamily on input line 101.
-LaTeX Info: Redefining \ttfamily on input line 101.
+LaTeX Info: Redefining \rmfamily on input line 79.
+LaTeX Info: Redefining \sffamily on input line 79.
+LaTeX Info: Redefining \ttfamily on input line 79.
+LaTeX Info: Redefining \rmfamily on input line 83.
+LaTeX Info: Redefining \sffamily on input line 83.
+LaTeX Info: Redefining \ttfamily on input line 83.
 )
 \openout1 = `DataScience.aux'.
 
@@ -2479,12 +2479,12 @@ LaTeX Font Warning: Font shape `TU/lmr/bx/sc' undefined
 LaTeX Info: Redefining \rmfamily on input line 3.
 LaTeX Info: Redefining \sffamily on input line 3.
 LaTeX Info: Redefining \ttfamily on input line 3.
+LaTeX Info: Redefining \rmfamily on input line 31.
+LaTeX Info: Redefining \sffamily on input line 31.
+LaTeX Info: Redefining \ttfamily on input line 31.
 LaTeX Info: Redefining \rmfamily on input line 33.
 LaTeX Info: Redefining \sffamily on input line 33.
 LaTeX Info: Redefining \ttfamily on input line 33.
-LaTeX Info: Redefining \rmfamily on input line 35.
-LaTeX Info: Redefining \sffamily on input line 35.
-LaTeX Info: Redefining \ttfamily on input line 35.
 )
 
 ******************************************************
@@ -2514,70 +2514,126 @@ Sidefootvsep and sidefootheight: 13.6pt and 594.32022pt
 ] [5] [6] [7] [8] [9] [10
 
 ]
-Package hyperref Info: bookmark level for unknown bclogo defaults to 0 on input
- line 565.
-File: bc-trombone.mps Graphic file (type mps)
-<bc-trombone.mps>
-Package mdframed Info: mdframed works in twoside mode on input line 565.
-Package mdframed Info: mdframed detected package amsthm 
- changed the theorem header of amsthm
-(mdframed)              on input line 565.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 575.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 6.0pt on input line 575.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 575.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 9.00082pt on input line 575.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 6.00055pt on input line 575.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00046pt on input line 575.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 8.99904pt on input line 575.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 5.99936pt on input line 575.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 575.
+
+LaTeX Warning: Reference `es-pratico-zetsche' on page 1 undefined on input line
+ 582.
+
 [1
 
 ]
-
-LaTeX Warning: Reference `es-pratico-zetsche' on page 2 undefined on input line
- 588.
-
-[2]
 LaTeX Font Info:    Font shape `TU/Inconsolata(0)/m/n' will be
-(Font)              scaled to size 9.30756pt on input line 598.
-File: 026_distr_coniugate_files/figure-latex/unnamed-chunk-2-1.pdf Graphic file
- (type pdf)
-<use 026_distr_coniugate_files/figure-latex/unnamed-chunk-2-1.pdf>
+(Font)              scaled to size 9.30756pt on input line 610.
 
 LaTeX Font Warning: Font shape `TU/Inconsolata(0)/m/it' undefined
 (Font)              using `TU/Inconsolata(0)/m/n' instead on input line 611.
 
-File: 026_distr_coniugate_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file
- (type pdf)
-<use 026_distr_coniugate_files/figure-latex/unnamed-chunk-4-1.pdf>
-[3]
 LaTeX Font Info:    Font shape `TU/Inconsolata(0)/m/it' will be
-(Font)              scaled to size 9.30756pt on input line 630.
-File: 026_distr_coniugate_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file
- (type pdf)
-<use 026_distr_coniugate_files/figure-latex/unnamed-chunk-6-1.pdf>
-[4] [5]
+(Font)              scaled to size 9.30756pt on input line 612.
 LaTeX Font Info:    Font shape `TU/Inconsolata(0)/b/n' will be
-(Font)              scaled to size 9.30756pt on input line 676.
+(Font)              scaled to size 9.30756pt on input line 614.
+[2]
+File: 046_ppc_files/figure-latex/unnamed-chunk-2-1.pdf Graphic file (type pdf)
+<use 046_ppc_files/figure-latex/unnamed-chunk-2-1.pdf>
+File: 046_ppc_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
+<use 046_ppc_files/figure-latex/unnamed-chunk-3-1.pdf>
+[3] [4]
+
+LaTeX Warning: Reference `mod-binom' on page 5 undefined on input line 697.
+
+[5]
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 9.0pt on input line 787.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 6.0pt on input line 787.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 5.0pt on input line 787.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 9.00082pt on input line 787.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 6.00055pt on input line 787.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 5.00046pt on input line 787.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 8.99904pt on input line 787.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 5.99936pt on input line 787.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 4.99947pt on input line 787.
+
+LaTeX Warning: Reference `inference-one-prop' on page 6 undefined on input line
+ 787.
+
 [6]
-File: 026_distr_coniugate_files/figure-latex/unnamed-chunk-14-1.pdf Graphic fil
-e (type pdf)
-<use 026_distr_coniugate_files/figure-latex/unnamed-chunk-14-1.pdf>
+File: 046_ppc_files/figure-latex/unnamed-chunk-11-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-11-1.pdf>
 [7] [8]
-File: 026_distr_coniugate_files/figure-latex/unnamed-chunk-17-1.pdf Graphic fil
-e (type pdf)
-<use 026_distr_coniugate_files/figure-latex/unnamed-chunk-17-1.pdf>
-[9] [10]
+File: 046_ppc_files/figure-latex/unnamed-chunk-13-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-13-1.pdf>
+File: 046_ppc_files/figure-latex/unnamed-chunk-14-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-14-1.pdf>
+[9]
+File: 046_ppc_files/figure-latex/unnamed-chunk-15-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-15-1.pdf>
+File: 046_ppc_files/figure-latex/unnamed-chunk-16-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-16-1.pdf>
+[10]
+Underfull \vbox (badness 10000) detected at line 977
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 977
+ []
+
+[11]
+File: 046_ppc_files/figure-latex/unnamed-chunk-18-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-18-1.pdf>
+File: 046_ppc_files/figure-latex/unnamed-chunk-19-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-19-1.pdf>
+[12] [13]
+File: 046_ppc_files/figure-latex/unnamed-chunk-26-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-26-1.pdf>
+[14]
+File: 046_ppc_files/figure-latex/unnamed-chunk-28-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-28-1.pdf>
+[15]
+File: 046_ppc_files/figure-latex/unnamed-chunk-29-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-29-1.pdf>
+File: 046_ppc_files/figure-latex/unnamed-chunk-30-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-30-1.pdf>
+[16]
+File: 046_ppc_files/figure-latex/unnamed-chunk-32-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-32-1.pdf>
+[17] [18]
+File: 046_ppc_files/figure-latex/unnamed-chunk-37-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-37-1.pdf>
+File: 046_ppc_files/figure-latex/unnamed-chunk-38-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-38-1.pdf>
+[19]
+File: 046_ppc_files/figure-latex/unnamed-chunk-39-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-39-1.pdf>
+File: 046_ppc_files/figure-latex/unnamed-chunk-40-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-40-1.pdf>
+[20]
+File: 046_ppc_files/figure-latex/unnamed-chunk-41-1.pdf Graphic file (type pdf)
+
+<use 046_ppc_files/figure-latex/unnamed-chunk-41-1.pdf>
+[21] [22]
 
 ******************************************************
 Stock height and width: 845.04684pt by 597.50787pt
@@ -2598,11 +2654,11 @@ Sidefoothsep and sidefootwidth: 7pt and 101pt
 Sidefootvsep and sidefootheight: 13.6pt and 594.32022pt
 ******************************************************
 
-[11
+[23
 
 
 
-] [12
+] [24
 
 
 ]
@@ -2636,7 +2692,7 @@ LaTeX Info: Redefining \ttfamily on input line 9.
 LaTeX Info: Redefining \rmfamily on input line 11.
 LaTeX Info: Redefining \sffamily on input line 11.
 LaTeX Info: Redefining \ttfamily on input line 11.
-) [13
+) [25
 
 ]
 
@@ -2659,17 +2715,17 @@ Sidefoothsep and sidefootwidth: 7pt and 101pt
 Sidefootvsep and sidefootheight: 13.6pt and 594.32022pt
 ******************************************************
 
-LaTeX Info: Redefining \rmfamily on input line 912.
-LaTeX Info: Redefining \sffamily on input line 912.
-LaTeX Info: Redefining \ttfamily on input line 912.
+LaTeX Info: Redefining \rmfamily on input line 1377.
+LaTeX Info: Redefining \sffamily on input line 1377.
+LaTeX Info: Redefining \ttfamily on input line 1377.
 
-Underfull \hbox (badness 10000) in paragraph at lines 916--918
+Underfull \hbox (badness 10000) in paragraph at lines 1381--1383
 
  []
 
-LaTeX Info: Redefining \rmfamily on input line 919.
-LaTeX Info: Redefining \sffamily on input line 919.
-LaTeX Info: Redefining \ttfamily on input line 919.
+LaTeX Info: Redefining \rmfamily on input line 1384.
+LaTeX Info: Redefining \sffamily on input line 1384.
+LaTeX Info: Redefining \ttfamily on input line 1384.
 The property list \polyglossia@langsetup contains the pairs (without outer
 braces):
 >  {latex/script}  =>  {latin}
@@ -2720,7 +2776,7 @@ braces):
 >  {english/babelname}  =>  {american}
 >  {english/localnumeral}  =>  {polyglossia@C@localnumeral}
 >  {english/Localnumeral}  =>  {polyglossia@C@localnumeral}.
-[14
+[26
 
 
 ]
@@ -2730,23 +2786,24 @@ braces):
 \tf@lof=\write9
 \openout9 = `DataScience.lof'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 924.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 924.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1389.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1389.
 (./DataScience.aux
 LaTeX Info: Redefining \rmfamily on input line 26.
 LaTeX Info: Redefining \sffamily on input line 26.
 LaTeX Info: Redefining \ttfamily on input line 26.
-LaTeX Info: Redefining \rmfamily on input line 98.
-LaTeX Info: Redefining \sffamily on input line 98.
-LaTeX Info: Redefining \ttfamily on input line 98.
-LaTeX Info: Redefining \rmfamily on input line 102.
-LaTeX Info: Redefining \sffamily on input line 102.
-LaTeX Info: Redefining \ttfamily on input line 102.
+LaTeX Info: Redefining \rmfamily on input line 80.
+LaTeX Info: Redefining \sffamily on input line 80.
+LaTeX Info: Redefining \ttfamily on input line 80.
+LaTeX Info: Redefining \rmfamily on input line 84.
+LaTeX Info: Redefining \sffamily on input line 84.
+LaTeX Info: Redefining \ttfamily on input line 84.
 )
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 924.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 924.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1389.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1389.
+
 Package rerunfilecheck Info: File `DataScience.out' has not changed.
-(rerunfilecheck)             Checksum: 46C3E80FB3BC426BDB0FEB12AB801EEA;2581.
+(rerunfilecheck)             Checksum: 9059B39ACDBDCAF6903C3555856C964F;2377.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -2758,12 +2815,12 @@ Package logreq Info: Writing requests to 'DataScience.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 47314 strings out of 479418
- 913357 string characters out of 5884586
- 1863397 words of memory out of 5000000
- 64016 multiletter control sequences out of 15000+600000
- 548302 words of font info for 96 fonts, out of 8000000 for 9000
+ 47236 strings out of 479418
+ 913022 string characters out of 5884586
+ 1863121 words of memory out of 5000000
+ 63921 multiletter control sequences out of 15000+600000
+ 548318 words of font info for 98 fonts, out of 8000000 for 9000
  1350 hyphenation exceptions out of 8191
- 75i,12n,121p,2172b,5610s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 75i,16n,121p,2172b,5078s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on DataScience.pdf (24 pages).
+Output written on DataScience.pdf (36 pages).
