@@ -35,7 +35,7 @@ L'inferenza bayesiana utilizza le seguenti distribuzioni di probabilità (o dens
 $$
 p(y) = \int_\theta p(y, \theta) d\theta = \int_\theta p(y \mid \theta) p(\theta) d\theta.
 $$
-- la *distribuzione a posteriori* $p(\theta \mid y)$ --- la nuova credenza a posteriori relativamente alla credibilità di ciascun valore $\theta$, dopo avere osservato i dati $Y = y$.
+- la *distribuzione a posteriori* $p(\theta \mid y)$ --- la nuova credenza relativamente alla credibilità di ciascun valore $\theta$, dopo avere osservato i dati $Y = y$.
 
 
 ### La regola di Bayes
