@@ -141,14 +141,20 @@ for (n in 0:4) {
   sum = sum + 3 * n
 }
 sum
-#> [1] 30
+```
+
+```
+## [1] 30
 ```
 \noindent
 In maniera equivalente, e più semplice, possiamo scrivere
 
 ```r
 sum(3 * (0:4))
-#> [1] 30
+```
+
+```
+## [1] 30
 ```
 
 Allo stesso modo, la notazione 
@@ -163,17 +169,21 @@ for (n in 1:4) {
   prod <- prod * 2 * n
 }
 prod
-#> [1] 384
+```
+
+```
+## [1] 384
 ```
 che si può scrivere, più semplicemente, come
 
 ```r
 prod(2 * (1:4))
-#> [1] 384
+```
+
+```
+## [1] 384
 ```
 
 In entrambi i casi precedenti, abbiamo sostituito le operazioni aritmetiche eseguite all'interno di un ciclo `for` con le stesse operazioni aritmetiche eseguite sui vettori elemento per elemento.
 
-
-le operazioni vettorializzate che $\R$ consente di svolgere.
 
