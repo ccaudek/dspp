@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="it" xml:lang="it">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capitolo 2 Distribuzioni a priori coniugate | Psicometria</title>
+  <meta name="description" content="Bookdown template based on LaTeX memoir class" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capitolo 2 Distribuzioni a priori coniugate | Psicometria" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://GitHubID.github.io/Repository/" />
+  
+  <meta property="og:description" content="Bookdown template based on LaTeX memoir class" />
+  <meta name="github-repo" content="GitHubID/Repository" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capitolo 2 Distribuzioni a priori coniugate | Psicometria" />
+  
+  <meta name="twitter:description" content="Bookdown template based on LaTeX memoir class" />
+  
+
+<meta name="author" content="Corrado Caudek" />
+
+
+<meta name="date" content="2021-10-31" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Title of the Memoir</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prefazione</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#la-psicologia-e-la-data-science"><i class="fa fa-check"></i>La psicologia e la Data Science</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#come-studiare"><i class="fa fa-check"></i>Come studiare</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#sviluppare-un-metodo-di-studio-efficace"><i class="fa fa-check"></i>Sviluppare un metodo di studio efficace</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="chapter-distr-coniugate.html"><a href="chapter-distr-coniugate.html"><i class="fa fa-check"></i><b>2</b> Distribuzioni a priori coniugate</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="chapter-distr-coniugate.html"><a href="chapter-distr-coniugate.html#il-denominatore-bayesiano"><i class="fa fa-check"></i><b>2.1</b> Il denominatore bayesiano</a></li>
+<li class="chapter" data-level="2.2" data-path="chapter-distr-coniugate.html"><a href="chapter-distr-coniugate.html#chapter-distr-priori-coniugate"><i class="fa fa-check"></i><b>2.2</b> Il modello Beta-Binomiale</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="chapter-distr-coniugate.html"><a href="chapter-distr-coniugate.html#parametri-della-distribuzione-beta"><i class="fa fa-check"></i><b>2.2.1</b> Parametri della distribuzione Beta</a></li>
+<li class="chapter" data-level="2.2.2" data-path="chapter-distr-coniugate.html"><a href="chapter-distr-coniugate.html#la-specificazione-della-distribuzione-a-posteriori"><i class="fa fa-check"></i><b>2.2.2</b> La specificazione della distribuzione a posteriori</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="chapter-distr-coniugate.html"><a href="chapter-distr-coniugate.html#principali-distribuzioni-coniugate"><i class="fa fa-check"></i><b>2.3</b> Principali distribuzioni coniugate</a></li>
+<li class="chapter" data-level="" data-path="chapter-distr-coniugate.html"><a href="chapter-distr-coniugate.html#considerazioni-conclusive"><i class="fa fa-check"></i>Considerazioni conclusive</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/GitHubID/Repository" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Psicometria</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="chapter-distr-coniugate" class="section level1" number="2">
+<h1><span class="header-section-number">Capitolo 2</span> Distribuzioni a priori coniugate</h1>
+<div class="Summary">
+<p>
+Obiettivo di questo Capitolo è fornire un esempio di derivazione della distribuzione a posteriori scegliendo quale distribuzione a priori una distribuzione coniugata. Esamineremo qui il caso più semplice, ovvero il modello Beta-Binomiale.
+</p>
+</div>
+<div id="il-denominatore-bayesiano" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Il denominatore bayesiano</h2>
+<p>In un problema bayesiano i dati <span class="math inline">\(y\)</span> provengono da una distribuzione <span class="math inline">\(p(y \mid \theta)\)</span> e al parametro <span class="math inline">\(\theta\)</span> viene assegnata una distribuzione a priori <span class="math inline">\(p(\theta)\)</span>.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> La scelta della distribuzione a priori ha importanti conseguenze di tipo computazionale. Infatti, a meno di non utilizzare particolari forme analitiche, risulta impossibile ottenere espressioni esplicite per la distribuzione a posteriori. Ciò dipende dall’espressione a denominatore della formula di Bayes
+<span class="math display">\[\begin{equation}
+p(\theta \mid y) = \frac{p(\theta) p(y \mid \theta)}{\int p(\theta) p(y \mid \theta) d \theta}
+\end{equation}\]</span>
+il cui calcolo non è eseguibile in modo analitico in forma chiusa.
+<!-- ^[Inoltre, i sommari della distribuzione a posteriori sono espressi come rapporto di integrali. Ad esempio, la media a posteriori di $\theta$ è data da -->
+<!-- $$ -->
+<!-- \E(\theta \mid y) = \frac{\int \theta \pi(\theta) p(y \mid \theta) d \theta}{\int \pi(\theta) p(y \mid \theta) d \theta}. -->
+<!-- $$ -->
+<!-- Il calcolo del valore atteso a posteriori richiede dunque la valutazione di due integrali, ciascuno dei quali non esprimibile in forma chiusa.]  -->
+Per non incorrere in problemi nel calcolo della distribuzione a posteriori vengono usate le distribuzioni provenienti da famiglie coniugate. Una distribuzione di probabilità a priori <span class="math inline">\(p(\theta)\)</span> si dice <em>coniugata</em> al modello usato se la distribuzione a priori e la distribuzione a posteriori hanno la stessa forma funzionale. Dunque, le due distribuzioni differiscono solo per il valore dei parametri.</p>
+<p>L’uso di distribuzioni a priori coniugate, pur consentendo di determinare la distribuzione a posteriori per via analitica, limita però di molto le possibili scelte del ricercatore. Nel senso che non è sempre sensato, dal punto di vista teorico, utilizzare distribuzioni a priori coniugate per la verosimiglianza per i parametri di interesse. Detto in altre parole: è possibile ottenere la distribuzione posteriore per via analitica solo per alcune specifiche combinazioni di distribuzione a priori e verosimiglianza, ma questo limita considerevolmente la flessibilità della modellizzazione.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
+</div>
+<div id="chapter-distr-priori-coniugate" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Il modello Beta-Binomiale</h2>
+<p>Per fare un esempio concreto, considereremo qui i dati di <span class="citation"><a href="#ref-zetschefuture2019" role="doc-biblioref">Zetsche, Bürkner, e Renneberg</a> (<a href="#ref-zetschefuture2019" role="doc-biblioref">2019</a>)</span> – per una descrizione di tale ricerca si veda l’Appendice <a href="#es-pratico-zetsche"><strong>??</strong></a>. Nel campione dei 30 partecipanti clinici di <span class="citation"><a href="#ref-zetschefuture2019" role="doc-biblioref">Zetsche, Bürkner, e Renneberg</a> (<a href="#ref-zetschefuture2019" role="doc-biblioref">2019</a>)</span>, le aspettative future di 23 partecipanti risultano distorte negativamente e quelle di 7 partecipanti risultano distorte positivamente. Nel seguito, indicheremo con <span class="math inline">\(\theta\)</span> la probabilità che le aspettative di un paziente clinico siano distorte negativamente. Ci poniamo il problema di ottenere una stima a posteriori di <span class="math inline">\(\theta\)</span> avendo osservato 23 “successi” in 30 prove.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
+<p>I dati osservati (<span class="math inline">\(y = 23\)</span>) possono essere considerati la manifestazione di una variabile casuale Bernoulliana. In tali circostanze, esiste una famiglia di distribuzioni che, qualora venga scelta per la distribuzione a priori, fa sì che la distribuzione a posteriori abbia la stessa forma funzionale della distribuzione a priori. Questo consente una soluzione analitica dell’integrale che compare a denominatore nella formula di Bayes. Nel caso presente, la famiglia di distribuzioni che ha questa proprietà è la distribuzione Beta.</p>
+<div id="parametri-della-distribuzione-beta" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Parametri della distribuzione Beta</h3>
+<p>Usando la distribuzione Beta è possibile esprimere diverse credenze iniziali rispetto a <span class="math inline">\(\theta\)</span>. La scelta di <span class="math inline">\(\alpha=4\)</span> e <span class="math inline">\(\beta=4\)</span> quali parametri per la distribuzione a priori Beta, ad esempio, corrisponde alla credenza a priori che associa all’evento “presenza di una aspettativa futura distorta negativamente” una grande incertezza: il valore 0.5 è il valore di <span class="math inline">\(\theta\)</span> più plausibile, ma anche gli altri valori del parametro (tranne gli estremi) sono ritenuti piuttosto plausibili. Questa distribuzione a priori esprime la credenza che sia egualmente probabile osservare una “aspettativa futura distorta negativamente” oppure non osservarla.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="chapter-distr-coniugate.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;bayesrules&quot;</span>)</span>
+<span id="cb1-2"><a href="chapter-distr-coniugate.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_beta</span>(<span class="at">alpha =</span> <span class="dv">4</span>, <span class="at">beta =</span> <span class="dv">4</span>, <span class="at">mean =</span> <span class="cn">TRUE</span>, <span class="at">mode =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="026_conjugate_families_files/figure-html/unnamed-chunk-2-1.png" width="465.984" style="display: block; margin: auto;" /></p>
+<p>Possiamo quantificare la nostra incertezza calcolando, con un grado di fiducia del 95%, la regione nella quale, in base a tale credenza a priori, si trova il valore del parametro. Per ottenere tale intervallo di credibilità a priori, usiamo la funzione <code>qbeta()</code> di <span class="math inline">\(\R\)</span>. In <code>qbeta()</code> i parametri <span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\beta\)</span> sono chiamati <code>shape1</code> e <code>shape2</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="chapter-distr-coniugate.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qbeta</span>(<span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>), <span class="at">shape1 =</span> <span class="dv">4</span>, <span class="at">shape2 =</span> <span class="dv">4</span>)</span>
+<span id="cb2-2"><a href="chapter-distr-coniugate.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.1840516 0.8159484</span></span></code></pre></div>
+<p>Se scegliamo <span class="math inline">\(\alpha=10\)</span> e <span class="math inline">\(\beta=10\)</span> supponiamo ancora a priori che sia tanto plausibile osservare come non osservare una “aspettativa futura distorta negativamente”.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="chapter-distr-coniugate.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_beta</span>(<span class="at">alpha =</span> <span class="dv">10</span>, <span class="at">beta =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="cn">TRUE</span>, <span class="at">mode =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="026_conjugate_families_files/figure-html/unnamed-chunk-4-1.png" width="465.984" style="display: block; margin: auto;" />
+Ma ora la nostra certezza a priori sul valore del parametro è maggiore, come indicato dall’intervallo al 95%:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="chapter-distr-coniugate.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qbeta</span>(<span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>), <span class="at">shape1 =</span> <span class="dv">10</span>, <span class="at">shape2 =</span> <span class="dv">10</span>)</span>
+<span id="cb4-2"><a href="chapter-distr-coniugate.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.2886432 0.7113568</span></span></code></pre></div>
+<p>Quale distribuzione a priori dobbiamo scegliere? In un problema concreto di analisi dei dati, la scelta della distribuzione a priori dipende dalle credenze a priori che vogliamo includere nell’analisi dei dati. Se non abbiamo alcuna informazione a priori, possiamo usare <span class="math inline">\(\alpha=1\)</span> e <span class="math inline">\(\beta=1\)</span>, che produce una distribuzione a priori uniforme. Questa, tuttavia, è una cattiva idea, se pensiamo al problema della riparametrizzazione. In tali circostanze è invece raccomandato usare una distribuzione a priori vagamente informativa, come <span class="math inline">\(\text{Beta}(2, 2)\)</span>.</p>
+<p>Nella successiva discussione, per fare un esempio, useremo quale distribuzione a priori una <span class="math inline">\(\mbox{Beta}(2, 10)\)</span>, ovvero:
+<span class="math display">\[
+p(\theta) = \frac{\Gamma(12)}{\Gamma(2)\Gamma(10)}\theta^{2-1} (1-\theta)^{10-1}.
+\]</span></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="chapter-distr-coniugate.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_beta</span>(<span class="at">alpha =</span> <span class="dv">2</span>, <span class="at">beta =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="cn">TRUE</span>, <span class="at">mode =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="026_conjugate_families_files/figure-html/unnamed-chunk-6-1.png" width="465.984" style="display: block; margin: auto;" />
+La <span class="math inline">\(\mbox{Beta}(2, 10)\)</span> esprime la credenza che <span class="math inline">\(\theta\)</span> assume valori <span class="math inline">\(&lt; 0.5\)</span>, con il valore più plausibile pari a cicrca 0.1.</p>
+</div>
+<div id="la-specificazione-della-distribuzione-a-posteriori" class="section level3" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> La specificazione della distribuzione a posteriori</h3>
+<p>Una volta scelta una distribuzione a priori di tipo Beta, i cui parametri rispecchiano le nostre credenze a priori su <span class="math inline">\(\theta\)</span>, la distribuzione a posteriori viene specificata dalla formula di Bayes:
+<span class="math display">\[
+\text{distribuzione a posteriori} = \frac{\text{verosimiglianza}\cdot\text{distribuzione a priori}}{\text{verosimiglianza marginale}}.
+\]</span>
+Nel caso presente abbiamo
+<span class="math display">\[
+p(\theta \mid n=30, y=23) = \frac{\Big[\binom{30}{23}\theta^{23}(1-\theta)^{30-23}\Big]\Big[\frac{\Gamma(12)}{\Gamma(2)\Gamma(10)}\theta^{2-1} (1-\theta)^{10-1}\Big]}{p(y = 23)},
+\]</span>
+laddove <span class="math inline">\(p(y = 23)\)</span> è <span class="math inline">\(\int_0^1p(y = 23 \mid n = 30, \theta)\)</span>. Questo termine, ovvero la verosimiglianza marginale, è una costante di normalizzazione che fa sì che l’area sottesa alla densità a posteriori sia unitaria.
+<!-- (si veda il Paragrafo \@ref(verosim-marginale)). -->
+Raccogliendo tutte le costanti dell’equazione precedente abbiamo:
+<span class="math display">\[
+p(\theta \mid n=30, y=23) =\left[\frac{\binom{30}{23}\frac{\Gamma(12)}{\Gamma(2)\Gamma(10)}}{p(y = 23)}\right] \theta^{23}(1-\theta)^{7}\theta^{1} (1-\theta)^{9}.
+\]</span>
+Se ignoriamo il termine costante all’interno della parentesi quadra otteniamo:
+<span class="math display">\[\begin{align}
+p(\theta \mid n=30, y=23) &amp;\propto \theta^{23}(1-\theta)^{7}\theta^{1} (1-\theta)^{9}\notag\\
+&amp;\propto \theta^{24}(1-\theta)^{16}.\notag
+\end{align}\]</span>
+Il termine di destra dell’equazione precedente corrisponde ad una distribuzione Beta di parametri <span class="math inline">\(\alpha=25\)</span> e <span class="math inline">\(\beta = 17\)</span>. Il risultato così ottenuto individua il <em>kernel</em> della distribuzione a posteriori, ovvero la distribuzione a posteriori non normalizzata. Infatti, l’area sotto la curva (AUC) non è 1:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="chapter-distr-coniugate.html#cb6-1" aria-hidden="true" tabindex="-1"></a>postFun <span class="ot">&lt;-</span> <span class="cf">function</span>(theta) {</span>
+<span id="cb6-2"><a href="chapter-distr-coniugate.html#cb6-2" aria-hidden="true" tabindex="-1"></a>  theta<span class="sc">^</span><span class="dv">24</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> theta)<span class="sc">^</span><span class="dv">16</span></span>
+<span id="cb6-3"><a href="chapter-distr-coniugate.html#cb6-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-4"><a href="chapter-distr-coniugate.html#cb6-4" aria-hidden="true" tabindex="-1"></a>(AUC <span class="ot">&lt;-</span> <span class="fu">integrate</span>(postFun, <span class="at">lower =</span> <span class="dv">0</span>, <span class="at">upper =</span> <span class="dv">1</span>)<span class="sc">$</span>value)</span>
+<span id="cb6-5"><a href="chapter-distr-coniugate.html#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3.880577e-13</span></span></code></pre></div>
+<p>
+Per ottenere una distribuzione di densità è necessario includere una costante di normalizzazione. In base alla definizione della distribuzione Beta, tale costante è
+<span class="math display">\[
+\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)} = \frac{\Gamma(42)}{\Gamma(25)\Gamma(17)}.
+\]</span>
+Questo termine non è altro che l’integrale della distribuzione a posteriori non normalizzata che è stato calcolato in precedenza:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="chapter-distr-coniugate.html#cb7-1" aria-hidden="true" tabindex="-1"></a>postFun <span class="ot">&lt;-</span> <span class="cf">function</span>(theta) {</span>
+<span id="cb7-2"><a href="chapter-distr-coniugate.html#cb7-2" aria-hidden="true" tabindex="-1"></a>  theta<span class="sc">^</span><span class="dv">24</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> theta)<span class="sc">^</span><span class="dv">16</span> <span class="sc">/</span> AUC</span>
+<span id="cb7-3"><a href="chapter-distr-coniugate.html#cb7-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-4"><a href="chapter-distr-coniugate.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">integrate</span>(postFun, <span class="at">lower =</span> <span class="dv">0</span>, <span class="at">upper =</span> <span class="dv">1</span>)<span class="sc">$</span>value</span>
+<span id="cb7-5"><a href="chapter-distr-coniugate.html#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<p>
+Infatti, l’area sottesa alla funzione
+<span class="math display">\[
+p(\theta \mid n=30, y=23) =  \frac{\Gamma(42)}{\Gamma(25)\Gamma(17)}\theta^{25-1}(1-\theta)^{17-1} = \text{Beta}(y+a, n-y+b)
+\]</span>
+
+somma ad 1, ovvero,</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="chapter-distr-coniugate.html#cb8-1" aria-hidden="true" tabindex="-1"></a>postFunNor <span class="ot">&lt;-</span> <span class="cf">function</span>(theta) {</span>
+<span id="cb8-2"><a href="chapter-distr-coniugate.html#cb8-2" aria-hidden="true" tabindex="-1"></a>  (<span class="fu">factorial</span>(<span class="dv">42</span> <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> (<span class="fu">factorial</span>(<span class="dv">25</span> <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">factorial</span>(<span class="dv">17</span> <span class="sc">-</span> <span class="dv">1</span>))) <span class="sc">*</span></span>
+<span id="cb8-3"><a href="chapter-distr-coniugate.html#cb8-3" aria-hidden="true" tabindex="-1"></a>    theta<span class="sc">^</span>(<span class="dv">25</span> <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> theta)<span class="sc">^</span>(<span class="dv">17</span> <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb8-4"><a href="chapter-distr-coniugate.html#cb8-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-5"><a href="chapter-distr-coniugate.html#cb8-5" aria-hidden="true" tabindex="-1"></a>(AUC2 <span class="ot">&lt;-</span> <span class="fu">integrate</span>(postFunNor, <span class="at">lower =</span> <span class="dv">0</span>, <span class="at">upper =</span> <span class="dv">1</span>)<span class="sc">$</span>value)</span>
+<span id="cb8-6"><a href="chapter-distr-coniugate.html#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<!-- \noindent -->
+<!-- In maniera equivalente, è possibile usare la formula della verosimiglianza marginale. Svolgendo i calcoli in R e mediante la \@ref(eq:constant-norm-beta-binom) otteniamo -->
+<!-- ```{r} -->
+<!-- B <- function(a, b) { -->
+<!--   (gamma(a) * gamma(b)) / gamma(a + b) -->
+<!-- } -->
+<!-- y <- 23 -->
+<!-- n <- 30 -->
+<!-- a <- 2 -->
+<!-- b <- 10 -->
+<!-- # marginal likelihood -->
+<!-- K <- choose(n, y) * B(y + a, n - y + b) / B(a, b)  -->
+<!-- postFunNor3 <- function(theta) { -->
+<!--   (dbinom(y, n, theta) * dbeta(theta, a, b)) / K   -->
+<!-- } -->
+<!-- (AUC3 <- integrate(postFunNor3, lower = 0, upper = 1)$value) -->
+<!-- ``` -->
+<p>Possiamo quindi concludere dicendo che siamo partiti da una verosimiglianza <span class="math inline">\(\Bin(n = 30, y = 23 \mid \theta)\)</span> e, moltiplicando la verosimiglianza per la distribuzione a priori <span class="math inline">\(\theta \sim \text{Beta}(2, 10)\)</span>, abbiamo ottenuto la distribuzione a posteriori <span class="math inline">\(p(\theta \mid n, y) \sim \text{Beta}(25, 17)\)</span>. Questo è un esempio di analisi coniugata: la distribuzione a posteriori del parametro ha la stessa forma funzionale della distribuzione a priori. La presente combinazione di verosimiglianza e distribuzione a priori è chiamata caso coniugato <em>Beta-Binomiale</em> ed è descritto dal seguente teorema.</p>
+<div class="theorem">
+<p><span id="thm:beta-binom" class="theorem"><strong>Teorema 2.1  </strong></span>Sia data la funzione di verosimiglianza <span class="math inline">\(\Bin(n, y \mid \theta)\)</span> e sia <span class="math inline">\(\mathrm{Beta}(\alpha, \beta)\)</span> una distribuzione a priori. In tali circostanze, la distribuzione a posteriori del parametro <span class="math inline">\(\theta\)</span> sarà una distribuzione <span class="math inline">\(\mathrm{Beta}(\alpha + y, \beta + n - y)\)</span>.</p>
+</div>
+<p>
+In particolare, possiamo calcolare qual è il valore atteso a posteriori di <span class="math inline">\(\theta\)</span>. Essendo <span class="math inline">\(\E[\text{Beta}(\alpha, \beta)] = \frac{\alpha}{\alpha + \beta}\)</span>, il valore atteso a posteriori di <span class="math inline">\(\theta\)</span> sarà
+<span class="math display" id="eq:ev-post-beta-bin-1">\[\begin{equation}
+\E_{\text{post}} [\mathrm{Beta}(\alpha + y, \beta + n - y)] = \frac{\alpha + y}{\alpha + \beta +n}.
+\tag{2.1}
+\end{equation}\]</span></p>
+<!-- Riscrivendo la \@ref(eq:ev-post-beta-bin-1) nel modo seguente -->
+<!-- \begin{align} -->
+<!-- \E_{\text{post}} [\Beta(\alpha + y, \beta + n - y)] &= \frac{\alpha + y}{\alpha + \beta +n}\notag\\  -->
+<!-- &= \frac{a+b}{a+b+n} \cdot \frac{a}{a+b} + \frac{n}{a+b+n} \cdot \frac{y}{n} -->
+<!-- (\#eq:ev-post-beta-bin) -->
+<!-- \end{align} -->
+<!-- possiamo vedere che il valore atteso a posteriori è una media pesata fra il valore atteso a priori $\left( \frac{\alpha}{\alpha+\beta}\right)$ e la frequenze di successi osservata $\left(\frac{y}{n}\right)$. I pesi sono $\left( \frac{\alpha+\beta}{\alpha+\beta+n}\right)$ e $\left( \frac{n}{\alpha+\beta+n}\right)$; quindi, quando $n$ è grande rispetto ad $\alpha + \beta$, conta molto quanto abbiamo osservato e poco l'aspettativa a priori; viceversa, quando $n$ è piccolo rispetto a $\alpha + \beta$, le osservazioni contano poco rispetto all'aspettativa a priori. -->
+<!-- Queste osservazioni ci possono far capire come scegliere i parametri $\alpha$ e $\beta$: se vogliamo assumere totale ignoranza, la scelta coerente è $\alpha = \beta = 1$ (ogni valore di $\theta$ è ugualmente probabile); se invece abbiamo delle aspettative, possiamo scegliere $\alpha$ in modo che sia uguale al valore atteso a priori, mentre $\alpha + \beta$ esprime l’importanza che diamo all'informazione a priori: maggiore è il valore di $\alpha + \beta$, più dati servono per allontanare la distribuzione a priori da quella a posteriori. Se $n$ è abbastanza grande, la distribuzione a posteriori è molto poco influenzata dalla distribuzione a priori, a meno di scelte estreme. -->
+<div class="example">
+<p><span id="exm:unlabeled-div-1" class="example"><strong>Esempio 2.1  </strong></span>Per i dati esaminati, usando la <a href="chapter-distr-coniugate.html#thm:beta-binom">2.1</a> possiamo ottenere l’intervallo di credibilità a posteriori del 95% per il parametro <span class="math inline">\(\theta\)</span> come:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="chapter-distr-coniugate.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qbeta</span>(<span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>), <span class="at">shape1 =</span> <span class="dv">25</span>, <span class="at">shape2 =</span> <span class="dv">17</span>)</span>
+<span id="cb9-2"><a href="chapter-distr-coniugate.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.4450478 0.7368320</span></span></code></pre></div>
+<p>
+La media della distribuzione a posteriori è</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="chapter-distr-coniugate.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dv">25</span> <span class="sc">/</span> (<span class="dv">25</span> <span class="sc">+</span> <span class="dv">17</span>)</span>
+<span id="cb10-2"><a href="chapter-distr-coniugate.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.5952381</span></span></code></pre></div>
+<p>
+La moda della distribuzione a posteriori è</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="chapter-distr-coniugate.html#cb11-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">25</span> <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> (<span class="dv">25</span> <span class="sc">+</span> <span class="dv">17</span> <span class="sc">-</span> <span class="dv">2</span>)</span>
+<span id="cb11-2"><a href="chapter-distr-coniugate.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.6</span></span></code></pre></div>
+<p>
+La deviazione standard della distribuzione a priori è</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="chapter-distr-coniugate.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>((<span class="dv">25</span> <span class="sc">*</span> <span class="dv">17</span>) <span class="sc">/</span> ((<span class="dv">25</span> <span class="sc">+</span> <span class="dv">17</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> (<span class="dv">25</span> <span class="sc">+</span> <span class="dv">17</span> <span class="sc">+</span> <span class="dv">1</span>)))</span>
+<span id="cb12-2"><a href="chapter-distr-coniugate.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.0748533</span></span></code></pre></div>
+</div>
+<div class="example">
+<p><span id="exm:unlabeled-div-2" class="example"><strong>Esempio 2.2  </strong></span>La funzione <span class="math inline">\(\R\)</span> <code>plot_beta_binomial()</code> del pacchetto <code>bayesrules</code> descrive in maniera grafica l’aggiornamento bayesiano Beta-Binomiale:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="chapter-distr-coniugate.html#cb13-1" aria-hidden="true" tabindex="-1"></a>bayesrules<span class="sc">::</span><span class="fu">plot_beta_binomial</span>(</span>
+<span id="cb13-2"><a href="chapter-distr-coniugate.html#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="dv">2</span>, <span class="at">beta =</span> <span class="dv">10</span>, <span class="at">y =</span> <span class="dv">23</span>, <span class="at">n =</span> <span class="dv">30</span></span>
+<span id="cb13-3"><a href="chapter-distr-coniugate.html#cb13-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="026_conjugate_families_files/figure-html/unnamed-chunk-14-1.png" width="465.984" style="display: block; margin: auto;" />
+Un sommario delle distribuzioni a priori e a posteriori si ottiene usando la funzione <code>summarize_beta_binomial()</code>:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="chapter-distr-coniugate.html#cb14-1" aria-hidden="true" tabindex="-1"></a>bayesrules<span class="sc">:::</span><span class="fu">summarize_beta_binomial</span>(</span>
+<span id="cb14-2"><a href="chapter-distr-coniugate.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="dv">2</span>, <span class="at">beta =</span> <span class="dv">10</span>, <span class="at">y =</span> <span class="dv">23</span>, <span class="at">n =</span> <span class="dv">30</span></span>
+<span id="cb14-3"><a href="chapter-distr-coniugate.html#cb14-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-4"><a href="chapter-distr-coniugate.html#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       model alpha beta      mean mode         var        sd</span></span>
+<span id="cb14-5"><a href="chapter-distr-coniugate.html#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     prior     2   10 0.1666667  0.1 0.010683761 0.1033623</span></span>
+<span id="cb14-6"><a href="chapter-distr-coniugate.html#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 posterior    25   17 0.5952381  0.6 0.005603016 0.0748533</span></span></code></pre></div>
+</div>
+<div class="example">
+<p><span id="exm:unlabeled-div-3" class="example"><strong>Esempio 2.3  </strong></span>Consideriamo un altro esempio discusso da <span class="citation"><a href="#ref-Johnson2022bayesrules" role="doc-biblioref">Johnson, Ott, e Dogucu</a> (<a href="#ref-Johnson2022bayesrules" role="doc-biblioref">2022</a>)</span>. Nel 1963, Stanley Milgram presentò una ricerca sulla propensione delle persone a obbedire agli ordini di figure di autorità, anche quando tali ordini possono danneggiare altre persone <span class="citation">(<a href="#ref-milgram1963behavioral" role="doc-biblioref">Milgram 1963</a>)</span>. Nell’articolo, Milgram descrive lo studio come</p>
+<blockquote>
+<p>consist[ing] of ordering a naive subject to administer electric shock to a victim. A simulated shock generator is used, with 30 clearly marked voltage levels that range from IS to 450 volts. The instrument bears verbal designations that range from Slight Shock to Danger: Severe Shock. The responses of the victim, who is a trained confederate of the experimenter, are standardized. The orders to administer shocks are given to the naive subject in the context of a `learning experiment’ ostensibly set up to study the effects of punishment on memory. As the experiment proceeds the naive subject is commanded to administer increasingly more intense shocks to the victim, even to the point of reaching the level marked Danger: Severe Shock.</p>
+</blockquote>
+<p>
+All’insaputa del partecipante, gli shock elettrici erano falsi e l’attore stava solo fingendo di provare il dolore dello shock.</p>
+<p><span class="citation"><a href="#ref-Johnson2022bayesrules" role="doc-biblioref">Johnson, Ott, e Dogucu</a> (<a href="#ref-Johnson2022bayesrules" role="doc-biblioref">2022</a>)</span> fanno inferenza sui risultati dello studio di Milgram mediante il modello Beta-Binomiale. Il parametro di interesse è <span class="math inline">\(\theta\)</span>, la probabiltà che una persona obbedisca all’autorità (in questo caso, somministrando lo shock più severo), anche se ciò significa recare danno ad altri. <span class="citation"><a href="#ref-Johnson2022bayesrules" role="doc-biblioref">Johnson, Ott, e Dogucu</a> (<a href="#ref-Johnson2022bayesrules" role="doc-biblioref">2022</a>)</span> ipotizzano che, prima di raccogliere dati, le credenze di Milgram relative a <span class="math inline">\(\theta\)</span> possano essere rappresentate mediante una <span class="math inline">\(\text{Beta}(1, 10)\)</span>. Sia <span class="math inline">\(y = 26\)</span> il numero di soggetti che, sui 40 partecipanti allo studio, aveva accettato di infliggere lo shock più severo. Assumendo che ogni partecipante si comporti indipendentemente dagli altri, possiamo modellare la dipendenza di <span class="math inline">\(y\)</span> da <span class="math inline">\(\theta\)</span> usando la distribuzione binomiale. Giungiamo dunque al seguente modello bayesiano Beta-Binomiale:
+<span class="math display">\[\begin{align}
+y \mid \theta &amp; \sim \Bin(n = 40, \theta) \notag\\
+\theta &amp; \sim \text{Beta}(1, 10) \; . \notag
+\end{align}\]</span>
+Usando le funzioni di <code>bayesrules</code> possiamo facilmente calcolare i parametri e le proprietà della distribuzione a posteriori:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="chapter-distr-coniugate.html#cb15-1" aria-hidden="true" tabindex="-1"></a>bayesrules<span class="sc">:::</span><span class="fu">summarize_beta_binomial</span>(</span>
+<span id="cb15-2"><a href="chapter-distr-coniugate.html#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">beta =</span> <span class="dv">10</span>, <span class="at">y =</span> <span class="dv">26</span>, <span class="at">n =</span> <span class="dv">40</span></span>
+<span id="cb15-3"><a href="chapter-distr-coniugate.html#cb15-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-4"><a href="chapter-distr-coniugate.html#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       model alpha beta       mean      mode         var</span></span>
+<span id="cb15-5"><a href="chapter-distr-coniugate.html#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     prior     1   10 0.09090909 0.0000000 0.006887052</span></span>
+<span id="cb15-6"><a href="chapter-distr-coniugate.html#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 posterior    27   24 0.52941176 0.5306122 0.004791057</span></span>
+<span id="cb15-7"><a href="chapter-distr-coniugate.html#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           sd</span></span>
+<span id="cb15-8"><a href="chapter-distr-coniugate.html#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 0.08298827</span></span>
+<span id="cb15-9"><a href="chapter-distr-coniugate.html#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 0.06921746</span></span></code></pre></div>
+<p>
+Il processo di aggiornamento bayesiano è descritto dalla figura seguente:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="chapter-distr-coniugate.html#cb16-1" aria-hidden="true" tabindex="-1"></a>bayesrules<span class="sc">:::</span><span class="fu">plot_beta_binomial</span>(</span>
+<span id="cb16-2"><a href="chapter-distr-coniugate.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">beta =</span> <span class="dv">10</span>, <span class="at">y =</span> <span class="dv">26</span>, <span class="at">n =</span> <span class="dv">40</span></span>
+<span id="cb16-3"><a href="chapter-distr-coniugate.html#cb16-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="026_conjugate_families_files/figure-html/unnamed-chunk-17-1.png" width="465.984" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+</div>
+<div id="principali-distribuzioni-coniugate" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Principali distribuzioni coniugate</h2>
+<p>Esistono molte altre combinazioni simili di verosimiglianza e distribuzione a priori le quali producono una distribuzione a posteriori che ha la stessa densità della distribuzione a priori. Sono elencate qui sotto le più note coniugazioni tra modelli statistici e distribuzioni a priori.</p>
+<ul>
+<li><p>Per il modello Normale-Normale <span class="math inline">\(\mathcal{N}(\mu, \sigma^2_0)\)</span>, la distribizione iniziale è <span class="math inline">\(\mathcal{N}(\mu_0, \tau^2)\)</span> e la distribuzione finale è <span class="math inline">\(\mathcal{N}\left(\frac{\mu_0\sigma^2 + \bar{y}n\tau^2}{\sigma^2 + n\tau^2}, \frac{\sigma^2\tau^2}{\sigma^2 + n\tau^2} \right)\)</span>.</p></li>
+<li><p>Per il modello Poisson-gamma <span class="math inline">\(\text{Po}(\theta)\)</span>, la distribizione iniziale è <span class="math inline">\(\Gamma(\lambda, \delta)\)</span> e la distribuzione finale è <span class="math inline">\(\Gamma(\lambda + n \bar{y}, \delta +n)\)</span>.</p></li>
+<li><p>Per il modello esponenziale <span class="math inline">\(\text{Exp}(\theta)\)</span>, la distribizione iniziale è <span class="math inline">\(\Gamma(\lambda, \delta)\)</span> e la distribuzione finale è <span class="math inline">\(\Gamma(\lambda + n, \delta +n\bar{y})\)</span>.</p></li>
+<li><p>Per il modello uniforme-Pareto <span class="math inline">\(\text{U}(0, \theta)\)</span>, la distribizione iniziale è <span class="math inline">\(\text{Pa}(\alpha, \varepsilon)\)</span> e la distribuzione finale è <span class="math inline">\(\text{Pa}(\alpha + n, \max(y_{(n)}, \varepsilon))\)</span>.</p></li>
+</ul>
+</div>
+<div id="considerazioni-conclusive" class="section level2 unnumbered">
+<h2>Considerazioni conclusive</h2>
+<p>Lo scopo di questa discussione è stato quello di mostrare come sia possibile combinare le nostre conoscenze a priori (espresse nei termini di una densità di probabilità) con le evidenze fornite dai dati (espresse nei termini della funzione di verosimiglianza), così da determinare, mediante il teorema di Bayes, una distribuzione a posteriori, la quale condensa l’incertezza che abbiamo sul parametro <span class="math inline">\(\theta\)</span>. Per illustrare tale problema, abbiamo considerato una situazione nella quale <span class="math inline">\(\theta\)</span> corrisponde alla probabilità di successo in una sequenza di prove Bernoulliane. Abbiamo visto come, in queste circostanze, sia ragionevole esprimere le nostre credenze a priori mediante la densità Beta, con opportuni parametri. L’inferenza rispetto ad una proporzione rappresenta un caso particolare, ovvero un caso nel quale la distribuzione a priori è Beta e la verosimiglianza è Binomiale. In tali circostanze, la distribuzione a posteriori diventa una distribuzione Beta – questo è il cosiddetto modello Beta-Binomiale. Dato che utilizza una distribuzione a priori coniugata, dunque, il modello Beta-Binomiale rende possibile la determinazione analitica dei parametri della distribuzione a posteriori.</p>
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div class="csl-entry">
+Horn, Samantha, e George Loewenstein. 2021. <span>«Underestimating Learning by Doing»</span>. <em>Available at SSRN 3941441</em>.
+</div>
+<div class="csl-entry">
+Johnson, Alicia A., Miles Ott, e Mine Dogucu. 2022. <em><span>Bayes Rules! An Introduction to Bayesian Modeling with R</span></em>. CRC Press.
+</div>
+<div class="csl-entry">
+Milgram, Stanley. 1963. <span>«Behavioral study of obedience.»</span>. <em>The Journal of Abnormal and Social Psychology</em> 67 (4): 371–78.
+</div>
+<div class="csl-entry">
+Zetsche, Ulrike, Paul-Christian Bürkner, e Babette Renneberg. 2019. <span>«Future expectations in clinical depression: <span>Biased</span> or realistic?»</span>. <em>Journal of Abnormal Psychology</em> 128 (7): 678–88.
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Johnson2022bayesrules" class="csl-entry">
+Johnson, Alicia A., Miles Ott, e Mine Dogucu. 2022. <em><span>Bayes Rules! An Introduction to Bayesian Modeling with R</span></em>. CRC Press.
+</div>
+<div id="ref-milgram1963behavioral" class="csl-entry">
+Milgram, Stanley. 1963. <span>«Behavioral study of obedience.»</span>. <em>The Journal of Abnormal and Social Psychology</em> 67 (4): 371–78.
+</div>
+<div id="ref-zetschefuture2019" class="csl-entry">
+Zetsche, Ulrike, Paul-Christian Bürkner, e Babette Renneberg. 2019. <span>«Future expectations in clinical depression: <span>Biased</span> or realistic?»</span>. <em>Journal of Abnormal Psychology</em> 128 (7): 678–88.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="2">
+<li id="fn2"><p>La scelta della distribuzione a priori è l’aspetto cruciale dell’impostazione bayesiana in quanto essa è lo strumento attraverso cui le informazioni extra-sperimentali vengono inserite nel procedimento induttivo. La scelta della distribuzione a priori che meglio rappresenta le credenze iniziali implica che agenti diversi possono specificare sia le stesse distribuzioni di probabilità ma con diversi valori dei parametri, sia diverse distribuzioni di probabilità. Da ciò deriva una componente soggettiva.<a href="chapter-distr-coniugate.html#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Per questa ragione, la strada principale che viene seguita nella modellistica bayesiana è quella che porta a determinare la distribuzione a posteriori non per via analitica, ma bensì mediante metodi numerici. La simulazione fornisce dunque la strategia generale del calcolo bayesiano. A questo fine vengono usati i metodi di campionamento detti Monte-Carlo Markov-Chain (MCMC). Tali metodi costituiscono una potente e praticabile alternativa per la costruzione della distribuzione a posteriori per modelli complessi e consentono di decidere quali distribuzioni a priori e quali distribuzioni di verosimiglianza usare sulla base di considerazioni teoriche soltanto, senza dovere preoccuparsi di altri vincoli. Dato che è basata su metodi computazionalmente intensivi, la stima numerica della funzione a posteriori può essere svolta soltanto mediante software. In anni recenti i metodi bayesiani di analisi dei dati sono diventati sempre più popolari proprio perché la potenza di calcolo necessaria per svolgere tali calcoli è ora alla portata di tutti. Questo non era vero solo pochi decenni fa.<a href="chapter-distr-coniugate.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>Si noti un punto importante: dire semplicemente che la stima di <span class="math inline">\(\theta\)</span> è uguale a 23/30 = 0.77 ci porta ad ignorare il livello di incertezza associato a tale stima. Infatti, lo stesso valore (0.77) si può ottenere come 23/30, o 230/300, o 2300/3000, o 23000/30000, ma l’incertezza di una stima pari a 0.77 è molto diversa nei quattro casi. Quando si traggono conclusioni dai dati è invece necessario quantificare il livello della nostra incertezza relativamente alla stima del parametro di interesse (nel caso presente, <span class="math inline">\(\theta\)</span>). Lo strumento ci consente di quantificare tale incertezza è la distribizione a posteriori <span class="math inline">\(p(\theta \mid y)\)</span>. Ovviamente, <span class="math inline">\(p(\theta \mid y)\)</span> assume forme molto diverse nei quattro casi descritti sopra.<a href="chapter-distr-coniugate.html#fnref4" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["DataScience.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
