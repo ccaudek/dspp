@@ -50,6 +50,46 @@
 % Strikeout
 
 % Necessary for code chunks
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 
 % Listings package
 
@@ -281,7 +321,7 @@
 
 \author{Corrado Caudek}
 
-\date{2021-10-31}
+\date{2021-11-05}
 
 
 % Include headers (preamble.tex) here
@@ -384,23 +424,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\usepackage{amsthm}
-\newtheorem{theorem}{Teorema}[chapter]
-\newtheorem{lemma}{Lemma}[chapter]
-\newtheorem{corollary}{Corollario}[chapter]
-\newtheorem{proposition}{Proposizione}[chapter]
-\newtheorem{conjecture}{Congettura}[chapter]
-\theoremstyle{definition}
-\newtheorem{definition}{Definizione}[chapter]
-\theoremstyle{definition}
-\newtheorem{example}{Esempio}[chapter]
-\theoremstyle{definition}
-\newtheorem{exercise}{Exercizio}[chapter]
-\theoremstyle{definition}
-\newtheorem{hypothesis}{Hypothesis}[chapter]
-\theoremstyle{remark}
-\newtheorem*{remark}{Osservazione}
-\newtheorem*{solution}{Soluzione}
 \begin{document}
 \frontmatter
 
@@ -519,182 +542,128 @@ Febbraio 2022
 
 \mainmatter
 
-\hypertarget{chapter-prob-cond}{%
-\chapter{Probabilità condizionata}\label{chapter-prob-cond}}
+\hypertarget{chapter-input-output}{%
+\section{Input/Output}\label{chapter-input-output}}
 
-L'attribuzione di una probabilità ad un evento è sempre condizionata dalle conoscenze che abbiamo a disposizione. Per un determinato stato di conoscenze, attribuiamo ad un dato evento una certa probabilità di verificarsi; ma se il nostro stato di conoscenze cambia, allora cambierà
-anche la probabilità che attribuiamo all'evento in questione. Per esempio, posiamo chiederci quale sia la probabilità che Mario Rossi superi l'esame di Psicometria nel primo appello del presente anno accademico. In assenza di altre informazioni, la migliore stima di tale probabilità
-è data dalla proporzione di studenti che hanno superato l'esame di Psicometria nel corrispondente appello dei precedenti anni accademici. Ma se sappiamo che Mario Rossi è particolarmente motivato ed ha studiato molto, allora la probabilità sarà sicuramente più alta.
+I dati raccolti dallo psicologo sono contenuti in file aventi formati
+diversi: solo testo, CSV, Excel, eccetera. \texttt{R} prevede diverse funzioni
+di importazione dei dati. Esamineremo qui la funzione \texttt{read.table()} per
+l'importazione di dati in formato solo testo, ma funzioni analoghe
+possono essere usate per molti altri formati possibili.
 
-\hypertarget{probabilituxe0-condizionata-su-altri-eventi}{%
-\section{Probabilità condizionata su altri eventi}\label{probabilituxe0-condizionata-su-altri-eventi}}
+\hypertarget{la-funzione-read.table}{%
+\subsection{\texorpdfstring{La funzione \texttt{read.table()}}{La funzione read.table()}}\label{la-funzione-read.table}}
 
-La probabilità condizionata è una componente essenziale del ragionamento scientifico dato che chiarisce come sia possibile incorporare le evidenze disponibili, in maniera logica e coerente, nella nostra conoscenza del mondo. Infatti, si può pensare che tutte le probabilità siano probabilità condizionate, anche se l'evento condizionante non è sempre esplicitamente menzionato. Consideriamo il seguente problema.
+Ci sono tanti modi per importare un file dal nostro computer. \texttt{R} permette di utilizzare delle funzioni che sono già nella libreria di base, oppure possiamo utilizzare delle funzioni specifiche, a seconda del tipo di file da importare, che sono contenute in pacchetti aggiuntivi. Per leggere i dati da file in \texttt{R} è conveniente
+preliminarmente generare un file di dati in formato ASCII, disponendoli
+come si farebbe in una matrice di dati, e mettere questo file nella
+cartella di lavoro corrente. Fatto questo, si può utilizzare la funzione
+\texttt{read.table()} presente nella libreria di base per leggere l'intero
+dataset. Se la prima riga del file contiene l'intestazione delle
+variabili, allora \texttt{read.table("my\_file.txt",\ header\ =\ TRUE)}
+interpreterà la prima riga del file come una riga dove sono contenuti i
+nomi delle variabili, assegnando ciascun nome alle variabili del data
+frame:
 
-\begin{example}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mydata }\OtherTok{\textless{}{-}} \FunctionTok{read.table}\NormalTok{(}\StringTok{"my\_file.txt"}\NormalTok{, }\AttributeTok{header =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-Supponiamo che lo screening per la diagnosi precoce del tumore mammario si avvalga di test che sono accurati al 90\%, nel senso che il 90\% delle donne con cancro e il 90\% delle donne senza cancro saranno classificate correttamente. Supponiamo che l'1\% delle donne sottoposte allo screening abbia effettivamente il cancro al seno. Ci chiediamo: qual è la probabilità che una donna scelta casualmente abbia una mammografia positiva e, se ce l'ha, qual è la probabilità che abbia davvero il cancro?
+In alternativa, si può impiegare la funzione \texttt{read.csv()}, che è adatta
+a leggere dati salvati in \texttt{.csv}. Utilizzando altre funzioni, si possono
+leggere in R  i dati contenuti in file aventi formati diversi da quelli
+considerati qui, quali Excel, SPSS, ecc.
 
-Per risolvere questo problema, supponiamo che il test in questione venga somministrato ad un grande campione di donne, diciamo a 1000 donne. Di queste 1000 donne, 10 (ovvero, l'1\%) hanno il cancro al seno. Per queste 10 donne, il test darà un risultato positivo in 9 casi (ovvero, nel 90\% dei casi). Per le rimanenti 990 donne che non hanno il cancro al seno, il test darà un risultato positivo in 99 casi (se la probabilità di un vero positivo è del 90\%, la probabilità di un falso positivo è del 10\%). Questa situazione è rappresentata nella figura \ref{fig:mammografia}. Combinando questi due risultati, vediamo che il test dà un risultato positivo per 9 donne che hanno effettivamente il cancro al seno e per 99 donne che non ce l'hanno, per un totale di 108 risultati positivi. Dunque, la probabilità di ottenere un risultato positivo al test è \(\frac{108}{1000}\) = 11\%. Ma delle 108 donne che hanno ottenuto un risultato positivo al test, solo 9 hanno il cancro al seno. Dunque, la probabilità di avere il cancro, dato un risultato positivo al test, è pari a \(\frac{9}{108}\) = 8\%.
+\hypertarget{file-di-dati-forniti-da-r}{%
+\subsection{File di dati forniti da R}\label{file-di-dati-forniti-da-r}}
 
-\begin{figure}
+In \texttt{R} esistono comunque oltre 50 insiemi di dati contenuti nel package
+\texttt{base} e altri sono disponibili in altri packages. Per vedere l'elenco
+degli insiemi di dati disponibili nel package \texttt{base} basta usare
+l'istruzione \texttt{data()}; per caricare un particolare insieme di dati, ad
+esempio \texttt{cars}, basta utilizzare l'istruzione
 
-{\centering \includegraphics[width=0.9\linewidth]{images/mammografia} 
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(cars)}
+\end{Highlighting}
+\end{Shaded}
 
-}
+Nella maggior parte dei casi questo corrisponde a caricare un oggetto,
+solitamente un data.frame dello stesso nome: per l'esempio considerato
+si avrebbe un data frame di nome \texttt{cars}.
 
-\caption{Rappresentazione ad albero che riporta le frequenze attese dei risultati di una mammografia in un campione di 1,000 donne.}\label{fig:mammografia}
-\end{figure}
+\hypertarget{esportazione-di-un-file}{%
+\section{Esportazione di un file}\label{esportazione-di-un-file}}
 
-\end{example}
+Per esportare un data.frame in formato \texttt{.csv} possiamo scrivere il
+seguente codice
 
-Nell'esercizio precedente, la probabilità dell'evento ``ottenere un risultato positivo al test'' è una probabilità non condizionata, mentre la probabilità dell'evento ``avere il cancro al seno, dato che il test ha dato un risultato positivo'' è una probabilità condizionata. In termini generali, la probabilità condizionata \(P(A \mid B)\) rappresenta la probabilità che si verifichi l'evento \(A\) sapendo che si è verificato l'evento \(B\) (oppure: la probabilità di \(A\) in una prova valida solo se si verifica anche \(B\)). Ciò ci conduce alla seguente definizione.
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{write.csv}\NormalTok{(df\_esempio, }\AttributeTok{file =} \StringTok{"esempio.csv"}\NormalTok{, }\AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{definition}
-\protect\hypertarget{def:prob-cond}{}{\label{def:prob-cond} }Dato un qualsiasi evento \(A\), si chiama \emph{probabilità condizionata} di
-\(A\) dato \(B\) il numero
-\begin{equation}
-P(A \mid B) = \frac{P(A \cap B)}{P(B)}, \quad \text{con}\, P(B) > 0,
-\label{eq:probcond}
-\end{equation}
-dove \(P(A\cap B)\) è la probabilità congiunta dei
-due eventi, ovvero la probabilità che si verifichino entrambi.
-\end{definition}
-
-In alcuni casi può essere conveniente leggere al contrario la~\ref{def:prob-cond} e utilizzarla per calcolare la probabilità dell'intersezione di due eventi. Per esempio se conosciamo la probabilità dell'evento \(B\) e la probabilità condizionata di \(A\) su \(B\), otteniamo
-\begin{equation}
-P(A \cap B) = P(B)P(A \mid B),
-\label{eq:probcondinv}
-\end{equation}
 \noindent
-mentre se conosciamo la probabilità dell'evento \(A\) e la probabilità condizionata di \(B\) su \(A\), otteniamo
-\[
-P(A \cap B) = P(A)P(B \mid A).
-\]
+dove \texttt{df\_esempio} è il data.frame da salvare e \texttt{esempio.csv} è il file
+che verrà salvato all'interno della nostra cartellla di lavoro.
 
-\begin{example}
-Da un mazzo di 52 carte (13 carte per ciascuno dei 4 semi) ne viene estratta 1 in modo casuale. Qual è la probabilità che esca una figura di cuori? Sapendo che la carta estratta ha il seme di cuori, qual è la probabilità che il valore numerico della carta sia 7, 8 o 9?
+\hypertarget{pacchetto-rio}{%
+\subsection{\texorpdfstring{Pacchetto \texttt{rio}}{Pacchetto rio}}\label{pacchetto-rio}}
 
-Ci sono 13 carte di cuori, dunque la risposta alla prima domanda è 1/4. Per rispondere alla seconda domanda consideriamo solo le 13 carte di cuori; la probabilità cercata è dunque 3/13.
-\end{example}
+Un'alternativa più semplice è fornita dalle funzioni fornite dal pacchetto \texttt{rio}. Per importare i dati da un file in qualsiasi formato si usa
 
-\hypertarget{la-fallacia-del-pubblico-ministero}{%
-\subsection{La fallacia del pubblico ministero}\label{la-fallacia-del-pubblico-ministero}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_data\_frame }\OtherTok{\textless{}{-}}\NormalTok{ rio}\SpecialCharTok{::}\FunctionTok{import}\NormalTok{(}\StringTok{"my\_file.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-Un errore comune che si commette è quello di credere che \(P(A \mid B)\) sia uguale a \(P(B \mid A)\). Tale fallacia ha particolare risalto in ambito forense tanto che è conosciuta con il nome di ``fallacia del procuratore'' (\emph{prosecutor's fallacy}). In essa, una piccola probabilità dell'evidenza, data l'innocenza, viene erroneamente interpretata come la probabilità dell'innocenza, data l'evidenza.
+Per esportare i dati in un file avente qualsiasi formato si usa invece
 
-Consideriamo il caso di un esame del DNA. Un esperto forense potrebbe affermare, ad esempio, che ``se l'imputato è innocente, c'è solo una possibilità su un miliardo che vi sia una corrispondenza tra il suo DNA e il DNA trovato sulla scena del crimine''. Ma talvolta questa probabilità è erroneamente interpretata come avesse il seguente significato: ``date le prove del DNA, c'è solo una possibilità su un miliardo che l'imputato sia innocente''.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rio}\SpecialCharTok{::}\FunctionTok{export}\NormalTok{(my\_data\_frame, }\StringTok{"my\_file.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-Le considerazioni precedenti risultano più chiare se facciamo nuovamente riferimento all'esercizio sul tumore mammario descritto sopra. In tale esercizio abbiamo visto come la probabilità di cancro dato un risultato positivo al test sia uguale a 0.08. Tale probabilità è molto diversa dalla probabilità di un risultato positivo al test data la presenza del cancro. Infatti, questa seconda
-probabilità è uguale a 0.90 ed è descritta nel problema come una delle
-caratteristiche del test in questione.
+\hypertarget{dove-sono-i-miei-file}{%
+\subsection{Dove sono i miei file?}\label{dove-sono-i-miei-file}}
 
-\hypertarget{legge-della-probabilituxe0-composta}{%
-\section{Legge della probabilità composta}\label{legge-della-probabilituxe0-composta}}
+Quello che abbiamo detto finora, a proposito dell'importazione ed esportazione dei file, si riferisce a file che si trovano nella cartella di lavoro (\emph{working directory}). Ma non sempre ci troviamo in questa situazione, il che è una buona cosa, perché se dobbiamo gestire un progetto anche leggermente complesso è sempre una buona idea salvare i file che usiamo in cartelle diverse. Per esempio, possiamo usare una cartella chiamata \texttt{psicometria} dove salviamo tutto il materiale di questo insegnamento. Nella cartella \texttt{psicometria} ci potrà essere una cartella chiamata \texttt{scripts} dove salveremo gli script con il codice R utilizzato per i vari esercizi, e una cartella chiamata \texttt{data} dove possiamo salvare i dati. Questa organizzazione minimale ci pone, però, difronte ad un problema: i dati che vogliamo caricare in R non si trovano nella cartella dove sono contenuti gli script. Quando importiamo un file di dati dobbiamo dunque specificare il percorso che identifica la posizione del file sul nostro computer.
 
-Il teorema della probabilità composta deriva dal concetto di probabilità condizionata per cui la probabilità che si verifichino due eventi \(A_i\) e \(A_j\) è pari alla probabilità di uno dei due eventi moltiplicato con la probabilità dell'altro evento condizionato al verificarsi del primo.
+Questo problema può essere risolto in due modi: speficicando l'indirizzo assoluto del file, o l'indirizzo relativo. Specificare l'indirizzo assoluto di un file comporta una serie di svantaggi. Il più grande è che non sarà possibile utilizzare quell'istruzione su una macchina diversa. Dunque, è molto più conveniente specificare l'indirizzo dei file in modo relativo. Ma relativo rispetto a cosa? Rispetto alla \emph{working directory} che definirà l'origine del nostro percorso.
 
-L'equazione \eqref{eq:probcondinv} si estende al caso di \(n\) eventi \(A_1, \dots, A_n\) nella forma seguente:
-\begin{equation}
-\begin{split}
-P(A_1 \cap A_2 \cap \dots\cap A_n) = {}& P(A_1)P(A_2 \mid A_1)P(A_3 \mid A_1 \cap A_2) \dots\\
- & P(A_n \mid A_1 \cap A_2 \cap \dots \cap A_{n-1})
-\end{split}
-\label{eq:probcomposte}
-\end{equation}
-la quale esprime in forma generale la legge della probabilità composta.
+È ovvio che la \emph{working directory} cambia da progetto a progetto. Infatti, per ciascun progetto dobbiamo specificare una diversa \emph{working directory}. Per esempio, potremmo avere un progetto relativo all'insegnamento di Psicometria e un progetto relativo alla prova finale.
 
-\begin{example}
-Da un'urna contenente 6 palline bianche e 4 nere si estrae una pallina
-per volta, senza reintrodurla nell'urna. Indichiamo con \(B_i\) l'evento:
-``esce una pallina bianca alla \(i\)-esima estrazione'' e con \(N_i\)
-l'estrazione di una pallina nera. L'evento: ``escono due palline bianche
-nelle prime due estrazioni'' è rappresentato dalla intersezione
-\(\{B_1 \cap B_2\}\) e la sua probabilità vale, per la~\eqref{eq:probcondinv}
-\[
-P(B_1 \cap B_2) = P(B_1)P(B_2 \mid B_1).
-\]
-\(P(B_1)\) vale 6/10, perché nella prima estrazione \(\Omega\) è costituito da 10 elementi: 6 palline bianche e 4 nere. La probabilità condizionata \(P(B_2 \mid B_1)\) vale 5/9, perché nella seconda estrazione, se è verificato l'evento \(B_1\), lo spazio campionario consiste di 5 palline bianche e 4 nere. Si ricava
-pertanto:
-\[
-  P(B_1 \cap B_2) = \frac{6}{10} \cdot \frac{5}{9} = \frac{1}{3}.
-\]
-In modo analogo si ha che
-\[
-P(N_1 \cap N_2) = P(N_1)P(N_2 \mid N_1) = \frac{4}{10} \cdot \frac{3}{9} = \frac{4}{30}.
-\]
+Per organizzaere il lavoro in questo modo, si procede come segue. Supponiamo di creare una cartella chiamata \texttt{psicometria} che contiene, al suo interno, le cartelle \texttt{scripts} e \texttt{data}:
 
-Se l'esperimento consiste nell'estrazione successiva di 3 palline, la probabilità che queste siano tutte bianche vale, per la \eqref{eq:probcomposte}:
-\[
-P(B_1 \cap B_2 \cap B_3)=P(B_1)P(B_2 \mid B_1)P(B_3 \mid B_1 \cap B_2),
-\]
-dove la probabilità \(P(B_3 \mid B_1 \cap B_2)\) si calcola supponendo che si sia verificato l'evento condizionante \(\{B_1 \cap B_2\}\). Lo spazio campionario per questa probabilità condizionata è costituito da 4 palline bianche e 4 nere, per cui \(P(B_3 \mid B_1 \cap B_2) = 1/2\) e quindi:
-\[
-P (B_1 \cap B_2 \cap B_3) = \frac{6}{10}\cdot\frac{5}{9} \cdot\frac{4}{8}  = \frac{1}{6}.
-\]
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{psicometria}\SpecialCharTok{/}
+\NormalTok{  ├── data}
+\NormalTok{  ├── scripts}
+\end{Highlighting}
+\end{Shaded}
 
-La probabilità dell'estrazione di tre palline nere è invece:
-\[
-\begin{aligned}
-P(N_1 \cap N_2 \cap N_3) &= P(N_1)P(N_2 \mid N_1)P(N_3 \mid N_1 \cap N_2)\notag\\ 
-&= \frac{4}{10} \cdot \frac{3}{9} \cdot \frac{2}{8} = \frac{1}{30}.\notag
-\end{aligned}
-\]
-\end{example}
+Supponiamo che queste cartelle contengano i file che ho specificato sopra.
 
-\hypertarget{lindipendendenza-stocastica}{%
-\section{L'indipendendenza stocastica}\label{lindipendendenza-stocastica}}
+Chiudiamo RStudio, se è aperto, e lo riapriamo di nuovo. Dal menu selezioniamo \texttt{File\ -\textgreater{}\ New\ Project...} In questo modo si aprirà un menu che ci chiederà, tra le altre cose, se vogliamo creare un nuovo progetto (\texttt{New\ project}). Selezioniamo quell'opzione e navighiamo fino alla cartella \texttt{psicometria} e selezioniamo \texttt{open}. Questo creerà un file chiamato \texttt{psicometria.Rproj} nella cartella \texttt{psicometria}.
 
-Un concetto molto importante per le applicazioni statistiche della probabilità è quello dell'indipendenza stocastica. La definizione \eqref{eq:probcond} esprime il concetto intuitivo di indipendenza di un evento da un altro, nel senso che il verificarsi di \(A\) non influisce sulla probabilità del verificarsi di \(B\), ovvero non la condiziona. Infatti, per la definizione \eqref{eq:probcond} di probabilità condizionata, si ha che, se \(A\) e \(B\) sono due eventi indipendenti, risulta:
-\[
-P(A \mid B) = \frac{P(A)P(B)}{P(B)} = P(A).\notag
-\]
-Possiamo dunque dire che due eventi \(A\) e \(B\) sono indipendenti se
-\[
-\begin{split}
-P(A \mid B) &= P(A), \\
-P(B \mid A) &= P(B).
-\end{split}
-\]
+Chiudiamo ora RStudio. Se vogliamo accedere al progetto ``psicometria'', che abbiamo appena creato, dobbiamo semplicemente cliccare sul file \texttt{psicometria.Rproj}. Questo aprirà RStudio e farà in modo che la \emph{working directory} coincida con la cartalla \texttt{psicometria}. Ogni volta che vogliamo lavorare sui dati del progetto ``psicometria'' chiudiamo dunque RStudio (se è già aperto) e lo riapriamo cliccando sul file \texttt{psicometria.Rproj}.
 
-\begin{example}
-Nel lancio di due dadi non truccati, si considerino gli eventi: \emph{A} = \{esce un 1 o un 2 nel primo lancio\} e \emph{B} = \{il punteggio totale è 8\}. Gli eventi \emph{A} e \emph{B} sono indipendenti?
-\end{example}
+A questo punto possiamo definire l'indirizzo dei file in modo relativo -- ovvero, relativo alla cartella \texttt{psicometria}. Per fare questo usiamo le funzionalità del pacchetto \texttt{here}. Supponiamo di volere caricare un file di dati che si chiama \texttt{dati\_depressione.txt} e si trova nella cartella \texttt{psicometria/data}. Per importare i dati (dopo avere caricato i pacchetti \texttt{rio} e \texttt{here}) useremo l'istruzione seguente:
 
-Rappresentiamo qui sotto lo spazio campionario dell'esperimento casuale.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rio}\SpecialCharTok{::}\FunctionTok{import}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"dati\_depressione.txt"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.5\linewidth]{images/sampling-space-dice} 
-
-}
-
-\caption{Rappresentazione dello spazio campionario dei risultati dell'esperimento casuale corrispondente al lancio di due dadi bilanciati. Sono evidenziati gli eventi elementari che costituiscono l'evento A: esce un 1 o un 2 nel primo lancio.}\label{fig:sampling-space-dice}
-\end{figure}
-
-Gli eventi \emph{A} e \emph{B} non sono statisticamente indipendenti. Infatti, le loro probabilità valgono \emph{P}(A) = 12/36 e \emph{P}(B) = 5/36 e la probabilità della loro intersezione è
-\[
-P(A \cap B) = 1/36 = 3/108 \neq P(A)P(B) = 5/108.
-\]
-
-Si noti che il concetto di indipendenza è del tutto differente da quello di incompatibilità. Due eventi \emph{A} e \emph{B} incompatibili (per i quali si ha \(A \cap B = \emptyset\)) sono statisticamente dipendenti, poiché il verificarsi dell'uno esclude il verificarsi dell'altro: \(P(A \cap B)=0 \neq P(A)P(B)\).
-
-Si noti inoltre che, se due eventi con probabilità non nulla sono statisticamente indipendenti, la legge delle probabilità totali espressa dalla~\eqref{eq:probunione}
-\begin{equation}
-P(A \cup B) = P(A) + P(B) - P(A \cap B)
-\label{eq:probunione}
-\end{equation}
-\noindent
-si modifica nella relazione seguente:
-\begin{equation}
-P(A \cup B) = P(A) + P(B) - P(A)P(B).
-\end{equation}
-
-\hypertarget{considerazioni-conclusive}{%
-\section*{Considerazioni conclusive}\label{considerazioni-conclusive}}
-\addcontentsline{toc}{section}{Considerazioni conclusive}
-
-La probabilità condizionata è importante perché ci fornisce uno strumento per precisare il concetto di indipendenza statistica. Una delle domande più importanti delle analisi statistiche è infatti quella che si chiede se due variabili sono associate tra loro oppure no. In questo Capitolo abbiamo discusso il concetto di indipendenza (come contrapposto al concetto di associazione -- si veda il Capitolo @ref(\#chapter-descript)). In seguito vedremo come sia possibile fare inferenza sull'associazione tra variabili.
+In altre parole, così facendo specifichiamo il percorso relativo del file \texttt{dati\_depressione.txt} (in quanto l'origine corrisponde alla cartella \texttt{psicometria}). L'istruzione precedente significa che, partendo dalla cartella che coincide con la \emph{working directory} (ovvero, \texttt{psicometria}) ci spostiamo nella cartella \texttt{data} e lì dentro troviamo il file chiamato \texttt{dati\_depressione.txt}.
 
 
 % Bibliography

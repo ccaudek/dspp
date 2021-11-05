@@ -21,8 +21,11 @@ interpreterà la prima riga del file come una riga dove sono contenuti i
 nomi delle variabili, assegnando ciascun nome alle variabili del data
 frame:
 
-    mydata <- read.table("my_file.txt", header = TRUE)
 
+```r
+mydata <- read.table("my_file.txt", header = TRUE)
+```
+    
 In alternativa, si può impiegare la funzione `read.csv()`, che è adatta
 a leggere dati salvati in `.csv`. Utilizzando altre funzioni, si possono
 leggere in R  i dati contenuti in file aventi formati diversi da quelli
@@ -36,7 +39,10 @@ degli insiemi di dati disponibili nel package `base` basta usare
 l'istruzione `data()`; per caricare un particolare insieme di dati, ad
 esempio `cars`, basta utilizzare l'istruzione
 
-    data(cars)
+
+```r
+data(cars)
+```
 
 Nella maggior parte dei casi questo corrisponde a caricare un oggetto,
 solitamente un data.frame dello stesso nome: per l'esempio considerato
@@ -47,9 +53,12 @@ si avrebbe un data frame di nome `cars`.
 Per esportare un data.frame in formato `.csv` possiamo scrivere il
 seguente codice
 
-````
+
+```r
 write.csv(df_esempio, file = "esempio.csv", row.names = FALSE)
-````
+```
+
+\noindent
 dove `df_esempio` è il data.frame da salvare e `esempio.csv` è il file
 che verrà salvato all'interno della nostra cartellla di lavoro.
 
@@ -72,11 +81,11 @@ rio::export(my_data_frame, "my_file.csv")
 
 ### Dove sono i miei file?
 
-Quello che abbiamo detto finora, a proposito dell'importazione ed esportazione dei file, si riferisce a file che si trovano nella cartella di lavoro (_working directory_). Ma non sempre ci troviamo in questa situazione, il che è anche una buona cosa, perché se dobbiamo gestire un progetto anche leggermente complesso è sempre una buona idea salvare i file che usiamo in cartelle diverse. Per esempio, possiamo usare una cartella chiamata `psicometria` dove salviamo tutto il materiale di questo insegnamento. Nella cartella `psicometria` ci potrà essere una cartella chiamata `scripts` dove salveremo gli script con il codice R utilizzato per i vari esercizi, e una cartella chiamata `data` dove possiamo salvare i dati. Questa organizzazione minimale ci pone, però, difronte ad un problema: i dati che vogliamo caricare in R non si trovano più nella cartella dove sono contenuti gli script. Quando importiamo un file di dati dobbiamo dunque specificare il percorso che identifica la posizione sul nostro computer del file che ci interessa.
+Quello che abbiamo detto finora, a proposito dell'importazione ed esportazione dei file, si riferisce a file che si trovano nella cartella di lavoro (_working directory_). Ma non sempre ci troviamo in questa situazione, il che è una buona cosa, perché se dobbiamo gestire un progetto anche leggermente complesso è sempre una buona idea salvare i file che usiamo in cartelle diverse. Per esempio, possiamo usare una cartella chiamata `psicometria` dove salviamo tutto il materiale di questo insegnamento. Nella cartella `psicometria` ci potrà essere una cartella chiamata `scripts` dove salveremo gli script con il codice R utilizzato per i vari esercizi, e una cartella chiamata `data` dove possiamo salvare i dati. Questa organizzazione minimale ci pone, però, difronte ad un problema: i dati che vogliamo caricare in R non si trovano nella cartella dove sono contenuti gli script. Quando importiamo un file di dati dobbiamo dunque specificare il percorso che identifica la posizione del file sul nostro computer.
 
-Questo problema può essere risolto in due modi: speficicando l'inridizzo del file in modo assoluto o relativo. Specificare l'indirizzo di un file in modo assoluto ha una serie di limiti. Il più grande è che non sarà possibile utilizzare quell'istruzione su una macchina diversa.  Dunque, è molto più conveniente specificare l'indirizzo dei file in modo relativo.  Ma relativo rispetto a cosa?  Rispetto alla _working directory_ che definirà l'origine del nostro percorso.
+Questo problema può essere risolto in due modi: speficicando l'indirizzo assoluto del file, o l'indirizzo relativo. Specificare l'indirizzo assoluto di un file comporta una serie di svantaggi. Il più grande è che non sarà possibile utilizzare quell'istruzione su una macchina diversa.  Dunque, è molto più conveniente specificare l'indirizzo dei file in modo relativo.  Ma relativo rispetto a cosa?  Rispetto alla _working directory_ che definirà l'origine del nostro percorso.
 
-Ma è facile immaginare che progetti diversi possano avere diverse  _working directory_. Infatti le cose stanno proprio in questo modo: per ciascun progetto dobbiamo specificare una diversa _working directory_.  Per esempio, potremmo avere un progetto relativo all'insegnamento di Psicometria e un progetto relativo alla prova finale.
+È ovvio che la _working directory_ cambia da progetto a progetto. Infatti, per ciascun progetto dobbiamo specificare una diversa _working directory_.  Per esempio, potremmo avere un progetto relativo all'insegnamento di Psicometria e un progetto relativo alla prova finale.
 
 Per organizzaere il lavoro in questo modo, si procede come segue. Supponiamo di creare una cartella chiamata `psicometria` che contiene, al suo interno, le cartelle `scripts` e `data`: 
 
@@ -87,20 +96,20 @@ psicometria/
   ├── scripts
 ```
 
-Queste cartelle conterranno i file che ho specificato sopra.  
+Supponiamo che queste cartelle contengano i file che ho specificato sopra.  
 
-Chiudiamo RStudio, se è aperto e lo riapriamo di nuovo.  Dal menu selezioniamo `File -> New Project...` Questo aprirà un altro menu che ci chiederà, tra le altre cose se vogliamo creare un nuovo progetto (`New project`). Selezioniamo quell'opzione e navighiamo fino alla cartella `psicometria` e selezioniamo `open`. Questo creerà un file chiamato `psicometria.Rproj` nella cartella `psicometria`.
+Chiudiamo RStudio, se è aperto, e lo riapriamo di nuovo.  Dal menu selezioniamo `File -> New Project...` In questo modo si aprirà un menu che ci chiederà, tra le altre cose, se vogliamo creare un nuovo progetto (`New project`). Selezioniamo quell'opzione e navighiamo fino alla cartella `psicometria` e selezioniamo `open`. Questo creerà un file chiamato `psicometria.Rproj` nella cartella `psicometria`.
 
-Chiudiamo RStudio.  Se vogliamo accedere al progetto "psicometria" dobbiamo cliccare sul file `psicometria.Rproj`. Questo aprirà RStudio e farà in modo che la _working directory_ coincida con la cartalla `psicometria`. Ogni volta che vogliamo lavorare sui dati del progetto "psicometria" dobbiamo chiudere RStudio (se è già aperto) e riaprirlo cliccando sul file `psicometria.Rproj`.
+Chiudiamo ora RStudio.  Se vogliamo accedere al progetto "psicometria", che abbiamo appena creato, dobbiamo semplicemente cliccare sul file `psicometria.Rproj`. Questo aprirà RStudio e farà in modo che la _working directory_ coincida con la cartalla `psicometria`. Ogni volta che vogliamo lavorare sui dati del progetto "psicometria" chiudiamo dunque RStudio (se è già aperto) e lo riapriamo cliccando sul file `psicometria.Rproj`.
 
-A questo punto possiamo definire l'indirizzo dei file in modo relativo -- relativo alla cartella `psicometria`. Per fare questo usiamo le funzionalità del pacchetto `here`. Supponiamo di volere caricare un file di dati che si chiama `dati_depressione.txt` e si trova nella cartella `data` contenuta nella cartella `psicometria`. Per importare questi dati (dopo avere caricato i pacchetti `rio` e `here`) useremo l'istruzione seguente:
+A questo punto possiamo definire l'indirizzo dei file in modo relativo -- ovvero, relativo alla cartella `psicometria`. Per fare questo usiamo le funzionalità del pacchetto `here`. Supponiamo di volere caricare un file di dati che si chiama `dati_depressione.txt` e si trova nella cartella `psicometria/data`. Per importare i dati (dopo avere caricato i pacchetti `rio` e `here`) useremo l'istruzione seguente:
 
 
 ```r
 rio::import(here("data", "dati_depressione.txt"))
 ```
 
-In altre parole, così facendo specifichiamo il percorso relativo del file `dati_depressione.txt`.  L'istruzione precedente significa che, partendo dalla cartella che coincide con la _working directory_ dobbiamo spostarci nella cartella `data` e lì dentro troviamo il file chiamato `dati_depressione.txt`.
+In altre parole, così facendo specifichiamo il percorso relativo del file `dati_depressione.txt` (in quanto l'origine corrisponde alla cartella `psicometria`).  L'istruzione precedente significa che, partendo dalla cartella che coincide con la _working directory_ (ovvero, `psicometria`) ci spostiamo nella cartella `data` e lì dentro troviamo il file chiamato `dati_depressione.txt`.
 
 
 

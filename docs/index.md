@@ -1,7 +1,7 @@
 --- 
 title: "Psicometria"
 author: "Corrado Caudek"
-date: "2021-10-31"
+date: "2021-11-05"
 url: https://GitHubID.github.io/Repository/
 github-repo: GitHubID/Repository
 description: "Bookdown template based on LaTeX memoir class"
