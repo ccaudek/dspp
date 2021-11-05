@@ -21,7 +21,6 @@ interpreterà la prima riga del file come una riga dove sono contenuti i
 nomi delle variabili, assegnando ciascun nome alle variabili del data
 frame:
 
-
 ```r
 mydata <- read.table("my_file.txt", header = TRUE)
 ```
@@ -39,7 +38,6 @@ degli insiemi di dati disponibili nel package `base` basta usare
 l'istruzione `data()`; per caricare un particolare insieme di dati, ad
 esempio `cars`, basta utilizzare l'istruzione
 
-
 ```r
 data(cars)
 ```
@@ -52,7 +50,6 @@ si avrebbe un data frame di nome `cars`.
 
 Per esportare un data.frame in formato `.csv` possiamo scrivere il
 seguente codice
-
 
 ```r
 write.csv(df_esempio, file = "esempio.csv", row.names = FALSE)
@@ -67,13 +64,10 @@ che verrà salvato all'interno della nostra cartellla di lavoro.
 
 Un'alternativa più semplice è fornita dalle funzioni fornite dal pacchetto `rio`.  Per importare i dati da un file in qualsiasi formato si usa
 
-
 ```r
 my_data_frame <- rio::import("my_file.csv")
 ```
-
 Per esportare i dati in un file avente qualsiasi formato si usa invece
-
 
 ```r
 rio::export(my_data_frame, "my_file.csv")
@@ -89,26 +83,21 @@ Questo problema può essere risolto in due modi: speficicando l'indirizzo assolu
 
 Per organizzaere il lavoro in questo modo, si procede come segue. Supponiamo di creare una cartella chiamata `psicometria` che contiene, al suo interno, le cartelle `scripts` e `data`: 
 
-
 ```r
 psicometria/
   ├── data
   ├── scripts
 ```
 
-Supponiamo che queste cartelle contengano i file che ho specificato sopra.  
-
-Chiudiamo RStudio, se è aperto, e lo riapriamo di nuovo.  Dal menu selezioniamo `File -> New Project...` In questo modo si aprirà un menu che ci chiederà, tra le altre cose, se vogliamo creare un nuovo progetto (`New project`). Selezioniamo quell'opzione e navighiamo fino alla cartella `psicometria` e selezioniamo `open`. Questo creerà un file chiamato `psicometria.Rproj` nella cartella `psicometria`.
+Supponiamo che queste cartelle contengano i file che ho specificato sopra. Chiudiamo RStudio, se è aperto, e lo riapriamo di nuovo.  Dal menu selezioniamo `File -> New Project...` In questo modo si aprirà un menu che ci chiederà, tra le altre cose, se vogliamo creare un nuovo progetto (`New project`). Selezioniamo quell'opzione e navighiamo fino alla cartella `psicometria` e selezioniamo `open`. Questo creerà un file chiamato `psicometria.Rproj` nella cartella `psicometria`.
 
 Chiudiamo ora RStudio.  Se vogliamo accedere al progetto "psicometria", che abbiamo appena creato, dobbiamo semplicemente cliccare sul file `psicometria.Rproj`. Questo aprirà RStudio e farà in modo che la _working directory_ coincida con la cartalla `psicometria`. Ogni volta che vogliamo lavorare sui dati del progetto "psicometria" chiudiamo dunque RStudio (se è già aperto) e lo riapriamo cliccando sul file `psicometria.Rproj`.
 
 A questo punto possiamo definire l'indirizzo dei file in modo relativo -- ovvero, relativo alla cartella `psicometria`. Per fare questo usiamo le funzionalità del pacchetto `here`. Supponiamo di volere caricare un file di dati che si chiama `dati_depressione.txt` e si trova nella cartella `psicometria/data`. Per importare i dati (dopo avere caricato i pacchetti `rio` e `here`) useremo l'istruzione seguente:
 
-
 ```r
 rio::import(here("data", "dati_depressione.txt"))
 ```
-
 In altre parole, così facendo specifichiamo il percorso relativo del file `dati_depressione.txt` (in quanto l'origine corrisponde alla cartella `psicometria`).  L'istruzione precedente significa che, partendo dalla cartella che coincide con la _working directory_ (ovvero, `psicometria`) ci spostiamo nella cartella `data` e lì dentro troviamo il file chiamato `dati_depressione.txt`.
 
 
