@@ -27,7 +27,7 @@ mydata <- read.table("my_file.txt", header = TRUE)
     
 In alternativa, si può impiegare la funzione `read.csv()`, che è adatta
 a leggere dati salvati in `.csv`. Utilizzando altre funzioni, si possono
-leggere in R  i dati contenuti in file aventi formati diversi da quelli
+leggere in `R` i dati contenuti in file aventi formati diversi da quelli
 considerati qui, quali Excel, SPSS, ecc.
 
 ### File di dati forniti da R
@@ -46,7 +46,7 @@ Nella maggior parte dei casi questo corrisponde a caricare un oggetto,
 solitamente un data.frame dello stesso nome: per l'esempio considerato
 si avrebbe un data frame di nome `cars`.
 
-## Esportazione di un file
+### Esportazione di un file
 
 Per esportare un data.frame in formato `.csv` possiamo scrivere il
 seguente codice
@@ -54,7 +54,6 @@ seguente codice
 ```r
 write.csv(df_esempio, file = "esempio.csv", row.names = FALSE)
 ```
-
 \noindent
 dove `df_esempio` è il data.frame da salvare e `esempio.csv` è il file
 che verrà salvato all'interno della nostra cartellla di lavoro.
