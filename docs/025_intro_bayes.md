@@ -19,24 +19,21 @@ informazioni fornite dai dati.
 
 <!-- L'inferenza Bayesiana è un approccio all'inferenza statistica in cui le probabilità non sono interpretate come frequenze, proporzioni o concetti analoghi, ma piuttosto come il grado di fiducia che una singola persona attribuisce al verificarsi di un evento sulla base delle proprie conoscenze e delle informazioni di cui dispone.  -->
 
-
 ## Inferenza bayesiana come un problema inverso
 
 L'inferenza bayesiana è formulata nei termini di un problema inverso che segue la regola di Bayes (si veda la Sezione \@ref(inf-stat-probl-inv)).^[Nell'approccio bayesiano non si fa riferimento ad un modello probabilistico $f(y \mid \theta)$ rappresentativo del fenomeno d'interesse noto a meno del valore assunto dal parametro (o dei parametri) che lo caratterizza. Si fa invece riferimento ad una distribuzione congiunta (di massa o di densità di probabilità) $f(y, \theta)$. Entrambi gli argomenti della funzione $y$ e $\theta$ hanno natura di variabili casuali, laddove la nostra incertezza relativa a $y$ è dovuta alla naturale variabilità del fenomeno indagato (_variabilità aleatoria_), mentre la nostra incertezza relativa a $\theta$ è dovuta alla mancata conoscenza del suo valore numerico (_variabilità epistemica_).] Per fissare la notazione, nel seguito $y$ rappresenterà le variabili osservate, ovvero i dati, e $\theta$ rappresenterà i parametri incogniti di un modello statistico. Sia $y$ che $\theta$ sono concepiti come delle variabili casuali. Con $x$ verranno invece denotate le quantità note, come i predittori nel modello di regressione.
-
 
 ### Funzioni di probabilità
 
 L'inferenza bayesiana utilizza le seguenti distribuzioni di probabilità (o densità di probabilità): 
 
 - la *distribuzione a priori* $p(\theta)$ --- la credenza iniziale (prima di avere osservato i dati $Y = y$) riguardo a $\theta$;
-- la *funzione di verosimiglianza* $p(y \mid \theta)$ --- quanto sono compatibili i dati osservati $Y = y$ con i diversi valori possibili di $\theta$; 
+- la *funzione di verosimiglianza* $p(y \mid \theta)$ --- quanto sono compatibili i dati osservati $Y = y$ con i diversi valori possibili di $\theta$? 
 - la *verosimiglianza marginale* $p(y)$ --- costante di normalizzazione: qual è la probabilità complessiva di osservare i dati $Y = y$? In termini formali:
 $$
 p(y) = \int_\theta p(y, \theta) d\theta = \int_\theta p(y \mid \theta) p(\theta) d\theta.
 $$
-- la *distribuzione a posteriori* $p(\theta \mid y)$ --- la nuova credenza relativamente alla credibilità di ciascun valore $\theta$, dopo avere osservato i dati $Y = y$.
-
+- la *distribuzione a posteriori* $p(\theta \mid y)$ --- la nuova credenza relativa alla credibilità di ciascun valore $\theta$ dopo avere osservato i dati $Y = y$.
 
 ### La regola di Bayes
 
@@ -66,7 +63,6 @@ Possiamo dire che la regola di Bayes viene usata per aggiornare le credenze a pr
 
 La \@ref(eq:bayesmodel) rende evidente che, in ottica bayesiana, la quantità di interesse $\theta$ non è fissata come nell'impostazione frequentista, ma è una variabile casuale la cui distribuzione di probabilità è influenzata sia dalle informazioni a priori sia dai dati a disposizione. In altre parole, nell'approccio bayesiano non esiste un valore vero di $\theta$, ma vogliamo fornire invece un giudizio di probabilità. Prima delle osservazioni, sulla base delle nostre conoscenze assegniamo a $\theta$ una distribuzione a priori di probabilità. Dopo le osservazioni, correggiamo il nostro giudizio e assegniamo a $\theta$ una distribuzione a posteriori di probabilità. La distribuzione a posteriori $p(\theta \mid y)$ contiene tutta l'informazione riguardante il parametro $\theta$ e viene utilizzata per produrre indicatori sintetici, per la determinazione di stime puntuali o intervallari, e per la verifica d'ipotesi.
 
-
 ## Inferenza bayesiana
 
 Un esempio di inferenza bayesiana è quello nel quale i dati sono rappresentati da una proporzione. Per questo tipo di dati possiamo adottare il seguente modello statistico 
@@ -92,7 +88,6 @@ Una parte del lavoro della ricerca in tutte le scienze consiste nel verificare l
 
 Per concludere, un modello è un costrutto matematico il cui scopo è quello di rappresentare un qualche aspetto della realtà. Il valore di un tale strumento dipende dalla sua capacità di ottenere lo scopo per cui è stato costruito.
 :::
-
 
 ### Notazione
 
@@ -126,7 +121,6 @@ $$
          \right].
 $$
 
-
 ### Cos'è un parametro del modello?
 
 Il parametro di un modello è un valore che influenza la credibilità dei dati. Ad esempio, il singolo parametro $\theta$ del modello binomiale determina la forma della funzione di verosimiglianza binomiale. Ricordiamo che, per il modello binomiale, la funzione di verosimiglianza è:
@@ -150,7 +144,6 @@ $$
 <!--     y = latex2exp::TeX("Verosimiglianza, $ Bin(k=23, N=30, \\theta)$") -->
 <!--   ) -->
 <!-- ``` -->
-
 
 ### La distribuzione a priori sui parametri
 
@@ -189,134 +182,121 @@ La figura seguente mostra esempi di distribuzioni a priori non informative, debo
 \caption{Esempi di distribuzioni a priori per il parametro $\theta_c$ nel Modello Binomiale.}(\#fig:ch-03-02-models-types-of-priors)
 \end{figure}
 
-
 ### Scelta della distribuzione a priori
 
 La selezione delle distribuzioni a priori è stata spesso vista come una delle scelte più importanti che un ricercatore fa quando implementa un modello bayesiano in quanto può avere un impatto sostanziale sui risultati finali.  La soggettività delle distribuzioni a priori è evidenziata dai critici come un potenziale svantaggio dei metodi bayesiani. A questa critica, @vandeSchoot2021modelling rispondono dicendo che, al di là della scelta delle distribuzioni a priori, ci sono molti elementi del processo di inferenza statistica che sono soggettivi, ovvero la scelta del modello statistico e le ipotesi sulla distribuzione degli errori. In secondo luogo, @vandeSchoot2021modelling notano come le distribuzioni a priori svolgono due importanti ruoli statistici: quello della "regolarizzazione della stima", ovvero, il processo che porta ad indebolire l'influenza indebita di osservazioni estreme, e quello del miglioramento dell'efficienza della stima, ovvero, la facilitazione dei processi di calcolo numerico di stima della distribuzione a posteriori. L'effetto della distribuzione a priori sulla distribuzione a posteriori verrà discusso nel Capitolo \@ref(chapter-balance).
 
-
 ## Verosimiglianza marginale {#verosim-marginale}
 
-Al denominatore della regola di Bayes abbiamo la verosimiglianza marginale $p(y)$. Tale denominatore è espresso nei termini di un integrale che, tranne in pochi casi particolari, non ha una soluzione analitica. 
-<!-- Per questa ragione, l'inferenza bayesiana procede calcolando una approssimazione della distribuzione a posteriori mediante metodi numerici. -->
+Al denominatore della regola di Bayes abbiamo la verosimiglianza marginale $p(y)$. Tale denominatore è espresso nei termini di un integrale che, tranne in pochi casi particolari, non ha una soluzione analitica. Per questa ragione, l'inferenza bayesiana procede calcolando una approssimazione della distribuzione a posteriori mediante metodi numerici. Obiettivo di questo Paragrafo è chiarire il concetto di verosimiglianza marginale mediante un esempio molto artificiale che fa uso della distribuzione binomiale.
+
+Sia $Y$ una variabile casuale binomiale con funzione di massa di probabilità $p(Y)$:
+$$
+p(y, n \mid \theta) = \binom{n}{y} \theta^{y} (1-\theta)^{n-y}.
+$$
+Supponiamo che $\theta$ possa assumere solo i valori 0.1, 0.5, 0.9, ciascuno con eguale probabilità. In altre parole, la probabilità che $\theta$ sia 0.1, 0.5, o 0.9 è sempre 1/3.
+
+Ponendo $n = 30$ e $y = 23$, ad esempio, la funzione di verosimiglianza diventa:
+$$
+p(y = 23, n = 30 \mid \theta) = \binom{30}{23} \theta^{23} (1-\theta)^{7}.
+$$
+La _verosimiglianza marginale_ $p(y = 23, n = 30)$ si ottiene marginalizzando la funzione precedente sopra $\theta$: per ogni possibile valore del parametro $\theta$, calcoliamo il valore della verosimiglianza e lo moltiplichiamo per la probabilità di quel possibile valore $\theta$; sommiamo poi tutti i prodotti che abbiamo ottenuto in questo modo. Matematicamente, ciò significa eseguire l'operazione descritta di seguito.
+
+Nell'esempio abbiamo tre possibili valori $\theta$ che chiameremo $\theta_1 = 0.1$, $\theta_2 = 0.5$ e $\theta_3 = 0.9$. Ciascuno ha probabilità 1/3, quindi $p(\theta_1) = p(\theta_2) = p(\theta_3) = 1/3$. Date queste informazioni possiamo calcolare la verosimiglianza marginale come segue:
+\begin{align}
+p(y = 23, n = 30) &= \binom{30}{23} \theta_1^{23} (1-\theta_1)^{7} \cdot p(\theta_1) \notag\\
+&+ \binom{30}{23} \theta_2^{23} (1-\theta_2)^{7} \cdot p(\theta_2) \notag\\
+&+ \binom{30}{23} \theta_3^{23} (1-\theta_3)^{7} \cdot p(\theta_3) \notag,
+\end{align}
+\noindent
+ovvero
+\begin{align}
+p(y = 23, n = 30) &= \binom{30}{23} 0.1^{23} (1-0.1)^{7} \cdot \frac{1}{3} \notag\\
+&+ \binom{30}{23} 0.5^{23} (1-0.5)^{7} \cdot \frac{1}{3} \notag\\
+&+ \binom{30}{23} 0.9^{23} (1-0.9)^{7} \cdot \frac{1}{3} \notag.
+\end{align}
+È dunque possibile considerare la verosimiglianza marginale come una sorta di media ponderata della verosimiglianza, nella quale i "pesi" dipendono dalla credibilità dei valori del parametro.
+
+L'esempio presentato sopra è artificiale perché al parametro $\theta$ sono stati attribuiti solo tre possibili valori. In  realtà, $\theta$ può assumere tutti i possibili valori compresi nell'intervallo [0, 1] e dunque la somma che dobbiamo calcolare avrà infiniti addendi. Dal punto di vista matematico, una tale somma corrisponde all'integrale:
+$$
+p(y = 23, n = 30) = \int_0^1 \binom{30}{23} \theta^{23} (1-\theta)^{7} d\theta.
+$$
+\noindent
+L'integrale precedente descrive esattamente le stesse operazioni che abbiamo discusso nell'esempio "artificiale" in cui $\theta$ poteva assumere solo tre valori, eccetto che ora dobbiamo eseguire la somma dei prodotti calcolati su tutti gli infiniti valori $\theta$. Questo integrale corrisponde alla marginalizzazione del parametro $\theta$. Non è tuttavia necessario eseguire una tale operazione di maginalizzazione in forma analitica in quanto il precedente integrale può essere calcolato con \R:
+
+```r
+BinLik <- function(theta) {
+  choose(30, 23) * theta^23 * (1 - theta)^7
+}
+integrate(BinLik, lower = 0, upper = 1)$value
+#> [1] 0.03225806
+```
 
 
-<!-- Obiettivo di questo Paragrafo è chiarire questo concetto in riferimento al caso più semplice, ovvero quello della distribuzione binomiale. -->
+### Soluzione analitica
 
-<!-- Sia $Y$ una variabile casuale con funzione di massa di probabilità $p(Y)$. Iniziamo la discussione con un semplice esempio in cui supponiamo che la funzione di massa di probabilità della $Y$ sia definita nei termini del parametro $\theta$ e che $\theta$ possa assumere solo i valori 0.1, 0.5, 0.9, ciascuno con eguale probabilità. In altre parole, la probabilità che $\theta$ sia 0.1, 0.5, o 0.9 è sempre 1/3.  -->
-
-<!-- Ponendo $n = 30$ e $y = 23$, ad esempio, la funzione di verosimiglianza diventa -->
-
-<!-- $$ -->
-<!-- p(y = 23, n = 30 \mid \theta) = \binom{30}{23} \theta^{23} (1-\theta)^{7}. -->
-<!-- $$ -->
-<!-- La _verosimiglianza marginale_ $p(y = 23, n = 30)$ basata su $\theta$ si ottiene marginalizzando rispetto al parametro $\theta$: per ogni possibile valore del parametro $\theta$, calcoliamo il valore della verosimiglianza e lo moltiplichiamo per la probabilità di $\theta$; poi sommiamo tutti i prodotti ottenuti in questo modo. Matematicamente, ciò significa eseguire l'operazione descritta di seguito. -->
-
-<!-- Nell'esempio abbiamo tre possibili valori $\theta$ che chiameremo $\theta_1 = 0.1$, $\theta_2 = 0.5$ e $\theta_3 = 0.9$. Ciascuno ha probabilità 1/3, quindi $p(\theta_1) = p(\theta_2) = p(\theta_3) = 1/3$. Date queste informazioni possiamo calcolare la verosimiglianza marginale come segue: -->
-
-
-<!-- \begin{align} -->
-<!-- p(y = 23, n = 30) &= \binom{30}{23} \theta_1^{23} (1-\theta_1)^{7} \cdot p(\theta_1) \notag\\ -->
-<!-- &+ \binom{30}{23} \theta_2^{23} (1-\theta_2)^{7} \cdot p(\theta_2) \notag\\ -->
-<!-- &+ \binom{30}{23} \theta_3^{23} (1-\theta_3)^{7} \cdot p(\theta_3) \notag, -->
-<!-- \end{align} -->
-
-<!-- \noindent -->
-<!-- ovvero -->
-
-<!-- \begin{align} -->
-<!-- p(y = 23, n = 30) &= \binom{30}{23} 0.1^{23} (1-0.1)^{7} \cdot \frac{1}{3} \notag\\ -->
-<!-- &+ \binom{30}{23} 0.5^{23} (1-0.5)^{7} \cdot \frac{1}{3} \notag\\ -->
-<!-- &+ \binom{30}{23} 0.9^{23} (1-0.9)^{7} \cdot \frac{1}{3} \notag. -->
-<!-- \end{align} -->
-
-<!-- È dunque possibile considerare la verosimiglianza marginale come una sorta di media ponderata della verosimiglianza, nella quale i "pesi" dipendono dalla credibilità dei valori del parametro. -->
-
-<!-- L'esempio che abbiamo presentato sopra è artificiale perché al parametro $\theta$ abbiamo attribuito solo tre possibili valori. In  realtà, $\theta$ può assumere tutti i possibili valori compresi nell'intervallo [0, 1] e dunque la somma che dobbiamo calcolare avrà infiniti addendi. Dal punto di vista matematico, una tale somma corrisponde all'integrale: -->
-
-<!-- $$ -->
-<!-- p(y = 23, n = 30) = \int_0^1 \binom{30}{23} \theta^{23} (1-\theta)^{7} d\theta. -->
-<!-- $$ -->
-
-<!-- \noindent -->
-<!-- L'integrale precedente descrive esattamente le stesse operazioni che abbiamo discusso nell'esempio "artificiale" in cui $\theta$ poteva assumere solo tre valori, eccetto che ora dobbiamo eseguire la somma dei prodotti calcolati su tutti gli infiniti valori $\theta$. Questo integrale corrisponde alla "marginalizzazione" del parametro $\theta$. Non è tuttavia necessario eseguire una tale operazione di maginalizzazione in forma analitica in quanto il precedente integrale può essere calcolato con R: -->
-
-<!-- ```{r} -->
-<!-- BinLik <- function(theta) { -->
-<!--   choose(30, 23) * theta^23 * (1 - theta)^7 -->
-<!-- } -->
-<!-- integrate(BinLik, lower = 0, upper = 1)$value -->
-<!-- ``` -->
+Qui di seguito è riportata la derivazione analitica. Sia $\theta \sim \Beta(a, b)$ e sia $y = \{y_1, \dots, y_n\} \sim \Bin(\theta, n)$. Ponendo
+$$
+B(a, b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)},
+$$
+\noindent
+la verosimiglianza marginale diventa
+\begin{align}
+p(y) &= \binom{n}{y} \int p(y \mid \theta) p(\theta) d\theta \notag\\
+&= \binom{n}{y}\int_0^1 \theta^{y} (1 - \theta)^{n- y} \frac{1}{B(a,b)} \theta^{a-1} (1-\theta)^{b-1} d \theta \notag\\
+&= \binom{n}{y}\frac{1}{B(a,b)} \int_0^1 \theta^{y + a - 1} (1-\theta)^{n- y + b-1} \notag\\
+&= \binom{n}{y}\frac{B(y + a, n- y + b)}{B(a,b)},
+\end{align}
+\noindent
+in quanto
+\begin{align}
+\int_0^1 \frac{1}{B(a,b)} \theta^{a-1} (1-\theta)^{b-1} d \theta &= 1\notag\\
+\frac{1}{B(a,b)} \int_0^1  \theta^{a-1} (1-\theta)^{b-1} d \theta &= 1\notag\\
+\int_0^1  \theta^{a-1} (1-\theta)^{b-1} d \theta &= B(a,b). \notag
+\end{align}
+\noindent
+Continuiamo con l'esempio precedente. Per replicare il risultato trovato per via numerica con \R, assumiamo una distribuzione a priori uniforme, ovvero $\Beta(1, 1)$. I valori del problema sono i seguenti:
 
 
-<!-- ### Soluzione analitica -->
+```r
+a <- 1
+b <- 1
+y <- 23
+n <- 30
+```
 
-<!-- Qui di seguito è riportata la derivazione analitica. Sia $\theta \sim \Beta(a, b)$ e sia $y = \{y_1, \dots, y_n\} \sim \Bin(\theta, n)$. Ponendo  -->
+\noindent
+e dunque
 
-<!-- $$ -->
-<!-- B(a, b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}, -->
-<!-- $$ -->
 
-<!-- \noindent -->
-<!-- la verosimiglianza marginale diventa -->
+```r
+alpha <- y + a
+beta <- n - y + b
+```
+\noindent
+Definiamo
 
-<!-- \begin{align} -->
-<!-- p(y) &= \binom{n}{y} \int p(y \mid \theta) p(\theta) d\theta \notag\\ -->
-<!-- &= \binom{n}{y}\int_0^1 \theta^{y} (1 - \theta)^{n- y} \frac{1}{B(a,b)} \theta^{a-1} (1-\theta)^{b-1} d \theta \notag\\ -->
-<!-- &= \binom{n}{y}\frac{1}{B(a,b)} \int_0^1 \theta^{y + a - 1} (1-\theta)^{n- y + b-1} \notag\\ -->
-<!-- &= \binom{n}{y}\frac{B(y + a, n- y + b)}{B(a,b)}, -->
-<!-- \end{align} -->
 
-<!-- \noindent -->
-<!-- in quanto -->
+```r
+B <- function(a, b) {
+  (gamma(a) * gamma(b)) / gamma(a + b)
+}
+```
 
-<!-- \begin{align} -->
-<!-- \int_0^1 \frac{1}{B(a,b)} \theta^{a-1} (1-\theta)^{b-1} d \theta &= 1\notag\\ -->
-<!-- \frac{1}{B(a,b)} \int_0^1  \theta^{a-1} (1-\theta)^{b-1} d \theta &= 1\notag\\ -->
-<!-- \int_0^1  \theta^{a-1} (1-\theta)^{b-1} d \theta &= B(a,b). \notag -->
-<!-- \end{align} -->
+\noindent
+Il risultato cercato si ottiene con
 
-<!-- \noindent -->
-<!-- Continuiamo con l'esempio precedente. Per replicare il risultato trovato per via numerica con R, assumiamo una distribuzione a priori uniforme, ovvero $\Beta(1, 1)$. I valori del problema sono i seguenti: -->
 
-<!-- ```{r} -->
-<!-- a <- 1 -->
-<!-- b <- 1 -->
-<!-- y <- 23 -->
-<!-- n <- 30 -->
-<!-- ``` -->
+```r
+choose(30, 23) * B(alpha, beta) / B(a, b)
+#> [1] 0.03225806
+```
 
-<!-- \noindent -->
-<!-- e dunque -->
-
-<!-- ```{r} -->
-<!-- alpha <- y + a -->
-<!-- beta <- n - y + b -->
-<!-- ``` -->
-
-<!-- \noindent -->
-<!-- Definiamo -->
-
-<!-- ```{r} -->
-<!-- B <- function(a, b) { -->
-<!--   (gamma(a) * gamma(b)) / gamma(a + b) -->
-<!-- } -->
-<!-- ``` -->
-
-<!-- \noindent -->
-<!-- Il risultato cercato si ottiene con -->
-
-<!-- ```{r} -->
-<!-- choose(30, 23) * B(alpha, beta) / B(a, b) -->
-<!-- ``` -->
-
-<!-- In conclusione, nel caso di una verosimiglianza binomiale $y = \sim \Bin(\theta, n)$ e di una distribuzione a priori  $\theta \sim \Beta(a, b)$, la verosimiglianza marginale diventa -->
-
-<!-- \begin{equation} -->
-<!-- \binom{n}{y}\frac{B(y + a, n - y + b)}{B(a, b)}. -->
-<!-- (\#eq:constant-norm-beta-binom) -->
-<!-- \end{equation} -->
-
+In conclusione, nel caso di una verosimiglianza binomiale $y = \sim \Bin(\theta, n)$ e di una distribuzione a priori  $\theta \sim \Beta(a, b)$, la verosimiglianza marginale diventa
+\begin{equation}
+\binom{n}{y}\frac{B(y + a, n - y + b)}{B(a, b)}.
+(\#eq:constant-norm-beta-binom)
+\end{equation}
 
 ## La distribuzione a posteriori
 
@@ -326,7 +306,6 @@ Ci sono due metodi principali per calcolare la distribuzione a posteriori $p(\th
 - un metodo approssimato, molto facile da utilizzare in pratica, che dipende da metodi Monte Carlo basati su Catena di Markov (MCMC).
 
 Una volta calcolata la distribuzione a posteriori dobbiamo riassumerla in qualche modo. Questo problema verrà discusso nel Capitolo \@ref(chapter-sintesi-distr-post).
-
 
 ## Considerazioni conclusive {-}
 
