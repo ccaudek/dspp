@@ -7,7 +7,8 @@ suppressPackageStartupMessages(library("ggpubr"))
 suppressPackageStartupMessages(library("khroma"))
 
 # R options set globally
-options(width = 60)
+# options(width = 60)
+options(digits = 3)
 set.seed(42)
 SEED <- 374237 # set random seed for reproducibility
 # theme_set(bayesplot::theme_default(base_family = "sans"))
