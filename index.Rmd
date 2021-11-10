@@ -4,7 +4,7 @@ author: "Corrado Caudek"
 date: "`r Sys.Date()`"
 url: https://github.com/ccaudek/dspp/
 github-repo: ccaudek/dspp
-description: "Bookdown template based on LaTeX memoir class"
+description: "This is dspp, aka Data science per psicologi."
 # cover-image: "images/logo.png"
 # Title page...
 maintitlepage:
@@ -172,6 +172,10 @@ knitr::opts_chunk$set(dev.args=list(bg="transparent"))
 
 # Random seed
 set.seed(973)
+```
+
+```{r, include = FALSE}
+source("_common.R")
 ```
 
 

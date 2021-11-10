@@ -17,7 +17,8 @@ colors <- colour("bright", names = FALSE)(4)
 ggplot <- function(...) ggplot2::ggplot(...) + scale_color_bright()
 theme_update(plot.title = element_text(hjust = 0.5))
 
-# chunk options set globally
+# knitr chunk options ----------------------------------------------------------
+
 knitr::opts_chunk$set(
   comment = "#>",
   collapse = TRUE,
@@ -25,10 +26,27 @@ knitr::opts_chunk$set(
   warning = FALSE,
   error = FALSE,
   tidy = "styler",
-  fig.height = 3, 
-  fig.width = 4.854,
+  # fig.height = 3, 
+  # fig.width = 4.854,
+  # fig.align = "center",
   fig.align = "center",
+  fig.width = 6,
+  fig.asp = 0.618,  # 1 / phi
+  fig.show = "hold",
+  dpi = 300,
+  fig.pos = "h",
   knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
   )
+
+if (knitr::is_html_output()) {
+  knitr::opts_chunk$set(out.width = "90%")
+} else if (knitr::is_latex_output()) {
+  knitr::opts_chunk$set(out.width = "80%")
+}
+
+# dplyr options ----------------------------------------------------------------
+
+options(dplyr.print_min = 6, dplyr.print_max = 6)
+
 
 

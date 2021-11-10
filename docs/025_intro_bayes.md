@@ -173,9 +173,9 @@ La figura seguente mostra esempi di distribuzioni a priori non informative, debo
 - *fortemente informativa* : $\theta_c \sim \text{Beta}(50,20)$;
 - *valore puntuale* : $\theta_c \sim \text{Beta}(\alpha, \beta)$ con $\alpha, \beta \rightarrow \infty$ e $\frac{\alpha}{\beta} = \frac{5}{2}$.
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{025_intro_bayes_files/figure-latex/ch-03-02-models-types-of-priors-1} 
+{\centering \includegraphics[width=0.8\linewidth]{025_intro_bayes_files/figure-latex/ch-03-02-models-types-of-priors-1} 
 
 }
 

@@ -1,10 +1,10 @@
 --- 
 title: "Psicometria"
 author: "Corrado Caudek"
-date: "2021-11-07"
+date: "2021-11-10"
 url: https://github.com/ccaudek/dspp/
 github-repo: ccaudek/dspp
-description: "Bookdown template based on LaTeX memoir class"
+description: "This is dspp, aka Data science per psicologi."
 # cover-image: "images/logo.png"
 # Title page...
 maintitlepage:
@@ -103,6 +103,8 @@ colorlinks: true
 
 <!-- HTML code necessary for key messages --> 
 <img src="images/trombone.png" alt="image" hidden/>
+
+
 
 
 

@@ -44,7 +44,7 @@ plot_beta(alpha = 4, beta = 4, mean = TRUE, mode = TRUE)
 
 
 
-\begin{center}\includegraphics{026_conjugate_families_files/figure-latex/unnamed-chunk-2-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{026_conjugate_families_files/figure-latex/unnamed-chunk-2-1} \end{center}
 
 Possiamo quantificare la nostra incertezza calcolando, con un grado di fiducia del 95%, la regione nella quale, in base a tale credenza a priori, si trova il valore del parametro. Per ottenere tale intervallo di credibilità a priori, usiamo la funzione `qbeta()` di $\R$. In `qbeta()` i parametri $\alpha$ e $\beta$ sono chiamati `shape1` e `shape2`:
 
@@ -61,7 +61,7 @@ plot_beta(alpha = 10, beta = 10, mean = TRUE, mode = TRUE)
 
 
 
-\begin{center}\includegraphics{026_conjugate_families_files/figure-latex/unnamed-chunk-4-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{026_conjugate_families_files/figure-latex/unnamed-chunk-4-1} \end{center}
 Ma ora la nostra certezza a priori sul valore del parametro è maggiore, come indicato dall'intervallo al 95%:
 
 ```r
@@ -82,7 +82,7 @@ plot_beta(alpha = 2, beta = 10, mean = TRUE, mode = TRUE)
 
 
 
-\begin{center}\includegraphics{026_conjugate_families_files/figure-latex/unnamed-chunk-6-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{026_conjugate_families_files/figure-latex/unnamed-chunk-6-1} \end{center}
 La $\mbox{Beta}(2, 10)$ esprime la credenza che $\theta$ assume valori $< 0.5$, con il valore più plausibile pari a cicrca 0.1. 
 
 
@@ -140,8 +140,8 @@ somma ad 1, ovvero,
 
 ```r
 postFunNor <- function(theta) {
-  (factorial(42 - 1) / (factorial(25 - 1) * factorial(17 - 1))) *
-    theta^(25 - 1) * (1 - theta)^(17 - 1)
+  (factorial(42-1) / (factorial(25-1)*factorial(17-1))) * 
+    theta^(25-1) * (1 - theta)^(17-1)
 }
 (AUC2 <- integrate(postFunNor, lower = 0, upper = 1)$value)
 #> [1] 1
@@ -235,7 +235,7 @@ bayesrules::plot_beta_binomial(
 
 
 
-\begin{center}\includegraphics{026_conjugate_families_files/figure-latex/unnamed-chunk-14-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{026_conjugate_families_files/figure-latex/unnamed-chunk-14-1} \end{center}
 Un sommario delle distribuzioni a priori e a posteriori si ottiene usando la funzione `summarize_beta_binomial()`:
 
 ```r
@@ -286,7 +286,7 @@ bayesrules:::plot_beta_binomial(
 
 
 
-\begin{center}\includegraphics{026_conjugate_families_files/figure-latex/unnamed-chunk-17-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{026_conjugate_families_files/figure-latex/unnamed-chunk-17-1} \end{center}
 ::: 
 
 
