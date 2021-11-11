@@ -10,7 +10,7 @@
 
 
 \documentclass[
-  11pt,
+  10pt,
   italian,
   a4paper,
   extrafontsizes,onecolumn,openright
@@ -754,7 +754,7 @@ Si possono evidenziare due proprietà dell'entropia.
 \item
   L'entropia aumenta all'aumentare della varianza di una variabile casuale.
 \item
-  L'entropia aumenta all'aumentare del numero di possibilità con cui un evento può verificarsi.
+  L'entropia aumenta all'aumentare del numero delle possibilità con cui un evento può verificarsi.
 \end{itemize}
 
 \begin{example}
@@ -779,7 +779,7 @@ Svolgendo i calcoli in \(\R\) abbiamo:
 \end{Shaded}
 
 \noindent
-Se però viviamo a Las Vegas, allora le probabilità di pioggia e sole saranno qualcosa come \(p(y_1) = 0.01\) e \(p(y_2) = 0.99\). In questo secondo caso, l'entropia è 0.06, ovvero, molto minore di prima. Infatti, a Las Vegas non piove quasi mai, per cui quando abbiamo imparato che, in un certo giorno, non ha piovuto, abbiamo imparato molto poco rispetto a quello che sapevamo in precedenza.
+Se però viviamo a Las Vegas, allora le probabilità di pioggia e sole saranno qualcosa come \(p(y_1) = 0.01\) e \(p(y_2) = 0.99\). In questo secondo caso, l'entropia è 0.06, ovvero, molto minore di prima. Infatti, a Las Vegas non piove quasi mai, per cui quando abbiamo imparato che, in un certo giorno, non ha piovuto, abbiamo imparato molto poco rispetto a quello che già sapevamo in precedenza.
 \end{example}
 
 \begin{example}
@@ -820,7 +820,7 @@ D_{KL}(p_t \mid\mid p_{\mathcal{M}})  = \sum_{i=1}^n p_t(y_i) \cdot \left[\log p
 
 La divergenza di Kullback-Leibler introduce un piccolo cambiamento alla \eqref{eq:entropy}: anziché considerare una sola distribuzione di probabilità, \(p_t\), considera anche una approssimazione a tale distribuzione, ovvero \(p_{\mathcal{M}}\). Calcolando la differenza dei logaritmi dei valore delle due distribuzioni giungiamo alla \eqref{eq:kldivergence}.
 
-La divergenza KL misura la quantità di informazione che viene persa quando una distribuzione approssimata viene usata per descrivere le proprietà della distribuzione di riferimento. Infatti, ciò che viene calcolato nella divergenza KL è il valore atteso della differenza tra il logaritmo delle probabilità dei dati nella distribuzione \(p_t\) e il logaritmo delle probabilità dei dati nella distribuzione approssimata \(p_{\mathcal{M}}\):
+La divergenza KL misura la quantità di informazione che viene perduta quando una distribuzione approssimata viene usata per descrivere le proprietà della distribuzione di riferimento. Infatti, ciò che viene calcolato nella divergenza KL è il valore atteso della differenza tra il logaritmo delle probabilità dei dati nella distribuzione \(p_t\) e il logaritmo delle probabilità dei dati nella distribuzione approssimata \(p_{\mathcal{M}}\):
 \begin{equation}
 D_{KL}(p_t \mid\mid p_{\mathcal{M}})  = \E \left[\log p_t(y) - \log p_{\mathcal{M}}(y) \right].
 \label{eq:kldivergenceev}
@@ -829,7 +829,7 @@ Se c'è una perfetta corrispondenza tra le due distribuzioni, \(p_t = p_{\mathca
 \[
 D_{KL}(p_t \mid\mid p_{\mathcal{M}}) = D_{KL}(p_t \mid\mid p_t) = \sum_{i=1}^n p_t(y_i) \cdot \left[\log p_t(y_i) - \log p_t(y_i)\right] = 0,
 \]
-nessuna incertezza aggiuntiva viene introdotta se una distribuzione viene usata per rappresentare se stessa. Altrimenti (ovvero, se \(p_t \neq p_{\mathcal{M}}\)) la divergenza KL assume valori nell'intervallo \([0, \infty]\): all'aumentare della differenza tra \(p_{\mathcal{M}}\) e \(p_t\) aumenta anche il valore \(D_{KL}(p_t \mid\mid p_{\mathcal{M}})\).
+ovvvero: nessuna incertezza aggiuntiva viene introdotta se una distribuzione viene usata per rappresentare se stessa. Altrimenti (cioè, se \(p_t \neq p_{\mathcal{M}}\)) la divergenza KL assume valori nell'intervallo \([0, \infty]\): all'aumentare della differenza tra \(p_{\mathcal{M}}\) e \(p_t\) aumenta il valore \(D_{KL}(p_t \mid\mid p_{\mathcal{M}})\).
 
 \begin{example}
 \autocite[da][]{McElreath_rethinking} Sia la distribuzione target \(p = \{0.3, 0.7\}\). Supponiamo che la distribuzione approssimata \(q\) possa assumere valori da \(q = \{0.01, 0.99\}\) a \(q = \{0.99, 0.01\}\). Calcoliamo la divergenza KL.
@@ -925,6 +925,7 @@ Sia \(q_2\) una distribuzione uniforme:
 \end{Highlighting}
 \end{Shaded}
 
+\noindent
 La divergenza KL di \(q_1\) da \(p\) è
 
 \begin{Shaded}
@@ -1597,8 +1598,8 @@ Questo accade se un predittore è associato in modo trascurabile con la variabil
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{outier}{%
-\subsection{Outier}\label{outier}}
+\hypertarget{outlier}{%
+\subsection{Outlier}\label{outlier}}
 
 Si è soliti pensare che la maggior parte delle osservazioni del campione sia prodotta da un unico meccanismo generatore dei dati, mentre le rimanenti osservazioni sono la realizzazione di un diverso processo stocastico. Le osservazioni che appartengono a questo secondo gruppo si chiamano \emph{outlier}. È dunque necessario identificare gli outlier e limitare la loro influenza sull'inferenza.\footnote{\textcite{McElreath_rethinking} nota che, spesso, i ricercatori eliminano i valori anomali prima di adattare un modello ai dati, basandosi solo sulla distanza dal valore medio della variabile dipendente misurata in termini di unità di deviazione standard. Secondo \textcite{McElreath_rethinking} questo non dovrebbe mai essere fatto: un'osservazione può essere considerata come un valore anomalo o un valore influente solo alla luce delle predizioni di un modello (mai prima di avere adattato il modello ai dati). Se ci sono solo pochi valori anomali una strategia possibile è quella di riportare i risultati delle analisi statistiche svolte su tutto il campione dei dati oppure dopo avere eliminato le osservazioni anomale e influenti.}
 

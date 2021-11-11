@@ -34,7 +34,7 @@ classoption:
   - openright
 # Paper, font
 papersize: A4
-fontsize: 11pt
+fontsize: 10pt
 # Fonts installed by a package. LaTeX tex-gyre package must be installed for:
 # mainfont: texgyretermes          # Times New Roman for the text
 mainfontoptions:
