@@ -383,23 +383,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\usepackage{amsthm}
-\newtheorem{theorem}{Teorema}[chapter]
-\newtheorem{lemma}{Lemma}[chapter]
-\newtheorem{corollary}{Corollario}[chapter]
-\newtheorem{proposition}{Proposizione}[chapter]
-\newtheorem{conjecture}{Congettura}[chapter]
-\theoremstyle{definition}
-\newtheorem{definition}{Definizione}[chapter]
-\theoremstyle{definition}
-\newtheorem{example}{Esempio}[chapter]
-\theoremstyle{definition}
-\newtheorem{exercise}{Exercizio}[chapter]
-\theoremstyle{definition}
-\newtheorem{hypothesis}{Hypothesis}[chapter]
-\theoremstyle{remark}
-\newtheorem*{remark}{Osservazione}
-\newtheorem*{solution}{Soluzione}
 \begin{document}
 \frontmatter
 
@@ -538,276 +521,213 @@ Febbraio 2022
 
 \mainmatter
 
-\hypertarget{chapter-prob-congiunta}{%
-\chapter{Probabilità congiunta}\label{chapter-prob-congiunta}}
+\hypertarget{regr-models-intro}{%
+\chapter{Introduzione alla regressione lineare}\label{regr-models-intro}}
 
-In psicologia e nella vita quotidiana siamo spesso interessati a studiare problemi di probabilità legati al valore congiunto di due o più variabili casuali. Ad esempio, potremmo misurare il QI dei bambini e il loro peso alla nascita, o l'altezza e il peso delle giraffe, o il livello di inquinamento atmosferico e il tasso di malattie respiratorie nelle città, o il numero di amici di Facebook e l'età. Ci potremmo chiedere che relazione esiste tra le coppie di variabili elencate in precedenza.
+Lo scopo della ricerca è trovare le associazioni tra le variabili e fare
+confronti fra le condizioni sperimentali. Nel caso della psicologia, il
+ricercatore vuole scoprire le leggi generali che descrivono le relazioni
+tra i costrutti psicologici e le relazioni che intercorrono tra i
+fenomeni psicologici e quelli non psicologici (sociali, economici,
+storici, \ldots). Abbiamo già visto come la correlazione di Pearson sia uno
+strumento adatto a questo scopo. Infatti, essa ci informa sulla
+direzione e sull'intensità della relazione lineare tra due variabili.
+Tuttavia, la correlazione non è sufficiente, in quanto il ricercatore ha
+a disposizione solo i dati di un campione, mentre vorrebbe descrivere la
+relazione tra le variabili nella popolazione. A causa della variabilità
+campionaria, le proprietà dei campioni sono necessariamente diverse da
+quelle della popolazione: ciò che si può osservare nella popolazione
+potrebbe non emergere nel campione e, al contrario, il campione
+manifesta caratteristiche che non sono necessariamente presenti nella
+popolazione. È dunque necessario chiarire, dal punto di vista
+statistico, il legame che intercorre tra le proprietà del campione e le
+proprietà della popolazione da cui esso è stato estratto.
+Il modello di regressione utilizza la funzione matematica più semplice
+per descrivere la relazione fra due variabili, ovvero la funzione
+lineare. In questo Capitolo vedremo come si possa fare inferenza sulla relazione tra due variabili mediante il modello di regressione bayesiano. Inizieremo a descrivere le proprietà geometriche della funzione lineare per poi utilizzare questa semplice funzione per costruire un modello statistico secondo un approccio bayesiano.
 
-Per descrivere la relazione tra due variabili casuali è necessario calcolare la \emph{covarianza} e la \emph{correlazione}. Il calcolo di questi due indici richiede la conoscenza della funzione di probabilità congiunta. Obiettivo di questo Capitolo è chiarire cosa si intende per funzione di probabilità congiunta di due variabili casuali \(X\) e \(Y\). Esamineremo qui in dettaglio il caso discreto.
+\hypertarget{la-funzione-lineare}{%
+\section{La funzione lineare}\label{la-funzione-lineare}}
 
-\hypertarget{funzione-di-probabilituxe0-congiunta}{%
-\section{Funzione di probabilità congiunta}\label{funzione-di-probabilituxe0-congiunta}}
+Iniziamo con un ripasso sulla funzione di lineare. Si chiama \emph{funzione lineare} una funzione del tipo
 
-Dopo aver trattato della distribuzione di probabilità di una variabile casuale, la quale associa ad ogni evento elementare dello spazio campionario uno ed un solo numero reale, è naturale estendere questo concetto al caso di due o più variabili casuali. Iniziamo a descrivere il caso discreto con un esempio.
+\begin{equation}
+f(x) = a + b x,
+\end{equation}
 
-Consideriamo l'esperimento casuale corrispondente al lancio di tre monete equilibrate. Lo spazio campionario è
+dove \(a\) e \(b\) sono delle costanti. Il grafico di tale funzione è una retta di cui il parametro \(b\) è detto \emph{coefficiente angolare} e il parametro \(a\) è detto \emph{intercetta} con l'asse delle \(y\) {[}infatti, la retta interseca l'asse \(y\) nel punto \((0,a)\), se \(b \neq 0\){]}.
 
-\[
-\Omega = \{TTT, TTC, TCT, CTT, CCT, CTC, TCC, CCC\}.
-\]
+Per assegnare un'interpretazione geometrica alle costanti \(a\) e \(b\) si consideri la funzione
 
-\noindent
-Dato che i tre lanci sono tra loro indipendenti, non c'è ragione di aspettarsi che uno degli otto risultati possibili dell'esperimento sia più probabile degli altri, dunque possiamo associare a ciascuno degli otto eventi elementari dello spazio campionario la stessa probabilità, ovvero 1/8.
+\begin{equation}
+y = b x.
+\end{equation}
 
-Su tale spazio campionario consideriamo le variabili aleatorie
-\(X \in \{0, 1, 2, 3\}\) che conta il numero delle teste nei tre lanci e \(Y \in \{0, 1\}\) che conta il numero delle teste al primo lancio. Indicando con T = `testa' e C = `croce', si ottiene dunque la situazione riportata nella tabella~\ref{tab:tre-monete-distr-cong-1}.
+Tale funzione rappresenta un caso particolare, ovvero quello della \emph{proporzionalità diretta} tra \(x\) e \(y\). Il caso generale della linearità
 
-\begin{longtable}[]{@{}cccc@{}}
-\caption{\label{tab:tre-monete-distr-cong-1} Spazio campionario dell'esperimento consistente nel lancio di tre monete equilibrate su cui sono state definite le variabili aleatorie \(X\) e \(Y\).}\tabularnewline
-\toprule
-\(\omega\) & \(X\) & \(Y\) & \(P(\omega)\) \\
-\midrule
-\endfirsthead
-\toprule
-\(\omega\) & \(X\) & \(Y\) & \(P(\omega)\) \\
-\midrule
-\endhead
-\(\omega_1\) = TTT & 3 & 1 & 1/8 \\
-\(\omega_2\) = TTC & 2 & 1 & 1/8 \\
-\(\omega_3\) = TCT & 2 & 1 & 1/8 \\
-\(\omega_4\) = CTT & 2 & 0 & 1/8 \\
-\(\omega_5\) = CCT & 1 & 0 & 1/8 \\
-\(\omega_6\) = CTC & 1 & 0 & 1/8 \\
-\(\omega_7\) = TCC & 1 & 1 & 1/8 \\
-\(\omega_8\) = CCC & 0 & 0 & 1/8 \\
-\bottomrule
-\end{longtable}
+\begin{equation}
+y = a + b x
+\end{equation}
 
-Ci poniamo il problema di associare un livello di probabilità ad ogni coppia \((x, y)\) definita su \(\Omega\). La coppia \((X = 0, Y = 0)\) si realizza in corrispondenza di un solo evento elementare, ovvero CCC; avrà dunque una probabilità pari a \(P(X=0, Y=0) = P(CCC) = 1/8\). Nel caso della coppia \((X = 1, Y = 0)\) ci sono due eventi elementari che danno luogo al risultato considerato, ovvero, CCT e CTC; la probabilità \(P(X=1, Y=0)\) sarà dunque data dall'unione delle probabilità dei due eventi elementari corrispondenti, cioé \(P(X=1, Y=0) = P(CCT \:\cup\: CTC) = 1/8 + 1/8 = 1/4\). Riportiamo qui sotto i calcoli svolti per tutti i possibili valori di \(X\) e \(Y\).
+non fa altro che sommare una costante \(a\) a ciascuno dei valori \(y = b x\). Nella funzione lineare \(y = a + b x\), se \(b\) è positivo allora \(y\) aumenta al crescere di \(x\); se \(b\) è negativo allora \(y\) diminuisce al crescere di \(x\); se \(b=0\) la retta è orizzontale, ovvero \(y\) non muta al variare di \(x\).
 
+Consideriamo ora il coefficiente \(b\). Si consideri un punto \(x_0\) e un incremento arbitrario \(\varepsilon\) come indicato nella figura \ref{fig:linearfunction}. Le differenze \(\Delta x = (x_0 + \varepsilon) - x_0\) e \(\Delta y = f(x_0 + \varepsilon) - f(x_0)\) sono detti \emph{incrementi} di \(x\) e \(y\). Il coefficiente angolare \(b\) è uguale al rapporto
+
+\begin{equation}
+    b = \frac{\Delta y}{\Delta x} = \frac{f(x_0 + \varepsilon) - f(x_0)}{(x_0 + \varepsilon) - x_0},
+\end{equation}
+
+indipendentemente dalla grandezza degli incrementi \(\Delta x\) e \(\Delta y\). Il modo più semplice per assegnare un'interpretazione geometrica al coefficiente angolare (o pendenza) della retta è dunque quello di porre \(\Delta x = 1\). In tali circostanze infatti \(b = \Delta y\).
+
+\begin{figure}[h]
+
+{\centering \includegraphics[width=0.7\linewidth]{images/linear_function} 
+
+}
+
+\caption{La funzione lineare $y = a + bx$.}\label{fig:linearfunction}
+\end{figure}
+
+\hypertarget{lerrore-di-misurazione}{%
+\section{L'errore di misurazione}\label{lerrore-di-misurazione}}
+
+Per descrivere l'associazione tra due variabili, tuttavia, la funzione lineare non è sufficiente. Nel mondo empirico, infatti, la relazione tra variabili non è mai perfettamente lineare. È dunque necessario includere nel modello di regressione anche una componente d'errore, ovvero una componente della \(y\) che non può essere spiegata dal modello lineare. Nel caso di due sole variabili, questo ci conduce alla seguente formulazione del modello di regressione:
+
+\begin{equation}
+y = \alpha + \beta x + \varepsilon,
+\label{eq:regbivpop}
+\end{equation}
+
+laddove i parametri \(\alpha\) e \(\beta\) descrivono l'associazione tra le variabili casuali \(y\) e \(x\), e il termine d'errore \(\varepsilon\) specifica quant'è grande la porzione della variabile \(y\) che non può essere predetta nei termini di una relazione lineare con la \(x\).
+
+Si noti che la \eqref{eq:regbivpop} consente di formulare una predizione, nei termini di un modello lineare, del valore atteso della \(y\) conoscendo \(x\), ovvero
+
+\begin{equation}
+\hat{y} = \mathbb{E}(y \mid x) = \alpha + \beta x.
+\label{eq:regbivpop2}
+\end{equation}
+
+In altri termini, se i parametri del modello (\(\alpha\) e \(\beta\)) sono noti, allora è possibile predire la \(y\) sulla base della nostra conoscenza della \(x\).
+Per esempio, se conosciamo la relazione lineare tra quoziente di intelligenza ed aspettativa di vita, allora possiamo prevedere quanto a lungo vivrà una persona sulla base del suo QI. Sì, c'è una relazione lineare tra intelligenza e aspettativa di vita \autocite{hambrick2015research}! Ma quando è accurata la previsione? Ciò dipende dal termine d'errore della \eqref{eq:regbivpop}. L'analisi di regressione fornisce un metodo per rispondere a domande di questo tipo\footnote{Per una discussione sugli aspetti di base della regressione lineare, si veda il \href{https://openintro-ims.netlify.app/model-slr.html}{capitolo 7} di \emph{Introduction to Modern Statistics}.}.
+
+\hypertarget{una-media-per-ciascuna-osservazione}{%
+\section{Una media per ciascuna osservazione}\label{una-media-per-ciascuna-osservazione}}
+
+In precedenza abbiamo visto come sia possibile stimare i parametri di un modello bayesiano Normale nel quale le osservazioni sono indipendenti e identicamente distribuite secondo una densità Normale,
+\begin{equation}
+Y_i \stackrel{i.i.d.}{\sim} \mathcal{N}(\mu, \sigma), \quad i = 1, \dots, n.
+\label{eq:normalsamplingmodel}
+\end{equation}
+
+Il modello \eqref{eq:normalsamplingmodel} assume che ogni \(Y_i\) sia una realizzazione della stessa \(\mathcal{N}(\mu, \sigma^2)\). Da un punto di vista bayesiano\footnote{Per un'introduzione alla trattazione frequentista dell'analisi di regressione, si veda l'Appendice \ref{least-squares}.}, si assegnano distribuzioni a priori ai parametri \(\mu\) e \(\sigma\), si genera la verosimiglianza in base ai dati osservati e, con queste informazioni, si generano le distribuzione a posteriori dei parametri \autocite{gelman2020regression}:
 \begin{align}
-P(X = 0, Y = 0) &= P(\omega_8 = CCC) = 1/8; \notag\\
-P(X = 1, Y = 0) &= P(\omega_5 = CCT) + P(\omega_6 = CTC) = 2/8; \notag\\
-P(X = 1, Y = 1) &= P(\omega_7 = TCC) = 1/8; \notag\\
-P(X = 2, Y = 0) &= P(\omega_4 = CTT) = 1/8; \notag\\
-P(X = 2, Y = 1) &= P(\omega_3 = TCT) + P(\omega_2 = TTC) = 2/8; \notag\\
-P(X = 3, Y = 1) &= P(\omega_1 = TTT) = 1/8; \notag
+Y_i \mid \mu, \sigma & \stackrel{iid}{\sim} \mathcal{N}(\mu, \sigma^2)\notag\\
+\mu       & \sim \mathcal{N}(\mu_0, \tau^2) \notag\\
+\sigma    & \sim \Cauchy(x_0, \gamma) \notag
 \end{align}
 
-Le probabilità così trovate sono riportate nella tabella \ref{tab:ditr-cong-biv-1} la quale descrive la distribuzione di probabilità congiunta delle variabili aleatorie \(X\) = ``numero di realizzazioni con il risultato testa nei tre lanci'' e \(Y\) = ``numero di realizzazioni con il risultato testa nel primo lancio'' per l'esperimento casuale consistente nel lancio di tre monete equilibrate.
+È comune però che vengano però registrate altre variabili \(x_i\) che possono essere associate alla risposta di interesse \(y_i\). La variabile \(x_i\) viene chiamata \emph{predittore} (o variabile indipendente) in quanto il ricercatore è tipicamente interessato a predire il valore \(y_i\) a partire da \(x_i\). Come si può estende il modello Normale della \eqref{eq:normalsamplingmodel} per lo studio della possibile relazione tra \(y_i\) e \(x_i\)?
 
-\begin{longtable}[]{@{}ccc@{}}
-\caption{\label{tab:ditr-cong-biv-1} Distribuzione di probabilità congiunta per i risultati dell'esperimento consistente nel lancio di tre monete equilibrate.}\tabularnewline
-\toprule
-\(x / y\) & 0 & 1 \\
-\midrule
-\endfirsthead
-\toprule
-\(x / y\) & 0 & 1 \\
-\midrule
-\endhead
-0 & 1/8 & 0 \\
-1 & 2/8 & 1/8 \\
-2 & 1/8 & 2/8 \\
-3 & 0 & 1/8 \\
-\bottomrule
-\end{longtable}
+Il modello \eqref{eq:normalsamplingmodel} assume una media \(\mu\) comune per ciascuna osservazione \(Y_i\). Dal momento che desideriamo introdurre una nuova variabile \(x_i\) che assume un valore specifico per ciascuna osservazione \(y_i\), il modello \eqref{eq:normalsamplingmodel} può essere modificato in modo che la media comune \(\mu\) venga sostituita da una media \(\mu_i\) specifica a ciascuna \(i\)-esima osservazione:
 
-In generale, possiamo dire che, dato uno spazio campionario discreto \(\Omega\), è possibile associare ad ogni evento elementare \(\omega_i\) dello spazio campionario una coppia di numeri reali \((x, y)\), essendo \(x = X(\omega)\) e \(y = Y(\omega)\), il che ci conduce alla seguente definizione.
+\begin{equation}
+Y_i \mid \mu_i, \sigma \stackrel{ind}{\sim} \mathcal{N}(\mu_i, \sigma), \quad i = 1, \dots, n.
+\label{eq:normalsamplinglinearmodel}
+\end{equation}
 
-\begin{definition}
-Siano \(X\) e \(Y\) due variabili casuale. La funzione che associa ad ogni coppia \((x, y)\) un livello di probabilità prende il nome di funzione di probabilità congiunta:
+Si noti che le osservazioni \(Y_1, \dots, Y_n\) non sono più identicamente distribuite poiché hanno medie diverse, ma sono ancora indipendenti come indicato dalla notazione \texttt{ind} posta sopra il simbolo \(\sim\) nella \eqref{eq:normalsamplinglinearmodel}
 
-\[
-P(x, y) = P(X = x, Y = y).
-\]
-\end{definition}
+\hypertarget{relazione-lineare-tra-la-media-e-il-predittore}{%
+\subsection{Relazione lineare tra la media e il predittore}\label{relazione-lineare-tra-la-media-e-il-predittore}}
 
-\noindent
-Il termine ``congiunta'' deriva dal fatto che questa probabilità è legata al verificarsi di una coppia di valori, il primo associato alla variabile casuale \(X\) ed il secondo alla variabile casuale \(Y\). Nel caso di due sole variabili casuali si parla di distribuzione bivariata, mentre nel caso di più variabili casuali si parla di distribuzione multivariata.
+L'approccio che consente di mettere in relazione un predittore \(x_i\) con la risposta \(Y_i\) è quello di assumere che la media di ciascuna \(Y_i\), ovvero \(\mu_i\), sia una funzione lineare del predittore \(x_i\). Una tale relazione lineare è scritta come
 
-\hypertarget{proprietuxe0}{%
-\subsection{Proprietà}\label{proprietuxe0}}
+\begin{equation}
+\mu_i = \beta_0 + \beta_ 1 x_i, \quad i = 1, \dots, n.
+\label{eq:regmodel}
+\end{equation}
 
-Una distribuzione di massa di probabilità congiunta bivariata deve soddisfare due proprietà:
+Nella \eqref{eq:regmodel}, ciascuna \(x_i\) è una costante nota (ecco perché viene usata una lettera minuscola per la \(x\)) e \(\beta_0\) e \(\beta_ 1\) sono parametri incogniti. Questi parametri che rappresentano l'intercetta e la pendenza della retta di regressione sono variabili casuali. Si assegna una distribuzione a priori a \(\beta_0\) e a \(\beta_ 1\) e si esegue l'inferenza riassumendo la distribuzione a posteriori di questi parametri.
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
+In questo modello, la funzione lineare \(\beta_0 + \beta_ 1 x_i\) è interpretata come il valore atteso della \(Y_i\) per ciascun valore \(x_i\), mentre l'intercetta \(\beta_0\) rappresenta il valore atteso della \(Y_i\) quando \(x_i = 0\). Il parametro \(\beta_ 1\) (pendenza) rappresenta invece l'aumento medio della \(Y_i\) quando \(x_i\) aumenta di un'unità. È importante notare che la relazione lineare \eqref{eq:normalsamplinglinearmodel} di parametri \(\beta_0\) e \(\beta_ 1\) descrive l'associazione tra \emph{la media} \(\mu_i\) e il predittore \(x_i\). In altri termini, tale relazione lineare ci fornisce una predizione sul valore medio \(\mu_i\), non sul valore \emph{effettivo} \(Y_i\).
+
+\hypertarget{il-modello-di-regressione-lineare}{%
+\subsection{Il modello di regressione lineare}\label{il-modello-di-regressione-lineare}}
+
+Sostituendo la \eqref{eq:regmodel} nel modello \eqref{eq:normalsamplinglinearmodel} otteniamo il modello di regressione lineare:
+
+\begin{equation}
+Y_i \mid \beta_0, \beta_ 1, \sigma \stackrel{ind}{\sim} \mathcal{N}(\beta_0 + \beta_ 1 x_i, \sigma), \quad i = 1, \dots, n.
+\label{eq:samplinglinearmodel}
+\end{equation}
+
+Questo è un caso speciale del modello di campionamento Normale, dove le \(Y_i\) seguono indipendentemente una densità Normale con una media (\(\beta_0 + \beta_ 1 x_i\)) specifica per ciascuna osservazione e con una deviazione standard (\(\sigma\)) comune a tutte le osservazioni. Poiché include un solo predittore (\(x\)), questo modello è comunemente chiamato \emph{modello di regressione lineare semplice}.
+
+In maniera equivalente, il modello \eqref{eq:samplinglinearmodel} può essere formulato come
+
+\begin{equation}
+Y_i = \mu_i + \varepsilon_i, \quad i = 1, \dots, n,
+\label{eq:samplinglinearmodel2}
+\end{equation}
+
+dove la risposta media è \(\mu_i = \beta_0 + \beta_ 1 x_i\) e i residui \(\varepsilon_1, \dots, \varepsilon_n\) sono i.i.d. da una Normale con media 0 e deviazione standard \(\sigma\).
+
+\begin{center}\includegraphics[width=0.8\linewidth]{051_reglin1_files/figure-latex/unnamed-chunk-2-1} \end{center}
+
+Nel modello di regressione lineare, l'osservazione \(Y_i\) è una variabile casuale, il predittore \(x_i\) è una costante fissa, e \(\beta_0\), \(\beta_1\) e \(\sigma\) sono parametri incogniti. Utilizzando il paradigma bayesiano, viene assegnata una distribuzione a priori congiunta a \((\beta_0, \beta_1, \sigma)\). Dopo avere osservato le risposte \(Y_i, i = 1, \dots, n\), l'inferenza procede stimando la distribuzione a posteriori dei parametri.
+
+Nella costruzione di un modello di regressione bayesiano, è importante iniziare dalle basi e procedere un passo alla volta. Sia \(Y\) una variabile di risposta e
+sia \(x\) un predittore o un insieme di predittori. È possibile costruire un modello di regressione di \(Y\) su \(x\) applicando i seguenti principi generali:
+
+\begin{itemize}
+\tightlist
 \item
-  \(0 \leq P(x_i, y_j) \leq 1\);
+  Stabilire se \(Y\) è discreto o continuo. Di conseguenza, identificare l'appropriata struttura dei dati (per esempio, Normale, di Poisson, o Binomiale).
 \item
-  la probabilità totale deve essere uguale a \(1.0\). Tale proprietà può essere espressa nel modo seguente
-\end{enumerate}
+  Esprimere la media di \(Y\) come funzione dei predittori \(x\) (per esempio, \(\mu = \beta_0 + \beta_1 x\)).
+\item
+  Identificare tutti i parametri incogniti del modello (per esempio, \(\mu, \beta_1, \beta_2\)).
+\item
+  Valutare quali valori che ciascuno di questi parametri potrebbe assumere. Di conseguenza, identificare le distribuzioni a priori appropriate per questi parametri.
+\end{itemize}
 
-\[
-\sum_{i} \sum_{j} P(x_i, y_j) = 1.0.
-\]
+Nel caso di una variabile \(Y\) continua che segue la legge Normale e un solo predittore, ad esempio, il modello diventa:
 
-\hypertarget{eventi}{%
-\subsection{Eventi}\label{eventi}}
+\begin{align} 
+Y_i \mid \beta_0, \beta_1, \sigma  &\stackrel{ind}{\sim} \mathcal{N}\left(\mu_i, \sigma^2\right) \;\; \text{ con } \;\; \mu_i = \beta_0 + \beta_1 x_i \notag\\
+\beta_0  &\sim \mathcal{N}\left(\mu_0, \sigma_0^2 \right)  \notag\\
+\beta_1  & \sim \mathcal{N}\left(\mu_1, \sigma_1^2 \right) \notag\\
+\sigma & \sim \text{Cauchy}(x_0, \gamma) \; .\notag
+\end{align}
 
-Si noti che dalla probabilità congiunta possiamo calcolare la
-probabilità di qualsiasi evento definito in base alle variabili
-aleatorie \(X\) e \(Y\). Per capire come questo possa essere fatto,
-consideriamo nuovamente l'esperimento casuale discusso in precedenza.
-
-\begin{example}
-Per la distribuzione di massa di probabilità congiunta riportata nella tabella~precedente si trovi la probabilità dell'evento \(X+Y \leq 1\).
-
-Per trovare la probabilità richiesta dobbiamo semplicemente sommare le probabilità associate a tutte le coppie \((x,y)\) che soddisfano la condizione \(X+Y \leq 1\), ovvero
-
-\begin{equation}
-P_{XY}(X+Y \leq 1) = P_{XY}(0, 0) + P_{XY}(1, 0)= 3/8.\notag
-\end{equation}
-\end{example}
-
-\hypertarget{regola-della-catena}{%
-\subsection{Regola della catena}\label{regola-della-catena}}
-
-Regola della catena permette il calcolo di qualsiasi membro della distribuzione congiunta di un insieme di variabili casuali utilizzando solo le probabilità condizionate.
-
-\begin{definition}
-Dati due eventi \(A\) e \(B\), la regola della catena (\emph{chain rule}) afferma che
-
-\[
-P(A \cap B) = P(A)P(B \mid A).
-\]
-\end{definition}
-
-Nel caso di 4 eventi, per esempio, la regola della catena diventa
-
-\[
-P(A_1, A_2, A_3, A_4) = P(A_1) P(A_2 \mid A_1) P(A_3 \mid A_1, A_2) P(A_4 \mid A_1, A_2, A_3).
-\]
-
-\hypertarget{funzioni-di-probabilituxe0-marginali}{%
-\subsection{Funzioni di probabilità marginali}\label{funzioni-di-probabilituxe0-marginali}}
-
-Data la funzione di probabilità congiunta \(p(x, y)\) è possibile pervenire alla costruzione della funzione di probabilità della singola variabile casuale \(X\) o della singola variabile casuale \(Y\)
-
-\begin{equation}
-P(X) = \sum_y Pr(X, Y = y),
-\end{equation}
-
-\begin{equation}
-P(Y) = \sum_x P(X = x, Y),
-\end{equation}
-
-\noindent
-che prendono, rispettivamente, il nome di funzione di probabilità marginale di \(X\) e funzione di probabilità marginale di \(Y\). Si noti che \(P_X\) e \(P_Y\) sono normalizzate:
-
-\[
-\sum_x P_X(x) = 1.0, \quad \sum_y P_Y(y) = 1.0.
-\]
-
-\begin{example}
-\protect\hypertarget{exm:flip3coins}{}\label{exm:flip3coins}
-
-Per l'esperimento casuale consistente nel lancio di tre monete equilibrate, si calcolino le probabilità marginali di \(X\) e \(Y\).
-
-Nell'ultima colonna a destra e nell'ultima riga in basso della tabella \ref{tab:ditr-cong-biv} sono riportate le distribuzioni di probabilità marginali di \(X\) e \(Y\). \(P_X\) si ottiene sommando su ciascuna riga fissata la colonna \(j\), \(P_X(X = j) = \sum_y p_{xy}(x = j, y)\). \(P_Y\) si trova sommando su ciascuna colonna fissata la riga \(i,\) \(P_Y (Y = i) = \sum_x p_{xy}(x, y = i)\).
-
-\begin{longtable}[]{@{}cccc@{}}
-\caption{\label{tab:ditr-cong-biv} Distribuzione di probabilità congiunta \(p(x,y)\) per i risultati dell'esperimento consistente nel lancio di tre monete equilibrate e probabilità marginali \(P(x)\) e \(P(y)\).}\tabularnewline
-\toprule
-\(x / y\) & 0 & 1 & \(P(x)\) \\
-\midrule
-\endfirsthead
-\toprule
-\(x / y\) & 0 & 1 & \(P(x)\) \\
-\midrule
-\endhead
-0 & 1/8 & 0 & 1/8 \\
-1 & 2/8 & 1/8 & 3/8 \\
-2 & 1/8 & 2/8 & 3/8 \\
-3 & 0 & 1/8 & 1/8 \\
-\(P(y)\) & 4/8 & 4/8 & 1.0 \\
-\bottomrule
-\end{longtable}
-
-\end{example}
-
-\hypertarget{marginalizzazione-nel-caso-continuo}{%
-\section{Marginalizzazione nel caso continuo}\label{marginalizzazione-nel-caso-continuo}}
-
-Come indicato nel Paragrafo precedente, la marginalizzazione è un metodo che richiede di sommare tutti i possibili valori di una variabile casuale per determinare il contributo marginale di un'altra. Per una v.c. discreta abbiamo
-
-\begin{equation}
-Pr(X) = \sum_y Pr(X, Y = y),\notag
-\end{equation}
-
-\noindent
-ovvero
-
-\begin{equation}
-P(X) = \sum_y P(X, Y = y) = \sum_y P(X \mid Y = y) P(Y = y).
-\end{equation}
-
-Nel caso continuo abbiamo
-
-\begin{equation}
-p(X) = \int_y p(X, Y = y) dy = \int_y p(X \mid Y = y) p(Y = y).
-\end{equation}
-
-\hypertarget{verosimiglianza-marginalizzata}{%
-\section{Verosimiglianza marginalizzata}\label{verosimiglianza-marginalizzata}}
-
-Nella statistica bayesiana, la marginalizzazione serve per calcolare la cosiddetta \emph{verosimiglianza marginalizzata}. Sia \(y = \{y_1, \dots, y_n\}\) un campione casuale e si assuma un modello statistico parametrizzato da \(\theta\). Il teorema di Bayes è
-
-\[
-p(\theta \mid y) = \frac{p(y \mid \theta) p(\theta)}{p(y)},
-\]
-
-\noindent
-laddove
-
-\[
-p(y) = \int_\theta p(y \mid \theta) p(\theta) d\theta,
-\]
-
-\noindent
-si integra su tutti i valori del parametro (o dei parametri).
-
-\hypertarget{indipendenza-stocastica}{%
-\section{Indipendenza stocastica}\label{indipendenza-stocastica}}
-
-Ora abbiamo tutti gli strumenti per dare una precisa definizione
-statistica al concetto di indipendenza. La definizione proposta
-sarà necessariamente coerente con la definizione di indipendenza che abbiamo usato fino ad ora. Ma, espressa in questi nuovi termini, potrà essere utilizzata in indagini probabilistiche e statistiche più complesse. Ricordiamo che gli eventi \(A\) e \(B\) si dicono indipendenti se \(P (A \cap B)\, = P(A) P(B)\). Diciamo quindi che \(X\) e \(Y\) sono indipendenti se qualsiasi evento definito da \(X\) è indipendente da qualsiasi evento definito da \(Y\). La definizione formale che garantisce che ciò accada è la seguente.
-
-\begin{definition}
-Le variabili aleatorie \(X\) e \(Y\) sono indipendenti se la loro distribuzione congiunta è il prodotto delle rispettive distribuzioni marginali:
-
-\begin{equation}
-P(X, Y)\, = P_X(x)P_Y(y).
-\end{equation}
-\end{definition}
-
-Nel caso discreto, dunque, l'indipendenza implica che la probabilità
-riportata in ciascuna cella della tabella di probabilità congiunta deve
-essere uguale al prodotto delle probabilità marginali di riga e di
-colonna:
-\[
-P(x_i, y_i)\, = P_X(x_i) P_Y(y_i).
-\]
-
-\begin{example}
-Per la situazione rappresentata nella tabella \ref{exm:flip3coins} le variabili casuali \(X\) e \(Y\) sono indipendenti?
-
-Nella tabella le variabili casuali \(X\) e \(Y\) non sono indipendenti: le probabilità congiunte non sono ricavabili dal prodotto delle marginali. Per esempio, nessuna delle probabilità marginali è uguale a \(0\) per cui nessuno dei valori dentro la tabella (probabilità congiunte) che risulta essere uguale a \(0\) può essere il prodotto delle probabilità marginali.
-\end{example}
+Un algoritmo MCMC viene usato per simulare i campioni dalle distribuzioni a posteriori e, mediante tali campioni, si fanno inferenze sulla risposta attesa \(\beta_0 + \beta_1 x\) per ciascuno specifico valore del predittore \(x\). Inoltre, è possibile valutare le dimensioni degli errori di previsione mediante un indice sintetico della densità a posteriori della deviazione standard \(\sigma\).
 
 \hypertarget{considerazioni-conclusive}{%
 \section*{Considerazioni conclusive}\label{considerazioni-conclusive}}
 \addcontentsline{toc}{section}{Considerazioni conclusive}
 
-La funzione di probabilità congiunta tiene simultaneamente conto del
-comportamento di due variabili casuali \(X\) e \(Y\) e di come esse si
-influenzano reciprocamente. In particolare, si osserva che se le due
-variabili non si influenzano, cioè se sono statisticamente indipendenti,
-allora la distribuzione di massa di probabilità congiunta si ottiene
-come prodotto delle funzioni di probabilità marginali di \(X\) e \(Y\):
-\(P_{X, Y}(x, y) = P_X(x) P_Y(y)\).
+Il modello di regressione lineare semplice viene usato per descrivere la
+relazione tra due variabili e per determinare il segno e l'intensità di
+tale relazione. Inoltre, il modello di regressione ci consente di
+prevedere il valore della variabile dipendente in base ad alcuni nuovi
+valori della variabile indipendente. Il modello di regressione lineare
+semplice è in realtà molto limitato, in quanto descrive soltanto la
+relazione tra la variabile dipendente \(y\) e una sola variabile
+esplicativa \(x\). Esso diventa molto più utile quando incorpora più
+variabili indipendenti. In questo secondo caso, però, i calcoli per la
+stima dei coefficienti del modello diventano più complicati. Abbiamo
+deciso di iniziare considerando il modello di regressione lineare semplice
+perché, in questo caso, sia la logica dell'inferenza sia le procedure di
+calcolo sono facilmente maneggiabili. Nel caso più generale, quello del
+modello di regressione multipla, la logica dell'inferenza rimarrà
+identica a quella discussa qui, ma le procedure di calcolo richiedono
+l'uso dell'algebra matriciale. Il modello di regressione multipla può includere sia regressori quantitativi, sia regressori qualitativi, utilizzando un
+opportuna schema di codifica. È interessante notare come un modello di
+regressione multipla che include una sola variabile esplicativa
+quantitativa corrisponde all'analisi della varianza ad una via; un
+modello di regressione multipla che include più di una variabile
+esplicativa quantitativa corrisponde all'analisi della varianza più vie.
+Possiamo qui concludere dicendo che il modello di regressione, nelle sue varie forme e varianti, costituisce la tecnica di analisi dei dati maggiormente usata in psicologia.
 
 
 % Bibliography

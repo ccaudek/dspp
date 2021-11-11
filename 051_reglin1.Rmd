@@ -84,7 +84,7 @@ Si noti che la \@ref(eq:regbivpop) consente di formulare una predizione, nei ter
 \end{equation}
 
 In altri termini, se i parametri del modello ($\alpha$ e $\beta$) sono noti, allora è possibile predire la $y$ sulla base della nostra conoscenza della $x$. 
-Per esempio, se conosciamo la relazione lineare tra quoziente di intelligenza ed aspettativa di vita, allora possiamo prevedere quanto a lungo vivrà una persona sulla base del suo QI. Sì, c'è una relazione lineare tra intelligenza e aspettativa di vita [@hambrick2015research]! Ma quando è accurata la previsione? Ciò dipende dal termine d'errore della \@ref(eq:regbivpop). L'analisi di regressione fornisce un metodo per rispondere a domande di questo tipo.
+Per esempio, se conosciamo la relazione lineare tra quoziente di intelligenza ed aspettativa di vita, allora possiamo prevedere quanto a lungo vivrà una persona sulla base del suo QI. Sì, c'è una relazione lineare tra intelligenza e aspettativa di vita [@hambrick2015research]! Ma quando è accurata la previsione? Ciò dipende dal termine d'errore della \@ref(eq:regbivpop). L'analisi di regressione fornisce un metodo per rispondere a domande di questo tipo^[Per una discussione sugli aspetti di base della regressione lineare, si veda il [capitolo 7](https://openintro-ims.netlify.app/model-slr.html) di _Introduction to Modern Statistics_.].
 
 
 ## Una media per ciascuna osservazione

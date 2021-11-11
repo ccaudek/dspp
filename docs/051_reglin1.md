@@ -57,7 +57,7 @@ Consideriamo ora il coefficiente $b$. Si consideri un punto $x_0$ e un increment
 
 indipendentemente dalla grandezza degli incrementi $\Delta x$ e $\Delta y$. Il modo più semplice per assegnare un'interpretazione geometrica al coefficiente angolare (o pendenza) della retta è dunque quello di porre $\Delta x = 1$. In tali circostanze infatti $b = \Delta y$.
 
-\begin{figure}
+\begin{figure}[h]
 
 {\centering \includegraphics[width=0.7\linewidth]{images/linear_function} 
 
@@ -86,7 +86,7 @@ Si noti che la \@ref(eq:regbivpop) consente di formulare una predizione, nei ter
 \end{equation}
 
 In altri termini, se i parametri del modello ($\alpha$ e $\beta$) sono noti, allora è possibile predire la $y$ sulla base della nostra conoscenza della $x$. 
-Per esempio, se conosciamo la relazione lineare tra quoziente di intelligenza ed aspettativa di vita, allora possiamo prevedere quanto a lungo vivrà una persona sulla base del suo QI. Sì, c'è una relazione lineare tra intelligenza e aspettativa di vita [@hambrick2015research]! Ma quando è accurata la previsione? Ciò dipende dal termine d'errore della \@ref(eq:regbivpop). L'analisi di regressione fornisce un metodo per rispondere a domande di questo tipo.
+Per esempio, se conosciamo la relazione lineare tra quoziente di intelligenza ed aspettativa di vita, allora possiamo prevedere quanto a lungo vivrà una persona sulla base del suo QI. Sì, c'è una relazione lineare tra intelligenza e aspettativa di vita [@hambrick2015research]! Ma quando è accurata la previsione? Ciò dipende dal termine d'errore della \@ref(eq:regbivpop). L'analisi di regressione fornisce un metodo per rispondere a domande di questo tipo^[Per una discussione sugli aspetti di base della regressione lineare, si veda il [capitolo 7](https://openintro-ims.netlify.app/model-slr.html) di _Introduction to Modern Statistics_.].
 
 
 ## Una media per ciascuna osservazione
@@ -151,7 +151,7 @@ Y_i = \mu_i + \varepsilon_i, \quad i = 1, \dots, n,
 dove la risposta media è $\mu_i = \beta_0 + \beta_ 1 x_i$ e i residui $\varepsilon_1, \dots, \varepsilon_n$ sono i.i.d. da una Normale con media 0 e deviazione standard $\sigma$. 
 
 
-\begin{center}\includegraphics{051_reglin1_files/figure-latex/unnamed-chunk-2-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{051_reglin1_files/figure-latex/unnamed-chunk-2-1} \end{center}
 
 Nel modello di regressione lineare, l'osservazione $Y_i$ è una variabile casuale, il predittore $x_i$ è una costante fissa, e $\beta_0$, $\beta_1$ e $\sigma$ sono parametri incogniti. Utilizzando il paradigma bayesiano, viene assegnata una distribuzione a priori congiunta a $(\beta_0, \beta_1, \sigma)$. Dopo avere osservato le risposte $Y_i, i = 1, \dots, n$, l'inferenza procede stimando la distribuzione a posteriori dei parametri. 
 
