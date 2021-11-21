@@ -423,6 +423,23 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+\usepackage{amsthm}
+\newtheorem{theorem}{Teorema}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{corollary}{Corollario}[chapter]
+\newtheorem{proposition}{Proposizione}[chapter]
+\newtheorem{conjecture}{Congettura}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Definizione}[chapter]
+\theoremstyle{definition}
+\newtheorem{example}{Esempio}[chapter]
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercizio}[chapter]
+\theoremstyle{definition}
+\newtheorem{hypothesis}{Hypothesis}[chapter]
+\theoremstyle{remark}
+\newtheorem*{remark}{Osservazione}
+\newtheorem*{solution}{Soluzione}
 \begin{document}
 \frontmatter
 
@@ -561,447 +578,1240 @@ Febbraio 2022
 
 \mainmatter
 
-\hypertarget{regr-ml}{%
-\chapter{Adattare il modello di regressione ai dati}\label{regr-ml}}
+\hypertarget{part-statistica-descrittiva-ed-analisi-esplorativa-dei-dati}{%
+\part*{Statistica descrittiva ed analisi esplorativa dei dati}\label{part-statistica-descrittiva-ed-analisi-esplorativa-dei-dati}}
+\addcontentsline{toc}{part}{Statistica descrittiva ed analisi esplorativa dei dati}
 
-In questo capitolo verranno esposte alcune nozioni matematiche che stanno alla base dell'inferenza per i modelli di regressione e un po' di algebra che ci aiuterà a comprendere la stima della regressione lineare. Spiegheremo anche la logica per l'uso della funzione bayesiana {[}\texttt{brm()}{]} e la sua connessione con la regressione lineare classica. Questo capitolo fornisce quindi lo sfondo e la motivazione per la discussione dei capitoli successivi.
+\hypertarget{descriptive-stats}{%
+\chapter{Statistica descrittiva}\label{descriptive-stats}}
 
-\hypertarget{minimi-quadrati}{%
-\section{Minimi quadrati}\label{minimi-quadrati}}
+\hypertarget{chapter-descript}{%
+\section{Introduzione all'esplorazione dei dati}\label{chapter-descript}}
 
-Nel modello di regressione lineare classico, \(y_i = a + b x_i + \epsilon_i\), i coefficienti \(a\) e \(b\) sono stimati in modo da minimizzare gli errori \(\epsilon_i\). Se il numero dei dati \(n\) è maggiore di 2, non è generalmente possibile trovare una retta che passi per tutte le osservazioni (\(x, y\)) (sarebbe \(y_i = a + b x_i\), senza errori, per tutti i punti \(i = 1, \dots, n\)), e l'obiettivo della stima è scegliere i valori (\(\hat{a}, \hat{b}\)) che minimizzano la somma dei quadrati dei residui,
-\[
-r_i = y_i − (\hat{a} + \hat{b} x_i).
-\]
-Distinguiamo tra i residui \(r_i = y_i - (\hat{a} + \hat{b} x_i)\) e gli \emph{errori} \(\epsilon_i = y_i − (a + b x_i)\). Il modello è scritto in termini degli errori, ma possiamo solo lavorare con i residui: non possiamo calcolare gli errori perché per farlo sarebbe necessario conoscere \(a\) e \(b\).
+Le analisi esplorative dei dati e la statistica descrittiva costituiscono la prima fase dell'analisi dei dati psicologici. Ci consentono di capire come i dati sono distribuiti. Inoltre, ci aiutano ad individuare outliers ed errori di tabulazione. Sono anche molto utili per studiare le relazioni tra le variabili. Insomma, sono indispensabili per condurre una qualsiasi analisi statistica, dal livello base a quello avanzato, in modo corretto.
 
-La somma dei residui quadratici (\emph{residual sum of squares}) è
-\[
-\text{RSS} = \sum_{i=1}^n (y_i = (\hat{a} + \hat{b} x_i))^2.
-\]
-I coefficienti (\(\hat{a}, \hat{b}\)) che minimizzano RSS sono chiamati stime dei minimi quadrati, o minimi quadrati ordinari (\emph{ordinari least squares}), o stime OLS.
-\#\#\# Stima della deviazione standard dei residui \(\sigma\)
+Si parla di analisi descrittiva se l'obiettivo è quello di descrivere le caratteristiche di un campione. Si parla di analisi esplorativa dei dati (\emph{Exploratory Data Analysis} o EDA) se l'obiettivo è quello di esplorare i dati alla ricerca di nuove informazioni e relazioni tra variabili. Questa distinzione, seppur importante a livello teorico, nella pratica è più fumosa perché spesso entrambe le situazioni si verificano contemporaneamente nella stessa indagine statistica e le metodologie di analisi che si utilizzano sono molto simili.
 
-Nel modello di regressione, gli errori \(\epsilon_i\) provengono da una distribuzione con media 0 e deviazione standard \(\sigma\): la media è zero per definizione (qualsiasi media diversa da zero viene assorbita nell'intercetta, \(a\)), e la deviazione standard degli errori può essere stimata dai dati. Un modo naturale per stimare \(\sigma\) sarebbe semplicemente prendere la deviazione standard dei residui, \(\sqrt{\frac{1}{n} \sum_{i=1}^n r_i^2} = \sqrt{ \frac{1}{n} \sum_{i=1}^n y_i - (\hat{a} + \hat{b} x_i))^2}\), ma questo sottostimerebbe leggermente \(\sigma\) a causa del \emph{overfitting}, in quanto i coefficienti \(\hat{a}\) e \(\hat{b}\) sono stati stimati dai dati per minimizzare la somma dei residui quadratici. La correzione standard per questo overfitting consiste nel sostituire \(n\) con \(n - 2\) al denominatore (con la sottrazione di 2 derivante dalla stima di due coefficienti nel modello, l'intercetta e la pendenza). Così otteniamo
-\[
-\hat{\sigma} = \sqrt{\frac{1}{n-2} \sum_{i=1}^n (y_i - (\hat{a} + \hat{b} x_i))^2}.
-\]
-Quando \(n = 1\) o \(2\) questa espressione è priva di significato, il che ha senso: con solo due osservazioni è possibile adattare esattamente una retta al diagramma di dispersione e quindi non c'è modo di stimare l'errore dai dati.
+Né il calcolo delle statistiche descrittive né l'analisi esplorativa dei dati possono essere condotte senza utilizzare un software. Le descrizioni dei concetti di base della EDA saranno dunque fornite di pari passo alla spiegazione di come le quantità discusse possono essere calcolate in pratica utilizzando R.
 
-\hypertarget{calcolare-la-somma-dei-quadrati}{%
-\section{Calcolare la somma dei quadrati}\label{calcolare-la-somma-dei-quadrati}}
+\hypertarget{un-excursus-storico}{%
+\section{Un excursus storico}\label{un-excursus-storico}}
 
-Seguendo \href{https://github.com/ASKurz/Working-through-Regression-and-other-stories/blob/main/08.Rmd}{Solomon Kurz}, creiamo una funzione per calcolare la somma dei quadrati per diversi valori di \(a\) e \(b\):
+Nel 1907 Francis Galton, cugino di Charles Darwin, matematico e
+statistico autodidatta, geografo, esploratore, teorico della
+dattiloscopia (ovvero, dell'uso delle impronte digitali a fini
+identificativi) e dell'eugenetica, scrisse una lettera alla rivista
+scientifica Nature sulla sua visita alla \emph{Fat Stock and Poultry
+Exhibition} di Plymouth. Lì vide alcuni membri del pubblico partecipare
+ad un gioco il cui scopo era quello di indovinare il peso della carcassa
+di un grande bue che era appena stato scuoiato. Galton si procurò i 787
+dei biglietti che erano stati compilati dal pubblico e considerò il
+valore medio di 547 kg come la ``scelta democratica'' dei partecipanti, in
+quanto ``ogni altra stima era stata giudicata troppo alta o troppo bassa
+dalla maggioranza dei votanti''. Il punto interessante è che il peso
+corretto di 543 kg si dimostrò essere molto simile alla ``scelta
+democratica'' basata sulle stime dei 787 partecipanti. Galton intitolò la
+sua lettera a Nature \emph{Vox Populi} (voce del popolo), ma questo processo
+decisionale è ora meglio conosciuto come la ``saggezza delle folle''
+(\emph{wisdom of crowds}). Possiamo dire che, nel suo articolo del 1907,
+Galton effettuò quello che ora chiamiamo un riepilogo dei dati, ovvero
+calcolò un indice sintetico a partire da un insieme di dati. In questo
+capitolo esamineremo le tecniche che sono state sviluppate nel secolo
+successivo per riassumere le grandi masse di dati con cui sempre più
+spesso ci dobbiamo confrontare. Vedremo come calcolare e interpretare
+gli indici di posizione e di dispersione, discuteremo le distribuzioni
+di frequenze e le relazioni tra variabili. Vedremo inoltre quali sono le
+tecniche di visualizzazione che ci consentono di rappresentare questi
+sommari dei dati mediante dei grafici. Ma prima di entrare nei dettagli, prendiamoci un momento per capire perché abbiamo bisogno della statistica e, per ciò che stiamo discutendo qui, della statistica descrittiva.
+
+In generale, che cos'è la statistica? Ci sono molte definizioni. Fondamentalmente, la statistica è un insieme di tecniche che ci consentono di dare un senso al mondo attraverso i dati. Ciò avviene tramite il processo di analisi statistica. L'analisi statistica traduce le domande che abbiamo a proposito del mondo in modelli matematici, utilizza i dati per scegliere i modelli matematici che sono apppropriati per descrivere il mondo e, infine, applica tali modelli per trovare una risposta alle domande che ci siamo posti. La statistica consente quindi di collegare le nostre domande a proposito del mondo ai dati, di utilizzare i dati per trovare le risposte alle domande che ci siamo posti e di valutare l'impatto delle risposte che abbiamo trovato.
+
+\hypertarget{riassumere-i-dati}{%
+\section{Riassumere i dati}\label{riassumere-i-dati}}
+
+Iniziamo a porci una domanda. Quando riassumiamo i dati, necessariamente buttiamo via delle informazioni; ma è una buona idea procedere in questo modo? Non sarebbe meglio conservare le informazioni specifiche di ciascun soggetto che partecipa ad un esperimento psicologico, al di là di ciò che viene trasmesso dagli indici riassuntivi della statistica descrittiva? Che dire delle informazioni che descrivono come sono stati raccolti i dati, come l'ora del giorno o l'umore del partecipante? Tutte queste informazioni vengono perdute quando riassumiamo i dati. La risposta alla domanda che ci siamo posti è che, in generale, non è una buona idea conservare tutti i dettagli di ciò che sappiamo. È molto più utile riassumere le informazioni perché la semplificazione risultante consente i processi di \emph{generalizzazione}.
+
+In un contesto letterario, l'importanza della generalizzazione è stata
+sottolineata da Jorge Luis Borges nel suo racconto ``Funes o della
+memoria'', che descrive un individuo che perde la capacità di
+dimenticare. Borges si concentra sulla relazione tra generalizzazione e
+pensiero:
+
+\begin{quote}
+Pensare è dimenticare una differenza, generalizzare, astrarre. Nel mondo troppo pieno di Funes, c'erano solo dettagli.
+\end{quote}
+
+Come possiamo ben capire, la vita di Funes non è facile. Se facciamo
+riferimento alla psicologia possiamo dire che gli psicologi hanno
+studiato a lungo l'utilità della generalizzazione per il pensiero. Un
+esempio è fornito dal fenomeno della formazione dei concetti e lo
+psicologo che viene in mente a questo proposito è sicuramente Eleanor
+Rosch, la quale ha studiato i principi di base della categorizzazione. I
+concetti ci forniscono uno strumento potente per organizzare le
+conoscenze. Noi siamo in grado di riconoscere facilmente i diversi
+esemplare di un concetto -- per esempio, ``gli uccelli'' -- anche se i
+singoli esemplari che fanno parte di una categoria sono molto diversi
+tra loro (l'aquila, il gabbiano, il pettirosso). L'uso dei concetti, cioè
+la generalizzazione, è utile perché ci consente di fare previsioni sulle
+proprietà dei singoli esemplari che appartengono ad una categoria, anche
+se non abbiamo mai avuto esperienza diretta con essi -- per esempio,
+possiamo fare la predizione che tutti gli uccelli possono volare e
+mangiare vermi, ma non possono guidare un'automobile o parlare in
+inglese. Queste previsioni non sono sempre corrette, ma sono utili.
+
+Le statistiche descrittive, in un certo senso, ci fornisco l'analogo dei
+``prototipi'' che, secondo Eleanor Rosch, stanno alla base del processo
+psicologico di creazione dei concetti. Un prototipo è l'esemplare più
+rappresentativo di una categoria. In maniera simile, una statistica
+descrittiva come la media, ad esempio, potrebbe essere intesa come
+l'osservazione ``tipica''.
+
+La statistica descrittiva ci fornisce gli strumenti per riassumere i
+dati che abbiamo a disposizione in una forma visiva o numerica. Le
+rappresentazioni grafiche più usate della statistica descrittiva sono
+gli istogrammi, i diagrammi a dispersione o i box-plot, e gli indici
+sintetici più comuni sono la media, la mediana, la varianza e la
+deviazione standard.
+
+\hypertarget{distribuzioni-di-frequenze}{%
+\section{Distribuzioni di frequenze}\label{distribuzioni-di-frequenze}}
+
+Per introdurre i principali strumenti della statistica descrittiva considereremo qui i dati raccolti da \textcite{zetschefuture2019}\footnote{Si veda l'Appendice \ref{es-pratico-zetsche}.}. Questi autori hanno studiato le aspettative negative le quali sono state evidenziate come un meccanismo chiave nel mantenimento e nella reiterazione della depressione. \textcite{zetschefuture2019} hanno valutato le aspettative di individui depressi circa il loro umore futuro ed si sono chiesti se queste aspettative fossero accurate oppure distorte negativamente.
+
+In uno degli studi descritti viene esaminato un campione costituito da 30 soggetti con almeno un episodio depressivo maggiore e da 37 controlli sani. Gli autori hanno misurato il livello depressivo con il \emph{Beck Depression Inventory} (BDI-II). Ma qual è la la gravità della depressione riportata dai soggetti nel campione esaminato da \textcite{zetschefuture2019}?
+
+Per rispondere a questa domanda, iniziamo a leggere in \(\R\) i dati, assumendo che il file \texttt{data.mood.csv} si trovi nella cartella \texttt{data} contenuta nella \emph{working directory}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{rss }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x, y, a, b) \{  }
-  \CommentTok{\# x and y are vectors, }
-  \CommentTok{\# a and b are scalars }
-\NormalTok{  resid }\OtherTok{\textless{}{-}}\NormalTok{ y }\SpecialCharTok{{-}}\NormalTok{ (a }\SpecialCharTok{+}\NormalTok{ b }\SpecialCharTok{*}\NormalTok{ x)}
-  \FunctionTok{return}\NormalTok{(}\FunctionTok{sum}\NormalTok{(resid}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}
-\NormalTok{  \}}
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}
+  \FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"data.mood.csv"}\NormalTok{), }
+  \AttributeTok{header=}\ConstantTok{TRUE}
+\NormalTok{) }
 \end{Highlighting}
 \end{Shaded}
 
-Useremo i dati \ldots.
+C'è un solo valore BDI-II per ciascun soggetto ma tale valore viene ripetuto tante volte quante volte sono le righe del \texttt{data.frame} associate ad ogni soggetto (ciascuna riga corrispondente ad una prova diversa). È dunque necessario trasformare il \texttt{data.frame} in modo tale da avere un'unica riga per ciascun soggetto, ovvero un unico valore BDI-II per soggetto.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{read.dta}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"kidiq.dta"}\NormalTok{))}
-\FunctionTok{head}\NormalTok{(df)}
-\CommentTok{\#\textgreater{}   kid\_score mom\_hs mom\_iq mom\_work mom\_age}
-\CommentTok{\#\textgreater{} 1        65      1  121.1        4      27}
-\CommentTok{\#\textgreater{} 2        98      1   89.4        4      25}
-\CommentTok{\#\textgreater{} 3        85      1  115.4        4      27}
-\CommentTok{\#\textgreater{} 4        83      1   99.4        3      25}
-\CommentTok{\#\textgreater{} 5       115      1   92.7        4      27}
-\CommentTok{\#\textgreater{} 6        98      0  107.9        1      18}
+\NormalTok{bysubj }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(esm\_id) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{bdi =} \FunctionTok{mean}\NormalTok{(bdi)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{na.omit}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
-Nell'esempio, \texttt{kid\_score} è la variabile \(y\) e \texttt{mom\_iq} è il predittore. Le stime dei minimi quadrati sono fornite dalla funzione \texttt{lm()}:
+Ci sono dunque 66 soggetti i quali hanno ottenuto i valori sulla scala del BDI-II stampati di seguito. Per semplicità, li presentiamo ordinati dal più piccolo al più grande.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(kid\_score }\SpecialCharTok{\textasciitilde{}}\NormalTok{ mom\_iq, }\AttributeTok{data =}\NormalTok{ df)}
-\FunctionTok{coef}\NormalTok{(fm)}
-\CommentTok{\#\textgreater{} (Intercept)      mom\_iq }
-\CommentTok{\#\textgreater{}       25.80        0.61}
+\FunctionTok{sort}\NormalTok{(bysubj}\SpecialCharTok{$}\NormalTok{bdi)}
+\CommentTok{\#\textgreater{}  [1]  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  1  1  1  1  1  1  1  1}
+\CommentTok{\#\textgreater{} [26]  2  2  2  2  3  3  3  5  7  9 12 19 22 22 24 25 25 26 26 26 27 27 28 28 30}
+\CommentTok{\#\textgreater{} [51] 30 30 31 31 33 33 34 35 35 35 36 39 41 43 43 44}
 \end{Highlighting}
 \end{Shaded}
 
-Calcoliamo la somma dei residui quadratici in base al modello di regressione \(y_i = 25.8 + 0.61 x_i + \epsilon_i\).
+È chiaro che i dati grezzi sono di difficile lettura. Poniamoci dunque il problema di creare una rappresentazione sintetica e comprensibile di questo insieme di valori.
+
+Uno dei modi che ci consentono di effettuare una sintesi dei dati è
+quello di generare una \emph{distribuzione di frequenze}.
+Una distribuzione di frequenze è un riepilogo del conteggio della
+frequenza con cui le modalità osservate in un insieme di dati si
+verificano in un intervallo di valori.
+
+Per creare una distribuzione di frequenze possiamo procedere effettuando una partizione delle modalità della variabile di interesse in \(m\) classi (denotate con \(\Delta_i\)) tra loro disgiunte. In tale partizione, la classe \(i\)-esima coincide con un intervallo di valori aperto a destra \([a_i, b_i)\) o aperto a sinistra \((a_i, b_i]\). Ad ogni classe \(\Delta_i\) avente \(a_i\) e \(b_i\) come limite inferiore e superiore associamo l'ampiezza \(b_i - a_i\) (non necessariamente uguale per ogni
+classe) e il valore centrale \(\bar{x}_i\). La scelta delle classi è arbitraria, ma è buona norma non definire classi con un numero troppo piccolo (\textless{} 5) di osservazioni. Poiché ogni elemento dell'insieme \(\{x_i\}_{i=1}^n\) appartiene ad una ed una sola classe \(\Delta_i\), possiamo calcolare le quantità elencate di seguito.
+
+\begin{itemize}
+\item
+  La \emph{frequenza assoluta} \(n_i\) di ciascuna classe, ovvero il numero di osservazioni che ricadono nella classe \(\Delta_i\).
+  Proprietà: \(n_1 + n_2 + \dots + n_m = n\).
+\item
+  La \emph{frequenza relativa} \(f_i = n_i/n\) di ciascuna classe. Proprietà: \(f_1+f_2+\dots+f_m =1\).
+\item
+  La \emph{frequenza cumulata} \(N_i\), ovvero il numero totale delle osservazioni che ricadono nelle classi fino alla \(i\)-esima compresa: \(N_i = \sum_{i=1}^m n_i.\)
+\item
+  La \emph{frequenza cumulata relativa} \(F_i\), ovvero
+  \(F_i = f_1+f_2+\dots+f_m = \frac{N_i}{n} = \frac{1}{n} \sum_{i=1}^m f_i.\)
+\end{itemize}
+
+Calcoliamo ora la distribuzione di frequenza assoluta e la distribuzione di frequenza relativa per i valori del BDI-II del campione clinico di \textcite{zetschefuture2019}. Per costruire una distribuzione di frequenza è innanzitutto necessario scegliere gli intervalli delle classi. Facendo riferimento ai cut-off usati per l'interpretazione del BDI-II, definiamo i seguenti \emph{intervalli aperti a destra}:
+
+\begin{itemize}
+\tightlist
+\item
+  depressione minima: {[}0, 13.5),
+\item
+  depressione lieve: {[}13.5, 19.5),
+\item
+  depressione moderata: {[}19.5, 28.5),
+\item
+  depressione severa: {[}28.5, 63).
+\end{itemize}
+
+Esaminando i dati, possiamo notare che 36 soggetti cadono nella prima classe, uno nella seconda classe, e così via. La distribuzione di frequenza della variabile \texttt{bdi2} è riportata nella tabella seguente. Questa distribuzione di frequenza ci aiuta a capire meglio cosa sta succedendo. Se consideriamo la frequenza relativa, ad esempio, possiamo notare che ci sono due valori maggiormente ricorrenti e tali valori corrispondono alle due classi più estreme. Questo ha senso nel caso presente, in quanto il campione esaminato da \textcite{zetschefuture2019} includeva due gruppi di soggetti: soggetti sani (con valori BDI-II bassi) e soggetti depressi (con valori BDI-II alti).\footnote{In una sezione successiva di questo capitolo discuteremo i principi che, secondo Edward Tufte, devono guidare la Data Science. Parlando delle rappresentazioni grafiche dei dati, Edward Tufte ci dice che la prima cosa da fare è ``mostrare i dati''. Questa può sembrare una tautologia, considerato che questo è lo scopo della statistica descrittiva: trasformare i dati attraverso vari indici riassuntivi o rappresentazioni grafiche, in modo tale da renderli \emph{comprensibili}. Tuttavia, spesso le tecniche statistiche vengono usate per \emph{nascondere} e non per \emph{mostrare} i dati. L'uso delle frequenze relative offre un chiaro esempio di questo. Di questi tempi capita spesso di incontrare, sulla stampa, notizie a proposito un nuovo farmaco che, in una prova clinica, ha mostrato risultati incoraggianti che suggeriscono la sua efficacia come possibile trattamento del COVID-19. Alle volte i risultati della sperimentazione clinica sono riportati nei termini di una \emph{frequenza relativa}. Ad esempio, potremmo leggere che l'uso del farmaco ha portato ad una riduzione del 21\% dei ricoveri o dei decessi. Sembra tanto. Ma è necessario guardare i dati! Ovvero, molto spesso, quello che \emph{non} viene riportato dai comunicati stampa. Infatti, una riduzione del 21\% può corrispondere ad un cambiamento dal 5\% al 4\%. E una riduzione del 44\% può corrispondere ad una differenza di 10 contro 18, o di 5 contro 9, o di 15 contro 27. In altri termini, una proporzione, anche grande, può corrispondere ad una differenza \emph{assoluta} piuttosto piccola: un piccolo passo in avanti, ma non ad un balzo! Per questa ragione, per capire cosa i dati significano, è necessario guardare i dati da diversi punti di vista, utilizzando diverse statistiche descrittive, senza limitarci alla statistica descrittiva che racconta la storia che piace di più. Perché la scelta della statistica descrittiva da utilizzare per riassumere i dati dipende dagli scopi di chi esegue l'analisi statisica: il nostro scopo è quelloi di capire se il farmaco funziona; lo scopo delle compagnie farmaceutiche è quello di vendere il farmaco. Sono obiettivi molto diversi.} In una distribuzione di frequenza tali valori tipici vanno sotto il nome di \emph{mode} della distribuzione.
+
+\begin{longtable}[]{@{}ccccc@{}}
+\toprule
+Limiti delle classi & Freq. ass. & Freq. rel. & Freq. ass. cum. & Freq. rel. cum. \\
+\midrule
+\endhead
+\([0, 13.5)\) & 36 & 36/66 & 36 & 36/66 \\
+\([13.5, 19.5)\) & 1 & 1/66 & 37 & 37/66 \\
+\([19.5, 28.5)\) & 12 & 12/66 & 49 & 49/66 \\
+\([28.5, 63)\) & 17 & 17/66 & 66 & 66/66 \\
+\bottomrule
+\end{longtable}
+
+Poniamoci ora il problema di costruire la tabella precedente utilizzando \R. Per fare questo useremo la funzione \texttt{cut()} che divide il \emph{campo di variazione} (ovvero, la differenza tra il valore massimo di una distribuzione ed il valore minimo) di una variabile continua \texttt{x} in intervalli e codifica ciascun valore \texttt{x} nei termini dell'intervallo a cui appartiene. Così facendo otteniamo:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{rss}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{mom\_iq, df}\SpecialCharTok{$}\NormalTok{kid\_score, }\FloatTok{25.8}\NormalTok{, }\FloatTok{0.61}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 144137}
-\end{Highlighting}
-\end{Shaded}
-
-Esploriamo ora i valori assunti da \(rss\) per diversi valori di \(a\) e \(b\). Per iniziare, utilizziamo un vettore di valori \texttt{a}, mantenendo costante \texttt{b\ =\ 0.61}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# set the global plotting theme}
-\CommentTok{\# theme\_set(theme\_linedraw() +}
-\CommentTok{\#             theme(panel.grid = element\_blank()))}
-\CommentTok{\# simulate}
-\FunctionTok{tibble}\NormalTok{(}\AttributeTok{a =} \FunctionTok{seq}\NormalTok{(}\DecValTok{20}\NormalTok{, }\DecValTok{30}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{30}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}
-    \AttributeTok{rss =} \FunctionTok{map\_dbl}\NormalTok{(}
-\NormalTok{      a, }
-\NormalTok{      rss, }
-      \AttributeTok{x =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{mom\_iq, }
-      \AttributeTok{y =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{kid\_score,  }
-      \AttributeTok{b =} \FloatTok{0.61}\NormalTok{)}
-\NormalTok{    ) }\SpecialCharTok{\%\textgreater{}\%} 
-  
-  \CommentTok{\# plot}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ a, }\AttributeTok{y =}\NormalTok{ rss)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Il valore b è tenuto costante (b = 0.61)"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.8\linewidth]{052_reglin2_files/figure-latex/unnamed-chunk-6-1} \end{center}
-
-Ora variamo sia \texttt{a} che \texttt{b}, facendo assumere a ciascun parametro un insieme di valori in un intevallo, e rappresentiamo i risultati in una heat map che rappresenta l'intensitè di \texttt{rss} in funzione dei valori \texttt{a} e \texttt{b}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{d }\OtherTok{\textless{}{-}}
-  \FunctionTok{crossing}\NormalTok{(}\AttributeTok{a =} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{20}\NormalTok{, }\DecValTok{70}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{400}\NormalTok{),}
-           \AttributeTok{b =} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.2}\NormalTok{, }\FloatTok{1.4}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{400}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{rss =} \FunctionTok{map2\_dbl}\NormalTok{(a, b, rss, }\AttributeTok{x =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{mom\_iq, }\AttributeTok{y =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{kid\_score))}
-\NormalTok{d }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ a, }\AttributeTok{y =}\NormalTok{ b, }\AttributeTok{fill =}\NormalTok{ rss)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_tile}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{scale\_fill\_viridis\_c}\NormalTok{(}\StringTok{"RSS"}\NormalTok{, }\AttributeTok{option =} \StringTok{"A"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.8\linewidth]{052_reglin2_files/figure-latex/unnamed-chunk-7-1} \end{center}
-
-Poiché la stima dei minimi quadrati enfatizza il valore RSS più piccolo, la soluzione che cerchiamo corrisponde alle combinazione di \texttt{a} e \texttt{b} nell'intervallo più scuro rappresentato nella figura.
-
-Tra gli \texttt{a} e \texttt{b} che abbiamo preso in considerazione, la coppia di valori dei parametri a cui è associato il valore \texttt{rss} più basso si trova nel modo seguente:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{d }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{arrange}\NormalTok{(rss) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\NormalTok{)}
-\CommentTok{\#\textgreater{} \# A tibble: 1 x 3}
-\CommentTok{\#\textgreater{}       a     b     rss}
-\CommentTok{\#\textgreater{}   \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}   \textless{}dbl\textgreater{}}
-\CommentTok{\#\textgreater{} 1  25.8 0.610 144137.}
-\end{Highlighting}
-\end{Shaded}
-
-Si noti la corrispondenza tra la soluzione qui trovata e l'output della funzione \texttt{lm()}.
-
-\hypertarget{massima-verosimiglianza}{%
-\section{Massima verosimiglianza}\label{massima-verosimiglianza}}
-
-Se gli errori del modello lineare sono indipendenti e distribuiti normalmente, in modo che \(y_i \sim \mathcal{N}(a + b x_i, \sigma^2)\) per ogni \(i\), allora la stima ai minimi quadrati di (\texttt{a}, \texttt{b}) è anche la stima di massima verosimiglianza. La \emph{funzione di verosimiglianza} in un modello di regressione è definita come la densità di probabilità delle osservazioni dati i parametri e i predittori; quindi, in questo esempio,
-\[
- p(y \mid a, b, \sigma, x) = \prod_{i=1}^n \mathcal{N}(y_i \mid a + b x_i, \sigma^2),
- \]
-
-dove \(\mathcal{N}(\cdot | \cdot, \cdot)\) è la funzione di densità di probabilità normale,
-\[
-\mathcal{N}(y \mid \mu, \sigma^2) = \frac{1}{\sqrt{2 \pi \sigma}} \exp \left(-\frac{1}{2} \left( \frac{y - \mu}{\sigma} \right)^2 \right).
-\]
-
-Un studio della funzione precedente rivela che la massimizzazione della verosimiglianza richiede la minimizzazione della somma dei quadrati dei residui; quindi la stima dei minimi quadrati \(\hat{\beta} = (\hat{a}, \hat{b})\) può essere vista come una stima di massima verosimiglianza nel modello normale:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{ll }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x, y, a, b) \{}
-\NormalTok{  resid }\OtherTok{\textless{}{-}}\NormalTok{ y }\SpecialCharTok{{-}}\NormalTok{ (a }\SpecialCharTok{+}\NormalTok{ b }\SpecialCharTok{*}\NormalTok{ x)}
-\NormalTok{  sigma }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{sum}\NormalTok{(resid}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{/} \FunctionTok{length}\NormalTok{(x))}
-\NormalTok{  d }\OtherTok{\textless{}{-}} \FunctionTok{dnorm}\NormalTok{(y, }\AttributeTok{mean =}\NormalTok{ a }\SpecialCharTok{+}\NormalTok{ b }\SpecialCharTok{*}\NormalTok{ x, }\AttributeTok{sd =}\NormalTok{ sigma, }\AttributeTok{log =} \ConstantTok{TRUE}\NormalTok{)}
-  \FunctionTok{tibble}\NormalTok{(}\AttributeTok{sigma =}\NormalTok{ sigma, }\AttributeTok{ll =} \FunctionTok{sum}\NormalTok{(d))}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-Calcoliamo dunque le stime di verosimiglianza logaritmica per varie combinazioni di (\texttt{a}, \texttt{b}), date due colonne di dati, \texttt{x} e \texttt{y}. La funzione resituisce anche il valore \(\hat{\sigma}\).
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{d }\OtherTok{\textless{}{-}}
-  \FunctionTok{crossing}\NormalTok{(}\AttributeTok{a =} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{20}\NormalTok{, }\DecValTok{70}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{200}\NormalTok{),}
-           \AttributeTok{b =} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.2}\NormalTok{, }\FloatTok{1.4}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{200}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{ll =} \FunctionTok{map2}\NormalTok{(a, b, ll, }\AttributeTok{x =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{mom\_iq, }\AttributeTok{y =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{kid\_score)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{unnest}\NormalTok{(ll)}
-\NormalTok{p1 }\OtherTok{\textless{}{-}}
-\NormalTok{  d }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ a, }\AttributeTok{y =}\NormalTok{ b, }\AttributeTok{fill =}\NormalTok{ ll)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_tile}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{scale\_fill\_viridis\_c}\NormalTok{(}\AttributeTok{option =} \StringTok{"A"}\NormalTok{, }\AttributeTok{breaks =} \ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Verosimiglianza, p(a, b | y)"}\NormalTok{)}
-\NormalTok{p1}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.8\linewidth]{052_reglin2_files/figure-latex/unnamed-chunk-10-1} \end{center}
-
-Le stime di \(\hat{a}, \hat{b}\) ottenute mediante il metodo di massima verosimiglianza sono:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{d }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(ll)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\NormalTok{)}
-\CommentTok{\#\textgreater{} \# A tibble: 1 x 4}
-\CommentTok{\#\textgreater{}       a     b sigma     ll}
-\CommentTok{\#\textgreater{}   \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}}
-\CommentTok{\#\textgreater{} 1  25.7 0.612  18.2 {-}1876.}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{inferenza-bayesiana}{%
-\subsection{Inferenza bayesiana}\label{inferenza-bayesiana}}
-
-Usiamo ora la funzione \texttt{brms::brm()} per eseguire l'analisi mediante un approccio bayesiano:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{m }\OtherTok{\textless{}{-}}
-  \FunctionTok{brm}\NormalTok{(}
-\NormalTok{    kid\_score }\SpecialCharTok{\textasciitilde{}}\NormalTok{ mom\_iq,}
-    \AttributeTok{data =}\NormalTok{ df, }
-    \AttributeTok{backend =} \StringTok{"cmdstan"}
+\NormalTok{bysubj}\SpecialCharTok{$}\NormalTok{bdi\_level }\OtherTok{\textless{}{-}} \FunctionTok{cut}\NormalTok{(}
+\NormalTok{  bysubj}\SpecialCharTok{$}\NormalTok{bdi,}
+  \AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{13.5}\NormalTok{, }\FloatTok{19.5}\NormalTok{, }\FloatTok{28.5}\NormalTok{, }\DecValTok{63}\NormalTok{),}
+  \AttributeTok{include.lowest =} \ConstantTok{TRUE}\NormalTok{,}
+  \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}
+    \StringTok{"minimal"}\NormalTok{, }\StringTok{"mild"}\NormalTok{, }\StringTok{"moderate"}\NormalTok{, }\StringTok{"severe"}
 \NormalTok{  )}
+\NormalTok{)}
+
+\NormalTok{bysubj}\SpecialCharTok{$}\NormalTok{bdi\_level}
+\CommentTok{\#\textgreater{}  [1] moderate severe   severe   moderate severe   severe   severe   severe  }
+\CommentTok{\#\textgreater{}  [9] moderate severe   moderate mild     severe   minimal  minimal  minimal }
+\CommentTok{\#\textgreater{} [17] severe   moderate minimal  minimal  minimal  minimal  minimal  moderate}
+\CommentTok{\#\textgreater{} [25] minimal  minimal  minimal  minimal  minimal  minimal  minimal  severe  }
+\CommentTok{\#\textgreater{} [33] minimal  minimal  severe   minimal  moderate minimal  minimal  minimal }
+\CommentTok{\#\textgreater{} [41] severe   minimal  minimal  severe   severe   moderate severe   severe  }
+\CommentTok{\#\textgreater{} [49] minimal  moderate minimal  moderate severe   moderate moderate minimal }
+\CommentTok{\#\textgreater{} [57] minimal  minimal  minimal  minimal  minimal  minimal  minimal  minimal }
+\CommentTok{\#\textgreater{} [65] minimal  minimal }
+\CommentTok{\#\textgreater{} Levels: minimal mild moderate severe}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-#> Running MCMC with 4 chains, at most 8 in parallel...
-#> 
-#> Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup) 
-#> Chain 1 Iteration:  100 / 2000 [  5%]  (Warmup) 
-#> Chain 1 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-#> Chain 1 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-#> Chain 1 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-#> Chain 1 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-#> Chain 1 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-#> Chain 1 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-#> Chain 1 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-#> Chain 1 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-#> Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-#> Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-#> Chain 1 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-#> Chain 1 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-#> Chain 1 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-#> Chain 1 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-#> Chain 1 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-#> Chain 1 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-#> Chain 1 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-#> Chain 1 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-#> Chain 1 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-#> Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
-#> Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
-#> Chain 2 Iteration:  100 / 2000 [  5%]  (Warmup) 
-#> Chain 2 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-#> Chain 2 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-#> Chain 2 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-#> Chain 2 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-#> Chain 2 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-#> Chain 2 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-#> Chain 2 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-#> Chain 2 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-#> Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-#> Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-#> Chain 2 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-#> Chain 2 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-#> Chain 2 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-#> Chain 2 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-#> Chain 2 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-#> Chain 2 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-#> Chain 2 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-#> Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-#> Chain 2 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-#> Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-#> Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup) 
-#> Chain 3 Iteration:  100 / 2000 [  5%]  (Warmup) 
-#> Chain 3 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-#> Chain 3 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-#> Chain 3 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-#> Chain 3 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-#> Chain 3 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-#> Chain 3 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-#> Chain 3 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-#> Chain 3 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-#> Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-#> Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-#> Chain 3 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-#> Chain 3 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-#> Chain 3 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-#> Chain 3 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-#> Chain 3 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-#> Chain 3 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-#> Chain 3 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-#> Chain 3 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-#> Chain 3 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-#> Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-#> Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup) 
-#> Chain 4 Iteration:  100 / 2000 [  5%]  (Warmup) 
-#> Chain 4 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-#> Chain 4 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-#> Chain 4 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-#> Chain 4 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-#> Chain 4 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-#> Chain 4 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-#> Chain 4 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-#> Chain 4 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-#> Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-#> Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-#> Chain 4 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-#> Chain 4 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-#> Chain 4 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-#> Chain 4 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-#> Chain 4 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-#> Chain 4 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-#> Chain 4 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-#> Chain 4 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-#> Chain 4 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-#> Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
-#> Chain 1 finished in 0.0 seconds.
-#> Chain 2 finished in 0.0 seconds.
-#> Chain 3 finished in 0.0 seconds.
-#> Chain 4 finished in 0.0 seconds.
-#> 
-#> All 4 chains finished successfully.
-#> Mean chain execution time: 0.0 seconds.
-#> Total execution time: 0.3 seconds.
-\end{verbatim}
-
-Utilizzando i coefficienti calcolati da \texttt{brms::brm()}, aggiungiamo la stima della retta di regressione al diagramma di dispersione dei dati:
+\noindent
+Possiamo ora usare la funzione \texttt{table()} la quale ritorna un elenco che associa la frequenza assoluta a ciascuna modalità della variabile -- ovvero, ritorna la distribuzione di frequenza assoluta.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ mom\_iq, }\AttributeTok{y =}\NormalTok{ kid\_score)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_abline}\NormalTok{(}
-    \AttributeTok{intercept =} \FunctionTok{fixef}\NormalTok{(m, }\AttributeTok{robust =} \ConstantTok{TRUE}\NormalTok{)[}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{], }
-    \AttributeTok{slope =} \FunctionTok{fixef}\NormalTok{(m, }\AttributeTok{robust =} \ConstantTok{TRUE}\NormalTok{)[}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{],}
-    \AttributeTok{size =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{3}
+\FunctionTok{table}\NormalTok{(bysubj}\SpecialCharTok{$}\NormalTok{bdi\_level)}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{}  minimal     mild moderate   severe }
+\CommentTok{\#\textgreater{}       36        1       12       17}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+La distribuzione di frequenza relativa si ottiene dividendo ciascuna frequenza assoluta per il numero totale di osservazioni:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{table}\NormalTok{(bysubj}\SpecialCharTok{$}\NormalTok{bdi\_level) }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(}\FunctionTok{table}\NormalTok{(bysubj}\SpecialCharTok{$}\NormalTok{bdi\_level))}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{}  minimal     mild moderate   severe }
+\CommentTok{\#\textgreater{}   0.5455   0.0152   0.1818   0.2576}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+I risultati sono riportati qui sotto:
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule
+Limiti delle classi & Frequenza assoluta & Frequenza relativa \\
+\midrule
+\endhead
+{[}0, 13.5) & 36 & 36/66 \\
+{[}13.5, 19.5) & 1 & 1/66 \\
+{[}19.5, 28.5) & 12 & 12/66 \\
+{[}28.5, 63{]} & 17 & 17/66 \\
+\bottomrule
+\end{longtable}
+
+\hypertarget{istogramma}{%
+\section{Istogramma}\label{istogramma}}
+
+I dati che sono stati sintetizzati in una distribuzione di frequenze
+possono essere rappresentati graficamente in un istogramma.
+Un istogramma si costruisce riportando sulle ascisse i limiti delle
+classi \(\Delta_i\) e sulle ordinate i valori della funzione costante a
+tratti
+\[
+\varphi_n(x)= \frac{f_i}{b_i-a_i}, \quad x\in \Delta_i,\, i=1, \dots, m
+\]
+che misura la \emph{densità della frequenza relativa} della variabile \(X\)
+nella classe \(\Delta_i\), ovvero il rapporto fra la frequenza relativa
+\(f_i\) e l'ampiezza (\(b_i - a_i\)) della classe. In questo modo il
+rettangolo dell'istogramma associato alla classe \(\Delta_i\) avrà un'area
+proporzionale alla frequenza relativa \(f_i\). Si noti che l'area totale
+dell'istogramma delle frequenze relative è data della somma delle aree
+dei singoli rettangoli e quindi vale 1.0.
+
+Poniamoci ora il problema di costruire in R un istogramma per i dati BDI-II di \textcite{zetschefuture2019}. Per fare ciò è possibile usare le funzioni del pacchetto \texttt{ggplot2}, come indicato di seguito.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bdi)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ ..density..),}
+    \AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{13.5}\NormalTok{, }\FloatTok{19.5}\NormalTok{, }\FloatTok{28.5}\NormalTok{, }\FloatTok{44.1}\NormalTok{)}
+    \CommentTok{\# il valore BDI{-}II massimo è 44}
 \NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{annotate}\NormalTok{(}
-    \AttributeTok{geom =} \StringTok{"text"}\NormalTok{,}
-    \AttributeTok{x =} \DecValTok{130}\NormalTok{, }\AttributeTok{y =} \DecValTok{30}\NormalTok{,}
-    \AttributeTok{label =} \FunctionTok{expression}\NormalTok{(y }\SpecialCharTok{==} \FloatTok{25.7} \SpecialCharTok{+} \FloatTok{0.61} \SpecialCharTok{*}\NormalTok{ x)}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}
+    \AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{13.5}\NormalTok{, }\FloatTok{19.5}\NormalTok{, }\FloatTok{28.5}\NormalTok{, }\FloatTok{44.1}\NormalTok{)}
 \NormalTok{  ) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}
-    \AttributeTok{subtitle =} \StringTok{"Dati e retta di regressione"}\NormalTok{,}
-    \AttributeTok{x =} \StringTok{"x"}\NormalTok{,}
-    \AttributeTok{y =} \StringTok{"y"}
-\NormalTok{  )}
+    \AttributeTok{x =} \StringTok{"BDI{-}II"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Densità di frequenza"}
+\NormalTok{  ) }
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{052_reglin2_files/figure-latex/unnamed-chunk-14-1} \end{center}
+\begin{figure}[h]
 
-Usiamo ora la funzione \texttt{brms::posterior\_samples()} per estrarre molti campioni dalla distribuzione a posteriori del modello \texttt{m}. In questo modo otteniamo un vettore di valori per ciascuno dei tre parametri, i quali, in questo output sono chiamati \texttt{b\_Intercept}, \texttt{b\_mom\_iq} e \texttt{sigma}. Abbiamo quindi usato \texttt{slice\_sample()} per ottenere un sottoinsieme casuale di 50 righe. Per semplicità, qui ne stampiamo solo 5.
+{\centering \includegraphics[width=0.8\linewidth]{013_eda_files/figure-latex/hist1zetsche-1} 
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{set.seed}\NormalTok{(}\DecValTok{8}\NormalTok{)}
+}
 
-\FunctionTok{posterior\_samples}\NormalTok{(m) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{slice\_sample}\NormalTok{(}\AttributeTok{n =} \DecValTok{5}\NormalTok{)}
-\CommentTok{\#\textgreater{}   b\_Intercept b\_mom\_iq sigma Intercept  lp\_\_}
-\CommentTok{\#\textgreater{} 1        18.7    0.671  19.2      85.8 {-}1883}
-\CommentTok{\#\textgreater{} 2        20.4    0.663  17.9      86.7 {-}1881}
-\CommentTok{\#\textgreater{} 3        33.3    0.546  18.5      87.8 {-}1882}
-\CommentTok{\#\textgreater{} 4        25.5    0.620  18.3      87.5 {-}1881}
-\CommentTok{\#\textgreater{} 5        29.0    0.577  18.2      86.7 {-}1881}
-\end{Highlighting}
-\end{Shaded}
+\caption{Istogramma per i valori BDI-II riportati da Zetsche et al. (2019).}\label{fig:hist1zetsche}
+\end{figure}
 
-Possiamo interpretare i valori \texttt{b\_Intercept}, \texttt{b\_mom\_iq} come un insieme di valori credibili per i parametri \(a\) e \(b\). Dati questi valori credibili per i parametri del modello di regressione, possiamo aggiungere al diagramma a dispersione 50 stime possibili della retta di regressione, alla luce dei dati osservati.
+Con i quattro intervalli individuati dai cut-off del BDI-II otteniamo la
+rappresentazione riportata nella figura \ref{fig:hist1zetsche}. Per chiarezza, precisiamo che \texttt{ggplot()} utilizza intervalli aperti a destra.
+
+Nel caso della prima barra dell'istogramma, l'ampiezza dell'intervallo è pari a 13.5 e l'area della barra (ovvero, la frequenza relativa) è uguale a 36/66. Dunque l'altezza della barra è uguale a \((36 / 66) / 13.5 = 0.040\). Lo stesso procedimento si applica per il calcolo dell'altezza degli altri rettangoli.
+
+Anche se nel caso presente è sensato usare ampiezze diverse per gli intervalli delle classi, in generale gli istogrammi si costruiscono utilizzando intervalli riportati sulle ascisse con un'ampiezza uguale. Questo è il caso dell'istogramma della figura \ref{fig:hist2zetsche}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{set.seed}\NormalTok{(}\DecValTok{8}\NormalTok{)}
-
-\FunctionTok{posterior\_samples}\NormalTok{(m) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{slice\_sample}\NormalTok{(}\AttributeTok{n =} \DecValTok{50}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  
-  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_abline}\NormalTok{(}
-    \FunctionTok{aes}\NormalTok{(}\AttributeTok{intercept =}\NormalTok{ b\_Intercept, }\AttributeTok{slope =}\NormalTok{ b\_mom\_iq),}
-        \AttributeTok{size =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{4}\NormalTok{, }\AttributeTok{alpha =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{, }\AttributeTok{color =} \StringTok{"grey25"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}
-    \AttributeTok{data =}\NormalTok{ df,}
-    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ mom\_iq, }\AttributeTok{y =}\NormalTok{ kid\_score)}
+\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bdi)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ ..density..),}
+    \AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{44.1}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{7}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}
+    \AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.00}\NormalTok{, }\FloatTok{7.35}\NormalTok{, }\FloatTok{14.70}\NormalTok{, }\FloatTok{22.05}\NormalTok{, }
+               \FloatTok{29.40}\NormalTok{, }\FloatTok{36.75}\NormalTok{, }\FloatTok{44.10}\NormalTok{)}
 \NormalTok{  ) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}
-    \AttributeTok{subtitle =} \StringTok{"Dati e possibili rette di regressione"}\NormalTok{,}
-    \AttributeTok{x =} \StringTok{"x"}\NormalTok{,}
-    \AttributeTok{y =} \StringTok{"y"}
-\NormalTok{  )}
+    \AttributeTok{x =} \StringTok{"BDI{-}II"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Densità di frequanza"}
+\NormalTok{  ) }
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{052_reglin2_files/figure-latex/unnamed-chunk-16-1} \end{center}
+\begin{figure}[h]
 
-I minimi quadrati o la massima verosimiglianza trovano i parametri che meglio si adattano ai dati (secondo un criterio prestabilito), ma senza altrimenti vincolare o guidare l'adattamento. Ma di solito abbiamo informazioni preliminari sui parametri del modello. L'inferenza bayesiana produce un compromesso tra informazioni a priori e i dati, moltiplicando la verosimiglianza con una distribuzione a priori che codifica probabilisticamente le informazioni esterne sui parametri. Il prodotto della verosimiglianza \(p(y \mid a, b, \sigma)\) e della distribuzione a priori è chiamato \emph{distribuzione a posteriori} e, dopo aver visto i dati, riassume la nostra credenza sui valori dei parametri.
+{\centering \includegraphics[width=0.8\linewidth]{013_eda_files/figure-latex/hist2zetsche-1} 
 
-La soluzione dei minimi quadrati fornisce una stima puntuale dei coefficienti che producono il miglior adattamento complessivo ai dati. Per un modello bayesiano, la corrispondente stima puntuale è la moda a posteriori, la quale fornisce il miglior adattamento complessivo ai dati e alla distribuzione a priori. La stima dei minimi quadrati o di massima verosimiglianza è la moda a posteriori corrispondente al modello bayesiano che utilizza una distribuzione a priori uniforme.
+}
 
-Ma non vogliamo solo una stima puntuale; vogliamo anche una misura dell'incertezza della stima. La figura precedente fornisce, in forma grafica, una descrizione di tale incertezza.
+\caption{Una rappresentazione più comune per l'istogramma dei valori BDI-II nella quale gli intervalli delle classi hanno ampiezze uguali.}\label{fig:hist2zetsche}
+\end{figure}
 
-Gli intervalli di credibilità al 95\% si ottengono nel modo seguente:
+\hypertarget{kernel-density-plot}{%
+\section{Kernel density plot}\label{kernel-density-plot}}
+
+Il confronto tra le figure \ref{fig:hist1zetsche} e \ref{fig:hist2zetsche} rende chiaro il limite dell'istogramma: il profilo dell'istogramma è arbitrario, in quanto dipende dal numero e dall'ampiezza delle classi. Questo rende difficile l'interpretazione.
+
+Il problema precedente può essere alleviato utilizzando una
+rappresentazione alternativa della distribuzione di frequenza, ovvero la
+stima della densità della frequenza dei dati (detta anche stima \emph{kernel
+di densità}). Un modo semplice per pensare a tale rappresentazione, che
+in inglese va sotto il nome di \emph{kernel density plot} (cioè i grafici basati sulla stima kernel di densità), è quello di immaginare un grande campione di dati, in modo che diventi possibile definire un enorme numero di classi di equivalenza di ampiezza molto piccola, le quali non risultino vuote. In tali circostanze, la funzione di densità empirica non è altro che il profilo \emph{lisciato} dell'istogramma. La stessa idea si applica anche quando il campione è piccolo. In tali circostanze, invece di raccogliere le osservazioni in barre come negli istogrammi, lo stimatore di densità kernel colloca una piccola ``gobba'' (\emph{bump}), determinata da un fattore \(K\) (kernel) e da un parametro \(h\) di smussamento detto ampiezza di banda (\emph{bandwidth}), in corrispondenza di ogni osservazione, quindi somma le gobbe risultanti generando una curva smussata.
+
+L'interpretazione che possiamo attribuire al kernel density plot è simile a quella che viene assegnata agli istogrammi: l'area sottesa al kernel density plot in un certo intervallo rappresenta la proporzione di casi della distribuzione che hanno valori compresi in quell'intervallo.
+
+\begin{example}
+
+Vediamo ora come rappresentare con R sia l'istogramma sia il kernel density plot di una variabile numerica impiegando i valori BDI-II di \textcite{zetschefuture2019}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{print}\NormalTok{(m, }\AttributeTok{robust =} \ConstantTok{TRUE}\NormalTok{)}
-\CommentTok{\#\textgreater{}  Family: gaussian }
-\CommentTok{\#\textgreater{}   Links: mu = identity; sigma = identity }
-\CommentTok{\#\textgreater{} Formula: kid\_score \textasciitilde{} mom\_iq }
-\CommentTok{\#\textgreater{}    Data: df (Number of observations: 434) }
-\CommentTok{\#\textgreater{}   Draws: 4 chains, each with iter = 1000; warmup = 0; thin = 1;}
-\CommentTok{\#\textgreater{}          total post{-}warmup draws = 4000}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Population{-}Level Effects: }
-\CommentTok{\#\textgreater{}           Estimate Est.Error l{-}95\% CI u{-}95\% CI Rhat Bulk\_ESS Tail\_ESS}
-\CommentTok{\#\textgreater{} Intercept    25.83      5.80    14.44    37.47 1.00     3329     3005}
-\CommentTok{\#\textgreater{} mom\_iq        0.61      0.06     0.49     0.72 1.00     3310     3009}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Family Specific Parameters: }
-\CommentTok{\#\textgreater{}       Estimate Est.Error l{-}95\% CI u{-}95\% CI Rhat Bulk\_ESS Tail\_ESS}
-\CommentTok{\#\textgreater{} sigma    18.26      0.61    17.13    19.53 1.00     3824     3105}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Draws were sampled using sample(hmc). For each parameter, Bulk\_ESS}
-\CommentTok{\#\textgreater{} and Tail\_ESS are effective sample size measures, and Rhat is the potential}
-\CommentTok{\#\textgreater{} scale reduction factor on split chains (at convergence, Rhat = 1).}
+\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bdi)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ ..density..), }
+    \AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{44.1}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{7}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{geom\_density}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bdi), }
+    \AttributeTok{adjust =} \FloatTok{0.5}\NormalTok{, }
+    \AttributeTok{size =} \FloatTok{0.8}\NormalTok{, }
+    \CommentTok{\#fill = colors[2],}
+    \AttributeTok{alpha =} \FloatTok{0.5}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \StringTok{"BDI{-}II"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Densità di frequenza"}
+\NormalTok{  ) }
 \end{Highlighting}
 \end{Shaded}
 
-In alternativa, è possibile usare la funzione \texttt{posterior\_interval()}:
+\begin{figure}[h]
+
+{\centering \includegraphics[width=0.8\linewidth]{013_eda_files/figure-latex/zetschehist3-1} 
+
+}
+
+\caption{Kernel density plot e corrispondente istogramma per i valori BDI-II.}\label{fig:zetschehist3}
+\end{figure}
+
+\end{example}
+
+\hypertarget{forma-di-una-distribuzione}{%
+\section{Forma di una distribuzione}\label{forma-di-una-distribuzione}}
+
+In generale, la forma di una distribuzione descrive come i dati si distribuiscono intorno ai valori centrali. Distinguiamo tra distribuzioni simmetriche e asimmetriche, e tra distribuzioni unimodali o multimodali. Un'illustrazione grafica è fornita nella figura \ref{fig:distrib-shapes}. Nel pannello 1 la distribuzione è unimodale con asimmetria negativa; nel pannello 2 la distribuzione è unimodale con asimmetria positiva; nel pannello 3 la distribuzione è simmetrica e unimodale; nel pannello 4 la distribuzione è bimodale.
+
+\begin{figure}[h]
+
+{\centering \includegraphics[width=0.8\linewidth]{013_eda_files/figure-latex/distrib-shapes-1} 
+
+}
+
+\caption{1: Asimmetria negativa. 2: Asimmetria positiva. 3: Distribuzione unimodale. 4: Distribuzione bimodale.}\label{fig:distrib-shapes}
+\end{figure}
+
+\begin{example}
+Il kernel density plot della figura \ref{fig:zetschehist3} indica che la distribuzione dei valori del BDI-II nel campione di \textcite{zetschefuture2019} è bimodale. Ciò indica che le osservazioni della distribuzione si addensano in due cluster ben distinti: un gruppo di osservazioni tende ad avere valori BDI-II bassi, mentre l'altro gruppo tende ad avere BDI-II alti. Questi due cluster di osservazioni corrispondono al gruppo di controllo e al gruppo clinico nel campione di dati esaminato da \textcite{zetschefuture2019}.
+\end{example}
+
+\hypertarget{indici-di-posizione}{%
+\section{Indici di posizione}\label{indici-di-posizione}}
+
+Nuovamente, se preferite un'introduzione ``soft'' alla nozione di ``tendenza centrale'' di una distribuzione statistica, vi rimando nuovamentew al \href{https://tinystats.github.io/teacups-giraffes-and-statistics/03_mean.html}{link} che ho già suggerito in precedenza.
+
+\hypertarget{quantili}{%
+\subsection{Quantili}\label{quantili}}
+
+La descrizione della distribuzione dei valori BDI-II di
+\textcite{zetschefuture2019} può essere facilitata dalla determinazione di
+alcuni valori caratteristici che sintetizzano le informazioni contenute
+nella distribuzione di frequenze. Si dicono \emph{quantili} (o \emph{frattili})
+quei valori caratteristici che hanno le seguenti proprietà. I \emph{quartili}
+sono quei valori che ripartiscono i dati \(x_i\) in quattro parti
+ugualmente numerose (pari ciascuna al 25\% del totale). Il primo
+quartile, \(q_1\), lascia alla sua sinistra il 25\% del campione pensato
+come una fila ordinata (a destra quindi il 75\%). Il secondo quartile
+\(q_2\) lascia a sinistra il 50\% del campione (a destra quindi il 50\%).
+Esso viene anche chiamato \emph{mediana}. Il terzo quartile lascia a sinistra
+il 75\% del campione (a destra quindi il 25\%). Secondo lo stesso
+criterio, si dicono \emph{decili} i quantili di ordine \(p\) multiplo di 0.10 e
+\emph{percentili} i quantili di ordine \(p\) multiplo di 0.01.
+
+Come si calcolano i quantili? Consideriamo la definizione di quantile
+\emph{non interpolato} di ordine \(p\) \((0 < p < 1)\). Si procede innanzitutto
+ordinando i dati in ordine crescente, \(\{x_1, x_2, \dots, x_n\}\). Ci
+sono poi due possibilità. Se il valore \(np\) non è intero, sia \(k\)
+l'intero tale che \(k < np < k + 1\) -- ovvero, la parte intera di \(np\).
+Allora \(q_p = x_{k+1}.\) Se \(np = k\) con \(k\) intero, allora
+\(q_p = \frac{1}{2}(x_{k} + x_{k+1}).\) Se vogliamo calcolare il primo
+quartile \(q_1\), ad esempio, utilizziamo \(p = 0.25\). Dovendo calcolare
+gli altri quantili basta sostituire a \(p\) il valore appropriato{[}\^{}2{]}.
+
+Gli indici di posizione, tra le altre cose, hanno un ruolo importante,
+ovvero vengono utilizzati per creare una rappresentazione grafica di una
+distribuzione di valori che è molto popolare e può essere usata in
+alternativa ad un istogramma (in realtà vedremo poi come possa essere
+combinata con un istogramma). Tale rappresentazione va sotto il nome di
+box-plot.
+
+\begin{example}
+Per fare un esempio, consideriamo i nove soggetti del campione clinico di \textcite{zetschefuture2019} che hanno riportato un unico episodio di depressione maggiore. Per tali soggetti i valori ordinati del BDI-II (per semplicità li chiameremo \(x\)) sono i seguenti: 19, 26, 27, 28, 28, 33, 33, 41, 43.
+Per il calcolo del secondo quartile (non interpolato), ovvero per il calcolo della mediana, dobbiamo considerare la quantità \(np = 9 \cdot 0.5 = 4.5\), non intero. Quindi, \(q_1 = x_{4 + 1} = 27\).
+Per il calcolo del quantile (non interpolato) di ordine \(p = 2/3\) dobbiamo considerare la quantità \(np = 9 \cdot 2/3 = 6\), intero. Quindi, \(q_{\frac{2}{3}} = \frac{1}{2} (x_{6} + x_{7}) = \frac{1}{2} (33 + 33) = 33\).
+\end{example}
+
+\hypertarget{diagramma-a-scatola}{%
+\subsection{Diagramma a scatola}\label{diagramma-a-scatola}}
+
+Il \emph{diagramma a scatola} (o box plot) è uno strumento grafico utile al
+fine di ottenere informazioni circa la dispersione e l'eventuale
+simmetria o asimmetria di una distribuzione. Per costruire un box-plot
+si rappresenta sul piano cartesiano un rettangolo (cioè la ``scatola'') di
+altezza arbitraria la cui base corrisponde alla dist intanza
+interquartile (IQR = \(q_{0.75} - q_{0.25}\)). La linea interna alla
+scatola rappresenta la mediana \(q_{0.5}\). Si tracciano poi ai lati della
+scatola due segmenti di retta i cui estremi sono detti ``valore
+adiacente'' inferiore e superiore. Il valore adiacente inferiore è il
+valore più piccolo tra le osservazioni che risulta maggiore o uguale al
+primo quartile meno la distanza corrispondente a 1.5 volte la distanza
+interquartile.
+Il valore adiacente superiore è il valore più grande tra le osservazioni che risulta minore o uguale a \(Q_3+1.5\) IQR. I valori esterni ai valori adiacenti (chiamati \emph{valori anomali}) vengono rappresentati individualmente nel box-plot per meglio evidenziarne la presenza e la posizione.
+
+\begin{figure}[h]
+
+{\centering \includegraphics[width=0.8\linewidth]{013_eda_files/figure-latex/unnamed-chunk-8-1} 
+
+}
+
+\caption{Box-plot: $M$ è la mediana, $\bar{x}$ è la media aritmetica e IQR è la distanza interquartile (~$Q_3 - Q_1$~).}\label{fig:unnamed-chunk-8}
+\end{figure}
+
+\begin{example}
+Consideriamo ora un caso concreto nel quale viene utilizzato un box-plot.
+Nel caso dei dati di \textcite{zetschefuture2019} ci chiediamo in che modo si differenziano le distribuzioni del BDI-II tra i due gruppi considerati, ovvero tra il gruppo dei pazienti e il gruppo di controllo. La figura \ref{fig:violin-zetsche} fornisce due rappresentazioni grafiche che possono essere utilizzate per rispondere a questa domanda.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{posterior\_interval}\NormalTok{(m)}
-\CommentTok{\#\textgreater{}                  2.5\%     97.5\%}
-\CommentTok{\#\textgreater{} b\_Intercept    14.445    37.471}
-\CommentTok{\#\textgreater{} b\_mom\_iq        0.495     0.722}
-\CommentTok{\#\textgreater{} sigma          17.132    19.529}
-\CommentTok{\#\textgreater{} Intercept      85.119    88.563}
-\CommentTok{\#\textgreater{} lp\_\_        {-}1885.190 {-}1880.580}
+\FunctionTok{library}\NormalTok{(}\StringTok{"patchwork"}\NormalTok{)}
+\NormalTok{bysubj }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(esm\_id, group) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{bdi =} \FunctionTok{mean}\NormalTok{(bdi),}
+    \AttributeTok{nr\_of\_episodes =} \FunctionTok{mean}\NormalTok{(nr\_of\_episodes, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{na.omit}\NormalTok{()}
+
+\NormalTok{bysubj}\SpecialCharTok{$}\NormalTok{group }\OtherTok{\textless{}{-}}\NormalTok{ forcats}\SpecialCharTok{::}\FunctionTok{fct\_recode}\NormalTok{(}
+\NormalTok{  bysubj}\SpecialCharTok{$}\NormalTok{group, }
+  \StringTok{"Controlli sani"} \OtherTok{=} \StringTok{"ctl"}\NormalTok{, }
+  \StringTok{"Depressione maggiore"} \OtherTok{=} \StringTok{"mdd"}
+\NormalTok{)}
+
+\NormalTok{p1 }\OtherTok{\textless{}{-}}\NormalTok{ bysubj }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{group, }\AttributeTok{y=}\NormalTok{bdi)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_violin}\NormalTok{(}\AttributeTok{trim=}\ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_dotplot}\NormalTok{(}\AttributeTok{binaxis=}\StringTok{\textquotesingle{}y\textquotesingle{}}\NormalTok{, }\AttributeTok{stackdir=}\StringTok{\textquotesingle{}center\textquotesingle{}}\NormalTok{, }\AttributeTok{dotsize=}\FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \StringTok{""}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"BDI{-}II"}
+\NormalTok{  ) }
+\NormalTok{p2 }\OtherTok{\textless{}{-}}\NormalTok{ bysubj }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{group, }\AttributeTok{y=}\NormalTok{bdi)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_violin}\NormalTok{(}\AttributeTok{trim=}\ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{(}\AttributeTok{width=}\FloatTok{0.05}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \StringTok{""}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"BDI{-}II"}
+\NormalTok{  ) }
+\NormalTok{p1 }\SpecialCharTok{+}\NormalTok{ p2}
 \end{Highlighting}
 \end{Shaded}
 
+\begin{figure}[h]
+
+{\centering \includegraphics[width=0.8\linewidth]{013_eda_files/figure-latex/violin-zetsche-1} 
+
+}
+
+\caption{Due versioni di un violin plot per i valori BDI-II di ciascuno dei due gruppi di soggetti esaminati da Zetsche et al. (2019).}\label{fig:violin-zetsche}
+\end{figure}
+
+Nella figura \ref{fig:violin-zetsche} sinistra sono rappresentati i dati grezzi. La linea curva che circonda (simmetricamente) le osservazioni è l'\emph{istogramma lisciato} (kernel density plot) che abbiamo descritto in precedenza. Nella figura \ref{fig:violin-zetsche} destra sono rappresentanti gli stessi dati: il kernel density plot è lo stesso di prima, ma al suo interno è stato collocato un box-plot. Entrambe le rappresentazioni suggeriscono che la distribuzione dei dati è all'incirca simmetrica nel gruppo clinico. Il gruppo di controllo mostra invece un'asimmetria positiva.
+\end{example}
+
+Si noti che i box plot non sono necessariamente la rappresentazione migliore della distribuzione di una variabile. Infatti, richiedono la comprensione di concetti complessi (quali i quantili e la differenza interquantile) che non sono necessari se vogliamo presentare in maniera grafica la distribuzione della variabile e, in generale, non sono compresi da un pubblico di non specialisti. Inoltre, i box plot nascondono informazioni che di solito sono cruciali da vedere. È dunque preferibile presentare direttamente i dati. Qui di seguito viene mostrato come usare un cosiddetto ``sina plot'', il quale presenta le singole osservazioni divise in classi. Ai punti viene aggiunto un jitter, così da evitare sovrapposizioni; l'ampiezza del jitter è controllata dalla distribuzione della densità dei dati all'interno di ciascuna classe. Per i dati dell'esempio in discussione, otteniamo la rappresentazione seguente. Per i dati presenti, questa mi sembra la rappresentazione migliore.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bysubj }\SpecialCharTok{|}\ErrorTok{\textgreater{}} 
+  \FunctionTok{ggplot}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ group, }\AttributeTok{y =}\NormalTok{ bdi, }\AttributeTok{color =}\NormalTok{ group)}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{guide =} \StringTok{"none"}\NormalTok{) }\SpecialCharTok{+} 
+\NormalTok{  ggforce}\SpecialCharTok{::}\FunctionTok{geom\_sina}\NormalTok{(}
+    \AttributeTok{maxwidth =}\NormalTok{ .}\DecValTok{6}\NormalTok{, }\AttributeTok{scale =} \StringTok{"count"}\NormalTok{, }\AttributeTok{seed =} \DecValTok{1}\NormalTok{,}
+    \AttributeTok{size =} \DecValTok{3}\NormalTok{, }\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{5}
+\NormalTok{  ) }\SpecialCharTok{+} 
+\NormalTok{  ggforce}\SpecialCharTok{::}\FunctionTok{geom\_sina}\NormalTok{(}
+    \AttributeTok{maxwidth =}\NormalTok{ .}\DecValTok{6}\NormalTok{, }\AttributeTok{scale =} \StringTok{"count"}\NormalTok{, }\AttributeTok{seed =} \DecValTok{1}\NormalTok{, }
+    \AttributeTok{size =} \DecValTok{3}\NormalTok{, }\AttributeTok{shape =} \DecValTok{1}\NormalTok{, }\AttributeTok{stroke =}\NormalTok{ .}\DecValTok{8}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \StringTok{""}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"BDI{-}II"}\NormalTok{,}
+    \AttributeTok{color =} \StringTok{\textquotesingle{}Gruppo\textquotesingle{}}
+\NormalTok{  ) }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[h]
+
+{\centering \includegraphics[width=0.8\linewidth]{013_eda_files/figure-latex/sina-zetsche-1} 
+
+}
+
+\caption{Sina plot per i valori BDI-II di ciascuno dei due gruppi di soggetti esaminati da Zetsche et al. (2019).}\label{fig:sina-zetsche}
+\end{figure}
+
+\hypertarget{leccellenza-grafica}{%
+\subsection{L'eccellenza grafica}\label{leccellenza-grafica}}
+
+Non c'è un modo ``corretto'' per rappresentare in forma grafica un insieme
+di dati. Ciascuno dei grafici che abbiamo discusso ha i suoi pregi e i
+suoi difetti. Un ricercatore che ha influenzato molto il modo in cui
+viene realizzata la visualizzazione dei dati scientifici è Edward Tufte,
+soprannominato dal New York Times il ``Leonardo da Vinci dei dati.''
+Secondo Tufte, ``l'eccellenza nella grafica consiste nel comunicare idee
+complesse in modo chiaro, preciso ed efficiente''. Nella visualizzazione
+delle informazioni, l'``eccellenza grafica'' ha l'obiettivo di comunicare
+al lettore il maggior numero di idee nel minor tempo possibile, con meno
+inchiostro possibile, usando il minor spazio possibile. Secondo
+\textcite{tufte_visual_display}, le rappresentazioni grafiche dovrebbero:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  mostrare i dati;
+\item
+  indurre l'osservatore a riflettere sulla sostanza piuttosto che
+  sulla progettazione grafica, o qualcos'altro;
+\item
+  evitare di distorcere quanto i dati stanno comunicando (``integrità
+  grafica'');
+\item
+  presentare molte informazioni in forma succinta;
+\item
+  rivelare la coerenza tra le molte dimensioni dei dati;
+\item
+  incoraggiare l'osservatore a comparare differenti porzioni di dati;
+\item
+  rivelare i dati a diversi livelli di dettaglio, da una visione ampia
+  alla struttura di base;
+\item
+  servire ad uno scopo preciso (descrizione, esplorazione, o la
+  risposta a qualche domanda);
+\item
+  essere fortemente integrate con le descrizioni statistiche e verbali
+  dei dati fornite nel testo.
+\end{enumerate}
+
+In base a questi principi, la funzione di densità empirica fornisce una
+rappresentazione migliore dei dati di \textcite{zetschefuture2019} di quanto lo faccia un istogramma. Inoltre, se oltre al grupppo di appartenenza non ci sono altre dimensioni importanti da mettere in evidenza, allora la nostra scelta dovrebbe ricadere sul pannello di sinistra della figura \ref{fig:violin-zetsche}. Il seguente \href{https://www.biostat.wisc.edu/~kbroman/presentations/graphs2018.pdf}{link} fornisce diverse interessanti illustrazioni dei principi elencati sopra.
+
+\hypertarget{indici-di-tendenza-centrale}{%
+\section{Indici di tendenza centrale}\label{indici-di-tendenza-centrale}}
+
+L'analisi grafica, esaminata in precedenza, costituisce la base di
+partenza di qualsivoglia analisi quantitativa dei dati. Tramite
+l'analisi grafica possiamo capire alcune caratteristiche importanti di
+una distribuzione: per esempio, se è simmetrica o asimmetrica; oppure se
+è unimodale o multimodale. Successivamente, possiamo calcolare degli
+indici numerici che descrivono in modo sintetico le caratteristiche di
+base dei dati esaminati. Tra le misure di tendenza centrale, ovvero tra
+gli indici che forniscono un'idea dei valori attorno ai quali sono
+prevalentemente concentrati i dati di un campione, quella più
+comunemente usata è la media.
+
+\hypertarget{media}{%
+\subsection{Media}\label{media}}
+
+Tutti conosciamo la media aritmetica di \(\{x_1, x_2, \dots, x_n\}\),
+ovvero il numero reale \(\bar{x}\) definito da
+\begin{equation}
+\bar{x}=\frac{1}{n}\sum_{i=1}^n x_i.
+\label{eq:mean}
+\end{equation}
+Nell'eq.~\eqref{eq:mean} abbiamo usato la notazione delle sommatorie
+per descrivere una somma di valori. Questa notazione è molto usata in
+statistica e viene descritta in Appendice.
+
+La media gode della seguente importante proprietà: la somma degli scarti
+tra ciascuna modalità \(x_i\) e la media aritmetica \(\bar{x}\) è nulla,
+cioè
+\[
+\sum_{i=1}^n (x_i - \bar{x}) = 0.\notag
+\label{eq:diffmeansumzero}\] Infatti, \[\begin{aligned}
+\sum_{i=1}^n (x_i - \bar{x}) &= \sum_i x_i - \sum_i \bar{x}\notag\\
+&= \sum_i x_i - n \bar{x}\notag\\
+&= \sum_i x_i - \sum_i x_i = 0.\notag\end{aligned}
+\]
+Ciò ci consente di pensare alla media come al baricentro della distribuzione.
+
+Un'altra proprietà della media è la seguente. La somma dei quadrati
+degli scarti tra ciascuna modalità \(x_i\) e una costante arbitraria
+\(a \in \Re\), cioè \[\varphi(a) = \sum_{i=1}^n (x_i - a)^2,\notag\] è
+minima per \(a = \bar{x}\).
+
+Il concetto statistico di media ha suscitato molte battute. Per esempio,
+il fatto che, in media, ciascuno di noi ha un numero di gambe circa pari
+a 1.9999999. Oppure, il fatto che, in media, ciascuno di noi ha un
+testicolo. Ma la media ha altri problemi, oltre al fatto di ispirare
+battute simili alle precedenti. In particolare, dobbiamo notare che la
+media non è sempre l'indice che meglio rappresenta la tendenza centrale
+di una distribuzione. In particolare, ciò non accade quando la
+distribuzione è asimmetrica, o in presenza di valori anomali (\emph{outlier})
+-- si veda il pannello di destra della figura \ref{fig:violin-zetsche}. In tali circostanze, la tendenza centrale della distribuzione è meglio rappresentata dalla mediana o dalla media spuntata.
+
+\begin{example}
+
+Calcoliamo la media dei valori BDI-II per i due gruppi di soggetti di \textcite{zetschefuture2019}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{avg\_bdi =} \FunctionTok{mean}\NormalTok{(bdi)}
+\NormalTok{  ) }
+\CommentTok{\#\textgreater{} \# A tibble: 2 x 2}
+\CommentTok{\#\textgreater{}   group                avg\_bdi}
+\CommentTok{\#\textgreater{}   \textless{}fct\textgreater{}                  \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 Controlli sani          1.69}
+\CommentTok{\#\textgreater{} 2 Depressione maggiore   30.9}
+\end{Highlighting}
+\end{Shaded}
+
+\end{example}
+
+\hypertarget{media-spuntata}{%
+\subsection{Media spuntata}\label{media-spuntata}}
+
+La \emph{media spuntata} \(\bar{x}_t\) (\emph{trimmed mean}) non è altro che la
+media dei dati calcolata considerando solo il 90\% (o altra percentuale)
+dei dati centrali. Per calcolare \(\bar{x}_t\) si ordinando i dati secondo
+una sequenza crescente, \(x_1 \leq x_2 \leq x_3 \leq \dots \leq x_n\), per
+poi eliminare il primo 5\% e l'ultimo 5\% dei dati della serie così
+ordinata. La media spuntata è data dalla media aritmetica dei dati rimanenti.
+
+\begin{example}
+
+Calcoliamo la media spuntata dei valori BDI-II per i due gruppi di soggetti di \textcite{zetschefuture2019} escludendo il 10\% dei valori più estremi in ciascun gruppo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{avg\_trim\_bdi =} \FunctionTok{mean}\NormalTok{(bdi, }\AttributeTok{trim =} \FloatTok{0.1}\NormalTok{)}
+\NormalTok{  ) }
+\CommentTok{\#\textgreater{} \# A tibble: 2 x 2}
+\CommentTok{\#\textgreater{}   group                avg\_trim\_bdi}
+\CommentTok{\#\textgreater{}   \textless{}fct\textgreater{}                       \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 Controlli sani                1  }
+\CommentTok{\#\textgreater{} 2 Depressione maggiore         30.6}
+\end{Highlighting}
+\end{Shaded}
+
+\end{example}
+
+\hypertarget{moda-e-mediana}{%
+\subsection{Moda e mediana}\label{moda-e-mediana}}
+
+In precedenza abbiamo già incontrato altri due popolari indici di
+tendenza centrale: la \emph{moda} (\emph{Mo}), ovvero il valore centrale della
+classe con la frequenza massima (può succedere che una distribuzione
+abbia più mode; in tal caso si dice \emph{multimodale} e questo operatore
+perde il suo significato di indice di tendenza centrale) e la \emph{mediana}
+\(\tilde{x}\).
+
+\begin{example}
+
+Calcoliamo i quantili di ordine 0.25, 0.5 e 0.75 dei valori BDI-II per i due gruppi di soggetti di \textcite{zetschefuture2019}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{q25 =} \FunctionTok{quantile}\NormalTok{(bdi, }\AttributeTok{probs =} \FloatTok{0.25}\NormalTok{),}
+    \AttributeTok{q50 =} \FunctionTok{quantile}\NormalTok{(bdi, }\AttributeTok{probs =} \FloatTok{0.50}\NormalTok{),}
+    \AttributeTok{q75 =} \FunctionTok{quantile}\NormalTok{(bdi, }\AttributeTok{probs =} \FloatTok{0.75}\NormalTok{)}
+\NormalTok{  ) }
+\CommentTok{\#\textgreater{} \# A tibble: 2 x 4}
+\CommentTok{\#\textgreater{}   group                  q25   q50   q75}
+\CommentTok{\#\textgreater{}   \textless{}fct\textgreater{}                \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 Controlli sani           0     1     2}
+\CommentTok{\#\textgreater{} 2 Depressione maggiore    26    30    35}
+\end{Highlighting}
+\end{Shaded}
+
+\end{example}
+
+Si noti che solitamente i software restituiscono un valore \textbf{interpolato} del \(p\)-esimo quantile \(q_p\) \((0 < p < 1)\), il quale viene calcolato mediante specifiche procedure. Il risultato fornito dai software, dunque, non sarà identico a quello trovato utilizzando la definizione non interpolata di quantile che abbiamo presentato qui. Se, per qualche ragione, vogliamo conoscere l'algoritmo usato per la determinazione dei quantili interpolati, dobbiamo leggere la documentazione del software.
+
+\hypertarget{indici-di-dispersione}{%
+\section{Indici di dispersione}\label{indici-di-dispersione}}
+
+Le medie e gli indici di posizione descritti in precedenza forniscono
+delle sintesi dei dati che mettono in evidenza la tendenza centrale
+delle osservazioni. Tali indici, tuttavia, non considerano un aspetto
+importante della distribuzione dei dati, ovvero la variabilità dei
+valori numerici della variabile statistica. È dunque necessario
+sintetizzare la distribuzione di una variabile statistica oltre che con
+le misure di posizione anche tramite l'utilizzo di indicatori che
+valutino la dispersione delle unità statistice.
+
+Anche in questo caso, un'introduzione ``soft'' è fornita nel \href{https://tinystats.github.io/teacups-giraffes-and-statistics/04_variance.html}{link}.
+
+\hypertarget{indici-basati-sullordinamento-dei-dati}{%
+\subsection{Indici basati sull'ordinamento dei dati}\label{indici-basati-sullordinamento-dei-dati}}
+
+È possibile calcolare degli indici di variabilità basati
+sull'ordinamento dei dati. L'indice più ovvio è l'intervallo di
+variazione, ovvero la distanza tra il valore massimo e il valore minimo
+di una distribuzione di modalità, mentre in precedenza abbiamo già
+incontrato la differenza interquartile. Questi due indici, però, hanno
+il limite di essere calcolati sulla base di due soli valori della
+distribuzione (\(x_{\text{max}}\) e \(x_{\text{mini}}\), oppure \(x_{0.25}\) e
+\(x_{0.75}\)). Pertanto non utilizzano tutte le informazioni che sono
+disponibili. Inoltre, l'intervallo di variazione ha il limite di essere
+pesantemente influenzato dalla presenza di valori anomali.
+
+\hypertarget{varianza}{%
+\subsection{Varianza}\label{varianza}}
+
+Dati i limiti delle statistiche precedenti è più comune misurare la
+variabilità di una variabile statistica come la dispersione dei dati
+attorno ad un indice di tendenza centrale. Infatti, la misura di variabilità di gran lunga più usata per valutare la variabilità di una variabile statistica è senza dubbio la varianza. La varianza
+\begin{equation}
+s^2 = \frac{1}{n} \sum_{i=1}^n (x_i - \bar{x})^2
+\label{eq:var-descr}
+\end{equation}
+è la media dei quadrati degli scarti \(x_i - \bar{x}\) tra ogni valore e la media della distribuzione.
+La varianza è una misura di dispersione più complessa di quelle esaminate in precedenza. È appropriata solo nel caso di distribuzioni simmetriche e, anch'essa, è fortemente influenzata dai valori anomali. Inoltre, è espressa in un'unità di misura che è il quadrato dell'unità di misura dei dati originari e quindi ad essa non può essere assegnata un'interpretazione intuitiva.
+
+\begin{example}
+
+Calcoliamo la varianza dei punteggi BDI-II nei due gruppi di soggetti di \textcite{zetschefuture2019}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{variance =} \FunctionTok{var}\NormalTok{(bdi)}
+\NormalTok{  ) }
+\CommentTok{\#\textgreater{} \# A tibble: 2 x 2}
+\CommentTok{\#\textgreater{}   group                variance}
+\CommentTok{\#\textgreater{}   \textless{}fct\textgreater{}                   \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 Controlli sani           8.03}
+\CommentTok{\#\textgreater{} 2 Depressione maggiore    43.7}
+\end{Highlighting}
+\end{Shaded}
+
+\end{example}
+
+\hypertarget{deviazione-standard}{%
+\subsection{Deviazione standard}\label{deviazione-standard}}
+
+Per le ragioni espresse sopra, la misura più usata della dispersione di una distribuzione di dati è la \emph{deviazione standard}, ovvero la radice quadrata della varianza. A differenza della varianza, dunque, la deviazione standard è espressa nella stessa unità di misura dei dati. Come nel caso della varianza, anche la deviazione standard \(s\) dovrebbe essere usata soltanto quando la media è adeguata per misurare il centro della distribuzione, ovvero, nel caso di distribuzioni simmetriche. Come nel caso della media \(\bar{x}\), anche la deviazione standard è fortemente influenzata dai dati anomali (\emph{outlier}), ovvero dalla presenza di uno o di pochi dati che sono molto più distanti dalla media rispetto agli altri valori della distribuzione. Quando tutte le osservazioni sono uguali, \(s=0\), altrimenti \(s > 0\).
+
+Alla deviazione standard può essere assegnata una semplice interpretazione: la deviazione standard è \textbf{simile} (ma non identica) allo scostamento medio semplice dalla media. La deviazione standard ci dice, dunque, quanto sono distanti, in media, le singole osservazioni dal centro della distribuzione.
+
+\begin{example}
+
+Calcoliamo la deviazione standard per il BDI-II dei due gruppi di soggetti di \textcite{zetschefuture2019}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{stdev =} \FunctionTok{sd}\NormalTok{(bdi)}
+\NormalTok{  ) }
+\CommentTok{\#\textgreater{} \# A tibble: 2 x 2}
+\CommentTok{\#\textgreater{}   group                stdev}
+\CommentTok{\#\textgreater{}   \textless{}fct\textgreater{}                \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 Controlli sani        2.83}
+\CommentTok{\#\textgreater{} 2 Depressione maggiore  6.61}
+\end{Highlighting}
+\end{Shaded}
+
+\end{example}
+
+\hypertarget{deviazione-mediana-assoluta}{%
+\subsection{Deviazione mediana assoluta}\label{deviazione-mediana-assoluta}}
+
+Una misura robusta della dispersione statistica di un campione è la deviazione mediana assoluta (Median Absolute Deviation, MAD) definita come la mediana del valore assoluto delle deviazioni dei dati dalla mediana, ovvero:
+\[
+{\displaystyle \operatorname {MAD} =\operatorname {median} \left(\ \left|X_{i}-\operatorname {median} (X)\right|\ \right)}
+\]
+Nel caso di una distribuzione dei dati unimodale simmetrica di forma campanulare (ovvero, normale) si ha che
+\[
+{\displaystyle \text{deviazione standard} \approx 1.4826\ \operatorname {MAD} .\,}
+\]
+Pertanto, solitamente i software restituiscono il valore MAD moltiplicato per una tale costante.
+
+\begin{example}
+
+Calcoliamo il valore MAD per il BDI-II dei due gruppi di soggetti di \textcite{zetschefuture2019}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FloatTok{1.4826} \SpecialCharTok{*} \FunctionTok{median}\NormalTok{(}\FunctionTok{abs}\NormalTok{(bysubj}\SpecialCharTok{$}\NormalTok{bdi }\SpecialCharTok{{-}} \FunctionTok{median}\NormalTok{(bysubj}\SpecialCharTok{$}\NormalTok{bdi)))}
+\CommentTok{\#\textgreater{} [1] 15.6}
+\end{Highlighting}
+\end{Shaded}
+
+Oppure, per i due gruppi:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{MAD =} \FunctionTok{mad}\NormalTok{(bdi)}
+\NormalTok{  ) }
+\CommentTok{\#\textgreater{} \# A tibble: 2 x 2}
+\CommentTok{\#\textgreater{}   group                  MAD}
+\CommentTok{\#\textgreater{}   \textless{}fct\textgreater{}                \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 Controlli sani        1.48}
+\CommentTok{\#\textgreater{} 2 Depressione maggiore  6.67}
+\end{Highlighting}
+\end{Shaded}
+
+\end{example}
+
+\hypertarget{indici-di-variabilituxe0-relativi}{%
+\subsection{Indici di variabilità relativi}\label{indici-di-variabilituxe0-relativi}}
+
+A volte può essere interessante effettuare un confronto fra due misure
+di variabilità di grandezze incommensurabili, ovvero di caratteri
+rilevati mediante differenti unità di misura. In questi casi, le misure
+di variabilità precedentemente descritte si rivelano inadeguate in
+quanto dipendono dall'unità di misura adottata. Diventa dunque
+necessario ricorrere a particolari numeri adimensionali detti indici
+relativi di variabilità. Il più importante di tali indici è il
+coefficiente di variazione, ovvero il numero puro
+\[C_v = \frac{\sigma}{\bar{x}}\] ottenuto dal rapporto tra la deviazione
+standard e la media dei dati. Un altro indice relativo di variabilità è
+la differenza interquartile rapportata al primo quartile oppure al terzo
+quartile oppure alla mediana, cioè:
+\[\frac{x_{0.75} - x_{0.25}}{x_{0.25}}, \qquad \frac{x_{0.75} - x_{0.25}}{x_{0.75}}, \qquad \frac{x_{0.75} - x_{0.25}}{x_{0.50}}.\notag\]
+
+\hypertarget{le-relazioni-tra-variabili}{%
+\section{Le relazioni tra variabili}\label{le-relazioni-tra-variabili}}
+
+\textcite{zetschefuture2019} hanno misurato il livello di depressione dei
+soggetti del loro esperimento utilizzando due scale psicometriche: il
+Beck Depression Inventory II (BDI-II) e la Center for Epidemiologic
+Studies Depression Scale (CES-D). Il BDI-II è uno strumento self-report
+che valutare la presenza e l'intensità di sintomi depressivi in pazienti
+adulti e adolescenti di almeno 13 anni di età con diagnosi psichiatrica
+mentre la CES-D è una scala self-report progettata per misurare i
+sintomi depressivi che sono stati vissuti nella settimana precedente
+nella popolazione generale, specialmente quella degli
+adolescenti/giovani adulti. Una domanda ovvia che ci può venire in
+mente è: quanto sono simili le misure ottenute mediante queste due
+scale?
+
+È chiaro che i numeri prodotti dalle scale BDI-II e CES-D non possono
+essere identici, e questo per due motivi: (1) la presenza degli errori
+di misurazione e (2) l'unità di misura delle due variabili. L'errore di
+misurazione corrompe sempre, almeno in parte, qualunque operazione di
+misurazione. E questo è vero specialmente in psicologia dove
+l'\emph{attendibilità} degli strumenti di misurazione è minore che in altre
+discipline (quali la fisica, ad esempio). Il secondo motivo per cui i
+valori delle scale BDI-II e CES-D non possono essere uguali è che
+l'unità di misura delle due scale è arbitraria. Infatti, qual è l'unità
+di misura della depressione? Chi può dirlo! Ma, al di là delle
+differenze derivanti dall'errore di misurazione e dalla differente unità
+di misura, ci aspettiamo che, se le due scale misurano entrambe lo
+stesso costrutto, allora i valori prodotti dalle due scale dovranno
+essere tra loro \emph{linearmente associati}. Per capire cosa si intende con
+``associazione lineare'' iniziamo a guardare i dati. Per fare questo
+utilizziamo una rappresentazione grafica che va sotto il nome di
+diagramma a dispersione.
+
+\hypertarget{diagramma-a-dispersione}{%
+\subsection{Diagramma a dispersione}\label{diagramma-a-dispersione}}
+
+Il diagramma di dispersione è la rappresentazione grafica delle coppie di punti individuati da due variabili \(X\) e \(Y\).
+
+Il diagramma di dispersione per le variabili BDI-II e CES-D si ottiene ponendo, ad esempio, i valori BDI-II sull'asse delle ascisse e quelli del CES-D sull'asse delle ordinate. In tale grafico, fornito dalla figura~\ref{fig:zetsche-scatter}, cascun punto corrisponde ad un individuo del quale, nel caso presente, conosciamo il livello di depressione misurato dalle due scale psicometriche.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bysubj }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(esm\_id, group) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{bdi =} \FunctionTok{mean}\NormalTok{(bdi),}
+    \AttributeTok{cesd =} \FunctionTok{mean}\NormalTok{(cesd\_sum)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{na.omit}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ungroup}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m\_cesd }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(bysubj}\SpecialCharTok{$}\NormalTok{cesd)}
+\NormalTok{m\_bdi }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(bysubj}\SpecialCharTok{$}\NormalTok{bdi)}
+\NormalTok{FONT\_SIZE }\OtherTok{\textless{}{-}} \DecValTok{10}
+
+\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{bdi, }\AttributeTok{y=}\NormalTok{cesd, }\AttributeTok{color=}\NormalTok{group)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size=}\DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept=}\NormalTok{ m\_cesd, }\AttributeTok{linetype=}\StringTok{"dashed"}\NormalTok{, }\AttributeTok{color =} \StringTok{"gray"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept =}\NormalTok{ m\_bdi, }\AttributeTok{linetype=}\StringTok{"dashed"}\NormalTok{, }\AttributeTok{color =} \StringTok{"gray"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{x=}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\AttributeTok{y=}\DecValTok{16}\NormalTok{, }\AttributeTok{label=}\StringTok{"I"}\NormalTok{, }\AttributeTok{color =} \StringTok{"gray"}\NormalTok{, }\AttributeTok{size=}\NormalTok{FONT\_SIZE) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{x=}\DecValTok{0}\NormalTok{, }\AttributeTok{y=}\DecValTok{46}\NormalTok{, }\AttributeTok{label=}\StringTok{"IV"}\NormalTok{, }\AttributeTok{color =} \StringTok{"gray"}\NormalTok{, }\AttributeTok{size=}\NormalTok{FONT\_SIZE) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{x=}\DecValTok{18}\NormalTok{, }\AttributeTok{y=}\DecValTok{46}\NormalTok{, }\AttributeTok{label=}\StringTok{"III"}\NormalTok{, }\AttributeTok{color =} \StringTok{"gray"}\NormalTok{, }\AttributeTok{size=}\NormalTok{FONT\_SIZE) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{x=}\DecValTok{18}\NormalTok{, }\AttributeTok{y=}\DecValTok{16}\NormalTok{, }\AttributeTok{label=}\StringTok{"II"}\NormalTok{, }\AttributeTok{color =} \StringTok{"gray"}\NormalTok{, }\AttributeTok{size=}\NormalTok{FONT\_SIZE) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \StringTok{"BDI{-}II"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"CESD"}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position=}\StringTok{"none"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[h]
+
+{\centering \includegraphics[width=0.8\linewidth]{013_eda_files/figure-latex/zetsche-scatter-1} 
+
+}
+
+\caption{Associazione tra le variabili BDI-II e CES-D nello studio di @zetschefuture2019. In rosso sono rappresentate le osservazioni del gruppo di controllo; in blu quelle dei pazienti.}\label{fig:zetsche-scatter}
+\end{figure}
+
+Dalla figura~\ref{fig:zetsche-scatter} possiamo vedere che i dati mostrano una tendenza a disporsi attorno ad una retta -- nel gergo statistico, questo fatto viene espresso dicendo che i punteggi CES-Dtendono ad essere linearmente associati ai punteggi BDI-II. È ovvio, tuttavia, che tale relazione lineare è lungi dall'essere perfetta -- se fosse perfetta, tutti i punti del diagramma a dispersione si disporrebbero esattamente lungo una retta.
+
+\hypertarget{covarianza}{%
+\subsection{Covarianza}\label{covarianza}}
+
+Il problema che ci poniamo è quello di trovare un indice numerico che
+descriva di quanto la nube di punti si discosta da una perfetta
+relazione lineare tra le due variabili. Per risolvere tale problema
+dobbiamo specificare un indice statistico che descriva la direzione e la
+forza della relazione lineare tra le due variabili. Ci sono vari indici
+statistici che possiamo utilizzare a questo scopo.
+
+Iniziamo a considerare il più importante di tali indici, chiamato
+\emph{covarianza}. In realtà la definizione di questo indice non ci
+sorprenderà più di tanto in quanto, in una forma solo apparentemente
+diversa, l'abbiamo già incontrato in precedenza. Ci ricordiamo infatti
+che la varianza di una generica variabile \(X\) è definita come la media
+degli scarti quadratici di ciascuna osservazione dalla media:
+\begin{equation}
+S_{XX} = \frac{1}{n} \sum_{i=1}^n(X_i - \bar{X}) (X_i - \bar{X}).
+\label{eq:variance2}
+\end{equation}
+Infatti, la varianza viene talvolta descritta come la ``covarianza di una
+variabile con sé stessa''.
+
+Adesso facciamo un passo ulteriore. Invece di valutare la dispersione di
+una sola variabile, chiediamoci come due variabili \(X\) e \(Y\) ``variano
+insieme'' (co-variano). È facile capire come una risposta a tale domanda
+possa essere fornita da una semplice trasformazione della formula
+precedente che diventa:
+\begin{equation}
+S_{XY} = \frac{1}{n} \sum_{i=1}^n(X_i - \bar{X}) (Y_i - \bar{Y}).
+\label{eq:covariance}
+\end{equation}
+L'eq.~\eqref{eq:covariance} ci fornisce dunque la definizione della covarianza.
+
+Per capire il significato dell'eq.~\eqref{eq:covariance}, supponiamo di dividere il grafico della figura~\ref{fig:zetsche-scatter} in quattro quadranti definiti da una retta verticale passante per la media dei valori BDI-II e da una retta orizzontale passante per la media dei valori CES-D. Numeriamo i quadranti partendo da quello in basso a sinistra e muovendoci in senso antiorario.
+
+Se prevalgono punti nel I e III quadrante, allora la nuvola di punti
+avrà un andamento crescente (per cui a valori bassi di \(X\) tendono ad
+associarsi valori bassi di \(Y\) e a valori elevati di \(X\) tendono ad
+associarsi valori elevati di \(Y\)) e la covarianza segno positivo. Mentre
+se prevalgono punti nel II e IV quadrante la nuvola di punti avrà un
+andamento decrescente (per cui a valori bassi di \(X\) tendono ad
+associarsi valori elevati di \(Y\) e a valori elevati di \(X\) tendono ad
+associarsi valori bassi di \(Y\)) e la covarianza segno negativo. Dunque,
+il segno della covarianza ci informa sulla direzione della relazione
+lineare tra due variabili: l'associazione lineare si dice positiva se la
+covarianza è positiva, negativa se la covarianza è negativa.
+
+Il segno della covarianza ci informa sulla direzione della relazione, ma
+invece il valore assoluto della covarianza ci dice ben poco. Esso,
+infatti, dipende dall'unità di misura delle variabili. Nel caso presente
+questo concetto è difficile da comprendere, dato che le due variabili in
+esame non hanno un'unità di misura (ovvero, hanno un'unità di misura
+arbitraria e priva di significato). Ma quest'idea diventa chiara se
+pensiamo alla relazione lineare tra l'altezza e il peso delle persone,
+ad esempio. La covarianza tra queste due quantità è certamente positiva,
+ma il valore assoluto della covarianza diventa più grande se l'altezza
+viene misurata in millimetri e il peso in grammi, e diventa più piccolo
+l'altezza viene misurata in metri e il peso in chilogrammi. Dunque, il
+valore della covarianza cambia al mutare dell'unità di misura delle
+variabili anche se l'associazione tra le variabili resta costante.
+
+\hypertarget{correlazione}{%
+\subsection{Correlazione}\label{correlazione}}
+
+Dato che il valore assoluto della covarianza è di difficile
+interpretazione -- in pratica, non viene mai interpretato -- è
+necessario trasformare la covarianza in modo tale da renderla immune
+alle trasformazioni dell'unità di misura delle variabili. Questa
+operazione si dice \emph{standardizzazione} e corrisponde alla divisione
+della covarianza per le deviazioni standard (\(s_X\), \(s_Y\)) delle due
+variabili:
+
+\begin{equation}
+r_{XY} = \frac{S_{XY}}{s_X s_Y}.
+\label{eq:correlation}
+\end{equation}
+La quantià che si ottiene in questo modo viene chiamata \emph{correlazione} di Bravais-Pearson (dal nome degli autori che, indipendentemente l'uno dall'altro, la hanno introdotta).
+
+Il coefficiente di correlazione ha le seguenti proprietà:
+
+\begin{itemize}
+\tightlist
+\item
+  ha lo stesso segno della covarianza, dato che si ottiene dividendo
+  la covarianza per due numeri positivi;
+\item
+  è un numero puro, cioè non dipende dall'unità di misura delle
+  variabili;
+\item
+  assume valori compresi tra -1 e +1.
+\end{itemize}
+
+Ad esso possiamo assegnare la seguente interpretazione:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(r_{XY} = -1\) \(\rightarrow\) perfetta relazione negativa: tutti i
+  punti si trovano esattamente su una retta con pendenza negativa (dal
+  quadrante in alto a sinistra al quadrante in basso a destra);
+\item
+  \(r_{XY} = +1\) \(\rightarrow\) perfetta relazione positiva: tutti i
+  punti si trovano esattamente su una retta con pendenza positiva (dal
+  quadrante in basso a sinistra al quadrante in alto a destra);
+\item
+  \(-1 < r_{XY} < +1\) \(\rightarrow\) presenza di una relazione lineare
+  di intensità diversa;
+\item
+  \(r_{XY} = 0\) \(\rightarrow\) assenza di relazione lineare tra \(X\) e
+  \(Y\).
+\end{enumerate}
+
+\begin{example}
+Per i dati della figura~\ref{fig:zetsche-scatter}, la covarianza è 207.426. Il segno positivo della covarianza ci dice che tra le due variabili c'è un'associazione lineare positiva. Per capire qual è l'intensità della relazione lineare tra le due variabili calcoliamo la correlazione.
+Essendo le deviazioni standard del BDI-II e del CES-D rispettavamente uguali a 15.37 e 14.93, la correlazione diventa uguale a \(\frac{207.426}{15.38 \cdot 14.93} = 0.904.\) Tale valore è prossimo a 1.0, il che vuol dire che i punti del diagramma a dispersione non si discostano troppo da una retta con una pendenza positiva.
+\end{example}
+
+\hypertarget{correlazione-e-causazione}{%
+\section{Correlazione e causazione}\label{correlazione-e-causazione}}
+
+Facendo riferimento nuovamente alla figura~\ref{fig:zetsche-scatter}, possiamo dire che, in molte applicazioni (ma non nel caso presente!) l'asse \(x\) rappresenta una quantità nota come \emph{variabile indipendente} e l'interesse si concentra sulla sua influenza sulla \emph{variabile dipendente} tracciata sull'asse \(y\). Ciò presuppone però che sia nota la direzione in cui l'influenza causale potrebbe risiedere. È importante tenere bene a mente che la correlazione è soltanto un indice descrittivo della relazione lineare tra due variabili e in nessun caso può essere usata per inferire alcunché sulle relazioni \textbf{causali} che legano le variabili. È ben nota l'espressione: ``correlazione non significa causazione''.
+
+Di opinione diversa era invece Karl Pearson (1911), il quale ha affermato:
+
+\begin{quote}
+Quanto spesso, quando è stato osservato un nuovo fenomeno,
+sentiamo che viene posta la domanda: `qual è la sua causa?'. Questa è
+una domanda a cui potrebbe essere assolutamente impossibile rispondere.
+Invece, può essere più facile rispondere alla domanda: `in che misura
+altri fenomeni sono associati con esso?'. Dalla risposta a questa
+seconda domanda possono risultare molte preziose conoscenze.
+\end{quote}
+
+Che alla seconda domanda posta da Pearson sia facile rispondere è indubbio. Che la nostra comprensione di un fenomeno possa aumentare sulla base delle
+informazioni fornite unicamente dalle correlazioni, invece, è molto dubbio e quasi certamente falso.
+
+\hypertarget{usi-della-correlazione}{%
+\subsection{Usi della correlazione}\label{usi-della-correlazione}}
+
+Anche se non può essere usata per studiare le relazioni causali, la
+correlazione viene usata per molti altri scopi tra i quali, per esempio,
+quello di misurare la \emph{validità concorrente} di un test psiologico. Se
+un test psicologico misura effettivamente ciò che ci si aspetta che
+misuri (nel caso dell'esempio presente, la depressione), allora dovremo
+aspettarci che fornisca una correlazione alta con risultati di altri
+test che misurano lo stesso costrutto -- come nel caso dei dati di
+\autocite{zetschefuture2019}. Un'altra proprietà desiderabile di un test
+psicometrico è la \emph{validità divergente}: i risultati di test
+psicometrici che misurano costrutti diversi dovrebbero essere poco
+associati tra loro. In altre parole, in questo secondo caso dovremmo
+aspettarci che la correlazione sia bassa.
+
+\hypertarget{correlazione-di-spearman}{%
+\subsection{Correlazione di Spearman}\label{correlazione-di-spearman}}
+
+Una misura alternativa della relazione lineare tra due variabili è
+fornita dal coefficiente di correlazione di Spearman e dipende soltanto
+dalla relazione d'ordine dei dati, non dagli specifici valori dei dati.
+Tale misura di associazione è appropriata quando, del fenomeno in esame,
+gli psicologi sono stati in grado di misurare soltanto le relazioni
+d'ordine tra le diverse modalità della risposta dei soggetti, non
+l'intensità della risposta. Le variabili psicologiche che hanno questa
+proprietà si dicono \emph{ordinali}. Nel caso di variabili ordinali, non è
+possibile sintetizzare i dati mediante le statistiche descrittive che
+abbiamo introdotto in questo capitolo, quali ad esempio la media e la
+varianza, ma è invece solo possibile riassumere i dati mediante una
+distribuzione di frequenze per le varie modalità della risposta.
+
+\hypertarget{correlazione-nulla}{%
+\subsection{Correlazione nulla}\label{correlazione-nulla}}
+
+Un ultimo aspetto da mettere in evidenza a proposito della correlazione riguarda il fatto che la correlazione descrive la direzione e l'intensità della relazione lineare tra due variabili. Relazioni non lineari tra le variabili, anche se sono molto forti, non vengono catturate dalla correlazione. È importante rendersi conto che una correlazione pari a zero non significa che non c'è relazione tra le due variabili, ma solo che tra esse non c'è una relazione \emph{lineare}.
+
+\begin{example}
+
+Un esempio di correlazione nulla in presenza di una chiara relazione (non lineare) tra le variabili è fornito dalla figura~\ref{fig:zerocorr}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(}\StringTok{"datasauRus"}\NormalTok{)}
+\NormalTok{slant }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}
+\NormalTok{  datasaurus\_dozen\_wide, }
+  \FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{slant\_down\_x,}\AttributeTok{y=}\NormalTok{slant\_down\_y),   }
+  \AttributeTok{colour=}\NormalTok{dataset}
+\NormalTok{) }
+\NormalTok{slant }\OtherTok{\textless{}{-}}\NormalTok{ slant }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }
+\NormalTok{slant }\OtherTok{\textless{}{-}}\NormalTok{ slant }\SpecialCharTok{+} 
+  \FunctionTok{theme\_void}\NormalTok{() }
+\NormalTok{slant }\OtherTok{\textless{}{-}}\NormalTok{ slant }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{, }
+        \AttributeTok{panel.border =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{fill=}\ConstantTok{NA}\NormalTok{, }\AttributeTok{size =} \DecValTok{1}\NormalTok{),}
+        \AttributeTok{plot.margin =} \FunctionTok{margin}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{aspect.ratio =} \DecValTok{1}\NormalTok{) }
+
+\NormalTok{dino }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}
+\NormalTok{  datasaurus\_dozen\_wide, }
+  \FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{dino\_x,}\AttributeTok{y=}\NormalTok{dino\_y), }
+  \AttributeTok{colour=}\NormalTok{dataset}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }
+
+\NormalTok{dino }\OtherTok{\textless{}{-}}\NormalTok{ dino }\SpecialCharTok{+}\FunctionTok{theme\_void}\NormalTok{() }
+\NormalTok{dino }\OtherTok{\textless{}{-}}\NormalTok{ dino }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{, }
+        \AttributeTok{panel.border =}  \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{fill=}\ConstantTok{NA}\NormalTok{, }\AttributeTok{size =} \DecValTok{1}\NormalTok{),}
+        \AttributeTok{plot.margin =} \FunctionTok{margin}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{aspect.ratio =} \DecValTok{1}\NormalTok{) }
+
+\NormalTok{slant }\SpecialCharTok{+}\NormalTok{ dino}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[h]
+
+{\centering \includegraphics[width=0.8\linewidth]{013_eda_files/figure-latex/zerocorr-1} 
+
+}
+
+\caption{Due insiemi di dati (fittizi) per i quali i coefficienti di correlazione di Pearson sono entrambi 0. Ma questo non significa che non vi sia alcuna relazione tra le variabili.}\label{fig:zerocorr}
+\end{figure}
+
+\end{example}
+
+\hypertarget{considerazioni-conclusive}{%
+\section*{Considerazioni conclusive}\label{considerazioni-conclusive}}
+\addcontentsline{toc}{section}{Considerazioni conclusive}
+
+La prima fase dell'analisi dei dati ci porta a riassumere i dati mediante gli strumenti della statistica descrittiva.
+Le tipiche domande che vengono affrontate in questa fase sono: qual è la
+distribuzione delle variabili di interesse? Quali relazioni a coppie si
+possono osservare nel campione? Ci sono delle osservazioni `anomale',
+ovvero estremamente discrepanti rispetto alle altre, sia quando si
+esaminano le statistiche descrittive univariate (ovvero, quelle che
+riguardano le caratteristiche di una variabile presa singolarmente), sia
+quando vengono esaminate le statistiche bivariate (ovvero, le
+statistiche che descrivono l'associazione tra le variabili)? È
+importante avere ben chiare le idee su questi punti prima di procedere
+con qualsiasi procedura statistica di tipo inferenziale. Per rispondere
+alle domande che abbiamo elencato sopra, ed ad altre simili, è molto
+utile procedere con delle rappresentazioni grafiche dei dati. È chiaro che, quando disponiamo di grandi moli di dati (come è sempre il caso in psicologia), le operazioni descritte sopra devono essere svolte mediante un software statistico.
 
 
 % Bibliography

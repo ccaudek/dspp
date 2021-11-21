@@ -437,7 +437,7 @@ Il valore adiacente superiore è il valore più grande tra le osservazioni che r
 Consideriamo ora un caso concreto nel quale viene utilizzato un box-plot.
 Nel caso dei dati di @zetschefuture2019 ci chiediamo in che modo si differenziano le distribuzioni del BDI-II tra i due gruppi considerati, ovvero tra il gruppo dei pazienti e il gruppo di controllo. La figura \@ref(fig:violin-zetsche) fornisce due rappresentazioni grafiche che possono essere utilizzate per rispondere a questa domanda.
 
-```{r violin-zetsche, fig.cap = "Due versioni di un violin plot per i valori BDI-II di ciascuno dei due gruppi di soggetti esaminati da @zetschefuture2019."}
+```{r violin-zetsche, fig.cap = "Due versioni di un violin plot per i valori BDI-II di ciascuno dei due gruppi di soggetti esaminati da Zetsche et al. (2019)."}
 library("patchwork")
 bysubj <- df %>% 
   group_by(esm_id, group) %>% 
@@ -446,12 +446,19 @@ bysubj <- df %>%
     nr_of_episodes = mean(nr_of_episodes, na.rm = TRUE)
   ) %>% 
   na.omit()
+
+bysubj$group <- forcats::fct_recode(
+  bysubj$group, 
+  "Controlli sani" = "ctl", 
+  "Depressione maggiore" = "mdd"
+)
+
 p1 <- bysubj %>% 
   ggplot(aes(x=group, y=bdi)) + 
   geom_violin(trim=FALSE) +
   geom_dotplot(binaxis='y', stackdir='center', dotsize=0.7) +
   labs(
-    x = "Gruppo",
+    x = "",
     y = "BDI-II"
   ) 
 p2 <- bysubj %>% 
@@ -459,15 +466,39 @@ p2 <- bysubj %>%
   geom_violin(trim=FALSE) +
   geom_boxplot(width=0.05) +
   labs(
-    x = "Gruppo",
+    x = "",
     y = "BDI-II"
   ) 
 p1 + p2
 ```
 
-Nella figura \@ref(fig:violin-zetsche) sinistra sono rappresentati i dati grezzi: questa è la pratica migliore quando il numero di osservazioni è piccolo. La linea curva che circonda (simmetricamente) le osservazioni è l'_istogramma lisciato_ (kernel density plot) che abbiamo descritto in precedenza. Nella figura \@ref(fig:violin-zetsche) destra sono rappresentanti gli stessi dati: il kernel density plot è lo stessao di prima, ma al suo interno è stato collocato un box-plot. Questa seconda rappresentazione è da preferire quando ci sono molte osservazioni e non è utile rappresentare singolarmente ciascun dato. Entrambe le rappresentazioni suggeriscono che la distribuzione dei dati è all'incirca simmetrica nel gruppo clinico (codificato come `mdd`). Il gruppo di controllo (`ctl`) mostra invece un'asimmetria positiva, con tre osservazioni evidenziate nel boxplot come "valori anomali", ovvero, valori che si discostano dalla mediana di una quantità maggiore di 1.5 IQR.
+Nella figura \@ref(fig:violin-zetsche) sinistra sono rappresentati i dati grezzi.  La linea curva che circonda (simmetricamente) le osservazioni è l'_istogramma lisciato_ (kernel density plot) che abbiamo descritto in precedenza. Nella figura \@ref(fig:violin-zetsche) destra sono rappresentanti gli stessi dati: il kernel density plot è lo stesso di prima, ma al suo interno è stato collocato un box-plot. Entrambe le rappresentazioni suggeriscono che la distribuzione dei dati è all'incirca simmetrica nel gruppo clinico. Il gruppo di controllo mostra invece un'asimmetria positiva.
 ::: 
 
+Si noti che i box plot non sono necessariamente la rappresentazione migliore della distribuzione di una variabile. Infatti, richiedono la comprensione di concetti complessi (quali i quantili e la differenza interquantile) che non sono necessari se vogliamo presentare in maniera grafica la distribuzione della variabile e, in generale, non sono compresi da un pubblico di non specialisti. Inoltre, i box plot nascondono informazioni che di solito sono cruciali da vedere. È dunque preferibile presentare direttamente i dati. Qui di seguito viene mostrato come usare un cosiddetto "sina plot", il quale presenta le singole osservazioni divise in classi. Ai punti viene aggiunto un jitter, così da evitare sovrapposizioni; l'ampiezza del jitter è controllata dalla distribuzione della densità dei dati all'interno di ciascuna classe. Per i dati dell'esempio in discussione, otteniamo la rappresentazione seguente. Per i dati presenti, questa mi sembra la rappresentazione migliore.
+
+
+```{r sina-zetsche, fig.cap = "Sina plot per i valori BDI-II di ciascuno dei due gruppi di soggetti esaminati da Zetsche et al. (2019)."}
+bysubj |> 
+  ggplot(
+    aes(x = group, y = bdi, color = group)
+  ) +
+  scale_fill_manual(guide = "none") + 
+  ggforce::geom_sina(
+    maxwidth = .6, scale = "count", seed = 1,
+    size = 3, alpha = .5
+  ) + 
+  ggforce::geom_sina(
+    maxwidth = .6, scale = "count", seed = 1, 
+    size = 3, shape = 1, stroke = .8
+  ) +
+  labs(
+    x = "",
+    y = "BDI-II",
+    color = 'Gruppo'
+  ) + 
+  theme(legend.position = "none")
+```
 
 ### L'eccellenza grafica
 
