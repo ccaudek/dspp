@@ -25,7 +25,7 @@ Un diagramma a dispersione dei dati con sovrapposto il valore atteso della $y$ i
 
 ```r
 plot(
-  df$kid_score ~ I(df$mom_iq - mean(df$mom_iq)),
+  df$kid_score ~ I(df$mom_iq - mean(df$mom_iq)), 
   pch = 20,
   xlab = "mom_iq (centered)",
   ylab = "kid_score"
@@ -35,27 +35,27 @@ abline(mean(posterior$alpha), mean(posterior$beta), col = 6, lw = 2)
 
 
 
-\begin{center}\includegraphics{053_reglin3_files/figure-latex/unnamed-chunk-4-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{053_reglin3_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 Un modo per visualizzare l'incertezza della stima della retta di regressione è quello di tracciare molteplici rette di regressione, ciascuna delle quali definita da una diversa stima dei parametri $\alpha$ e $\beta$ che vengono estratti a caso dalle rispettive distribuzioni a posteriori.
 
 
 ```r
 plot(
-  df$kid_score ~ I(df$mom_iq - mean(df$mom_iq)),
+  df$kid_score ~ I(df$mom_iq - mean(df$mom_iq)), 
   pch = 20,
   xlab = "mom_iq (centered)",
   ylab = "kid_score"
 )
 for (i in 1:50) {
-  abline(posterior$alpha[i], posterior$beta[i], col = "gray", lty = 1)
+ abline(posterior$alpha[i], posterior$beta[i], col = "gray", lty = 1)
 }
 abline(mean(posterior$alpha), mean(posterior$beta), col = 6, lw = 2)
 ```
 
 
 
-\begin{center}\includegraphics{053_reglin3_files/figure-latex/unnamed-chunk-5-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{053_reglin3_files/figure-latex/unnamed-chunk-5-1} \end{center}
 
 
 ## Intervalli di credibilità
@@ -68,14 +68,14 @@ Per l'esempio che stiamo discutendo, gli intervalli di credibilità al 95% si ot
 ```r
 posterior <- extract(stanfit)
 rstantools::posterior_interval(as.matrix(stanfit), prob = 0.95)
-#>                    2.5%         97.5%
-#> alpha_std   -0.08381793    0.08454522
-#> beta_std     0.36326418    0.53240170
-#> sigma_std    0.84043118    0.95801893
-#> alpha       85.08649000   88.52285250
-#> beta         0.49429853    0.72444565
-#> sigma       17.15376250   19.55382000
-#> lp__      -172.82802500 -168.24900000
+#>                2.5%     97.5%
+#> alpha_std   -0.0838    0.0845
+#> beta_std     0.3633    0.5324
+#> sigma_std    0.8404    0.9580
+#> alpha       85.0865   88.5229
+#> beta         0.4943    0.7244
+#> sigma       17.1538   19.5538
+#> lp__      -172.8280 -168.2490
 ```
 
 Un grafico che riporta l'intervallo di credibilità ai livelli di probabilità desiderati per $\beta$ si ottiene con le seguenti istruzioni:
@@ -86,12 +86,12 @@ mcmc_areas(
   fit2$draws(c("beta")),
   prob = 0.8,
   prob_outer = 0.95
-)
+  )
 ```
 
 
 
-\begin{center}\includegraphics{053_reglin3_files/figure-latex/unnamed-chunk-7-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{053_reglin3_files/figure-latex/unnamed-chunk-7-1} \end{center}
 
 Per i parametri ottenuti analizzando i dati standardizzati, abbiamo
 
@@ -99,7 +99,7 @@ Per i parametri ottenuti analizzando i dati standardizzati, abbiamo
 ```r
 stanfit %>%
   mcmc_intervals(
-    pars = c("alpha_std", "beta_std", "sigma_std"),
+    pars = c("alpha_std", "beta_std", "sigma_std"), 
     prob = 0.8,
     prob_outer = 0.95
   )
@@ -107,7 +107,7 @@ stanfit %>%
 
 
 
-\begin{center}\includegraphics{053_reglin3_files/figure-latex/unnamed-chunk-8-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{053_reglin3_files/figure-latex/unnamed-chunk-8-1} \end{center}
 
 
 ## Rappresentazione grafica della distribuzione a posteriori
@@ -123,7 +123,7 @@ stan_dens(stanfit, pars = c("alpha", "beta", "sigma"))
 
 
 
-\begin{center}\includegraphics{053_reglin3_files/figure-latex/unnamed-chunk-9-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{053_reglin3_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 
 ## Test di ipotesi
@@ -157,7 +157,7 @@ che
 ```r
 coef(lm(kid_score ~ mom_iq, data = df2))
 #> (Intercept)      mom_iq 
-#>   49.187954    0.362552
+#>      49.188       0.363
 ```
 \noindent
 la stima di $\beta$ viene drammaticamente ridotta (di quasi la metà!). 
@@ -177,7 +177,7 @@ $$
 
 
 ```r
-modelString <- "
+modelString = "
 data {
   int<lower=0> N;
   vector[N] y;
@@ -254,13 +254,12 @@ Esaminando le stime dei parametri
 ```r
 fit4$summary(c("alpha", "beta", "sigma", "nu"))
 #> # A tibble: 4 x 10
-#>   variable   mean median     sd    mad     q5    q95  rhat
-#>   <chr>     <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl>
-#> 1 alpha    87.8   87.8   0.887  0.899  86.3   89.3    1.00
-#> 2 beta      0.603  0.603 0.0585 0.0577  0.506  0.698  1.00
-#> 3 sigma    15.9   15.9   0.806  0.812  14.6   17.3    1.00
-#> 4 nu        5.58   5.44  1.15   1.11    3.94   7.65   1.00
-#> # ... with 2 more variables: ess_bulk <dbl>, ess_tail <dbl>
+#>   variable   mean median     sd    mad     q5    q95  rhat ess_bulk ess_tail
+#>   <chr>     <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl>    <dbl>    <dbl>
+#> 1 alpha    87.8   87.8   0.887  0.899  86.3   89.3    1.00   13776.   11987.
+#> 2 beta      0.603  0.603 0.0585 0.0577  0.506  0.698  1.00   14185.   11067.
+#> 3 sigma    15.9   15.9   0.806  0.812  14.6   17.3    1.00   12699.   11256.
+#> 4 nu        5.58   5.44  1.15   1.11    3.94   7.65   1.00   12258.   12033.
 ```
 
 \noindent

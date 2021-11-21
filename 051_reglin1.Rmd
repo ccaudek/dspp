@@ -114,7 +114,7 @@ Y_i \mid \mu_i, \sigma \stackrel{ind}{\sim} \mathcal{N}(\mu_i, \sigma), \quad i 
 Si noti che le osservazioni $Y_1, \dots, Y_n$ non sono più identicamente distribuite poiché hanno medie diverse, ma sono ancora indipendenti come indicato dalla notazione `ind` posta sopra il simbolo $\sim$ nella \@ref(eq:normalsamplinglinearmodel)
 
 
-### Relazione lineare tra la media e il predittore
+### Relazione lineare tra la media $y \mid x$ e il predittore
 
 L'approccio che consente di mettere in relazione un predittore $x_i$ con la risposta $Y_i$ è quello di assumere che la media di ciascuna $Y_i$, ovvero $\mu_i$, sia una funzione lineare del predittore $x_i$. Una tale relazione lineare è scritta come 
 
