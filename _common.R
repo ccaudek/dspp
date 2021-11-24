@@ -12,7 +12,7 @@ options(digits = 3)
 set.seed(42)
 SEED <- 374237 # set random seed for reproducibility
 # theme_set(bayesplot::theme_default(base_family = "sans"))
-theme_set(bayesplot::theme_default(base_size = 11))
+theme_set(bayesplot::theme_default(base_size = 12))
 # bayesplot::color_scheme_set("brightblue") 
 colors <- colour("bright", names = FALSE)(4)
 ggplot <- function(...) ggplot2::ggplot(...) + scale_color_bright()

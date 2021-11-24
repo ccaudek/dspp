@@ -321,7 +321,7 @@
 
 \author{Corrado Caudek}
 
-\date{2021-11-21}
+\date{2021-11-24}
 
 
 % Include headers (preamble.tex) here
@@ -498,7 +498,7 @@ Copyright \(\copyright\) 2022.
 
 \normalsize
 
-Data della versione presente: Novembre 21, 2021.
+Data della versione presente: Novembre 24, 2021.
 
 \hypertarget{prefazione}{%
 \chapter{Prefazione}\label{prefazione}}
@@ -685,9 +685,9 @@ Per rispondere a questa domanda, iniziamo a leggere in \(\R\) i dati, assumendo 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}
-  \FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"data.mood.csv"}\NormalTok{), }
-  \AttributeTok{header=}\ConstantTok{TRUE}
-\NormalTok{) }
+  \FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"data.mood.csv"}\NormalTok{),}
+  \AttributeTok{header =} \ConstantTok{TRUE}
+\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -695,11 +695,11 @@ C'è un solo valore BDI-II per ciascun soggetto ma tale valore viene ripetuto ta
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{bysubj }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(esm\_id) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{bysubj }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(esm\_id) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{summarise}\NormalTok{(}
     \AttributeTok{bdi =} \FunctionTok{mean}\NormalTok{(bdi)}
-\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{na.omit}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -869,7 +869,7 @@ Poniamoci ora il problema di costruire in R un istogramma per i dati BDI-II di \
   \FunctionTok{labs}\NormalTok{(}
     \AttributeTok{x =} \StringTok{"BDI{-}II"}\NormalTok{,}
     \AttributeTok{y =} \StringTok{"Densità di frequenza"}
-\NormalTok{  ) }
+\NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
 
@@ -898,13 +898,15 @@ Anche se nel caso presente è sensato usare ampiezze diverse per gli intervalli 
     \AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{44.1}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{7}\NormalTok{)}
 \NormalTok{  ) }\SpecialCharTok{+}
   \FunctionTok{scale\_x\_continuous}\NormalTok{(}
-    \AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.00}\NormalTok{, }\FloatTok{7.35}\NormalTok{, }\FloatTok{14.70}\NormalTok{, }\FloatTok{22.05}\NormalTok{, }
-               \FloatTok{29.40}\NormalTok{, }\FloatTok{36.75}\NormalTok{, }\FloatTok{44.10}\NormalTok{)}
+    \AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}
+      \FloatTok{0.00}\NormalTok{, }\FloatTok{7.35}\NormalTok{, }\FloatTok{14.70}\NormalTok{, }\FloatTok{22.05}\NormalTok{,}
+      \FloatTok{29.40}\NormalTok{, }\FloatTok{36.75}\NormalTok{, }\FloatTok{44.10}
+\NormalTok{    )}
 \NormalTok{  ) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}
     \AttributeTok{x =} \StringTok{"BDI{-}II"}\NormalTok{,}
     \AttributeTok{y =} \StringTok{"Densità di frequanza"}
-\NormalTok{  ) }
+\NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
 
@@ -936,23 +938,23 @@ Vediamo ora come rappresentare con R sia l'istogramma sia il kernel density plot
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bdi)) }\SpecialCharTok{+}
   \FunctionTok{geom\_histogram}\NormalTok{(}
-    \FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ ..density..), }
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ ..density..),}
     \AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{44.1}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{7}\NormalTok{)}
 \NormalTok{  ) }\SpecialCharTok{+}
   \FunctionTok{geom\_density}\NormalTok{(}
-    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bdi), }
-    \AttributeTok{adjust =} \FloatTok{0.5}\NormalTok{, }
-    \AttributeTok{size =} \FloatTok{0.8}\NormalTok{, }
-    \CommentTok{\#fill = colors[2],}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bdi),}
+    \AttributeTok{adjust =} \FloatTok{0.5}\NormalTok{,}
+    \AttributeTok{size =} \FloatTok{0.8}\NormalTok{,}
+    \CommentTok{\# fill = colors[2],}
     \AttributeTok{alpha =} \FloatTok{0.5}
 \NormalTok{  ) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}
     \AttributeTok{x =} \StringTok{"BDI{-}II"}\NormalTok{,}
     \AttributeTok{y =} \StringTok{"Densità di frequenza"}
-\NormalTok{  ) }
+\NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1063,37 +1065,36 @@ Nel caso dei dati di \textcite{zetschefuture2019} ci chiediamo in che modo si di
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(}\StringTok{"patchwork"}\NormalTok{)}
-\NormalTok{bysubj }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(esm\_id, group) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{bysubj }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(esm\_id, group) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{summarise}\NormalTok{(}
     \AttributeTok{bdi =} \FunctionTok{mean}\NormalTok{(bdi),}
     \AttributeTok{nr\_of\_episodes =} \FunctionTok{mean}\NormalTok{(nr\_of\_episodes, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
-\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{na.omit}\NormalTok{()}
 
 \NormalTok{bysubj}\SpecialCharTok{$}\NormalTok{group }\OtherTok{\textless{}{-}}\NormalTok{ forcats}\SpecialCharTok{::}\FunctionTok{fct\_recode}\NormalTok{(}
-\NormalTok{  bysubj}\SpecialCharTok{$}\NormalTok{group, }
-  \StringTok{"Controlli sani"} \OtherTok{=} \StringTok{"ctl"}\NormalTok{, }
-  \StringTok{"Depressione maggiore"} \OtherTok{=} \StringTok{"mdd"}
+\NormalTok{  bysubj}\SpecialCharTok{$}\NormalTok{group,}
+  \StringTok{"Controlli}\SpecialCharTok{\textbackslash{}n}\StringTok{ sani"} \OtherTok{=} \StringTok{"ctl"}\NormalTok{,}
+  \StringTok{"Depressione}\SpecialCharTok{\textbackslash{}n}\StringTok{ maggiore"} \OtherTok{=} \StringTok{"mdd"}
 \NormalTok{)}
 
-\NormalTok{p1 }\OtherTok{\textless{}{-}}\NormalTok{ bysubj }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{group, }\AttributeTok{y=}\NormalTok{bdi)) }\SpecialCharTok{+} 
-  \FunctionTok{geom\_violin}\NormalTok{(}\AttributeTok{trim=}\ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_dotplot}\NormalTok{(}\AttributeTok{binaxis=}\StringTok{\textquotesingle{}y\textquotesingle{}}\NormalTok{, }\AttributeTok{stackdir=}\StringTok{\textquotesingle{}center\textquotesingle{}}\NormalTok{, }\AttributeTok{dotsize=}\FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
+\NormalTok{p1 }\OtherTok{\textless{}{-}}\NormalTok{ bysubj }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ group, }\AttributeTok{y =}\NormalTok{ bdi)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_violin}\NormalTok{(}\AttributeTok{trim =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_dotplot}\NormalTok{(}\AttributeTok{binaxis =} \StringTok{"y"}\NormalTok{, }\AttributeTok{stackdir =} \StringTok{"center"}\NormalTok{, }\AttributeTok{dotsize =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}
     \AttributeTok{x =} \StringTok{""}\NormalTok{,}
     \AttributeTok{y =} \StringTok{"BDI{-}II"}
-\NormalTok{  ) }
-\NormalTok{p2 }\OtherTok{\textless{}{-}}\NormalTok{ bysubj }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{group, }\AttributeTok{y=}\NormalTok{bdi)) }\SpecialCharTok{+} 
-  \FunctionTok{geom\_violin}\NormalTok{(}\AttributeTok{trim=}\ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_boxplot}\NormalTok{(}\AttributeTok{width=}\FloatTok{0.05}\NormalTok{) }\SpecialCharTok{+}
+\NormalTok{  )}
+\NormalTok{p2 }\OtherTok{\textless{}{-}}\NormalTok{ bysubj }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ group, }\AttributeTok{y =}\NormalTok{ bdi)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_violin}\NormalTok{(}\AttributeTok{trim =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{(}\AttributeTok{width =} \FloatTok{0.05}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}
     \AttributeTok{x =} \StringTok{""}\NormalTok{,}
     \AttributeTok{y =} \StringTok{"BDI{-}II"}
-\NormalTok{  ) }
+\NormalTok{  )}
 \NormalTok{p1 }\SpecialCharTok{+}\NormalTok{ p2}
 \end{Highlighting}
 \end{Shaded}
@@ -1110,28 +1111,34 @@ Nel caso dei dati di \textcite{zetschefuture2019} ci chiediamo in che modo si di
 Nella figura \ref{fig:violin-zetsche} sinistra sono rappresentati i dati grezzi. La linea curva che circonda (simmetricamente) le osservazioni è l'\emph{istogramma lisciato} (kernel density plot) che abbiamo descritto in precedenza. Nella figura \ref{fig:violin-zetsche} destra sono rappresentanti gli stessi dati: il kernel density plot è lo stesso di prima, ma al suo interno è stato collocato un box-plot. Entrambe le rappresentazioni suggeriscono che la distribuzione dei dati è all'incirca simmetrica nel gruppo clinico. Il gruppo di controllo mostra invece un'asimmetria positiva.
 \end{example}
 
-Si noti che i box plot non sono necessariamente la rappresentazione migliore della distribuzione di una variabile. Infatti, richiedono la comprensione di concetti complessi (quali i quantili e la differenza interquantile) che non sono necessari se vogliamo presentare in maniera grafica la distribuzione della variabile e, in generale, non sono compresi da un pubblico di non specialisti. Inoltre, i box plot nascondono informazioni che di solito sono cruciali da vedere. È dunque preferibile presentare direttamente i dati. Qui di seguito viene mostrato come usare un cosiddetto ``sina plot'', il quale presenta le singole osservazioni divise in classi. Ai punti viene aggiunto un jitter, così da evitare sovrapposizioni; l'ampiezza del jitter è controllata dalla distribuzione della densità dei dati all'interno di ciascuna classe. Per i dati dell'esempio in discussione, otteniamo la rappresentazione seguente. Per i dati presenti, questa mi sembra la rappresentazione migliore.
+Si noti che i box plot non sono necessariamente la rappresentazione migliore della distribuzione di una variabile. Infatti, richiedono la comprensione di concetti complessi (quali i quantili e la differenza interquantile) che non sono necessari se vogliamo presentare in maniera grafica la distribuzione della variabile e, in generale, non sono compresi da un pubblico di non specialisti. Inoltre, i box plot nascondono informazioni che di solito sono cruciali da vedere. È dunque preferibile presentare direttamente i dati.
+
+Qui di seguito viene presentato un cosiddetto ``sina plot''. In tale rappresentazione grafica vengono mostrate le singole osservazioni divise in classi. Ai punti viene aggiunto un jitter, così da evitare sovrapposizioni. L'ampiezza del jitter lungo l'asse \(x\) è determinata dalla distribuzione della densità dei dati all'interno di ciascuna classe; quindi il grafico mostra lo stesso contorno di un \emph{violin plot}, ma trasmette informazioni sia sul numero di punti dati, sia sulla distribuzione della densità, sui valori anomali e sulla distribuzione dei dati in un formato molto semplice, comprensibile e sintetico. Per i dati dell'esempio in discussione, otteniamo la rappresentazione della figura \ref{fig:sina-zetsche}, a cui è stata aggiunta la mediana di ciascun gruppo.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{bysubj }\SpecialCharTok{|}\ErrorTok{\textgreater{}} 
+\NormalTok{zetsche\_summary }\OtherTok{\textless{}{-}}\NormalTok{ bysubj }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}
+    \AttributeTok{bdi\_mean =} \FunctionTok{mean}\NormalTok{(bdi),}
+    \AttributeTok{bdi\_sd =} \FunctionTok{sd}\NormalTok{(bdi),}
+    \AttributeTok{bdi\_median =} \FunctionTok{median}\NormalTok{(bdi)}
+\NormalTok{  )}
+
+\NormalTok{bysubj }\SpecialCharTok{|}\ErrorTok{\textgreater{}}
   \FunctionTok{ggplot}\NormalTok{(}
     \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ group, }\AttributeTok{y =}\NormalTok{ bdi, }\AttributeTok{color =}\NormalTok{ group)}
 \NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{guide =} \StringTok{"none"}\NormalTok{) }\SpecialCharTok{+} 
-\NormalTok{  ggforce}\SpecialCharTok{::}\FunctionTok{geom\_sina}\NormalTok{(}
-    \AttributeTok{maxwidth =}\NormalTok{ .}\DecValTok{6}\NormalTok{, }\AttributeTok{scale =} \StringTok{"count"}\NormalTok{, }\AttributeTok{seed =} \DecValTok{1}\NormalTok{,}
-    \AttributeTok{size =} \DecValTok{3}\NormalTok{, }\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{5}
-\NormalTok{  ) }\SpecialCharTok{+} 
-\NormalTok{  ggforce}\SpecialCharTok{::}\FunctionTok{geom\_sina}\NormalTok{(}
-    \AttributeTok{maxwidth =}\NormalTok{ .}\DecValTok{6}\NormalTok{, }\AttributeTok{scale =} \StringTok{"count"}\NormalTok{, }\AttributeTok{seed =} \DecValTok{1}\NormalTok{, }
-    \AttributeTok{size =} \DecValTok{3}\NormalTok{, }\AttributeTok{shape =} \DecValTok{1}\NormalTok{, }\AttributeTok{stroke =}\NormalTok{ .}\DecValTok{8}
+\NormalTok{  ggforce}\SpecialCharTok{::}\FunctionTok{geom\_sina}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ group, }\AttributeTok{size =} \DecValTok{3}\NormalTok{, }\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{5}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_errorbar}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ bdi\_median, }\AttributeTok{ymin =}\NormalTok{ bdi\_median, }\AttributeTok{ymax =}\NormalTok{ bdi\_median),}
+    \AttributeTok{data =}\NormalTok{ zetsche\_summary, }\AttributeTok{width =} \FloatTok{0.3}\NormalTok{, }\AttributeTok{size =} \DecValTok{3}
 \NormalTok{  ) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}
     \AttributeTok{x =} \StringTok{""}\NormalTok{,}
     \AttributeTok{y =} \StringTok{"BDI{-}II"}\NormalTok{,}
-    \AttributeTok{color =} \StringTok{\textquotesingle{}Gruppo\textquotesingle{}}
-\NormalTok{  ) }\SpecialCharTok{+} 
+    \AttributeTok{color =} \StringTok{"Gruppo"}
+\NormalTok{  ) }\SpecialCharTok{+}
   \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -1142,23 +1149,20 @@ Si noti che i box plot non sono necessariamente la rappresentazione migliore del
 
 }
 
-\caption{Sina plot per i valori BDI-II di ciascuno dei due gruppi di soggetti esaminati da Zetsche et al. (2019).}\label{fig:sina-zetsche}
+\caption{Sina plot per i valori BDI-II di ciascuno dei due gruppi di soggetti esaminati da Zetsche et al. (2019) con l'indicazione della mediana per ciascun gruppo.}\label{fig:sina-zetsche}
 \end{figure}
 
 \hypertarget{leccellenza-grafica}{%
 \subsection{L'eccellenza grafica}\label{leccellenza-grafica}}
 
 Non c'è un modo ``corretto'' per rappresentare in forma grafica un insieme
-di dati. Ciascuno dei grafici che abbiamo discusso ha i suoi pregi e i
-suoi difetti. Un ricercatore che ha influenzato molto il modo in cui
+di dati. Ciascuno dei grafici che abbiamo discusso in precedenza ha i suoi pregi e i suoi difetti. Un ricercatore che ha molto influenzato il modo in cui
 viene realizzata la visualizzazione dei dati scientifici è Edward Tufte,
 soprannominato dal New York Times il ``Leonardo da Vinci dei dati.''
 Secondo Tufte, ``l'eccellenza nella grafica consiste nel comunicare idee
 complesse in modo chiaro, preciso ed efficiente''. Nella visualizzazione
 delle informazioni, l'``eccellenza grafica'' ha l'obiettivo di comunicare
-al lettore il maggior numero di idee nel minor tempo possibile, con meno
-inchiostro possibile, usando il minor spazio possibile. Secondo
-\textcite{tufte_visual_display}, le rappresentazioni grafiche dovrebbero:
+al lettore il maggior numero di idee nella maniera più diretta e semplice possibile. Secondo \textcite{tufte_visual_display}, le rappresentazioni grafiche dovrebbero:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1176,7 +1180,7 @@ inchiostro possibile, usando il minor spazio possibile. Secondo
 \item
   rivelare la coerenza tra le molte dimensioni dei dati;
 \item
-  incoraggiare l'osservatore a comparare differenti porzioni di dati;
+  incoraggiare l'osservatore a confrontare differenti sottoinsiemi di dati;
 \item
   rivelare i dati a diversi livelli di dettaglio, da una visione ampia
   alla struttura di base;
@@ -1188,8 +1192,8 @@ inchiostro possibile, usando il minor spazio possibile. Secondo
   dei dati fornite nel testo.
 \end{enumerate}
 
-In base a questi principi, la funzione di densità empirica fornisce una
-rappresentazione migliore dei dati di \textcite{zetschefuture2019} di quanto lo faccia un istogramma. Inoltre, se oltre al grupppo di appartenenza non ci sono altre dimensioni importanti da mettere in evidenza, allora la nostra scelta dovrebbe ricadere sul pannello di sinistra della figura \ref{fig:violin-zetsche}. Il seguente \href{https://www.biostat.wisc.edu/~kbroman/presentations/graphs2018.pdf}{link} fornisce diverse interessanti illustrazioni dei principi elencati sopra.
+In base a questi principi, figura \ref{fig:sina-zetsche} sembra fornire la
+rappresentazione migliore dei dati di \textcite{zetschefuture2019}. Il seguente \href{https://www.biostat.wisc.edu/~kbroman/presentations/graphs2018.pdf}{link} fornisce diverse interessanti illustrazioni dei principi elencati sopra.
 
 \hypertarget{indici-di-tendenza-centrale}{%
 \section{Indici di tendenza centrale}\label{indici-di-tendenza-centrale}}
@@ -1251,16 +1255,16 @@ Calcoliamo la media dei valori BDI-II per i due gruppi di soggetti di \textcite{
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{summarise}\NormalTok{(}
     \AttributeTok{avg\_bdi =} \FunctionTok{mean}\NormalTok{(bdi)}
-\NormalTok{  ) }
+\NormalTok{  )}
 \CommentTok{\#\textgreater{} \# A tibble: 2 x 2}
-\CommentTok{\#\textgreater{}   group                avg\_bdi}
-\CommentTok{\#\textgreater{}   \textless{}fct\textgreater{}                  \textless{}dbl\textgreater{}}
-\CommentTok{\#\textgreater{} 1 Controlli sani          1.69}
-\CommentTok{\#\textgreater{} 2 Depressione maggiore   30.9}
+\CommentTok{\#\textgreater{}   group                    avg\_bdi}
+\CommentTok{\#\textgreater{}   \textless{}fct\textgreater{}                      \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 "Controlli\textbackslash{}n sani"          1.69}
+\CommentTok{\#\textgreater{} 2 "Depressione\textbackslash{}n maggiore"   30.9}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1282,16 +1286,16 @@ Calcoliamo la media spuntata dei valori BDI-II per i due gruppi di soggetti di \
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{summarise}\NormalTok{(}
     \AttributeTok{avg\_trim\_bdi =} \FunctionTok{mean}\NormalTok{(bdi, }\AttributeTok{trim =} \FloatTok{0.1}\NormalTok{)}
-\NormalTok{  ) }
+\NormalTok{  )}
 \CommentTok{\#\textgreater{} \# A tibble: 2 x 2}
-\CommentTok{\#\textgreater{}   group                avg\_trim\_bdi}
-\CommentTok{\#\textgreater{}   \textless{}fct\textgreater{}                       \textless{}dbl\textgreater{}}
-\CommentTok{\#\textgreater{} 1 Controlli sani                1  }
-\CommentTok{\#\textgreater{} 2 Depressione maggiore         30.6}
+\CommentTok{\#\textgreater{}   group                    avg\_trim\_bdi}
+\CommentTok{\#\textgreater{}   \textless{}fct\textgreater{}                           \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 "Controlli\textbackslash{}n sani"                1  }
+\CommentTok{\#\textgreater{} 2 "Depressione\textbackslash{}n maggiore"         30.6}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1313,18 +1317,18 @@ Calcoliamo i quantili di ordine 0.25, 0.5 e 0.75 dei valori BDI-II per i due gru
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{summarise}\NormalTok{(}
     \AttributeTok{q25 =} \FunctionTok{quantile}\NormalTok{(bdi, }\AttributeTok{probs =} \FloatTok{0.25}\NormalTok{),}
     \AttributeTok{q50 =} \FunctionTok{quantile}\NormalTok{(bdi, }\AttributeTok{probs =} \FloatTok{0.50}\NormalTok{),}
     \AttributeTok{q75 =} \FunctionTok{quantile}\NormalTok{(bdi, }\AttributeTok{probs =} \FloatTok{0.75}\NormalTok{)}
-\NormalTok{  ) }
+\NormalTok{  )}
 \CommentTok{\#\textgreater{} \# A tibble: 2 x 4}
-\CommentTok{\#\textgreater{}   group                  q25   q50   q75}
-\CommentTok{\#\textgreater{}   \textless{}fct\textgreater{}                \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}}
-\CommentTok{\#\textgreater{} 1 Controlli sani           0     1     2}
-\CommentTok{\#\textgreater{} 2 Depressione maggiore    26    30    35}
+\CommentTok{\#\textgreater{}   group                      q25   q50   q75}
+\CommentTok{\#\textgreater{}   \textless{}fct\textgreater{}                    \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 "Controlli\textbackslash{}n sani"           0     1     2}
+\CommentTok{\#\textgreater{} 2 "Depressione\textbackslash{}n maggiore"    26    30    35}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1379,16 +1383,16 @@ Calcoliamo la varianza dei punteggi BDI-II nei due gruppi di soggetti di \textci
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{summarise}\NormalTok{(}
     \AttributeTok{variance =} \FunctionTok{var}\NormalTok{(bdi)}
-\NormalTok{  ) }
+\NormalTok{  )}
 \CommentTok{\#\textgreater{} \# A tibble: 2 x 2}
-\CommentTok{\#\textgreater{}   group                variance}
-\CommentTok{\#\textgreater{}   \textless{}fct\textgreater{}                   \textless{}dbl\textgreater{}}
-\CommentTok{\#\textgreater{} 1 Controlli sani           8.03}
-\CommentTok{\#\textgreater{} 2 Depressione maggiore    43.7}
+\CommentTok{\#\textgreater{}   group                    variance}
+\CommentTok{\#\textgreater{}   \textless{}fct\textgreater{}                       \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 "Controlli\textbackslash{}n sani"           8.03}
+\CommentTok{\#\textgreater{} 2 "Depressione\textbackslash{}n maggiore"    43.7}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1407,16 +1411,16 @@ Calcoliamo la deviazione standard per il BDI-II dei due gruppi di soggetti di \t
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{summarise}\NormalTok{(}
     \AttributeTok{stdev =} \FunctionTok{sd}\NormalTok{(bdi)}
-\NormalTok{  ) }
+\NormalTok{  )}
 \CommentTok{\#\textgreater{} \# A tibble: 2 x 2}
-\CommentTok{\#\textgreater{}   group                stdev}
-\CommentTok{\#\textgreater{}   \textless{}fct\textgreater{}                \textless{}dbl\textgreater{}}
-\CommentTok{\#\textgreater{} 1 Controlli sani        2.83}
-\CommentTok{\#\textgreater{} 2 Depressione maggiore  6.61}
+\CommentTok{\#\textgreater{}   group                    stdev}
+\CommentTok{\#\textgreater{}   \textless{}fct\textgreater{}                    \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 "Controlli\textbackslash{}n sani"        2.83}
+\CommentTok{\#\textgreater{} 2 "Depressione\textbackslash{}n maggiore"  6.61}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1450,16 +1454,16 @@ Oppure, per i due gruppi:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{summarise}\NormalTok{(}
     \AttributeTok{MAD =} \FunctionTok{mad}\NormalTok{(bdi)}
-\NormalTok{  ) }
+\NormalTok{  )}
 \CommentTok{\#\textgreater{} \# A tibble: 2 x 2}
-\CommentTok{\#\textgreater{}   group                  MAD}
-\CommentTok{\#\textgreater{}   \textless{}fct\textgreater{}                \textless{}dbl\textgreater{}}
-\CommentTok{\#\textgreater{} 1 Controlli sani        1.48}
-\CommentTok{\#\textgreater{} 2 Depressione maggiore  6.67}
+\CommentTok{\#\textgreater{}   group                      MAD}
+\CommentTok{\#\textgreater{}   \textless{}fct\textgreater{}                    \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 "Controlli\textbackslash{}n sani"        1.48}
+\CommentTok{\#\textgreater{} 2 "Depressione\textbackslash{}n maggiore"  6.67}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1525,13 +1529,13 @@ Il diagramma di dispersione per le variabili BDI-II e CES-D si ottiene ponendo, 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{bysubj }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(esm\_id, group) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{bysubj }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(esm\_id, group) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{summarise}\NormalTok{(}
     \AttributeTok{bdi =} \FunctionTok{mean}\NormalTok{(bdi),}
     \AttributeTok{cesd =} \FunctionTok{mean}\NormalTok{(cesd\_sum)}
-\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{na.omit}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{na.omit}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ungroup}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -1544,19 +1548,20 @@ Il diagramma di dispersione per le variabili BDI-II e CES-D si ottiene ponendo, 
 
 \NormalTok{bysubj }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ggplot}\NormalTok{(}
-    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{bdi, }\AttributeTok{y=}\NormalTok{cesd, }\AttributeTok{color=}\NormalTok{group)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size=}\DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept=}\NormalTok{ m\_cesd, }\AttributeTok{linetype=}\StringTok{"dashed"}\NormalTok{, }\AttributeTok{color =} \StringTok{"gray"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept =}\NormalTok{ m\_bdi, }\AttributeTok{linetype=}\StringTok{"dashed"}\NormalTok{, }\AttributeTok{color =} \StringTok{"gray"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{x=}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\AttributeTok{y=}\DecValTok{16}\NormalTok{, }\AttributeTok{label=}\StringTok{"I"}\NormalTok{, }\AttributeTok{color =} \StringTok{"gray"}\NormalTok{, }\AttributeTok{size=}\NormalTok{FONT\_SIZE) }\SpecialCharTok{+}
-  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{x=}\DecValTok{0}\NormalTok{, }\AttributeTok{y=}\DecValTok{46}\NormalTok{, }\AttributeTok{label=}\StringTok{"IV"}\NormalTok{, }\AttributeTok{color =} \StringTok{"gray"}\NormalTok{, }\AttributeTok{size=}\NormalTok{FONT\_SIZE) }\SpecialCharTok{+}
-  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{x=}\DecValTok{18}\NormalTok{, }\AttributeTok{y=}\DecValTok{46}\NormalTok{, }\AttributeTok{label=}\StringTok{"III"}\NormalTok{, }\AttributeTok{color =} \StringTok{"gray"}\NormalTok{, }\AttributeTok{size=}\NormalTok{FONT\_SIZE) }\SpecialCharTok{+}
-  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{x=}\DecValTok{18}\NormalTok{, }\AttributeTok{y=}\DecValTok{16}\NormalTok{, }\AttributeTok{label=}\StringTok{"II"}\NormalTok{, }\AttributeTok{color =} \StringTok{"gray"}\NormalTok{, }\AttributeTok{size=}\NormalTok{FONT\_SIZE) }\SpecialCharTok{+}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bdi, }\AttributeTok{y =}\NormalTok{ cesd, }\AttributeTok{color =}\NormalTok{ group)}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{3}\NormalTok{, }\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =}\NormalTok{ m\_cesd, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{, }\AttributeTok{color =} \StringTok{"gray"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept =}\NormalTok{ m\_bdi, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{, }\AttributeTok{color =} \StringTok{"gray"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{x =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\AttributeTok{y =} \DecValTok{16}\NormalTok{, }\AttributeTok{label =} \StringTok{"I"}\NormalTok{, }\AttributeTok{color =} \StringTok{"gray"}\NormalTok{, }\AttributeTok{size =}\NormalTok{ FONT\_SIZE) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{x =} \DecValTok{0}\NormalTok{, }\AttributeTok{y =} \DecValTok{46}\NormalTok{, }\AttributeTok{label =} \StringTok{"IV"}\NormalTok{, }\AttributeTok{color =} \StringTok{"gray"}\NormalTok{, }\AttributeTok{size =}\NormalTok{ FONT\_SIZE) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{x =} \DecValTok{18}\NormalTok{, }\AttributeTok{y =} \DecValTok{46}\NormalTok{, }\AttributeTok{label =} \StringTok{"III"}\NormalTok{, }\AttributeTok{color =} \StringTok{"gray"}\NormalTok{, }\AttributeTok{size =}\NormalTok{ FONT\_SIZE) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{x =} \DecValTok{18}\NormalTok{, }\AttributeTok{y =} \DecValTok{16}\NormalTok{, }\AttributeTok{label =} \StringTok{"II"}\NormalTok{, }\AttributeTok{color =} \StringTok{"gray"}\NormalTok{, }\AttributeTok{size =}\NormalTok{ FONT\_SIZE) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}
     \AttributeTok{x =} \StringTok{"BDI{-}II"}\NormalTok{,}
     \AttributeTok{y =} \StringTok{"CESD"}
 \NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position=}\StringTok{"none"}\NormalTok{) }
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1754,31 +1759,36 @@ Un esempio di correlazione nulla in presenza di una chiara relazione (non linear
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(}\StringTok{"datasauRus"}\NormalTok{)}
 \NormalTok{slant }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}
-\NormalTok{  datasaurus\_dozen\_wide, }
-  \FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{slant\_down\_x,}\AttributeTok{y=}\NormalTok{slant\_down\_y),   }
-  \AttributeTok{colour=}\NormalTok{dataset}
-\NormalTok{) }
-\NormalTok{slant }\OtherTok{\textless{}{-}}\NormalTok{ slant }\SpecialCharTok{+} 
-  \FunctionTok{geom\_point}\NormalTok{() }
-\NormalTok{slant }\OtherTok{\textless{}{-}}\NormalTok{ slant }\SpecialCharTok{+} 
-  \FunctionTok{theme\_void}\NormalTok{() }
-\NormalTok{slant }\OtherTok{\textless{}{-}}\NormalTok{ slant }\SpecialCharTok{+} 
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{, }
-        \AttributeTok{panel.border =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{fill=}\ConstantTok{NA}\NormalTok{, }\AttributeTok{size =} \DecValTok{1}\NormalTok{),}
-        \AttributeTok{plot.margin =} \FunctionTok{margin}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{aspect.ratio =} \DecValTok{1}\NormalTok{) }
+\NormalTok{  datasaurus\_dozen\_wide,}
+  \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ slant\_down\_x, }\AttributeTok{y =}\NormalTok{ slant\_down\_y),}
+  \AttributeTok{colour =}\NormalTok{ dataset}
+\NormalTok{)}
+\NormalTok{slant }\OtherTok{\textless{}{-}}\NormalTok{ slant }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}
+\NormalTok{slant }\OtherTok{\textless{}{-}}\NormalTok{ slant }\SpecialCharTok{+}
+  \FunctionTok{theme\_void}\NormalTok{()}
+\NormalTok{slant }\OtherTok{\textless{}{-}}\NormalTok{ slant }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{,}
+    \AttributeTok{panel.border =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{size =} \DecValTok{1}\NormalTok{),}
+    \AttributeTok{plot.margin =} \FunctionTok{margin}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{2}\NormalTok{), }\AttributeTok{aspect.ratio =} \DecValTok{1}
+\NormalTok{  )}
 
 \NormalTok{dino }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}
-\NormalTok{  datasaurus\_dozen\_wide, }
-  \FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{dino\_x,}\AttributeTok{y=}\NormalTok{dino\_y), }
-  \AttributeTok{colour=}\NormalTok{dataset}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{() }
+\NormalTok{  datasaurus\_dozen\_wide,}
+  \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ dino\_x, }\AttributeTok{y =}\NormalTok{ dino\_y),}
+  \AttributeTok{colour =}\NormalTok{ dataset}
+\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}
 
-\NormalTok{dino }\OtherTok{\textless{}{-}}\NormalTok{ dino }\SpecialCharTok{+}\FunctionTok{theme\_void}\NormalTok{() }
-\NormalTok{dino }\OtherTok{\textless{}{-}}\NormalTok{ dino }\SpecialCharTok{+} 
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{, }
-        \AttributeTok{panel.border =}  \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{fill=}\ConstantTok{NA}\NormalTok{, }\AttributeTok{size =} \DecValTok{1}\NormalTok{),}
-        \AttributeTok{plot.margin =} \FunctionTok{margin}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{aspect.ratio =} \DecValTok{1}\NormalTok{) }
+\NormalTok{dino }\OtherTok{\textless{}{-}}\NormalTok{ dino }\SpecialCharTok{+}
+  \FunctionTok{theme\_void}\NormalTok{()}
+\NormalTok{dino }\OtherTok{\textless{}{-}}\NormalTok{ dino }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{,}
+    \AttributeTok{panel.border =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{size =} \DecValTok{1}\NormalTok{),}
+    \AttributeTok{plot.margin =} \FunctionTok{margin}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{2}\NormalTok{), }\AttributeTok{aspect.ratio =} \DecValTok{1}
+\NormalTok{  )}
 
 \NormalTok{slant }\SpecialCharTok{+}\NormalTok{ dino}
 \end{Highlighting}

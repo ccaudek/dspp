@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.7)  21 NOV 2021 13:09
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.7)  24 NOV 2021 09:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2558,18 +2558,18 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 File: 013_eda_files/figure-latex/unnamed-chunk-8-1.pdf Graphic file (type pdf)
 <use 013_eda_files/figure-latex/unnamed-chunk-8-1.pdf>
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 1057.
+(Font)              scaled to size 9.0pt on input line 1059.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 9.00082pt on input line 1057.
+(Font)              scaled to size 9.00082pt on input line 1059.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 8.99904pt on input line 1057.
+(Font)              scaled to size 8.99904pt on input line 1059.
 [12]
 File: 013_eda_files/figure-latex/violin-zetsche-1.pdf Graphic file (type pdf)
 <use 013_eda_files/figure-latex/violin-zetsche-1.pdf>
 [13]
 
 LaTeX Font Warning: Font shape `TU/Inconsolata(0)/b/n' undefined
-(Font)              using `TU/Inconsolata(0)/m/n' instead on input line 1117.
+(Font)              using `TU/Inconsolata(0)/m/n' instead on input line 1128.
 
 File: 013_eda_files/figure-latex/sina-zetsche-1.pdf Graphic file (type pdf)
 <use 013_eda_files/figure-latex/sina-zetsche-1.pdf>
@@ -2665,17 +2665,17 @@ Sidefoothsep and sidefootwidth: 7pt and 117pt
 Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 ******************************************************
 
-LaTeX Info: Redefining \rmfamily on input line 1854.
-LaTeX Info: Redefining \sffamily on input line 1854.
-LaTeX Info: Redefining \ttfamily on input line 1854.
+LaTeX Info: Redefining \rmfamily on input line 1864.
+LaTeX Info: Redefining \sffamily on input line 1864.
+LaTeX Info: Redefining \ttfamily on input line 1864.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1858--1860
+Underfull \hbox (badness 10000) in paragraph at lines 1868--1870
 
  []
 
-LaTeX Info: Redefining \rmfamily on input line 1861.
-LaTeX Info: Redefining \sffamily on input line 1861.
-LaTeX Info: Redefining \ttfamily on input line 1861.
+LaTeX Info: Redefining \rmfamily on input line 1871.
+LaTeX Info: Redefining \sffamily on input line 1871.
+LaTeX Info: Redefining \ttfamily on input line 1871.
 The property list \polyglossia@langsetup contains the pairs (without outer
 braces):
 >  {latex/script}  =>  {latin}
@@ -2736,8 +2736,8 @@ braces):
 \tf@lof=\write9
 \openout9 = `DataScience.lof'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1866.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1866.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1876.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1876.
 (./DataScience.aux
 LaTeX Info: Redefining \rmfamily on input line 26.
 LaTeX Info: Redefining \sffamily on input line 26.
@@ -2749,8 +2749,8 @@ LaTeX Info: Redefining \rmfamily on input line 255.
 LaTeX Info: Redefining \sffamily on input line 255.
 LaTeX Info: Redefining \ttfamily on input line 255.
 )
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1866.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1866.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1876.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1876.
 
 Package rerunfilecheck Info: File `DataScience.out' has not changed.
 (rerunfilecheck)             Checksum: A82107600B7C3F29998E6F765868927B;6449.
@@ -2767,7 +2767,7 @@ Package logreq Info: Writing requests to 'DataScience.run.xml'.
 Here is how much of TeX's memory you used:
  47249 strings out of 479418
  910393 string characters out of 5884586
- 1865297 words of memory out of 5000000
+ 1865399 words of memory out of 5000000
  63933 multiletter control sequences out of 15000+600000
  549293 words of font info for 106 fonts, out of 8000000 for 9000
  1350 hyphenation exceptions out of 8191
