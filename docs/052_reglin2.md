@@ -2,28 +2,39 @@
 
 
 
-In questo capitolo verranno esposte alcune nozioni matematiche che stanno alla base dell'inferenza per i modelli di regressione e un po' di algebra che ci aiuterà a comprendere la stima della regressione lineare. Spiegheremo anche la logica per l'uso della funzione bayesiana [`brm()`] e la sua connessione con la regressione lineare classica. Questo capitolo fornisce quindi lo sfondo e la motivazione per la discussione dei capitoli successivi. 
+\begin{Summary}
+In questo Capitolo verranno esposte alcune nozioni matematiche che
+stanno alla base dell'inferenza per i modelli di regressione e un po' di
+algebra che ci aiuterà a comprendere la stima della regressione lineare.
+Spiegheremo anche la logica per l'uso della funzione bayesiana
+\texttt{brm()} e la sua connessione con la regressione lineare classica.
+\end{Summary}
+
 
 ## Minimi quadrati
 
-Nel modello di regressione lineare classico, $y_i = a + b x_i + \epsilon_i$, i coefficienti $a$ e $b$ sono stimati in modo da minimizzare gli errori $\epsilon_i$. Se il numero dei dati $n$ è maggiore di 2, non è generalmente possibile trovare una retta che passi per tutte le osservazioni ($x, y$) (sarebbe $y_i = a + b x_i$, senza errori, per tutti i punti $i = 1, \dots, n$), e l'obiettivo della stima è scegliere i valori ($\hat{a}, \hat{b}$) che minimizzano la somma dei quadrati dei residui,
-$$
-r_i = y_i − (\hat{a} + \hat{b} x_i).
-$$
-Distinguiamo tra i residui $r_i = y_i - (\hat{a} + \hat{b} x_i)$ e gli *errori* $\epsilon_i = y_i − (a + b x_i)$. Il modello è scritto in termini degli errori, ma possiamo solo lavorare con i residui: non possiamo calcolare gli errori perché per farlo sarebbe necessario conoscere $a$ e $b$.
+Nel modello di regressione lineare classico, $y_i = a + b x_i + \varepsilon_i$, i coefficienti $a$ e $b$ sono stimati in modo tale da minimizzare gli errori $\varepsilon_i$. Se il numero dei dati $n$ è maggiore di 2, non è generalmente possibile trovare una retta che passi per tutte le osservazioni ($x, y$) (sarebbe $y_i = a + b x_i$, senza errori, per tutti i punti $i = 1, \dots, n$). L'obiettivo della stima dei minimi quadrati è quello di scegliere i valori ($\hat{a}, \hat{b}$) che minimizzano la somma dei quadrati dei residui,
+\begin{equation}
+e_i = y_i − (\hat{a} + \hat{b} x_i)\,.
+\end{equation}
+Distinguiamo tra i residui $e_i = y_i - (\hat{a} + \hat{b} x_i)$ e gli *errori* $\varepsilon_i = y_i − (a + b x_i)$. Il modello di regressione è scritto in termini degli errori, ma possiamo solo lavorare con i residui: non possiamo calcolare gli errori perché per farlo sarebbe necessario conoscere i parametri ignoti $a$ e $b$.
 
 La somma dei residui quadratici (_residual sum of squares_) è
-$$
-\text{RSS} = \sum_{i=1}^n (y_i = (\hat{a} + \hat{b} x_i))^2.
-$$
+\begin{equation}
+\text{RSS} = \sum_{i=1}^n (y_i = (\hat{a} + \hat{b} x_i))^2\,.
+\end{equation}
 I coefficienti ($\hat{a}, \hat{b}$) che minimizzano RSS sono chiamati stime dei minimi quadrati, o minimi quadrati ordinari (_ordinari least squares_), o stime OLS. 
+
 ### Stima della deviazione standard dei residui $\sigma$
 
-Nel modello di regressione, gli errori $\epsilon_i$ provengono da una distribuzione con media 0 e deviazione standard $\sigma$: la media è zero per definizione (qualsiasi media diversa da zero viene assorbita nell'intercetta, $a$), e  la deviazione standard degli errori può essere stimata dai dati. Un modo naturale per stimare $\sigma$ sarebbe semplicemente prendere la deviazione standard dei residui, $\sqrt{\frac{1}{n} \sum_{i=1}^n r_i^2} = \sqrt{ \frac{1}{n} \sum_{i=1}^n y_i - (\hat{a} + \hat{b} x_i))^2}$, ma questo sottostimerebbe leggermente $\sigma$ a causa del *overfitting*, in quanto i coefficienti $\hat{a}$ e $\hat{b}$ sono stati stimati dai  dati per minimizzare la somma dei residui quadratici.  La correzione standard per questo overfitting consiste nel sostituire $n$ con $n - 2$ al denominatore (con la sottrazione di 2 derivante dalla stima di due coefficienti nel modello, l'intercetta e la pendenza). Così otteniamo
-$$
-\hat{\sigma} = \sqrt{\frac{1}{n-2} \sum_{i=1}^n (y_i - (\hat{a} + \hat{b} x_i))^2}.
-$$
-Quando $n = 1$ o $2$ questa espressione è priva di significato, il che ha senso: con solo due osservazioni è possibile adattare esattamente una retta al diagramma di dispersione e quindi non c'è modo di stimare l'errore dai dati. 
+Nel modello di regressione, gli errori $\varepsilon_i$ provengono da una distribuzione con media 0 e deviazione standard $\sigma$: la media è zero per definizione (qualsiasi media diversa da zero viene assorbita nell'intercetta, $a$), e  la deviazione standard degli errori può essere stimata dai dati. Un modo apparentemente naturale per stimare $\sigma$ potrebbe essere quello di calcolare la deviazione standard dei residui, $\sqrt{\frac{1}{n} \sum_{i=1}^n e_i^2} = \sqrt{ \frac{1}{n} \sum_{i=1}^n y_i - (\hat{a} + \hat{b} x_i))^2}$, ma questo approccio finisce per sottostimare $\sigma$.
+<!-- a causa del *overfitting*, in quanto i coefficienti $\hat{a}$ e $\hat{b}$ sono stati stimati dai dati per minimizzare la somma dei residui quadratici.   -->
+La correzione standard di questa sottostima consiste nel sostituire $n$ con $n - 2$ al denominatore (la sottrazione di 2 deriva dal fatto che il valore atteso della regressione è stato calcolato utilizzando i due coefficienti nel modello, l'intercetta e la pendenza, i quali sono stati stimati dai dati campionari -- si dice che, in questo modo, abbiamo perso due gradi di libertà). Così facendo otteniamo
+\begin{equation}
+\hat{\sigma} = \sqrt{\frac{1}{n-2} \sum_{i=1}^n (y_i - (\hat{a} + \hat{b} x_i))^2}\,.
+\end{equation}
+Quando $n = 1$ o $2$ l'equazione precedente è priva di significato, il che ha senso: con solo due osservazioni è possibile adattare esattamente una retta al diagramma di dispersione e quindi non c'è modo di stimare l'errore dai dati. 
+
 
 ## Calcolare la somma dei quadrati
 
@@ -31,12 +42,12 @@ Seguendo [Solomon Kurz](https://github.com/ASKurz/Working-through-Regression-and
 
 
 ```r
-rss <- function(x, y, a, b) {  
-  # x and y are vectors, 
-  # a and b are scalars 
+rss <- function(x, y, a, b) {
+  # x and y are vectors,
+  # a and b are scalars
   resid <- y - (a + b * x)
   return(sum(resid^2))
-  }
+}
 ```
 
 Useremo i dati ....
@@ -58,12 +69,14 @@ Nell'esempio, `kid_score` è la variabile $y$ e `mom_iq` è il predittore. Le st
 
 ```r
 fm <- lm(kid_score ~ mom_iq, data = df)
-coef(fm)
-#> (Intercept)      mom_iq 
-#>       25.80        0.61
+fm %>%
+  tidy() %>%
+  filter(term == c("(Intercept)", "mom_iq")) %>%
+  pull(estimate)
+#> [1] 25.80  0.61
 ```
 
-Calcoliamo la somma dei residui quadratici in base al modello di regressione $y_i = 25.8 + 0.61 x_i + \epsilon_i$.
+Calcoliamo la somma dei residui quadratici in base al modello di regressione $\hat{y}_i = 25.8 + 0.61 x_i$:
 
 
 ```r
@@ -79,16 +92,16 @@ Esploriamo ora i valori assunti da $rss$ per diversi valori di $a$ e $b$. Per in
 # theme_set(theme_linedraw() +
 #             theme(panel.grid = element_blank()))
 # simulate
-tibble(a = seq(20, 30, length.out = 30)) %>% 
+tibble(a = seq(20, 30, length.out = 30)) %>%
   mutate(
     rss = map_dbl(
-      a, 
-      rss, 
-      x = df$mom_iq, 
-      y = df$kid_score,  
-      b = 0.61)
-    ) %>% 
-  
+      a,
+      rss,
+      x = df$mom_iq,
+      y = df$kid_score,
+      b = 0.61
+    )
+  ) %>%
   # plot
   ggplot(aes(x = a, y = rss)) +
   geom_point() +
@@ -97,14 +110,16 @@ tibble(a = seq(20, 30, length.out = 30)) %>%
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{052_reglin2_files/figure-latex/unnamed-chunk-6-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{052_reglin2_files/figure-latex/unnamed-chunk-7-1} \end{center}
 Ora variamo sia `a` che `b`, facendo assumere a ciascun parametro un insieme di valori in un intevallo, e rappresentiamo i risultati in una heat map che rappresenta l'intensitè di `rss` in funzione dei valori `a` e `b`.
 
 
 ```r
 d <-
-  crossing(a = seq(-20, 70, length.out = 400),
-           b = seq(-0.2, 1.4, length.out = 400)) %>% 
+  crossing(
+    a = seq(-20, 70, length.out = 400),
+    b = seq(-0.2, 1.4, length.out = 400)
+  ) %>%
   mutate(rss = map2_dbl(a, b, rss, x = df$mom_iq, y = df$kid_score))
 d %>%
   ggplot(aes(x = a, y = b, fill = rss)) +
@@ -116,21 +131,20 @@ d %>%
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{052_reglin2_files/figure-latex/unnamed-chunk-7-1} \end{center}
-Poiché la stima dei minimi quadrati enfatizza il valore RSS più piccolo, la soluzione che cerchiamo corrisponde alle combinazione di `a` e `b` nell'intervallo più scuro rappresentato nella figura. 
-
-Tra gli `a` e `b` che abbiamo preso in considerazione, la coppia di valori dei parametri a cui è associato il valore `rss` più basso si trova nel modo seguente:
+\begin{center}\includegraphics[width=0.8\linewidth]{052_reglin2_files/figure-latex/unnamed-chunk-8-1} \end{center}
+Poiché la stima dei minimi quadrati enfatizza il valore RSS minimo, la soluzione che cerchiamo corrisponde alle combinazione di `a` e `b` nell'intervallo più scuro rappresentato nella figura. Tra gli `a` e `b` che abbiamo preso in considerazione, la coppia di valori a cui è associato il minimo valore `rss` si trova nel modo seguente:
 
 ```r
-d %>% 
-  arrange(rss) %>% 
+d %>%
+  arrange(rss) %>%
   slice(1)
 #> # A tibble: 1 x 3
 #>       a     b     rss
 #>   <dbl> <dbl>   <dbl>
 #> 1  25.8 0.610 144137.
 ```
-Si noti la corrispondenza tra la soluzione qui trovata e l'output della funzione `lm()`. 
+Si noti che i valori trovati in questo modo corrispondono alla soluzione fornita nell'output della funzione `lm()`. 
+
 
 ## Massima verosimiglianza 
 
@@ -159,9 +173,11 @@ Calcoliamo dunque le stime di verosimiglianza logaritmica per varie combinazioni
 
 ```r
 d <-
-  crossing(a = seq(-20, 70, length.out = 200),
-           b = seq(-0.2, 1.4, length.out = 200)) %>% 
-  mutate(ll = map2(a, b, ll, x = df$mom_iq, y = df$kid_score)) %>% 
+  crossing(
+    a = seq(-20, 70, length.out = 200),
+    b = seq(-0.2, 1.4, length.out = 200)
+  ) %>%
+  mutate(ll = map2(a, b, ll, x = df$mom_iq, y = df$kid_score)) %>%
   unnest(ll)
 p1 <-
   d %>%
@@ -176,13 +192,13 @@ p1
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{052_reglin2_files/figure-latex/unnamed-chunk-10-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{052_reglin2_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
 Le stime di $\hat{a}, \hat{b}$ ottenute mediante il metodo di massima verosimiglianza sono:
 
 ```r
-d %>% 
-  arrange(desc(ll)) %>% 
+d %>%
+  arrange(desc(ll)) %>%
   slice(1)
 #> # A tibble: 1 x 4
 #>       a     b sigma     ll
@@ -199,103 +215,12 @@ Usiamo ora la funzione `brms::brm()` per eseguire l'analisi mediante un approcci
 m <-
   brm(
     kid_score ~ mom_iq,
-    data = df, 
-    backend = "cmdstan"
+    data = df,
+    backend = "cmdstan",
+    refresh = 0
   )
-```
-
-
-```
 #> Running MCMC with 4 chains, at most 8 in parallel...
 #> 
-#> Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup) 
-#> Chain 1 Iteration:  100 / 2000 [  5%]  (Warmup) 
-#> Chain 1 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-#> Chain 1 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-#> Chain 1 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-#> Chain 1 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-#> Chain 1 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-#> Chain 1 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-#> Chain 1 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-#> Chain 1 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-#> Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-#> Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-#> Chain 1 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-#> Chain 1 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-#> Chain 1 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-#> Chain 1 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-#> Chain 1 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-#> Chain 1 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-#> Chain 1 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-#> Chain 1 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-#> Chain 1 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-#> Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
-#> Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
-#> Chain 2 Iteration:  100 / 2000 [  5%]  (Warmup) 
-#> Chain 2 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-#> Chain 2 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-#> Chain 2 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-#> Chain 2 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-#> Chain 2 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-#> Chain 2 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-#> Chain 2 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-#> Chain 2 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-#> Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-#> Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-#> Chain 2 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-#> Chain 2 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-#> Chain 2 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-#> Chain 2 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-#> Chain 2 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-#> Chain 2 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-#> Chain 2 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-#> Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-#> Chain 2 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-#> Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-#> Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup) 
-#> Chain 3 Iteration:  100 / 2000 [  5%]  (Warmup) 
-#> Chain 3 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-#> Chain 3 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-#> Chain 3 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-#> Chain 3 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-#> Chain 3 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-#> Chain 3 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-#> Chain 3 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-#> Chain 3 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-#> Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-#> Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-#> Chain 3 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-#> Chain 3 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-#> Chain 3 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-#> Chain 3 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-#> Chain 3 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-#> Chain 3 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-#> Chain 3 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-#> Chain 3 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-#> Chain 3 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-#> Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-#> Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup) 
-#> Chain 4 Iteration:  100 / 2000 [  5%]  (Warmup) 
-#> Chain 4 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-#> Chain 4 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-#> Chain 4 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-#> Chain 4 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-#> Chain 4 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-#> Chain 4 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-#> Chain 4 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-#> Chain 4 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-#> Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-#> Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-#> Chain 4 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-#> Chain 4 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-#> Chain 4 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-#> Chain 4 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-#> Chain 4 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-#> Chain 4 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-#> Chain 4 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-#> Chain 4 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-#> Chain 4 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-#> Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
 #> Chain 1 finished in 0.0 seconds.
 #> Chain 2 finished in 0.0 seconds.
 #> Chain 3 finished in 0.0 seconds.
@@ -309,13 +234,13 @@ m <-
 Utilizzando i coefficienti calcolati da `brms::brm()`, aggiungiamo la stima della retta di regressione al diagramma di dispersione dei dati:
 
 ```r
-df %>% 
+df %>%
   ggplot(aes(x = mom_iq, y = kid_score)) +
   geom_point() +
   geom_abline(
-    intercept = fixef(m, robust = TRUE)[1, 1], 
+    intercept = fixef(m, robust = TRUE)[1, 1],
     slope = fixef(m, robust = TRUE)[2, 1],
-    size = 1/3
+    size = 1 / 3
   ) +
   annotate(
     geom = "text",
@@ -333,13 +258,13 @@ df %>%
 
 \begin{center}\includegraphics[width=0.8\linewidth]{052_reglin2_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
-Usiamo ora la funzione `brms::posterior_samples()` per estrarre molti campioni dalla distribuzione a posteriori del modello `m`. In questo modo otteniamo un vettore di valori per ciascuno dei tre parametri, i quali, in questo output sono chiamati `b_Intercept`, `b_mom_iq` e `sigma`. Abbiamo quindi usato `slice_sample()` per ottenere un sottoinsieme casuale di 50 righe. Per semplicità, qui ne stampiamo solo 5.
+La funzione `brms::posterior_samples()` consente di estrarre molti campioni dalla distribuzione a posteriori del modello `m`. In questo modo otteniamo un vettore di valori per ciascuno dei tre parametri, i quali, in questo output sono chiamati `b_Intercept`, `b_mom_iq` e `sigma`. Abbiamo quindi usato `slice_sample()` per ottenere un sottoinsieme casuale di 50 righe. Per semplicità, qui ne stampiamo solo 5.
 
 
 ```r
 set.seed(8)
 
-posterior_samples(m) %>% 
+posterior_samples(m) %>%
   slice_sample(n = 5)
 #>   b_Intercept b_mom_iq sigma Intercept  lp__
 #> 1        18.7    0.671  19.2      85.8 -1883
@@ -355,13 +280,13 @@ Possiamo interpretare i valori `b_Intercept`, `b_mom_iq` come un insieme di valo
 ```r
 set.seed(8)
 
-posterior_samples(m) %>% 
-  slice_sample(n = 50) %>% 
-  
+posterior_samples(m) %>%
+  slice_sample(n = 50) %>%
   ggplot() +
   geom_abline(
     aes(intercept = b_Intercept, slope = b_mom_iq),
-        size = 1/4, alpha = 1/2, color = "grey25") +
+    size = 1 / 4, alpha = 1 / 2, color = "grey25"
+  ) +
   geom_point(
     data = df,
     aes(x = mom_iq, y = kid_score)

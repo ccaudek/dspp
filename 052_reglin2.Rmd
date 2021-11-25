@@ -5,30 +5,38 @@ source("_common.R")
 source("_stan_options.R")
 library("foreign")
 library("brms")
+library("broom")
 ```
 
-In questo capitolo verranno esposte alcune nozioni matematiche che stanno alla base dell'inferenza per i modelli di regressione e un po' di algebra che ci aiuterà a comprendere la stima della regressione lineare. Spiegheremo anche la logica per l'uso della funzione bayesiana [`brm()`] e la sua connessione con la regressione lineare classica. Questo capitolo fornisce quindi lo sfondo e la motivazione per la discussione dei capitoli successivi. 
+```{block, type='Summary'}
+In questo Capitolo verranno esposte alcune nozioni matematiche che stanno alla base dell'inferenza per i modelli di regressione e un po' di algebra che ci aiuterà a comprendere la stima della regressione lineare. Spiegheremo anche la logica per l'uso della funzione bayesiana `brm()` e la sua connessione con la regressione lineare classica. 
+```
+
 
 ## Minimi quadrati
 
-Nel modello di regressione lineare classico, $y_i = a + b x_i + \epsilon_i$, i coefficienti $a$ e $b$ sono stimati in modo da minimizzare gli errori $\epsilon_i$. Se il numero dei dati $n$ è maggiore di 2, non è generalmente possibile trovare una retta che passi per tutte le osservazioni ($x, y$) (sarebbe $y_i = a + b x_i$, senza errori, per tutti i punti $i = 1, \dots, n$), e l'obiettivo della stima è scegliere i valori ($\hat{a}, \hat{b}$) che minimizzano la somma dei quadrati dei residui,
-$$
-r_i = y_i − (\hat{a} + \hat{b} x_i).
-$$
-Distinguiamo tra i residui $r_i = y_i - (\hat{a} + \hat{b} x_i)$ e gli *errori* $\epsilon_i = y_i − (a + b x_i)$. Il modello è scritto in termini degli errori, ma possiamo solo lavorare con i residui: non possiamo calcolare gli errori perché per farlo sarebbe necessario conoscere $a$ e $b$.
+Nel modello di regressione lineare classico, $y_i = a + b x_i + \varepsilon_i$, i coefficienti $a$ e $b$ sono stimati in modo tale da minimizzare gli errori $\varepsilon_i$. Se il numero dei dati $n$ è maggiore di 2, non è generalmente possibile trovare una retta che passi per tutte le osservazioni ($x, y$) (sarebbe $y_i = a + b x_i$, senza errori, per tutti i punti $i = 1, \dots, n$). L'obiettivo della stima dei minimi quadrati è quello di scegliere i valori ($\hat{a}, \hat{b}$) che minimizzano la somma dei quadrati dei residui,
+\begin{equation}
+e_i = y_i − (\hat{a} + \hat{b} x_i)\,.
+\end{equation}
+Distinguiamo tra i residui $e_i = y_i - (\hat{a} + \hat{b} x_i)$ e gli *errori* $\varepsilon_i = y_i − (a + b x_i)$. Il modello di regressione è scritto in termini degli errori, ma possiamo solo lavorare con i residui: non possiamo calcolare gli errori perché per farlo sarebbe necessario conoscere i parametri ignoti $a$ e $b$.
 
 La somma dei residui quadratici (_residual sum of squares_) è
-$$
-\text{RSS} = \sum_{i=1}^n (y_i = (\hat{a} + \hat{b} x_i))^2.
-$$
+\begin{equation}
+\text{RSS} = \sum_{i=1}^n (y_i = (\hat{a} + \hat{b} x_i))^2\,.
+\end{equation}
 I coefficienti ($\hat{a}, \hat{b}$) che minimizzano RSS sono chiamati stime dei minimi quadrati, o minimi quadrati ordinari (_ordinari least squares_), o stime OLS. 
+
 ### Stima della deviazione standard dei residui $\sigma$
 
-Nel modello di regressione, gli errori $\epsilon_i$ provengono da una distribuzione con media 0 e deviazione standard $\sigma$: la media è zero per definizione (qualsiasi media diversa da zero viene assorbita nell'intercetta, $a$), e  la deviazione standard degli errori può essere stimata dai dati. Un modo naturale per stimare $\sigma$ sarebbe semplicemente prendere la deviazione standard dei residui, $\sqrt{\frac{1}{n} \sum_{i=1}^n r_i^2} = \sqrt{ \frac{1}{n} \sum_{i=1}^n y_i - (\hat{a} + \hat{b} x_i))^2}$, ma questo sottostimerebbe leggermente $\sigma$ a causa del *overfitting*, in quanto i coefficienti $\hat{a}$ e $\hat{b}$ sono stati stimati dai  dati per minimizzare la somma dei residui quadratici.  La correzione standard per questo overfitting consiste nel sostituire $n$ con $n - 2$ al denominatore (con la sottrazione di 2 derivante dalla stima di due coefficienti nel modello, l'intercetta e la pendenza). Così otteniamo
-$$
-\hat{\sigma} = \sqrt{\frac{1}{n-2} \sum_{i=1}^n (y_i - (\hat{a} + \hat{b} x_i))^2}.
-$$
-Quando $n = 1$ o $2$ questa espressione è priva di significato, il che ha senso: con solo due osservazioni è possibile adattare esattamente una retta al diagramma di dispersione e quindi non c'è modo di stimare l'errore dai dati. 
+Nel modello di regressione, gli errori $\varepsilon_i$ provengono da una distribuzione con media 0 e deviazione standard $\sigma$: la media è zero per definizione (qualsiasi media diversa da zero viene assorbita nell'intercetta, $a$), e  la deviazione standard degli errori può essere stimata dai dati. Un modo apparentemente naturale per stimare $\sigma$ potrebbe essere quello di calcolare la deviazione standard dei residui, $\sqrt{\frac{1}{n} \sum_{i=1}^n e_i^2} = \sqrt{ \frac{1}{n} \sum_{i=1}^n y_i - (\hat{a} + \hat{b} x_i))^2}$, ma questo approccio finisce per sottostimare $\sigma$.
+<!-- a causa del *overfitting*, in quanto i coefficienti $\hat{a}$ e $\hat{b}$ sono stati stimati dai dati per minimizzare la somma dei residui quadratici.   -->
+La correzione standard di questa sottostima consiste nel sostituire $n$ con $n - 2$ al denominatore (la sottrazione di 2 deriva dal fatto che il valore atteso della regressione è stato calcolato utilizzando i due coefficienti nel modello, l'intercetta e la pendenza, i quali sono stati stimati dai dati campionari -- si dice che, in questo modo, abbiamo perso due gradi di libertà). Così facendo otteniamo
+\begin{equation}
+\hat{\sigma} = \sqrt{\frac{1}{n-2} \sum_{i=1}^n (y_i - (\hat{a} + \hat{b} x_i))^2}\,.
+\end{equation}
+Quando $n = 1$ o $2$ l'equazione precedente è priva di significato, il che ha senso: con solo due osservazioni è possibile adattare esattamente una retta al diagramma di dispersione e quindi non c'è modo di stimare l'errore dai dati. 
+
 
 ## Calcolare la somma dei quadrati
 
@@ -53,10 +61,13 @@ Nell'esempio, `kid_score` è la variabile $y$ e `mom_iq` è il predittore. Le st
 
 ```{r}
 fm <- lm(kid_score ~ mom_iq, data = df)
-coef(fm)
+fm %>%
+  tidy() %>% 
+  filter(term == c("(Intercept)", "mom_iq")) %>% 
+  pull(estimate)
 ```
 
-Calcoliamo la somma dei residui quadratici in base al modello di regressione $y_i = 25.8 + 0.61 x_i + \epsilon_i$.
+Calcoliamo la somma dei residui quadratici in base al modello di regressione $\hat{y}_i = 25.8 + 0.61 x_i$:
 
 ```{r}
 rss(df$mom_iq, df$kid_score, 25.8, 0.61)
@@ -82,7 +93,7 @@ tibble(a = seq(20, 30, length.out = 30)) %>%
   # plot
   ggplot(aes(x = a, y = rss)) +
   geom_point() +
-  labs(subtitle = "Il valore b è tenuto costante (b = 0.61)")
+  labs(subtitle = "Il valore b è tenuto costante (b = 0.61)") 
 ```
 Ora variamo sia `a` che `b`, facendo assumere a ciascun parametro un insieme di valori in un intevallo, e rappresentiamo i risultati in una heat map che rappresenta l'intensitè di `rss` in funzione dei valori `a` e `b`.
 
@@ -98,15 +109,14 @@ d %>%
   scale_x_continuous(expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0))
 ```
-Poiché la stima dei minimi quadrati enfatizza il valore RSS più piccolo, la soluzione che cerchiamo corrisponde alle combinazione di `a` e `b` nell'intervallo più scuro rappresentato nella figura. 
-
-Tra gli `a` e `b` che abbiamo preso in considerazione, la coppia di valori dei parametri a cui è associato il valore `rss` più basso si trova nel modo seguente:
+Poiché la stima dei minimi quadrati enfatizza il valore RSS minimo, la soluzione che cerchiamo corrisponde alle combinazione di `a` e `b` nell'intervallo più scuro rappresentato nella figura. Tra gli `a` e `b` che abbiamo preso in considerazione, la coppia di valori a cui è associato il minimo valore `rss` si trova nel modo seguente:
 ```{r}
 d %>% 
   arrange(rss) %>% 
   slice(1)
 ```
-Si noti la corrispondenza tra la soluzione qui trovata e l'output della funzione `lm()`. 
+Si noti che i valori trovati in questo modo corrispondono alla soluzione fornita nell'output della funzione `lm()`. 
+
 
 ## Massima verosimiglianza 
 
@@ -159,21 +169,13 @@ d %>%
 
 Usiamo ora la funzione `brms::brm()` per eseguire l'analisi mediante un approccio bayesiano:
 
-```{r eval=FALSE}
+```{r}
 m <-
   brm(
     kid_score ~ mom_iq,
     data = df, 
-    backend = "cmdstan"
-  )
-```
-
-```{r echo=FALSE}
-m <-
-  brm(
-    kid_score ~ mom_iq,
-    data = df, 
-    backend = "cmdstan"
+    backend = "cmdstan",
+    refresh = 0
   )
 ```
 
@@ -196,10 +198,10 @@ df %>%
     subtitle = "Dati e retta di regressione",
     x = "x",
     y = "y"
-  )
+  ) 
 ```
 
-Usiamo ora la funzione `brms::posterior_samples()` per estrarre molti campioni dalla distribuzione a posteriori del modello `m`. In questo modo otteniamo un vettore di valori per ciascuno dei tre parametri, i quali, in questo output sono chiamati `b_Intercept`, `b_mom_iq` e `sigma`. Abbiamo quindi usato `slice_sample()` per ottenere un sottoinsieme casuale di 50 righe. Per semplicità, qui ne stampiamo solo 5.
+La funzione `brms::posterior_samples()` consente di estrarre molti campioni dalla distribuzione a posteriori del modello `m`. In questo modo otteniamo un vettore di valori per ciascuno dei tre parametri, i quali, in questo output sono chiamati `b_Intercept`, `b_mom_iq` e `sigma`. Abbiamo quindi usato `slice_sample()` per ottenere un sottoinsieme casuale di 50 righe. Per semplicità, qui ne stampiamo solo 5.
 
 ```{r}
 set.seed(8)
@@ -228,7 +230,7 @@ posterior_samples(m) %>%
     subtitle = "Dati e possibili rette di regressione",
     x = "x",
     y = "y"
-  )
+  ) 
 ```
 
 I minimi quadrati o la massima verosimiglianza trovano i parametri che meglio si adattano ai dati (secondo un criterio prestabilito), ma senza altrimenti vincolare o guidare l'adattamento. Ma di solito abbiamo informazioni preliminari sui parametri del modello. L'inferenza bayesiana produce un compromesso tra informazioni a priori e i dati, moltiplicando la verosimiglianza con una distribuzione a priori che codifica probabilisticamente le informazioni esterne sui parametri. Il prodotto della verosimiglianza $p(y \mid a, b, \sigma)$ e della distribuzione a priori è chiamato _distribuzione a posteriori_ e, dopo aver visto i dati, riassume la nostra credenza sui valori dei parametri. 

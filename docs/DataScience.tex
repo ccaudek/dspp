@@ -423,23 +423,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\usepackage{amsthm}
-\newtheorem{theorem}{Teorema}[chapter]
-\newtheorem{lemma}{Lemma}[chapter]
-\newtheorem{corollary}{Corollario}[chapter]
-\newtheorem{proposition}{Proposizione}[chapter]
-\newtheorem{conjecture}{Congettura}[chapter]
-\theoremstyle{definition}
-\newtheorem{definition}{Definizione}[chapter]
-\theoremstyle{definition}
-\newtheorem{example}{Esempio}[chapter]
-\theoremstyle{definition}
-\newtheorem{exercise}{Exercizio}[chapter]
-\theoremstyle{definition}
-\newtheorem{hypothesis}{Hypothesis}[chapter]
-\theoremstyle{remark}
-\newtheorem*{remark}{Osservazione}
-\newtheorem*{solution}{Soluzione}
 \begin{document}
 \frontmatter
 
@@ -578,723 +561,370 @@ Febbraio 2022
 
 \mainmatter
 
-\hypertarget{distr-rv-cont}{%
-\chapter{Distribuzioni di v.c. continue}\label{distr-rv-cont}}
+\hypertarget{regr-ml}{%
+\chapter{Adattare il modello di regressione ai dati}\label{regr-ml}}
 
-Dopo avere introdotto con una simulazione il concetto di funzione di densità nel Capitolo \ref{chapter-intro-density-function}, prendiamo ora in esame alcune delle densità di probabilità più note. La più importante di esse è sicuramente la distribuzione Normale.
+\begin{Summary}
+In questo Capitolo verranno esposte alcune nozioni matematiche che
+stanno alla base dell'inferenza per i modelli di regressione e un po' di
+algebra che ci aiuterà a comprendere la stima della regressione lineare.
+Spiegheremo anche la logica per l'uso della funzione bayesiana
+\texttt{brm()} e la sua connessione con la regressione lineare classica.
+\end{Summary}
 
-\hypertarget{distribuzione-normale}{%
-\section{Distribuzione Normale}\label{distribuzione-normale}}
+\hypertarget{minimi-quadrati}{%
+\section{Minimi quadrati}\label{minimi-quadrati}}
 
-Non c'è un'unica distribuzione Normale, ma ce ne sono molte. Tali distribuzioni sono anche dette ``gaussiane'' in onore di Carl Friedrich Gauss (uno dei più grandi matematici della storia il quale, tra le altre cose, scoprì l'utilità di tale funzione di densità per descrivere gli errori di misurazione). Adolphe Quetelet, il padre delle scienze sociali quantitative, fu il primo ad applicare tale densità alle misurazioni dell'uomo. Karl Pearson usò per primo il termine ``distribuzione Normale'' anche se ammise che questa espressione ``ha lo svantaggio di indurre le persone a credere che le altre distribuzioni, in un senso o nell'altro, non siano normali.''
+Nel modello di regressione lineare classico, \(y_i = a + b x_i + \varepsilon_i\), i coefficienti \(a\) e \(b\) sono stimati in modo tale da minimizzare gli errori \(\varepsilon_i\). Se il numero dei dati \(n\) è maggiore di 2, non è generalmente possibile trovare una retta che passi per tutte le osservazioni (\(x, y\)) (sarebbe \(y_i = a + b x_i\), senza errori, per tutti i punti \(i = 1, \dots, n\)). L'obiettivo della stima dei minimi quadrati è quello di scegliere i valori (\(\hat{a}, \hat{b}\)) che minimizzano la somma dei quadrati dei residui,
+\begin{equation}
+e_i = y_i − (\hat{a} + \hat{b} x_i)\,.
+\end{equation}
+Distinguiamo tra i residui \(e_i = y_i - (\hat{a} + \hat{b} x_i)\) e gli \emph{errori} \(\varepsilon_i = y_i − (a + b x_i)\). Il modello di regressione è scritto in termini degli errori, ma possiamo solo lavorare con i residui: non possiamo calcolare gli errori perché per farlo sarebbe necessario conoscere i parametri ignoti \(a\) e \(b\).
 
-\hypertarget{limite-delle-distribuzioni-binomiali}{%
-\subsection{Limite delle distribuzioni binomiali}\label{limite-delle-distribuzioni-binomiali}}
+La somma dei residui quadratici (\emph{residual sum of squares}) è
+\begin{equation}
+\text{RSS} = \sum_{i=1}^n (y_i = (\hat{a} + \hat{b} x_i))^2\,.
+\end{equation}
+I coefficienti (\(\hat{a}, \hat{b}\)) che minimizzano RSS sono chiamati stime dei minimi quadrati, o minimi quadrati ordinari (\emph{ordinari least squares}), o stime OLS.
 
-Iniziamo con un un breve excursus storico. Nel 1733, Abraham de Moivre notò che, aumentando il numero di prove in una distribuzione binomiale, la distribuzione risultante diventava quasi simmetrica e a forma campanulare. Con 10 prove e una probabilità di successo di 0.9 in ciascuna prova, la distribuzione è chiaramente asimmetrica.
+\hypertarget{stima-della-deviazione-standard-dei-residui-sigma}{%
+\subsection{\texorpdfstring{Stima della deviazione standard dei residui \(\sigma\)}{Stima della deviazione standard dei residui \textbackslash sigma}}\label{stima-della-deviazione-standard-dei-residui-sigma}}
+
+Nel modello di regressione, gli errori \(\varepsilon_i\) provengono da una distribuzione con media 0 e deviazione standard \(\sigma\): la media è zero per definizione (qualsiasi media diversa da zero viene assorbita nell'intercetta, \(a\)), e la deviazione standard degli errori può essere stimata dai dati. Un modo apparentemente naturale per stimare \(\sigma\) potrebbe essere quello di calcolare la deviazione standard dei residui, \(\sqrt{\frac{1}{n} \sum_{i=1}^n e_i^2} = \sqrt{ \frac{1}{n} \sum_{i=1}^n y_i - (\hat{a} + \hat{b} x_i))^2}\), ma questo approccio finisce per sottostimare \(\sigma\).
+La correzione standard di questa sottostima consiste nel sostituire \(n\) con \(n - 2\) al denominatore (la sottrazione di 2 deriva dal fatto che il valore atteso della regressione è stato calcolato utilizzando i due coefficienti nel modello, l'intercetta e la pendenza, i quali sono stati stimati dai dati campionari -- si dice che, in questo modo, abbiamo perso due gradi di libertà). Così facendo otteniamo
+\begin{equation}
+\hat{\sigma} = \sqrt{\frac{1}{n-2} \sum_{i=1}^n (y_i - (\hat{a} + \hat{b} x_i))^2}\,.
+\end{equation}
+Quando \(n = 1\) o \(2\) l'equazione precedente è priva di significato, il che ha senso: con solo due osservazioni è possibile adattare esattamente una retta al diagramma di dispersione e quindi non c'è modo di stimare l'errore dai dati.
+
+\hypertarget{calcolare-la-somma-dei-quadrati}{%
+\section{Calcolare la somma dei quadrati}\label{calcolare-la-somma-dei-quadrati}}
+
+Seguendo \href{https://github.com/ASKurz/Working-through-Regression-and-other-stories/blob/main/08.Rmd}{Solomon Kurz}, creiamo una funzione per calcolare la somma dei quadrati per diversi valori di \(a\) e \(b\):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{N }\OtherTok{\textless{}{-}} \DecValTok{10}
-\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{0}\SpecialCharTok{:}\DecValTok{10}
-\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{dbinom}\NormalTok{(x, N, }\FloatTok{0.9}\NormalTok{)}
-\NormalTok{binomial\_limit\_plot }\OtherTok{\textless{}{-}}
-  \FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{y =}\NormalTok{ y) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{y =}\NormalTok{ y)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_bar}\NormalTok{(}
-    \AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.2}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"y"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{10}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Binomial(y | 10, 0.9)"}\NormalTok{)}
-\NormalTok{binomial\_limit\_plot}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-1-1} 
-
-}
-
-\caption{Probabilità del numero di successi in $N = 10$ prove bernoulliane indipendenti, ciascuna con una probabilità di successo di 0.90. Il risultato è una distribuzione $\Bin(y \mid 10, 0.9)$. Con solo dieci prove, la distribuzione è fortemente asimmetrica negativa.}\label{fig:unnamed-chunk-1}
-\end{figure}
-
-Ma se aumentiamo il numero di prove di un fattore di 100 a
-\emph{N} = 1000, senza modificare la probabilità di successo di 0.9, la distribuzione assume una forma campanulare quasi simmetrica. Dunque, de Moivre scoprì che, quando \emph{N} è grande, la funzione Normale (che introdurremo qui sotto), nonostante sia la densità di v.a. continue, fornisce una buona approssimazione alla funzione di massa di probabilità binomiale.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{N }\OtherTok{\textless{}{-}} \DecValTok{1000}
-\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{0}\SpecialCharTok{:}\DecValTok{1000}
-\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{dbinom}\NormalTok{(x, N, }\FloatTok{0.9}\NormalTok{)}
-\NormalTok{binomial\_limit\_plot }\OtherTok{\textless{}{-}}
-  \FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{y =}\NormalTok{ y) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{y =}\NormalTok{ y)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.2}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"y"}\NormalTok{) }\SpecialCharTok{+}
-  \CommentTok{\# scale\_x\_continuous(breaks = c(0, 2, 4, 6, 8, 1000)) +}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Binomial(y | 1000, 0.9)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlim}\NormalTok{(}\DecValTok{850}\NormalTok{, }\DecValTok{950}\NormalTok{)}
-\NormalTok{binomial\_limit\_plot}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-2-1} 
-
-}
-
-\caption{Probabilità del numero di successi in $N = 1000$ prove bernoulliane indipendenti, ciascuna con una probabilità di successo di 0.90. Il risultato è una distribuzione $\Bin(y \mid 1000, 0.9)$. Con mille prove, la distribuzione è quasi simmetrica a forma campanulare.}\label{fig:unnamed-chunk-2}
-\end{figure}
-
-La distribuzione Normale fu scoperta da Gauss nel 1809 e, storicamente, è intimamente legata al metodo dei minimi quadrati -- si veda l'Appendice \ref{gauss-normale}. Il Paragrafo successivo illustra come si possa giungere alla Normale mediante una simulazione.
-
-\hypertarget{normal-random-walk}{%
-\section{La Normale prodotta con una simulazione}\label{normal-random-walk}}
-
-\textcite{McElreath_rethinking} presenta un esempio che illustra come sia possibile giungere alla distribuzione Normale mediante una simulazione. Supponiamo che vi siano mille persone tutte allineate su una linea di partenza. Quando viene dato un segnale, ciascuna persona lancia una moneta e fa un passo in avanti oppure all'indietro a seconda che sia uscita testa o croce. Supponiamo che la lunghezza di ciascun passo vari da 0 a 1 metro. Ciascuna persona lancia una moneta 16 volte e dunque compie 16 passi.
-
-Alla conclusione di queste passeggiate casuali (\emph{random walk}) non possiamo sapere con esattezza dove si troverà ciascuna persona, ma possiamo conoscere con certezza le caratteristiche della distribuzione delle mille distanze dall'origine. Per esempio, possiamo predire in maniera accurata la proporzione di persone che si sono spostate in avanti oppure all'indietro. Oppure, possiamo predire accuratamente la proporzione di persone che si troveranno ad una certa distanza dalla linea di partenza (es., a 1.5 m dall'origine).
-
-Queste predizioni sono possibili perché tali distanze si distribuiscono secondo la legge Normale. È facile simulare questo processo usando \R. I risultati della simulazione sono riportati nella figura \ref{fig:rw-normal-4816}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{set.seed}\NormalTok{(}\DecValTok{4}\NormalTok{)}
-\NormalTok{pos }\OtherTok{\textless{}{-}}
-  \FunctionTok{replicate}\NormalTok{(}\DecValTok{100}\NormalTok{, }\FunctionTok{runif}\NormalTok{(}\DecValTok{16}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{rbind}\NormalTok{(}\DecValTok{0}\NormalTok{, .) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{step =} \DecValTok{0}\SpecialCharTok{:}\DecValTok{16}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{gather}\NormalTok{(key, value, }\SpecialCharTok{{-}}\NormalTok{step) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{person =} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{100}\NormalTok{, }\AttributeTok{each =} \DecValTok{17}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(person) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{position =} \FunctionTok{cumsum}\NormalTok{(value)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ungroup}\NormalTok{()}
-
-\FunctionTok{ggplot}\NormalTok{(}
-  \AttributeTok{data =}\NormalTok{ pos,}
-  \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ step, }\AttributeTok{y =}\NormalTok{ position, }\AttributeTok{group =}\NormalTok{ person)}
-\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{16}\NormalTok{), }\AttributeTok{linetype =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ person }\SpecialCharTok{\textless{}} \DecValTok{2}\NormalTok{, }\AttributeTok{alpha =}\NormalTok{ person }\SpecialCharTok{\textless{}} \DecValTok{2}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"gray"}\NormalTok{, }\StringTok{"black"}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{scale\_alpha\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\DecValTok{1} \SpecialCharTok{/} \DecValTok{5}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{scale\_x\_continuous}\NormalTok{(}
-    \StringTok{"Numero di passi"}\NormalTok{,}
-    \AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{12}\NormalTok{, }\DecValTok{16}\NormalTok{)}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{y =} \StringTok{"Posizione"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/rw-normal-4816-1} 
-
-}
-
-\caption{Passeggiata casuale di 4, 8 e 16 passi. La spezzata nera indica la media delle distanze dall'origine come funzione del numero di passi.}\label{fig:rw-normal-4816}
-\end{figure}
-
-Un kernel density plot delle distanze ottenute dopo 4, 8 e 16 passi è riportato nella figura \ref{fig:rw-normal-3panels}. Nel pannello di destra, al kernel density plot è stata sovrapposta una densità Normale di opportuni parametri (linea tratteggiata).
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{p1 }\OtherTok{\textless{}{-}}
-\NormalTok{  pos }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(step }\SpecialCharTok{==} \DecValTok{4}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ position)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{stat =} \StringTok{"density"}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"4 passi"}\NormalTok{)}
-
-\NormalTok{p2 }\OtherTok{\textless{}{-}}
-\NormalTok{  pos }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(step }\SpecialCharTok{==} \DecValTok{8}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ position)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{outline.type =} \StringTok{"full"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"8 passi"}\NormalTok{)}
-
-\NormalTok{sd }\OtherTok{\textless{}{-}}
-\NormalTok{  pos }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(step }\SpecialCharTok{==} \DecValTok{16}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{sd =} \FunctionTok{sd}\NormalTok{(position)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{pull}\NormalTok{(sd)}
-
-\NormalTok{p3 }\OtherTok{\textless{}{-}}
-\NormalTok{  pos }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(step }\SpecialCharTok{==} \DecValTok{16}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ position)) }\SpecialCharTok{+}
-  \FunctionTok{stat\_function}\NormalTok{(}
-    \AttributeTok{fun =}\NormalTok{ dnorm,}
-    \AttributeTok{args =} \FunctionTok{list}\NormalTok{(}\AttributeTok{mean =} \DecValTok{0}\NormalTok{, }\AttributeTok{sd =}\NormalTok{ sd),}
-    \AttributeTok{linetype =} \DecValTok{2}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{alpha =} \DecValTok{1} \SpecialCharTok{/} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}
-    \AttributeTok{title =} \StringTok{"16 passi"}\NormalTok{,}
-    \AttributeTok{y =} \StringTok{"Densità"}
-\NormalTok{  )}
-
-\NormalTok{(p1 }\SpecialCharTok{|}\NormalTok{ p2 }\SpecialCharTok{|}\NormalTok{ p3) }\SpecialCharTok{\&} \FunctionTok{coord\_cartesian}\NormalTok{(}\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{6}\NormalTok{, }\DecValTok{6}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/rw-normal-3panels-1} 
-
-}
-
-\caption{Kernel density plot dei risultati della passeggiata casuale riportata nella figura precente, dopo 4, 8 e 16 passi. Nel pannello di destra, una densità Normale di opportuni parametri è sovrapposta all'istogramma lisciato.}\label{fig:rw-normal-3panels}
-\end{figure}
-
-Questa simulazione mostra che qualunque processo nel quale viene sommato un certo numero di valori casuali, tutti provenienti dalla medesima distribuzione, converge ad una distribuzione Normale. Non importa quale sia la forma della distribuzione di partenza: essa può essere uniforme, come nell'esempio presente, o di qualunque altro tipo. La forma della distribuzione da cui viene realizzato il campionamento determina la velocità della convergenza alla Normale. In alcuni casi la convergenza è lenta; in altri casi la convergenza è molto rapida (come nell'esempio presente).
-
-Da un punto di vista formale, diciamo che una variabile casuale continua \(Y\) ha una distribuzione Normale se la sua densità è
-
-\begin{equation}
-f(y; \mu, \sigma) = {1 \over {\sigma\sqrt{2\pi} }} \exp \left\{-\frac{(y -  \mu)^2}{2 \sigma^2} \right\},
-\label{eq:normal-formula}
-\end{equation}
-\noindent
-dove \(\mu \in \mathbb{R}\) e \(\sigma > 0\) sono i parametri della distribuzione.
-
-La densità normale è unimodale e simmetrica con una caratteristica forma a campana e con il punto di massima densità in corrispondenza di \(\mu\).
-
-Il significato dei parametri \(\mu\) e \(\sigma\) che appaiono nella \eqref{eq:normal-formula} viene chiarito dalla dimostrazione che
-
-\begin{equation}
-\E(X) = \mu, \qquad \Var(X) = \sigma^2.
-\end{equation}
-
-\begin{example}
-
-La rappresentazione grafica di quattro densità Normali tutte con media 0 e con deviazioni standard 0.25, 0.5, 1 e 2 è fornita nella figura \ref{fig:gaussian-plot-demo}.
-
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/gaussian-plot-demo-1} 
-
-}
-
-\caption{Alcune distribuzioni Normali.}\label{fig:gaussian-plot-demo}
-\end{figure}
-
-\end{example}
-
-\hypertarget{concentrazione}{%
-\subsection{Concentrazione}\label{concentrazione}}
-
-È istruttivo osservare il grado di concentrazione della distribuzione
-Normale attorno alla media:
-
-\begin{align}
-P(\mu - \sigma < X < \mu + \sigma) &= P (-1 < Z < 1) \simeq 0.683, \notag\\
-P(\mu - 2\sigma < X < \mu + 2\sigma) &= P (-2 < Z < 2) \simeq 0.956, \notag\\
-P(\mu - 3\sigma < X < \mu + 3\sigma) &= P (-3 < Z < 3) \simeq 0.997. \notag
-\end{align}
-
-\noindent
-Si noti come un dato la cui distanza dalla media è superiore a 3 volte la deviazione standard presenti un carattere di eccezionalità perché meno del 0.3\% dei dati della distribuzione Normale presentano questa caratteristica.
-
-Per indicare la distribuzione Normale si usa la notazione
-\(\mathcal{N}(\mu, \sigma)\).
-
-\hypertarget{funzione-di-ripartizione}{%
-\subsection{Funzione di ripartizione}\label{funzione-di-ripartizione}}
-
-Il valore della funzione di ripartizione di \(Y\) nel punto \(y\) è l'area sottesa alla curva di densità \(f(y)\) nella semiretta \((-\infty, y]\). Non esiste alcuna funzione elementare per la funzione di ripartizione
-
-\begin{equation}
-F(y) = \int_{-\infty}^y {1 \over {\sigma\sqrt{2\pi} }} \exp \left\{-\frac{(y - \mu)^2}{2\sigma^2} \right\} dy, 
-\end{equation}
-
-\noindent
-pertanto le probabilità \(P(Y < y)\) vengono calcolate mediante integrazione numerica approssimata. I valori della funzione di ripartizione di una variabile casuale Normale sono dunque forniti da un software.
-
-\begin{example}
-
-Usiamo \R per calcolare la funzione di ripartizione della Normale. La funzione \texttt{pnorm(q,\ mean,\ sd)} restituisce la funzione di ripartizione della Normale con media \texttt{mean} e deviazione standard \texttt{sd}, ovvero l'area sottesa alla funzione di densità di una Normale con media \texttt{mean} e deviazione standard \texttt{sd} nell'intervallo \([-\infty, q]\).
-
-Per esempio, in precedenza abbiamo detto che il 68\% circa dell'area sottesa ad una Normale è compresa nell'intervallo \(\mu \pm \sigma\). Verifichiamo per la distribuzione del QI \(\sim \mathcal{N}(\mu = 100, \sigma = 15)\):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{pnorm}\NormalTok{(}\DecValTok{100} \SpecialCharTok{+} \DecValTok{15}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{15}\NormalTok{) }\SpecialCharTok{{-}} \FunctionTok{pnorm}\NormalTok{(}\DecValTok{100} \SpecialCharTok{{-}} \DecValTok{15}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{15}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.683}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Il 95\% dell'area è compresa nell'intervallo \(\mu \pm 1.96 \cdot\sigma\):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{pnorm}\NormalTok{(}\DecValTok{100} \SpecialCharTok{+} \FloatTok{1.96} \SpecialCharTok{*} \DecValTok{15}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{15}\NormalTok{) }\SpecialCharTok{{-}} \FunctionTok{pnorm}\NormalTok{(}\DecValTok{100} \SpecialCharTok{{-}} \FloatTok{1.96} \SpecialCharTok{*} \DecValTok{15}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{15}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.95}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Quasi tutta la distribuzione è compresa nell'intervallo \(\mu \pm 3 \cdot\sigma\):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{pnorm}\NormalTok{(}\DecValTok{100} \SpecialCharTok{+} \DecValTok{3} \SpecialCharTok{*} \DecValTok{15}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{15}\NormalTok{) }\SpecialCharTok{{-}} \FunctionTok{pnorm}\NormalTok{(}\DecValTok{100} \SpecialCharTok{{-}} \DecValTok{3} \SpecialCharTok{*} \DecValTok{15}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{15}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.997}
-\end{Highlighting}
-\end{Shaded}
-
-\end{example}
-
-\hypertarget{distribuzione-normale-standard}{%
-\subsection{Distribuzione Normale standard}\label{distribuzione-normale-standard}}
-
-La distribuzione Normale di parametri \(\mu = 0\) e \(\sigma = 1\) viene detta \emph{distribuzione Normale standard}. La famiglia Normale è l'insieme avente come elementi tutte le distribuzioni Normali con parametri \(\mu\) e \(\sigma\) diversi. Tutte le distribuzioni Normali si ottengono dalla Normale standard mediante una trasformazione lineare: se \(Y \sim \mathcal{N}(\mu_Y, \sigma_Y)\) allora
-
-\begin{equation}
-X = a + b Y \sim \mathcal{N}(\mu_X = a+b \mu_Y, \sigma_X = \left|b\right|\sigma_Y).
-\end{equation}
-
-L'area sottesa alla curva di densità di \(\mathcal{N}(\mu, \sigma)\) nella semiretta \((-\infty, y]\) è uguale all'area sottesa alla densità Normale standard nella semiretta \((-\infty, z]\), in cui \(z = (y -\mu_Y )/\sigma_Y\) è il punteggio standard di \(Y\). Per la simmetria della distribuzione, l'area sottesa nella semiretta \([1, \infty)\) è uguale all'area sottesa nella semiretta \((-\infty, 1]\) e quest'ultima coincide con \(F(-1)\). Analogamente, l'area sottesa nell'intervallo \([y_a, y_b]\), con \(y_a < y_b\), è pari a \(F(z_b) - F(z_a)\), dove \(z_a\) e \(z_b\) sono i punteggi standard di \(y_a\) e \(y_b\).
-
-Si ha anche il problema inverso rispetto a quello del calcolo delle aree: dato un numero \(0 \leq p \leq 1\), il problema è quello di determinare un numero \(z \in \mathbb{R}\) tale che \(P(Z < z) = p\). Il valore \(z\) cercato è detto \emph{quantile} di ordine \(p\) della Normale standard e può essere trovato mediante un software.
-
-\begin{example}
-Supponiamo che l'altezza degli individui adulti segua la distribuzione Normale di media \(\mu = 1.7\) m e deviazione standard \(\sigma = 0.1\) m. Vogliamo sapere la proporzione di individui adulti con un'altezza compresa tra \(1.7\) e \(1.8\) m.
-
-Il problema ci chiede di trovare l'area sottesa alla distribuzione \(\mathcal{N}(\mu = 1.7, \sigma = 0.1)\) nell'intervallo \([1.7, 1.8]\):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =} \FunctionTok{seq}\NormalTok{(}\FloatTok{1.4}\NormalTok{, }\FloatTok{2.0}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{100}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{y =} \FunctionTok{dnorm}\NormalTok{(x, }\AttributeTok{mean =} \FloatTok{1.7}\NormalTok{, }\AttributeTok{sd =} \FloatTok{0.1}\NormalTok{))}
-
-\FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(x, y)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_area}\NormalTok{(}\AttributeTok{fill =} \StringTok{"sky blue"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{gghighlight}\NormalTok{(x }\SpecialCharTok{\textless{}} \FloatTok{1.8} \SpecialCharTok{\&}\NormalTok{ x }\SpecialCharTok{\textgreater{}} \FloatTok{1.7}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}
-    \AttributeTok{x =} \StringTok{"Altezza"}\NormalTok{,}
-    \AttributeTok{y =} \StringTok{"Densità"}
-\NormalTok{  )}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-6-1} \end{center}
-
-\noindent
-La risposta si trova utilizzando la funzione di
-ripartizione \(F(X)\) della legge \(\mathcal{N}(1.7, 0.1)\) in
-corrispondenza dei due valori forniti dal problema:
-\(F(X = 1.8) - F(X = 1.7)\). Utilizzando la seguente istruzione
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{pnorm}\NormalTok{(}\FloatTok{1.8}\NormalTok{, }\FloatTok{1.7}\NormalTok{, }\FloatTok{0.1}\NormalTok{) }\SpecialCharTok{{-}} \FunctionTok{pnorm}\NormalTok{(}\FloatTok{1.7}\NormalTok{, }\FloatTok{1.7}\NormalTok{, }\FloatTok{0.1}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.341}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-otteniamo il \(31.43\%\).
-
-In maniera equivalente, possiamo standardizzare i valori che delimitano l'intervallo considerato e utilizzare la funzione di ripartizione della normale standardizzata. I limiti inferiore e superiore dell'intervallo sono
-
-\[
-z_{\text{inf}} = \frac{1.7 - 1.7}{0.1} = 0, \quad z_{\text{sup}} = \frac{1.8 - 1.7}{0.1} = 1.0,
-\]
-
-\noindent 
-quindi otteniamo
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{pnorm}\NormalTok{(}\FloatTok{1.0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{) }\SpecialCharTok{{-}} \FunctionTok{pnorm}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.341}
-\end{Highlighting}
-\end{Shaded}
-
-Il modo più semplice per risolvere questo problema resta comunque quello di rendersi conto che la probabilità richiesta non è altro che la metà dell'area sottesa dalle distribuzioni Normali nell'intervallo \([\mu - \sigma, \mu + \sigma]\), ovvero \(0.683/2\).
-\end{example}
-
-\hypertarget{funzione-di-ripartizione-della-variabile-casuale-normale-standard-e-funzione-logistica}{%
-\subsubsection{Funzione di ripartizione della variabile casuale normale standard e funzione logistica}\label{funzione-di-ripartizione-della-variabile-casuale-normale-standard-e-funzione-logistica}}
-
-Si noti che la funzione logistica (in blu), pur essendo del tutto diversa dalla Normale dal punto di vista formale, assomiglia molto alla Normale standard quando le due cdf hanno la stessa varianza.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x)) }\SpecialCharTok{+}
-  \FunctionTok{stat\_function}\NormalTok{(}\AttributeTok{fun =}\NormalTok{ pnorm) }\SpecialCharTok{+}
-  \FunctionTok{stat\_function}\NormalTok{(}
-    \AttributeTok{fun =}\NormalTok{ plogis,}
-    \AttributeTok{args =} \FunctionTok{list}\NormalTok{(}\AttributeTok{scale =} \FloatTok{0.56}\NormalTok{),}
-    \AttributeTok{col =} \StringTok{"sky blue"}
-\NormalTok{  )}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-9-1} \end{center}
-
-\hypertarget{teorema-del-limite-centrale}{%
-\section{Teorema del limite centrale}\label{teorema-del-limite-centrale}}
-
-Laplace dimostrò il teorema del limite centrale (TLC) nel 1812. Il TLC ci dice che se prendiamo una sequenza di variabili casuali indipendenti e le sommiamo, tale somma tende a distribuirisi come una Normale. Il TLC specifica inoltre, sulla base dei valori attesi e delle varianze delle v.c. che vengono sommate, quali saranno i parametri della distribuzione Normale così ottenuta.
-
-\begin{theorem}
-Si supponga che \(Y = Y_1, Y_2, \ldots, Y_N\) sia una sequenza di v.a. i.i.d. con \(\E(Y_n) = \mu\) e \(\SD(Y_n) = \sigma\). Si definisca una nuova v.c. come la media di \(Y\):
-
-\[
-Z = \frac{1}{N} \sum_{n=1}^N Y_n.
-\]
-\noindent
-Con \(N \rightarrow \infty\), \(Z\) tenderà ad una Normale con lo stesso valore atteso di \(Y_n\) e una deviazione standard che sarà più piccola della deviazione standard originaria di un fattore pari a \(\sqrt{\frac{1}{\sqrt{N}}}\):
-
-\begin{equation}
-p_Z(z) \rightarrow \mathcal{N}\left(z \ \Bigg| \ \mu, \, \frac{1}{\sqrt{N}} \cdot \sigma \right).
-\end{equation}
-\end{theorem}
-
-Il TLC può essere generalizzato a variabili che non hanno la stessa distribuzione purché siano indipendenti e abbiano aspettative e varianze finite.
-
-Molti fenomeni naturali, come l'altezza dell'uomo adulto di entrambi i sessi, sono il risultato di una serie di effetti additivi relativamente piccoli, la cui combinazione porta alla normalità, indipendentemente da come gli effetti additivi sono distribuiti. In pratica, questo è il motivo per cui la distribuzione normale ha senso come rappresentazione di molti fenomeni naturali.
-
-\hypertarget{distribuzione-chi-quadrato}{%
-\section{Distribuzione Chi-quadrato}\label{distribuzione-chi-quadrato}}
-
-Dalla Normale deriva la distribuzione \(\chi^2\). La distribuzione \(\chi^2_{~k}\) con \(k\) gradi di libertà descrive la variabile casuale
-
-\[
-Z_1^2 + Z_2^2 + \dots + Z_k^2,
-\]
-\noindent
-dove \(Z_1, Z_2, \dots, Z_k\) sono variabili casuali i.i.d. con distribuzione Normale standard \(\mathcal{N}(0, 1)\). La variabile casuale chi-quadrato dipende dal parametro intero positivo \(\nu = k\) che ne identifica il numero di gradi di libertà. La densità di probabilità di \(\chi^2_{~\nu}\) è
-
-\[
-f(x) = C_{\nu} x^{\nu/2-1} \exp (-x/2), \qquad \text{se } x > 0,
-\]
-\noindent
-dove \(C_{\nu}\) è una costante positiva.
-
-\hypertarget{proprietuxe0}{%
-\subsection{Proprietà}\label{proprietuxe0}}
-
-\begin{itemize}
-\tightlist
-\item
-  La distribuzione di densità \(\chi^2_{~\nu}\) è asimmetrica.
-\item
-  Il valore atteso di una variabile \(\chi^2_{~\nu}\) è uguale a \(\nu\).
-\item
-  La varianza di una variabile \(\chi^2_{~\nu}\) è uguale a \(2\nu\).
-\item
-  Per \(k \rightarrow \infty\), la \(\chi^2_{~\nu} \rightarrow \mathcal{N}\).
-\item
-  Se \(X\) e \(Y\) sono due variabili casuali chi-quadrato indipendenti con \(\nu_1\) e \(\nu_2\) gradi di libertà, ne segue che \(X + Y \sim \chi^2_m\), con \(m = \nu_1 + \nu_2\). Tale principio si estende a qualunque numero finito di variabili casuali chi-quadrato indipendenti.
-\end{itemize}
-
-\begin{example}
-
-Usiamo \(\R\) per disegnare la densità chi-quadrato con 3 gradi di libertà dividendo l'area sottesa alla curva di densità in due parti uguali.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{15.0}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{100}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{y =} \FunctionTok{dchisq}\NormalTok{(x, }\DecValTok{3}\NormalTok{))}
-
-\FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(x, y)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_area}\NormalTok{(}\AttributeTok{fill =} \StringTok{"sky blue"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{gghighlight}\NormalTok{(x }\SpecialCharTok{\textless{}} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}
-    \AttributeTok{x =} \StringTok{"V.a. chi{-}quadrato con 3 gradi di libertà"}\NormalTok{,}
-    \AttributeTok{y =} \StringTok{"Densità"}
-\NormalTok{  )}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-10-1} \end{center}
-
-\end{example}
-
-\begin{example}
-
-La figura \ref{fig:alcune-chi-quadrato} mostra alcune distribuzioni Chi-quadrato variando il parametro \(\nu\).
-
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/alcune-chi-quadrato-1} 
-
-}
-
-\caption{Alcune distribuzioni Chi-quadrato.}\label{fig:alcune-chi-quadrato}
-\end{figure}
-
-\end{example}
-
-\hypertarget{distribuzione-t-di-student}{%
-\section{\texorpdfstring{Distribuzione \(t\) di Student}{Distribuzione t di Student}}\label{distribuzione-t-di-student}}
-
-Dalle distribuzioni Normale e Chi quadrato deriva un'altra distribuzione molto nota, la \(t\) di Student. Se \(Z \sim \mathcal{N}\) e \(W \sim \chi^2_{~\nu}\) sono due variabili casuali indipendenti, allora il rapporto
-
-\begin{equation}
-T = \frac{Z}{\Big( \frac{W}{\nu}\Big)^{\frac{1}{2}}}
-\end{equation}
-\noindent
-definisce la distribuzione \(t\) di Student con \(\nu\) gradi di libertà. Si usa scrivere \(T \sim t_{\nu}\). L'andamento della distribuzione \(t\) di Student è simile a quello della distribuzione Normale, ma ha una maggiore dispersione (ha le code più pesanti di una Normale, ovvero ha una varianza maggiore di 1).
-
-\hypertarget{proprietuxe0-1}{%
-\subsection{Proprietà}\label{proprietuxe0-1}}
-
-La variabile casuale \(t\) di Student soddisfa le seguenti proprietà:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Per \(\nu \rightarrow \infty\), \(t_{\nu}\) tende alla normale standard
-  \(\mathcal{N}(0, 1)\).
-\item
-  La densità della \(t_{\nu}\) è una funzione simmetrica con valore
-  atteso nullo.
-\item
-  Per \(\nu > 2\), la varianza della \(t_{\nu}\) vale \(\nu/(\nu - 2)\);
-  pertanto è sempre maggiore di 1 e tende a 1 per
-  \(\nu \rightarrow \infty\).
-\end{enumerate}
-
-\begin{example}
-
-La figura \ref{fig:alcune-t-student} mostra alcune distribuzioni \(t\) di Student variando il parametro \(\nu\).
-
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/alcune-t-student-1} 
-
-}
-
-\caption{Alcune distribuzioni $t$ di Student.}\label{fig:alcune-t-student}
-\end{figure}
-
-\end{example}
-
-\hypertarget{funzione-beta-di-eulero}{%
-\section{Funzione beta di Eulero}\label{funzione-beta-di-eulero}}
-
-La funzione beta di Eulero è una funzione matematica, \emph{non} una densità di probabilità. La menzioniamo qui perché viene utilizzata nella distribuzione Beta. La funzione beta si può scrivere in molti modi; per i nostri scopi, può essere scritta nel modo seguente:
-\begin{equation}
-B(\alpha, \beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}\,,
-\end{equation}
-\noindent
-dove \(\Gamma(x)\) è la funzione Gamma, ovvero il fattoriale discendente, cioè
-\begin{equation}
-x(x-1)(x-2)\ldots (x-n+1)\notag\,.
-\end{equation}
-
-\hypertarget{distribuzione-beta}{%
-\section{Distribuzione Beta}\label{distribuzione-beta}}
-
-Una distribuzione che viene usata per modellare percentuali e proporzioni è la distribuzione Beta in quanto è definita sull'intervallo \((0; 1)\) -- ma non include i valori 0 o 1. La distribuzione Beta è una distribuzione estremamente flessibile e può assumere molti tipi di forme diverse (un'illustrazione è fornita dalla seguente \href{https://en.wikipedia.org/wiki/File:PDF_of_the_Beta_distribution.gif}{GIF animata}). Una definizione formale è la seguente.
-
-\begin{definition}
-Sia \(\pi\) una variabile casuale che può assumere qualsiasi valore compreso tra 0 e 1, cioè \(\pi \in [0, 1]\). Diremo che \(\pi\) segue la distribuzione Beta di parametri \(\alpha\) e \(\beta\), \(\pi \sim \text{Beta}(\alpha, \beta)\), se la sua densità è
-\begin{align}
-\text{Beta}(\pi \mid \alpha, \beta) &= \frac{1}{B(\alpha, \beta)}\pi^{\alpha-1} (1-\pi)^{\beta-1}\notag\\ 
-&=  \frac{\Gamma(\alpha+ \beta)}{\Gamma(\alpha)\Gamma(\beta)}\pi^{\alpha-1} (1-\pi)^{\beta-1} \quad \text{per } \pi \in [0, 1]\,,
-\label{eq:beta-distr-formula}
-\end{align}
-laddove \(B(\alpha, \beta)\) è la funzione beta.
-\end{definition}
-
-I termini \(\alpha\) e \(\beta\) sono i parametri della distribuzione Beta e devono essere entrambi positivi. Tali parametri possono essere interpretati come l'espressione delle nostre credenze a priori relativamente alla probabilità di successo. Il parametro \(\alpha\) rappresenta il numero di ``successi'' e il parametro \(\beta\) il numero di ``insuccessi'':
-\begin{equation}
-\frac{\text{Numero di successi}}{\text{Numero di successi} + \text{Numero di insuccessi}} = \frac{\alpha}{\alpha + \beta}\notag\,.
-\end{equation}
-
-Il rapporto \(\frac{1}{B(\alpha, \beta)} = \frac{\Gamma(\alpha+b)}{\Gamma(\alpha)\Gamma(\beta)}\) è una costante di normalizzazione:
-\begin{equation}
-\int_0^1 \pi^{\alpha-1} (1-\pi)^{\beta-1} = \frac{\Gamma(\alpha+b)}{\Gamma(\alpha)\Gamma(\beta)}\,.
-\end{equation}
-
-Il valore atteso, la moda e la varianza di una distribuzione Beta sono dati dalle seguenti equazioni:
-\begin{equation}
-\E(\pi) = \frac{\alpha}{\alpha+\beta}\,,
-\label{eq:beta-mean}
-\end{equation}
-
-\begin{equation}
-\Mo(\pi) = \frac{\alpha-1}{\alpha+\beta-2}\,,
-\label{eq:beta-mode}
-\end{equation}
-
-\begin{equation}
-\Var(\pi) = \frac{\alpha \beta}{(\alpha+\beta)^2 (\alpha+\beta+1)}\,.
-\label{eq:beta-var}
-\end{equation}
-
-\emph{Attenzione alle parole.} In questo contesto, il termine ``beta'' viene utilizzato con tre significati diversi:
-
-\begin{itemize}
-\tightlist
-\item
-  la distribuzione di densità Beta,
-\item
-  la funzione matematica beta,
-\item
-  il parametro \(\beta\).
-\end{itemize}
-
-\begin{example}
-
-Al variare di \(\alpha\) e \(\beta\) si ottengono molte distribuzioni di forma diversa; per \(\alpha = \beta = 1\) si ha la densità uniforme. Vari esempi di distribuzioni Beta sono mostrati nella figura \ref{fig:some-beta-distr}.
-
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/some-beta-distr-1} 
-
-}
-
-\caption{Alcune distribuzioni Beta.}\label{fig:some-beta-distr}
-\end{figure}
-
-\end{example}
-
-\begin{example}
-\protect\hypertarget{exm:beta-tuning}{}\label{exm:beta-tuning}Nel disturbo depressivo la recidiva è definita come la comparsa di un nuovo episodio depressivo che si manifesta dopo un prolungato periodo di recupero (6-12 mesi) con stato di eutimia (umore relativamente normale). Supponiamo che una serie di studi mostri una comparsa di recidiva in una proporzione che va dal 20\% al 60\% dei casi, con una media del 40\% \autocite[per una recente discussione, si veda][]{nuggerud2020analysis}. Sulla base di queste ipotetiche informazioni, è possibile usare la distribuzione Beta per rappresentare le nostre credenze a priori relativamente alla probabilità di recidiva. Per fare questo dobbiamo trovare i parametri della distribuzione Beta tali per cui la massa della densità sia compresa tra 0.2 e 0.6, con la media in corrispondenza di 0.4. Procedendo per tentativi ed errori, ed usando la funzione \texttt{bayesrules::plot\_beta()}, un risultato possibile è \(\Beta(16, 24)\).
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{find\_pars }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(ev, n) \{}
-\NormalTok{  a }\OtherTok{\textless{}{-}}\NormalTok{ ev }\SpecialCharTok{*}\NormalTok{ n}
-\NormalTok{  b }\OtherTok{\textless{}{-}}\NormalTok{ n }\SpecialCharTok{{-}}\NormalTok{ a}
-  \FunctionTok{return}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FunctionTok{round}\NormalTok{(a), }\FunctionTok{round}\NormalTok{(b)))}
+\NormalTok{rss }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x, y, a, b) \{}
+  \CommentTok{\# x and y are vectors,}
+  \CommentTok{\# a and b are scalars}
+\NormalTok{  resid }\OtherTok{\textless{}{-}}\NormalTok{ y }\SpecialCharTok{{-}}\NormalTok{ (a }\SpecialCharTok{+}\NormalTok{ b }\SpecialCharTok{*}\NormalTok{ x)}
+  \FunctionTok{return}\NormalTok{(}\FunctionTok{sum}\NormalTok{(resid}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}
 \NormalTok{\}}
-
-\NormalTok{pars }\OtherTok{\textless{}{-}} \FunctionTok{find\_pars}\NormalTok{(.}\DecValTok{4}\NormalTok{, }\DecValTok{40}\NormalTok{)}
-\NormalTok{pars}
-\CommentTok{\#\textgreater{} [1] 16 24}
-\NormalTok{bayesrules}\SpecialCharTok{::}\FunctionTok{plot\_beta}\NormalTok{(pars[}\DecValTok{1}\NormalTok{], pars[}\DecValTok{2}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-11-1} \end{center}
-
-La media della distribuzione a priori diventa:
+Useremo i dati \ldots.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\DecValTok{16} \SpecialCharTok{/}\NormalTok{ (}\DecValTok{16} \SpecialCharTok{+} \DecValTok{24}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.4}
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{read.dta}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"kidiq.dta"}\NormalTok{))}
+\FunctionTok{head}\NormalTok{(df)}
+\CommentTok{\#\textgreater{}   kid\_score mom\_hs mom\_iq mom\_work mom\_age}
+\CommentTok{\#\textgreater{} 1        65      1  121.1        4      27}
+\CommentTok{\#\textgreater{} 2        98      1   89.4        4      25}
+\CommentTok{\#\textgreater{} 3        85      1  115.4        4      27}
+\CommentTok{\#\textgreater{} 4        83      1   99.4        3      25}
+\CommentTok{\#\textgreater{} 5       115      1   92.7        4      27}
+\CommentTok{\#\textgreater{} 6        98      0  107.9        1      18}
 \end{Highlighting}
 \end{Shaded}
 
-\noindent
-e la moda è
+Nell'esempio, \texttt{kid\_score} è la variabile \(y\) e \texttt{mom\_iq} è il predittore. Le stime dei minimi quadrati sono fornite dalla funzione \texttt{lm()}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{(}\DecValTok{16} \SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{16} \SpecialCharTok{+} \DecValTok{24} \SpecialCharTok{{-}} \DecValTok{2}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.395}
+\NormalTok{fm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(kid\_score }\SpecialCharTok{\textasciitilde{}}\NormalTok{ mom\_iq, }\AttributeTok{data =}\NormalTok{ df)}
+\NormalTok{fm }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tidy}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(term }\SpecialCharTok{==} \FunctionTok{c}\NormalTok{(}\StringTok{"(Intercept)"}\NormalTok{, }\StringTok{"mom\_iq"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pull}\NormalTok{(estimate)}
+\CommentTok{\#\textgreater{} [1] 25.80  0.61}
 \end{Highlighting}
 \end{Shaded}
 
-\noindent
-Inoltre, la deviazione standard della distribuzione a priori diventa
+Calcoliamo la somma dei residui quadratici in base al modello di regressione \(\hat{y}_i = 25.8 + 0.61 x_i\):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{sqrt}\NormalTok{((}\DecValTok{16} \SpecialCharTok{*} \DecValTok{24}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ ((}\DecValTok{16} \SpecialCharTok{+} \DecValTok{24}\NormalTok{)}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ (}\DecValTok{16} \SpecialCharTok{+} \DecValTok{24} \SpecialCharTok{+} \DecValTok{1}\NormalTok{)))}
-\CommentTok{\#\textgreater{} [1] 0.0765}
+\FunctionTok{rss}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{mom\_iq, df}\SpecialCharTok{$}\NormalTok{kid\_score, }\FloatTok{25.8}\NormalTok{, }\FloatTok{0.61}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 144137}
 \end{Highlighting}
 \end{Shaded}
 
-\noindent
-uguale a circa 8 punti percentuali. Questo significa che le nostre credenze a priori rispetto la possibilità di recidiva tendono a deviare di circa 8 punti percentuali rispetto alla media della distribuzione a priori del 40\%.
-\end{example}
+Esploriamo ora i valori assunti da \(rss\) per diversi valori di \(a\) e \(b\). Per iniziare, utilizziamo un vettore di valori \texttt{a}, mantenendo costante \texttt{b\ =\ 0.61}.
 
-\hypertarget{distribuzione-di-cauchy}{%
-\section{Distribuzione di Cauchy}\label{distribuzione-di-cauchy}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# set the global plotting theme}
+\CommentTok{\# theme\_set(theme\_linedraw() +}
+\CommentTok{\#             theme(panel.grid = element\_blank()))}
+\CommentTok{\# simulate}
+\FunctionTok{tibble}\NormalTok{(}\AttributeTok{a =} \FunctionTok{seq}\NormalTok{(}\DecValTok{20}\NormalTok{, }\DecValTok{30}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{30}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{rss =} \FunctionTok{map\_dbl}\NormalTok{(}
+\NormalTok{      a,}
+\NormalTok{      rss,}
+      \AttributeTok{x =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{mom\_iq,}
+      \AttributeTok{y =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{kid\_score,}
+      \AttributeTok{b =} \FloatTok{0.61}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \CommentTok{\# plot}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ a, }\AttributeTok{y =}\NormalTok{ rss)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Il valore b è tenuto costante (b = 0.61)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-La distribuzione di Cauchy è un caso speciale della distribuzione di \(t\) di Student con 1 grado di libertà. È definita da una densità di probabilità che corrisponde alla funzione, dipendente da due parametri \(\theta\) e \(d\) (con la condizione \(d > 0\)),
+\begin{center}\includegraphics[width=0.8\linewidth]{052_reglin2_files/figure-latex/unnamed-chunk-7-1} \end{center}
 
-\begin{equation}
-f(x; \theta, d) = \frac{1}{\pi d} \frac{1}{1 + \left(\frac{x - \theta}{d} \right)^2},
-\end{equation}
-dove \(\theta\) è la mediana della distribuzione e \(d\) ne misura la larghezza a metà altezza.
+Ora variamo sia \texttt{a} che \texttt{b}, facendo assumere a ciascun parametro un insieme di valori in un intevallo, e rappresentiamo i risultati in una heat map che rappresenta l'intensitè di \texttt{rss} in funzione dei valori \texttt{a} e \texttt{b}.
 
-\hypertarget{distribuzione-log-normale}{%
-\section{Distribuzione log-normale}\label{distribuzione-log-normale}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d }\OtherTok{\textless{}{-}}
+  \FunctionTok{crossing}\NormalTok{(}
+    \AttributeTok{a =} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{20}\NormalTok{, }\DecValTok{70}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{400}\NormalTok{),}
+    \AttributeTok{b =} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.2}\NormalTok{, }\FloatTok{1.4}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{400}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{rss =} \FunctionTok{map2\_dbl}\NormalTok{(a, b, rss, }\AttributeTok{x =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{mom\_iq, }\AttributeTok{y =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{kid\_score))}
+\NormalTok{d }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ a, }\AttributeTok{y =}\NormalTok{ b, }\AttributeTok{fill =}\NormalTok{ rss)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_tile}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_viridis\_c}\NormalTok{(}\StringTok{"RSS"}\NormalTok{, }\AttributeTok{option =} \StringTok{"A"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
 
-Sia \(y\) una variabile casuale avente distribuzione normale con media \(\mu\) e varianza \(\sigma^2\). Definiamo poi una nuova variabile casuale \(x\) attraverso la relazione
+\begin{center}\includegraphics[width=0.8\linewidth]{052_reglin2_files/figure-latex/unnamed-chunk-8-1} \end{center}
+
+Poiché la stima dei minimi quadrati enfatizza il valore RSS minimo, la soluzione che cerchiamo corrisponde alle combinazione di \texttt{a} e \texttt{b} nell'intervallo più scuro rappresentato nella figura. Tra gli \texttt{a} e \texttt{b} che abbiamo preso in considerazione, la coppia di valori a cui è associato il minimo valore \texttt{rss} si trova nel modo seguente:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(rss) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\CommentTok{\#\textgreater{} \# A tibble: 1 x 3}
+\CommentTok{\#\textgreater{}       a     b     rss}
+\CommentTok{\#\textgreater{}   \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}   \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1  25.8 0.610 144137.}
+\end{Highlighting}
+\end{Shaded}
+
+Si noti che i valori trovati in questo modo corrispondono alla soluzione fornita nell'output della funzione \texttt{lm()}.
+
+\hypertarget{massima-verosimiglianza}{%
+\section{Massima verosimiglianza}\label{massima-verosimiglianza}}
+
+Se gli errori del modello lineare sono indipendenti e distribuiti normalmente, in modo che \(y_i \sim \mathcal{N}(a + b x_i, \sigma^2)\) per ogni \(i\), allora la stima ai minimi quadrati di (\texttt{a}, \texttt{b}) è anche la stima di massima verosimiglianza. La \emph{funzione di verosimiglianza} in un modello di regressione è definita come la densità di probabilità delle osservazioni dati i parametri e i predittori; quindi, in questo esempio,
 \[
-x = e^y \quad \Longleftrightarrow \quad y = \log x.
-\]
-Il dominio di definizione della \(x\) è il semiasse \(x > 0\) e la densità di probabilità \(f(x)\) è data da
-\begin{equation}
-f(x) = \frac{1}{\sigma \sqrt{2 \pi}} \frac{1}{x} \exp \left\{-\frac{(\log x -  \mu)^2}{2 \sigma^2} \right\}.
-\end{equation}
-\noindent
-Questa funzione di densità si chiama log-normale.
+ p(y \mid a, b, \sigma, x) = \prod_{i=1}^n \mathcal{N}(y_i \mid a + b x_i, \sigma^2),
+ \]
 
-Il valore atteso e la varianza di una distribuzione log-normale sono dati dalle seguenti equazioni:
-\begin{equation}
-\E(x) = \exp \left\{\mu + \frac{\sigma^2}{2} \right\}.
-\end{equation}
-
-\begin{equation}
-\Var(x) = \exp \left\{2 \mu + \sigma^2 \right\} \left(\exp \left\{\sigma^2 \right\}  -1\right).
-\end{equation}
-
-Si può dimostrare che il prodotto di variabili casuali log-normali ed indipendenti segue una distribuzione log-normale.
-
-\hypertarget{distribuzione-di-pareto}{%
-\section{Distribuzione di Pareto}\label{distribuzione-di-pareto}}
-
-La distribuzione paretiana (o distribuzione di Pareto) è una distribuzione di probabilità continua e così chiamata in onore di Vilfredo Pareto. La distribuzione di Pareto è una distribuzione di probabilità con legge di potenza utilizzata nella descrizione di fenomeni sociali e molti altri tipi di fenomeni osservabili. Originariamente applicata per descrivere la distribuzione del reddito in una società, adattandosi alla tendenza che una grande porzione di ricchezza è detenuta da una piccola frazione della popolazione, la distribuzione di Pareto è diventata colloquialmente nota e indicata come il principio di Pareto, o ``regola 80-20''. Questa regola afferma che, ad esempio, l'80\% della ricchezza di una società è detenuto dal 20\% della sua popolazione. Viene spesso applicata nello studio della distribuzione del reddito, della dimensione dell'impresa, della dimensione di una popolazione e nelle fluttuazioni del prezzo delle azioni.
-
-La densità di una distribuzione di Pareto é
-
+dove \(\mathcal{N}(\cdot | \cdot, \cdot)\) è la funzione di densità di probabilità normale,
 \[
-f(x)=(x_m/x)^\alpha,
+\mathcal{N}(y \mid \mu, \sigma^2) = \frac{1}{\sqrt{2 \pi \sigma}} \exp \left(-\frac{1}{2} \left( \frac{y - \mu}{\sigma} \right)^2 \right).
 \]
-\noindent
-dove \(x_m\) (parametro di scala) è il minimo (necessariamente positivo) valore possibile di \(X\) e \(\alpha\) è un parametro di forma.
+
+Un studio della funzione precedente rivela che la massimizzazione della verosimiglianza richiede la minimizzazione della somma dei quadrati dei residui; quindi la stima dei minimi quadrati \(\hat{\beta} = (\hat{a}, \hat{b})\) può essere vista come una stima di massima verosimiglianza nel modello normale:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{5}\NormalTok{, }\FloatTok{0.05}\NormalTok{)}
-\NormalTok{a3 }\OtherTok{\textless{}{-}} \DecValTok{3} \SpecialCharTok{/}\NormalTok{ x}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{4}\NormalTok{)}
-\NormalTok{a2 }\OtherTok{\textless{}{-}} \DecValTok{2} \SpecialCharTok{/}\NormalTok{ x}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{3}\NormalTok{)}
-\NormalTok{a1 }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{/}\NormalTok{ x}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{2}\NormalTok{)}
-\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(}
-  \FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{p =}\NormalTok{ a3, }\AttributeTok{alpha =} \StringTok{"3"}\NormalTok{),}
-  \FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{p =}\NormalTok{ a2, }\AttributeTok{alpha =} \StringTok{"2"}\NormalTok{),}
-  \FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{p =}\NormalTok{ a1, }\AttributeTok{alpha =} \StringTok{"1"}\NormalTok{)}
-\NormalTok{)}
-\NormalTok{gg }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{y =}\NormalTok{ p, }\AttributeTok{group =}\NormalTok{ alpha)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ alpha)) }\SpecialCharTok{+}
-  \FunctionTok{xlim}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{5}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Densità di Pareto per alcuni valori del parametro di forma"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"P(X = x)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{scale\_colour\_viridis}\NormalTok{(}
-    \AttributeTok{discrete =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{labels =} \FunctionTok{parse\_format}\NormalTok{()}
+\NormalTok{ll }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x, y, a, b) \{}
+\NormalTok{  resid }\OtherTok{\textless{}{-}}\NormalTok{ y }\SpecialCharTok{{-}}\NormalTok{ (a }\SpecialCharTok{+}\NormalTok{ b }\SpecialCharTok{*}\NormalTok{ x)}
+\NormalTok{  sigma }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{sum}\NormalTok{(resid}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{/} \FunctionTok{length}\NormalTok{(x))}
+\NormalTok{  d }\OtherTok{\textless{}{-}} \FunctionTok{dnorm}\NormalTok{(y, }\AttributeTok{mean =}\NormalTok{ a }\SpecialCharTok{+}\NormalTok{ b }\SpecialCharTok{*}\NormalTok{ x, }\AttributeTok{sd =}\NormalTok{ sigma, }\AttributeTok{log =} \ConstantTok{TRUE}\NormalTok{)}
+  \FunctionTok{tibble}\NormalTok{(}\AttributeTok{sigma =}\NormalTok{ sigma, }\AttributeTok{ll =} \FunctionTok{sum}\NormalTok{(d))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Calcoliamo dunque le stime di verosimiglianza logaritmica per varie combinazioni di (\texttt{a}, \texttt{b}), date due colonne di dati, \texttt{x} e \texttt{y}. La funzione resituisce anche il valore \(\hat{\sigma}\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d }\OtherTok{\textless{}{-}}
+  \FunctionTok{crossing}\NormalTok{(}
+    \AttributeTok{a =} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{20}\NormalTok{, }\DecValTok{70}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{200}\NormalTok{),}
+    \AttributeTok{b =} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.2}\NormalTok{, }\FloatTok{1.4}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{200}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{ll =} \FunctionTok{map2}\NormalTok{(a, b, ll, }\AttributeTok{x =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{mom\_iq, }\AttributeTok{y =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{kid\_score)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{unnest}\NormalTok{(ll)}
+\NormalTok{p1 }\OtherTok{\textless{}{-}}
+\NormalTok{  d }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ a, }\AttributeTok{y =}\NormalTok{ b, }\AttributeTok{fill =}\NormalTok{ ll)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_tile}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_viridis\_c}\NormalTok{(}\AttributeTok{option =} \StringTok{"A"}\NormalTok{, }\AttributeTok{breaks =} \ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Verosimiglianza, p(a, b | y)"}\NormalTok{)}
+\NormalTok{p1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{052_reglin2_files/figure-latex/unnamed-chunk-11-1} \end{center}
+
+Le stime di \(\hat{a}, \hat{b}\) ottenute mediante il metodo di massima verosimiglianza sono:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(ll)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\CommentTok{\#\textgreater{} \# A tibble: 1 x 4}
+\CommentTok{\#\textgreater{}       a     b sigma     ll}
+\CommentTok{\#\textgreater{}   \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1  25.7 0.612  18.2 {-}1876.}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{inferenza-bayesiana}{%
+\subsection{Inferenza bayesiana}\label{inferenza-bayesiana}}
+
+Usiamo ora la funzione \texttt{brms::brm()} per eseguire l'analisi mediante un approccio bayesiano:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m }\OtherTok{\textless{}{-}}
+  \FunctionTok{brm}\NormalTok{(}
+\NormalTok{    kid\_score }\SpecialCharTok{\textasciitilde{}}\NormalTok{ mom\_iq,}
+    \AttributeTok{data =}\NormalTok{ df,}
+    \AttributeTok{backend =} \StringTok{"cmdstan"}\NormalTok{,}
+    \AttributeTok{refresh =} \DecValTok{0}
+\NormalTok{  )}
+\CommentTok{\#\textgreater{} Running MCMC with 4 chains, at most 8 in parallel...}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Chain 1 finished in 0.0 seconds.}
+\CommentTok{\#\textgreater{} Chain 2 finished in 0.0 seconds.}
+\CommentTok{\#\textgreater{} Chain 3 finished in 0.0 seconds.}
+\CommentTok{\#\textgreater{} Chain 4 finished in 0.0 seconds.}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} All 4 chains finished successfully.}
+\CommentTok{\#\textgreater{} Mean chain execution time: 0.0 seconds.}
+\CommentTok{\#\textgreater{} Total execution time: 0.3 seconds.}
+\end{Highlighting}
+\end{Shaded}
+
+Utilizzando i coefficienti calcolati da \texttt{brms::brm()}, aggiungiamo la stima della retta di regressione al diagramma di dispersione dei dati:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ mom\_iq, }\AttributeTok{y =}\NormalTok{ kid\_score)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_abline}\NormalTok{(}
+    \AttributeTok{intercept =} \FunctionTok{fixef}\NormalTok{(m, }\AttributeTok{robust =} \ConstantTok{TRUE}\NormalTok{)[}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{],}
+    \AttributeTok{slope =} \FunctionTok{fixef}\NormalTok{(m, }\AttributeTok{robust =} \ConstantTok{TRUE}\NormalTok{)[}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{],}
+    \AttributeTok{size =} \DecValTok{1} \SpecialCharTok{/} \DecValTok{3}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{annotate}\NormalTok{(}
+    \AttributeTok{geom =} \StringTok{"text"}\NormalTok{,}
+    \AttributeTok{x =} \DecValTok{130}\NormalTok{, }\AttributeTok{y =} \DecValTok{30}\NormalTok{,}
+    \AttributeTok{label =} \FunctionTok{expression}\NormalTok{(y }\SpecialCharTok{==} \FloatTok{25.7} \SpecialCharTok{+} \FloatTok{0.61} \SpecialCharTok{*}\NormalTok{ x)}
 \NormalTok{  ) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}
-    \AttributeTok{x =} \StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{y"}\NormalTok{,}
-    \AttributeTok{y =} \StringTok{"f(y)}\SpecialCharTok{\textbackslash{}n}\StringTok{"}
+    \AttributeTok{subtitle =} \StringTok{"Dati e retta di regressione"}\NormalTok{,}
+    \AttributeTok{x =} \StringTok{"x"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"y"}
 \NormalTok{  )}
-\FunctionTok{print}\NormalTok{(gg)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-15-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{052_reglin2_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
-\noindent
-La distribuzione di Pareto ha una asimmetria positiva. Il supporto della distribuzione di Pareto è la retta reale positiva. Tutti i valori devono essere maggiori del parametro di scala \(x_m\), che è in realtà un parametro di soglia.
+La funzione \texttt{brms::posterior\_samples()} consente di estrarre molti campioni dalla distribuzione a posteriori del modello \texttt{m}. In questo modo otteniamo un vettore di valori per ciascuno dei tre parametri, i quali, in questo output sono chiamati \texttt{b\_Intercept}, \texttt{b\_mom\_iq} e \texttt{sigma}. Abbiamo quindi usato \texttt{slice\_sample()} per ottenere un sottoinsieme casuale di 50 righe. Per semplicità, qui ne stampiamo solo 5.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{8}\NormalTok{)}
+
+\FunctionTok{posterior\_samples}\NormalTok{(m) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{slice\_sample}\NormalTok{(}\AttributeTok{n =} \DecValTok{5}\NormalTok{)}
+\CommentTok{\#\textgreater{}   b\_Intercept b\_mom\_iq sigma Intercept  lp\_\_}
+\CommentTok{\#\textgreater{} 1        18.7    0.671  19.2      85.8 {-}1883}
+\CommentTok{\#\textgreater{} 2        20.4    0.663  17.9      86.7 {-}1881}
+\CommentTok{\#\textgreater{} 3        33.3    0.546  18.5      87.8 {-}1882}
+\CommentTok{\#\textgreater{} 4        25.5    0.620  18.3      87.5 {-}1881}
+\CommentTok{\#\textgreater{} 5        29.0    0.577  18.2      86.7 {-}1881}
+\end{Highlighting}
+\end{Shaded}
+
+Possiamo interpretare i valori \texttt{b\_Intercept}, \texttt{b\_mom\_iq} come un insieme di valori credibili per i parametri \(a\) e \(b\). Dati questi valori credibili per i parametri del modello di regressione, possiamo aggiungere al diagramma a dispersione 50 stime possibili della retta di regressione, alla luce dei dati osservati.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{8}\NormalTok{)}
+
+\FunctionTok{posterior\_samples}\NormalTok{(m) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{slice\_sample}\NormalTok{(}\AttributeTok{n =} \DecValTok{50}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_abline}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{intercept =}\NormalTok{ b\_Intercept, }\AttributeTok{slope =}\NormalTok{ b\_mom\_iq),}
+    \AttributeTok{size =} \DecValTok{1} \SpecialCharTok{/} \DecValTok{4}\NormalTok{, }\AttributeTok{alpha =} \DecValTok{1} \SpecialCharTok{/} \DecValTok{2}\NormalTok{, }\AttributeTok{color =} \StringTok{"grey25"}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}
+    \AttributeTok{data =}\NormalTok{ df,}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ mom\_iq, }\AttributeTok{y =}\NormalTok{ kid\_score)}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{subtitle =} \StringTok{"Dati e possibili rette di regressione"}\NormalTok{,}
+    \AttributeTok{x =} \StringTok{"x"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"y"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{052_reglin2_files/figure-latex/unnamed-chunk-16-1} \end{center}
+
+I minimi quadrati o la massima verosimiglianza trovano i parametri che meglio si adattano ai dati (secondo un criterio prestabilito), ma senza altrimenti vincolare o guidare l'adattamento. Ma di solito abbiamo informazioni preliminari sui parametri del modello. L'inferenza bayesiana produce un compromesso tra informazioni a priori e i dati, moltiplicando la verosimiglianza con una distribuzione a priori che codifica probabilisticamente le informazioni esterne sui parametri. Il prodotto della verosimiglianza \(p(y \mid a, b, \sigma)\) e della distribuzione a priori è chiamato \emph{distribuzione a posteriori} e, dopo aver visto i dati, riassume la nostra credenza sui valori dei parametri.
+
+La soluzione dei minimi quadrati fornisce una stima puntuale dei coefficienti che producono il miglior adattamento complessivo ai dati. Per un modello bayesiano, la corrispondente stima puntuale è la moda a posteriori, la quale fornisce il miglior adattamento complessivo ai dati e alla distribuzione a priori. La stima dei minimi quadrati o di massima verosimiglianza è la moda a posteriori corrispondente al modello bayesiano che utilizza una distribuzione a priori uniforme.
+
+Ma non vogliamo solo una stima puntuale; vogliamo anche una misura dell'incertezza della stima. La figura precedente fornisce, in forma grafica, una descrizione di tale incertezza.
+
+Gli intervalli di credibilità al 95\% si ottengono nel modo seguente:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(m, }\AttributeTok{robust =} \ConstantTok{TRUE}\NormalTok{)}
+\CommentTok{\#\textgreater{}  Family: gaussian }
+\CommentTok{\#\textgreater{}   Links: mu = identity; sigma = identity }
+\CommentTok{\#\textgreater{} Formula: kid\_score \textasciitilde{} mom\_iq }
+\CommentTok{\#\textgreater{}    Data: df (Number of observations: 434) }
+\CommentTok{\#\textgreater{}   Draws: 4 chains, each with iter = 1000; warmup = 0; thin = 1;}
+\CommentTok{\#\textgreater{}          total post{-}warmup draws = 4000}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Population{-}Level Effects: }
+\CommentTok{\#\textgreater{}           Estimate Est.Error l{-}95\% CI u{-}95\% CI Rhat Bulk\_ESS Tail\_ESS}
+\CommentTok{\#\textgreater{} Intercept    25.83      5.80    14.44    37.47 1.00     3329     3005}
+\CommentTok{\#\textgreater{} mom\_iq        0.61      0.06     0.49     0.72 1.00     3310     3009}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Family Specific Parameters: }
+\CommentTok{\#\textgreater{}       Estimate Est.Error l{-}95\% CI u{-}95\% CI Rhat Bulk\_ESS Tail\_ESS}
+\CommentTok{\#\textgreater{} sigma    18.26      0.61    17.13    19.53 1.00     3824     3105}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Draws were sampled using sample(hmc). For each parameter, Bulk\_ESS}
+\CommentTok{\#\textgreater{} and Tail\_ESS are effective sample size measures, and Rhat is the potential}
+\CommentTok{\#\textgreater{} scale reduction factor on split chains (at convergence, Rhat = 1).}
+\end{Highlighting}
+\end{Shaded}
+
+In alternativa, è possibile usare la funzione \texttt{posterior\_interval()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{posterior\_interval}\NormalTok{(m)}
+\CommentTok{\#\textgreater{}                  2.5\%     97.5\%}
+\CommentTok{\#\textgreater{} b\_Intercept    14.445    37.471}
+\CommentTok{\#\textgreater{} b\_mom\_iq        0.495     0.722}
+\CommentTok{\#\textgreater{} sigma          17.132    19.529}
+\CommentTok{\#\textgreater{} Intercept      85.119    88.563}
+\CommentTok{\#\textgreater{} lp\_\_        {-}1885.190 {-}1880.580}
+\end{Highlighting}
+\end{Shaded}
+
 
 
 % Bibliography

@@ -11,12 +11,23 @@ suppressPackageStartupMessages(library("khroma"))
 options(digits = 3)
 set.seed(42)
 SEED <- 374237 # set random seed for reproducibility
+
 # theme_set(bayesplot::theme_default(base_family = "sans"))
-theme_set(bayesplot::theme_default(base_size = 12))
+# theme_set(bayesplot::theme_default(base_size = 12))
 # bayesplot::color_scheme_set("brightblue") 
 colors <- colour("bright", names = FALSE)(4)
-ggplot <- function(...) ggplot2::ggplot(...) + scale_color_bright()
+ggplot <- function(...) ggplot2::ggplot(...) + 
+  scale_color_bright()
 theme_update(plot.title = element_text(hjust = 0.5))
+
+theme_clean <- function() {
+  theme_minimal() +
+    theme(
+      panel.grid.minor = element_blank(),
+      strip.background = element_rect(fill = "grey80", color = NA)
+    )
+}
+theme_set(theme_clean())
 
 # knitr chunk options ----------------------------------------------------------
 
