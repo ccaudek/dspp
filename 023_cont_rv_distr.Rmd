@@ -571,47 +571,54 @@ student_t_plot()
 
 ## Funzione beta di Eulero
 
-La funzione beta di Eulero è una funzione matematica, *non* una densità di probabilità. La menzioniamo qui perché viene utilizzata nella distribuzione Beta.
-
-La funzione beta si può scrivere in molti modi; per i nostri scopi, può essere scritta nel modo seguente:
-
+La funzione beta di Eulero è una funzione matematica, *non* una densità di probabilità. La menzioniamo qui perché viene utilizzata nella distribuzione Beta. La funzione beta si può scrivere in molti modi; per i nostri scopi, può essere scritta nel modo seguente:
 \begin{equation}
-B(\alpha, \beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)},
+B(\alpha, \beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}\,,
 \end{equation}
 \noindent
-dove $\Gamma(x)$ è la funzione Gamma, ovvero il fattoriale discendente, cioè $x(x-1)(x-2)\ldots (x-n+1)$.
+dove $\Gamma(x)$ è la funzione Gamma, ovvero il fattoriale discendente, cioè
+\begin{equation}
+x(x-1)(x-2)\ldots (x-n+1)\notag\,.
+\end{equation}
 
 
 ## Distribuzione Beta
 
+Una distribuzione che viene usata per modellare percentuali e proporzioni è la distribuzione Beta in quanto è definita sull'intervallo $(0; 1)$ -- ma non include i valori 0 o 1. La distribuzione Beta è una distribuzione estremamente flessibile e può assumere molti tipi di forme diverse (un'illustrazione è fornita dalla seguente [GIF animata](https://en.wikipedia.org/wiki/File:PDF_of_the_Beta_distribution.gif)). Una definizione formale è la seguente.
+
 :::{.definition}
 Sia $\pi$ una variabile casuale che può assumere qualsiasi valore compreso tra 0 e 1, cioè $\pi \in [0, 1]$. Diremo che $\pi$ segue la distribuzione Beta di parametri $\alpha$ e $\beta$, $\pi \sim \text{Beta}(\alpha, \beta)$, se la sua densità è
-\begin{equation}
-\text{Beta}(\pi \mid \alpha, \beta) = \frac{1}{B(\alpha, \beta)}\pi^{\alpha-1} (1-\pi)^{\beta-1} =  \frac{\Gamma(\alpha+ \beta)}{\Gamma(\alpha)\Gamma(\beta)}\pi^{\alpha-1} (1-\pi)^{\beta-1} \quad \text{per } \theta \in [0, 1],
-\end{equation}
-laddove $B(\alpha, \beta)$ è la funzione beta.
+\begin{align}
+\text{Beta}(\pi \mid \alpha, \beta) &= \frac{1}{B(\alpha, \beta)}\pi^{\alpha-1} (1-\pi)^{\beta-1}\notag\\ 
+&=  \frac{\Gamma(\alpha+ \beta)}{\Gamma(\alpha)\Gamma(\beta)}\pi^{\alpha-1} (1-\pi)^{\beta-1} \quad \text{per } \pi \in [0, 1]\,,
+(\#eq:beta-distr-formula)
+\end{align}
+laddove $B(\alpha, \beta)$ è la funzione beta. 
 :::
 
-I termini $\alpha$ e $\beta$ sono i parametri della distribuzione Beta e devono essere entrambi positivi.^[I parametri $\alpha$ e $\beta$ della distribuzione Beta possono essere interpretati come l'espressione delle nostre credenze a priori relativamente alla probabilità di successo: il parametro $\alpha$ rappresenta il numero di "successi" e il parametro $\beta$ il numero di "insuccessi".] Il rapporto $\frac{1}{B(\alpha, \beta)} = \frac{\Gamma(\alpha+b)}{\Gamma(\alpha)\Gamma(\beta)}$ è una costante di normalizzazione:
-
+I termini $\alpha$ e $\beta$ sono i parametri della distribuzione Beta e devono essere entrambi positivi. Tali parametri possono essere interpretati come l'espressione delle nostre credenze a priori relativamente alla probabilità di successo. Il parametro $\alpha$ rappresenta il numero di "successi" e il parametro $\beta$ il numero di "insuccessi":
 \begin{equation}
-\int_0^1 \pi^{\alpha-1} (1-\pi)^{\beta-1} = \frac{\Gamma(\alpha+b)}{\Gamma(\alpha)\Gamma(\beta)}.
+\frac{\text{Numero di successi}}{\text{Numero di successi} + \text{Numero di insuccessi}} = \frac{\alpha}{\alpha + \beta}\notag\,.
+\end{equation}
+
+Il rapporto $\frac{1}{B(\alpha, \beta)} = \frac{\Gamma(\alpha+b)}{\Gamma(\alpha)\Gamma(\beta)}$ è una costante di normalizzazione:
+\begin{equation}
+\int_0^1 \pi^{\alpha-1} (1-\pi)^{\beta-1} = \frac{\Gamma(\alpha+b)}{\Gamma(\alpha)\Gamma(\beta)}\,.
 \end{equation}
 
 Il valore atteso, la moda e la varianza di una distribuzione Beta sono dati dalle seguenti equazioni:
-
 \begin{equation}
-\E(\pi) = \frac{\alpha}{\alpha+\beta},
+\E(\pi) = \frac{\alpha}{\alpha+\beta}\,,
 (\#eq:beta-mean)
 \end{equation}
 
 \begin{equation}
-\Mo(\pi) = \frac{\alpha-1}{\alpha+\beta-2},
+\Mo(\pi) = \frac{\alpha-1}{\alpha+\beta-2}\,,
 (\#eq:beta-mode)
 \end{equation}
 
 \begin{equation}
-\Var(\pi) = \frac{\alpha \beta}{(\alpha+\beta)^2 (\alpha+\beta+1)}.
+\Var(\pi) = \frac{\alpha \beta}{(\alpha+\beta)^2 (\alpha+\beta+1)}\,.
 (\#eq:beta-var)
 \end{equation}
 
@@ -621,9 +628,8 @@ Il valore atteso, la moda e la varianza di una distribuzione Beta sono dati dall
 - la funzione matematica beta,
 - il parametro $\beta$.
 
-
 ::: {.example}
-Al variare di $\alpha$ e $\beta$ si ottengono molte distribuzioni di forma diversa: per $\alpha = \beta = 1$ si ha la densità uniforme. Vari esempi di distribuzioni Beta sono mostrati nella figura \@ref(fig:some-beta-distr).
+Al variare di $\alpha$ e $\beta$ si ottengono molte distribuzioni di forma diversa;  per $\alpha = \beta = 1$ si ha la densità uniforme. Vari esempi di distribuzioni Beta sono mostrati nella figura \@ref(fig:some-beta-distr).
 
 ```{r some-beta-distr, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE, fig.cap = "Alcune distribuzioni Beta."}
 library("scales")
@@ -744,23 +750,17 @@ pars <- find_pars(.4, 40)
 pars
 bayesrules::plot_beta(pars[1], pars[2])
 ```
-
 La media della distribuzione a priori diventa:
-
 ```{r}
 16 / (16 + 24)
 ```
-
 \noindent
 e la moda è
-
 ```{r}
 (16 - 1) / (16 + 24 - 2)
 ```
-
 \noindent
 Inoltre, la deviazione standard della distribuzione a priori diventa
-
 ```{r}
 sqrt((16 * 24) / ((16 + 24)^2 * (16 + 24 + 1)))
 ```

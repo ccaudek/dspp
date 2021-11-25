@@ -31,9 +31,9 @@ binomial_limit_plot <-
 binomial_limit_plot
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{023_cont_rv_distr_files/figure-latex/unnamed-chunk-1-1} 
+{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-1-1} 
 
 }
 
@@ -59,9 +59,9 @@ binomial_limit_plot <-
 binomial_limit_plot
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{023_cont_rv_distr_files/figure-latex/unnamed-chunk-2-1} 
+{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-2-1} 
 
 }
 
@@ -109,9 +109,9 @@ ggplot(
   theme(legend.position = "none")
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{023_cont_rv_distr_files/figure-latex/rw-normal-4816-1} 
+{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/rw-normal-4816-1} 
 
 }
 
@@ -160,9 +160,9 @@ p3 <-
 (p1 | p2 | p3) & coord_cartesian(xlim = c(-6, 6))
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{023_cont_rv_distr_files/figure-latex/rw-normal-3panels-1} 
+{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/rw-normal-3panels-1} 
 
 }
 
@@ -191,9 +191,9 @@ Il significato dei parametri $\mu$ e $\sigma$ che appaiono nella \@ref(eq:normal
 ::: {.example}
 La rappresentazione grafica di quattro densità Normali tutte con media 0 e con deviazioni standard 0.25, 0.5, 1 e 2 è fornita nella figura \@ref(fig:gaussian-plot-demo).
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{023_cont_rv_distr_files/figure-latex/gaussian-plot-demo-1} 
+{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/gaussian-plot-demo-1} 
 
 }
 
@@ -239,7 +239,7 @@ Per esempio, in precedenza abbiamo detto che il 68% circa dell'area sottesa ad u
 
 ```r
 pnorm(100 + 15, 100, 15) - pnorm(100 - 15, 100, 15)
-#> [1] 0.6826895
+#> [1] 0.683
 ```
 \noindent
 Il 95% dell'area è compresa nell'intervallo $\mu \pm 1.96 \cdot\sigma$:
@@ -247,7 +247,7 @@ Il 95% dell'area è compresa nell'intervallo $\mu \pm 1.96 \cdot\sigma$:
 
 ```r
 pnorm(100 + 1.96 * 15, 100, 15) - pnorm(100 - 1.96 * 15, 100, 15)
-#> [1] 0.9500042
+#> [1] 0.95
 ```
 \noindent
 Quasi tutta la distribuzione è compresa nell'intervallo $\mu \pm 3 \cdot\sigma$:
@@ -255,7 +255,7 @@ Quasi tutta la distribuzione è compresa nell'intervallo $\mu \pm 3 \cdot\sigma$
 
 ```r
 pnorm(100 + 3 * 15, 100, 15) - pnorm(100 - 3 * 15, 100, 15)
-#> [1] 0.9973002
+#> [1] 0.997
 ```
 ::: 
 
@@ -298,7 +298,7 @@ ggplot(df, aes(x, y)) +
 
 
 
-\begin{center}\includegraphics{023_cont_rv_distr_files/figure-latex/unnamed-chunk-6-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-6-1} \end{center}
 
 \noindent
 La risposta si trova utilizzando la funzione di
@@ -309,7 +309,7 @@ $F(X = 1.8) - F(X = 1.7)$. Utilizzando la seguente istruzione
 
 ```r
 pnorm(1.8, 1.7, 0.1) - pnorm(1.7, 1.7, 0.1)
-#> [1] 0.3413447
+#> [1] 0.341
 ```
 \noindent
 otteniamo il $31.43\%$.
@@ -326,7 +326,7 @@ quindi otteniamo
 
 ```r
 pnorm(1.0, 0, 1) - pnorm(0, 0, 1)
-#> [1] 0.3413447
+#> [1] 0.341
 ```
 
 Il modo più semplice per risolvere questo problema resta comunque quello di rendersi conto che la probabilità richiesta non è altro che la metà dell'area sottesa dalle distribuzioni Normali nell'intervallo $[\mu - \sigma, \mu + \sigma]$, ovvero $0.683/2$.
@@ -350,7 +350,7 @@ tibble(x = c(-3, 3)) %>%
 
 
 
-\begin{center}\includegraphics{023_cont_rv_distr_files/figure-latex/unnamed-chunk-9-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 
 ## Teorema del limite centrale
@@ -422,15 +422,15 @@ ggplot(df, aes(x, y)) +
 
 
 
-\begin{center}\includegraphics{023_cont_rv_distr_files/figure-latex/unnamed-chunk-10-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-10-1} \end{center}
 ::: 
 
 ::: {.example}
 La figura \@ref(fig:alcune-chi-quadrato) mostra alcune distribuzioni Chi-quadrato variando il parametro $\nu$.
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{023_cont_rv_distr_files/figure-latex/alcune-chi-quadrato-1} 
+{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/alcune-chi-quadrato-1} 
 
 }
 
@@ -469,9 +469,9 @@ La variabile casuale $t$ di Student soddisfa le seguenti proprietà:
 
 La figura \@ref(fig:alcune-t-student) mostra alcune distribuzioni $t$ di Student variando il parametro $\nu$.
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{023_cont_rv_distr_files/figure-latex/alcune-t-student-1} 
+{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/alcune-t-student-1} 
 
 }
 
@@ -482,47 +482,54 @@ La figura \@ref(fig:alcune-t-student) mostra alcune distribuzioni $t$ di Student
 
 ## Funzione beta di Eulero
 
-La funzione beta di Eulero è una funzione matematica, *non* una densità di probabilità. La menzioniamo qui perché viene utilizzata nella distribuzione Beta.
-
-La funzione beta si può scrivere in molti modi; per i nostri scopi, può essere scritta nel modo seguente:
-
+La funzione beta di Eulero è una funzione matematica, *non* una densità di probabilità. La menzioniamo qui perché viene utilizzata nella distribuzione Beta. La funzione beta si può scrivere in molti modi; per i nostri scopi, può essere scritta nel modo seguente:
 \begin{equation}
-B(\alpha, \beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)},
+B(\alpha, \beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}\,,
 \end{equation}
 \noindent
-dove $\Gamma(x)$ è la funzione Gamma, ovvero il fattoriale discendente, cioè $x(x-1)(x-2)\ldots (x-n+1)$.
+dove $\Gamma(x)$ è la funzione Gamma, ovvero il fattoriale discendente, cioè
+\begin{equation}
+x(x-1)(x-2)\ldots (x-n+1)\notag\,.
+\end{equation}
 
 
 ## Distribuzione Beta
 
+Una distribuzione che viene usata per modellare percentuali e proporzioni è la distribuzione Beta in quanto è definita sull'intervallo $(0; 1)$ -- ma non include i valori 0 o 1. La distribuzione Beta è una distribuzione estremamente flessibile e può assumere molti tipi di forme diverse (un'illustrazione è fornita dalla seguente [GIF animata](https://en.wikipedia.org/wiki/File:PDF_of_the_Beta_distribution.gif)). Una definizione formale è la seguente.
+
 :::{.definition}
 Sia $\pi$ una variabile casuale che può assumere qualsiasi valore compreso tra 0 e 1, cioè $\pi \in [0, 1]$. Diremo che $\pi$ segue la distribuzione Beta di parametri $\alpha$ e $\beta$, $\pi \sim \text{Beta}(\alpha, \beta)$, se la sua densità è
-\begin{equation}
-\text{Beta}(\pi \mid \alpha, \beta) = \frac{1}{B(\alpha, \beta)}\pi^{\alpha-1} (1-\pi)^{\beta-1} =  \frac{\Gamma(\alpha+ \beta)}{\Gamma(\alpha)\Gamma(\beta)}\pi^{\alpha-1} (1-\pi)^{\beta-1} \quad \text{per } \theta \in [0, 1],
-\end{equation}
-laddove $B(\alpha, \beta)$ è la funzione beta.
+\begin{align}
+\text{Beta}(\pi \mid \alpha, \beta) &= \frac{1}{B(\alpha, \beta)}\pi^{\alpha-1} (1-\pi)^{\beta-1}\notag\\ 
+&=  \frac{\Gamma(\alpha+ \beta)}{\Gamma(\alpha)\Gamma(\beta)}\pi^{\alpha-1} (1-\pi)^{\beta-1} \quad \text{per } \pi \in [0, 1]\,,
+(\#eq:beta-distr-formula)
+\end{align}
+laddove $B(\alpha, \beta)$ è la funzione beta. 
 :::
 
-I termini $\alpha$ e $\beta$ sono i parametri della distribuzione Beta e devono essere entrambi positivi.^[I parametri $\alpha$ e $\beta$ della distribuzione Beta possono essere interpretati come l'espressione delle nostre credenze a priori relativamente alla probabilità di successo: il parametro $\alpha$ rappresenta il numero di "successi" e il parametro $\beta$ il numero di "insuccessi".] Il rapporto $\frac{1}{B(\alpha, \beta)} = \frac{\Gamma(\alpha+b)}{\Gamma(\alpha)\Gamma(\beta)}$ è una costante di normalizzazione:
-
+I termini $\alpha$ e $\beta$ sono i parametri della distribuzione Beta e devono essere entrambi positivi. Tali parametri possono essere interpretati come l'espressione delle nostre credenze a priori relativamente alla probabilità di successo. Il parametro $\alpha$ rappresenta il numero di "successi" e il parametro $\beta$ il numero di "insuccessi":
 \begin{equation}
-\int_0^1 \pi^{\alpha-1} (1-\pi)^{\beta-1} = \frac{\Gamma(\alpha+b)}{\Gamma(\alpha)\Gamma(\beta)}.
+\frac{\text{Numero di successi}}{\text{Numero di successi} + \text{Numero di insuccessi}} = \frac{\alpha}{\alpha + \beta}\notag\,.
+\end{equation}
+
+Il rapporto $\frac{1}{B(\alpha, \beta)} = \frac{\Gamma(\alpha+b)}{\Gamma(\alpha)\Gamma(\beta)}$ è una costante di normalizzazione:
+\begin{equation}
+\int_0^1 \pi^{\alpha-1} (1-\pi)^{\beta-1} = \frac{\Gamma(\alpha+b)}{\Gamma(\alpha)\Gamma(\beta)}\,.
 \end{equation}
 
 Il valore atteso, la moda e la varianza di una distribuzione Beta sono dati dalle seguenti equazioni:
-
 \begin{equation}
-\E(\pi) = \frac{\alpha}{\alpha+\beta},
+\E(\pi) = \frac{\alpha}{\alpha+\beta}\,,
 (\#eq:beta-mean)
 \end{equation}
 
 \begin{equation}
-\Mo(\pi) = \frac{\alpha-1}{\alpha+\beta-2},
+\Mo(\pi) = \frac{\alpha-1}{\alpha+\beta-2}\,,
 (\#eq:beta-mode)
 \end{equation}
 
 \begin{equation}
-\Var(\pi) = \frac{\alpha \beta}{(\alpha+\beta)^2 (\alpha+\beta+1)}.
+\Var(\pi) = \frac{\alpha \beta}{(\alpha+\beta)^2 (\alpha+\beta+1)}\,.
 (\#eq:beta-var)
 \end{equation}
 
@@ -532,13 +539,12 @@ Il valore atteso, la moda e la varianza di una distribuzione Beta sono dati dall
 - la funzione matematica beta,
 - il parametro $\beta$.
 
-
 ::: {.example}
-Al variare di $\alpha$ e $\beta$ si ottengono molte distribuzioni di forma diversa: per $\alpha = \beta = 1$ si ha la densità uniforme. Vari esempi di distribuzioni Beta sono mostrati nella figura \@ref(fig:some-beta-distr).
+Al variare di $\alpha$ e $\beta$ si ottengono molte distribuzioni di forma diversa;  per $\alpha = \beta = 1$ si ha la densità uniforme. Vari esempi di distribuzioni Beta sono mostrati nella figura \@ref(fig:some-beta-distr).
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{023_cont_rv_distr_files/figure-latex/some-beta-distr-1} 
+{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/some-beta-distr-1} 
 
 }
 
@@ -608,32 +614,26 @@ bayesrules::plot_beta(pars[1], pars[2])
 
 
 
-\begin{center}\includegraphics{023_cont_rv_distr_files/figure-latex/unnamed-chunk-11-1} \end{center}
-
+\begin{center}\includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-11-1} \end{center}
 La media della distribuzione a priori diventa:
-
 
 ```r
 16 / (16 + 24)
 #> [1] 0.4
 ```
-
 \noindent
 e la moda è
 
-
 ```r
 (16 - 1) / (16 + 24 - 2)
-#> [1] 0.3947368
+#> [1] 0.395
 ```
-
 \noindent
 Inoltre, la deviazione standard della distribuzione a priori diventa
 
-
 ```r
 sqrt((16 * 24) / ((16 + 24)^2 * (16 + 24 + 1)))
-#> [1] 0.07650921
+#> [1] 0.0765
 ```
 \noindent
 uguale a circa 8 punti percentuali. Questo significa che le nostre credenze a priori rispetto la possibilità di recidiva tendono a deviare di circa 8 punti percentuali rispetto alla media della distribuzione a priori del 40%.
@@ -717,7 +717,7 @@ print(gg)
 
 
 
-\begin{center}\includegraphics{023_cont_rv_distr_files/figure-latex/unnamed-chunk-15-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
 \noindent
 La distribuzione di Pareto ha una asimmetria positiva. Il supporto della distribuzione di Pareto è la retta reale positiva. Tutti i valori devono essere maggiori del parametro di scala $x_m$, che è in realtà un parametro di soglia.
