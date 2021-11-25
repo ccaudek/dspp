@@ -143,9 +143,9 @@ Alternativamente, possiamo trovare la probabilità dell'evento complementare a q
 :::{.example}
 La distribuzione di probabilità di alcune distribuzioni binomiali, per due valori di $n$ e $\theta$, è fornita nella figura \@ref(fig:example-binomial-distr).
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{022_discr_rv_distr_files/figure-latex/example-binomial-distr-1} 
+{\centering \includegraphics[width=0.8\linewidth]{022_discr_rv_distr_files/figure-latex/example-binomial-distr-1} 
 
 }
 
@@ -213,7 +213,7 @@ Quindi la probabilità che in un minuto si abbiano 3 eventi è pari a
 ```r
 y <- 3
 (lambda^y / factorial(y)) * exp(-lambda)
-#> [1] 0.1403739
+#> [1] 0.14
 ```
 :::
 
@@ -232,9 +232,9 @@ Svolgendo i calcoli in \R otteniamo:
 
 ```r
 1 - ppois(q = 7, lambda = 5)
-#> [1] 0.1333717
+#> [1] 0.133
 ppois(q = 7, lambda = 5, lower.tail = FALSE)
-#> [1] 0.1333717
+#> [1] 0.133
 ```
 :::
 
@@ -246,14 +246,14 @@ Sapendo che un evento avviene in media 6 volte al minuto, si calcoli (a) la prob
 
 ```r
 ppois(q = 3, lambda = 6, lower.tail = TRUE)
-#> [1] 0.1512039
+#> [1] 0.151
 ```
 (b) In questo caso $\lambda = 6 / 2$ e la probabilità richiesta è
 
 
 ```r
 dpois(x = 2, lambda = 3)
-#> [1] 0.2240418
+#> [1] 0.224
 ```
 :::
 
@@ -261,9 +261,9 @@ dpois(x = 2, lambda = 3)
 ::: {.example}
 Alcune distribuzioni di Poisson sono riportate nella figura \@ref(fig:examples-poisson-distrib).
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{022_discr_rv_distr_files/figure-latex/examples-poisson-distrib-1} 
+{\centering \includegraphics[width=0.8\linewidth]{022_discr_rv_distr_files/figure-latex/examples-poisson-distrib-1} 
 
 }
 
