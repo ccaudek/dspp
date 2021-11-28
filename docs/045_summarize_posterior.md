@@ -80,14 +80,12 @@ Per fare un esempio pratico, consideriamo nuovamente i valori del BDI-II dei 30 
 
 
 ```r
-suppressPackageStartupMessages(library("bayesrules"))
+suppressPackageStartupMessages(library("bayesrules")) 
 
 df <- data.frame(
-  y = c(
-    26, 35, 30, 25, 44, 30, 33, 43, 22, 43,
-    24, 19, 39, 31, 25, 28, 35, 30, 26, 31,
-    41, 36, 26, 35, 33, 28, 27, 34, 27, 22
-  )
+  y = c(26, 35, 30, 25, 44, 30, 33, 43, 22, 43, 
+        24, 19, 39, 31, 25, 28, 35, 30, 26, 31, 
+        41, 36, 26, 35, 33, 28, 27, 34, 27, 22)
 )
 ```
 
@@ -122,7 +120,7 @@ plot_beta_binomial(alpha = 8, beta = 2, y = 17, n = 30)
 
 
 
-\begin{center}\includegraphics{045_summarize_posterior_files/figure-latex/unnamed-chunk-4-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{045_summarize_posterior_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 
 ### Stime puntuali della distribuzione a posteriori
@@ -144,12 +142,9 @@ Gli stessi risultati si ottiengono usando la chiamata a `bayesrules::summarize_b
 
 ```r
 summarize_beta_binomial(alpha = 8, beta = 2, y = 17, n = 30)
-#>       model alpha beta  mean      mode         var
-#> 1     prior     8    2 0.800 0.8750000 0.014545455
-#> 2 posterior    25   15 0.625 0.6315789 0.005716463
-#>          sd
-#> 1 0.1206045
-#> 2 0.0756073
+#>       model alpha beta  mean  mode     var     sd
+#> 1     prior     8    2 0.800 0.875 0.01455 0.1206
+#> 2 posterior    25   15 0.625 0.632 0.00572 0.0756
 ```
 
 La mediana si ottiene con 
@@ -157,7 +152,7 @@ La mediana si ottiene con
 
 ```r
 qbeta(.5, shape1 = 25, shape2 = 15)
-#> [1] 0.6271031
+#> [1] 0.627
 ```
 
 
@@ -172,7 +167,7 @@ plot_beta_ci(alpha = 25, beta = 15, ci_level = 0.95)
 
 
 
-\begin{center}\includegraphics{045_summarize_posterior_files/figure-latex/unnamed-chunk-7-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{045_summarize_posterior_files/figure-latex/unnamed-chunk-7-1} \end{center}
 
 \noindent
 è dato dalla chiamata
@@ -180,7 +175,7 @@ plot_beta_ci(alpha = 25, beta = 15, ci_level = 0.95)
 
 ```r
 qbeta(c(0.025, 0.975), 25, 15)
-#> [1] 0.4717951 0.7663607
+#> [1] 0.472 0.766
 ```
 \noindent
 Il calcolo precedente evidenzia l'interpretazione intuitiva dell'intervallo di credibilità. Tale intervallo, infatti, può essere interpretato come la probabilità che $\theta$ assuma valori compresi tra 0.472 e 0.766:
@@ -195,8 +190,8 @@ postFun <- function(theta) {
   gamma(25 + 15) / (gamma(25) * gamma(15)) * theta^24 * (1 - theta)^14
 }
 integrate(
-  postFun,
-  lower = 0.4717951,
+  postFun, 
+  lower = 0.4717951, 
   upper = 0.7663607
 )$value
 #> [1] 0.95
@@ -207,7 +202,7 @@ Possiamo costruire diversi intervalli di credibilità a code equivalenti. Ad ese
 
 ```r
 qbeta(c(0.25, 0.75), 25, 15)
-#> [1] 0.5743878 0.6778673
+#> [1] 0.574 0.678
 ```
 
 \noindent
@@ -230,7 +225,7 @@ dove $f(\cdot)$ è la distribuzione $\mbox{\Beta}(25, 15)$:
 
 ```r
 pbeta(0.5, shape1 = 25, shape2 = 15, lower.tail = FALSE)
-#> [1] 0.9459355
+#> [1] 0.946
 ```
 
 \noindent
@@ -242,11 +237,11 @@ postFun <- function(theta) {
   gamma(25 + 15) / (gamma(25) * gamma(15)) * theta^24 * (1 - theta)^14
 }
 integrate(
-  postFun,
-  lower = 0.5,
+  postFun, 
+  lower = 0.5, 
   upper = 1
 )$value
-#> [1] 0.9459355
+#> [1] 0.946
 ```
 
 È anche possibile formulare un test di ipotesi contrastando due ipotesi contrapposte. Per esempio, $H_1: \theta \geq 0.5$ e $H_2: \theta < 0.5$. Ciò consente di calcolare l'_odds a posteriori_ di $\theta > 0.5$:
@@ -257,11 +252,11 @@ ovvero
 
 
 ```r
-posterior_odds <-
+posterior_odds <- 
   pbeta(0.5, shape1 = 25, shape2 = 15, lower.tail = FALSE) /
-    pbeta(0.5, shape1 = 25, shape2 = 15, lower.tail = TRUE)
+  pbeta(0.5, shape1 = 25, shape2 = 15, lower.tail = TRUE)
 posterior_odds
-#> [1] 17.49642
+#> [1] 17.5
 ```
 
 \noindent
@@ -269,9 +264,9 @@ L'odds a posteriori rappresenta l'aggiornamento delle nostre credenze dopo avere
 
 
 ```r
-prior_odds <-
+prior_odds <- 
   pbeta(0.5, shape1 = 8, shape2 = 2, lower.tail = FALSE) /
-    pbeta(0.5, shape1 = 8, shape2 = 2, lower.tail = TRUE)
+  pbeta(0.5, shape1 = 8, shape2 = 2, lower.tail = TRUE)
 prior_odds
 #> [1] 50.2
 ```
@@ -286,7 +281,7 @@ Nel caso presente abbiamo
 ```r
 BF <- posterior_odds / prior_odds
 BF
-#> [1] 0.3485343
+#> [1] 0.349
 ```
 
 Quindi, dopo avere osservato i dati, gli odds a posteriori della nostra ipotesi a proposito di $\theta$  sono pari a solo il 34% degli odds a priori. 
@@ -296,12 +291,9 @@ Per fare un altro esempio, consideriamo invece il caso in cui le credenze a prio
 
 ```r
 summarize_beta_binomial(alpha = 2, beta = 8, y = 17, n = 30)
-#>       model alpha beta  mean      mode         var
-#> 1     prior     2    8 0.200 0.1250000 0.014545455
-#> 2 posterior    19   21 0.475 0.4736842 0.006082317
-#>           sd
-#> 1 0.12060454
-#> 2 0.07798921
+#>       model alpha beta  mean  mode     var    sd
+#> 1     prior     2    8 0.200 0.125 0.01455 0.121
+#> 2 posterior    19   21 0.475 0.474 0.00608 0.078
 ```
 
 \noindent
@@ -309,17 +301,17 @@ e il BF è
 
 
 ```r
-posterior_odds <-
+posterior_odds <- 
   pbeta(0.5, shape1 = 19, shape2 = 21, lower.tail = FALSE) /
-    pbeta(0.5, shape1 = 19, shape2 = 21, lower.tail = TRUE)
+  pbeta(0.5, shape1 = 19, shape2 = 21, lower.tail = TRUE)
 
-prior_odds <-
+prior_odds <- 
   pbeta(0.5, shape1 = 2, shape2 = 8, lower.tail = FALSE) /
-    pbeta(0.5, shape1 = 2, shape2 = 8, lower.tail = TRUE)
+  pbeta(0.5, shape1 = 2, shape2 = 8, lower.tail = TRUE)
 
 BF <- posterior_odds / prior_odds
 BF
-#> [1] 30.07239
+#> [1] 30.1
 ```
 
 \noindent

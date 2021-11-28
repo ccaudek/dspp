@@ -20,14 +20,13 @@ N <- 10
 x <- 0:10
 y <- dbinom(x, N, 0.9)
 binomial_limit_plot <-
-  tibble(x = x, y = y) %>%
+  tibble(x = x, y = y) %>% 
   ggplot(aes(x = x, y = y)) +
   geom_bar(
-    stat = "identity", color = "black", size = 0.2
-  ) +
-  xlab("y") +
+    stat = "identity", color = 'black', size = 0.2) +
+  xlab('y') +
   scale_x_continuous(breaks = c(0, 2, 4, 6, 8, 10)) +
-  ylab("Binomial(y | 10, 0.9)")
+  ylab('Binomial(y | 10, 0.9)') 
 binomial_limit_plot
 ```
 
@@ -49,13 +48,13 @@ N <- 1000
 x <- 0:1000
 y <- dbinom(x, N, 0.9)
 binomial_limit_plot <-
-  tibble(x = x, y = y) %>%
+  tibble(x = x, y = y) %>% 
   ggplot(aes(x = x, y = y)) +
-  geom_bar(stat = "identity", color = "black", size = 0.2) +
-  xlab("y") +
+  geom_bar(stat = "identity", color = 'black', size = 0.2) +
+  xlab('y') +
   # scale_x_continuous(breaks = c(0, 2, 4, 6, 8, 1000)) +
-  ylab("Binomial(y | 1000, 0.9)") +
-  xlim(850, 950)
+  ylab('Binomial(y | 1000, 0.9)') +
+  xlim(850, 950) 
 binomial_limit_plot
 ```
 
@@ -84,26 +83,23 @@ Queste predizioni sono possibili perché tali distanze si distribuiscono secondo
 set.seed(4)
 pos <-
   replicate(100, runif(16, -1, 1)) %>%
-  as_tibble() %>%
-  rbind(0, .) %>%
-  mutate(step = 0:16) %>%
-  gather(key, value, -step) %>%
-  mutate(person = rep(1:100, each = 17)) %>%
+  as_tibble() %>% 
+  rbind(0, .) %>% 
+  mutate(step = 0:16) %>% 
+  gather(key, value, -step) %>%  
+  mutate(person = rep(1:100, each = 17)) %>%  
   group_by(person) %>%
   mutate(position = cumsum(value)) %>%
-  ungroup()
+  ungroup()  
 
-ggplot(
-  data = pos,
-  aes(x = step, y = position, group = person)
-) +
+ggplot(data = pos,
+       aes(x = step, y = position, group = person)) +
   geom_vline(xintercept = c(4, 8, 16), linetype = 2) +
-  geom_line(aes(color = person < 2, alpha = person < 2)) +
+  geom_line(aes(color = person < 2, alpha  = person < 2)) +
   scale_color_manual(values = c("gray", "black")) +
-  scale_alpha_manual(values = c(1 / 5, 1)) +
+  scale_alpha_manual(values = c(1/5, 1)) +
   scale_x_continuous(
-    "Numero di passi",
-    breaks = c(0, 4, 8, 12, 16)
+    "Numero di passi", breaks = c(0, 4, 8, 12, 16)
   ) +
   labs(y = "Posizione") +
   theme(legend.position = "none")
@@ -134,7 +130,7 @@ p2 <-
   filter(step == 8) %>%
   ggplot(aes(x = position)) +
   geom_density(color = "black", outline.type = "full") +
-  labs(title = "8 passi")
+  labs(title = "8 passi") 
 
 sd <-
   pos %>%
@@ -146,16 +142,12 @@ p3 <-
   pos %>%
   filter(step == 16) %>%
   ggplot(aes(x = position)) +
-  stat_function(
-    fun = dnorm,
-    args = list(mean = 0, sd = sd),
-    linetype = 2
-  ) +
-  geom_density(color = "black", alpha = 1 / 2) +
-  labs(
-    title = "16 passi",
-    y = "Densità"
-  )
+  stat_function(fun = dnorm,
+                args = list(mean = 0, sd = sd),
+                linetype = 2) +
+  geom_density(color = "black", alpha = 1/2) +
+  labs(title = "16 passi",
+       y = "Densità") 
 
 (p1 | p2 | p3) & coord_cartesian(xlim = c(-6, 6))
 ```
@@ -238,7 +230,7 @@ Per esempio, in precedenza abbiamo detto che il 68% circa dell'area sottesa ad u
 
 
 ```r
-pnorm(100 + 15, 100, 15) - pnorm(100 - 15, 100, 15)
+pnorm(100+15, 100, 15) - pnorm(100-15, 100, 15)
 #> [1] 0.683
 ```
 \noindent
@@ -285,7 +277,7 @@ Il problema ci chiede di trovare l'area sottesa alla distribuzione $\mathcal{N}(
 
 ```r
 df <- tibble(x = seq(1.4, 2.0, length.out = 100)) %>%
-  mutate(y = dnorm(x, mean = 1.7, sd = 0.1))
+  mutate(y = dnorm(x, mean=1.7, sd=0.1))
 
 ggplot(df, aes(x, y)) +
   geom_area(fill = "sky blue") +
@@ -293,7 +285,7 @@ ggplot(df, aes(x, y)) +
   labs(
     x = "Altezza",
     y = "Densità"
-  )
+  ) 
 ```
 
 
@@ -342,9 +334,9 @@ tibble(x = c(-3, 3)) %>%
   ggplot(aes(x = x)) +
   stat_function(fun = pnorm) +
   stat_function(
-    fun = plogis,
-    args = list(scale = 0.56),
-    col = "sky blue"
+    fun = plogis, 
+    args = list(scale = 0.56), 
+    col="sky blue"
   )
 ```
 
@@ -600,9 +592,9 @@ Nel disturbo depressivo la recidiva è definita come la comparsa di un nuovo epi
 
 
 ```r
-find_pars <- function(ev, n) {
-  a <- ev * n
-  b <- n - a
+find_pars <- function(ev, n){
+  a = ev * n
+  b = n - a
   return(c(round(a), round(b)))
 }
 
@@ -690,27 +682,27 @@ dove $x_m$ (parametro di scala) è il minimo (necessariamente positivo) valore p
 
 
 ```r
-x <- seq(1, 5, 0.05)
-a3 <- 3 / x^(4)
-a2 <- 2 / x^(3)
-a1 <- 1 / x^(2)
-df <- bind_rows(
-  tibble(x = x, p = a3, alpha = "3"),
-  tibble(x = x, p = a2, alpha = "2"),
-  tibble(x = x, p = a1, alpha = "1")
+x  <- seq(1, 5, 0.05)
+a3 <-  3/x^(4)
+a2 <-  2/x^(3)
+a1 <-  1/x^(2)
+df <-  bind_rows(
+  tibble(x = x, p=a3, alpha='3'), 
+  tibble(x = x, p=a2, alpha='2'), 
+  tibble(x = x, p=a1, alpha='1')
 )
 gg <- df %>%
   ggplot(aes(x = x, y = p, group = alpha)) +
   geom_line(aes(color = alpha)) +
   xlim(1, 5) +
-  ggtitle("Densità di Pareto per alcuni valori del parametro di forma") +
-  ylab("P(X = x)") +
+  ggtitle('Densità di Pareto per alcuni valori del parametro di forma') +
+  ylab('P(X = x)') +
   scale_colour_viridis(
     discrete = TRUE, labels = parse_format()
   ) +
   labs(
-    x = "\ny",
-    y = "f(y)\n"
+    x = '\ny',
+    y = 'f(y)\n'
   )
 print(gg)
 ```

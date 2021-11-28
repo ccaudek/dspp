@@ -16,18 +16,18 @@ set.seed(42)
 SEED <- 374237 # set random seed for reproducibility
 
 # theme_set(bayesplot::theme_default(base_family = "sans"))
-# theme_set(bayesplot::theme_default(base_size = 12))
-bayesplot::color_scheme_set("brightblue")
+theme_set(bayesplot::theme_default(base_size = 12))
+bayesplot::color_scheme_set("mix-blue-green") # "brightblue"
 theme_update(plot.title = element_text(hjust = 0.5))
 
-theme_clean <- function() {
-  theme_minimal() +
-    theme(
-      panel.grid.minor = element_blank(),
-      strip.background = element_rect(fill = "grey80", color = NA)
-    )
-}
-theme_set(theme_clean())
+# theme_clean <- function() {
+#   theme_minimal() +
+#     theme(
+#       panel.grid.minor = element_blank(),
+#       strip.background = element_rect(fill = "grey80", color = NA)
+#     )
+# }
+# theme_set(theme_clean())
 
 # knitr chunk options ----------------------------------------------------------
 

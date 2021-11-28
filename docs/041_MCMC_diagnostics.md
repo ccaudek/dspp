@@ -19,9 +19,9 @@ La convergenza e il "mixing" possono essere controllate mediante il _trace plot_
 
 
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{041_MCMC_diagnostics_files/figure-latex/trace-plot-gautret-2-1} 
+{\centering \includegraphics[width=0.8\linewidth]{041_MCMC_diagnostics_files/figure-latex/trace-plot-gautret-2-1} 
 
 }
 
@@ -31,9 +31,9 @@ La convergenza e il "mixing" possono essere controllate mediante il _trace plot_
 La figura \@ref(fig:trace-plot-gautret-2) fornisce un esempio perfetto di come dovrebbero apparire i _trace plot_. Quando le catene markoviane raggiungono uno stato stazionario e sono stabili ciò significa che hanno raggiunto la distribuzione stazionaria e il _trace plot_ rivela una assenza di struttura e assomiglia alla rappresentazione del rumore bianco, come nella figura \@ref(fig:trace-plot-gautret-2).
 Al contrario, la figura \@ref(fig:bad-trace-bayesrules) indica mancanza di convergenza^[Figura riprodotta da @Johnson2022bayesrules].
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics[width=32.81in]{images/bad-trace-bayesrules} 
+{\centering \includegraphics[width=0.8\linewidth]{images/bad-trace-bayesrules} 
 
 }
 
@@ -59,13 +59,13 @@ Nella simulazione `cmdstanr()` per il modello Beta-Binomiale dei dati di @Gautre
 
 
 ```r
-mcmc_dens_overlay(stanfit1, pars = "theta") +
+mcmc_dens_overlay(stanfit1, pars = "theta") + 
   ylab("density")
 ```
 
 
 
-\begin{center}\includegraphics{041_MCMC_diagnostics_files/figure-latex/unnamed-chunk-2-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{041_MCMC_diagnostics_files/figure-latex/unnamed-chunk-2-1} \end{center}
 
 Per fare un confronto, consideriamo la simulazione di una catena di Markov più corta per lo stesso modello. La chiamata seguente richiede  quattro catene parallele per sole 100 iterazioni ciascuna:
 
@@ -73,7 +73,7 @@ Per fare un confronto, consideriamo la simulazione di una catena di Markov più 
 ```r
 bb_short <- mod$sample(
   data = data1_list,
-  iter_sampling = 50 * 2L,
+  iter_sampling = 50*2L,
   seed = SEED,
   chains = 4L,
   parallel_chains = 4L,
@@ -104,7 +104,7 @@ mcmc_trace(stanfit_bb_short, pars = "theta")
 
 
 
-\begin{center}\includegraphics{041_MCMC_diagnostics_files/figure-latex/unnamed-chunk-4-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{041_MCMC_diagnostics_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 
 ```r
@@ -113,7 +113,7 @@ mcmc_dens_overlay(stanfit_bb_short, pars = "theta")
 
 
 
-\begin{center}\includegraphics{041_MCMC_diagnostics_files/figure-latex/unnamed-chunk-5-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{041_MCMC_diagnostics_files/figure-latex/unnamed-chunk-5-1} \end{center}
 
 Anche se i _trace plot_ sembrano tutti mostrare un andamento casuale, gli istogrammi lisciati sono piuttosto diversi tra loro e producono approssimazioni diverse della distribuzione a posteriori. Di fronte a tale instabilità è chiaro che sarebbe un errore interrompere la simulazione dopo solo 100 iterazioni.
 
@@ -127,7 +127,7 @@ Tipicamente, $N_{eff} < N$, per cui il rapporto campionario effettivo (_effectiv
 
 ```r
 bayesplot::neff_ratio(stanfit1, pars = c("theta"))
-#> [1] 0.3352141
+#> [1] 0.335
 ```
 
 Ciò indica che l'accuratezza dell'approssimazione della distribuzione a posteriori di $\theta$ ottenuta mediante 16000 campioni dipendenti è approssimativamente simile a quella che si potrebbe ottenere con 
@@ -135,7 +135,7 @@ Ciò indica che l'accuratezza dell'approssimazione della distribuzione a posteri
 
 ```r
 bayesplot::neff_ratio(stanfit1, pars = c("theta")) * 16000
-#> [1] 5363.426
+#> [1] 5363
 ```
 \noindent
 campioni _indipendenti_. In questo esempio, il rapporto campionario effettivo è maggiore di 0.1; dunque non ci sono problemi.
@@ -154,14 +154,14 @@ bayesplot::mcmc_acf(stanfit1, pars = "theta")
 
 
 
-\begin{center}\includegraphics{041_MCMC_diagnostics_files/figure-latex/unnamed-chunk-8-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{041_MCMC_diagnostics_files/figure-latex/unnamed-chunk-8-1} \end{center}
 
 Il correlogramma mostra l'autocorrelazione in funzione di ritardi da 0 a 20. L'autocorrelazione di lag 0 è naturalmente 1 -- misura la correlazione tra un valore della catena di Markov e se stesso. L'autocorrelazione di lag 1 è di circa 0.5, indicando una correlazione moderata tra i valori della catena che distano di solo 1 passo l'uno dall'altro. Successivamente, l'autocorrelazione diminuisce rapidamente ed è effettivamente pari a 0 per un lag di 5. Questo risultato fornisce una conferma del fatto che la catena di Markov costituisce una buona approssimazione di un campione casuale di $p(\theta \mid y)$.
 
 Al contrario, nella figura \@ref(fig:bad-autocorrelation) (a destra) [riprodotta da @Johnson2022bayesrules] vediamo un esempio nel quale il trace plot rivela una forte tendenza tra i valori di una catena di Markov e, dunque, una forte autocorrelazione. 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics[width=32.81in]{images/ch6-acf-2-1} 
+{\centering \includegraphics[width=0.8\linewidth]{images/ch6-acf-2-1} 
 
 }
 
@@ -198,7 +198,7 @@ La prima catena può essere isolata nel modo seguente:
 
 
 ```r
-S1 <- S %>%
+S1 <- S %>% 
   dplyr::filter(
     Chain == 1,
     Parameter == "theta"
@@ -214,7 +214,7 @@ ggmcmc::ggs_running(S1)
 
 
 
-\begin{center}\includegraphics{041_MCMC_diagnostics_files/figure-latex/unnamed-chunk-11-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{041_MCMC_diagnostics_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
 \noindent
 Il grafico precedente mostra che, per il modello bayesiano che stiamo discutendo, una condizione di equilibrio della catena di Markov richiederebbe un numero maggiore di iterazioni di quelle che sono state effettivamente simulate.
@@ -224,7 +224,7 @@ L'autocorrelazione di ordine 1 si ottiene nel modo seguente (si veda il Paragraf
 
 ```r
 cor(S1$value[-length(S1$value)], S1$value[-1])
-#> [1] 0.471083
+#> [1] 0.471
 ```
 
 \noindent
@@ -240,7 +240,7 @@ In precedenza abbiamo detto che non solo è necessario che ogni singola catena s
 
 ```r
 bayesplot::rhat(stanfit1, pars = "theta")
-#> [1] 1.000499
+#> [1] 1
 ```
 \noindent
 il che indica che il valore $\hat{R}$ ottenuto è molto simile al valore ottimale. 
@@ -256,7 +256,7 @@ ggmcmc::ggs_Rhat(S) + xlab("R_hat") + xlim(0.95, 1.05)
 
 
 
-\begin{center}\includegraphics{041_MCMC_diagnostics_files/figure-latex/unnamed-chunk-14-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{041_MCMC_diagnostics_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 
 ## Diagnostica di convergenza di Geweke
@@ -271,14 +271,14 @@ fit_mcmc <- As.mcmc.list(
   stanfit1,
   pars = c("theta")
 )
-coda::geweke.diag(fit_mcmc, frac1 = .1, frac2 = .5)
+coda::geweke.diag(fit_mcmc, frac1 = .1, frac2 = .5) 
 #> [[1]]
 #> 
 #> Fraction in 1st window = 0.1
 #> Fraction in 2nd window = 0.5 
 #> 
-#>   theta 
-#> -0.8403 
+#> theta 
+#> -0.84 
 #> 
 #> 
 #> [[2]]
@@ -295,8 +295,8 @@ coda::geweke.diag(fit_mcmc, frac1 = .1, frac2 = .5)
 #> Fraction in 1st window = 0.1
 #> Fraction in 2nd window = 0.5 
 #> 
-#>   theta 
-#> -0.7616 
+#>  theta 
+#> -0.762 
 #> 
 #> 
 #> [[4]]
@@ -305,7 +305,7 @@ coda::geweke.diag(fit_mcmc, frac1 = .1, frac2 = .5)
 #> Fraction in 2nd window = 0.5 
 #> 
 #> theta 
-#> 1.878
+#>  1.88
 ```
 \noindent
 Per interpretare questi valori ricordiamo che la statistica di Geweke è uguale a zero quando le medie delle due porzioni della  catena di Markov sono uguali. Valori maggiori di $\mid 2 \mid$ suggeriscono che la catena non ha ancora raggiunto una distribuzione stazionaria.

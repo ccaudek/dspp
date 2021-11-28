@@ -37,8 +37,8 @@ l'input finché il comando non è sintatticamente completo. Ad esempio,
 
 ```r
 4 -
-  +
-    +1
++ 
++ 1
 #> [1] 3
 ```
 
@@ -55,9 +55,8 @@ Il risultato è preceduto da `[1]`, il che significa che il risultato dell'opera
 
 ```r
 100:130
-#>  [1] 100 101 102 103 104 105 106 107 108 109 110 111 112 113
-#> [15] 114 115 116 117 118 119 120 121 122 123 124 125 126 127
-#> [29] 128 129 130
+#>  [1] 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118
+#> [20] 119 120 121 122 123 124 125 126 127 128 129 130
 ```
 
 In questo caso, sul mio computer, `[24]` indica che il valore $123$ è il ventiquattresimo numero che è stato stampato sulla console -- su un altro computer le cose possono essere diverse in quanto il risultato, credo, dipende dalla grandezza dello schermo.
@@ -459,8 +458,7 @@ le operazioni di "minore di," "maggiore di" e "uguale a". Se scriviamo
 
 ```r
 roll == 5
-#>  [1] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-#> [10] FALSE
+#>  [1] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ```
 
 creiamo un vettore costituito da elementi `TRUE/FALSE` i quali
@@ -509,7 +507,7 @@ dei livelli del fattore si usa la seguente sintassi:
 
 
 ```r
-soc_status <-
+soc_status <- 
   factor(soc_status, levels = c("low", "medium", "high"))
 levels(soc_status)
 #> [1] "low"    "medium" "high"
@@ -619,7 +617,7 @@ nome_funzione <- function(arg1, arg2, ...) {
   espressione1
   espressione2
   return(risultato)
-}
+} 
 ```
 
 Una chiamata di funzione è poi eseguita nel seguente modo:
@@ -661,7 +659,7 @@ risultato diverso ogni volta che viene usata:
 
 
 ```r
-two_rolls()
+two_rolls()   
 #> [1] 6
 two_rolls()
 #> [1] 5
