@@ -50,7 +50,7 @@ Possiamo quantificare la nostra incertezza calcolando, con un grado di fiducia d
 
 ```r
 qbeta(c(0.025, 0.975), shape1 = 4, shape2 = 4)
-#> [1] 0.1840516 0.8159484
+#> [1] 0.184 0.816
 ```
 
 Se scegliamo $\alpha=10$ e $\beta=10$ supponiamo ancora a priori che sia tanto plausibile osservare come non osservare una "aspettativa futura distorta negativamente".
@@ -66,7 +66,7 @@ Ma ora la nostra certezza a priori sul valore del parametro è maggiore, come in
 
 ```r
 qbeta(c(0.025, 0.975), shape1 = 10, shape2 = 10)
-#> [1] 0.2886432 0.7113568
+#> [1] 0.289 0.711
 ```
 
 Quale distribuzione a priori dobbiamo scegliere? In un problema concreto di analisi dei dati, la scelta della distribuzione a priori dipende dalle credenze a priori che vogliamo includere nell'analisi dei dati. Se non abbiamo alcuna informazione a priori, possiamo usare $\alpha=1$ e $\beta=1$, che produce una distribuzione a priori uniforme. Questa, tuttavia, è una cattiva idea, se pensiamo al problema della riparametrizzazione. In tali circostanze è invece raccomandato usare una distribuzione a priori vagamente informativa, come $\text{Beta}(2, 2)$.
@@ -114,7 +114,7 @@ postFun <- function(theta) {
   theta^24 * (1 - theta)^16
 }
 (AUC <- integrate(postFun, lower = 0, upper = 1)$value)
-#> [1] 3.880577e-13
+#> [1] 3.88e-13
 ```
 \noindent
 Per ottenere una distribuzione di densità è necessario includere una costante di normalizzazione. In base alla definizione della distribuzione Beta, tale costante è
@@ -199,14 +199,14 @@ Per i dati esaminati, usando la \@ref(thm:beta-binom) possiamo ottenere l'interv
 
 ```r
 qbeta(c(0.025, 0.975), shape1 = 25, shape2 = 17)
-#> [1] 0.4450478 0.7368320
+#> [1] 0.445 0.737
 ```
 \noindent
 La media della distribuzione a posteriori è
 
 ```r
 25 / (25 + 17)
-#> [1] 0.5952381
+#> [1] 0.595
 ```
 \noindent
 La moda della distribuzione a posteriori è
@@ -220,7 +220,7 @@ La deviazione standard della distribuzione a priori è
 
 ```r
 sqrt((25 * 17) / ((25 + 17)^2 * (25 + 17 + 1)))
-#> [1] 0.0748533
+#> [1] 0.0749
 ```
 ::: 
 
@@ -242,9 +242,9 @@ Un sommario delle distribuzioni a priori e a posteriori si ottiene usando la fun
 bayesrules:::summarize_beta_binomial(
   alpha = 2, beta = 10, y = 23, n = 30
 )
-#>       model alpha beta      mean mode         var        sd
-#> 1     prior     2   10 0.1666667  0.1 0.010683761 0.1033623
-#> 2 posterior    25   17 0.5952381  0.6 0.005603016 0.0748533
+#>       model alpha beta  mean mode    var     sd
+#> 1     prior     2   10 0.167  0.1 0.0107 0.1034
+#> 2 posterior    25   17 0.595  0.6 0.0056 0.0749
 ```
 ::: 
 
@@ -268,12 +268,9 @@ Usando le funzioni di `bayesrules` possiamo facilmente calcolare i parametri e l
 bayesrules:::summarize_beta_binomial(
   alpha = 1, beta = 10, y = 26, n = 40
 )
-#>       model alpha beta       mean      mode         var
-#> 1     prior     1   10 0.09090909 0.0000000 0.006887052
-#> 2 posterior    27   24 0.52941176 0.5306122 0.004791057
-#>           sd
-#> 1 0.08298827
-#> 2 0.06921746
+#>       model alpha beta   mean  mode     var     sd
+#> 1     prior     1   10 0.0909 0.000 0.00689 0.0830
+#> 2 posterior    27   24 0.5294 0.531 0.00479 0.0692
 ```
 \noindent
 Il processo di aggiornamento bayesiano è descritto dalla figura seguente:

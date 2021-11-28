@@ -11,7 +11,7 @@ Le variabili casuali continue assumono valori reali. L'insieme dei numeri reali 
 
 Consideriamo il seguente esperimento casuale. Facciamo ruotare ad alta velocità uno spinner simmetrico imperniato su un goniometro e osserviamo la posizione in cui si ferma (individuata dall'angolo acuto con segno tra il suo asse e l'asse orizzontale del goniometro). Chiamiamo $\Theta$ la variabile casuale "pendenza dello spinner". Nella trattazione seguente useremo i gradi e, di conseguenza, $\Theta \in [0, 360]$.
 
-\begin{figure}
+\begin{figure}[h]
 
 {\centering \includegraphics[width=1\linewidth]{019_density_func_files/figure-latex/unnamed-chunk-1-1} 
 
@@ -75,9 +75,9 @@ $$
 \noindent
 Questa è una funzione lineare di $\theta$, cioè $\frac{1}{360} \times \theta$, come indicato dal grafico della figura \@ref(fig:spinner-cdf).
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{019_density_func_files/figure-latex/spinner-cdf-1} 
+{\centering \includegraphics[width=0.8\linewidth]{019_density_func_files/figure-latex/spinner-cdf-1} 
 
 }
 
@@ -103,13 +103,13 @@ unif_cdf_plot <-
   scale_x_continuous(breaks = c(0, 90, 180, 270, 360)) +
   scale_y_continuous(breaks = c(0, 0.25, 0.5, 0.75, 1.0)) +
   xlab(expression(theta)) +
-  ylab(expression(F[Theta](theta)))
+  ylab(expression(F[Theta](theta))) 
 unif_cdf_plot
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{019_density_func_files/figure-latex/unnamed-chunk-2-1} 
+{\centering \includegraphics[width=0.8\linewidth]{019_density_func_files/figure-latex/unnamed-chunk-2-1} 
 
 }
 
@@ -148,19 +148,18 @@ M <- 10000
 logit <- function(x) log(x / (1 - x))
 theta <- runif(M)
 alpha <- logit(theta)
-for (m in 1:10) {
+for (m in 1:10)
   print(alpha[m])
-}
-#> [1] -2.053458
-#> [1] 0.4993195
-#> [1] 0.4442646
-#> [1] 0.5039172
-#> [1] 1.822914
-#> [1] 0.5767125
-#> [1] -4.647369
-#> [1] -1.193965
-#> [1] 0.6905252
-#> [1] 0.05702001
+#> [1] -2.05
+#> [1] 0.499
+#> [1] 0.444
+#> [1] 0.504
+#> [1] 1.82
+#> [1] 0.577
+#> [1] -4.65
+#> [1] -1.19
+#> [1] 0.691
+#> [1] 0.057
 ```
 
 Creaiamo ora un istogramma che descrive la distribuzione delle 10,000 realizzazioni $\Theta$ che abbiamo trovato:
@@ -170,19 +169,17 @@ Creaiamo ora un istogramma che descrive la distribuzione delle 10,000 realizzazi
 df_prob_unif <- data.frame(theta = theta)
 unif_prob_plot <-
   ggplot(df_prob_unif, aes(theta)) +
-  geom_histogram(
-    binwidth = 1 / 34, center = 1 / 68, color = "black",
-    size = 0.25
-  ) +
+  geom_histogram(binwidth = 1/34, center = 1/68, color = "black",
+                 size = 0.25) +
   scale_x_continuous(breaks = c(0, 0.25, 0.5, 0.75, 1)) +
   scale_y_continuous(lim = c(0, 1300), breaks = c(500, 1000)) +
-  xlab(expression(paste(Theta, " ~ Uniform(0, 1)")))
+  xlab(expression(paste(Theta, " ~ Uniform(0, 1)"))) 
 unif_prob_plot
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{019_density_func_files/figure-latex/unnamed-chunk-4-1} 
+{\centering \includegraphics[width=0.8\linewidth]{019_density_func_files/figure-latex/unnamed-chunk-4-1} 
 
 }
 
@@ -196,28 +193,26 @@ unif_prob_plot
 uniform_pdf_df <- data.frame(y = c(0, 1), p_y = c(1, 1))
 uniform_pdf_plot <-
   ggplot(uniform_pdf_df, aes(x = y, y = p_y)) +
-  geom_line(size = 0.5, color = "#333333") +
-  geom_point(size = 1.5, color = "#333333") +
+  geom_line(size = 0.5, color = '#333333') +
+  geom_point(size = 1.5, color = '#333333') +
   scale_x_continuous(breaks = c(0, 1), labels = c("a", "b")) +
-  scale_y_continuous(
-    lim = c(0, 1), breaks = c(0, 1),
-    labels = c("0", "c")
-  ) +
+  scale_y_continuous(lim = c(0, 1), breaks = c(0, 1),
+                     labels = c("0", "c")) +
   xlab(expression(theta)) +
   ylab(expression(paste(p[Theta], "(", theta, " | a, b)"))) +
-  geom_segment(aes(x = 0, y = 0, xend = 0, yend = 1), linetype = "dotted") +
-  geom_segment(aes(x = 1, y = 0, xend = 1, yend = 1), linetype = "dotted") +
-  geom_segment(aes(x = 0, y = 0, xend = 1, yend = 0), linetype = "dotted") +
+  geom_segment(aes(x = 0, y = 0, xend = 0, yend = 1), linetype = 'dotted') +
+  geom_segment(aes(x = 1, y = 0, xend = 1, yend = 1), linetype = 'dotted') +
+  geom_segment(aes(x = 0, y = 0, xend = 1, yend = 0), linetype = 'dotted') +
   geom_segment(aes(x = -0.25, y = 0, xend = 0, yend = 0)) +
   geom_segment(aes(x = 1, y = 0, xend = 1.25, yend = 0)) +
-  geom_point(aes(x = 0, y = 0), size = 1.5, shape = 21, fill = "#ffffe6") +
-  geom_point(aes(x = 1, y = 0), size = 1.5, shape = 21, fill = "#ffffe6")
+  geom_point(aes(x = 0, y = 0), size = 1.5, shape = 21, fill = '#ffffe6') +
+  geom_point(aes(x = 1, y = 0), size = 1.5, shape = 21, fill = '#ffffe6') 
 uniform_pdf_plot
 ```
 
 
 
-\begin{center}\includegraphics{019_density_func_files/figure-latex/unnamed-chunk-5-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{019_density_func_files/figure-latex/unnamed-chunk-5-1} \end{center}
 
 \noindent
 Dal grafico vediamo che l'area sottesa alla funzione di densità è $(b - a)\times c$. Dato che tale area deve essere unitaria, ovvero, $(b - a) \times c = 1$, possiamo trovare $c$ dividendo entrambi i termini per $b - a$,
@@ -284,13 +279,13 @@ log_odds_plot <-
   ) +
   xlab(
     expression(paste(Phi, " = ", logit(Theta)))
-  )
+  ) 
 log_odds_plot
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{019_density_func_files/figure-latex/unnamed-chunk-6-1} 
+{\centering \includegraphics[width=0.8\linewidth]{019_density_func_files/figure-latex/unnamed-chunk-6-1} 
 
 }
 
@@ -336,40 +331,30 @@ logit <- function(u) log(u / (1 - u))
 M <- 1000
 phi <- logit(runif(M))
 phi_asc <- sort(phi)
-prob <- (1:M) / M
+prob <- (1:M)/M
 logistic_cdf_df <- data.frame(phi = phi_asc, prob = prob)
 logistic_cdf_plot <-
   ggplot(logistic_cdf_df, aes(x = phi, y = prob)) +
   geom_line() +
-  geom_hline(
-    yintercept = 1, size = 0.3, linetype = "dashed",
-    color = "#333333"
-  ) +
-  geom_hline(
-    yintercept = 0, size = 0.3, linetype = "dashed",
-    color = "#333333"
-  ) +
-  geom_vline(
-    xintercept = 0, size = 0.3, linetype = "dotted",
-    color = "#333333"
-  ) +
-  geom_hline(
-    yintercept = 0.5, size = 0.3, linetype = "dotted",
-    color = "#333333"
-  ) +
-  scale_x_continuous(
-    lim = c(-7, 7),
-    breaks = c(-6, -4, -2, 0, 2, 4, 6)
-  ) +
+  geom_hline(yintercept = 1, size = 0.3, linetype = "dashed",
+             color = "#333333") +
+  geom_hline(yintercept = 0, size = 0.3, linetype = "dashed",
+             color = "#333333") +
+  geom_vline(xintercept = 0, size = 0.3, linetype = "dotted",
+             color = "#333333") +
+  geom_hline(yintercept = 0.5, size = 0.3, linetype = "dotted",
+             color = "#333333") +
+  scale_x_continuous(lim = c(-7, 7),
+                     breaks = c(-6, -4, -2, 0, 2, 4, 6)) +
   scale_y_continuous(breaks = c(0, 0.25, 0.5, 0.75, 1.0)) +
   xlab(expression(phi)) +
-  ylab(expression(F[Phi](phi)))
+  ylab(expression(F[Phi](phi))) 
 logistic_cdf_plot
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{019_density_func_files/figure-latex/logistic-cdf-1} 
+{\centering \includegraphics[width=0.8\linewidth]{019_density_func_files/figure-latex/logistic-cdf-1} 
 
 }
 
@@ -401,19 +386,19 @@ df_log_odds_growth <- data.frame()
 for (log10M in 1:6) {
   M <- 10^log10M
   alpha <- logit(runif(M))
-  df_log_odds_growth <- rbind(
+  df_log_odds_growth = rbind(
     df_log_odds_growth,
     data.frame(
       alpha = alpha,
-      M = rep(sprintf("M = %d", M), M)
-    )
+			M = rep(sprintf("M = %d", M), M)
+		)
   )
 }
 log_odds_growth_plot <-
   df_log_odds_growth %>%
   ggplot(aes(alpha)) +
   geom_histogram(color = "black", bins = 75) +
-  facet_wrap(~M, scales = "free") +
+  facet_wrap(~ M, scales = "free") +
   scale_x_continuous(
     lim = c(-8.5, 8.5), breaks = c(-5, 0, 5)
   ) +
@@ -428,7 +413,7 @@ log_odds_growth_plot <-
 log_odds_growth_plot
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
 {\centering \includegraphics[width=1\linewidth]{019_density_func_files/figure-latex/unnamed-chunk-7-1} 
 
@@ -446,7 +431,7 @@ Nella simulazione, possiamo pensare all'area di ciascuna barra dell'istogramma c
 set.seed(1234)
 M <- 1e6
 alpha <- logit(runif(M))
-density_limit_df <- data.frame(alpha = alpha)
+density_limit_df = data.frame(alpha = alpha)
 density_limit_plot <-
   density_limit_df %>%
   ggplot(aes(alpha)) +
@@ -457,12 +442,12 @@ density_limit_plot <-
   stat_function(
     fun = dlogis,
     args = list(location = 0, scale = 1),
-    col = "black",
+    col = 'black',
     size = 0.3
   ) +
   scale_x_continuous(
     lim = c(-9, 9),
-    breaks = c(-6, -4, -2, 0, 2, 4, 6)
+    breaks = c(-6, -4, -2, 0, 2, 4,  6)
   ) +
   xlab(
     expression(paste(Phi, " = ", logit(Theta)))
@@ -475,7 +460,7 @@ density_limit_plot <-
 density_limit_plot
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
 {\centering \includegraphics[width=1\linewidth]{019_density_func_files/figure-latex/hist-dens-example-1} 
 

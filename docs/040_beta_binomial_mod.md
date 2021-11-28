@@ -48,7 +48,7 @@ set_cmdstan_path("/Users/corrado/.cmdstan/cmdstan-2.28.0")
 library("posterior")
 rstan_options(auto_write = TRUE) # avoid recompilation of models
 options(mc.cores = parallel::detectCores()) # parallelize across all CPUs
-Sys.setenv(LOCAL_CPPFLAGS = "-march=native") # improve execution time
+Sys.setenv(LOCAL_CPPFLAGS = '-march=native') # improve execution time
 SEED <- 374237 # set random seed for reproducibility
 ```
 
@@ -79,7 +79,7 @@ Il *modello* è $\Bin(n, \theta)$ e, nel linguaggio Stan, può essere scritto co
 
 ```r
 for (i in 1:N) {
-  y[i] ~ bernoulli(theta)
+  y[i] ~ bernoulli(theta);
 }
 ```
 
@@ -88,14 +88,14 @@ ovvero come
 
 
 ```r
-y ~ bernoulli(theta)
+y ~ bernoulli(theta);
 ```
 
 La struttura del modello Beta-Binomiale viene tradotta nella sintassi Stan^[Si veda l'Appendice \@ref(intro-stan)] e viene poi memorizzata come stringa di caratteri del file `oneprop1.stan`:
 
 
 ```r
-modelString <- "
+modelString = "
 data {
   int<lower=0> N;
   int<lower=0, upper=1> y[N];
@@ -119,7 +119,7 @@ model {
   //  }
   // which is equivalent to
   //  for (i in 1:N) {
-  //    target += bernoulli_lpmf(y[i] | theta);
+  //    target += bernoulli_lpmf(y[i] | theta); 
   //  }
 }
 generated quantities {
@@ -197,10 +197,9 @@ Un sommario della distribuzione a posteriori si ottiene con:
 ```r
 fit1$summary(c("theta"))
 #> # A tibble: 1 x 10
-#>   variable  mean median     sd    mad    q5   q95  rhat
-#>   <chr>    <dbl>  <dbl>  <dbl>  <dbl> <dbl> <dbl> <dbl>
-#> 1 theta    0.802  0.813 0.0868 0.0867 0.644 0.928  1.00
-#> # ... with 2 more variables: ess_bulk <dbl>, ess_tail <dbl>
+#>   variable  mean median     sd    mad    q5   q95  rhat ess_bulk ess_tail
+#>   <chr>    <dbl>  <dbl>  <dbl>  <dbl> <dbl> <dbl> <dbl>    <dbl>    <dbl>
+#> 1 theta    0.802  0.813 0.0868 0.0867 0.644 0.928  1.00    5116.    5887.
 ```
 
 Creiamo un oggetto di classe `stanfit`
@@ -224,20 +223,20 @@ I primi 10 valori sono presentati qui di seguito
 
 
 ```r
-as.matrix(stanfit1, pars = "theta") %>%
+as.matrix(stanfit1, pars = "theta") %>% 
   head(10)
 #>           parameters
-#> iterations    theta
-#>       [1,] 0.757239
-#>       [2,] 0.703550
-#>       [3,] 0.772169
-#>       [4,] 0.747881
-#>       [5,] 0.765079
-#>       [6,] 0.793709
-#>       [7,] 0.857447
-#>       [8,] 0.845012
-#>       [9,] 0.824972
-#>      [10,] 0.881219
+#> iterations theta
+#>       [1,] 0.757
+#>       [2,] 0.704
+#>       [3,] 0.772
+#>       [4,] 0.748
+#>       [5,] 0.765
+#>       [6,] 0.794
+#>       [7,] 0.857
+#>       [8,] 0.845
+#>       [9,] 0.825
+#>      [10,] 0.881
 ```
 
 \noindent
@@ -247,13 +246,13 @@ Un tracciato della catena di Markov illustra questa esplorazione rappresentando 
 
 
 ```r
-stanfit1 %>%
+stanfit1 %>% 
   mcmc_trace(pars = c("theta"), size = 0.1)
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{040_beta_binomial_mod_files/figure-latex/trace-plot-gautret-1} 
+{\centering \includegraphics[width=0.8\linewidth]{040_beta_binomial_mod_files/figure-latex/trace-plot-gautret-1} 
 
 }
 
@@ -267,14 +266,14 @@ Possiamo anche esaminare la distribuzione degli stati della catena di Markov, ov
 
 
 ```r
-mcmc_hist(stanfit1, pars = "theta") +
-  yaxis_text(TRUE) +
+mcmc_hist(stanfit1, pars = "theta") + 
+  yaxis_text(TRUE) + 
   ylab("count")
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{040_beta_binomial_mod_files/figure-latex/hist-post-gautret-1} 
+{\centering \includegraphics[width=0.8\linewidth]{040_beta_binomial_mod_files/figure-latex/hist-post-gautret-1} 
 
 }
 
@@ -285,15 +284,15 @@ Nel modello Beta-Binomiale in cui la verosimiglianza è binomiale con 14 success
 
 
 ```r
-mcmc_dens(stanfit1, pars = "theta") +
-  yaxis_text(TRUE) +
+mcmc_dens(stanfit1, pars = "theta") + 
+  yaxis_text(TRUE) + 
   ylab("density") +
-  stat_function(fun = dbeta, args = list(shape1 = 16, shape2 = 4))
+  stat_function(fun = dbeta, args = list(shape1 = 16, shape2=4))
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{040_beta_binomial_mod_files/figure-latex/hist-post-gautret-plus-correct-1} 
+{\centering \includegraphics[width=0.8\linewidth]{040_beta_binomial_mod_files/figure-latex/hist-post-gautret-plus-correct-1} 
 
 }
 
@@ -306,41 +305,41 @@ Un intervallo di credibilità al 95% per $\theta$ si ottiene con la seguente chi
 ```r
 posterior1 <- extract(stanfit1)
 rstantools::posterior_interval(as.matrix(stanfit1), prob = 0.95)
-#>                    2.5%        97.5%
-#> theta         0.6107860   0.94402990
-#> y_rep[1]      0.0000000   1.00000000
-#> y_rep[2]      0.0000000   1.00000000
-#> y_rep[3]      0.0000000   1.00000000
-#> y_rep[4]      0.0000000   1.00000000
-#> y_rep[5]      0.0000000   1.00000000
-#> y_rep[6]      0.0000000   1.00000000
-#> y_rep[7]      0.0000000   1.00000000
-#> y_rep[8]      0.0000000   1.00000000
-#> y_rep[9]      0.0000000   1.00000000
-#> y_rep[10]     0.0000000   1.00000000
-#> y_rep[11]     0.0000000   1.00000000
-#> y_rep[12]     0.0000000   1.00000000
-#> y_rep[13]     0.0000000   1.00000000
-#> y_rep[14]     0.0000000   1.00000000
-#> y_rep[15]     0.0000000   1.00000000
-#> y_rep[16]     0.0000000   1.00000000
-#> log_lik[1]   -0.4930093  -0.05759735
-#> log_lik[2]   -0.4930093  -0.05759735
-#> log_lik[3]   -0.4930093  -0.05759735
-#> log_lik[4]   -0.4930093  -0.05759735
-#> log_lik[5]   -0.4930093  -0.05759735
-#> log_lik[6]   -0.4930093  -0.05759735
-#> log_lik[7]   -0.4930093  -0.05759735
-#> log_lik[8]   -0.4930093  -0.05759735
-#> log_lik[9]   -0.4930093  -0.05759735
-#> log_lik[10]  -0.4930093  -0.05759735
-#> log_lik[11]  -0.4930093  -0.05759735
-#> log_lik[12]  -0.4930093  -0.05759735
-#> log_lik[13]  -0.4930093  -0.05759735
-#> log_lik[14]  -0.4930093  -0.05759735
-#> log_lik[15]  -2.8829362  -0.94362543
-#> log_lik[16]  -2.8829362  -0.94362543
-#> lp__        -12.7342100 -10.00860000
+#>                2.5%    97.5%
+#> theta         0.611   0.9440
+#> y_rep[1]      0.000   1.0000
+#> y_rep[2]      0.000   1.0000
+#> y_rep[3]      0.000   1.0000
+#> y_rep[4]      0.000   1.0000
+#> y_rep[5]      0.000   1.0000
+#> y_rep[6]      0.000   1.0000
+#> y_rep[7]      0.000   1.0000
+#> y_rep[8]      0.000   1.0000
+#> y_rep[9]      0.000   1.0000
+#> y_rep[10]     0.000   1.0000
+#> y_rep[11]     0.000   1.0000
+#> y_rep[12]     0.000   1.0000
+#> y_rep[13]     0.000   1.0000
+#> y_rep[14]     0.000   1.0000
+#> y_rep[15]     0.000   1.0000
+#> y_rep[16]     0.000   1.0000
+#> log_lik[1]   -0.493  -0.0576
+#> log_lik[2]   -0.493  -0.0576
+#> log_lik[3]   -0.493  -0.0576
+#> log_lik[4]   -0.493  -0.0576
+#> log_lik[5]   -0.493  -0.0576
+#> log_lik[6]   -0.493  -0.0576
+#> log_lik[7]   -0.493  -0.0576
+#> log_lik[8]   -0.493  -0.0576
+#> log_lik[9]   -0.493  -0.0576
+#> log_lik[10]  -0.493  -0.0576
+#> log_lik[11]  -0.493  -0.0576
+#> log_lik[12]  -0.493  -0.0576
+#> log_lik[13]  -0.493  -0.0576
+#> log_lik[14]  -0.493  -0.0576
+#> log_lik[15]  -2.883  -0.9436
+#> log_lik[16]  -2.883  -0.9436
+#> lp__        -12.734 -10.0086
 ```
 
 Svolgendo un'analisi bayesiana simile a questa, @Gautret_2020 hanno trovato che gli intervalli di credibilità del gruppo di controllo e del gruppo sperimentale non si sovrappongono. Questo fatto viene interpretato dicendo che il parametro $\theta$ è diverso nei due gruppi. Sulla base di queste evidenza, @Gautret_2020 hanno concluso, con un grado di certezza soggettiva del 95%, che nel gruppo sperimentale vi è una probabilità più bassa di risultare positivi al SARS-CoV-2 rispetto al gruppo di controllo. In altri termini, questa analisi dei dati suggerisce che l'idrossiclorochina sia efficace come terapia per il Covid-19. 
@@ -374,16 +373,16 @@ Nell'implementazione di questo modello, la quantità di interesse è dunque l'od
 
 ```r
 data_list <- list(
-  N1 = 18,
-  y1 = 10,
-  N2 = 16,
+  N1 = 18, 
+  y1 = 10, 
+  N2 = 16, 
   y2 = 14
 )
 ```
 
 
 ```r
-modelString <- "
+modelString = "
 //  Comparison of two groups with Binomial
 data {
   int<lower=0> N1;              // number of experiments in group 1
@@ -445,20 +444,16 @@ print(
   pars = c("theta1", "theta2", "oddsratio"),
   digits_summary = 3L
 )
-#> Inference for Stan model: twoprop1-202110180843-1-608466.
+#> Inference for Stan model: twoprop1-202111281227-1-603b2f.
 #> 4 chains, each with iter=6000; warmup=2000; thin=1; 
 #> post-warmup draws per chain=4000, total post-warmup draws=16000.
 #> 
-#>            mean se_mean    sd  2.5%   25%   50%   75%
-#> theta1    0.546   0.001 0.104 0.337 0.475 0.547 0.619
-#> theta2    0.801   0.001 0.087 0.605 0.747 0.812 0.865
-#> oddsratio 4.859   0.049 4.740 0.914 2.221 3.599 5.933
-#>            97.5% n_eff  Rhat
-#> theta1     0.743 11214 1.000
-#> theta2     0.939 12359 1.000
-#> oddsratio 16.251  9207 1.001
+#>            mean se_mean    sd  2.5%   25%   50%   75%  97.5% n_eff Rhat
+#> theta1    0.546   0.001 0.104 0.337 0.475 0.547 0.619  0.743 11214    1
+#> theta2    0.801   0.001 0.087 0.605 0.747 0.812 0.865  0.939 12359    1
+#> oddsratio 4.859   0.049 4.740 0.914 2.221 3.599 5.933 16.251  9207    1
 #> 
-#> Samples were drawn using NUTS(diag_e) at Lun Ott 18 08:43:40 2021.
+#> Samples were drawn using NUTS(diag_e) at Dom Nov 28 12:27:58 2021.
 #> For each parameter, n_eff is a crude measure of effective sample size,
 #> and Rhat is the potential scale reduction factor on split chains (at 
 #> convergence, Rhat=1).

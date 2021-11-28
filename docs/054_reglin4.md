@@ -25,7 +25,7 @@ Un diagramma a dispersione dei dati con sovrapposto il valore atteso della $y$ i
 
 ```r
 plot(
-  df$kid_score ~ I(df$mom_iq - mean(df$mom_iq)),
+  df$kid_score ~ I(df$mom_iq - mean(df$mom_iq)), 
   pch = 20,
   xlab = "mom_iq (centered)",
   ylab = "kid_score"
@@ -42,13 +42,13 @@ Un modo per visualizzare l'incertezza della stima della retta di regressione è 
 
 ```r
 plot(
-  df$kid_score ~ I(df$mom_iq - mean(df$mom_iq)),
+  df$kid_score ~ I(df$mom_iq - mean(df$mom_iq)), 
   pch = 20,
   xlab = "mom_iq (centered)",
   ylab = "kid_score"
 )
 for (i in 1:50) {
-  abline(posterior$alpha[i], posterior$beta[i], col = "gray", lty = 1)
+ abline(posterior$alpha[i], posterior$beta[i], col = "gray", lty = 1)
 }
 abline(mean(posterior$alpha), mean(posterior$beta), col = 6, lw = 2)
 ```
@@ -86,7 +86,7 @@ mcmc_areas(
   fit2$draws(c("beta")),
   prob = 0.8,
   prob_outer = 0.95
-)
+  )
 ```
 
 
@@ -99,7 +99,7 @@ Per i parametri ottenuti analizzando i dati standardizzati, abbiamo
 ```r
 stanfit %>%
   mcmc_intervals(
-    pars = c("alpha_std", "beta_std", "sigma_std"),
+    pars = c("alpha_std", "beta_std", "sigma_std"), 
     prob = 0.8,
     prob_outer = 0.95
   )
@@ -112,13 +112,15 @@ stanfit %>%
 
 ## Rappresentazione grafica della distribuzione a posteriori
 
-Non c'è niente di "magico" o necessario relativamente al livello di 0.95: il valore  0.95 è arbitrario. Sono possibili tantissime altre soglie per quantificare la nostra incertezza: alcuni ricercatori usano il livello di 0.89, altri quello di 0.5. Se l'obiettivo è quello di descrivere il livello della nostra incertezza relativamente alla stima del parametro, allora dobbiamo riconoscere che la nostra incertezza è descritta dall'*intera* distribuzione a posteriori. Per cui il metodo più semplice, più diretto e più completo per descrivere la nostra incertezza rispetto alla stima dei parametri è quello di riportare graficamente tutta la distribuzione a posteriori. 
-
-Una rappresentazione della distribuzione a posteriori dei parametri del modello dell'esempio si ottiene nel modo seguente:
+Non c'è niente di "magico" o necessario relativamente al livello di 0.95: il valore  0.95 è arbitrario. Sono possibili tantissime altre soglie per quantificare la nostra incertezza: alcuni ricercatori usano il livello di 0.89, altri quello di 0.5. Se l'obiettivo è quello di descrivere il livello della nostra incertezza relativamente alla stima del parametro, allora dobbiamo riconoscere che la nostra incertezza è descritta dall'*intera* distribuzione a posteriori. Per cui il metodo più semplice, più diretto e più completo per descrivere la nostra incertezza rispetto alla stima dei parametri è quello di riportare graficamente tutta la distribuzione a posteriori. Una rappresentazione della distribuzione a posteriori dei parametri del modello dell'esempio si ottiene nel modo seguente:
 
 
 ```r
-stan_dens(stanfit, pars = c("alpha", "beta", "sigma"))
+stan_dens(
+  stanfit, 
+  pars = c("alpha", "beta", "sigma"),
+  fill = "#4ca5ff"
+)
 ```
 
 
@@ -177,7 +179,7 @@ $$
 
 
 ```r
-modelString <- "
+modelString = "
 data {
   int<lower=0> N;
   vector[N] y;

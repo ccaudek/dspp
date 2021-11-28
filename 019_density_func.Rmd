@@ -395,28 +395,27 @@ Nella simulazione, possiamo pensare all'area di ciascuna barra dell'istogramma c
 set.seed(1234)
 M <- 1e6
 alpha <- logit(runif(M))
-density_limit_df = data.frame(alpha = alpha)
+density_limit_df <- data.frame(alpha = alpha)
 density_limit_plot <-
   density_limit_df %>%
   ggplot(aes(alpha)) +
   geom_histogram(
-    stat = "density", n = 75, color = "black",
-    size = 0.15
+    stat = "density", n = 75, color = "black", size = 0.15
   ) +
   stat_function(
     fun = dlogis,
     args = list(location = 0, scale = 1),
-    col = 'black',
+    col = "black",
     size = 0.3
   ) +
   scale_x_continuous(
     lim = c(-9, 9),
-    breaks = c(-6, -4, -2, 0, 2, 4,  6)
+    breaks = c(-6, -4, -2, 0, 2, 4, 6)
   ) +
   xlab(
     expression(paste(Phi, " = ", logit(Theta)))
   ) +
-  ylab("frequenza relativa") +
+  ylab("Frequenza relativa") +
   theme(
     axis.text.y = element_blank(),
     axis.ticks.y = element_blank()
