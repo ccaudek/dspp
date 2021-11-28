@@ -22,29 +22,30 @@ Per approfondire questi temi, si rinvia al testo di @Johnson2022bayesrules. Qui 
 
 ## Capacità predittiva
 
-Nel framework bayesiano il problema della generalizzabilità del modello viene affrontato calcolando la capacità predittiva del modello, laddove per capacità predittiva si intende la capacità di un modello, i cui parametri sono stati stimati usando le informazioni di un campione, di ben adattarsi ad un campione di nuove osservazioni future. A questo proposito, in questo Capitolo cercheremo di rispondere a due tipi di domande.
+Nel framework bayesiano il problema della generalizzabilità del modello viene affrontato calcolando la capacità predittiva del modello, laddove per capacità predittiva si intende la capacità di un modello, i cui parametri sono stati stimati usando le informazioni di un campione, di ben adattarsi ad un campione di nuove osservazioni future. In questo Capitolo cercheremo di rispondere a tre domande.
 
-1. Quali criteri devono essere considerati se vogliamo valutare la capacità predittiva di un modello?
-1. Come è possibile misurare la capacità predittiva di un modello sulla base delle informazioni di un campione di osservazioni? E, parallelamente, come possiamo confrontare la capacità predittiva di modelli alternativi?
+1. Quali criteri devono essere presi in considerazione se vogliamo valutare la capacità predittiva di un modello?
+1. Come quantificare la capacità predittiva di un modello sulla base delle informazioni di un campione di osservazioni? 
+1. Come confrontare le capacità predittive di modelli alternativi?
 
 
 ## Il rasoio di Ockham
 
-Uno dei problemi più importanti in campo scientifico è quello di scegliere il modello più adatto a spiegare un insieme di informazioni. Le domande che i ricercatori si pongono sono: il modello è completo? È necessario un nuovo parametro? Come si può cambiare il modello? Se ci sono delle alternative, quali sono le migliori? 
+Uno dei problemi più importanti in campo scientifico è quello di scegliere il modello più adatto a spiegare un insieme di informazioni relativamente ad un fenomeno di interesse. Le domande che i ricercatori si pongono sono: il modello è completo? È necessario aggiungere un nuovo parametro? Come può essere cambiato il modello? Se ci sono modelli diversi, qual'è il migliore? 
 
-Per rispondere a tali domandi, ci viene in soccorso il principio del rasoio di Ockham: _frustra fit per plura quod potest fieri per pauciora_ ("si fa inutilmente con molte cose ciò che si può fare con poche cose"). Parafrasando la massima potremmo dire che: quando due modelli approssimano egualmente bene le osservazioni viene sempre preferito quello più semplice. Questo principio è alla base della scienza e, da un punto di vista della probabilità, il fatto che il rasoio di Ockham funzioni è data dal fatto che i modelli più semplici sono anche i più probabili. 
+Per rispondere a queste domande è possibile utilizzare il principio del rasoio di Ockham: _frustra fit per plura quod potest fieri per pauciora_ ("si fa inutilmente con molte cose ciò che si può fare con poche cose"). Parafrasando la massima potremmo dire: quando due modelli approssimano egualmente bene i dati viene sempre preferito il modello più semplice. Questo principio sta alla base della ricerca scientifica. 
 
-Due modelli possono fare le stesse predizioni ma possono differire in termini di complessità --- per esempio, relativamente al numero di parametri richiesti. In questo caso, è facile decidere perché, in generale, i ricercatori preferiscono sempre i modelli più semplici (pragmaticamente, sono i più facili da usare). Tuttavia, il rasoio di Ockham, se usato da solo, non ci consente sempre di selezionare tra modelli alternativi, perché i modelli possono differire sia per complessità (ovvero, per il numero di parametri) sia per accuratezza (ovvero, per la grandezza degli errori di predizione). Il rasoio di Ockham non è in grado di trovare un equilibrio tra la necessità di aumentare l'accuratezza e quella di diminuire la complessità.
+Due modelli possono fare le stesse predizioni ma possono differire in termini di complessità --- per esempio, relativamente al numero di parametri richiesti. In questo caso, è facile decidere: i ricercatori preferiscono sempre i modelli più semplici anche perché, pragmaticamente, sono i più facili da usare. Tuttavia, il rasoio di Ockham, da solo, non ci consente sempre di selezionare tra modelli alternativi, perché, in generale, i modelli differiscono sia per complessità (ovvero, per il numero di parametri) sia per accuratezza (ovvero, per la grandezza degli errori di predizione). Il rasoio di Ockham non consente di trovare un equilibrio tra la necessità di aumentare l'accuratezza e quella di diminuire la complessità.
 
-In questo Capitolo ci chiederemo come sia possibile misurare l'accuratezza predittiva di un modello. Ciò ci consentirà, in seguito, di usare il rasoio di Ockham: a parità di accuratezza, verrà scelto il modello più semplice. Ma nella pratica scientifica non si sacrifica mai l'accuratezza per la semplicità: il criterio prioritario è sempre l'accuratezza.
+In questo Capitolo ci chiederemo come sia possibile misurare l'accuratezza predittiva di un modello. Ciò ci consentirà, in seguito, di usare il rasoio di Ockham: a parità di accuratezza, verrà scelto il modello più semplice. Ma nella pratica scientifica non si sacrifica mai l'accuratezza per la semplicità: il criterio prioritario è sempre qeullo dell'accuratezza.
 
 Per valutare l'accuratezza (predittiva) di un modello, @McElreath_rethinking fa notare che è necessario evitare due opposti errori:
 
-- _sovra-adattamento_ (_overfitting_): il modello non si generalizza bene a nuovi dati futuri perché rappresenta gli aspetti idiosincratici o le informazioni irrilevanti che sono presenti nello specifico campione esaminato che, necessariamente, non si ritroveranno in altri campioni;
+- il _sovra-adattamento_ (_overfitting_) --- il modello non si generalizza bene a nuovi dati futuri perché fa leva sulle informazioni irrilevanti che sono presenti nel campione di dati esaminato; tali aspetti idiosincratici del campione necessariamente non si ritroveranno in altri campioni di dati;
 
-- _sotto-adattamento_ (_underfitting_): il modello non è in grado di rendere conto delle regolarità presenti nei dati osservati.
+- il _sotto-adattamento_ (_underfitting_) --- il modello non è in grado di rendere conto delle regolarità presenti nei dati osservati.
 
-In questo capitolo verranno presentati due metodi [detti _criterio di informazione_ (_information criteria_) e _validazione incrociata_ (_cross-validation_)] che consentono di valutare la capacità predittiva di un modello e di determinare quale, tra due o più modelli, sia quello preferibile. 
+In questo capitolo verranno presentati due metodi [detti _criterio di informazione_ (_information criteria_) e _validazione incrociata_ (_cross-validation_)] che consentono di valutare la capacità predittiva di un modello e di determinare quale, tra due o più modelli, sia quello da preferire. 
 
 
 ### Stargazing
@@ -90,9 +91,9 @@ dt2 %>%
   kable_styling(full_width = FALSE)
 ```
 
-Un primo possibile criterio per scegliere tra i due annunciatori può essere formulato nei termini del numero medio di previsioni corrette. In base a tale criterio, il primo annunciatore ottiene un numero medio di successi uguale a $(3 \cdot 1 + 7 \cdot 0.4) / 10 = 0.58$ mentre il secondo annunciatore ottiene un numero medio di successi uguale a $(3 \cdot 0 + 7 \cdot 1) / 10 = 0.7$. In base a questo criterio, dunque, il secondo annunciatore è più accurato del primo.
+Un primo possibile criterio per scegliere tra i due annunciatori può essere formulato nei termini del numero medio di previsioni corrette. In base a tale criterio, il primo annunciatore ottiene un numero medio di successi uguale a $(3 \cdot 1 + 7 \cdot 0.4) / 10 = 0.58$ e il secondo annunciatore ottiene un numero medio di successi uguale a $(3 \cdot 0 + 7 \cdot 1) / 10 = 0.7$. In base a questo criterio, dunque, il secondo annunciatore è più accurato del primo.
 
-Ma il numero medio di previsioni corrette non è l'unico criterio possibile per valutare l'accuratezza. Un secondo possibile criterio è un'analisi costi-benefici. Sia -1 il costo di portare con sé un ombrello e -5 il costo di bagnarsi.  
+Ma il numero medio di previsioni corrette non è l'unico criterio possibile per valutare l'accuratezza. Un altro possibile criterio è l'analisi costi-benefici. Sia -1 il costo di portare con sé un ombrello e -5 il costo di bagnarsi. Consideriamo la tabella \@ref(tab:costi-benefici-pioggia). Per il primo annunciatore, quando la previsione è pioggia e effettivamente piove, il costo è -1; quando la previsione è pioggia al 60% e invece c'è il sole, il costo è -0.6 (si porta l'ombrello nel 60% dei casi). Per il primo annunciatore, dunque, il costo totale è $3 \cdot (-1) + 7 \cdot (-0.6) = -7.2$. Per il secondo annunciatore, invece, il costo totale è $3 \cdot (-5) + 7 \cdot (0) = -15$. Nei termini di un'analisi costi-benefici, dunque, il primo annunciatore fornisce previsioni più accurate (ovvero, predizioni a cui è associato un costo minore) del secondo.
 
 ```{r, costi-benefici-pioggia, echo=FALSE}
 costbenefits <-
@@ -109,34 +110,31 @@ dt2 %>%
   kable_styling(full_width = FALSE)
 ```
 
-Consideriamo la tabella \@ref(tab:costi-benefici-pioggia). Per il primo annunciatore, quando la previsione è pioggia e effettivamente piove, il costo è -1; quando la previsione è pioggia al 60% e invece c'è il sole, il costo è -0.6 (si porta l'ombrello nel 60% dei casi). Per il primo annunciatore, dunque, il costo totale è $3 \cdot (-1) + 7 \cdot (-0.6) = -7.2$. Per il secondo annunciatore, invece, il costo totale è $3 \cdot (-5) + 7 \cdot (0) = -15$. Nei termini di un'analisi costi-benefici, dunque, il primo annunciatore fornisce previsioni più accurate (ovvero, predizioni a cui è associato un costo minore) del secondo.
-
 È possibile cambiare la regola decisionale (-1, -5), ma sicuramente il costo di bagnarsi è molto maggiore del costo di portare con sé un ombrello. Quindi, quale che sia la regola decisionale, il fatto di trovandosi sempre impreparato quando piove pone il secondo annunciatore in una posizione di svantaggio rispetto al primo annunciatore.
 
-Dalle considerazioni precedenti @McElreath_rethinking trae due conclusioni: (a) un'analisi costi-benefici non fornisce una misura univoca dell'accuratezza di un modello (ovvero, sono possibili diverse regole decisionali) e (b) il numero di successi non fornisce una metrica migliore di un'analisi costi-benefici. Non è dunque ancora chiaro quale sia il modo migliore per definire l'accuratezza di un modello.
+Dalle considerazioni precedenti @McElreath_rethinking trae due conclusioni: (a) un'analisi costi-benefici non fornisce una misura univoca dell'accuratezza di un modello (ovvero, sono possibili regole decisionali diverse) e (b) il numero di successi non fornisce una metrica migliore di un'analisi costi-benefici. Non è dunque ancora chiaro quale sia il modo migliore per definire l'accuratezza di un modello.
 
 
 ## Misurare l'accuratezza 
 
-@McElreath_rethinking sostiene che la misura migliore dell'accuratezza predittiva di un modello sia fornita dalla massimizzazione della funzione che descrive il vero processo generatore dei dati.  Per spiegare cosa significa questo, chiediamoci quale sia la probabilità di osservare la _specifica_ sequenza di sole e pioggia (ovvero, P, P, P, S, S, S, S, S, S, S) che i due annunciatori vogliono prevedere. La probabilità cercata è data dal prodotto della probabilità di prevedere correttamente ($y = 1$) le condizioni meteo in ciascuno dei 10 giorni considerati. In altre parole, la probabilità cercata è la verosimiglianza congiunta dei dati. 
+@McElreath_rethinking sostiene che la misura migliore dell'accuratezza predittiva di un modello sia fornita dalla massimizzazione della funzione che descrive il vero processo generatore dei dati.  Per spiegare cosa significa questa affermazione, chiediamoci quale sia la probabilità di osservare la _specifica_ sequenza di sole e pioggia (ovvero, P, P, P, S, S, S, S, S, S, S) che i due annunciatori vogliono prevedere. La probabilità cercata è data dal prodotto della probabilità di prevedere correttamente ($y = 1$) le condizioni meteo in ciascuno dei 10 giorni considerati. In altre parole, la probabilità cercata è la verosimiglianza congiunta dei dati. 
 In termini più precisi, se $y = y_1, \dots, y_{10}$ sono i dati e se $\theta$ è la probabilità dell'evento $y_i = 1$, allora $p(y \mid \theta) = \prod_{i=1}^{10} p(y_i \mid \theta)$. 
 <!-- Una tale misura dell'accuratezza predittiva richiede dunque la conoscenza di $\theta$, ovvero il parametro del vero meccanismo generatore dei dati. In generale, però, il ricercatore non conosce né il vero meccanismo generatore dei dati, né tantomeno il valore del parametro di tale modello. -->
 <!-- Nel caso dell'esempio, se la verosimiglianza congiunta viene utilizzata quale criterio di scelta, allora viene preferito il primo annunciatore.  -->
-Per il primo annunciatore la verosimiglianza congiunta è $1^3 \cdot 0.4^7 \approx 0.005$; per il secondo annunciatore è $0^3 \cdot 1^7 = 0$. Vi è dunque una probabilità pari a zero che il secondo annunciatore predica la sequenza corretta di sole e pioggia nei 10 giorni considerati (infatti, il secondo annunciatore non predice mai pioggia). In conclusione, benché per il secondo annunciatore la probabilità _media_ di previsioni corrette (numero medio di successi) sia alta, la probabilità _congiunta_ di previsioni corrette è zero. 
+Per il primo annunciatore la verosimiglianza congiunta è $1^3 \cdot 0.4^7 \approx 0.005$; per il secondo annunciatore è $0^3 \cdot 1^7 = 0$. Vi è dunque una probabilità pari a zero che il secondo annunciatore predica la sequenza corretta di sole e pioggia nei 10 giorni considerati (infatti, il secondo annunciatore non predice mai pioggia). In conclusione, benché per il secondo annunciatore la probabilità _media_ di previsioni corrette (numero medio di successi) sia alta, la probabilità _congiunta_ di previsioni corrette è uguale a zero. 
 
 
 ### Regola di punteggio logaritmica
 
-Nella letteratura statistica la probabilità congiunta viene utilizzata quale misura della precisione delle previsioni probabilistiche ed è chiamata _regola di punteggio_ (_scoring rule_). Nel calcolo della regola di punteggio si utilizzano dei pesi che vengono ottimizzati in modo tale che il _punteggio della previsione_ (_score_) sia il più elevato possibile. Il punteggio della previsione è solitamente espresso su scala logaritmica (_log score_). Una tale _regola di punteggio logaritmica_ è importante nel confronto di modelli statistici a causa della sua connessione con la misura della divergenza di Kullback-Leibler. 
+Nella letteratura statistica la probabilità congiunta utilizzata quale misura della precisione delle previsioni probabilistiche è chiamata _regola di punteggio_ (_scoring rule_). Nel calcolo della regola di punteggio si utilizzano dei pesi che vengono ottimizzati in modo che il _punteggio della previsione_ (_score_) sia il più elevato possibile. Tale punteggio della previsione è solitamente espresso su scala logaritmica (_log score_). Nell'ambito del confronto di modelli statistici, la _regola di punteggio logaritmica_ è importante a causa della sua connessione con la misura della divergenza di Kullback-Leibler. 
 
 ::: {.example}
-Nell'esempio dei due annunciatori, esaminiamo la previsione meteo relativa ad un giorno soltanto e ipotizziamo che l'annunciatore attribuisca all'evento pioggia una probabilità dell'60% (e quindi sole avrà una probabilità del 40%). Se la previsione si rivela corretta, l'annunciatore avrà un log score di -0.51 [calcolato come: _log score_ = $\log(0.6) = -0.51$]; se invece si rivela falsa lo score sarà -0.92 [calcolato come: _log score_ = $\log(0.4) = -0.92$]. 
+Nell'esempio dei due annunciatori, esaminiamo la previsione meteo relativa ad un giorno soltanto e ipotizziamo che l'annunciatore attribuisca all'evento pioggia una probabilità del 60% (e quindi sole avrà una probabilità del 40%). Se la previsione si rivela corretta, l'annunciatore avrà un log score di -0.51 [calcolato come: _log score_ = $\log(0.6) = -0.51$]; se invece si rivela falsa lo score sarà -0.92 [calcolato come: _log score_ = $\log(0.4) = -0.92$]. 
 ::: 
-
 
 ## Entropia
 
-Per discutere la divergenza di Kullback-Leibler è prima necessario introdurre il concetto di entropia. La nozione di entropia fu introdotta agli inizi del XIX secolo nel campo della termodinamica classica; il secondo principio della termodinamica è infatti basato sul concetto di entropia che, in generale, è assunto come una misura del disordine di un sistema fisico. Successivamente Boltzmann fornì una definizione statistica di entropia. Nel 1948 Shannon impiegò poi la nozione di entropia nell'ambito della teoria delle comunicazioni. Si giunge così alla seguente definizione. 
+Per discutere la divergenza di Kullback-Leibler è prima necessario introdurre il concetto di entropia. La nozione di entropia fu introdotta agli inizi del XIX secolo nel campo della termodinamica classica; il secondo principio della termodinamica è infatti basato sul concetto di entropia che, in generale, è assunto come una misura del disordine di un sistema fisico. Successivamente Boltzmann fornì una definizione statistica di entropia. Nel 1948 Shannon impiegò la nozione di entropia nell'ambito della teoria delle comunicazioni. Si giunge così alla seguente definizione. 
 
 :::{.definition}
 Sia $Y = y_1, \dots, y_n$ una variabile casuale e $p_t(y)$ una distribuzione di probabilità su $Y$. Si definisce la sua entropia (detta di Shannon) come:

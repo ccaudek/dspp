@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.7)  28 NOV 2021 12:49
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.7)  28 NOV 2021 13:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2525,27 +2525,27 @@ Package mdframed Info: mdframed detected package amsthm
 
 ] [2] [3] [4]
 LaTeX Font Info:    Font shape `TU/Inconsolata(0)/m/n' will be
-(Font)              scaled to size 8.50006pt on input line 773.
+(Font)              scaled to size 8.50006pt on input line 775.
 
 LaTeX Font Warning: Font shape `TU/Inconsolata(0)/m/it' undefined
-(Font)              using `TU/Inconsolata(0)/m/n' instead on input line 776.
+(Font)              using `TU/Inconsolata(0)/m/n' instead on input line 778.
 
 LaTeX Font Info:    Font shape `TU/Inconsolata(0)/m/it' will be
-(Font)              scaled to size 8.50006pt on input line 791.
+(Font)              scaled to size 8.50006pt on input line 793.
 [5] [6]
 File: 092_loo_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type pdf)
 <use 092_loo_files/figure-latex/unnamed-chunk-7-1.pdf>
 [7] [8]
 
-LaTeX Warning: Reference `chapter-ppc' on page 9 undefined on input line 995.
+LaTeX Warning: Reference `chapter-ppc' on page 9 undefined on input line 997.
 
 [9]
 
 LaTeX Font Warning: Font shape `TU/Inconsolata(0)/b/n' undefined
-(Font)              using `TU/Inconsolata(0)/m/n' instead on input line 1062.
+(Font)              using `TU/Inconsolata(0)/m/n' instead on input line 1064.
 
 LaTeX Font Info:    Font shape `TU/Inconsolata(0)/b/n' will be
-(Font)              scaled to size 8.50006pt on input line 1064.
+(Font)              scaled to size 8.50006pt on input line 1066.
 [10] [11] [12] [13] [14] [15] [16] [17] [18] [19]
 File: 092_loo_files/figure-latex/unnamed-chunk-48-1.pdf Graphic file (type pdf)
 
@@ -2633,17 +2633,17 @@ Sidefoothsep and sidefootwidth: 7pt and 117pt
 Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 ******************************************************
 
-LaTeX Info: Redefining \rmfamily on input line 1746.
-LaTeX Info: Redefining \sffamily on input line 1746.
-LaTeX Info: Redefining \ttfamily on input line 1746.
+LaTeX Info: Redefining \rmfamily on input line 1747.
+LaTeX Info: Redefining \sffamily on input line 1747.
+LaTeX Info: Redefining \ttfamily on input line 1747.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1750--1752
+Underfull \hbox (badness 10000) in paragraph at lines 1751--1753
 
  []
 
-LaTeX Info: Redefining \rmfamily on input line 1753.
-LaTeX Info: Redefining \sffamily on input line 1753.
-LaTeX Info: Redefining \ttfamily on input line 1753.
+LaTeX Info: Redefining \rmfamily on input line 1754.
+LaTeX Info: Redefining \sffamily on input line 1754.
+LaTeX Info: Redefining \ttfamily on input line 1754.
 The property list \polyglossia@langsetup contains the pairs (without outer
 braces):
 >  {latex/script}  =>  {latin}
@@ -2704,8 +2704,8 @@ braces):
 \tf@lof=\write9
 \openout9 = `DataScience.lof'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1758.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1758.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1759.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1759.
 (./DataScience.aux
 LaTeX Info: Redefining \rmfamily on input line 26.
 LaTeX Info: Redefining \sffamily on input line 26.
@@ -2717,8 +2717,8 @@ LaTeX Info: Redefining \rmfamily on input line 205.
 LaTeX Info: Redefining \sffamily on input line 205.
 LaTeX Info: Redefining \ttfamily on input line 205.
 )
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1758.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1758.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1759.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1759.
 
 Package rerunfilecheck Info: File `DataScience.out' has not changed.
 (rerunfilecheck)             Checksum: F04EFC4536778D1B76E3EE70B14284AD;4572.
