@@ -154,7 +154,6 @@ Per utilizzare il verbo `filter()` in modo efficace è neccessario usare gli ope
       AND 	   &  \&	\\
       OR       &  |	\\
       NOT 	   &  !	  \\
-      diverso  &  !=	\\
       \bottomrule
     \end{tabular}
   \end{center}
@@ -421,8 +420,8 @@ msleep %>%
   scale_color_okabe_ito(name = "vore", alpha = .9) +
   theme(legend.title = element_blank()) +
   labs(
-    x = "Peso Corporeo (log)",
-    y = "Ore totali di sonno",
+    x = "Peso corporeo (log)",
+    y = "Ore di sonno",
     title = "Il sonno in 83 specie di mammiferi",
     subtitle = "Savage e West (2007)"
   )
@@ -445,8 +444,8 @@ msleep %>%
   ) +
   geom_histogram(aes(y = ..density..)) +
   labs(
-    x = "Log Peso Cervello",
-    y = "Frequenza Relativa"
+    x = "Peso del cervello (log)",
+    y = "Frequenza relativa"
   ) +
   theme(legend.title = element_blank())
 ```

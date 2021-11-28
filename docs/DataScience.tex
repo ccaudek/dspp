@@ -732,7 +732,6 @@ Per utilizzare il verbo \texttt{filter()} in modo efficace è neccessario usare 
       AND      &  \&    \\
       OR       &  | \\
       NOT      &  !   \\
-      diverso  &  !=    \\
       \bottomrule
     \end{tabular}
   \end{center}
@@ -1023,8 +1022,8 @@ Infine, aggiustiamo il ``tema'' del grafico (si noti l'utilizzo di una tavolozza
   \FunctionTok{scale\_color\_okabe\_ito}\NormalTok{(}\AttributeTok{name =} \StringTok{"vore"}\NormalTok{, }\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{9}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}
-    \AttributeTok{x =} \StringTok{"Peso Corporeo (log)"}\NormalTok{,}
-    \AttributeTok{y =} \StringTok{"Ore totali di sonno"}\NormalTok{,}
+    \AttributeTok{x =} \StringTok{"Peso corporeo (log)"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Ore di sonno"}\NormalTok{,}
     \AttributeTok{title =} \StringTok{"Il sonno in 83 specie di mammiferi"}\NormalTok{,}
     \AttributeTok{subtitle =} \StringTok{"Savage e West (2007)"}
 \NormalTok{  )}
@@ -1046,8 +1045,8 @@ Creiamo ora un istogramma che rappresenta la distribuzione del (logaritmo del) p
 \NormalTok{  ) }\SpecialCharTok{+}
   \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ ..density..)) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}
-    \AttributeTok{x =} \StringTok{"Log Peso Cervello"}\NormalTok{,}
-    \AttributeTok{y =} \StringTok{"Frequenza Relativa"}
+    \AttributeTok{x =} \StringTok{"Peso del cervello (log)"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Frequenza relativa"}
 \NormalTok{  ) }\SpecialCharTok{+}
   \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{())}
 \end{Highlighting}
