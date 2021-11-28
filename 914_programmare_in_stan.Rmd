@@ -189,6 +189,6 @@ Stan è un linguaggio estremamente potente e consente di implementare quasi tutt
 
 ## Workflow
 
-Se usiamo `cmdstanr`, dobbiamo prima scrivere il codice con il modello, poi compilare il codice con la funzione `cmdstan_model()`, poi eseguire il campionamento MCMC con il metodo `$sample()` e, infine, creare un sommario dei risultati usando, per esempio, usando il metodo `$summary()`.
+Se usiamo `cmdstanr`, dobbiamo prima scrivere il codice con il modello statistico in un file in formato Stan. È necessario poi "transpile" quel file, ovvero tradurre il file in C++ e compilarlo. Ciò viene fatto mediante la funzione `cmdstan_model()`. Possiamo poi eseguire il campionamento MCMC con il metodo `$sample()`. Infine è possibile creare un sommario dei risultati usando, per esempio, usando il metodo `$summary()`.
 
 
