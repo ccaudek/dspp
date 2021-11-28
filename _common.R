@@ -1,12 +1,14 @@
-suppressPackageStartupMessages(library("here"))
-suppressPackageStartupMessages(library("tidyverse"))
-suppressPackageStartupMessages(library("patchwork"))
-suppressPackageStartupMessages(library("bayesplot"))
-suppressPackageStartupMessages(library("ggExtra"))
-suppressPackageStartupMessages(library("ggpubr"))
-suppressPackageStartupMessages(library("khroma"))
-suppressPackageStartupMessages(library("ggokabeito"))
-
+# Common packages
+suppressPackageStartupMessages({
+  library("here")
+  library("tidyverse")
+  library("patchwork")
+  library("bayesplot")
+  library("ggExtra")
+  library("ggpubr")
+  library("ggokabeito")
+})  
+  
 # R options set globally
 # options(width = 60)
 options(digits = 3)
@@ -16,11 +18,6 @@ SEED <- 374237 # set random seed for reproducibility
 # theme_set(bayesplot::theme_default(base_family = "sans"))
 # theme_set(bayesplot::theme_default(base_size = 12))
 # bayesplot::color_scheme_set("brightblue")
-colors <- colour("bright", names = FALSE)(4)
-ggplot <- function(...) {
-  ggplot2::ggplot(...) +
-    scale_color_bright()
-}
 theme_update(plot.title = element_text(hjust = 0.5))
 
 theme_clean <- function() {
@@ -40,10 +37,6 @@ knitr::opts_chunk$set(
   message = FALSE,
   warning = FALSE,
   error = FALSE,
-  # tidy = "styler",
-  # fig.height = 3,
-  # fig.width = 4.854,
-  # fig.align = "center",
   fig.align = "center",
   fig.width = 6,
   fig.asp = 0.618, # 1 / phi

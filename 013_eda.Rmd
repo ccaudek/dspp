@@ -7,12 +7,13 @@ source("_common.R")
 library("patchwork")
 ```
 
+```{block, type='Summary'}
+Le analisi esplorative dei dati e la statistica descrittiva costituiscono la prima fase dell'analisi dei dati psicologici. Consentono di capire come i dati sono distribuiti, ci aiutano ad individuare le osservazioni anomale e gli errori di tabulazione. Consentono di visualizzare e di studiare le relazioni tra le variabili. 
+```
 
 ## Introduzione all'esplorazione dei dati {#chapter-descript}
 
-Le analisi esplorative dei dati e la statistica descrittiva costituiscono la prima fase dell'analisi dei dati psicologici. Ci consentono di capire come i dati sono distribuiti. Inoltre, ci aiutano ad individuare outliers ed errori di tabulazione. Sono anche molto utili per studiare le relazioni tra le variabili. Insomma, sono indispensabili per condurre una qualsiasi analisi statistica, dal livello base a quello avanzato, in modo corretto. 
-
-Si parla di analisi descrittiva se l'obiettivo è quello di descrivere le caratteristiche di un campione. Si parla di analisi esplorativa dei dati (_Exploratory Data Analysis_ o EDA) se l'obiettivo è quello di esplorare i dati alla ricerca di nuove informazioni e relazioni tra variabili. Questa distinzione, seppur importante a livello teorico, nella pratica è più fumosa perché spesso entrambe le situazioni si verificano contemporaneamente nella stessa indagine statistica e le metodologie di analisi che si utilizzano sono molto simili.
+Le analisi esplorative dei datisono indispensabili per condurre in modo corretto una qualsiasi analisi statistica, dal livello base a quello avanzato. Si parla di analisi descrittiva se l'obiettivo è quello di descrivere le caratteristiche di un campione. Si parla di analisi esplorativa dei dati (_Exploratory Data Analysis_ o EDA) se l'obiettivo è quello di esplorare i dati alla ricerca di nuove informazioni e relazioni tra variabili. Questa distinzione, seppur importante a livello teorico, nella pratica è più fumosa perché spesso entrambe le situazioni si verificano contemporaneamente nella stessa indagine statistica e le metodologie di analisi che si utilizzano sono molto simili.
 
 Né il calcolo delle statistiche descrittive né l'analisi esplorativa dei dati possono essere condotte senza utilizzare un software. Le descrizioni dei concetti di base della EDA saranno dunque fornite di pari passo alla spiegazione di come le quantità discusse possono essere calcolate in pratica utilizzando R.
 
@@ -439,36 +440,37 @@ Consideriamo ora un caso concreto nel quale viene utilizzato un box-plot.
 Nel caso dei dati di @zetschefuture2019 ci chiediamo in che modo si differenziano le distribuzioni del BDI-II tra i due gruppi considerati, ovvero tra il gruppo dei pazienti e il gruppo di controllo. La figura \@ref(fig:violin-zetsche) fornisce due rappresentazioni grafiche che possono essere utilizzate per rispondere a questa domanda.
 
 ```{r violin-zetsche, fig.cap = "Due versioni di un violin plot per i valori BDI-II di ciascuno dei due gruppi di soggetti esaminati da Zetsche et al. (2019)."}
-bysubj <- df %>% 
-  group_by(esm_id, group) %>% 
+bysubj <- df %>%
+  group_by(esm_id, group) %>%
   summarise(
     bdi = mean(bdi),
     nr_of_episodes = mean(nr_of_episodes, na.rm = TRUE)
-  ) %>% 
-  na.omit()
+  ) %>%
+  na.omit() %>%
+  ungroup()
 
 bysubj$group <- forcats::fct_recode(
-  bysubj$group, 
-  "Controlli\n sani" = "ctl", 
+  bysubj$group,
+  "Controlli\n sani" = "ctl",
   "Depressione\n maggiore" = "mdd"
 )
 
-p1 <- bysubj %>% 
-  ggplot(aes(x=group, y=bdi)) + 
-  geom_violin(trim=FALSE) +
-  geom_dotplot(binaxis='y', stackdir='center', dotsize=0.7) +
+p1 <- bysubj %>%
+  ggplot(aes(x = group, y = bdi)) +
+  geom_violin(trim = FALSE) +
+  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 0.7) +
   labs(
     x = "",
     y = "BDI-II"
-  ) 
-p2 <- bysubj %>% 
-  ggplot(aes(x=group, y=bdi)) + 
-  geom_violin(trim=FALSE) +
-  geom_boxplot(width=0.05) +
+  )
+p2 <- bysubj %>%
+  ggplot(aes(x = group, y = bdi)) +
+  geom_violin(trim = FALSE) +
+  geom_boxplot(width = 0.05) +
   labs(
     x = "",
     y = "BDI-II"
-  ) 
+  )
 p1 + p2
 ```
 
@@ -481,26 +483,29 @@ Qui di seguito viene presentato un cosiddetto "sina plot". In tale rappresentazi
 
 ```{r sina-zetsche, fig.cap = "Sina plot per i valori BDI-II di ciascuno dei due gruppi di soggetti esaminati da Zetsche et al. (2019) con l'indicazione della mediana per ciascun gruppo."}
 zetsche_summary <- bysubj %>%
-        group_by(group) %>%
-        summarize(
-          bdi_mean = mean(bdi),
-          bdi_sd = sd(bdi),
-          bdi_median = median(bdi)
-        )
+  group_by(group) %>%
+  summarize(
+    bdi_mean = mean(bdi),
+    bdi_sd = sd(bdi),
+    bdi_median = median(bdi)
+  ) %>% 
+  ungroup()
 
-bysubj |> 
+bysubj %>%
   ggplot(
     aes(x = group, y = bdi, color = group)
   ) +
-  ggforce::geom_sina(aes(color=group, size = 3, alpha = .5)) + 
+  ggforce::geom_sina(aes(color = group, size = 3, alpha = .5)) +
   geom_errorbar(
-    aes(y = bdi_median, ymin = bdi_median, ymax= bdi_median), 
-    data = zetsche_summary, width = 0.3, size = 3) +
+    aes(y = bdi_median, ymin = bdi_median, ymax = bdi_median),
+    data = zetsche_summary, width = 0.3, size = 3
+  ) +
+  scale_color_okabe_ito(name = "group", alpha = .9) +
   labs(
     x = "",
     y = "BDI-II",
-    color = 'Gruppo'
-  ) + 
+    color = "Gruppo"
+  ) +
   theme(legend.position = "none")
 ```
 
@@ -555,7 +560,7 @@ ovvero il numero reale $\bar{x}$ definito da
 \bar{x}=\frac{1}{n}\sum_{i=1}^n x_i.
 (\#eq:mean)
 \end{equation}
-Nell'eq. \@ref(eq:mean) abbiamo usato la notazione delle sommatorie
+Nell'eq. \@ref(eq:mean) abbiamo usato la notazione delle sommatorie
 per descrivere una somma di valori. Questa notazione è molto usata in
 statistica e viene descritta in Appendice.
 
@@ -802,26 +807,34 @@ Il diagramma di dispersione è la rappresentazione grafica delle coppie di punti
 ::: {example}
 Il diagramma di dispersione per le variabili BDI-II e CES-D si ottiene ponendo, ad esempio, i valori BDI-II sull'asse delle ascisse e quelli del CES-D sull'asse delle ordinate. In tale grafico, fornito dalla figura \@ref(fig:zetsche-scatter), cascun punto corrisponde ad un individuo del quale, nel caso presente, conosciamo il livello di depressione misurato dalle due scale psicometriche. 
 ```{r}
-bysubj <- df %>% 
-  group_by(esm_id, group) %>% 
+bysubj <- df %>%
+  group_by(esm_id, group) %>%
   summarise(
     bdi = mean(bdi),
     cesd = mean(cesd_sum)
-  ) %>% 
-  na.omit() %>% 
+  ) %>%
+  na.omit() %>%
   ungroup()
 ```
 
-```{r, zetsche-scatter, fig.cap = "Associazione tra le variabili BDI-II e CES-D nello studio di @zetschefuture2019. In rosso sono rappresentate le osservazioni del gruppo di controllo; in blu quelle dei pazienti."}
-m_cesd <- mean(bysubj$cesd)
-m_bdi <- mean(bysubj$bdi)
-FONT_SIZE <- 10
+```{r, zetsche-scatter, fig.cap = "Associazione tra le variabili BDI-II e CES-D nello studio di Zetsche et al. (2019). In arancione sono rappresentate le osservazioni del gruppo di controllo; in azzurro quelle dei pazienti."}
+
+m_cesd <- bysubj %>% 
+  dplyr::pull(cesd) %>% 
+  mean()
+
+m_bdi <- bysubj %>% 
+  dplyr::pull(bdi) %>% 
+  mean()
+
+FONT_SIZE <- 9
 
 bysubj %>%
   ggplot(
     aes(x = bdi, y = cesd, color = group)
   ) +
   geom_point(size = 3, alpha = .5) +
+  scale_color_okabe_ito(name = "group", alpha = .9) +
   geom_hline(yintercept = m_cesd, linetype = "dashed", color = "gray") +
   geom_vline(xintercept = m_bdi, linetype = "dashed", color = "gray") +
   geom_text(x = -1, y = 16, label = "I", color = "gray", size = FONT_SIZE) +
