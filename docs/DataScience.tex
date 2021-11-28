@@ -321,7 +321,7 @@
 
 \author{Corrado Caudek}
 
-\date{2021-11-25}
+\date{2021-11-28}
 
 
 % Include headers (preamble.tex) here
@@ -423,23 +423,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\usepackage{amsthm}
-\newtheorem{theorem}{Teorema}[chapter]
-\newtheorem{lemma}{Lemma}[chapter]
-\newtheorem{corollary}{Corollario}[chapter]
-\newtheorem{proposition}{Proposizione}[chapter]
-\newtheorem{conjecture}{Congettura}[chapter]
-\theoremstyle{definition}
-\newtheorem{definition}{Definizione}[chapter]
-\theoremstyle{definition}
-\newtheorem{example}{Esempio}[chapter]
-\theoremstyle{definition}
-\newtheorem{exercise}{Exercizio}[chapter]
-\theoremstyle{definition}
-\newtheorem{hypothesis}{Hypothesis}[chapter]
-\theoremstyle{remark}
-\newtheorem*{remark}{Osservazione}
-\newtheorem*{solution}{Soluzione}
 \begin{document}
 \frontmatter
 
@@ -498,7 +481,7 @@ Copyright \(\copyright\) 2022.
 
 \normalsize
 
-Data della versione presente: Novembre 25, 2021.
+Data della versione presente: Novembre 28, 2021.
 
 \hypertarget{prefazione}{%
 \chapter{Prefazione}\label{prefazione}}
@@ -578,723 +561,504 @@ Febbraio 2022
 
 \mainmatter
 
-\hypertarget{distr-rv-cont}{%
-\chapter{Distribuzioni di v.c. continue}\label{distr-rv-cont}}
-
-Dopo avere introdotto con una simulazione il concetto di funzione di densità nel Capitolo \ref{chapter-intro-density-function}, prendiamo ora in esame alcune delle densità di probabilità più note. La più importante di esse è sicuramente la distribuzione Normale.
-
-\hypertarget{distribuzione-normale}{%
-\section{Distribuzione Normale}\label{distribuzione-normale}}
-
-Non c'è un'unica distribuzione Normale, ma ce ne sono molte. Tali distribuzioni sono anche dette ``gaussiane'' in onore di Carl Friedrich Gauss (uno dei più grandi matematici della storia il quale, tra le altre cose, scoprì l'utilità di tale funzione di densità per descrivere gli errori di misurazione). Adolphe Quetelet, il padre delle scienze sociali quantitative, fu il primo ad applicare tale densità alle misurazioni dell'uomo. Karl Pearson usò per primo il termine ``distribuzione Normale'' anche se ammise che questa espressione ``ha lo svantaggio di indurre le persone a credere che le altre distribuzioni, in un senso o nell'altro, non siano normali.''
-
-\hypertarget{limite-delle-distribuzioni-binomiali}{%
-\subsection{Limite delle distribuzioni binomiali}\label{limite-delle-distribuzioni-binomiali}}
-
-Iniziamo con un un breve excursus storico. Nel 1733, Abraham de Moivre notò che, aumentando il numero di prove in una distribuzione binomiale, la distribuzione risultante diventava quasi simmetrica e a forma campanulare. Con 10 prove e una probabilità di successo di 0.9 in ciascuna prova, la distribuzione è chiaramente asimmetrica.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{N }\OtherTok{\textless{}{-}} \DecValTok{10}
-\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{0}\SpecialCharTok{:}\DecValTok{10}
-\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{dbinom}\NormalTok{(x, N, }\FloatTok{0.9}\NormalTok{)}
-\NormalTok{binomial\_limit\_plot }\OtherTok{\textless{}{-}}
-  \FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{y =}\NormalTok{ y) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{y =}\NormalTok{ y)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_bar}\NormalTok{(}
-    \AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.2}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"y"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{10}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Binomial(y | 10, 0.9)"}\NormalTok{)}
-\NormalTok{binomial\_limit\_plot}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-1-1} 
-
-}
-
-\caption{Probabilità del numero di successi in $N = 10$ prove bernoulliane indipendenti, ciascuna con una probabilità di successo di 0.90. Il risultato è una distribuzione $\Bin(y \mid 10, 0.9)$. Con solo dieci prove, la distribuzione è fortemente asimmetrica negativa.}\label{fig:unnamed-chunk-1}
-\end{figure}
-
-Ma se aumentiamo il numero di prove di un fattore di 100 a
-\emph{N} = 1000, senza modificare la probabilità di successo di 0.9, la distribuzione assume una forma campanulare quasi simmetrica. Dunque, de Moivre scoprì che, quando \emph{N} è grande, la funzione Normale (che introdurremo qui sotto), nonostante sia la densità di v.a. continue, fornisce una buona approssimazione alla funzione di massa di probabilità binomiale.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{N }\OtherTok{\textless{}{-}} \DecValTok{1000}
-\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{0}\SpecialCharTok{:}\DecValTok{1000}
-\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{dbinom}\NormalTok{(x, N, }\FloatTok{0.9}\NormalTok{)}
-\NormalTok{binomial\_limit\_plot }\OtherTok{\textless{}{-}}
-  \FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{y =}\NormalTok{ y) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{y =}\NormalTok{ y)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.2}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"y"}\NormalTok{) }\SpecialCharTok{+}
-  \CommentTok{\# scale\_x\_continuous(breaks = c(0, 2, 4, 6, 8, 1000)) +}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Binomial(y | 1000, 0.9)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlim}\NormalTok{(}\DecValTok{850}\NormalTok{, }\DecValTok{950}\NormalTok{)}
-\NormalTok{binomial\_limit\_plot}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-2-1} 
-
-}
-
-\caption{Probabilità del numero di successi in $N = 1000$ prove bernoulliane indipendenti, ciascuna con una probabilità di successo di 0.90. Il risultato è una distribuzione $\Bin(y \mid 1000, 0.9)$. Con mille prove, la distribuzione è quasi simmetrica a forma campanulare.}\label{fig:unnamed-chunk-2}
-\end{figure}
-
-La distribuzione Normale fu scoperta da Gauss nel 1809 e, storicamente, è intimamente legata al metodo dei minimi quadrati -- si veda l'Appendice \ref{gauss-normale}. Il Paragrafo successivo illustra come si possa giungere alla Normale mediante una simulazione.
-
-\hypertarget{normal-random-walk}{%
-\section{La Normale prodotta con una simulazione}\label{normal-random-walk}}
-
-\textcite{McElreath_rethinking} presenta un esempio che illustra come sia possibile giungere alla distribuzione Normale mediante una simulazione. Supponiamo che vi siano mille persone tutte allineate su una linea di partenza. Quando viene dato un segnale, ciascuna persona lancia una moneta e fa un passo in avanti oppure all'indietro a seconda che sia uscita testa o croce. Supponiamo che la lunghezza di ciascun passo vari da 0 a 1 metro. Ciascuna persona lancia una moneta 16 volte e dunque compie 16 passi.
-
-Alla conclusione di queste passeggiate casuali (\emph{random walk}) non possiamo sapere con esattezza dove si troverà ciascuna persona, ma possiamo conoscere con certezza le caratteristiche della distribuzione delle mille distanze dall'origine. Per esempio, possiamo predire in maniera accurata la proporzione di persone che si sono spostate in avanti oppure all'indietro. Oppure, possiamo predire accuratamente la proporzione di persone che si troveranno ad una certa distanza dalla linea di partenza (es., a 1.5 m dall'origine).
-
-Queste predizioni sono possibili perché tali distanze si distribuiscono secondo la legge Normale. È facile simulare questo processo usando \R. I risultati della simulazione sono riportati nella figura \ref{fig:rw-normal-4816}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{set.seed}\NormalTok{(}\DecValTok{4}\NormalTok{)}
-\NormalTok{pos }\OtherTok{\textless{}{-}}
-  \FunctionTok{replicate}\NormalTok{(}\DecValTok{100}\NormalTok{, }\FunctionTok{runif}\NormalTok{(}\DecValTok{16}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{rbind}\NormalTok{(}\DecValTok{0}\NormalTok{, .) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{step =} \DecValTok{0}\SpecialCharTok{:}\DecValTok{16}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{gather}\NormalTok{(key, value, }\SpecialCharTok{{-}}\NormalTok{step) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{person =} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{100}\NormalTok{, }\AttributeTok{each =} \DecValTok{17}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(person) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{position =} \FunctionTok{cumsum}\NormalTok{(value)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ungroup}\NormalTok{()}
-
-\FunctionTok{ggplot}\NormalTok{(}
-  \AttributeTok{data =}\NormalTok{ pos,}
-  \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ step, }\AttributeTok{y =}\NormalTok{ position, }\AttributeTok{group =}\NormalTok{ person)}
-\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{16}\NormalTok{), }\AttributeTok{linetype =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ person }\SpecialCharTok{\textless{}} \DecValTok{2}\NormalTok{, }\AttributeTok{alpha =}\NormalTok{ person }\SpecialCharTok{\textless{}} \DecValTok{2}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"gray"}\NormalTok{, }\StringTok{"black"}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{scale\_alpha\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\DecValTok{1} \SpecialCharTok{/} \DecValTok{5}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{scale\_x\_continuous}\NormalTok{(}
-    \StringTok{"Numero di passi"}\NormalTok{,}
-    \AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{12}\NormalTok{, }\DecValTok{16}\NormalTok{)}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{y =} \StringTok{"Posizione"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/rw-normal-4816-1} 
-
-}
-
-\caption{Passeggiata casuale di 4, 8 e 16 passi. La spezzata nera indica la media delle distanze dall'origine come funzione del numero di passi.}\label{fig:rw-normal-4816}
-\end{figure}
-
-Un kernel density plot delle distanze ottenute dopo 4, 8 e 16 passi è riportato nella figura \ref{fig:rw-normal-3panels}. Nel pannello di destra, al kernel density plot è stata sovrapposta una densità Normale di opportuni parametri (linea tratteggiata).
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{p1 }\OtherTok{\textless{}{-}}
-\NormalTok{  pos }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(step }\SpecialCharTok{==} \DecValTok{4}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ position)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{stat =} \StringTok{"density"}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"4 passi"}\NormalTok{)}
-
-\NormalTok{p2 }\OtherTok{\textless{}{-}}
-\NormalTok{  pos }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(step }\SpecialCharTok{==} \DecValTok{8}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ position)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{outline.type =} \StringTok{"full"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"8 passi"}\NormalTok{)}
-
-\NormalTok{sd }\OtherTok{\textless{}{-}}
-\NormalTok{  pos }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(step }\SpecialCharTok{==} \DecValTok{16}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{sd =} \FunctionTok{sd}\NormalTok{(position)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{pull}\NormalTok{(sd)}
-
-\NormalTok{p3 }\OtherTok{\textless{}{-}}
-\NormalTok{  pos }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(step }\SpecialCharTok{==} \DecValTok{16}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ position)) }\SpecialCharTok{+}
-  \FunctionTok{stat\_function}\NormalTok{(}
-    \AttributeTok{fun =}\NormalTok{ dnorm,}
-    \AttributeTok{args =} \FunctionTok{list}\NormalTok{(}\AttributeTok{mean =} \DecValTok{0}\NormalTok{, }\AttributeTok{sd =}\NormalTok{ sd),}
-    \AttributeTok{linetype =} \DecValTok{2}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{alpha =} \DecValTok{1} \SpecialCharTok{/} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}
-    \AttributeTok{title =} \StringTok{"16 passi"}\NormalTok{,}
-    \AttributeTok{y =} \StringTok{"Densità"}
-\NormalTok{  )}
-
-\NormalTok{(p1 }\SpecialCharTok{|}\NormalTok{ p2 }\SpecialCharTok{|}\NormalTok{ p3) }\SpecialCharTok{\&} \FunctionTok{coord\_cartesian}\NormalTok{(}\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{6}\NormalTok{, }\DecValTok{6}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/rw-normal-3panels-1} 
-
-}
-
-\caption{Kernel density plot dei risultati della passeggiata casuale riportata nella figura precente, dopo 4, 8 e 16 passi. Nel pannello di destra, una densità Normale di opportuni parametri è sovrapposta all'istogramma lisciato.}\label{fig:rw-normal-3panels}
-\end{figure}
-
-Questa simulazione mostra che qualunque processo nel quale viene sommato un certo numero di valori casuali, tutti provenienti dalla medesima distribuzione, converge ad una distribuzione Normale. Non importa quale sia la forma della distribuzione di partenza: essa può essere uniforme, come nell'esempio presente, o di qualunque altro tipo. La forma della distribuzione da cui viene realizzato il campionamento determina la velocità della convergenza alla Normale. In alcuni casi la convergenza è lenta; in altri casi la convergenza è molto rapida (come nell'esempio presente).
-
-Da un punto di vista formale, diciamo che una variabile casuale continua \(Y\) ha una distribuzione Normale se la sua densità è
-
-\begin{equation}
-f(y; \mu, \sigma) = {1 \over {\sigma\sqrt{2\pi} }} \exp \left\{-\frac{(y -  \mu)^2}{2 \sigma^2} \right\},
-\label{eq:normal-formula}
-\end{equation}
-\noindent
-dove \(\mu \in \mathbb{R}\) e \(\sigma > 0\) sono i parametri della distribuzione.
-
-La densità normale è unimodale e simmetrica con una caratteristica forma a campana e con il punto di massima densità in corrispondenza di \(\mu\).
-
-Il significato dei parametri \(\mu\) e \(\sigma\) che appaiono nella \eqref{eq:normal-formula} viene chiarito dalla dimostrazione che
-
-\begin{equation}
-\E(X) = \mu, \qquad \Var(X) = \sigma^2.
-\end{equation}
-
-\begin{example}
-
-La rappresentazione grafica di quattro densità Normali tutte con media 0 e con deviazioni standard 0.25, 0.5, 1 e 2 è fornita nella figura \ref{fig:gaussian-plot-demo}.
-
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/gaussian-plot-demo-1} 
-
-}
-
-\caption{Alcune distribuzioni Normali.}\label{fig:gaussian-plot-demo}
-\end{figure}
-
-\end{example}
-
-\hypertarget{concentrazione}{%
-\subsection{Concentrazione}\label{concentrazione}}
-
-È istruttivo osservare il grado di concentrazione della distribuzione
-Normale attorno alla media:
-
-\begin{align}
-P(\mu - \sigma < X < \mu + \sigma) &= P (-1 < Z < 1) \simeq 0.683, \notag\\
-P(\mu - 2\sigma < X < \mu + 2\sigma) &= P (-2 < Z < 2) \simeq 0.956, \notag\\
-P(\mu - 3\sigma < X < \mu + 3\sigma) &= P (-3 < Z < 3) \simeq 0.997. \notag
-\end{align}
-
-\noindent
-Si noti come un dato la cui distanza dalla media è superiore a 3 volte la deviazione standard presenti un carattere di eccezionalità perché meno del 0.3\% dei dati della distribuzione Normale presentano questa caratteristica.
-
-Per indicare la distribuzione Normale si usa la notazione
-\(\mathcal{N}(\mu, \sigma)\).
-
-\hypertarget{funzione-di-ripartizione}{%
-\subsection{Funzione di ripartizione}\label{funzione-di-ripartizione}}
-
-Il valore della funzione di ripartizione di \(Y\) nel punto \(y\) è l'area sottesa alla curva di densità \(f(y)\) nella semiretta \((-\infty, y]\). Non esiste alcuna funzione elementare per la funzione di ripartizione
-
-\begin{equation}
-F(y) = \int_{-\infty}^y {1 \over {\sigma\sqrt{2\pi} }} \exp \left\{-\frac{(y - \mu)^2}{2\sigma^2} \right\} dy, 
-\end{equation}
-
-\noindent
-pertanto le probabilità \(P(Y < y)\) vengono calcolate mediante integrazione numerica approssimata. I valori della funzione di ripartizione di una variabile casuale Normale sono dunque forniti da un software.
-
-\begin{example}
-
-Usiamo \R per calcolare la funzione di ripartizione della Normale. La funzione \texttt{pnorm(q,\ mean,\ sd)} restituisce la funzione di ripartizione della Normale con media \texttt{mean} e deviazione standard \texttt{sd}, ovvero l'area sottesa alla funzione di densità di una Normale con media \texttt{mean} e deviazione standard \texttt{sd} nell'intervallo \([-\infty, q]\).
-
-Per esempio, in precedenza abbiamo detto che il 68\% circa dell'area sottesa ad una Normale è compresa nell'intervallo \(\mu \pm \sigma\). Verifichiamo per la distribuzione del QI \(\sim \mathcal{N}(\mu = 100, \sigma = 15)\):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{pnorm}\NormalTok{(}\DecValTok{100} \SpecialCharTok{+} \DecValTok{15}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{15}\NormalTok{) }\SpecialCharTok{{-}} \FunctionTok{pnorm}\NormalTok{(}\DecValTok{100} \SpecialCharTok{{-}} \DecValTok{15}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{15}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.683}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Il 95\% dell'area è compresa nell'intervallo \(\mu \pm 1.96 \cdot\sigma\):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{pnorm}\NormalTok{(}\DecValTok{100} \SpecialCharTok{+} \FloatTok{1.96} \SpecialCharTok{*} \DecValTok{15}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{15}\NormalTok{) }\SpecialCharTok{{-}} \FunctionTok{pnorm}\NormalTok{(}\DecValTok{100} \SpecialCharTok{{-}} \FloatTok{1.96} \SpecialCharTok{*} \DecValTok{15}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{15}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.95}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Quasi tutta la distribuzione è compresa nell'intervallo \(\mu \pm 3 \cdot\sigma\):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{pnorm}\NormalTok{(}\DecValTok{100} \SpecialCharTok{+} \DecValTok{3} \SpecialCharTok{*} \DecValTok{15}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{15}\NormalTok{) }\SpecialCharTok{{-}} \FunctionTok{pnorm}\NormalTok{(}\DecValTok{100} \SpecialCharTok{{-}} \DecValTok{3} \SpecialCharTok{*} \DecValTok{15}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{15}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.997}
-\end{Highlighting}
-\end{Shaded}
-
-\end{example}
-
-\hypertarget{distribuzione-normale-standard}{%
-\subsection{Distribuzione Normale standard}\label{distribuzione-normale-standard}}
-
-La distribuzione Normale di parametri \(\mu = 0\) e \(\sigma = 1\) viene detta \emph{distribuzione Normale standard}. La famiglia Normale è l'insieme avente come elementi tutte le distribuzioni Normali con parametri \(\mu\) e \(\sigma\) diversi. Tutte le distribuzioni Normali si ottengono dalla Normale standard mediante una trasformazione lineare: se \(Y \sim \mathcal{N}(\mu_Y, \sigma_Y)\) allora
-
-\begin{equation}
-X = a + b Y \sim \mathcal{N}(\mu_X = a+b \mu_Y, \sigma_X = \left|b\right|\sigma_Y).
-\end{equation}
-
-L'area sottesa alla curva di densità di \(\mathcal{N}(\mu, \sigma)\) nella semiretta \((-\infty, y]\) è uguale all'area sottesa alla densità Normale standard nella semiretta \((-\infty, z]\), in cui \(z = (y -\mu_Y )/\sigma_Y\) è il punteggio standard di \(Y\). Per la simmetria della distribuzione, l'area sottesa nella semiretta \([1, \infty)\) è uguale all'area sottesa nella semiretta \((-\infty, 1]\) e quest'ultima coincide con \(F(-1)\). Analogamente, l'area sottesa nell'intervallo \([y_a, y_b]\), con \(y_a < y_b\), è pari a \(F(z_b) - F(z_a)\), dove \(z_a\) e \(z_b\) sono i punteggi standard di \(y_a\) e \(y_b\).
-
-Si ha anche il problema inverso rispetto a quello del calcolo delle aree: dato un numero \(0 \leq p \leq 1\), il problema è quello di determinare un numero \(z \in \mathbb{R}\) tale che \(P(Z < z) = p\). Il valore \(z\) cercato è detto \emph{quantile} di ordine \(p\) della Normale standard e può essere trovato mediante un software.
-
-\begin{example}
-Supponiamo che l'altezza degli individui adulti segua la distribuzione Normale di media \(\mu = 1.7\) m e deviazione standard \(\sigma = 0.1\) m. Vogliamo sapere la proporzione di individui adulti con un'altezza compresa tra \(1.7\) e \(1.8\) m.
-
-Il problema ci chiede di trovare l'area sottesa alla distribuzione \(\mathcal{N}(\mu = 1.7, \sigma = 0.1)\) nell'intervallo \([1.7, 1.8]\):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =} \FunctionTok{seq}\NormalTok{(}\FloatTok{1.4}\NormalTok{, }\FloatTok{2.0}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{100}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{y =} \FunctionTok{dnorm}\NormalTok{(x, }\AttributeTok{mean =} \FloatTok{1.7}\NormalTok{, }\AttributeTok{sd =} \FloatTok{0.1}\NormalTok{))}
-
-\FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(x, y)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_area}\NormalTok{(}\AttributeTok{fill =} \StringTok{"sky blue"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{gghighlight}\NormalTok{(x }\SpecialCharTok{\textless{}} \FloatTok{1.8} \SpecialCharTok{\&}\NormalTok{ x }\SpecialCharTok{\textgreater{}} \FloatTok{1.7}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}
-    \AttributeTok{x =} \StringTok{"Altezza"}\NormalTok{,}
-    \AttributeTok{y =} \StringTok{"Densità"}
-\NormalTok{  )}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-6-1} \end{center}
-
-\noindent
-La risposta si trova utilizzando la funzione di
-ripartizione \(F(X)\) della legge \(\mathcal{N}(1.7, 0.1)\) in
-corrispondenza dei due valori forniti dal problema:
-\(F(X = 1.8) - F(X = 1.7)\). Utilizzando la seguente istruzione
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{pnorm}\NormalTok{(}\FloatTok{1.8}\NormalTok{, }\FloatTok{1.7}\NormalTok{, }\FloatTok{0.1}\NormalTok{) }\SpecialCharTok{{-}} \FunctionTok{pnorm}\NormalTok{(}\FloatTok{1.7}\NormalTok{, }\FloatTok{1.7}\NormalTok{, }\FloatTok{0.1}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.341}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-otteniamo il \(31.43\%\).
-
-In maniera equivalente, possiamo standardizzare i valori che delimitano l'intervallo considerato e utilizzare la funzione di ripartizione della normale standardizzata. I limiti inferiore e superiore dell'intervallo sono
-
-\[
-z_{\text{inf}} = \frac{1.7 - 1.7}{0.1} = 0, \quad z_{\text{sup}} = \frac{1.8 - 1.7}{0.1} = 1.0,
-\]
-
-\noindent 
-quindi otteniamo
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{pnorm}\NormalTok{(}\FloatTok{1.0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{) }\SpecialCharTok{{-}} \FunctionTok{pnorm}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.341}
-\end{Highlighting}
-\end{Shaded}
-
-Il modo più semplice per risolvere questo problema resta comunque quello di rendersi conto che la probabilità richiesta non è altro che la metà dell'area sottesa dalle distribuzioni Normali nell'intervallo \([\mu - \sigma, \mu + \sigma]\), ovvero \(0.683/2\).
-\end{example}
-
-\hypertarget{funzione-di-ripartizione-della-variabile-casuale-normale-standard-e-funzione-logistica}{%
-\subsubsection{Funzione di ripartizione della variabile casuale normale standard e funzione logistica}\label{funzione-di-ripartizione-della-variabile-casuale-normale-standard-e-funzione-logistica}}
-
-Si noti che la funzione logistica (in blu), pur essendo del tutto diversa dalla Normale dal punto di vista formale, assomiglia molto alla Normale standard quando le due cdf hanno la stessa varianza.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x)) }\SpecialCharTok{+}
-  \FunctionTok{stat\_function}\NormalTok{(}\AttributeTok{fun =}\NormalTok{ pnorm) }\SpecialCharTok{+}
-  \FunctionTok{stat\_function}\NormalTok{(}
-    \AttributeTok{fun =}\NormalTok{ plogis,}
-    \AttributeTok{args =} \FunctionTok{list}\NormalTok{(}\AttributeTok{scale =} \FloatTok{0.56}\NormalTok{),}
-    \AttributeTok{col =} \StringTok{"sky blue"}
-\NormalTok{  )}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-9-1} \end{center}
-
-\hypertarget{teorema-del-limite-centrale}{%
-\section{Teorema del limite centrale}\label{teorema-del-limite-centrale}}
-
-Laplace dimostrò il teorema del limite centrale (TLC) nel 1812. Il TLC ci dice che se prendiamo una sequenza di variabili casuali indipendenti e le sommiamo, tale somma tende a distribuirisi come una Normale. Il TLC specifica inoltre, sulla base dei valori attesi e delle varianze delle v.c. che vengono sommate, quali saranno i parametri della distribuzione Normale così ottenuta.
-
-\begin{theorem}
-Si supponga che \(Y = Y_1, Y_2, \ldots, Y_N\) sia una sequenza di v.a. i.i.d. con \(\E(Y_n) = \mu\) e \(\SD(Y_n) = \sigma\). Si definisca una nuova v.c. come la media di \(Y\):
-
-\[
-Z = \frac{1}{N} \sum_{n=1}^N Y_n.
-\]
-\noindent
-Con \(N \rightarrow \infty\), \(Z\) tenderà ad una Normale con lo stesso valore atteso di \(Y_n\) e una deviazione standard che sarà più piccola della deviazione standard originaria di un fattore pari a \(\sqrt{\frac{1}{\sqrt{N}}}\):
-
-\begin{equation}
-p_Z(z) \rightarrow \mathcal{N}\left(z \ \Bigg| \ \mu, \, \frac{1}{\sqrt{N}} \cdot \sigma \right).
-\end{equation}
-\end{theorem}
-
-Il TLC può essere generalizzato a variabili che non hanno la stessa distribuzione purché siano indipendenti e abbiano aspettative e varianze finite.
-
-Molti fenomeni naturali, come l'altezza dell'uomo adulto di entrambi i sessi, sono il risultato di una serie di effetti additivi relativamente piccoli, la cui combinazione porta alla normalità, indipendentemente da come gli effetti additivi sono distribuiti. In pratica, questo è il motivo per cui la distribuzione normale ha senso come rappresentazione di molti fenomeni naturali.
-
-\hypertarget{distribuzione-chi-quadrato}{%
-\section{Distribuzione Chi-quadrato}\label{distribuzione-chi-quadrato}}
-
-Dalla Normale deriva la distribuzione \(\chi^2\). La distribuzione \(\chi^2_{~k}\) con \(k\) gradi di libertà descrive la variabile casuale
-
-\[
-Z_1^2 + Z_2^2 + \dots + Z_k^2,
-\]
-\noindent
-dove \(Z_1, Z_2, \dots, Z_k\) sono variabili casuali i.i.d. con distribuzione Normale standard \(\mathcal{N}(0, 1)\). La variabile casuale chi-quadrato dipende dal parametro intero positivo \(\nu = k\) che ne identifica il numero di gradi di libertà. La densità di probabilità di \(\chi^2_{~\nu}\) è
-
-\[
-f(x) = C_{\nu} x^{\nu/2-1} \exp (-x/2), \qquad \text{se } x > 0,
-\]
-\noindent
-dove \(C_{\nu}\) è una costante positiva.
-
-\hypertarget{proprietuxe0}{%
-\subsection{Proprietà}\label{proprietuxe0}}
+\hypertarget{manipolazione-dei-dati}{%
+\section{Manipolazione dei dati}\label{manipolazione-dei-dati}}
+
+\hypertarget{motivazione}{%
+\subsection{Motivazione}\label{motivazione}}
+
+Si chiamano ``dati grezzi'' quelli che provengono dal mondo circostanze, i
+dati raccolti per mezzo degli strumenti usati negli esperimenti, per
+mezzo di interviste, di questionari, ecc. Questi dati (chiamati
+\emph{dataset}) raramente vengono forniti con una struttura logica precisa.
+Per potere elaborarli mediante dei software dobbiamo prima trasformarli
+in maniera tale che abbiano una struttura logica organizzata. La
+struttura che solitamente si utilizza è quella tabellare (matrice dei
+dati), ovvero si dispongono i dati in una tabella nella quale a ciascuna
+riga corrisponde ad un'osservazione e ciascuna colonna corrisponde ad
+una variabile rilevata. In \texttt{R} una tale struttura è chiamata \emph{data frame}.
+
+Utilizzando i pacchetti del \texttt{tidyverse} (\texttt{tidyverse} è un insieme, o \emph{bundle}, di pacchetti \texttt{R}), le operazioni di trasformazione dei dati risultano molto semplificate. Nel \texttt{tidyverse} i data frame vengono leggermente modificati e si chiamano \texttt{tibble}. Per la manipolazione dei dati vengono usati i seguenti pacchetti del \texttt{tidyverse}:
 
 \begin{itemize}
 \tightlist
 \item
-  La distribuzione di densità \(\chi^2_{~\nu}\) è asimmetrica.
+  \texttt{dplyr}
 \item
-  Il valore atteso di una variabile \(\chi^2_{~\nu}\) è uguale a \(\nu\).
+  \texttt{tidyr} (tibbles, dataframe e tabelle)
 \item
-  La varianza di una variabile \(\chi^2_{~\nu}\) è uguale a \(2\nu\).
-\item
-  Per \(k \rightarrow \infty\), la \(\chi^2_{~\nu} \rightarrow \mathcal{N}\).
-\item
-  Se \(X\) e \(Y\) sono due variabili casuali chi-quadrato indipendenti con \(\nu_1\) e \(\nu_2\) gradi di libertà, ne segue che \(X + Y \sim \chi^2_m\), con \(m = \nu_1 + \nu_2\). Tale principio si estende a qualunque numero finito di variabili casuali chi-quadrato indipendenti.
+  \texttt{stringr} (stringhe)
 \end{itemize}
 
-\begin{example}
+Il pacchetto \texttt{dplyr} (al momento uno dei pacchetti più famosi e utilizzati per la gestione dei dati) offre una serie di funzionalità che consentono di eseguire le operazioni più comuni di manipolazione dei dati in maniera più semplice rispetto a quanto succeda quando usiamo le funzioni base di \texttt{R}.
 
-Usiamo \(\R\) per disegnare la densità chi-quadrato con 3 gradi di libertà dividendo l'area sottesa alla curva di densità in due parti uguali.
+\hypertarget{trattamento-dei-dati-con-dplyr}{%
+\subsection{\texorpdfstring{Trattamento dei dati con \texttt{dplyr}}{Trattamento dei dati con dplyr}}\label{trattamento-dei-dati-con-dplyr}}
+
+Il pacchetto \texttt{dplyr} include sei funzioni base: \texttt{filter()}, \texttt{select()}, \texttt{mutate()}, \texttt{arrange()}, \texttt{group\_by()} e \texttt{summarise()}. Queste sei funzioni costituiscono i \emph{verbi} del linguaggio di manipolazione dei dati. A questi sei verbi si aggiunge il pipe \texttt{\%\textgreater{}\%} che serve a concatenare più operazioni. In particolare, considerando una matrice osservazioni per variabili, \texttt{select()} e \texttt{mutate()} si occupano di organizzare le variabili, \texttt{filter()} e \texttt{arrange()} i casi, e \texttt{group\_by()} e \texttt{summarise()} i gruppi.
+
+Per introdurre le funzionalità di \texttt{dplyr}, utilizzeremo i dati \texttt{msleep} forniti dal pacchetto \texttt{ggplot2}. Tali dati descrivono le ore di sonno medie di 83 specie di mammiferi \autocite{savage2007scaling}. Carichiamo il \emph{boundle} \texttt{tidyverse} (che contiene \texttt{ggplot2}) e leggiamo nella memoria di lavoro l'oggetto \texttt{msleep}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{15.0}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{100}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{y =} \FunctionTok{dchisq}\NormalTok{(x, }\DecValTok{3}\NormalTok{))}
-
-\FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(x, y)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_area}\NormalTok{(}\AttributeTok{fill =} \StringTok{"sky blue"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{gghighlight}\NormalTok{(x }\SpecialCharTok{\textless{}} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}
-    \AttributeTok{x =} \StringTok{"V.a. chi{-}quadrato con 3 gradi di libertà"}\NormalTok{,}
-    \AttributeTok{y =} \StringTok{"Densità"}
-\NormalTok{  )}
+\FunctionTok{library}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)}
+\FunctionTok{data}\NormalTok{(msleep)}
+\FunctionTok{dim}\NormalTok{(msleep)}
+\CommentTok{\#\textgreater{} [1] 83 11}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-10-1} \end{center}
+\hypertarget{operatore-pipe}{%
+\subsubsection{Operatore pipe}\label{operatore-pipe}}
 
-\end{example}
+Prima di presentare le funzionalità di \texttt{dplyr}, introduciamo l'operatore pipe \texttt{\%\textgreater{}\%} del pacchetto \texttt{magrittr} -- ma ora presente anche in base \texttt{R} nella versione \texttt{\textbar{}\textgreater{}}. L'operatore pipe, \texttt{\%\textgreater{}\%} o \texttt{\textbar{}\textgreater{}}, serve a concatenare varie funzioni insieme, in modo da inserire un'operazione dietro l'altra. Una spiegazione intuitiva dell'operatore pipe è stata fornita in un tweet di \texttt{@andrewheiss}. Consideriamo la seguente istruzione in pseudo-codice \texttt{R}:
 
-\begin{example}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{leave\_house}\NormalTok{(}\FunctionTok{get\_dressed}\NormalTok{(}\FunctionTok{get\_out\_of\_bed}\NormalTok{(}\FunctionTok{wake\_up}\NormalTok{(me, }\AttributeTok{time =} \StringTok{"8:00"}\NormalTok{), }\AttributeTok{side =} \StringTok{"correct"}\NormalTok{), }
+\AttributeTok{pants =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{shirt =} \ConstantTok{TRUE}\NormalTok{), }\AttributeTok{car =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{bike =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-La figura \ref{fig:alcune-chi-quadrato} mostra alcune distribuzioni Chi-quadrato variando il parametro \(\nu\).
+Il listato precedente descrive una serie di (pseudo) funzioni concatenate, le quali costituiscono gli argomenti di altre funzioni. Scritto così, il codice è molto difficile da capire. Possiamo però ottenere lo stesso risultato utilizzando l'operatore pipe che facilita la leggibilità del codice:
 
-\begin{figure}[h]
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{me }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{wake\_up}\NormalTok{(}\AttributeTok{time =} \StringTok{"8:00"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{get\_out\_of\_bed}\NormalTok{(}\AttributeTok{side =} \StringTok{"correct"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{get\_dressed}\NormalTok{(}\AttributeTok{pants =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{shirt =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{leave\_house}\NormalTok{(}\AttributeTok{car =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{bike =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/alcune-chi-quadrato-1} 
+In questa seconda versione del (pseudo) codice \texttt{R} si capisce molto meglio ciò che vogliamo fare. Il \texttt{tibble} \texttt{me} viene passato alla funzione \texttt{wake\_up()}. La funzione \texttt{wake\_up()} ha come argomento l'ora del giorno: \texttt{time\ =\ "8:00"}. Una volta ``svegliati'' (wake up) dobbiamo scendere dal letto. Quindi l'output di \texttt{wake\_up()} viene passato alla funzione \texttt{get\_out\_of\_bed()} la quale ha come argomento \texttt{side\ =\ "correct"} perché vogliamo scendere dal letto dalla parte giusta. E così via.
 
-}
+Questo pseudo-codice chiarisce il significato dell'operatore pipe. L'operatore \texttt{\%\textgreater{}\%} viene utilizzato quando abbiamo una serie di funzioni concatenate. Per concatenazione di funzioni si intende una serie di funzioni nelle quali l'output di una funzione costituisce l'input della funzione successiva. L'operatore pipe è ``syntactic sugar'' per una serie di chiamate di funzioni concatenate, ovvero, detto in altre parole, consente di definire la concatenazione tra una serie di funzioni nelle quali il risultato (output) di una funzione viene utilizzato come l'input di una funzione successiva.
 
-\caption{Alcune distribuzioni Chi-quadrato.}\label{fig:alcune-chi-quadrato}
-\end{figure}
+\hypertarget{selezionare-le-colonne-del-tibble-con-select}{%
+\subsubsection{\texorpdfstring{Selezionare le colonne del \texttt{tibble} con \texttt{select()}}{Selezionare le colonne del tibble con select()}}\label{selezionare-le-colonne-del-tibble-con-select}}
 
-\end{example}
+Ritorniamo ora all'esempio precedente. Iniziamo a trasformare il data frame \texttt{msleep} in un \texttt{tibble} (che è identico ad un data frame ma viene stampato sulla console in un modo diverso):
 
-\hypertarget{distribuzione-t-di-student}{%
-\section{\texorpdfstring{Distribuzione \(t\) di Student}{Distribuzione t di Student}}\label{distribuzione-t-di-student}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{msleep }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(msleep)}
+\NormalTok{msleep}
+\CommentTok{\#\textgreater{} \# A tibble: 83 x 11}
+\CommentTok{\#\textgreater{}   name    genus vore  order conservation sleep\_total sleep\_rem sleep\_cycle awake}
+\CommentTok{\#\textgreater{}   \textless{}chr\textgreater{}   \textless{}chr\textgreater{} \textless{}chr\textgreater{} \textless{}chr\textgreater{} \textless{}chr\textgreater{}              \textless{}dbl\textgreater{}     \textless{}dbl\textgreater{}       \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 Cheetah Acin\textasciitilde{} carni Carn\textasciitilde{} lc                  12.1      NA        NA      11.9}
+\CommentTok{\#\textgreater{} 2 Owl mo\textasciitilde{} Aotus omni  Prim\textasciitilde{} \textless{}NA\textgreater{}                17         1.8      NA       7  }
+\CommentTok{\#\textgreater{} 3 Mounta\textasciitilde{} Aplo\textasciitilde{} herbi Rode\textasciitilde{} nt                  14.4       2.4      NA       9.6}
+\CommentTok{\#\textgreater{} 4 Greate\textasciitilde{} Blar\textasciitilde{} omni  Sori\textasciitilde{} lc                  14.9       2.3       0.133   9.1}
+\CommentTok{\#\textgreater{} 5 Cow     Bos   herbi Arti\textasciitilde{} domesticated         4         0.7       0.667  20  }
+\CommentTok{\#\textgreater{} 6 Three{-}\textasciitilde{} Brad\textasciitilde{} herbi Pilo\textasciitilde{} \textless{}NA\textgreater{}                14.4       2.2       0.767   9.6}
+\CommentTok{\#\textgreater{} \# ... with 77 more rows, and 2 more variables: brainwt \textless{}dbl\textgreater{}, bodywt \textless{}dbl\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
 
-Dalle distribuzioni Normale e Chi quadrato deriva un'altra distribuzione molto nota, la \(t\) di Student. Se \(Z \sim \mathcal{N}\) e \(W \sim \chi^2_{~\nu}\) sono due variabili casuali indipendenti, allora il rapporto
-
-\begin{equation}
-T = \frac{Z}{\Big( \frac{W}{\nu}\Big)^{\frac{1}{2}}}
-\end{equation}
 \noindent
-definisce la distribuzione \(t\) di Student con \(\nu\) gradi di libertà. Si usa scrivere \(T \sim t_{\nu}\). L'andamento della distribuzione \(t\) di Student è simile a quello della distribuzione Normale, ma ha una maggiore dispersione (ha le code più pesanti di una Normale, ovvero ha una varianza maggiore di 1).
+Supponiamo di volere selezionare le variabili \texttt{name}, \texttt{vore} e \texttt{sleep\_total} da \texttt{msleep}. Per fare ciò usiamo il verbo \texttt{select()}:
 
-\hypertarget{proprietuxe0-1}{%
-\subsection{Proprietà}\label{proprietuxe0-1}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt }\OtherTok{\textless{}{-}}\NormalTok{ msleep }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(name, vore, sleep\_total)}
+\NormalTok{dt}
+\CommentTok{\#\textgreater{} \# A tibble: 83 x 3}
+\CommentTok{\#\textgreater{}   name                       vore  sleep\_total}
+\CommentTok{\#\textgreater{}   \textless{}chr\textgreater{}                      \textless{}chr\textgreater{}       \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 Cheetah                    carni        12.1}
+\CommentTok{\#\textgreater{} 2 Owl monkey                 omni         17  }
+\CommentTok{\#\textgreater{} 3 Mountain beaver            herbi        14.4}
+\CommentTok{\#\textgreater{} 4 Greater short{-}tailed shrew omni         14.9}
+\CommentTok{\#\textgreater{} 5 Cow                        herbi         4  }
+\CommentTok{\#\textgreater{} 6 Three{-}toed sloth           herbi        14.4}
+\CommentTok{\#\textgreater{} \# ... with 77 more rows}
+\end{Highlighting}
+\end{Shaded}
 
-La variabile casuale \(t\) di Student soddisfa le seguenti proprietà:
+\noindent
+laddove la sequenza di istruzioni precedenti significa che abbiamo passato \texttt{msleep} alla funzione \texttt{select()} contenuta nel pacchetto \texttt{dplyr} e l'output di \texttt{select()} è stato salvato (usando l'operatore di assegnazione, \texttt{\textless{}-}) nell'oggetto \texttt{dt}. Alla funzione \texttt{select()} abbiamo passato gli argomenti \texttt{name}, \texttt{vore} e \texttt{sleep\_total}.
+
+\hypertarget{filtrare-le-osservazioni-righe-con-filter}{%
+\subsubsection{\texorpdfstring{Filtrare le osservazioni (righe) con \texttt{filter()}}{Filtrare le osservazioni (righe) con filter()}}\label{filtrare-le-osservazioni-righe-con-filter}}
+
+Il verbo \texttt{filter()} consente di selezionare un sottoinsieme di righe (osservazioni) di un \texttt{tibble}. Per esempio, possiamo selezionare tutte le osservazioni nella variabile \texttt{vore} contrassegnate come \texttt{carni} (ovvero, tutti i carnivori):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(vore }\SpecialCharTok{==} \StringTok{"carni"}\NormalTok{)}
+\CommentTok{\#\textgreater{} \# A tibble: 19 x 3}
+\CommentTok{\#\textgreater{}   name                 vore  sleep\_total}
+\CommentTok{\#\textgreater{}   \textless{}chr\textgreater{}                \textless{}chr\textgreater{}       \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 Cheetah              carni        12.1}
+\CommentTok{\#\textgreater{} 2 Northern fur seal    carni         8.7}
+\CommentTok{\#\textgreater{} 3 Dog                  carni        10.1}
+\CommentTok{\#\textgreater{} 4 Long{-}nosed armadillo carni        17.4}
+\CommentTok{\#\textgreater{} 5 Domestic cat         carni        12.5}
+\CommentTok{\#\textgreater{} 6 Pilot whale          carni         2.7}
+\CommentTok{\#\textgreater{} \# ... with 13 more rows}
+\end{Highlighting}
+\end{Shaded}
+
+Per utilizzare il verbo \texttt{filter()} in modo efficace è neccessario usare gli operatori relazionali (Tabella \ref{tab:oprelazionali}) e gli operatori logici (Tabella \ref{tab:oplogici}) di \texttt{R}. Per un approfondimento, si veda il Capitolo \href{https://r4ds.had.co.nz/transform.html}{Comparisons} di \emph{R for Data Science}.
+
+\begin{table}[h!]
+  \begin{center}
+    \caption{Operatori relazionali.}
+    \label{tab:oprelazionali}
+    \begin{tabular}{l c} 
+      \toprule
+      uguale             &  == \\
+      diverso            &  !=  \\
+      minore             &  <  \\
+      maggiore           &  >  \\
+      minore o uguale      & <=  \\
+      maggiore o uguale  & >=  \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+\end{table}
+
+\begin{table}[h!]
+  \begin{center}
+    \caption{Operatori logici.}
+    \label{tab:oplogici}
+    \begin{tabular}{l c} 
+      \toprule
+      AND      &  \&    \\
+      OR       &  | \\
+      NOT      &  !   \\
+      diverso  &  !=    \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+\end{table}
+
+\hypertarget{creare-una-nuova-variabile-con-mutate}{%
+\subsubsection{\texorpdfstring{Creare una nuova variabile con \texttt{mutate()}}{Creare una nuova variabile con mutate()}}\label{creare-una-nuova-variabile-con-mutate}}
+
+Talvolta vogliamo creare una nuova variabile, per esempio, sommando o dividendo due variabili, oppure calcolandone la media. A questo scopo si usa il verbo \texttt{mutate()}. Per esempio, se vogliamo esprimere i valori di \texttt{sleep\_total} in minuti, moltiplichiamo per 60:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{sleep\_minutes =}\NormalTok{ sleep\_total }\SpecialCharTok{*} \DecValTok{60}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(sleep\_total, sleep\_minutes)}
+\CommentTok{\#\textgreater{} \# A tibble: 83 x 2}
+\CommentTok{\#\textgreater{}   sleep\_total sleep\_minutes}
+\CommentTok{\#\textgreater{}         \textless{}dbl\textgreater{}         \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1        12.1           726}
+\CommentTok{\#\textgreater{} 2        17            1020}
+\CommentTok{\#\textgreater{} 3        14.4           864}
+\CommentTok{\#\textgreater{} 4        14.9           894}
+\CommentTok{\#\textgreater{} 5         4             240}
+\CommentTok{\#\textgreater{} 6        14.4           864}
+\CommentTok{\#\textgreater{} \# ... with 77 more rows}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ordinare-i-dati-con-arrange}{%
+\subsubsection{\texorpdfstring{Ordinare i dati con \texttt{arrange()}}{Ordinare i dati con arrange()}}\label{ordinare-i-dati-con-arrange}}
+
+Il verbo \texttt{arrange()} ordina i dati in base ai valori di una o più variabili. Per esempio, possiamo ordinare la variabile \texttt{sleep\_total} dal valore più alto al più basso in questo modo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(}
+    \FunctionTok{desc}\NormalTok{(sleep\_total)}
+\NormalTok{  )}
+\CommentTok{\#\textgreater{} \# A tibble: 83 x 3}
+\CommentTok{\#\textgreater{}   name                   vore    sleep\_total}
+\CommentTok{\#\textgreater{}   \textless{}chr\textgreater{}                  \textless{}chr\textgreater{}         \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 Little brown bat       insecti        19.9}
+\CommentTok{\#\textgreater{} 2 Big brown bat          insecti        19.7}
+\CommentTok{\#\textgreater{} 3 Thick{-}tailed opposum   carni          19.4}
+\CommentTok{\#\textgreater{} 4 Giant armadillo        insecti        18.1}
+\CommentTok{\#\textgreater{} 5 North American Opossum omni           18  }
+\CommentTok{\#\textgreater{} 6 Long{-}nosed armadillo   carni          17.4}
+\CommentTok{\#\textgreater{} \# ... with 77 more rows}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{raggruppare-i-dati-con-group_by}{%
+\subsubsection{\texorpdfstring{Raggruppare i dati con \texttt{group\_by()}}{Raggruppare i dati con group\_by()}}\label{raggruppare-i-dati-con-group_by}}
+
+Il verbo \texttt{group\_by()} raggruppa insieme i valori in base a una o più variabili. Lo vedremo in uso in seguito insieme a \texttt{summarise()}.
+
+\hypertarget{sommario-dei-dati-con-summarise}{%
+\subsubsection{\texorpdfstring{Sommario dei dati con \texttt{summarise()}}{Sommario dei dati con summarise()}}\label{sommario-dei-dati-con-summarise}}
+
+Il verbo \texttt{summarise()} collassa il dataset in una singola riga dove viene riportato il risultato della statistica richiesta. Per esempio, la media del tempo totale del sonno è
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{m\_sleep =} \FunctionTok{mean}\NormalTok{(sleep\_total, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  ) }
+\CommentTok{\#\textgreater{} \# A tibble: 1 x 1}
+\CommentTok{\#\textgreater{}   m\_sleep}
+\CommentTok{\#\textgreater{}     \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1    10.4}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{operazioni-raggruppate}{%
+\subsubsection{Operazioni raggruppate}\label{operazioni-raggruppate}}
+
+Sopra abbiamo visto come i mammiferi considerati dormano, in media, 10.4 ore al giorno. Troviamo ora il sonno medio in funzione di \texttt{vore}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(vore) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{m\_sleep =} \FunctionTok{mean}\NormalTok{(sleep\_total, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }
+    \AttributeTok{n =} \FunctionTok{n}\NormalTok{()}
+\NormalTok{  )}
+\CommentTok{\#\textgreater{} \# A tibble: 5 x 3}
+\CommentTok{\#\textgreater{}   vore    m\_sleep     n}
+\CommentTok{\#\textgreater{}   \textless{}chr\textgreater{}     \textless{}dbl\textgreater{} \textless{}int\textgreater{}}
+\CommentTok{\#\textgreater{} 1 carni     10.4     19}
+\CommentTok{\#\textgreater{} 2 herbi      9.51    32}
+\CommentTok{\#\textgreater{} 3 insecti   14.9      5}
+\CommentTok{\#\textgreater{} 4 omni      10.9     20}
+\CommentTok{\#\textgreater{} 5 \textless{}NA\textgreater{}      10.2      7}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Si noti che, nel caso di 7 osservazioni, il valore di \texttt{vore} non era
+specificato. Per tali osservazioni, dunque, la classe di appartenenza è
+\texttt{NA}.
+
+\hypertarget{dati-categoriali-in-r}{%
+\subsection{\texorpdfstring{Dati categoriali in \texttt{R}}{Dati categoriali in R}}\label{dati-categoriali-in-r}}
+
+Consideriamo una variabile che descrive il genere e include le categorie \texttt{male}, \texttt{female} e \texttt{non-conforming}. In \texttt{R}, ci sono due modi per memorizzare queste informazioni. Uno è usare la classe \emph{character strings} e l'altro è usare la classe \emph{factor}. Non ci addentrimo qui nelle sottigliezze di questa distinzione, motivata in gran parte per le necessità della programmazione con le funzioni di \texttt{tidyverse}. Per gli scopi di questo insegnamento sarà sufficiente codificare le variabili qualitative usando la classe \emph{factor}. Una volta codificati i dati qualitativi utilizzando la classe \emph{factor}, si pongono spesso due problemi:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\item
-  Per \(\nu \rightarrow \infty\), \(t_{\nu}\) tende alla normale standard
-  \(\mathcal{N}(0, 1)\).
-\item
-  La densità della \(t_{\nu}\) è una funzione simmetrica con valore
-  atteso nullo.
-\item
-  Per \(\nu > 2\), la varianza della \(t_{\nu}\) vale \(\nu/(\nu - 2)\);
-  pertanto è sempre maggiore di 1 e tende a 1 per
-  \(\nu \rightarrow \infty\).
-\end{enumerate}
-
-\begin{example}
-
-La figura \ref{fig:alcune-t-student} mostra alcune distribuzioni \(t\) di Student variando il parametro \(\nu\).
-
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/alcune-t-student-1} 
-
-}
-
-\caption{Alcune distribuzioni $t$ di Student.}\label{fig:alcune-t-student}
-\end{figure}
-
-\end{example}
-
-\hypertarget{funzione-beta-di-eulero}{%
-\section{Funzione beta di Eulero}\label{funzione-beta-di-eulero}}
-
-La funzione beta di Eulero è una funzione matematica, \emph{non} una densità di probabilità. La menzioniamo qui perché viene utilizzata nella distribuzione Beta. La funzione beta si può scrivere in molti modi; per i nostri scopi, può essere scritta nel modo seguente:
-\begin{equation}
-B(\alpha, \beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}\,,
-\end{equation}
-\noindent
-dove \(\Gamma(x)\) è la funzione Gamma, ovvero il fattoriale discendente, cioè
-\begin{equation}
-x(x-1)(x-2)\ldots (x-n+1)\notag\,.
-\end{equation}
-
-\hypertarget{distribuzione-beta}{%
-\section{Distribuzione Beta}\label{distribuzione-beta}}
-
-Una distribuzione che viene usata per modellare percentuali e proporzioni è la distribuzione Beta in quanto è definita sull'intervallo \((0; 1)\) -- ma non include i valori 0 o 1. La distribuzione Beta è una distribuzione estremamente flessibile e può assumere molti tipi di forme diverse (un'illustrazione è fornita dalla seguente \href{https://en.wikipedia.org/wiki/File:PDF_of_the_Beta_distribution.gif}{GIF animata}). Una definizione formale è la seguente.
-
-\begin{definition}
-Sia \(\pi\) una variabile casuale che può assumere qualsiasi valore compreso tra 0 e 1, cioè \(\pi \in [0, 1]\). Diremo che \(\pi\) segue la distribuzione Beta di parametri \(\alpha\) e \(\beta\), \(\pi \sim \text{Beta}(\alpha, \beta)\), se la sua densità è
-\begin{align}
-\text{Beta}(\pi \mid \alpha, \beta) &= \frac{1}{B(\alpha, \beta)}\pi^{\alpha-1} (1-\pi)^{\beta-1}\notag\\ 
-&=  \frac{\Gamma(\alpha+ \beta)}{\Gamma(\alpha)\Gamma(\beta)}\pi^{\alpha-1} (1-\pi)^{\beta-1} \quad \text{per } \pi \in [0, 1]\,,
-\label{eq:beta-distr-formula}
-\end{align}
-laddove \(B(\alpha, \beta)\) è la funzione beta.
-\end{definition}
-
-I termini \(\alpha\) e \(\beta\) sono i parametri della distribuzione Beta e devono essere entrambi positivi. Tali parametri possono essere interpretati come l'espressione delle nostre credenze a priori relativamente alla probabilità di successo. Il parametro \(\alpha\) rappresenta il numero di ``successi'' e il parametro \(\beta\) il numero di ``insuccessi'':
-\begin{equation}
-\frac{\text{Numero di successi}}{\text{Numero di successi} + \text{Numero di insuccessi}} = \frac{\alpha}{\alpha + \beta}\notag\,.
-\end{equation}
-
-Il rapporto \(\frac{1}{B(\alpha, \beta)} = \frac{\Gamma(\alpha+b)}{\Gamma(\alpha)\Gamma(\beta)}\) è una costante di normalizzazione:
-\begin{equation}
-\int_0^1 \pi^{\alpha-1} (1-\pi)^{\beta-1} = \frac{\Gamma(\alpha+b)}{\Gamma(\alpha)\Gamma(\beta)}\,.
-\end{equation}
-
-Il valore atteso, la moda e la varianza di una distribuzione Beta sono dati dalle seguenti equazioni:
-\begin{equation}
-\E(\pi) = \frac{\alpha}{\alpha+\beta}\,,
-\label{eq:beta-mean}
-\end{equation}
-
-\begin{equation}
-\Mo(\pi) = \frac{\alpha-1}{\alpha+\beta-2}\,,
-\label{eq:beta-mode}
-\end{equation}
-
-\begin{equation}
-\Var(\pi) = \frac{\alpha \beta}{(\alpha+\beta)^2 (\alpha+\beta+1)}\,.
-\label{eq:beta-var}
-\end{equation}
-
-\emph{Attenzione alle parole.} In questo contesto, il termine ``beta'' viene utilizzato con tre significati diversi:
-
-\begin{itemize}
 \tightlist
 \item
-  la distribuzione di densità Beta,
+  modificare le etichette dei livelli (ovvero, le modalità) di un fattore,
 \item
-  la funzione matematica beta,
+  riordinare i livelli di un fattore.
+\end{enumerate}
+
+\hypertarget{modificare-le-etichette-dei-livelli-di-un-fattore}{%
+\subsubsection{Modificare le etichette dei livelli di un fattore}\label{modificare-le-etichette-dei-livelli-di-un-fattore}}
+
+Esaminiamo l'esempio seguente.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f\_1 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"old\_3"}\NormalTok{, }\StringTok{"old\_4"}\NormalTok{, }\StringTok{"old\_1"}\NormalTok{, }\StringTok{"old\_1"}\NormalTok{, }\StringTok{"old\_2"}\NormalTok{)}
+\NormalTok{f\_1 }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(f\_1)}
+\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\DecValTok{5}
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(f\_1, y)}
+\NormalTok{df}
+\CommentTok{\#\textgreater{} \# A tibble: 5 x 2}
+\CommentTok{\#\textgreater{}   f\_1       y}
+\CommentTok{\#\textgreater{}   \textless{}fct\textgreater{} \textless{}int\textgreater{}}
+\CommentTok{\#\textgreater{} 1 old\_3     1}
+\CommentTok{\#\textgreater{} 2 old\_4     2}
+\CommentTok{\#\textgreater{} 3 old\_1     3}
+\CommentTok{\#\textgreater{} 4 old\_1     4}
+\CommentTok{\#\textgreater{} 5 old\_2     5}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Supponiamo ora di volere che i livelli del fattore \texttt{f\_1} abbiano le etichette \texttt{new\_1}, \texttt{new\_2}, ecc. Per ottenere questo risultato usiamo la funzione \texttt{recode()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{f\_1 =}
+\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{recode}\NormalTok{(f\_1,}
+      \StringTok{"old\_1"} \OtherTok{=} \StringTok{"new\_poco"}\NormalTok{,}
+      \StringTok{"old\_2"} \OtherTok{=} \StringTok{"new\_medio"}\NormalTok{,}
+      \StringTok{"old\_3"} \OtherTok{=} \StringTok{"new\_tanto"}\NormalTok{,}
+      \StringTok{"old\_4"} \OtherTok{=} \StringTok{"new\_massimo"}\NormalTok{,}
+\NormalTok{     )}
+\NormalTok{   )}
+\NormalTok{df}
+\CommentTok{\#\textgreater{} \# A tibble: 5 x 2}
+\CommentTok{\#\textgreater{}   f\_1             y}
+\CommentTok{\#\textgreater{}   \textless{}fct\textgreater{}       \textless{}int\textgreater{}}
+\CommentTok{\#\textgreater{} 1 new\_tanto       1}
+\CommentTok{\#\textgreater{} 2 new\_massimo     2}
+\CommentTok{\#\textgreater{} 3 new\_poco        3}
+\CommentTok{\#\textgreater{} 4 new\_poco        4}
+\CommentTok{\#\textgreater{} 5 new\_medio       5}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{riordinare-i-livelli-di-un-fattore}{%
+\subsubsection{Riordinare i livelli di un fattore}\label{riordinare-i-livelli-di-un-fattore}}
+
+Spesso i livelli dei fattori hanno un ordinamento naturale. Tuttavia, l'impostazione predefinita in base \texttt{R} è ordinare i livelli in ordine alfabetico. Quindi, gli utenti devono avere un modo per imporre l'ordine desiderato sulla codifica delle loro variabili qualitative. Ciò può essere ottenuto nel modo seguente.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df}\SpecialCharTok{$}\NormalTok{f\_1 }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{f\_1,}
+  \AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}
+    \StringTok{"new\_poco"}\NormalTok{, }\StringTok{"new\_medio"}\NormalTok{, }\StringTok{"new\_tanto"}\NormalTok{, }\StringTok{"new\_massimo"}
+\NormalTok{  )}
+\NormalTok{)}
+\FunctionTok{summary}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{f\_1)}
+\CommentTok{\#\textgreater{}    new\_poco   new\_medio   new\_tanto new\_massimo }
+\CommentTok{\#\textgreater{}           2           1           1           1}
+\end{Highlighting}
+\end{Shaded}
+
+Per approfondire le problematiche della manipolazione di variabili qualitative in R, si veda \textcite{mcnamara2018wrangling}.
+
+\hypertarget{creare-grafici-con-ggplot2}{%
+\subsection{\texorpdfstring{Creare grafici con \texttt{ggplot2()}}{Creare grafici con ggplot2()}}\label{creare-grafici-con-ggplot2}}
+
+Il pacchetto \texttt{ggplot2()} è un potente strumento per rappresentare graficamente i dati. Le iniziali del nome, \texttt{gg}, si riferiscono alla ``Grammar of Graphics'', che è un modo di pensare le figure come una serie di layer stratificati. Originariamente descritta da \textcite{wilkinson2012grammar}, la grammatica dei grafici è stata aggiornata e applicata in \texttt{R} da Hadley Wickham, il creatore del pacchetto.
+
+La funzione da cui si parte per inizializzare un grafico è \texttt{ggplot()}. La funzione \texttt{ggplot()} richiede due argomenti. Il primo è l'oggetto di tipo data.frame che contiene i dati da visualizzare -- in alternativa al primo argomento, un dataframe può essere passato a \texttt{ggplot()} mediante l'operatore pipe. Il secondo è una particolare lista che viene generata dalla funzione \texttt{aes()}, la quale determina l'aspetto (\emph{aesthetic}) del grafico. La funzione \texttt{aes()} richiede necessariamente di specificare ``x'' e ``y'', ovvero i nomi delle colonne del data.frame che è stato utilizzato quale primo argomento di \texttt{ggplot()} (o che è stato passato da pipe), le quali rappresentano le variabili da porre rispettivamente sugli assi orizzontale e verticale.
+
+La definizione della tipologia di grafico e i vari parametri sono poi definiti successivamente, aggiungendo all'oggetto creato da \texttt{ggplot()} tutte le componenti necessarie. Saranno quindi altre funzioni, come \texttt{geom\_bar()}, \texttt{geom\_line()} o \texttt{geom\_point()} a occuparsi di aggiungere al livello di base barre, linee, punti, e così via. Infine, tramite altre funzioni, ad esempio \texttt{labs()}, sarà possibile definire i dettagli più fini.
+
+Gli elementi grafici (bare, punti, segmenti, \ldots) usati da \texttt{ggplot2} sono chiamati \texttt{geoms}. Mediante queste funzioni è possibile costruire diverse tipologie di grafici:
+
+\begin{itemize}
 \item
-  il parametro \(\beta\).
+  \texttt{geom\_bar()}: crea un layer con delle barre;
+\item
+  \texttt{geom\_point()}: crea un layer con dei punti (diagramma a dispersione);
+\item
+  \texttt{geom\_line()}: crea un layer con una linea retta;
+\item
+  \texttt{geom\_histogram()}: crea un layer con un istogramma;
+\item
+  \texttt{geom\_boxplot()}: crea un layer con un box-plot;
+\item
+  \texttt{geom\_errorbar()}: crea un layer con barre che rappresentano intervalli di confidenza;
+\item
+  \texttt{geom\_hline()} e \texttt{geom\_vline()} : crea un layer con una linea orizzontale o verticale definita dall'utente.
 \end{itemize}
 
-\begin{example}
-
-Al variare di \(\alpha\) e \(\beta\) si ottengono molte distribuzioni di forma diversa; per \(\alpha = \beta = 1\) si ha la densità uniforme. Vari esempi di distribuzioni Beta sono mostrati nella figura \ref{fig:some-beta-distr}.
-
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/some-beta-distr-1} 
-
-}
-
-\caption{Alcune distribuzioni Beta.}\label{fig:some-beta-distr}
-\end{figure}
-
-\end{example}
-
-\begin{example}
-\protect\hypertarget{exm:beta-tuning}{}\label{exm:beta-tuning}Nel disturbo depressivo la recidiva è definita come la comparsa di un nuovo episodio depressivo che si manifesta dopo un prolungato periodo di recupero (6-12 mesi) con stato di eutimia (umore relativamente normale). Supponiamo che una serie di studi mostri una comparsa di recidiva in una proporzione che va dal 20\% al 60\% dei casi, con una media del 40\% \autocite[per una recente discussione, si veda][]{nuggerud2020analysis}. Sulla base di queste ipotetiche informazioni, è possibile usare la distribuzione Beta per rappresentare le nostre credenze a priori relativamente alla probabilità di recidiva. Per fare questo dobbiamo trovare i parametri della distribuzione Beta tali per cui la massa della densità sia compresa tra 0.2 e 0.6, con la media in corrispondenza di 0.4. Procedendo per tentativi ed errori, ed usando la funzione \texttt{bayesrules::plot\_beta()}, un risultato possibile è \(\Beta(16, 24)\).
+Un comando generico ha la seguente forma:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{find\_pars }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(ev, n) \{}
-\NormalTok{  a }\OtherTok{\textless{}{-}}\NormalTok{ ev }\SpecialCharTok{*}\NormalTok{ n}
-\NormalTok{  b }\OtherTok{\textless{}{-}}\NormalTok{ n }\SpecialCharTok{{-}}\NormalTok{ a}
-  \FunctionTok{return}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FunctionTok{round}\NormalTok{(a), }\FunctionTok{round}\NormalTok{(b)))}
-\NormalTok{\}}
-
-\NormalTok{pars }\OtherTok{\textless{}{-}} \FunctionTok{find\_pars}\NormalTok{(.}\DecValTok{4}\NormalTok{, }\DecValTok{40}\NormalTok{)}
-\NormalTok{pars}
-\CommentTok{\#\textgreater{} [1] 16 24}
-\NormalTok{bayesrules}\SpecialCharTok{::}\FunctionTok{plot\_beta}\NormalTok{(pars[}\DecValTok{1}\NormalTok{], pars[}\DecValTok{2}\NormalTok{])}
+\NormalTok{my\_graph }\OtherTok{\textless{}{-}}\NormalTok{ my\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(x\_var, y\_var)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_...}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-11-1} \end{center}
+La prima volta che si usa il pacchetto \texttt{ggplot2} è necessario installarlo. Per fare questo possiamo installare \texttt{tidyverse} che, oltre a caricare \texttt{ggplot2}, carica anche altre utili funzioni per l'analisi dei dati. Ogni volta che si inizia una sessione R è necessario attivare i pacchetti che si vogliono usare, ma non è necessario istallarli una nuova volta. Se è necessario specificare il pacchetto nel quale è contenuta la funzione che vogliamo utilizzare, usiamo la sintassi \texttt{package::function()}. Per esempio, l'istruzione \texttt{ggplot2::ggplot()} rende esplicito che stiamo usando la funzione \texttt{ggplot()} contenuta nel pacchetto \texttt{ggplot2}.
 
-La media della distribuzione a priori diventa:
+\hypertarget{diagramma-a-dispersione}{%
+\subsection{Diagramma a dispersione}\label{diagramma-a-dispersione}}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\DecValTok{16} \SpecialCharTok{/}\NormalTok{ (}\DecValTok{16} \SpecialCharTok{+} \DecValTok{24}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.4}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-e la moda è
+Consideriamo nuovamenti i dati contenuti nel \texttt{tibble} \texttt{msleep} e poniamoci il problema di rappresentare graficamente la relazione tra il numero medio di ore di sonno giornaliero (\texttt{sleep\_total}) e il peso dell'animale (\texttt{bodywt}). Usando le impostazioni di default di \texttt{ggplot2}, con le istruzioni seguenti, otteniamo il grafico fornito dalla figura seguente.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{(}\DecValTok{16} \SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{16} \SpecialCharTok{+} \DecValTok{24} \SpecialCharTok{{-}} \DecValTok{2}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.395}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Inoltre, la deviazione standard della distribuzione a priori diventa
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{sqrt}\NormalTok{((}\DecValTok{16} \SpecialCharTok{*} \DecValTok{24}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ ((}\DecValTok{16} \SpecialCharTok{+} \DecValTok{24}\NormalTok{)}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ (}\DecValTok{16} \SpecialCharTok{+} \DecValTok{24} \SpecialCharTok{+} \DecValTok{1}\NormalTok{)))}
-\CommentTok{\#\textgreater{} [1] 0.0765}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-uguale a circa 8 punti percentuali. Questo significa che le nostre credenze a priori rispetto la possibilità di recidiva tendono a deviare di circa 8 punti percentuali rispetto alla media della distribuzione a priori del 40\%.
-\end{example}
-
-\hypertarget{distribuzione-di-cauchy}{%
-\section{Distribuzione di Cauchy}\label{distribuzione-di-cauchy}}
-
-La distribuzione di Cauchy è un caso speciale della distribuzione di \(t\) di Student con 1 grado di libertà. È definita da una densità di probabilità che corrisponde alla funzione, dipendente da due parametri \(\theta\) e \(d\) (con la condizione \(d > 0\)),
-
-\begin{equation}
-f(x; \theta, d) = \frac{1}{\pi d} \frac{1}{1 + \left(\frac{x - \theta}{d} \right)^2},
-\end{equation}
-dove \(\theta\) è la mediana della distribuzione e \(d\) ne misura la larghezza a metà altezza.
-
-\hypertarget{distribuzione-log-normale}{%
-\section{Distribuzione log-normale}\label{distribuzione-log-normale}}
-
-Sia \(y\) una variabile casuale avente distribuzione normale con media \(\mu\) e varianza \(\sigma^2\). Definiamo poi una nuova variabile casuale \(x\) attraverso la relazione
-\[
-x = e^y \quad \Longleftrightarrow \quad y = \log x.
-\]
-Il dominio di definizione della \(x\) è il semiasse \(x > 0\) e la densità di probabilità \(f(x)\) è data da
-\begin{equation}
-f(x) = \frac{1}{\sigma \sqrt{2 \pi}} \frac{1}{x} \exp \left\{-\frac{(\log x -  \mu)^2}{2 \sigma^2} \right\}.
-\end{equation}
-\noindent
-Questa funzione di densità si chiama log-normale.
-
-Il valore atteso e la varianza di una distribuzione log-normale sono dati dalle seguenti equazioni:
-\begin{equation}
-\E(x) = \exp \left\{\mu + \frac{\sigma^2}{2} \right\}.
-\end{equation}
-
-\begin{equation}
-\Var(x) = \exp \left\{2 \mu + \sigma^2 \right\} \left(\exp \left\{\sigma^2 \right\}  -1\right).
-\end{equation}
-
-Si può dimostrare che il prodotto di variabili casuali log-normali ed indipendenti segue una distribuzione log-normale.
-
-\hypertarget{distribuzione-di-pareto}{%
-\section{Distribuzione di Pareto}\label{distribuzione-di-pareto}}
-
-La distribuzione paretiana (o distribuzione di Pareto) è una distribuzione di probabilità continua e così chiamata in onore di Vilfredo Pareto. La distribuzione di Pareto è una distribuzione di probabilità con legge di potenza utilizzata nella descrizione di fenomeni sociali e molti altri tipi di fenomeni osservabili. Originariamente applicata per descrivere la distribuzione del reddito in una società, adattandosi alla tendenza che una grande porzione di ricchezza è detenuta da una piccola frazione della popolazione, la distribuzione di Pareto è diventata colloquialmente nota e indicata come il principio di Pareto, o ``regola 80-20''. Questa regola afferma che, ad esempio, l'80\% della ricchezza di una società è detenuto dal 20\% della sua popolazione. Viene spesso applicata nello studio della distribuzione del reddito, della dimensione dell'impresa, della dimensione di una popolazione e nelle fluttuazioni del prezzo delle azioni.
-
-La densità di una distribuzione di Pareto é
-
-\[
-f(x)=(x_m/x)^\alpha,
-\]
-\noindent
-dove \(x_m\) (parametro di scala) è il minimo (necessariamente positivo) valore possibile di \(X\) e \(\alpha\) è un parametro di forma.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{5}\NormalTok{, }\FloatTok{0.05}\NormalTok{)}
-\NormalTok{a3 }\OtherTok{\textless{}{-}} \DecValTok{3} \SpecialCharTok{/}\NormalTok{ x}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{4}\NormalTok{)}
-\NormalTok{a2 }\OtherTok{\textless{}{-}} \DecValTok{2} \SpecialCharTok{/}\NormalTok{ x}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{3}\NormalTok{)}
-\NormalTok{a1 }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{/}\NormalTok{ x}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{2}\NormalTok{)}
-\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(}
-  \FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{p =}\NormalTok{ a3, }\AttributeTok{alpha =} \StringTok{"3"}\NormalTok{),}
-  \FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{p =}\NormalTok{ a2, }\AttributeTok{alpha =} \StringTok{"2"}\NormalTok{),}
-  \FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{p =}\NormalTok{ a1, }\AttributeTok{alpha =} \StringTok{"1"}\NormalTok{)}
-\NormalTok{)}
-\NormalTok{gg }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{y =}\NormalTok{ p, }\AttributeTok{group =}\NormalTok{ alpha)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ alpha)) }\SpecialCharTok{+}
-  \FunctionTok{xlim}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{5}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Densità di Pareto per alcuni valori del parametro di forma"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"P(X = x)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{scale\_colour\_viridis}\NormalTok{(}
-    \AttributeTok{discrete =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{labels =} \FunctionTok{parse\_format}\NormalTok{()}
+\FunctionTok{data}\NormalTok{(msleep)}
+\NormalTok{p }\OtherTok{\textless{}{-}}\NormalTok{ msleep }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bodywt, }\AttributeTok{y =}\NormalTok{ sleep\_total)}
 \NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}
-    \AttributeTok{x =} \StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{y"}\NormalTok{,}
-    \AttributeTok{y =} \StringTok{"f(y)}\SpecialCharTok{\textbackslash{}n}\StringTok{"}
-\NormalTok{  )}
-\FunctionTok{print}\NormalTok{(gg)}
+  \FunctionTok{geom\_point}\NormalTok{()}
+\FunctionTok{print}\NormalTok{(p)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-15-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-16-1} \end{center}
 
-\noindent
-La distribuzione di Pareto ha una asimmetria positiva. Il supporto della distribuzione di Pareto è la retta reale positiva. Tutti i valori devono essere maggiori del parametro di scala \(x_m\), che è in realtà un parametro di soglia.
+Coloriamo ora in maniera diversa i punti che rappresentano animali carnivori, erbivori, ecc.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p }\OtherTok{\textless{}{-}}\NormalTok{ msleep }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bodywt, }\AttributeTok{y =}\NormalTok{ sleep\_total, }\AttributeTok{col =}\NormalTok{ vore)}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}
+\FunctionTok{print}\NormalTok{(p)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-17-1} \end{center}
+
+È chiaro, senza fare alcuna analisi statistica, che la relazione tra le due variabili non è lineare. Trasformando in maniera logaritmica i valori dell'asse \(x\) la relazione si linearizza.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p }\OtherTok{\textless{}{-}}\NormalTok{ msleep }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{log}\NormalTok{(bodywt), }\AttributeTok{y =}\NormalTok{ sleep\_total, }\AttributeTok{col =}\NormalTok{ vore)}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}
+\FunctionTok{print}\NormalTok{(p)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-18-1} \end{center}
+
+Infine, aggiustiamo il ``tema'' del grafico (si noti l'utilizzo di una tavolozza di colori adatta ai daltonici), aggiungiamo le etichette sugli assi e il titolo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{msleep }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{log}\NormalTok{(bodywt), }\AttributeTok{y =}\NormalTok{ sleep\_total, }\AttributeTok{col =}\NormalTok{ vore)}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_okabe\_ito}\NormalTok{(}\AttributeTok{name =} \StringTok{"vore"}\NormalTok{, }\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{9}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \StringTok{"Peso Corporeo (log)"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Ore totali di sonno"}\NormalTok{,}
+    \AttributeTok{title =} \StringTok{"Il sonno in 83 specie di mammiferi"}\NormalTok{,}
+    \AttributeTok{subtitle =} \StringTok{"Savage e West (2007)"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-19-1} \end{center}
+
+\hypertarget{istogramma}{%
+\subsubsection{Istogramma}\label{istogramma}}
+
+Creiamo ora un istogramma che rappresenta la distribuzione del (logaritmo del) peso medio del cervello delle 83 specie di mammiferi considerate da \textcite{savage2007quantitative}. L'argomento \texttt{aes(y\ =\ ..density..)} in \texttt{geom\_histogram()} produce le frequenze relative. L'opzione di default (senza questo argomento) porta \texttt{ggplot()} a rappresentare le frequenze assolute.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{msleep }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}\FunctionTok{log}\NormalTok{(brainwt))}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ ..density..)) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \StringTok{"Log Peso Cervello"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Frequenza Relativa"}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-20-1} \end{center}
+
+\hypertarget{scrivere-il-codice-in-r-con-stile}{%
+\subsection{\texorpdfstring{Scrivere il codice in \texttt{R} con stile}{Scrivere il codice in R con stile}}\label{scrivere-il-codice-in-r-con-stile}}
+
+Uno stile di programmazione è un insieme di regole per la gestione dell'indentazione dei blocchi di codice, per la creazione dei nomi dei file e delle variabili e per le convenzioni tipografiche che vengono usate. Scrivere il codice in \texttt{R} con stile consente di creare listati più leggibili e semplici da modificare, minimizza la possibilità di errore, e consente correzioni e modifiche più rapide. Vi sono molteplici stili di programmazione che possono essere utilizzati dall'utente, anche se è bene attenersi a quelle che sono le convenzioni maggiormente diffuse, allo scopo di favorire la comunicazione. In ogni caso, l'importante è di essere coerenti, ovvero di adottare le stesse convenzioni in tutte le parti del codice che si scrive. Ad esempio, se si sceglie di usare lo stile \texttt{snake\_case} per il nome composto di una variabile (es., \texttt{personality\_trait}), non è appropriato usare lo stile \emph{lower Camel case} per un'altra variabile (es., \texttt{socialStatus}). Dato che questo argomento è stato trattato ampiamente in varie sedi, mi limito qui a rimandare ad uno stile di programmazione molto popolare, quello proposto da Hadley Wickham, il creatore di \texttt{tidyverse}. Potete trovare maggiori informazioni al seguente link: \url{http://style.tidyverse.org/}.
 
 
 % Bibliography
