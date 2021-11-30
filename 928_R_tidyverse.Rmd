@@ -66,7 +66,6 @@ Ritorniamo ora all'esempio precedente. Iniziamo a trasformare il data frame `msl
 
 ```{r}
 msleep <- tibble(msleep)
-msleep
 ```
 
 \noindent 

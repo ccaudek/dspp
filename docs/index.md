@@ -42,8 +42,8 @@ mainfontoptions:
   - UprightFont=*-regular
   - BoldFont=*-bold
   - BoldItalicFont=*-bolditalic
-monofont: "Inconsolata"
-monofontoptions: "Scale=0.85"
+monofont: "Operator Mono SSm Lig Book"
+monofontoptions: "Scale=0.75"
 # mathfont: texgyretermes-math.otf # Times New Roman for equations
 # memoir Style
 MemoirChapStyle: daleif1           # or companion with large margins
