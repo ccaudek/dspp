@@ -60,8 +60,7 @@ In questa seconda versione del (pseudo) codice `R` si capisce molto meglio ciò 
 
 Questo pseudo-codice chiarisce il significato dell'operatore pipe. L'operatore `%>%` viene utilizzato quando abbiamo una serie di funzioni concatenate. Per concatenazione di funzioni si intende una serie di funzioni nelle quali l'output di una funzione costituisce l'input della funzione successiva. L'operatore pipe è "syntactic sugar" per una serie di chiamate di funzioni concatenate, ovvero, detto in altre parole, consente di definire la concatenazione tra una serie di funzioni nelle quali il risultato (output) di una funzione viene utilizzato come l'input di una funzione successiva.
 
-
-#### Selezionare le colonne del `tibble` con `select()`
+#### Estrarre una singola colonna con `pull()`
 
 Ritorniamo ora all'esempio precedente. Iniziamo a trasformare il data frame `msleep` in un `tibble` (che è identico ad un data frame ma viene stampato sulla console in un modo diverso):
 
@@ -70,8 +69,17 @@ msleep <- tibble(msleep)
 msleep
 ```
 
-\noindent
-Supponiamo di volere selezionare le variabili `name`, `vore` e `sleep_total` da  `msleep`. Per fare ciò usiamo il verbo `select()`:
+\noindent 
+Estraiamo da `msleep` la variabile `sleep_total` usando il verbo `pull()`:
+
+```{r}
+msleep %>% 
+  pull(sleep_total)
+```
+
+#### Selezionare più colonne con `select()`
+
+Se vogliamo selezionare da `msleep` un insieme di variabili, ad esempio `name`, `vore` e `sleep_total`, possiamo usare il verbo `select()`:
 
 ```{r}
 dt <- msleep %>%
@@ -84,7 +92,7 @@ laddove la sequenza di istruzioni precedenti significa che abbiamo passato `msle
 
 #### Filtrare le osservazioni (righe) con `filter()`
 
-Il verbo `filter()` consente di selezionare un sottoinsieme di righe (osservazioni) di un `tibble`. Per esempio, possiamo selezionare tutte le osservazioni nella variabile `vore` contrassegnate come `carni` (ovvero, tutti i carnivori):
+Il verbo `filter()` consente di selezionare da un `tibble` un sottoinsieme di righe (osservazioni). Per esempio, possiamo selezionare tutte le osservazioni nella variabile `vore` contrassegnate come `carni` (ovvero, tutti i carnivori):
 
 ```{r}
 dt %>%
@@ -180,6 +188,35 @@ Si noti che, nel caso di 7 osservazioni, il valore di `vore` non era
 specificato. Per tali osservazioni, dunque, la classe di appartenenza è
 `NA`.
 
+#### Applicare una funzione su più colonne: `across()`
+
+È spesso utile eseguire la stessa operazione su più colonne, ma copiare e incollare è sia noioso che soggetto a errori:
+
+```{r, eval=FALSE}
+df %>% 
+  group_by(g1, g2) %>% 
+  summarise(a = mean(a), b = mean(b), c = mean(c), d = mean(d))
+```
+
+\noindent
+In tali circostanze è possibile usare la funzione `across()` che consente di riscrivere il codice precedente in modo più succinto:
+
+```{r, eval=FALSE}
+df %>% 
+  group_by(g1, g2) %>% 
+  summarise(across(a:d, mean))
+```
+
+\noindent
+Per i dati presenti, ad esempio, possiamo avere:
+
+```{r}
+msleep %>%
+  group_by(vore) %>%
+  summarise(across(starts_with("sleep"), ~ mean(.x, na.rm = TRUE)))
+```
+
+
 ### Dati categoriali in `R`
 
 Consideriamo una variabile che descrive il genere e include le categorie `male`,  `female` e `non-conforming`. In `R`, ci sono due modi per memorizzare queste informazioni. Uno è usare la classe _character strings_ e l'altro è usare la classe _factor_. Non ci addentrimo qui nelle sottigliezze di questa distinzione, motivata in gran parte per le necessità della programmazione con le funzioni di `tidyverse`. Per gli scopi di questo insegnamento sarà sufficiente codificare le variabili qualitative usando la classe _factor_. Una volta codificati i dati qualitativi utilizzando la classe _factor_, si pongono spesso due problemi:
@@ -200,35 +237,37 @@ df
 ```
 
 \noindent
-Supponiamo ora di volere che i livelli del fattore `f_1` abbiano le etichette `new_1`, `new_2`, ecc. Per ottenere questo risultato usiamo la funzione `recode()`:
+Supponiamo ora di volere che i livelli del fattore `f_1` abbiano le etichette `new_1`, `new_2`, ecc. Per ottenere questo risultato usiamo la funzione `forcats::fct_recode()`:
 
 ```{r}
 df <- df %>%
   mutate(f_1 =
-    dplyr::recode(f_1,
-      "old_1" = "new_poco",
-      "old_2" = "new_medio",
-      "old_3" = "new_tanto",
-      "old_4" = "new_massimo",
-     )
+    forcats::fct_recode(
+      f_1, 
+      "new_poco" = "old_1", 
+      "new_medio" = "old_2", 
+      "new_tanto" = "old_3", 
+      "new_massimo" = "old_4"
+      )
    )
 df
 ```
 
 #### Riordinare i livelli di un fattore
 
-Spesso i livelli dei fattori hanno un ordinamento naturale. Tuttavia, l'impostazione predefinita in base `R` è ordinare i livelli in ordine alfabetico. Quindi, gli utenti devono avere un modo per imporre l'ordine desiderato sulla codifica delle loro variabili qualitative. Ciò può essere ottenuto nel modo seguente.
+Spesso i livelli dei fattori hanno un ordinamento naturale. Quindi, gli utenti devono avere un modo per imporre l'ordine desiderato sulla codifica delle loro variabili qualitative. Se per qualche motivo vogliamo ordinare i livelli `f_1` in ordine inverso, ad esempio, possiamo procedere nel modo seguente.
 
 ```{r}
 df$f_1 <- factor(df$f_1,
   levels = c(
-    "new_poco", "new_medio", "new_tanto", "new_massimo"
+    "new_massimo", "new_tanto", "new_medio", "new_poco" 
   )
 )
 summary(df$f_1)
 ```
 
-Per approfondire le problematiche della manipolazione di variabili qualitative in R, si veda @mcnamara2018wrangling.
+\noindent
+Per approfondire le problematiche della manipolazione di variabili qualitative in `R`, si veda @mcnamara2018wrangling.
 
 ### Creare grafici con `ggplot2()`
 

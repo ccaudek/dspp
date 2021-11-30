@@ -321,7 +321,7 @@
 
 \author{Corrado Caudek}
 
-\date{2021-11-28}
+\date{2021-11-30}
 
 
 % Include headers (preamble.tex) here
@@ -481,7 +481,7 @@ Copyright \(\copyright\) 2022.
 
 \normalsize
 
-Data della versione presente: Novembre 28, 2021.
+Data della versione presente: Novembre 30, 2021.
 
 \hypertarget{prefazione}{%
 \chapter{Prefazione}\label{prefazione}}
@@ -636,8 +636,8 @@ In questa seconda versione del (pseudo) codice \texttt{R} si capisce molto megli
 
 Questo pseudo-codice chiarisce il significato dell'operatore pipe. L'operatore \texttt{\%\textgreater{}\%} viene utilizzato quando abbiamo una serie di funzioni concatenate. Per concatenazione di funzioni si intende una serie di funzioni nelle quali l'output di una funzione costituisce l'input della funzione successiva. L'operatore pipe è ``syntactic sugar'' per una serie di chiamate di funzioni concatenate, ovvero, detto in altre parole, consente di definire la concatenazione tra una serie di funzioni nelle quali il risultato (output) di una funzione viene utilizzato come l'input di una funzione successiva.
 
-\hypertarget{selezionare-le-colonne-del-tibble-con-select}{%
-\subsubsection{\texorpdfstring{Selezionare le colonne del \texttt{tibble} con \texttt{select()}}{Selezionare le colonne del tibble con select()}}\label{selezionare-le-colonne-del-tibble-con-select}}
+\hypertarget{estrarre-una-singola-colonna-con-pull}{%
+\subsubsection{\texorpdfstring{Estrarre una singola colonna con \texttt{pull()}}{Estrarre una singola colonna con pull()}}\label{estrarre-una-singola-colonna-con-pull}}
 
 Ritorniamo ora all'esempio precedente. Iniziamo a trasformare il data frame \texttt{msleep} in un \texttt{tibble} (che è identico ad un data frame ma viene stampato sulla console in un modo diverso):
 
@@ -658,8 +658,26 @@ Ritorniamo ora all'esempio precedente. Iniziamo a trasformare il data frame \tex
 \end{Highlighting}
 \end{Shaded}
 
-\noindent
-Supponiamo di volere selezionare le variabili \texttt{name}, \texttt{vore} e \texttt{sleep\_total} da \texttt{msleep}. Per fare ciò usiamo il verbo \texttt{select()}:
+\noindent 
+Estraiamo da \texttt{msleep} la variabile \texttt{sleep\_total} usando il verbo \texttt{pull()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{msleep }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pull}\NormalTok{(sleep\_total)}
+\CommentTok{\#\textgreater{}  [1] 12.1 17.0 14.4 14.9  4.0 14.4  8.7  7.0 10.1  3.0  5.3  9.4 10.0 12.5 10.3}
+\CommentTok{\#\textgreater{} [16]  8.3  9.1 17.4  5.3 18.0  3.9 19.7  2.9  3.1 10.1 10.9 14.9 12.5  9.8  1.9}
+\CommentTok{\#\textgreater{} [31]  2.7  6.2  6.3  8.0  9.5  3.3 19.4 10.1 14.2 14.3 12.8 12.5 19.9 14.6 11.0}
+\CommentTok{\#\textgreater{} [46]  7.7 14.5  8.4  3.8  9.7 15.8 10.4 13.5  9.4 10.3 11.0 11.5 13.7  3.5  5.6}
+\CommentTok{\#\textgreater{} [61] 11.1 18.1  5.4 13.0  8.7  9.6  8.4 11.3 10.6 16.6 13.8 15.9 12.8  9.1  8.6}
+\CommentTok{\#\textgreater{} [76] 15.8  4.4 15.6  8.9  5.2  6.3 12.5  9.8}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{selezionare-piuxf9-colonne-con-select}{%
+\subsubsection{\texorpdfstring{Selezionare più colonne con \texttt{select()}}{Selezionare più colonne con select()}}\label{selezionare-piuxf9-colonne-con-select}}
+
+Se vogliamo selezionare da \texttt{msleep} un insieme di variabili, ad esempio \texttt{name}, \texttt{vore} e \texttt{sleep\_total}, possiamo usare il verbo \texttt{select()}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -685,7 +703,7 @@ laddove la sequenza di istruzioni precedenti significa che abbiamo passato \text
 \hypertarget{filtrare-le-osservazioni-righe-con-filter}{%
 \subsubsection{\texorpdfstring{Filtrare le osservazioni (righe) con \texttt{filter()}}{Filtrare le osservazioni (righe) con filter()}}\label{filtrare-le-osservazioni-righe-con-filter}}
 
-Il verbo \texttt{filter()} consente di selezionare un sottoinsieme di righe (osservazioni) di un \texttt{tibble}. Per esempio, possiamo selezionare tutte le osservazioni nella variabile \texttt{vore} contrassegnate come \texttt{carni} (ovvero, tutti i carnivori):
+Il verbo \texttt{filter()} consente di selezionare da un \texttt{tibble} un sottoinsieme di righe (osservazioni). Per esempio, possiamo selezionare tutte le osservazioni nella variabile \texttt{vore} contrassegnate come \texttt{carni} (ovvero, tutti i carnivori):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -838,6 +856,49 @@ Si noti che, nel caso di 7 osservazioni, il valore di \texttt{vore} non era
 specificato. Per tali osservazioni, dunque, la classe di appartenenza è
 \texttt{NA}.
 
+\hypertarget{applicare-una-funzione-su-piuxf9-colonne-across}{%
+\subsubsection{\texorpdfstring{Applicare una funzione su più colonne: \texttt{across()}}{Applicare una funzione su più colonne: across()}}\label{applicare-una-funzione-su-piuxf9-colonne-across}}
+
+È spesso utile eseguire la stessa operazione su più colonne, ma copiare e incollare è sia noioso che soggetto a errori:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(g1, g2) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{a =} \FunctionTok{mean}\NormalTok{(a), }\AttributeTok{b =} \FunctionTok{mean}\NormalTok{(b), }\AttributeTok{c =} \FunctionTok{mean}\NormalTok{(c), }\AttributeTok{d =} \FunctionTok{mean}\NormalTok{(d))}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+In tali circostanze è possibile usare la funzione \texttt{across()} che consente di riscrivere il codice precedente in modo più succinto:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(g1, g2) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\FunctionTok{across}\NormalTok{(a}\SpecialCharTok{:}\NormalTok{d, mean))}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Per i dati presenti, ad esempio, possiamo avere:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{msleep }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(vore) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"sleep"}\NormalTok{), }\SpecialCharTok{\textasciitilde{}} \FunctionTok{mean}\NormalTok{(.x, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)))}
+\CommentTok{\#\textgreater{} \# A tibble: 5 x 4}
+\CommentTok{\#\textgreater{}   vore    sleep\_total sleep\_rem sleep\_cycle}
+\CommentTok{\#\textgreater{}   \textless{}chr\textgreater{}         \textless{}dbl\textgreater{}     \textless{}dbl\textgreater{}       \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 carni         10.4       2.29       0.373}
+\CommentTok{\#\textgreater{} 2 herbi          9.51      1.37       0.418}
+\CommentTok{\#\textgreater{} 3 insecti       14.9       3.52       0.161}
+\CommentTok{\#\textgreater{} 4 omni          10.9       1.96       0.592}
+\CommentTok{\#\textgreater{} 5 \textless{}NA\textgreater{}          10.2       1.88       0.183}
+\end{Highlighting}
+\end{Shaded}
+
 \hypertarget{dati-categoriali-in-r}{%
 \subsection{\texorpdfstring{Dati categoriali in \texttt{R}}{Dati categoriali in R}}\label{dati-categoriali-in-r}}
 
@@ -876,18 +937,19 @@ Esaminiamo l'esempio seguente.
 \end{Shaded}
 
 \noindent
-Supponiamo ora di volere che i livelli del fattore \texttt{f\_1} abbiano le etichette \texttt{new\_1}, \texttt{new\_2}, ecc. Per ottenere questo risultato usiamo la funzione \texttt{recode()}:
+Supponiamo ora di volere che i livelli del fattore \texttt{f\_1} abbiano le etichette \texttt{new\_1}, \texttt{new\_2}, ecc. Per ottenere questo risultato usiamo la funzione \texttt{forcats::fct\_recode()}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{f\_1 =}
-\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{recode}\NormalTok{(f\_1,}
-      \StringTok{"old\_1"} \OtherTok{=} \StringTok{"new\_poco"}\NormalTok{,}
-      \StringTok{"old\_2"} \OtherTok{=} \StringTok{"new\_medio"}\NormalTok{,}
-      \StringTok{"old\_3"} \OtherTok{=} \StringTok{"new\_tanto"}\NormalTok{,}
-      \StringTok{"old\_4"} \OtherTok{=} \StringTok{"new\_massimo"}\NormalTok{,}
-\NormalTok{     )}
+\NormalTok{    forcats}\SpecialCharTok{::}\FunctionTok{fct\_recode}\NormalTok{(}
+\NormalTok{      f\_1, }
+      \StringTok{"new\_poco"} \OtherTok{=} \StringTok{"old\_1"}\NormalTok{, }
+      \StringTok{"new\_medio"} \OtherTok{=} \StringTok{"old\_2"}\NormalTok{, }
+      \StringTok{"new\_tanto"} \OtherTok{=} \StringTok{"old\_3"}\NormalTok{, }
+      \StringTok{"new\_massimo"} \OtherTok{=} \StringTok{"old\_4"}
+\NormalTok{      )}
 \NormalTok{   )}
 \NormalTok{df}
 \CommentTok{\#\textgreater{} \# A tibble: 5 x 2}
@@ -904,22 +966,23 @@ Supponiamo ora di volere che i livelli del fattore \texttt{f\_1} abbiano le etic
 \hypertarget{riordinare-i-livelli-di-un-fattore}{%
 \subsubsection{Riordinare i livelli di un fattore}\label{riordinare-i-livelli-di-un-fattore}}
 
-Spesso i livelli dei fattori hanno un ordinamento naturale. Tuttavia, l'impostazione predefinita in base \texttt{R} è ordinare i livelli in ordine alfabetico. Quindi, gli utenti devono avere un modo per imporre l'ordine desiderato sulla codifica delle loro variabili qualitative. Ciò può essere ottenuto nel modo seguente.
+Spesso i livelli dei fattori hanno un ordinamento naturale. Quindi, gli utenti devono avere un modo per imporre l'ordine desiderato sulla codifica delle loro variabili qualitative. Se per qualche motivo vogliamo ordinare i livelli \texttt{f\_1} in ordine inverso, ad esempio, possiamo procedere nel modo seguente.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{df}\SpecialCharTok{$}\NormalTok{f\_1 }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{f\_1,}
   \AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}
-    \StringTok{"new\_poco"}\NormalTok{, }\StringTok{"new\_medio"}\NormalTok{, }\StringTok{"new\_tanto"}\NormalTok{, }\StringTok{"new\_massimo"}
+    \StringTok{"new\_massimo"}\NormalTok{, }\StringTok{"new\_tanto"}\NormalTok{, }\StringTok{"new\_medio"}\NormalTok{, }\StringTok{"new\_poco"} 
 \NormalTok{  )}
 \NormalTok{)}
 \FunctionTok{summary}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{f\_1)}
-\CommentTok{\#\textgreater{}    new\_poco   new\_medio   new\_tanto new\_massimo }
-\CommentTok{\#\textgreater{}           2           1           1           1}
+\CommentTok{\#\textgreater{} new\_massimo   new\_tanto   new\_medio    new\_poco }
+\CommentTok{\#\textgreater{}           1           1           1           2}
 \end{Highlighting}
 \end{Shaded}
 
-Per approfondire le problematiche della manipolazione di variabili qualitative in R, si veda \textcite{mcnamara2018wrangling}.
+\noindent
+Per approfondire le problematiche della manipolazione di variabili qualitative in \texttt{R}, si veda \textcite{mcnamara2018wrangling}.
 
 \hypertarget{creare-grafici-con-ggplot2}{%
 \subsection{\texorpdfstring{Creare grafici con \texttt{ggplot2()}}{Creare grafici con ggplot2()}}\label{creare-grafici-con-ggplot2}}
@@ -978,7 +1041,7 @@ Consideriamo nuovamenti i dati contenuti nel \texttt{tibble} \texttt{msleep} e p
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-16-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-20-1} \end{center}
 
 Coloriamo ora in maniera diversa i punti che rappresentano animali carnivori, erbivori, ecc.
 
@@ -993,7 +1056,7 @@ Coloriamo ora in maniera diversa i punti che rappresentano animali carnivori, er
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-17-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 È chiaro, senza fare alcuna analisi statistica, che la relazione tra le due variabili non è lineare. Trasformando in maniera logaritmica i valori dell'asse \(x\) la relazione si linearizza.
 
@@ -1008,7 +1071,7 @@ Coloriamo ora in maniera diversa i punti che rappresentano animali carnivori, er
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-18-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-22-1} \end{center}
 
 Infine, aggiustiamo il ``tema'' del grafico (si noti l'utilizzo di una tavolozza di colori adatta ai daltonici), aggiungiamo le etichette sugli assi e il titolo.
 
@@ -1030,7 +1093,7 @@ Infine, aggiustiamo il ``tema'' del grafico (si noti l'utilizzo di una tavolozza
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-19-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-23-1} \end{center}
 
 \hypertarget{istogramma}{%
 \subsubsection{Istogramma}\label{istogramma}}
@@ -1052,7 +1115,7 @@ Creiamo ora un istogramma che rappresenta la distribuzione del (logaritmo del) p
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-20-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-24-1} \end{center}
 
 \hypertarget{scrivere-il-codice-in-r-con-stile}{%
 \subsection{\texorpdfstring{Scrivere il codice in \texttt{R} con stile}{Scrivere il codice in R con stile}}\label{scrivere-il-codice-in-r-con-stile}}

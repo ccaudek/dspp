@@ -62,8 +62,7 @@ In questa seconda versione del (pseudo) codice `R` si capisce molto meglio ciò 
 
 Questo pseudo-codice chiarisce il significato dell'operatore pipe. L'operatore `%>%` viene utilizzato quando abbiamo una serie di funzioni concatenate. Per concatenazione di funzioni si intende una serie di funzioni nelle quali l'output di una funzione costituisce l'input della funzione successiva. L'operatore pipe è "syntactic sugar" per una serie di chiamate di funzioni concatenate, ovvero, detto in altre parole, consente di definire la concatenazione tra una serie di funzioni nelle quali il risultato (output) di una funzione viene utilizzato come l'input di una funzione successiva.
 
-
-#### Selezionare le colonne del `tibble` con `select()`
+#### Estrarre una singola colonna con `pull()`
 
 Ritorniamo ora all'esempio precedente. Iniziamo a trasformare il data frame `msleep` in un `tibble` (che è identico ad un data frame ma viene stampato sulla console in un modo diverso):
 
@@ -83,8 +82,24 @@ msleep
 #> # ... with 77 more rows, and 2 more variables: brainwt <dbl>, bodywt <dbl>
 ```
 
-\noindent
-Supponiamo di volere selezionare le variabili `name`, `vore` e `sleep_total` da  `msleep`. Per fare ciò usiamo il verbo `select()`:
+\noindent 
+Estraiamo da `msleep` la variabile `sleep_total` usando il verbo `pull()`:
+
+
+```r
+msleep %>% 
+  pull(sleep_total)
+#>  [1] 12.1 17.0 14.4 14.9  4.0 14.4  8.7  7.0 10.1  3.0  5.3  9.4 10.0 12.5 10.3
+#> [16]  8.3  9.1 17.4  5.3 18.0  3.9 19.7  2.9  3.1 10.1 10.9 14.9 12.5  9.8  1.9
+#> [31]  2.7  6.2  6.3  8.0  9.5  3.3 19.4 10.1 14.2 14.3 12.8 12.5 19.9 14.6 11.0
+#> [46]  7.7 14.5  8.4  3.8  9.7 15.8 10.4 13.5  9.4 10.3 11.0 11.5 13.7  3.5  5.6
+#> [61] 11.1 18.1  5.4 13.0  8.7  9.6  8.4 11.3 10.6 16.6 13.8 15.9 12.8  9.1  8.6
+#> [76] 15.8  4.4 15.6  8.9  5.2  6.3 12.5  9.8
+```
+
+#### Selezionare più colonne con `select()`
+
+Se vogliamo selezionare da `msleep` un insieme di variabili, ad esempio `name`, `vore` e `sleep_total`, possiamo usare il verbo `select()`:
 
 
 ```r
@@ -108,7 +123,7 @@ laddove la sequenza di istruzioni precedenti significa che abbiamo passato `msle
 
 #### Filtrare le osservazioni (righe) con `filter()`
 
-Il verbo `filter()` consente di selezionare un sottoinsieme di righe (osservazioni) di un `tibble`. Per esempio, possiamo selezionare tutte le osservazioni nella variabile `vore` contrassegnate come `carni` (ovvero, tutti i carnivori):
+Il verbo `filter()` consente di selezionare da un `tibble` un sottoinsieme di righe (osservazioni). Per esempio, possiamo selezionare tutte le osservazioni nella variabile `vore` contrassegnate come `carni` (ovvero, tutti i carnivori):
 
 
 ```r
@@ -251,6 +266,46 @@ Si noti che, nel caso di 7 osservazioni, il valore di `vore` non era
 specificato. Per tali osservazioni, dunque, la classe di appartenenza è
 `NA`.
 
+#### Applicare una funzione su più colonne: `across()`
+
+È spesso utile eseguire la stessa operazione su più colonne, ma copiare e incollare è sia noioso che soggetto a errori:
+
+
+```r
+df %>% 
+  group_by(g1, g2) %>% 
+  summarise(a = mean(a), b = mean(b), c = mean(c), d = mean(d))
+```
+
+\noindent
+In tali circostanze è possibile usare la funzione `across()` che consente di riscrivere il codice precedente in modo più succinto:
+
+
+```r
+df %>% 
+  group_by(g1, g2) %>% 
+  summarise(across(a:d, mean))
+```
+
+\noindent
+Per i dati presenti, ad esempio, possiamo avere:
+
+
+```r
+msleep %>%
+  group_by(vore) %>%
+  summarise(across(starts_with("sleep"), ~ mean(.x, na.rm = TRUE)))
+#> # A tibble: 5 x 4
+#>   vore    sleep_total sleep_rem sleep_cycle
+#>   <chr>         <dbl>     <dbl>       <dbl>
+#> 1 carni         10.4       2.29       0.373
+#> 2 herbi          9.51      1.37       0.418
+#> 3 insecti       14.9       3.52       0.161
+#> 4 omni          10.9       1.96       0.592
+#> 5 <NA>          10.2       1.88       0.183
+```
+
+
 ### Dati categoriali in `R`
 
 Consideriamo una variabile che descrive il genere e include le categorie `male`,  `female` e `non-conforming`. In `R`, ci sono due modi per memorizzare queste informazioni. Uno è usare la classe _character strings_ e l'altro è usare la classe _factor_. Non ci addentrimo qui nelle sottigliezze di questa distinzione, motivata in gran parte per le necessità della programmazione con le funzioni di `tidyverse`. Per gli scopi di questo insegnamento sarà sufficiente codificare le variabili qualitative usando la classe _factor_. Una volta codificati i dati qualitativi utilizzando la classe _factor_, si pongono spesso due problemi:
@@ -280,18 +335,19 @@ df
 ```
 
 \noindent
-Supponiamo ora di volere che i livelli del fattore `f_1` abbiano le etichette `new_1`, `new_2`, ecc. Per ottenere questo risultato usiamo la funzione `recode()`:
+Supponiamo ora di volere che i livelli del fattore `f_1` abbiano le etichette `new_1`, `new_2`, ecc. Per ottenere questo risultato usiamo la funzione `forcats::fct_recode()`:
 
 
 ```r
 df <- df %>%
   mutate(f_1 =
-    dplyr::recode(f_1,
-      "old_1" = "new_poco",
-      "old_2" = "new_medio",
-      "old_3" = "new_tanto",
-      "old_4" = "new_massimo",
-     )
+    forcats::fct_recode(
+      f_1, 
+      "new_poco" = "old_1", 
+      "new_medio" = "old_2", 
+      "new_tanto" = "old_3", 
+      "new_massimo" = "old_4"
+      )
    )
 df
 #> # A tibble: 5 x 2
@@ -306,21 +362,22 @@ df
 
 #### Riordinare i livelli di un fattore
 
-Spesso i livelli dei fattori hanno un ordinamento naturale. Tuttavia, l'impostazione predefinita in base `R` è ordinare i livelli in ordine alfabetico. Quindi, gli utenti devono avere un modo per imporre l'ordine desiderato sulla codifica delle loro variabili qualitative. Ciò può essere ottenuto nel modo seguente.
+Spesso i livelli dei fattori hanno un ordinamento naturale. Quindi, gli utenti devono avere un modo per imporre l'ordine desiderato sulla codifica delle loro variabili qualitative. Se per qualche motivo vogliamo ordinare i livelli `f_1` in ordine inverso, ad esempio, possiamo procedere nel modo seguente.
 
 
 ```r
 df$f_1 <- factor(df$f_1,
   levels = c(
-    "new_poco", "new_medio", "new_tanto", "new_massimo"
+    "new_massimo", "new_tanto", "new_medio", "new_poco" 
   )
 )
 summary(df$f_1)
-#>    new_poco   new_medio   new_tanto new_massimo 
-#>           2           1           1           1
+#> new_massimo   new_tanto   new_medio    new_poco 
+#>           1           1           1           2
 ```
 
-Per approfondire le problematiche della manipolazione di variabili qualitative in R, si veda @mcnamara2018wrangling.
+\noindent
+Per approfondire le problematiche della manipolazione di variabili qualitative in `R`, si veda @mcnamara2018wrangling.
 
 ### Creare grafici con `ggplot2()`
 
@@ -374,7 +431,7 @@ print(p)
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-16-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-20-1} \end{center}
 
 Coloriamo ora in maniera diversa i punti che rappresentano animali carnivori, erbivori, ecc.
 
@@ -390,7 +447,7 @@ print(p)
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-17-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 È chiaro, senza fare alcuna analisi statistica, che la relazione tra le due variabili non è lineare. Trasformando in maniera logaritmica i valori dell'asse $x$ la relazione si linearizza.
 
@@ -406,7 +463,7 @@ print(p)
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-18-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-22-1} \end{center}
 
 Infine, aggiustiamo il "tema" del grafico (si noti l'utilizzo di una tavolozza di colori adatta ai daltonici), aggiungiamo le etichette sugli assi e il titolo.
 
@@ -429,7 +486,7 @@ msleep %>%
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-19-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-23-1} \end{center}
 
 
 #### Istogramma
@@ -452,7 +509,7 @@ msleep %>%
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-20-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-24-1} \end{center}
 
 ### Scrivere il codice in `R` con stile 
 
