@@ -75,13 +75,13 @@ Apprendere che si è verificato un evento improbabile è più informativo che ap
 
 È possibile calcolare la quantità di informazione fornita da un evento usando la probabilità dell'evento. Una tale quantità di informazione è chiamata "informazione Shannon", "autoinformazione" o semplicemente "informazione" e, per un evento discreto $x$, può essere calcolata come segue:
 $$
-\text{informazione}(x) = -log\big( p(x) \big),
+\text{informazione}(x) = -\log_2 p(x),
 $$
-dove $log()$ è il logaritmo in base 2 e $p(x)$ è la probabilità dell'evento $x$.
+dove $\log_2$ è il logaritmo in base 2 e $p(x)$ è la probabilità dell'evento $x$.
 
 La scelta del logaritmo in base 2 significa che l'unità di misura dell'informazione è in bit (cifre binarie). Questo può essere interpretato dicendo che l'informazione misura il numero di bit richiesti per rappresentare l'evento.^[È possibile pensare all'entropia nei termini del numero di domande sì/no che devono essere poste per ridurre l'incertezza. Per esempio, se in un certo giorno ci può essere solo sole o pioggia, per ridurre l'incertezza, a fine giornata chiediamo: "ha piovuto?" La risposta (sì/no) ad una singola domanda elimina l'incertezza, e quindi l'informazione ottenuta (ovvero, la riduzione dell'incertezza) è uguale ad 1 bit. Se in una certa giornata ci potrebbero essere sole, pioggia o neve, per ridurre l'incertezza sono necessarie due domande: "c'era sole?"; "ha piovuto?" In questo secondo caso, l'informazione ottenuta (ovvero, la riduzione dell'incertezza) è uguale ad 2 bit. Usando un logaritmo in base 2, dunque, l'entropia può essere interpretata come il numero minimo di bit necessari per codificare la quantità di informazione nei dati.] Solitamente, la quantità di informazione viene denotata con $h()$:
 $$
-h(x) = -log\big( p(x) \big).
+h(x) = -\log p(x).
 $$
 Il segno negativo garantisce che il risultato sia sempre positivo o zero. L'informazione è zero quando la probabilità dell'evento è 1.0, ovvero l'evento è certo (assenza di sorpresa).
 
@@ -126,9 +126,8 @@ La figura mostra che questa relazione non è lineare, è infatti leggermente sub
 
 :::{.definition}
 Sia $Y = y_1, \dots, y_n$ una variabile casuale e $p_t(y)$ una distribuzione di probabilità su $Y$. Si definisce la sua entropia (detta di Shannon) come:
-
 \begin{equation}
-H(Y) = - \sum_{i=1}^n p_t(y_i) \cdot \log p_t(y_i).
+H(Y) = - \sum_{i=1}^n p_t(y_i) \cdot \log_2 p_t(y_i).
 (\#eq:entropy)
 \end{equation}
 :::
@@ -147,9 +146,8 @@ Si possono evidenziare due proprietà dell'entropia.
 
 ::: {.example}
 Consideriamo un esempio riguardante le previsioni del tempo. Supponiamo che le  probabilità di pioggia e sole siano, rispettivamente, $p_1 = 0.3$ e  $p_2 = 0.7$. Quindi
-
 $$
-H(p) = − [p(y_1) \log p(y_1) + p(y_2) \log p(y_2)] \approx 0.61.
+H(p) = − [p(y_1) \log_2 p(y_1) + p(y_2) \log_2 p(y_2)] \approx 0.61.
 $$
 \noindent
 Svolgendo i calcoli in $\R$ abbiamo:
@@ -183,7 +181,7 @@ Il valore assoluto dell'entropia è difficile da interpretare. Vedremo però com
 :::{.definition}
 Per due distribuzioni discrete $p_t$ e $p_{\mathcal{M}}$, la divergenza KL di $p_{\mathcal{M}}$ da $p_t$ è definita come:
 \begin{equation}
-D_{KL}(p_t \mid\mid p_{\mathcal{M}})  = \sum_{i=1}^n p_t(y_i) \cdot \left[\log p_t(y_i) - \log p_{\mathcal{M}}(y_i)\right].
+D_{KL}(p_t \mid\mid p_{\mathcal{M}}) = \sum_{i=1}^n p_t(y_i) \cdot \left[\log p_t(y_i) - \log p_{\mathcal{M}}(y_i)\right].
 (\#eq:kldivergence)
 \end{equation}
 :::
@@ -307,18 +305,18 @@ tibble(direction = c("Da q a p", "Da p a q"),
 
 Nel caso continuo, la divergenza KL diventa:
 \begin{equation}
-D_{KL}(p_t \mid\mid p_{\mathcal{M}}) = \int_{-\infty}^{+\infty}p_{t}(y)\log p_{t}(y) dy - \int_{-\infty}^{+\infty}p_{t}(y)\log p_{\mathcal{M}}(y) dy.
+D_{KL}(p_t \mid\mid p_{\mathcal{M}}) = \int_{-\infty}^{+\infty} p_{t}(y) \,\log p_{t}(y) \,\operatorname {d}\!y - \int_{-\infty}^{+\infty}p_{t}(y)\log p_{\mathcal{M}}(y) \,\operatorname {d}\!y.
 (\#eq:kl-div-cont)
 \end{equation}
 Se vengono confrontati due modelli, il primo termine della \@ref(eq:kl-div-cont) resta costante e il confronto si riduce al secondo termine della \@ref(eq:kl-div-cont), ovvero
 \begin{equation}
-\int_{-\infty}^{+\infty}p_{t}(y)\log p_{\mathcal{M}}(y) dy.
+\int_{-\infty}^{+\infty}p_{t}(y)\log p_{\mathcal{M}}(y) \,\operatorname {d}\!y.
 (\#eq:kl-div-cont-t2)
 \end{equation}
 \noindent
 Riscriviamo ora la \@ref(eq:kl-div-cont-t2) facendo riferimento alla distribuzione predittiva a posteriori, $p(\tilde{y} \mid y)$, perché ciò a cui siamo interessati è la divergenza di $p(\tilde{y} \mid y)$ da $p_{t}(y)$:
 \begin{equation}
-\elpd = \int_{\tilde{y}} p_{t}(\tilde{y}) \log p(\tilde{y} \mid y) d\tilde{y}.
+\elpd = \int_{\tilde{y}} p_{t}(\tilde{y}) \log p(\tilde{y} \mid y) \,\operatorname {d}\!\tilde{y}.
 (\#eq:elpd)
 \end{equation}
 La \@ref(eq:elpd) è chiamata _expected log predictive density_ ($\elpd$) e fornisce la risposta al problema che ci eravamo posti all'inizio di questo Capitolo, ovvero al problema di definire un criterio per valutare la capacità predittiva di un modello. Possiamo pensare alla \@ref(eq:elpd) dicendo che descrive la distribuzione predittiva a posteriori del modello ponderando la verosimiglianza dei possibili dati futuri con la vera distribuzione $p_t$. Di conseguenza, valori $\elpd$ più grandi corrispondono ad una maggiore capacità predittiva del modello.
@@ -378,7 +376,7 @@ Questa distribuzione ci dice quanto sono credibili i possibili dati futuri.
 
 Conoscendo la vera distribuzione dei dati $p_t(y)$ possiamo calcolare in forma esatta la quantità $\elpd$, ovvero
 $$
-\elpd = \int_{y^{rep}}p_{t}(y^{rep})\log p(y^{rep} \mid y) dy^{rep}.
+\elpd = \int_{y^{rep}}p_{t}(y^{rep})\log p(y^{rep} \mid y) \,\operatorname {d}\!y^{rep}.
 $$
 \noindent
 Svolgiamo i calcoli in $\R$ otteniamo:
@@ -985,8 +983,10 @@ m2 <- brm(kid_score ~ mom_iq,
 ```{r}
 summary(m2)
 ```
-Eseguiamo ora un confronto tra il modello completo e il modello semplificato in base alla statistica LOO-CV:
+\noindent
+Nel caso presente, le differenze sono minime, ma questo non è sempre vero.
 
+Eseguiamo ora un confronto tra il modello completo e il modello semplificato in base alla statistica LOO-CV:
 ```{r}
 loo1 <- loo::loo(m1)
 loo2 <- loo::loo(m2)
@@ -1001,8 +1001,6 @@ loo_R2(m1, robust = TRUE) %>%
 loo_R2(m2, robust = TRUE)%>%
   round(3)
 ```
-\noindent
-Nel caso presente, le differenze sono minime, ma questo non è sempre vero.
 
 
 ## Considerazioni conclusive {-}
