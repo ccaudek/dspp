@@ -5,19 +5,18 @@ source("_common.R")
 source("_stan_options.R")
 ```
 
-Oltre ad una sintesi della distribuzione a posteriori attraverso il computo di indici caratteristici e alla verifica delle ipotesi, un altro compito dell'analisi bayesiana è la predizione di nuovi dati futuri.
-
-::: {.definition}
-La _distribuzione predittiva a posteriori_ (_posterior predictive distribution_, PPD)
+Oltre ad una sintesi della distribuzione a posteriori attraverso il computo di indici caratteristici e alla verifica di ipotesi, un altro compito dell'analisi bayesiana è la predizione di nuovi dati futuri. Dopo aver visto i dati e ottenuto le distribuzioni a posteriori dei parametri, è infatti possibile ottenere qualche indicazione su come potrebbero essere i dati futuri. Una volta trovata la distribuzione a posteriori $p(\theta \mid y)$ possiamo derivare le previsioni relative ai possibili dati futuri in base a questa distribuzione:
 \begin{equation}
-p(\tilde{y} \mid y) = \int_{\theta} p(\tilde{y} \mid \theta) p(\theta \mid y) d\theta
+p(\tilde{y} \mid y) = \int_{\theta} p(\tilde{y}, \theta \mid y) d \theta = \int_{\theta} p(\tilde{y} \mid \theta, y) p(\theta \mid y) d\theta.\notag
+\end{equation}
+\noindent
+Supponendo che le osservazioni passate e future siano condizionalmente indipendenti dato $\theta$, ovvero che $p(\tilde{y} \mid \theta, y) = p(\tilde{y} \mid \theta)$, possiamo scrivere
+\begin{equation}
+p(\tilde{y} \mid y) = \int_{\theta} p(\tilde{y} \mid \theta) p(\theta \mid y) d\theta.
 (\#eq:dist-pred-post)
 \end{equation}
 \noindent
-è la distribuzione di un nuovo campione di possibili osservazioni $\tilde{Y}$ avendo già osservato $n$ manifestazioni dello stesso fenomeno $Y = y$.
-:::
-
-La \@ref(eq:dist-pred-post) descrive la nostra incertezza sui dati previsti futuri data la distribuzione a posteriori per $\theta$ che abbiamo ottenuto, ovvero tenendo conto della scelta del modello e della stima dei parametri mediante i dati osservati. La distribuzione predittiva a posteriori viene usata per fare inferenze predittive, cioè per prevedere la distribuzione di nuovi dati non osservati. 
+La distribuzione $p(\tilde{y} \mid y)$ è la distribuzione di un nuovo campione di possibili osservazioni $\tilde{y}$ avendo già osservato $n$ manifestazioni dello stesso fenomeno $y$ e si chiama _distribuzione predittiva a posteriori_ (_posterior predictive distribution_, PPD). La \@ref(eq:dist-pred-post) descrive la nostra incertezza sulla distribuzione di future osservazioni di dati data la distribuzione a posteriori di $\theta$, ovvero tenendo conto della scelta del modello e della stima dei parametri mediante i dati osservati. La distribuzione predittiva a posteriori viene usata per fare inferenze predittive, cioè per prevedere la distribuzione di nuovi dati non osservati. 
 
 <!-- Cioè, invece dei punti fisso come previsione, viene restituita una distribuzione su possibili punti. -->
 <!-- distribuzione di future osservazioni di dati, ovvero la distribuzione sui possibili dati previsti futuri $\tilde{y}$  -->

@@ -12,7 +12,7 @@ parameters {
 }
 model {
   lambda ~ exponential(0.2);
-
+  
   for (n in 1:N) {
     if (y[n] == 0) {
       target += log(theta);  // log(Pr(y = 0))
@@ -30,10 +30,10 @@ generated quantities {
       y_rep[n] = 0;
     } else {
       int w;  // temporary variable
-      w = poisson_rng(lambda);
+      w = poisson_rng(lambda); 
       while (w == 0 || w > U)
         w = poisson_rng(lambda);
-
+        
       y_rep[n] = w;
     }
     if (y[n] == 0) {
