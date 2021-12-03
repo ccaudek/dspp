@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="it" xml:lang="it">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capitolo 2 Valutare e confrontare i modelli | Psicometria</title>
+  <meta name="description" content="This is dspp, aka Data science per psicologi." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capitolo 2 Valutare e confrontare i modelli | Psicometria" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://github.com/ccaudek/dspp/" />
+  
+  <meta property="og:description" content="This is dspp, aka Data science per psicologi." />
+  <meta name="github-repo" content="ccaudek/dspp" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capitolo 2 Valutare e confrontare i modelli | Psicometria" />
+  
+  <meta name="twitter:description" content="This is dspp, aka Data science per psicologi." />
+  
+
+<meta name="author" content="Corrado Caudek" />
+
+
+<meta name="date" content="2021-12-03" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="prefazione.html"/>
+
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Title of the Memoir</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="prefazione.html"><a href="prefazione.html"><i class="fa fa-check"></i><b>1</b> Prefazione</a>
+<ul>
+<li class="chapter" data-level="" data-path="prefazione.html"><a href="prefazione.html#la-psicologia-e-la-data-science"><i class="fa fa-check"></i>La psicologia e la Data Science</a></li>
+<li class="chapter" data-level="" data-path="prefazione.html"><a href="prefazione.html#come-studiare"><i class="fa fa-check"></i>Come studiare</a></li>
+<li class="chapter" data-level="" data-path="prefazione.html"><a href="prefazione.html#sviluppare-un-metodo-di-studio-efficace"><i class="fa fa-check"></i>Sviluppare un metodo di studio efficace</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="loo-stan.html"><a href="loo-stan.html"><i class="fa fa-check"></i><b>2</b> Valutare e confrontare i modelli</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="loo-stan.html"><a href="loo-stan.html#capacità-predittiva"><i class="fa fa-check"></i><b>2.1</b> Capacità predittiva</a></li>
+<li class="chapter" data-level="2.2" data-path="loo-stan.html"><a href="loo-stan.html#il-rasoio-di-ockham"><i class="fa fa-check"></i><b>2.2</b> Il rasoio di Ockham</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="loo-stan.html"><a href="loo-stan.html#stargazing"><i class="fa fa-check"></i><b>2.2.1</b> Stargazing</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="loo-stan.html"><a href="loo-stan.html#entropia"><i class="fa fa-check"></i><b>2.3</b> Entropia</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="loo-stan.html"><a href="loo-stan.html#entropia-di-una-variabile-casuale"><i class="fa fa-check"></i><b>2.3.1</b> Entropia di una variabile casuale</a></li>
+<li class="chapter" data-level="2.3.2" data-path="loo-stan.html"><a href="loo-stan.html#proprietà"><i class="fa fa-check"></i><b>2.3.2</b> Proprietà</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="loo-stan.html"><a href="loo-stan.html#dallentropia-allaccuratezza"><i class="fa fa-check"></i><b>2.4</b> Dall’entropia all’accuratezza</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="loo-stan.html"><a href="loo-stan.html#la-divergenza-dipende-dalla-direzione"><i class="fa fa-check"></i><b>2.4.1</b> La divergenza dipende dalla direzione</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="loo-stan.html"><a href="loo-stan.html#expected-log-predictive-density"><i class="fa fa-check"></i><b>2.5</b> Expected log predictive density</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="loo-stan.html"><a href="loo-stan.html#log-pointwise-predictive-density"><i class="fa fa-check"></i><b>2.5.1</b> Log pointwise predictive density</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="loo-stan.html"><a href="loo-stan.html#criterio-di-informazione-e-convalida-incrociata-k-fold"><i class="fa fa-check"></i><b>2.6</b> Criterio di informazione e convalida incrociata K-fold</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="loo-stan.html"><a href="loo-stan.html#aic-dic-e-waic"><i class="fa fa-check"></i><b>2.6.1</b> AIC, DIC e WAIC</a></li>
+<li class="chapter" data-level="2.6.2" data-path="loo-stan.html"><a href="loo-stan.html#convalida-incrociata-k-fold"><i class="fa fa-check"></i><b>2.6.2</b> Convalida incrociata K-fold</a></li>
+<li class="chapter" data-level="2.6.3" data-path="loo-stan.html"><a href="loo-stan.html#confronto-tra-modelli-mediante-loo-cv"><i class="fa fa-check"></i><b>2.6.3</b> Confronto tra modelli mediante LOO-CV</a></li>
+<li class="chapter" data-level="2.6.4" data-path="loo-stan.html"><a href="loo-stan.html#outlier"><i class="fa fa-check"></i><b>2.6.4</b> Outlier</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="loo-stan.html"><a href="loo-stan.html#selezione-di-variabili"><i class="fa fa-check"></i><b>2.7</b> Selezione di variabili</a></li>
+<li class="chapter" data-level="" data-path="loo-stan.html"><a href="loo-stan.html#considerazioni-conclusive"><i class="fa fa-check"></i>Considerazioni conclusive</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/GitHubID/Repository" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Psicometria</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="loo-stan" class="section level1" number="2">
+<h1><span class="header-section-number">Capitolo 2</span> Valutare e confrontare i modelli</h1>
+<div class="Summary">
+<p>
+Il principio base del metodo scientifico è la <em>replicabilità</em> delle osservazioni: le osservazioni che non possono essere replicate sono poco interessanti. Parallelamente, una caratteristica fondamentale di un modello scientifico è la <em>generalizzabilità</em>: se un modello è capace di descrivere soltanto le proprietà di uno specifico campione di osservazioni, allora è poco utile. Ma come è possibile valutare la generalizzabilità di un modello statistico? Questa è la domanda a cui cercheremo di rispondere in questo Capitolo.
+</p>
+</div>
+<p>Nel valutare un modello, il ricercatore deve porsi tre domande critiche.</p>
+<ul>
+<li><p>Quali conseguenze più ampie derivano dall’inferenza? Come e chi ha raccolto i dati? Colui che svolge la ricerca otterrebbe di benefici manipolando i dati (escludendo delle osservazioni; selezionando il campione)? Che impatto hanno inferenze che vengono tratte dai dati sugli individui e sulla società? Quali pregiudizi o strutture di potere possono essere coinvolti in questa analisi?</p></li>
+<li><p>Che tipo di distorsioni sistematiche potrebbero essere presenti nell’analisi statistica? Ricordiamo la famosa citazione di George Box: “Tutti i modelli sono sbagliati, ma alcuni sono utili”. È dunque importante sapere quanto è sbagliato il modello. Le assunzioni che stanno alla base del modello sono ragionevoli? Il meccanismo generatore dei dati che è stato ipotizzato è adeguato per il fenomeno in esame?</p></li>
+<li><p>Quanto è accurato il modello? Quanto sono lontane dalla realtà le previsioni del modello?</p></li>
+</ul>
+<p>Per approfondire questi temi, si rinvia al testo di <span class="citation"><a href="#ref-Johnson2022bayesrules" role="doc-biblioref">Johnson, Ott, e Dogucu</a> (<a href="#ref-Johnson2022bayesrules" role="doc-biblioref">2022</a>)</span>. Qui ci concentreremo sul tema della generalizzabilità del modello.</p>
+<div id="capacità-predittiva" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Capacità predittiva</h2>
+<p>Nel framework bayesiano il problema della generalizzabilità di un modello viene affrontato calcolandone la sua capacità predittiva, laddove per capacità predittiva si intende la capacità di un modello, i cui parametri sono stati stimati usando le informazioni di un campione, di ben adattarsi ad un campione di nuove osservazioni future. In questo Capitolo cercheremo di rispondere a tre domande.</p>
+<ol style="list-style-type: decimal">
+<li>Quali criteri devono essere presi in considerazione se vogliamo valutare la capacità predittiva di un modello?</li>
+<li>Come è possibile quantificare la capacità predittiva di un modello sulla base delle informazioni di un campione di osservazioni?</li>
+<li>Come possiamo confrontare le capacità predittive di modelli alternativi?</li>
+</ol>
+</div>
+<div id="il-rasoio-di-ockham" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Il rasoio di Ockham</h2>
+<p>Iniziamo prendendo in considerazione quello che è uno dei problemi più importanti in campo scientifico: il problema di scegliere il modello più adatto a spiegare un insieme di informazioni che riguardano un fenomeno di interesse. Le domande che i ricercatori si pongono sono: il modello è completo? È necessario aggiungere un nuovo parametro al modello? Come può essere migliorato il modello? Se ci sono modelli diversi, qual’è il modello migliore?</p>
+<p>Un principio che può essere usato per rispondere a queste domande è il rasoio di Ockham: <em>frustra fit per plura quod potest fieri per pauciora</em> (“si fa inutilmente con molte cose ciò che si può fare con poche cose”). Parafrasando la massima potremmo dire: quando due modelli approssimano egualmente bene i dati viene sempre preferito il modello più semplice. Questo principio sta alla base della ricerca scientifica.</p>
+<p>Il rasoio di Ockham, però, non fornisce sempre la soluzione al problema della selezione tra modelli alternativi. Due modelli possono fare le stesse predizioni pur differendo in termini di complessità — per esempio, relativamente al numero di parametri di cui sono costituiti In questo caso, è facile decidere: viene preferito il modello più semplice anche perché, pragmaticamente, è il più facile da usare. Tuttavia, in generale, i modelli differiscono sia per complessità (ovvero, per il numero di parametri) che per accuratezza (ovvero, per la grandezza degli errori di predizione). In questa situazione, il rasoio di Ockham non è sufficiente: non consente infatti di trovare un equilibrio tra la necessità di ottenere la masssima accuratezza e quella di diminuire la complessità.</p>
+<p>In questo Capitolo ci chiederemo come sia possibile misurare l’accuratezza predittiva di un modello. Ciò ci consentirà, in seguito, di usare il rasoio di Ockham: a parità di accuratezza, verrà scelto il modello più semplice. Ma nella pratica scientifica non si sacrifica mai l’accuratezza per la semplicità: il criterio prioritario è sempre quello dell’accuratezza.</p>
+<p>Ma come è possibile valutare l’accuratezza (predittiva) di un modello? Per rispondere a questa domanda <span class="citation"><a href="#ref-McElreath_rethinking" role="doc-biblioref">McElreath</a> (<a href="#ref-McElreath_rethinking" role="doc-biblioref">2020</a>)</span> ci fa notare che è necessario evitare due opposti errori:</p>
+<ul>
+<li><p>il <em>sovra-adattamento</em> (<em>overfitting</em>) — il modello non si generalizza bene a nuovi dati futuri perché fa leva informazioni irrilevanti presenti nel campione esaminato; tali aspetti idiosincratici del campione necessariamente non si ritroveranno in altri campioni di dati;</p></li>
+<li><p>il <em>sotto-adattamento</em> (<em>underfitting</em>) — il modello non è neppure in grado di rendere conto delle regolarità presenti nei dati esaminati.</p></li>
+</ul>
+<p>In questo capitolo verranno presentati due metodi [detti <em>criterio di informazione</em> (<em>information criteria</em>) e <em>validazione incrociata</em> (<em>cross-validation</em>)] che, evitando il sovra- e il sotto-adattamento, consentono di valutare la capacità predittiva di un modello e di determinare quale, tra due o più modelli, sia quello da preferire.</p>
+<div id="stargazing" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Stargazing</h3>
+<p>Nella pratica concreta della ricerca, il metodo più comune per la selezione tra modelli statistici utilizza i test di ipotesi statistiche di stampo frequentista. Questo metodo viene chiamato <em>stargazing</em>, poiché richiede soltanto l’esame degli asterischi (<span class="math inline">\(**\)</span>) che si trovano nell’output di un software statistico (gli asterischi marcano i coefficienti del modello che sono “statisticamente significativi”): alcuni ricercatori ritengono che il modello con più stelline sia il modello migliore. Ma però questo non è vero. Al di là dei problemi legati ai test dell’ipotesi nulla, è sicuramente un errore usare i test di significatività per la selezione di modelli: i valori-<em>p</em> non consentono di trovare un equilibrio tra <em>underfitting</em> e <em>overfitting</em>. Infatti, le variabili che migliorano la capacità predittiva di un modello non risultano sempre statisticamente significative; inoltre, le variabili che sono statisticamente significative non migliorano sempre la capacità predittiva di un modello.</p>
+<!-- ### Problemi con l'incremento del numero di parametri -->
+<!-- TODO: numero di parametri e r2 -->
+<p>L’obiettivo del confronto tra modelli è la selezione del modello che più da vicino rappresenta il “vero” processo di generazione dei dati. Un modello che rappresenta meglio il “vero” processo di generazione dei dati è da preferire ad un modello che rappresenta meno bene un tale processo. Pertanto, è necessario quantificare il grado di “vicinanza” di un modello al “vero” processo di generazione dei dati. Si noti che, in questo contesto, facciamo riferimento sia alla famiglia distributiva così come ai valori dei parametri. Ad esempio, il modello <span class="math inline">\(y_i \sim \mathcal{N}(5, 3)\)</span> è diverso dal modello <span class="math inline">\(y_i \sim \mathcal{N}(5, 6)\)</span>, ed è anche diverso dal modello <span class="math inline">\(y_i \sim \Gamma(2, 2)\)</span>. I primi due modelli appartengono alla stessa famiglia distributiva ma differiscono nei termini dei valori dei parametri; gli ultimi due modelli appartengono a famiglie distributive diverse (Normale vs. Gamma). Per misurare il grado di “vicinanza” tra due modelli, <span class="math inline">\(\mathcal{M}_1\)</span> e <span class="math inline">\(\mathcal{M}_2\)</span>, la metrica di gran lunga più popolare in statistica è la <em>divergenza di Kullback-Liebler</em>. Prima di definire tale nozione è però necessario chiarire il concetto di entropia. Nei Paragrafi successivi vedremo di sviluppare una comprensione intuitiva della nozione di entropia. Avendo fatto questo, saremo poi in grado di discutere la divergenza di Kullback-Liebler.</p>
+</div>
+</div>
+<div id="entropia" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Entropia</h2>
+<p>Per discutere la divergenza di Kullback-Leibler è prima necessario introdurre il concetto di entropia.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> La definizione di entropia richiede il calcolo della quantità di informazione di un evento. L’intuizione dietro la quantificazione delle informazioni è l’idea di misurare quanta sorpresa fornisce un evento: gli eventi rari (a bassa probabilità) sono più sorprendenti e quindi forniscono più informazione degli eventi non rari (ad alta probabilità).</p>
+<ul>
+<li>Evento a bassa probabilità: molta informazione (sorprendente).</li>
+<li>Evento ad alta probabilità: poca informazione (non sorprende).</li>
+</ul>
+<p>Apprendere che si è verificato un evento improbabile è più informativo che apprendere che si è verificato un evento probabile. Gli eventi rari sono più incerti, o più sorprendenti, e per essere rappresentati richiedono una quantità di maggiore di informazione rispetto agli eventi non rari.</p>
+<p>È possibile calcolare la quantità di informazione fornita da un evento usando la probabilità dell’evento. Questa è chiamata “informazione Shannon”, “autoinformazione” o semplicemente “informazione” e, per un evento discreto <span class="math inline">\(x\)</span>, può essere calcolata come segue:
+<span class="math display">\[
+\text{informazione}(x) = -log\big( p(x) \big),
+\]</span>
+dove <span class="math inline">\(log()\)</span> è il logaritmo in base 2 e <span class="math inline">\(p(x)\)</span> è la probabilità dell’evento <span class="math inline">\(x\)</span>.</p>
+<p>La scelta del logaritmo in base 2 significa che l’unità di misura dell’informazione è in bit (cifre binarie). Questo può essere interpretato dicendo che l’informazione misura il numero di bit richiesti per rappresentare l’evento. Solitamente, la quantità di informazione viene denotata con <span class="math inline">\(h()\)</span>:
+<span class="math display">\[
+h(x) = -log\big( p(x) \big).
+\]</span>
+Il segno negativo garantisce che il risultato sia sempre positivo o zero. L’informazione è zero quando la probabilità dell’evento è 1.0, ovvero l’evento è certo (assenza di sorpresa).</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-1" class="example"><strong>Esempio 2.1  </strong></span>Consideriamo il lancio di una moneta equilibrata. La probabilità di testa (e croce) è 0.5. La quantità di informazione di ottenere “testa” è dunque</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="loo-stan.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fu">log2</span>(<span class="fl">0.5</span>)</span>
+<span id="cb1-2"><a href="loo-stan.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<p>Per rappresentare questo evento abbiamo bisogno di 1 bit di informazione. Se la stessa moneta venisse lanciata <span class="math inline">\(n\)</span> volte, la quantità di informazione necessaria per rappresentare questo evento (ovvero, questa sequenza di lanci) sarebbe pari a <span class="math inline">\(n\)</span> bit. Se la moneta non è equilibrata e la probabilità di testa è 0.1, allora l’evento “testa” è più raro e richiede più di 3 bit di informazione:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="loo-stan.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fu">log2</span>(<span class="fl">0.1</span>)</span>
+<span id="cb2-2"><a href="loo-stan.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3.32</span></span></code></pre></div>
+<p>Consideriamo ora il lancio di un dado. Ci possiamo chiedere quanta informazione sia fornita, ad esempio, dall’evento “esce il valore 6”. Dato che la probabilità di ottenere un 6 è più piccola della probabilità di ottenere “testa” nel lancio di una moneta, ci possiamo aspettare, nel lancio del dado, una maggiore sorpresa, ovvero una maggiore quantità di informazione. La quantità di informazione dell’evento “esce un 6” nel lancio di un dado</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="loo-stan.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fu">log2</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">6</span>)</span>
+<span id="cb3-2"><a href="loo-stan.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2.58</span></span></code></pre></div>
+<p>
+è infatti più del doppio della quantità di informazione dell’evento “esce testa” nel lancio di una moneta.</p>
+</div>
+<div class="example">
+<p><span id="exm:unlabeled-div-2" class="example"><strong>Esempio 2.2  </strong></span>Nella figura successiva viene esaminata la relazione tra probabilità e informazione, per valori di probabilità nell’intervallo tra 0 e 1.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="loo-stan.html#cb4-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">1000</span>)</span>
+<span id="cb4-2"><a href="loo-stan.html#cb4-2" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">log2</span>(p)</span>
+<span id="cb4-3"><a href="loo-stan.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(p, h), <span class="fu">aes</span>(p, h)) <span class="sc">+</span></span>
+<span id="cb4-4"><a href="loo-stan.html#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb4-5"><a href="loo-stan.html#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-6"><a href="loo-stan.html#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Probabilità&quot;</span>,</span>
+<span id="cb4-7"><a href="loo-stan.html#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Informazione&quot;</span></span>
+<span id="cb4-8"><a href="loo-stan.html#cb4-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="092_loo_files/figure-html/unnamed-chunk-6-1.png" width="90%" style="display: block; margin: auto;" />
+
+La figura mostra che questa relazione non è lineare, è infatti leggermente sublineare. Questo ha senso dato che abbiamo usato una funzione logaritmica.</p>
+</div>
+<div id="entropia-di-una-variabile-casuale" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Entropia di una variabile casuale</h3>
+<p>È possibile quantificare la quantità di informazione fornita da una variabile casuale.</p>
+<div class="definition">
+<p><span id="def:unlabeled-div-3" class="definition"><strong>Definizione 2.1  </strong></span>Sia <span class="math inline">\(Y = y_1, \dots, y_n\)</span> una variabile casuale e <span class="math inline">\(p_t(y)\)</span> una distribuzione di probabilità su <span class="math inline">\(Y\)</span>. Si definisce la sua entropia (detta di Shannon) come:</p>
+<p><span class="math display" id="eq:entropy">\[\begin{equation}
+H(Y) = - \sum_{i=1}^n p_t(y_i) \cdot \log p_t(y_i).
+\tag{2.1}
+\end{equation}\]</span></p>
+</div>
+</div>
+<div id="proprietà" class="section level3" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Proprietà</h3>
+<p>Si possono evidenziare due proprietà dell’entropia.</p>
+<ul>
+<li>L’entropia aumenta all’aumentare della varianza di una variabile casuale.</li>
+<li>L’entropia aumenta all’aumentare del numero delle possibilità con cui un evento può verificarsi.</li>
+</ul>
+<!-- ::: {.example} -->
+<!-- Consideriamo il lancio di una moneta, non necessariamente bilanciata, dove sono note le probabilità che esca “testa” oppure “croce”. L'entropia dell'esito del prossimo lancio è massima se la moneta non è truccata, cioè quando “testa” e “croce” hanno la stessa probabilità (pari a 1/2) di verificarsi. Questa è infatti la  situazione di massima incertezza, ovvero, in cui è più difficile prevedere se uscirà “testa” oppure “croce”. D'altra parte, quando la moneta è truccata uno degli esiti avrà una probabilità maggiore di verificarsi e quindi c’è meno incertezza, il che si riflette in una minore entropia. Il caso estremo è quello in cui la moneta ha lo stesso simbolo su entrambe le facce: in questo caso non c'è incertezza e l'entropia è zero. -->
+<!-- :::  -->
+<div class="example">
+<p><span id="exm:unlabeled-div-4" class="example"><strong>Esempio 2.3  </strong></span>Consideriamo un esempio riguardante le previsioni del tempo. Supponiamo che le probabilità di pioggia e sole siano, rispettivamente, <span class="math inline">\(p_1 = 0.3\)</span> e <span class="math inline">\(p_2 = 0.7\)</span>. Quindi</p>
+<p><span class="math display">\[
+H(p) = − [p(y_1) \log p(y_1) + p(y_2) \log p(y_2)] \approx 0.61.
+\]</span>
+
+Svolgendo i calcoli in <span class="math inline">\(\R\)</span> abbiamo:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="loo-stan.html#cb5-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.3</span> , <span class="fl">0.7</span>)</span>
+<span id="cb5-2"><a href="loo-stan.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fu">sum</span>(p<span class="sc">*</span><span class="fu">log</span>(p))</span>
+<span id="cb5-3"><a href="loo-stan.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.611</span></span></code></pre></div>
+<p>
+Se però viviamo a Las Vegas, allora le probabilità di pioggia e sole saranno qualcosa come <span class="math inline">\(p(y_1) = 0.01\)</span> e <span class="math inline">\(p(y_2) = 0.99\)</span>. In questo secondo caso, l’entropia è 0.06, ovvero, molto minore di prima. Infatti, a Las Vegas non piove quasi mai, per cui quando abbiamo imparato che, in un certo giorno, non ha piovuto, abbiamo imparato molto poco rispetto a quello che già sapevamo in precedenza.</p>
+</div>
+<div class="example">
+<p><span id="exm:unlabeled-div-5" class="example"><strong>Esempio 2.4  </strong></span>Abbiamo visto in precedenza che, se gli esiti possibili sono pioggia o sole con <span class="math inline">\(p(y_1) = 0.7\)</span>, <span class="math inline">\(p(y_2) = 0.3\)</span>, allora l’entropia è</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="loo-stan.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>(<span class="fl">0.7</span> <span class="sc">*</span> <span class="fu">log</span>(<span class="fl">0.7</span>) <span class="sc">+</span> <span class="fl">0.3</span> <span class="sc">*</span> <span class="fu">log</span>(<span class="fl">0.3</span>))</span>
+<span id="cb6-2"><a href="loo-stan.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.611</span></span></code></pre></div>
+<p>
+Se gli esiti possibili sono pioggia, neve o sole con <span class="math inline">\(p(y_1) = 0.7\)</span>, <span class="math inline">\(p(y_2) = 0.15\)</span> e <span class="math inline">\(p(y_3) = 0.15\)</span>, rispettivamente, allora l’entropia sarà maggiore, ovvero pari a 0.82.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="loo-stan.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>(<span class="fl">0.7</span> <span class="sc">*</span> <span class="fu">log</span>(<span class="fl">0.7</span>) <span class="sc">+</span> <span class="fl">0.15</span> <span class="sc">*</span> <span class="fu">log</span>(<span class="fl">0.15</span>) <span class="sc">+</span> <span class="fl">0.15</span> <span class="sc">*</span> <span class="fu">log</span>(<span class="fl">0.15</span>))</span>
+<span id="cb7-2"><a href="loo-stan.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.819</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="dallentropia-allaccuratezza" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Dall’entropia all’accuratezza</h2>
+<p>Il valore assoluto dell’entropia è difficile da interpretare. Vedremo però come sia possibile usare l’entropia per misurare l’accuratezza di un modello statistico. Nello specifico, ci porremo il problema di misurare la distanza tra la distribuzione di probabilità ipotizzata da un modello, chiamiamola <span class="math inline">\(p_{\mathcal{M}}\)</span>, e la distribuzione di probabilità del vero modello generatore dei dati, <span class="math inline">\(p_t\)</span>. La teoria delle probabilità quantifica l’informazione che viene perduta quando <span class="math inline">\(p_{\mathcal{M}}\)</span> approssima <span class="math inline">\(p_t\)</span> mediante la <em>divergenza di Kullback-Liebler</em>. La divergenza di Kullback-Liebler, denotata con <span class="math inline">\(D_{KL}(p_t \mid\mid p_{\mathcal{M}})\)</span>, misura dunque l’incremento della nostra incertezza quando una distribuzione “approssimata” viene usata al posto della “vera” distribuzione di probabilità.</p>
+<div class="definition">
+<p><span id="def:unlabeled-div-6" class="definition"><strong>Definizione 2.2  </strong></span>Per due distribuzioni discrete <span class="math inline">\(p_t\)</span> e <span class="math inline">\(p_{\mathcal{M}}\)</span>, la divergenza KL di <span class="math inline">\(p_{\mathcal{M}}\)</span> da <span class="math inline">\(p_t\)</span> è definita come:
+<span class="math display" id="eq:kldivergence">\[\begin{equation}
+D_{KL}(p_t \mid\mid p_{\mathcal{M}})  = \sum_{i=1}^n p_t(y_i) \cdot \left[\log p_t(y_i) - \log p_{\mathcal{M}}(y_i)\right].
+\tag{2.2}
+\end{equation}\]</span></p>
+</div>
+<p>La divergenza di Kullback-Liebler introduce un piccolo cambiamento alla <a href="loo-stan.html#eq:entropy">(2.1)</a>: anziché considerare una sola distribuzione di probabilità, <span class="math inline">\(p_t\)</span>, considera anche una approssimazione a tale distribuzione, ovvero <span class="math inline">\(p_{\mathcal{M}}\)</span>. Calcolando la differenza dei logaritmi dei valori delle due distribuzioni si giunge alla <a href="loo-stan.html#eq:kldivergence">(2.2)</a>.</p>
+<p>La divergenza KL misura dunque la quantità di informazione che viene perduta quando una distribuzione approssimata viene usata per descrivere le proprietà della distribuzione di riferimento.
+<!-- Infatti, ciò che viene calcolato nella divergenza KL è il valore atteso della differenza tra il logaritmo delle probabilità dei dati nella distribuzione $p_t$ e il logaritmo delle probabilità dei dati nella distribuzione approssimata $p_{\mathcal{M}}$: -->
+<!-- \begin{equation} -->
+<!-- D_{KL}(p_t \mid\mid p_{\mathcal{M}})  = \E \left[\log p_t(y) - \log p_{\mathcal{M}}(y) \right]. -->
+<!-- (\#eq:kldivergenceev) -->
+<!-- \end{equation} -->
+Se c’è una perfetta corrispondenza tra le due distribuzioni, <span class="math inline">\(p_t = p_{\mathcal{M}}\)</span>, allora
+<span class="math display">\[
+D_{KL}(p_t \mid\mid p_{\mathcal{M}}) = D_{KL}(p_t \mid\mid p_t) = \sum_{i=1}^n p_t(y_i) \cdot \left[\log p_t(y_i) - \log p_t(y_i)\right] = 0,
+\]</span>
+ovvvero: nessuna incertezza aggiuntiva viene introdotta se una distribuzione viene usata per rappresentare se stessa. Altrimenti, cioè se <span class="math inline">\(p_t \neq p_{\mathcal{M}}\)</span>, la divergenza KL assume valori nell’intervallo <span class="math inline">\([0, \infty]\)</span>: all’aumentare della differenza tra <span class="math inline">\(p_{\mathcal{M}}\)</span> e <span class="math inline">\(p_t\)</span> aumenta il valore <span class="math inline">\(D_{KL}(p_t \mid\mid p_{\mathcal{M}})\)</span>.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-7" class="example"><strong>Esempio 2.5  </strong></span><span class="citation">(da <a href="#ref-McElreath_rethinking" role="doc-biblioref">McElreath 2020</a>)</span> Sia la distribuzione target <span class="math inline">\(p = \{0.3, 0.7\}\)</span>. Supponiamo che la distribuzione approssimata <span class="math inline">\(q\)</span> possa assumere valori da <span class="math inline">\(q = \{0.01, 0.99\}\)</span> a <span class="math inline">\(q = \{0.99, 0.01\}\)</span>. Calcoliamo la divergenza KL.</p>
+<p>Le istruzioni <span class="math inline">\(\R\)</span> sono le seguenti:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="loo-stan.html#cb8-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span></span>
+<span id="cb8-2"><a href="loo-stan.html#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb8-3"><a href="loo-stan.html#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">p_1 =</span> .<span class="dv">3</span>,</span>
+<span id="cb8-4"><a href="loo-stan.html#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">p_2 =</span> .<span class="dv">7</span>,</span>
+<span id="cb8-5"><a href="loo-stan.html#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">q_1 =</span> <span class="fu">seq</span>(<span class="at">from =</span> .<span class="dv">01</span>, <span class="at">to =</span> .<span class="dv">99</span>, <span class="at">by =</span> .<span class="dv">01</span>)</span>
+<span id="cb8-6"><a href="loo-stan.html#cb8-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb8-7"><a href="loo-stan.html#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb8-8"><a href="loo-stan.html#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">q_2 =</span> <span class="dv">1</span> <span class="sc">-</span> q_1</span>
+<span id="cb8-9"><a href="loo-stan.html#cb8-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb8-10"><a href="loo-stan.html#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb8-11"><a href="loo-stan.html#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">d_kl =</span> (p_1 <span class="sc">*</span> <span class="fu">log</span>(p_1 <span class="sc">/</span> q_1)) <span class="sc">+</span> (p_2 <span class="sc">*</span> <span class="fu">log</span>(p_2 <span class="sc">/</span> q_2))</span>
+<span id="cb8-12"><a href="loo-stan.html#cb8-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb8-13"><a href="loo-stan.html#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="loo-stan.html#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(t)</span>
+<span id="cb8-15"><a href="loo-stan.html#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 5</span></span>
+<span id="cb8-16"><a href="loo-stan.html#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     p_1   p_2   q_1   q_2  d_kl</span></span>
+<span id="cb8-17"><a href="loo-stan.html#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb8-18"><a href="loo-stan.html#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   0.3   0.7  0.01  0.99 0.778</span></span>
+<span id="cb8-19"><a href="loo-stan.html#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   0.3   0.7  0.02  0.98 0.577</span></span>
+<span id="cb8-20"><a href="loo-stan.html#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   0.3   0.7  0.03  0.97 0.462</span></span>
+<span id="cb8-21"><a href="loo-stan.html#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   0.3   0.7  0.04  0.96 0.383</span></span>
+<span id="cb8-22"><a href="loo-stan.html#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   0.3   0.7  0.05  0.95 0.324</span></span>
+<span id="cb8-23"><a href="loo-stan.html#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6   0.3   0.7  0.06  0.94 0.276</span></span></code></pre></div>
+<p>
+Nella figura seguente sull’asse delle ascisse sono rappresentati i valori <span class="math inline">\(q\)</span> e sull’asse delle ordinante sono riportati i corrispondenti valori <span class="math inline">\(D_{KL}\)</span>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="loo-stan.html#cb9-1" aria-hidden="true" tabindex="-1"></a>t <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="loo-stan.html#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> q_1, <span class="at">y =</span> d_kl)) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="loo-stan.html#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> .<span class="dv">3</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="loo-stan.html#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="loo-stan.html#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom =</span> <span class="st">&quot;text&quot;</span>, <span class="at">x =</span> .<span class="dv">4</span>, <span class="at">y =</span> <span class="fl">1.5</span>, <span class="at">label =</span> <span class="st">&quot;q = p&quot;</span>,</span>
+<span id="cb9-6"><a href="loo-stan.html#cb9-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb9-7"><a href="loo-stan.html#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;q[1]&quot;</span>,</span>
+<span id="cb9-8"><a href="loo-stan.html#cb9-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Divergenza di q da p&quot;</span>)</span></code></pre></div>
+<p><img src="092_loo_files/figure-html/unnamed-chunk-11-1.png" width="90%" style="display: block; margin: auto;" />
+
+Tanto meglio la distribuzione <span class="math inline">\(q\)</span> approssima la distribuzione target tanto più piccolo è il valore di divergenza KL.</p>
+</div>
+<div class="example">
+<p><span id="exm:unlabeled-div-8" class="example"><strong>Esempio 2.6  </strong></span>Sia <span class="math inline">\(p\)</span> una distribuzione binomiale di parametri <span class="math inline">\(\theta = 0.2\)</span> e <span class="math inline">\(n = 5\)</span></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="loo-stan.html#cb10-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb10-2"><a href="loo-stan.html#cb10-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb10-3"><a href="loo-stan.html#cb10-3" aria-hidden="true" tabindex="-1"></a>true_py <span class="ot">&lt;-</span> <span class="fu">dbinom</span>(<span class="dv">0</span><span class="sc">:</span>n, n, <span class="fl">0.2</span>)</span>
+<span id="cb10-4"><a href="loo-stan.html#cb10-4" aria-hidden="true" tabindex="-1"></a>true_py</span>
+<span id="cb10-5"><a href="loo-stan.html#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.4096 0.4096 0.1536 0.0256 0.0016</span></span></code></pre></div>
+<p>
+Sia <span class="math inline">\(q_1\)</span> una approssimazione a <span class="math inline">\(p\)</span>:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="loo-stan.html#cb11-1" aria-hidden="true" tabindex="-1"></a>q1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.46</span>, <span class="fl">0.42</span>, <span class="fl">0.10</span>, <span class="fl">0.01</span>, <span class="fl">0.01</span>)</span>
+<span id="cb11-2"><a href="loo-stan.html#cb11-2" aria-hidden="true" tabindex="-1"></a>q1</span>
+<span id="cb11-3"><a href="loo-stan.html#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.46 0.42 0.10 0.01 0.01</span></span></code></pre></div>
+<p>
+Sia <span class="math inline">\(q_2\)</span> una distribuzione uniforme:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="loo-stan.html#cb12-1" aria-hidden="true" tabindex="-1"></a>q2 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fl">0.2</span>, <span class="dv">5</span>)</span>
+<span id="cb12-2"><a href="loo-stan.html#cb12-2" aria-hidden="true" tabindex="-1"></a>q2</span>
+<span id="cb12-3"><a href="loo-stan.html#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.2 0.2 0.2 0.2 0.2</span></span></code></pre></div>
+<p>
+La divergenza KL di <span class="math inline">\(q_1\)</span> da <span class="math inline">\(p\)</span> è</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="loo-stan.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(true_py <span class="sc">*</span> <span class="fu">log</span>(true_py <span class="sc">/</span> q1))</span>
+<span id="cb13-2"><a href="loo-stan.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.0293</span></span></code></pre></div>
+<p>
+La divergenza KL di <span class="math inline">\(q_2\)</span> da <span class="math inline">\(p\)</span> è:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="loo-stan.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(true_py <span class="sc">*</span> <span class="fu">log</span>(true_py <span class="sc">/</span> q2))</span>
+<span id="cb14-2"><a href="loo-stan.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.486</span></span></code></pre></div>
+<p>
+È chiaro che perdiamo una quantità maggiore di informazioni se, per descrivere la distribuzione binomiale <span class="math inline">\(p\)</span>, usiamo la distribuzione uniforme <span class="math inline">\(q_2\)</span> anziché <span class="math inline">\(q_1\)</span>.</p>
+</div>
+<div id="la-divergenza-dipende-dalla-direzione" class="section level3" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> La divergenza dipende dalla direzione</h3>
+<p>La divergenza KL non è simmetrica: la KL da <span class="math inline">\(p_t\)</span> a <span class="math inline">\(p_{\mathcal{M}}\)</span> in generale è diversa dalla KL da <span class="math inline">\(p_{\mathcal{M}}\)</span> a <span class="math inline">\(p_t\)</span>.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-9" class="example"><strong>Esempio 2.7  </strong></span>Usando le seguenti istruzioni <span class="math inline">\(\R\)</span> otteniamo:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="loo-stan.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">direction =</span> <span class="fu">c</span>(<span class="st">&quot;Da q a p&quot;</span>, <span class="st">&quot;Da p a q&quot;</span>),</span>
+<span id="cb15-2"><a href="loo-stan.html#cb15-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">p_1 =</span> <span class="fu">c</span>(.<span class="dv">01</span>, .<span class="dv">7</span>),</span>
+<span id="cb15-3"><a href="loo-stan.html#cb15-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">q_1 =</span> <span class="fu">c</span>(.<span class="dv">7</span>, .<span class="dv">01</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-4"><a href="loo-stan.html#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p_2 =</span> <span class="dv">1</span> <span class="sc">-</span> p_1,</span>
+<span id="cb15-5"><a href="loo-stan.html#cb15-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">q_2 =</span> <span class="dv">1</span> <span class="sc">-</span> q_1) <span class="sc">%&gt;%</span></span>
+<span id="cb15-6"><a href="loo-stan.html#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">d_kl =</span> (p_1 <span class="sc">*</span> <span class="fu">log</span>(p_1 <span class="sc">/</span> q_1)) <span class="sc">+</span> (p_2 <span class="sc">*</span> <span class="fu">log</span>(p_2 <span class="sc">/</span> q_2)))</span>
+<span id="cb15-7"><a href="loo-stan.html#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 6</span></span>
+<span id="cb15-8"><a href="loo-stan.html#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   direction   p_1   q_1   p_2   q_2  d_kl</span></span>
+<span id="cb15-9"><a href="loo-stan.html#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb15-10"><a href="loo-stan.html#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Da q a p   0.01  0.7   0.99  0.3   1.14</span></span>
+<span id="cb15-11"><a href="loo-stan.html#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Da p a q   0.7   0.01  0.3   0.99  2.62</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="expected-log-predictive-density" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Expected log predictive density</h2>
+<p>Nel caso continuo, la divergenza KL diventa:
+<span class="math display" id="eq:kl-div-cont">\[\begin{equation}
+D_{KL}(p_t \mid\mid p_{\mathcal{M}}) = \int_{-\infty}^{+\infty}p_{t}(y)\log p_{t}(y) dy - \int_{-\infty}^{+\infty}p_{t}(y)\log p_{\mathcal{M}}(y) dy.
+\tag{2.3}
+\end{equation}\]</span>
+Se vengono confrontati due modelli, il primo termine della <a href="loo-stan.html#eq:kl-div-cont">(2.3)</a> resta costante e il confronto si riduce al secondo termine della <a href="loo-stan.html#eq:kl-div-cont">(2.3)</a>, ovvero
+<span class="math display" id="eq:kl-div-cont-t2">\[\begin{equation}
+\int_{-\infty}^{+\infty}p_{t}(y)\log p_{\mathcal{M}}(y) dy.
+\tag{2.4}
+\end{equation}\]</span>
+
+Riscriviamo ora la <a href="loo-stan.html#eq:kl-div-cont-t2">(2.4)</a> facendo riferimento alla distribuzione predittiva a posteriori, <span class="math inline">\(p(\tilde{y} \mid y)\)</span>, perché ciò a cui siamo interessati è la divergenza di <span class="math inline">\(p(\tilde{y} \mid y)\)</span> da <span class="math inline">\(p_{t}(y)\)</span>:
+<span class="math display" id="eq:elpd">\[\begin{equation}
+\elpd = \int_{\tilde{y}} p_{t}(\tilde{y}) \log p(\tilde{y} \mid y) d\tilde{y}.
+\tag{2.5}
+\end{equation}\]</span>
+La <a href="loo-stan.html#eq:elpd">(2.5)</a> è chiamata <em>expected log predictive density</em> (<span class="math inline">\(\elpd\)</span>) e fornisce la risposta al problema che ci eravamo posti all’inizio di questo Capitolo, ovvero al problema di definire un criterio per valutare la capacità predittiva di un modello. Possiamo pensare alla <a href="loo-stan.html#eq:elpd">(2.5)</a> dicendo che descrive la distribuzione predittiva a posteriori del modello ponderando la verosimiglianza dei possibili dati futuri con la vera distribuzione <span class="math inline">\(p_t\)</span>. Di conseguenza, valori <span class="math inline">\(\elpd\)</span> più grandi corrispondono ad una maggiore capacità predittiva del modello.</p>
+<p>Non dobbiamo preoccuparci di trovare una formulazione analitica della distribuzione predittiva a posteriori <span class="math inline">\(p(\tilde{y} \mid y)\)</span> perché, come abbiamo visto nel Capitolo <a href="#chapter-ppc"><strong>??</strong></a>, è possibile approssimare tale distribuzione mediante simulazione. Notiamo però che la <a href="loo-stan.html#eq:elpd">(2.5)</a> è formulata nei termini del vero modello generatore dei dati, <span class="math inline">\(p_t\)</span>, il quale, ovviamente, è ignoto.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> Di conseguenza, la quantità <span class="math inline">\(\elpd\)</span> non può mai essere calcolata in maniera esatta, ma può essere solo stimata. Il secondo problema di questo Capitolo è capire come la <a href="loo-stan.html#eq:elpd">(2.5)</a> possa essere stimata utilizzando un campione di osservazioni.</p>
+<div id="log-pointwise-predictive-density" class="section level3" number="2.5.1">
+<h3><span class="header-section-number">2.5.1</span> Log pointwise predictive density</h3>
+<p>Ingenuamente, potremmo pensare di stimare la <a href="loo-stan.html#eq:elpd">(2.5)</a> ipotizzando che la distribuzione del campione coincida con <span class="math inline">\(p_t\)</span>. Usare la distribuzione del campione come proxy del vero modello generatore dei dati (ovvero, ipotizzare che la distribuzione del campione rappresenti fedelmente <span class="math inline">\(p_t\)</span>) comporta due conseguenze:</p>
+<ul>
+<li>dato che il campione è finito, anziché eseguire un’operazione di integrazione, possiamo semplicemente sommare la densità predittiva a posteriori delle osservazioni;</li>
+<li>non è necessario ponderare per <span class="math inline">\(p_t\)</span>, in quanto assumiamo che la distribuzione empirica del campione corrisponde a <span class="math inline">\(p_t\)</span> (ciò significa assumere che i valori più comunemente osservati nel campione siano anche quelli più verosimili nella vera distribuzione <span class="math inline">\(p_t\)</span>).</li>
+</ul>
+<p>Questo conduce alla seguente equazione:<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>
+<span class="math display" id="eq:1n-lppd">\[\begin{equation}
+\frac{1}{n} \sum_{i=1}^n \log p(y_i^{rep} \mid y).
+\tag{2.6}
+\end{equation}\]</span>
+<!-- possiamo ponderare la distribuzione predittiva a posteriori con la distribuzione del campione. Di conseguenza, dato che il campione è finito, anziché eseguire un'operazione di integrazione sommiamo semplicemente la densità predittiva a posteriori delle osservazioni, assegnando a ciascuna osservazione lo stesso peso (il che significa assumere che i valori più comunemente osservate nel campione siano anche quelli più verosimili nella vera distribuzione $p_t$): -->
+<!-- \begin{equation} -->
+<!-- \frac{1}{n} \sum_{i=1}^n \log p(y_i^{rep} \mid y). -->
+<!-- (\#eq:1n-lppd) -->
+<!-- \end{equation} -->
+<!-- La \@ref(eq:1n-lppd) riscrive la \@ref(eq:elpd) sostituendo il termine $p(y_i^{rep} \mid y)$ al termine $p(\tilde{y} \mid y)$. Ciò significa approssimare una valutazione incrociata _out-of-sample_ con una valutazione incrociata _in-sample_ (cioè, usare le osservazioni del campione come se fossero un nuovo campione di dati).  -->
+<!-- Inoltre, non ponderiamo con $p_t$ dato che assumiamo che la distribuzione empirica del campione  corrisponda a $p_t$. Infine, dato che il campione è finito, non è necessaria un'operazione di integrazione, ma solo una somma.  -->
+La quantità <a href="loo-stan.html#eq:1n-lppd">(2.6)</a>, senza il passaggio finale della divisione per il numero di osservazioni, è chiamata <em>log pointwise predictive density</em> (<span class="math inline">\(\lppd\)</span>)
+<span class="math display" id="eq:lppd">\[\begin{equation}
+\lppd = \sum_{i=1}^n \log p(y_i^{rep} \mid y)
+\tag{2.7}
+\end{equation}\]</span>
+e corrisponde alla somma delle densità predittive logaritmiche delle <span class="math inline">\(n\)</span> osservazioni. Valori più grandi della <a href="loo-stan.html#eq:lppd">(2.7)</a> sono da preferire perché indicano una maggiore accuratezza media. È anche comune vedere espressa la quantità precedente nei termini della <em>devianza</em>, ovvero alla <span class="math inline">\(\lppd\)</span> moltiplicata per -2. In questo secondo caso sono da preferire valori piccoli.</p>
+<p>È importante notare che <span class="math inline">\(\lppd\)</span> fornisce una <em>sovrastima</em> della <a href="loo-stan.html#eq:elpd">(2.5)</a>. Tale sovrastima è dovuta al fatto che, nel calcolo della <a href="loo-stan.html#eq:lppd">(2.7)</a>, abbiamo usato <span class="math inline">\(p(y^{rep} \mid y)\)</span> al posto di <span class="math inline">\(p(\tilde{y} \mid y)\)</span>: in altri termini, abbiamo considerato le osservazioni del campione come se fossero un nuovo campione di dati. In una serie di simulazioni, <span class="citation"><a href="#ref-McElreath_rethinking" role="doc-biblioref">McElreath</a> (<a href="#ref-McElreath_rethinking" role="doc-biblioref">2020</a>)</span> esamina il significato di questa sovrastima. Nelle simulazioni la devianza viene calcolata come funzione della complessità (ovvero, il numero di parametri) del modello. La simulazione mostra che <span class="math inline">\(\lppd\)</span> aumenta al crescere del numero di parametri del modello. Ciò significa che <span class="math inline">\(\lppd\)</span> mostra lo stesso limite del coefficiente di determinazione: aumenta all’aumentare della complessità del modello.
+<!-- le osservazioni del campione vengono considerate come _out-of-sample_ --- tutti i calcoli vengono fatti _in-sample_. --></p>
+<div class="example">
+<p><span id="exm:unlabeled-div-10" class="example"><strong>Esempio 2.8  </strong></span>Esaminiamo un esempio tratto da <a href="https://vasishth.github.io/bayescogsci/book/expected-log-predictive-density-of-a-model.html">Bayesian Data Analysis for Cognitive Science</a> nel quale la <span class="math inline">\(\elpd\)</span> viene calcolata in forma esatta oppure mediante approssimazione. Supponiamo di disporre di un campione di <span class="math inline">\(n\)</span> osservazioni. Supponiamo inoltre di conoscere il vero processo generativo dei dati (qualcosa che in pratica non è mai possibile), ovvero:</p>
+<p><span class="math display">\[
+p_t(y) = \Beta(1, 3).
+\]</span>
+I dati sono</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="loo-stan.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">75</span>)</span>
+<span id="cb16-2"><a href="loo-stan.html#cb16-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb16-3"><a href="loo-stan.html#cb16-3" aria-hidden="true" tabindex="-1"></a>y_data <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(n, <span class="dv">1</span>, <span class="dv">3</span>)</span>
+<span id="cb16-4"><a href="loo-stan.html#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(y_data)</span>
+<span id="cb16-5"><a href="loo-stan.html#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.5506 0.1335 0.8025 0.2143 0.0191 0.0868</span></span></code></pre></div>
+<p>
+Supponiamo inoltre di avere adattato ai dati un modello bayesiano <span class="math inline">\(\mathcal{M}\)</span> e di avere ottenuto la distribuzione a posteriori per i parametri del modello. Inoltre, supponiamo di avere derivato la forma analitica della distribuzione predittiva a posteriori per il modello:
+<span class="math display">\[
+p(y^{rep} \mid y) \sim \Beta(2, 2).
+\]</span>
+Questa distribuzione ci dice quanto sono credibili i possibili dati futuri.</p>
+<p>Conoscendo la vera distribuzione dei dati <span class="math inline">\(p_t(y)\)</span> possiamo calcolare in forma esatta la quantità <span class="math inline">\(\elpd\)</span>, ovvero
+<span class="math display">\[
+\elpd = \int_{y^{rep}}p_{t}(y^{rep})\log p(y^{rep} \mid y) dy^{rep}.
+\]</span>
+
+Svolgiamo i calcoli in <span class="math inline">\(\R\)</span> otteniamo:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="loo-stan.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># True distribution</span></span>
+<span id="cb17-2"><a href="loo-stan.html#cb17-2" aria-hidden="true" tabindex="-1"></a>p_t <span class="ot">&lt;-</span> <span class="cf">function</span>(y) <span class="fu">dbeta</span>(y, <span class="dv">1</span>, <span class="dv">3</span>)</span>
+<span id="cb17-3"><a href="loo-stan.html#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Predictive distribution</span></span>
+<span id="cb17-4"><a href="loo-stan.html#cb17-4" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="cf">function</span>(y) <span class="fu">dbeta</span>(y, <span class="dv">2</span>, <span class="dv">2</span>)</span>
+<span id="cb17-5"><a href="loo-stan.html#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Integration</span></span>
+<span id="cb17-6"><a href="loo-stan.html#cb17-6" aria-hidden="true" tabindex="-1"></a>integrand <span class="ot">&lt;-</span> <span class="cf">function</span>(y) <span class="fu">p_t</span>(y) <span class="sc">*</span> <span class="fu">log</span>(<span class="fu">p</span>(y))</span>
+<span id="cb17-7"><a href="loo-stan.html#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">integrate</span>(<span class="at">f =</span> integrand, <span class="at">lower =</span> <span class="dv">0</span>, <span class="at">upper =</span> <span class="dv">1</span>)</span>
+<span id="cb17-8"><a href="loo-stan.html#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -0.375 with absolute error &lt; 6.8e-07</span></span></code></pre></div>
+<p>
+Tuttavia, in pratica non conosciamo mai <span class="math inline">\(p_t(y)\)</span>. Quindi approssimiamo <span class="math inline">\(\elpd\)</span> usando la <a href="loo-stan.html#eq:elpd">(2.5)</a>:
+<span class="math display">\[
+\frac{1}{n} \sum_{i=1}^n \log p(y_i \mid y).
+\]</span>
+
+Così facendo, e svolgendo i calcoli in <span class="math inline">\(\R\)</span>, otteniamo</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="loo-stan.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span>n <span class="sc">*</span> <span class="fu">sum</span>(<span class="fu">log</span>(<span class="fu">p</span>(y_data)))</span>
+<span id="cb18-2"><a href="loo-stan.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -0.364</span></span></code></pre></div>
+<p>
+un valore diverso da quello trovato in precedenza.</p>
+</div>
+</div>
+</div>
+<div id="criterio-di-informazione-e-convalida-incrociata-k-fold" class="section level2" number="2.6">
+<h2><span class="header-section-number">2.6</span> Criterio di informazione e convalida incrociata K-fold</h2>
+<p>Nel Paragrafo precedente abbiamo visto che la <a href="loo-stan.html#eq:lppd">(2.7)</a> fornisce una sovrastima della <span class="math inline">\(\elpd\)</span>. Il modo migliore per stimare <span class="math inline">\(\elpd\)</span> è raccogliere un nuovo campione indipendente di dati, che si ritiene condivida lo stesso processo di generazione dei dati del campione corrente, e stimare <span class="math inline">\(\elpd\)</span> sul nuovo campione. Questa procedura è chiamata <em>out-of-sample validation</em>. Il problema, ovviamente, è che di solito non abbiamo le risorse per raccogliere un nuovo campione. Di conseguenza, gli statistici hanno messo a punto vari metodi per evitare la sovrastima della <span class="math inline">\(\elpd\)</span> che deriva dal solo utizzo del campione corrente. Ci sono due approcci generali:</p>
+<ul>
+<li>l’introduzione di un fattore di correzione;</li>
+<li>la convalida incrociata cosiddetta K-fold.</li>
+</ul>
+<div id="aic-dic-e-waic" class="section level3" number="2.6.1">
+<h3><span class="header-section-number">2.6.1</span> AIC, DIC e WAIC</h3>
+<p>Allo scopo di evitare la sovrastima della <a href="loo-stan.html#eq:lppd">(2.7)</a>, le statistiche <em>Akaike Information Criterion</em> (AIC), <em>Deviance Information Criterion</em> (DIC) e <em>Widely Applicable Information Criterion</em> (WAIC) introducono un fattore di correzione. Le statistiche DIC e WAIC sono più complesse di AIC, ma producono un’approssimazione migliore. Tuttavia, i valori AIC, DIC e WAIC sono spesso molto simili tra loro. Per convenienza, dunque, qui ci accontenteremo di esaminare da vicino la statistica più semplice, ovvero AIC.</p>
+<div id="criterio-dinformazione-di-akaike" class="section level4" number="2.6.1.1">
+<h4><span class="header-section-number">2.6.1.1</span> Criterio d’informazione di Akaike</h4>
+<p>Il criterio d’informazione di Akaike (in inglese <em>Akaike information criterion</em>, indicato come AIC) fornisce un metodo molto semplice per stimare la devianza media <em>out-of-sample</em>.</p>
+<div class="definition">
+<p><span id="def:unlabeled-div-11" class="definition"><strong>Definizione 2.3  </strong></span>Il criterio d’informazione di Akaike è definito come</p>
+<p><span class="math display">\[\begin{equation}
+AIC = -2 \log p(y \mid \hat{\theta}_{MLE}) + 2k,
+\end{equation}\]</span>
+dove <span class="math inline">\(k\)</span> è il numero di parametri stimati nel modello e <span class="math inline">\(p(y \mid \hat{\theta}_{MLE})\)</span> è il valore massimizzato della funzione di verosimiglianza del modello stimato.</p>
+</div>
+<p>
+Dividendo per -2, otteniamo <span class="math inline">\(\elpd_{AIC}\)</span>:</p>
+<p><span class="math display">\[\begin{equation}
+\widehat{\elpd}_{AIC} = \log p(y \mid \hat{\theta}_{MLE}) - k,
+\end{equation}\]</span></p>
+<p>
+dove <span class="math inline">\(k\)</span> è il fattore di correzione introdotto per evitare la sovrastima discussa in precedenza.</p>
+<p>AIC è di interesse principalmente storico e produce una approssimazione attendibile di <span class="math inline">\(\elpd\)</span> quando:</p>
+<ol style="list-style-type: decimal">
+<li>le distribuzioni a priori sono non informative;</li>
+<li>la distribuzione a posteriori è approssimativamente gaussiana multivariata;</li>
+<li>la dimensione <span class="math inline">\(n\)</span> del campione è molto maggiore del numero <span class="math inline">\(k\)</span> dei parametri.</li>
+</ol>
+<div class="example">
+<p><span id="exm:unlabeled-div-12" class="example"><strong>Esempio 2.9  </strong></span>Per meglio comprendere la statistica <span class="math inline">\(\widehat{\elpd}_{AIC}\)</span>, esaminiamo un esempio discusso da <span class="citation"><a href="#ref-gelman2014understanding" role="doc-biblioref">Gelman, Hwang, e Vehtari</a> (<a href="#ref-gelman2014understanding" role="doc-biblioref">2014</a>)</span>. Sia <span class="math inline">\(y_1, \dots, y_n \sim \mathcal{N}(\theta, 1)\)</span> un campione di osservazioni. Nel caso di una distribuzione a priori non-informativa <span class="math inline">\(p(\theta) \propto 1\)</span>, la stima di massima verosimiglianza è <span class="math inline">\(\bar{y}\)</span>. La log-verosimiglianza è
+<span class="math display">\[\begin{align}
+\log p(y \mid \hat{\theta}_{MLE}) &amp;= -\frac{n}{2} \log (2\pi) - \frac{1}{2}\sum_{i=1}^n (y_i - \bar{y})^2 \notag\\
+&amp;= -\frac{n}{2} \log (2\pi) - \frac{1}{2} (n-1)s_y^2,
+\end{align}\]</span>
+
+dove <span class="math inline">\(s_y^2\)</span> è la varianza campionaria.</p>
+<p>Nel caso di un modello Normale con con varianza nota e una distribuzione a priori uniforme viene stimato un solo parametro, per cui
+<span class="math display">\[\begin{align}
+\widehat{\elpd}_{AIC} &amp;= \log p(y \mid \hat{\theta}_{MLE}) - k \notag \\
+&amp;= -\frac{n}{2} \log (2\pi) - \frac{1}{2} (n-1)s_y^2 - 1.
+\end{align}\]</span></p>
+<!-- \noindent -->
+<!-- Il valore atteso diventa: -->
+<!-- \begin{align} -->
+<!-- \E(\widehat{\elpd}_{AIC}) &= -\frac{n}{2} \log (2\pi) - \frac{1}{2} (n-1)\E(s_y^2) - 1\notag \\ -->
+<!-- &= -\frac{n}{2} \log (2\pi) - \frac{n}{2} - \frac{1}{2}. -->
+<!-- \end{align} -->
+</div>
+</div>
+</div>
+<div id="convalida-incrociata-k-fold" class="section level3" number="2.6.2">
+<h3><span class="header-section-number">2.6.2</span> Convalida incrociata K-fold</h3>
+<p>La sovrastima della <a href="loo-stan.html#eq:lppd">(2.7)</a> può anche essere evitata usando una tecnica chiamata <em>K-fold cross-validation</em>. Mediante questo metodo vengono stimati i parametri del modello tralasciando una porzione di osservazioni (chiamata <em>fold</em>) dal campione per poi valutare il modello sulle osservazioni che sono state escluse. Una stima complessiva dell’accuratezza si ottiene poi calcolando la media del punteggio di accuratezza ottenuto in ogni fold. Il numero minimo di fold è 2; all’altro estremo, è possibile impiegare una singola osservazione in ciascun fold e adattare il modello tante volte (<span class="math inline">\(n\)</span>) quante sono le singole osservazioni. Questa strategia è chiamata <em>leave-one-out cross-validation</em> (LOO-CV).</p>
+<div id="importance-sampling" class="section level4" number="2.6.2.1">
+<h4><span class="header-section-number">2.6.2.1</span> Importance sampling</h4>
+<p>La strategia LOO-CV è computazionalmente onerosa (ovvero, richiede un tempo di esecuzione molto lungo). È però possibile approssimare LOO-CV mediante un metodo chiamato <em>Pareto-smoothed importance sampling cross-validation</em> [PSIS; <span class="citation"><a href="#ref-vehtari2017practical" role="doc-biblioref">Vehtari, Gelman, e Gabry</a> (<a href="#ref-vehtari2017practical" role="doc-biblioref">2017</a>)</span>]. Tralasciando qui i dettagli matematici, l’intuizione di base è che PSIS fa leva sul punteggio di “importanza” posseduto da ciascuna osservazione all’interno della distribuzione a posteriori. Per “importanza” si intende il fatto che alcune osservazioni hanno un impatto maggiore sulle proprietà della distribuzione a posteriori di altre: se viene rimossa un’osservazione importante, le proprietà della distribuzione a posteriori cambiano molto; se viene rimossa un’osservazione poco importante, la distribuzione a posteriori cambia poco.
+<!-- Il punto chiave è la possibilità di stimare l'"importanza" relativa delle osservazioni senza dovere adattare $n$ volte il modello ai dati. Questo risultato è possibile perché l'"importanza" relativa delle osservazioni dipende dal loro scostamento rispetto al valore atteso delle predizioni del modello.  -->
+L’“importanza” così intesa viene chiamata “peso” (<em>weight</em>) e tali pesi vengono utilizzati per stimare l’accuratezza <em>out-of-sample</em> del modello.
+<!-- Il nome dipende dal fatto che PSIS usa la distribuzione di Pareto per ottenere una stima del punteggio di convalida incrociata K-fold.  -->
+PSIS-LOO-CV richiede che il modello venga adattato una volta soltanto ai dati e fornisce una stima della devianza <em>out-of-sample</em> che evita la sovrastima della <a href="loo-stan.html#eq:lppd">(2.7)</a>. Inoltre, PSIS-LOO-CV fornisce un feedback sulla propria affidabilità identificando le osservazioni i cui pesi molto elevati potrebbero rendere imprecisa la predizione.</p>
+<p>Valori <span class="math inline">\(\widehat{\elpd}_{\LOO}\)</span> più grandi indicano una maggiore accuratezza predittiva. In alternativa, anziché considerare <span class="math inline">\(\widehat{\elpd}\)</span>, è possibile usare la quantità <span class="math inline">\(-2 \cdot \widehat{\elpd}\)</span>,
+<!-- che è equivalente ad una quantità detta _devianza_,  -->
+la quale è chiamata <em>LOO Information Criterion</em> (LOOIC). In questo secondo caso, valori LOOIC più piccoli sono da preferire.</p>
+<!-- In conclusione, $\widehat{\elpd}_{\LOO}$ fornisce una migliore approssimazione di $\elpd$ delle statistiche AIC, DIC e WAIC.  -->
+<!-- Una stima di $\widehat{\elpd}_{\LOO}$ può facilmente essere ottenuta con un programma scritto in linguaggio Stan. -->
+<p>La quantità <span class="math inline">\(\widehat{\elpd}_{\LOO}\)</span> viene calcolata dai pacchetti <code>loo</code> e <code>brms</code> ed è chiamata <code>elpd_loo</code> o <code>elpd_kfold</code>. È anche possibile calcolare la differenza della quantità <code>elpd_loo</code> per modelli alternativi, insieme alla deviazione standard della distribuzione campionaria di tale differenza.</p>
+</div>
+<div id="confronto-tra-aic-e-loo-cv" class="section level4" number="2.6.2.2">
+<h4><span class="header-section-number">2.6.2.2</span> Confronto tra AIC e LOO-CV</h4>
+<p>Per fare un esempio, faremo qui un confronto tra <span class="math inline">\(\widehat{\elpd}_{AIC}\)</span> e <span class="math inline">\(\widehat{\elpd}_{LOO-CV}\)</span>. Esaminiamo nuovamente l’associazione tra il QI dei figli e il QI delle madri nel campione di dati discusso da <span class="citation"><a href="#ref-gelman2020regression" role="doc-biblioref">Gelman, Hill, e Vehtari</a> (<a href="#ref-gelman2020regression" role="doc-biblioref">2020</a>)</span>. Una tale relazione può essere descritta da un modello di regressione nel quale la <span class="math inline">\(y\)</span> corrisponde al QI dei figli e la <span class="math inline">\(x\)</span> al QI delle madri.</p>
+<p>Leggiamo i dati in :</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="loo-stan.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;foreign&quot;</span>)</span>
+<span id="cb19-2"><a href="loo-stan.html#cb19-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.dta</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;kidiq.dta&quot;</span>))</span>
+<span id="cb19-3"><a href="loo-stan.html#cb19-3" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>y <span class="ot">&lt;-</span> <span class="fu">scale</span>(df<span class="sc">$</span>kid_score)[, <span class="dv">1</span>]</span>
+<span id="cb19-4"><a href="loo-stan.html#cb19-4" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>x1 <span class="ot">&lt;-</span> <span class="fu">scale</span>(df<span class="sc">$</span>mom_iq)[, <span class="dv">1</span>]</span>
+<span id="cb19-5"><a href="loo-stan.html#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span>
+<span id="cb19-6"><a href="loo-stan.html#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   kid_score mom_hs mom_iq mom_work mom_age       y      x1</span></span>
+<span id="cb19-7"><a href="loo-stan.html#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1        65      1  121.1        4      27 -1.0679  1.4078</span></span>
+<span id="cb19-8"><a href="loo-stan.html#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2        98      1   89.4        4      25  0.5489 -0.7092</span></span>
+<span id="cb19-9"><a href="loo-stan.html#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3        85      1  115.4        4      27 -0.0881  1.0295</span></span>
+<span id="cb19-10"><a href="loo-stan.html#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4        83      1   99.4        3      25 -0.1860 -0.0367</span></span>
+<span id="cb19-11"><a href="loo-stan.html#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5       115      1   92.7        4      27  1.3818 -0.4836</span></span>
+<span id="cb19-12"><a href="loo-stan.html#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6        98      0  107.9        1      18  0.5489  0.5268</span></span></code></pre></div>
+<p>Dato che AIC non è una statistica bayesiana, può essere calcolata mediante strumenti frequentisti:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="loo-stan.html#cb20-1" aria-hidden="true" tabindex="-1"></a>m1_freq <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1, <span class="at">data =</span> df)</span>
+<span id="cb20-2"><a href="loo-stan.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(m1_freq) <span class="sc">/</span> <span class="sc">-</span><span class="dv">2</span></span>
+<span id="cb20-3"><a href="loo-stan.html#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -570</span></span></code></pre></div>
+<p>Per ottenere LOO-CV adattiamo ai dati un modello di regressione bayesiano:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="loo-stan.html#cb21-1" aria-hidden="true" tabindex="-1"></a>modelString <span class="ot">=</span> <span class="st">&quot;</span></span>
+<span id="cb21-2"><a href="loo-stan.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="st">data {</span></span>
+<span id="cb21-3"><a href="loo-stan.html#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower=0&gt; N;</span></span>
+<span id="cb21-4"><a href="loo-stan.html#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[N] x1;</span></span>
+<span id="cb21-5"><a href="loo-stan.html#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[N] y;</span></span>
+<span id="cb21-6"><a href="loo-stan.html#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb21-7"><a href="loo-stan.html#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="st">parameters {</span></span>
+<span id="cb21-8"><a href="loo-stan.html#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="st">  real alpha;</span></span>
+<span id="cb21-9"><a href="loo-stan.html#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="st">  real beta1;</span></span>
+<span id="cb21-10"><a href="loo-stan.html#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="st">  real&lt;lower=0&gt; sigma;</span></span>
+<span id="cb21-11"><a href="loo-stan.html#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb21-12"><a href="loo-stan.html#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="st">transformed parameters {</span></span>
+<span id="cb21-13"><a href="loo-stan.html#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[N] mu;</span></span>
+<span id="cb21-14"><a href="loo-stan.html#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="st">  for (n in 1:N){</span></span>
+<span id="cb21-15"><a href="loo-stan.html#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="st">    mu[n] = alpha + beta1*x1[n];</span></span>
+<span id="cb21-16"><a href="loo-stan.html#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb21-17"><a href="loo-stan.html#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb21-18"><a href="loo-stan.html#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb21-19"><a href="loo-stan.html#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="st">  alpha ~ normal(0, 1);</span></span>
+<span id="cb21-20"><a href="loo-stan.html#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="st">  beta1 ~ normal(0, 1);</span></span>
+<span id="cb21-21"><a href="loo-stan.html#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="st">  sigma ~ cauchy(0, 1);</span></span>
+<span id="cb21-22"><a href="loo-stan.html#cb21-22" aria-hidden="true" tabindex="-1"></a><span class="st">  y ~ normal(mu, sigma);</span></span>
+<span id="cb21-23"><a href="loo-stan.html#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb21-24"><a href="loo-stan.html#cb21-24" aria-hidden="true" tabindex="-1"></a><span class="st">generated quantities {</span></span>
+<span id="cb21-25"><a href="loo-stan.html#cb21-25" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[N] y_rep;</span></span>
+<span id="cb21-26"><a href="loo-stan.html#cb21-26" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[N] log_lik;</span></span>
+<span id="cb21-27"><a href="loo-stan.html#cb21-27" aria-hidden="true" tabindex="-1"></a><span class="st">  for (n in 1:N){</span></span>
+<span id="cb21-28"><a href="loo-stan.html#cb21-28" aria-hidden="true" tabindex="-1"></a><span class="st">    y_rep[n] = normal_rng(mu[n], sigma);</span></span>
+<span id="cb21-29"><a href="loo-stan.html#cb21-29" aria-hidden="true" tabindex="-1"></a><span class="st">    log_lik[n] = normal_lpdf(y[n] | x1[n] * beta1, sigma);</span></span>
+<span id="cb21-30"><a href="loo-stan.html#cb21-30" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb21-31"><a href="loo-stan.html#cb21-31" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb21-32"><a href="loo-stan.html#cb21-32" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb21-33"><a href="loo-stan.html#cb21-33" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(modelString, <span class="at">con =</span> <span class="st">&quot;code/simplereg.stan&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="loo-stan.html#cb22-1" aria-hidden="true" tabindex="-1"></a>data1_list <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb22-2"><a href="loo-stan.html#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> <span class="fu">length</span>(df<span class="sc">$</span>kid_score),</span>
+<span id="cb22-3"><a href="loo-stan.html#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> df<span class="sc">$</span>y,</span>
+<span id="cb22-4"><a href="loo-stan.html#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x1 =</span> df<span class="sc">$</span>x1</span>
+<span id="cb22-5"><a href="loo-stan.html#cb22-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="loo-stan.html#cb23-1" aria-hidden="true" tabindex="-1"></a>file1 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;code&quot;</span>, <span class="st">&quot;simplereg.stan&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="loo-stan.html#cb24-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">cmdstan_model</span>(file1)</span></code></pre></div>
+<p>
+Eseguiamo il campionamento MCMC:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="loo-stan.html#cb25-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> mod1<span class="sc">$</span><span class="fu">sample</span>(</span>
+<span id="cb25-2"><a href="loo-stan.html#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data1_list,</span>
+<span id="cb25-3"><a href="loo-stan.html#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter_sampling =</span> 4000L,</span>
+<span id="cb25-4"><a href="loo-stan.html#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter_warmup =</span> 2000L,</span>
+<span id="cb25-5"><a href="loo-stan.html#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> SEED,</span>
+<span id="cb25-6"><a href="loo-stan.html#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> 4L,</span>
+<span id="cb25-7"><a href="loo-stan.html#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">parallel_chains =</span> 2L,</span>
+<span id="cb25-8"><a href="loo-stan.html#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">refresh =</span> <span class="dv">0</span>,</span>
+<span id="cb25-9"><a href="loo-stan.html#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">thin =</span> <span class="dv">1</span></span>
+<span id="cb25-10"><a href="loo-stan.html#cb25-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>
+Calcoliamo infine la quantità <span class="math inline">\(\widehat{\elpd}_{LOO-CV}\)</span>:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="loo-stan.html#cb26-1" aria-hidden="true" tabindex="-1"></a>loo1_result <span class="ot">&lt;-</span> fit1<span class="sc">$</span><span class="fu">loo</span>(<span class="at">cores =</span> <span class="dv">4</span>)</span>
+<span id="cb26-2"><a href="loo-stan.html#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(loo1_result)</span>
+<span id="cb26-3"><a href="loo-stan.html#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb26-4"><a href="loo-stan.html#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Computed from 16000 by 434 log-likelihood matrix</span></span>
+<span id="cb26-5"><a href="loo-stan.html#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb26-6"><a href="loo-stan.html#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          Estimate   SE</span></span>
+<span id="cb26-7"><a href="loo-stan.html#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; elpd_loo   -568.6 14.5</span></span>
+<span id="cb26-8"><a href="loo-stan.html#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; p_loo         1.9  0.2</span></span>
+<span id="cb26-9"><a href="loo-stan.html#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; looic      1137.2 28.9</span></span>
+<span id="cb26-10"><a href="loo-stan.html#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ------</span></span>
+<span id="cb26-11"><a href="loo-stan.html#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Monte Carlo SE of elpd_loo is 0.0.</span></span>
+<span id="cb26-12"><a href="loo-stan.html#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb26-13"><a href="loo-stan.html#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; All Pareto k estimates are good (k &lt; 0.5).</span></span>
+<span id="cb26-14"><a href="loo-stan.html#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; See help(&#39;pareto-k-diagnostic&#39;) for details.</span></span></code></pre></div>
+<p>
+Si noti la somiglianza tra <span class="math inline">\(\widehat{\elpd}_{LOO-CV}\)</span> e <span class="math inline">\(\widehat{\elpd}_{AIC}\)</span>. In conclusione, possiamo dunque dire che <span class="math inline">\(\widehat{\elpd}_{LOO-CV}\)</span> è la risposta bayesiana allo stesso problema che trova una soluzione frequentista nella statistica <span class="math inline">\(\widehat{\elpd}_{AIC}\)</span>.</p>
+</div>
+</div>
+<div id="confronto-tra-modelli-mediante-loo-cv" class="section level3" number="2.6.3">
+<h3><span class="header-section-number">2.6.3</span> Confronto tra modelli mediante LOO-CV</h3>
+<p>Come menzionato in precedenza, l’obiettivo centrale della misurazione dell’accuratezza predittiva è il confronto di modelli. Una volta capito come calcolare LOO-CV con un condice scritto in linguaggio Stan, svolgeremo ora un confronto di modelli.<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p>
+<p>Considereremo qui un confronto di modelli di regressione. Il modello di regressione discusso nel Paragrafo precedente prevede il QI dei bambini dal QI delle madri. Aggiungiamo a tale modello un secondo predittore che corrisponde all’età della madre. L’aggiunta di tale predittore migliori l’accuratezza predittiva del modello?</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="loo-stan.html#cb27-1" aria-hidden="true" tabindex="-1"></a>modelString <span class="ot">=</span> <span class="st">&quot;</span></span>
+<span id="cb27-2"><a href="loo-stan.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="st">data {</span></span>
+<span id="cb27-3"><a href="loo-stan.html#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower=0&gt; N;</span></span>
+<span id="cb27-4"><a href="loo-stan.html#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[N] x1;</span></span>
+<span id="cb27-5"><a href="loo-stan.html#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[N] x2;</span></span>
+<span id="cb27-6"><a href="loo-stan.html#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[N] y;</span></span>
+<span id="cb27-7"><a href="loo-stan.html#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb27-8"><a href="loo-stan.html#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="st">parameters {</span></span>
+<span id="cb27-9"><a href="loo-stan.html#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="st">  real alpha;</span></span>
+<span id="cb27-10"><a href="loo-stan.html#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="st">  real beta1;</span></span>
+<span id="cb27-11"><a href="loo-stan.html#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="st">  real beta2;</span></span>
+<span id="cb27-12"><a href="loo-stan.html#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="st">  real&lt;lower=0&gt; sigma;</span></span>
+<span id="cb27-13"><a href="loo-stan.html#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb27-14"><a href="loo-stan.html#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="st">transformed parameters {</span></span>
+<span id="cb27-15"><a href="loo-stan.html#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[N] mu;</span></span>
+<span id="cb27-16"><a href="loo-stan.html#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="st">  for (n in 1:N){</span></span>
+<span id="cb27-17"><a href="loo-stan.html#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="st">    mu[n] = alpha + beta1*x1[n] + beta2*x2[n];</span></span>
+<span id="cb27-18"><a href="loo-stan.html#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb27-19"><a href="loo-stan.html#cb27-19" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb27-20"><a href="loo-stan.html#cb27-20" aria-hidden="true" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb27-21"><a href="loo-stan.html#cb27-21" aria-hidden="true" tabindex="-1"></a><span class="st">  alpha ~ normal(0, 1);</span></span>
+<span id="cb27-22"><a href="loo-stan.html#cb27-22" aria-hidden="true" tabindex="-1"></a><span class="st">  beta1 ~ normal(0, 1);</span></span>
+<span id="cb27-23"><a href="loo-stan.html#cb27-23" aria-hidden="true" tabindex="-1"></a><span class="st">  beta2 ~ normal(0, 1);</span></span>
+<span id="cb27-24"><a href="loo-stan.html#cb27-24" aria-hidden="true" tabindex="-1"></a><span class="st">  sigma ~ cauchy(0, 1);</span></span>
+<span id="cb27-25"><a href="loo-stan.html#cb27-25" aria-hidden="true" tabindex="-1"></a><span class="st">  y ~ normal(mu, sigma);</span></span>
+<span id="cb27-26"><a href="loo-stan.html#cb27-26" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb27-27"><a href="loo-stan.html#cb27-27" aria-hidden="true" tabindex="-1"></a><span class="st">generated quantities {</span></span>
+<span id="cb27-28"><a href="loo-stan.html#cb27-28" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[N] y_rep;</span></span>
+<span id="cb27-29"><a href="loo-stan.html#cb27-29" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[N] log_lik;</span></span>
+<span id="cb27-30"><a href="loo-stan.html#cb27-30" aria-hidden="true" tabindex="-1"></a><span class="st">  for (n in 1:N){</span></span>
+<span id="cb27-31"><a href="loo-stan.html#cb27-31" aria-hidden="true" tabindex="-1"></a><span class="st">    y_rep[n] = normal_rng(mu[n], sigma);</span></span>
+<span id="cb27-32"><a href="loo-stan.html#cb27-32" aria-hidden="true" tabindex="-1"></a><span class="st">    log_lik[n] = normal_lpdf(y[n] | x1[n] * beta1 + x2[n] * beta2, sigma);</span></span>
+<span id="cb27-33"><a href="loo-stan.html#cb27-33" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb27-34"><a href="loo-stan.html#cb27-34" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb27-35"><a href="loo-stan.html#cb27-35" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb27-36"><a href="loo-stan.html#cb27-36" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(modelString, <span class="at">con =</span> <span class="st">&quot;code/mreg2.stan&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="loo-stan.html#cb28-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>x2 <span class="ot">&lt;-</span> <span class="fu">scale</span>(df<span class="sc">$</span>mom_age)[, <span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="loo-stan.html#cb29-1" aria-hidden="true" tabindex="-1"></a>data2_list <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb29-2"><a href="loo-stan.html#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> <span class="fu">length</span>(df<span class="sc">$</span>kid_score),</span>
+<span id="cb29-3"><a href="loo-stan.html#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> df<span class="sc">$</span>y,</span>
+<span id="cb29-4"><a href="loo-stan.html#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x1 =</span> df<span class="sc">$</span>x1,</span>
+<span id="cb29-5"><a href="loo-stan.html#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">x2 =</span> df<span class="sc">$</span>x2</span>
+<span id="cb29-6"><a href="loo-stan.html#cb29-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="loo-stan.html#cb30-1" aria-hidden="true" tabindex="-1"></a>file2 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;code&quot;</span>, <span class="st">&quot;mreg2.stan&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="loo-stan.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compile model</span></span>
+<span id="cb31-2"><a href="loo-stan.html#cb31-2" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">cmdstan_model</span>(file2)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="loo-stan.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Running MCMC</span></span>
+<span id="cb32-2"><a href="loo-stan.html#cb32-2" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> mod2<span class="sc">$</span><span class="fu">sample</span>(</span>
+<span id="cb32-3"><a href="loo-stan.html#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data2_list,</span>
+<span id="cb32-4"><a href="loo-stan.html#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter_sampling =</span> 4000L,</span>
+<span id="cb32-5"><a href="loo-stan.html#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter_warmup =</span> 2000L,</span>
+<span id="cb32-6"><a href="loo-stan.html#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> SEED,</span>
+<span id="cb32-7"><a href="loo-stan.html#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> 4L,</span>
+<span id="cb32-8"><a href="loo-stan.html#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">parallel_chains =</span> 2L,</span>
+<span id="cb32-9"><a href="loo-stan.html#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">refresh =</span> <span class="dv">0</span>,</span>
+<span id="cb32-10"><a href="loo-stan.html#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">thin =</span> <span class="dv">1</span></span>
+<span id="cb32-11"><a href="loo-stan.html#cb32-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="loo-stan.html#cb33-1" aria-hidden="true" tabindex="-1"></a>fit2<span class="sc">$</span><span class="fu">summary</span>(<span class="fu">c</span>(<span class="st">&quot;alpha&quot;</span>, <span class="st">&quot;beta1&quot;</span>, <span class="st">&quot;beta2&quot;</span>, <span class="st">&quot;sigma&quot;</span>))</span>
+<span id="cb33-2"><a href="loo-stan.html#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 10</span></span>
+<span id="cb33-3"><a href="loo-stan.html#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   variable     mean  median     sd    mad      q5    q95  rhat ess_bulk ess_tail</span></span>
+<span id="cb33-4"><a href="loo-stan.html#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;       &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;</span></span>
+<span id="cb33-5"><a href="loo-stan.html#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 alpha    0.000387 5.70e-4 0.0431 0.0427 -0.0706 0.0709  1.00   18092.   12482.</span></span>
+<span id="cb33-6"><a href="loo-stan.html#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 beta1    0.442    4.42e-1 0.0434 0.0428  0.372  0.514   1.00   18884.   12262.</span></span>
+<span id="cb33-7"><a href="loo-stan.html#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 beta2    0.0510   5.11e-2 0.0431 0.0431 -0.0192 0.122   1.00   19099.   12929.</span></span>
+<span id="cb33-8"><a href="loo-stan.html#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 sigma    0.896    8.96e-1 0.0306 0.0303  0.847  0.947   1.00   18776.   13031.</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="loo-stan.html#cb34-1" aria-hidden="true" tabindex="-1"></a>loo2_result <span class="ot">&lt;-</span> fit2<span class="sc">$</span><span class="fu">loo</span>(<span class="at">cores =</span> <span class="dv">4</span>)</span>
+<span id="cb34-2"><a href="loo-stan.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(loo2_result)</span>
+<span id="cb34-3"><a href="loo-stan.html#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb34-4"><a href="loo-stan.html#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Computed from 16000 by 434 log-likelihood matrix</span></span>
+<span id="cb34-5"><a href="loo-stan.html#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb34-6"><a href="loo-stan.html#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          Estimate   SE</span></span>
+<span id="cb34-7"><a href="loo-stan.html#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; elpd_loo   -569.0 14.5</span></span>
+<span id="cb34-8"><a href="loo-stan.html#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; p_loo         3.0  0.3</span></span>
+<span id="cb34-9"><a href="loo-stan.html#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; looic      1137.9 29.0</span></span>
+<span id="cb34-10"><a href="loo-stan.html#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ------</span></span>
+<span id="cb34-11"><a href="loo-stan.html#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Monte Carlo SE of elpd_loo is 0.0.</span></span>
+<span id="cb34-12"><a href="loo-stan.html#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb34-13"><a href="loo-stan.html#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; All Pareto k estimates are good (k &lt; 0.5).</span></span>
+<span id="cb34-14"><a href="loo-stan.html#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; See help(&#39;pareto-k-diagnostic&#39;) for details.</span></span></code></pre></div>
+<p>Consideriamo infine un terzo modello che utilizza come predittori, oltre al QI della madre, una variabile dicotomica (codificata 0 o 1) che distingue madri che hanno completato le scuole superiori da quelle che non le hanno completate. Nuovamente, la domanda è se l’aggiunta di tale predittore migliori la capacità predittiva del modello.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="loo-stan.html#cb35-1" aria-hidden="true" tabindex="-1"></a>modelString <span class="ot">=</span> <span class="st">&quot;</span></span>
+<span id="cb35-2"><a href="loo-stan.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="st">data {</span></span>
+<span id="cb35-3"><a href="loo-stan.html#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower=0&gt; N;</span></span>
+<span id="cb35-4"><a href="loo-stan.html#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[N] x1;</span></span>
+<span id="cb35-5"><a href="loo-stan.html#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[N] x3;</span></span>
+<span id="cb35-6"><a href="loo-stan.html#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[N] y;</span></span>
+<span id="cb35-7"><a href="loo-stan.html#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb35-8"><a href="loo-stan.html#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="st">parameters {</span></span>
+<span id="cb35-9"><a href="loo-stan.html#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="st">  real alpha;</span></span>
+<span id="cb35-10"><a href="loo-stan.html#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="st">  real beta1;</span></span>
+<span id="cb35-11"><a href="loo-stan.html#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="st">  real beta3;</span></span>
+<span id="cb35-12"><a href="loo-stan.html#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="st">  real&lt;lower=0&gt; sigma;</span></span>
+<span id="cb35-13"><a href="loo-stan.html#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb35-14"><a href="loo-stan.html#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="st">transformed parameters {</span></span>
+<span id="cb35-15"><a href="loo-stan.html#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[N] mu;</span></span>
+<span id="cb35-16"><a href="loo-stan.html#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="st">  for (n in 1:N){</span></span>
+<span id="cb35-17"><a href="loo-stan.html#cb35-17" aria-hidden="true" tabindex="-1"></a><span class="st">    mu[n] = alpha + beta1*x1[n] + beta3*x3[n];</span></span>
+<span id="cb35-18"><a href="loo-stan.html#cb35-18" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb35-19"><a href="loo-stan.html#cb35-19" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb35-20"><a href="loo-stan.html#cb35-20" aria-hidden="true" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb35-21"><a href="loo-stan.html#cb35-21" aria-hidden="true" tabindex="-1"></a><span class="st">  alpha ~ normal(0, 1);</span></span>
+<span id="cb35-22"><a href="loo-stan.html#cb35-22" aria-hidden="true" tabindex="-1"></a><span class="st">  beta1 ~ normal(0, 1);</span></span>
+<span id="cb35-23"><a href="loo-stan.html#cb35-23" aria-hidden="true" tabindex="-1"></a><span class="st">  beta3 ~ normal(0, 1);</span></span>
+<span id="cb35-24"><a href="loo-stan.html#cb35-24" aria-hidden="true" tabindex="-1"></a><span class="st">  sigma ~ cauchy(0, 1);</span></span>
+<span id="cb35-25"><a href="loo-stan.html#cb35-25" aria-hidden="true" tabindex="-1"></a><span class="st">  y ~ normal(mu, sigma);</span></span>
+<span id="cb35-26"><a href="loo-stan.html#cb35-26" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb35-27"><a href="loo-stan.html#cb35-27" aria-hidden="true" tabindex="-1"></a><span class="st">generated quantities {</span></span>
+<span id="cb35-28"><a href="loo-stan.html#cb35-28" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[N] y_rep;</span></span>
+<span id="cb35-29"><a href="loo-stan.html#cb35-29" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[N] log_lik;</span></span>
+<span id="cb35-30"><a href="loo-stan.html#cb35-30" aria-hidden="true" tabindex="-1"></a><span class="st">  for (n in 1:N){</span></span>
+<span id="cb35-31"><a href="loo-stan.html#cb35-31" aria-hidden="true" tabindex="-1"></a><span class="st">    y_rep[n] = normal_rng(mu[n], sigma);</span></span>
+<span id="cb35-32"><a href="loo-stan.html#cb35-32" aria-hidden="true" tabindex="-1"></a><span class="st">    log_lik[n] = normal_lpdf(y[n] | x1[n] * beta1 + x3[n] * beta3, sigma);</span></span>
+<span id="cb35-33"><a href="loo-stan.html#cb35-33" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb35-34"><a href="loo-stan.html#cb35-34" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb35-35"><a href="loo-stan.html#cb35-35" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb35-36"><a href="loo-stan.html#cb35-36" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(modelString, <span class="at">con =</span> <span class="st">&quot;code/mreg3.stan&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="loo-stan.html#cb36-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>x3 <span class="ot">&lt;-</span> df<span class="sc">$</span>mom_hs</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="loo-stan.html#cb37-1" aria-hidden="true" tabindex="-1"></a>data3_list <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb37-2"><a href="loo-stan.html#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> <span class="fu">length</span>(df<span class="sc">$</span>kid_score),</span>
+<span id="cb37-3"><a href="loo-stan.html#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> df<span class="sc">$</span>y,</span>
+<span id="cb37-4"><a href="loo-stan.html#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x1 =</span> df<span class="sc">$</span>x1,</span>
+<span id="cb37-5"><a href="loo-stan.html#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">x3 =</span> df<span class="sc">$</span>x3</span>
+<span id="cb37-6"><a href="loo-stan.html#cb37-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="loo-stan.html#cb38-1" aria-hidden="true" tabindex="-1"></a>file3 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;code&quot;</span>, <span class="st">&quot;mreg3.stan&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="loo-stan.html#cb39-1" aria-hidden="true" tabindex="-1"></a>mod3 <span class="ot">&lt;-</span> <span class="fu">cmdstan_model</span>(file3)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="loo-stan.html#cb40-1" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span> mod3<span class="sc">$</span><span class="fu">sample</span>(</span>
+<span id="cb40-2"><a href="loo-stan.html#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data3_list,</span>
+<span id="cb40-3"><a href="loo-stan.html#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter_sampling =</span> 4000L,</span>
+<span id="cb40-4"><a href="loo-stan.html#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter_warmup =</span> 2000L,</span>
+<span id="cb40-5"><a href="loo-stan.html#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> SEED,</span>
+<span id="cb40-6"><a href="loo-stan.html#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> 4L,</span>
+<span id="cb40-7"><a href="loo-stan.html#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">parallel_chains =</span> 2L,</span>
+<span id="cb40-8"><a href="loo-stan.html#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">refresh =</span> <span class="dv">0</span>,</span>
+<span id="cb40-9"><a href="loo-stan.html#cb40-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">thin =</span> <span class="dv">1</span></span>
+<span id="cb40-10"><a href="loo-stan.html#cb40-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="loo-stan.html#cb41-1" aria-hidden="true" tabindex="-1"></a>fit3<span class="sc">$</span><span class="fu">summary</span>(<span class="fu">c</span>(<span class="st">&quot;alpha&quot;</span>, <span class="st">&quot;beta1&quot;</span>, <span class="st">&quot;beta3&quot;</span>, <span class="st">&quot;sigma&quot;</span>))</span>
+<span id="cb41-2"><a href="loo-stan.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 10</span></span>
+<span id="cb41-3"><a href="loo-stan.html#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   variable   mean median     sd    mad     q5     q95  rhat ess_bulk ess_tail</span></span>
+<span id="cb41-4"><a href="loo-stan.html#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;</span></span>
+<span id="cb41-5"><a href="loo-stan.html#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 alpha    -0.225 -0.225 0.0951 0.0939 -0.380 -0.0673  1.00    7808.    8235.</span></span>
+<span id="cb41-6"><a href="loo-stan.html#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 beta1     0.414  0.414 0.0445 0.0440  0.340  0.487   1.00   10200.    9870.</span></span>
+<span id="cb41-7"><a href="loo-stan.html#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 beta3     0.287  0.288 0.108  0.106   0.108  0.463   1.00    7832.    8542.</span></span>
+<span id="cb41-8"><a href="loo-stan.html#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 sigma     0.890  0.889 0.0300 0.0295  0.842  0.941   1.00   11733.   10064.</span></span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="loo-stan.html#cb42-1" aria-hidden="true" tabindex="-1"></a>loo3_result <span class="ot">&lt;-</span> fit3<span class="sc">$</span><span class="fu">loo</span>(<span class="at">cores =</span> <span class="dv">4</span>)</span>
+<span id="cb42-2"><a href="loo-stan.html#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(loo3_result)</span>
+<span id="cb42-3"><a href="loo-stan.html#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb42-4"><a href="loo-stan.html#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Computed from 16000 by 434 log-likelihood matrix</span></span>
+<span id="cb42-5"><a href="loo-stan.html#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb42-6"><a href="loo-stan.html#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          Estimate   SE</span></span>
+<span id="cb42-7"><a href="loo-stan.html#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; elpd_loo   -584.2 16.4</span></span>
+<span id="cb42-8"><a href="loo-stan.html#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; p_loo         7.4  0.6</span></span>
+<span id="cb42-9"><a href="loo-stan.html#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; looic      1168.4 32.8</span></span>
+<span id="cb42-10"><a href="loo-stan.html#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ------</span></span>
+<span id="cb42-11"><a href="loo-stan.html#cb42-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Monte Carlo SE of elpd_loo is 0.0.</span></span>
+<span id="cb42-12"><a href="loo-stan.html#cb42-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb42-13"><a href="loo-stan.html#cb42-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; All Pareto k estimates are good (k &lt; 0.5).</span></span>
+<span id="cb42-14"><a href="loo-stan.html#cb42-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; See help(&#39;pareto-k-diagnostic&#39;) for details.</span></span></code></pre></div>
+<p>Per eseguire un confronto tra modelli in termini della loro capacità predittiva esaminiamo la differenza di LOO-CV tra coppie di modelli. Le seguenti istruzioni <span class="math inline">\(\R\)</span> producono la quantità <code>elpd_diff</code>, ovvero la differenza tra stime della <span class="math inline">\(\elpd\)</span> fornite da due modelli. Il primo argomento della funzione <code>loo_compare()</code> specifica il modello che viene usato come confronto. Nella prima riga dell’output, il valore <code>elpd_diff</code> è 0 (cioè, <span class="math inline">\(x − x = 0\)</span>). Nelle righe successive sono riportate le differenze rispetto al modello di confronto (in questo caso, il modello 1). La colonna <code>se_diff</code> riporta l’errore standard di tali differenze.</p>
+<p>L’incertezza della stima dell’accuratezza <em>out-of-sample</em> si distribuisce in maniera approssimativamente normale con media uguale al valore riportato dal software e deviazione standard uguale a ciò che è indicato nell’output come errore standard. Quando il campione è piccolo, questa approssimazione produce una forte sottostima dell’incertezza, ma fornisce comunque una stima migliore di AIC, DIC e WAIC.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="loo-stan.html#cb43-1" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">loo_compare</span>(loo1_result, loo2_result, loo3_result)</span>
+<span id="cb43-2"><a href="loo-stan.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(w)</span>
+<span id="cb43-3"><a href="loo-stan.html#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        elpd_diff se_diff</span></span>
+<span id="cb43-4"><a href="loo-stan.html#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; model1   0.0       0.0  </span></span>
+<span id="cb43-5"><a href="loo-stan.html#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; model2  -0.4       1.3  </span></span>
+<span id="cb43-6"><a href="loo-stan.html#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; model3 -15.6       6.0</span></span></code></pre></div>
+<p>Per interpretare l’output, usiamo il criterio suggerito da <span class="citation"><a href="#ref-gelman1995bayesian" role="doc-biblioref">Gelman et al.</a> (<a href="#ref-gelman1995bayesian" role="doc-biblioref">1995</a>)</span>: consideriamo “credibile” una differenza se <code>elpd_diff</code> è almeno due volte maggiore di <code>se_diff</code>. Nel caso presente, dunque, il confronto tra il modello 2 e il modello 1 indica che la quantità <code>elpd_diff</code> è molto piccola rispetto al suo errore standard.
+Questo accade se un predittore è associato in modo trascurabile con la variabile dipendente. I dati presenti, dunque, non offrono alcuna evidenza che aggiungere dell’età della madre come predittore migliori la capacità predittiva del modello. Nel confronto tra modello 3 e modello 1, invece, la quantità <code>elpd_diff</code> è maggiore di due volte il valore dell’errore standard. Questo suggerisce un incremento della capacità predittiva del modello quiando il livello di istruzione della madre viene incluso tra i predittori.</p>
+<p>È anche possibile calcolare l’intervallo di credibilità per <code>elpd_diff</code>:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="loo-stan.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fl">15.5</span> <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qnorm</span>(.<span class="dv">95</span>, <span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fl">6.0</span></span>
+<span id="cb44-2"><a href="loo-stan.html#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  5.63 25.37</span></span></code></pre></div>
+</div>
+<div id="outlier" class="section level3" number="2.6.4">
+<h3><span class="header-section-number">2.6.4</span> Outlier</h3>
+<p>Si è soliti pensare che la maggior parte delle osservazioni del campione sia prodotta da un unico meccanismo generatore dei dati, mentre le rimanenti osservazioni sono la realizzazione di un diverso processo stocastico. Le osservazioni che appartengono a questo secondo gruppo si chiamano <em>outlier</em>. È dunque necessario identificare gli outlier e limitare la loro influenza sull’inferenza.<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a></p>
+<p>Poniamoci ora il problema di identificare gli outlier con la tecnica PSIS-LOO-CV. Quando PSIS-LOO-CV viene calcolato con il pacchetto <code>loo</code>, l’output riporta il parametro di forma della distribuzione di Pareto (valore <code>k</code>). Tale valore può essere utilizzato per identificare gli outlier. Infatti, il valore <code>k</code> valuta, per ciascun punto del campione, l’approssimazione usata da PSIS-LOO-CV. Se <span class="math inline">\(k &lt; 0.5\)</span>, i pesi di importanza vengono stimati in modo accurato; se il valore <span class="math inline">\(k\)</span> di Pareto di un punto è <span class="math inline">\(&gt; 0.7\)</span>, i pesi di importanza possono essere inaccurati. Le osservazioni con <span class="math inline">\(k &gt; 0.7\)</span> sono dunque osservazioni outlier.</p>
+<p>Per fare un esempio concreto, introduciamo nel campione dell’esempio precedente una singola osservazione outlier.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="loo-stan.html#cb45-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df</span>
+<span id="cb45-2"><a href="loo-stan.html#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(df1)</span>
+<span id="cb45-3"><a href="loo-stan.html#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 434   9</span></span>
+<span id="cb45-4"><a href="loo-stan.html#cb45-4" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>x1[<span class="dv">434</span>] <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb45-5"><a href="loo-stan.html#cb45-5" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>y[<span class="dv">434</span>] <span class="ot">&lt;-</span> <span class="dv">10</span></span></code></pre></div>
+<p>
+Sistemiamo i dati nel formato appropriato per Stan:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="loo-stan.html#cb46-1" aria-hidden="true" tabindex="-1"></a>data1a_list <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb46-2"><a href="loo-stan.html#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> <span class="fu">length</span>(df1<span class="sc">$</span>kid_score),</span>
+<span id="cb46-3"><a href="loo-stan.html#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> df1<span class="sc">$</span>y,</span>
+<span id="cb46-4"><a href="loo-stan.html#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x1 =</span> df1<span class="sc">$</span>x1</span>
+<span id="cb46-5"><a href="loo-stan.html#cb46-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>
+Adattiamo nuovamente il modello 1 ad un campione di dati che contiene un outlier.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="loo-stan.html#cb47-1" aria-hidden="true" tabindex="-1"></a>fit1a <span class="ot">&lt;-</span> mod1<span class="sc">$</span><span class="fu">sample</span>(</span>
+<span id="cb47-2"><a href="loo-stan.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data1a_list,</span>
+<span id="cb47-3"><a href="loo-stan.html#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter_sampling =</span> 4000L,</span>
+<span id="cb47-4"><a href="loo-stan.html#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter_warmup =</span> 2000L,</span>
+<span id="cb47-5"><a href="loo-stan.html#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> SEED,</span>
+<span id="cb47-6"><a href="loo-stan.html#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> 4L,</span>
+<span id="cb47-7"><a href="loo-stan.html#cb47-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">parallel_chains =</span> 2L,</span>
+<span id="cb47-8"><a href="loo-stan.html#cb47-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">refresh =</span> <span class="dv">0</span>,</span>
+<span id="cb47-9"><a href="loo-stan.html#cb47-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">thin =</span> <span class="dv">1</span></span>
+<span id="cb47-10"><a href="loo-stan.html#cb47-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="loo-stan.html#cb48-1" aria-hidden="true" tabindex="-1"></a>loo1a_result <span class="ot">&lt;-</span> fit1a<span class="sc">$</span><span class="fu">loo</span>(<span class="at">cores =</span> <span class="dv">4</span>)</span></code></pre></div>
+<p>
+Una tabella diagnostica che riassume le stime dei parametri di forma della distribuzione di Pareto si ottiene nel modo seguente:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="loo-stan.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(loo1a_result)</span>
+<span id="cb49-2"><a href="loo-stan.html#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb49-3"><a href="loo-stan.html#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Computed from 16000 by 434 log-likelihood matrix</span></span>
+<span id="cb49-4"><a href="loo-stan.html#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb49-5"><a href="loo-stan.html#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          Estimate   SE</span></span>
+<span id="cb49-6"><a href="loo-stan.html#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; elpd_loo   -586.6 20.1</span></span>
+<span id="cb49-7"><a href="loo-stan.html#cb49-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; p_loo         7.1  5.4</span></span>
+<span id="cb49-8"><a href="loo-stan.html#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; looic      1173.2 40.3</span></span>
+<span id="cb49-9"><a href="loo-stan.html#cb49-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ------</span></span>
+<span id="cb49-10"><a href="loo-stan.html#cb49-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Monte Carlo SE of elpd_loo is NA.</span></span>
+<span id="cb49-11"><a href="loo-stan.html#cb49-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb49-12"><a href="loo-stan.html#cb49-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Pareto k diagnostic values:</span></span>
+<span id="cb49-13"><a href="loo-stan.html#cb49-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                          Count Pct.    Min. n_eff</span></span>
+<span id="cb49-14"><a href="loo-stan.html#cb49-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (-Inf, 0.5]   (good)     433   99.8%   9998      </span></span>
+<span id="cb49-15"><a href="loo-stan.html#cb49-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  (0.5, 0.7]   (ok)         0    0.0%   &lt;NA&gt;      </span></span>
+<span id="cb49-16"><a href="loo-stan.html#cb49-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    (0.7, 1]   (bad)        0    0.0%   &lt;NA&gt;      </span></span>
+<span id="cb49-17"><a href="loo-stan.html#cb49-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    (1, Inf)   (very bad)   1    0.2%   13        </span></span>
+<span id="cb49-18"><a href="loo-stan.html#cb49-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; See help(&#39;pareto-k-diagnostic&#39;) for details.</span></span></code></pre></div>
+<p>
+Un grafico che riporta le stime dei parametri di forma della distribuzione di Pareto per ciascuna osservazione è dato da:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="loo-stan.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(loo1a_result)</span></code></pre></div>
+<p><img src="092_loo_files/figure-html/unnamed-chunk-52-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>
+Il valore <code>k</code> stimato da PSIS-LOO-CV mette chiaramente in luce il fatto che il valore introdotto nel campione è un outlier. L’indice dell’osservazione outlier è identificato con:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="loo-stan.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pareto_k_ids</span>(loo1a_result, <span class="at">threshold =</span> <span class="fl">0.7</span>)</span>
+<span id="cb51-2"><a href="loo-stan.html#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 434</span></span></code></pre></div>
+</div>
+</div>
+<div id="selezione-di-variabili" class="section level2" number="2.7">
+<h2><span class="header-section-number">2.7</span> Selezione di variabili</h2>
+<p>I concetti che sono stati introdotti in questo Capitolo, tra le altre cose, risultano utili per affrontare un problema importante in psicologia, ovvero quello della semplificazione di un modello di regressione che contiene molti predittori. Il problema è quello di selezionare un insieme di variabili indipendenti così che tale selezione non comporti una apprezzabile perdita nella capacità predittiva del modello ristretto rispetto al modello completo. Un modo per identificare le variabili rilevanti per prevedere una determinata variabile risposta è quello di utilizzare il metodo basato sulla proiezione, come discusso nel seguente <a href="https://cran.r-project.org/web/packages/projpred/vignettes/quickstart.html">link</a> e in <span class="citation">(<a href="#ref-piironen2017comparison" role="doc-biblioref"><strong>piironen2017comparison?</strong></a>)</span>. Per descrivere questa procedura, adatto qui un esempio discusso da Mark Lai in <a href="https://bookdown.org/marklhc/notes_bookdown/model-comparison-and-regularization.html">Course Handouts for Bayesian Data Analysis Class</a>. Iniziamo a leggere i dati.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="loo-stan.html#cb52-1" aria-hidden="true" tabindex="-1"></a>kidiq <span class="ot">&lt;-</span> rio<span class="sc">::</span><span class="fu">import</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;kidiq.dta&quot;</span>))</span>
+<span id="cb52-2"><a href="loo-stan.html#cb52-2" aria-hidden="true" tabindex="-1"></a>kidiq <span class="ot">&lt;-</span> kidiq <span class="sc">%&gt;%</span></span>
+<span id="cb52-3"><a href="loo-stan.html#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb52-4"><a href="loo-stan.html#cb52-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_hs =</span> <span class="fu">factor</span>(mom_hs, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))</span>
+<span id="cb52-5"><a href="loo-stan.html#cb52-5" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p>
+Per potere usare delle distribuzione a priori sensate per i parametri, standardizzo le variabili numeriche.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="loo-stan.html#cb53-1" aria-hidden="true" tabindex="-1"></a>scale_this <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">as.vector</span>(<span class="fu">scale</span>(x))</span>
+<span id="cb53-2"><a href="loo-stan.html#cb53-2" aria-hidden="true" tabindex="-1"></a>kidiq_scaled <span class="ot">&lt;-</span> kidiq <span class="sc">%&gt;%</span></span>
+<span id="cb53-3"><a href="loo-stan.html#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb53-4"><a href="loo-stan.html#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), scale_this))</span>
+<span id="cb53-5"><a href="loo-stan.html#cb53-5" aria-hidden="true" tabindex="-1"></a>kidiq_scaled <span class="ot">&lt;-</span> kidiq_scaled <span class="sc">%&gt;%</span></span>
+<span id="cb53-6"><a href="loo-stan.html#cb53-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb53-7"><a href="loo-stan.html#cb53-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_hs =</span> kidiq<span class="sc">$</span>mom_hs</span>
+<span id="cb53-8"><a href="loo-stan.html#cb53-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb53-9"><a href="loo-stan.html#cb53-9" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(kidiq_scaled)</span>
+<span id="cb53-10"><a href="loo-stan.html#cb53-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Rows: 434</span></span>
+<span id="cb53-11"><a href="loo-stan.html#cb53-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Columns: 5</span></span>
+<span id="cb53-12"><a href="loo-stan.html#cb53-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ kid_score &lt;dbl&gt; -1.06793, 0.54887, -0.08805, -0.18604, 1.38176, 0.54887, -0.…</span></span>
+<span id="cb53-13"><a href="loo-stan.html#cb53-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ mom_hs    &lt;fct&gt; yes, yes, yes, yes, yes, no, yes, yes, yes, yes, yes, yes, y…</span></span>
+<span id="cb53-14"><a href="loo-stan.html#cb53-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ mom_iq    &lt;dbl&gt; 1.40784, -0.70921, 1.02954, -0.03669, -0.48362, 0.52679, 2.5…</span></span>
+<span id="cb53-15"><a href="loo-stan.html#cb53-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ mom_work  &lt;dbl&gt; 0.9342, 0.9342, 0.9342, 0.0878, 0.9342, -1.6051, 0.9342, 0.0…</span></span>
+<span id="cb53-16"><a href="loo-stan.html#cb53-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ mom_age   &lt;dbl&gt; 1.5602, 0.8198, 1.5602, 0.8198, 1.5602, -1.7718, -1.0313, 0.…</span></span></code></pre></div>
+<p>Il seguente modello di regressione utilizza <code>kid_score</code> quale variabile dipendente e, quali predittori, include tutte le altre variabili disponibili e le loro interazioni a due vie.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="loo-stan.html#cb54-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb54-2"><a href="loo-stan.html#cb54-2" aria-hidden="true" tabindex="-1"></a>  kid_score <span class="sc">~</span> (mom_iq <span class="sc">+</span> mom_hs <span class="sc">+</span> mom_work <span class="sc">+</span> mom_age)<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb54-3"><a href="loo-stan.html#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> kidiq_scaled,</span>
+<span id="cb54-4"><a href="loo-stan.html#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">prior =</span> <span class="fu">c</span>(</span>
+<span id="cb54-5"><a href="loo-stan.html#cb54-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> <span class="st">&quot;Intercept&quot;</span>),</span>
+<span id="cb54-6"><a href="loo-stan.html#cb54-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb54-7"><a href="loo-stan.html#cb54-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> <span class="st">&quot;sigma&quot;</span>)</span>
+<span id="cb54-8"><a href="loo-stan.html#cb54-8" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb54-9"><a href="loo-stan.html#cb54-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">2302</span>,</span>
+<span id="cb54-10"><a href="loo-stan.html#cb54-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> 4L,</span>
+<span id="cb54-11"><a href="loo-stan.html#cb54-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">cores =</span> 4L,</span>
+<span id="cb54-12"><a href="loo-stan.html#cb54-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">refresh =</span> <span class="dv">0</span>,</span>
+<span id="cb54-13"><a href="loo-stan.html#cb54-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">backend =</span> <span class="st">&quot;cmdstan&quot;</span></span>
+<span id="cb54-14"><a href="loo-stan.html#cb54-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb54-15"><a href="loo-stan.html#cb54-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Running MCMC with 4 parallel chains...</span></span>
+<span id="cb54-16"><a href="loo-stan.html#cb54-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb54-17"><a href="loo-stan.html#cb54-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chain 1 finished in 0.2 seconds.</span></span>
+<span id="cb54-18"><a href="loo-stan.html#cb54-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chain 2 finished in 0.2 seconds.</span></span>
+<span id="cb54-19"><a href="loo-stan.html#cb54-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chain 3 finished in 0.2 seconds.</span></span>
+<span id="cb54-20"><a href="loo-stan.html#cb54-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chain 4 finished in 0.2 seconds.</span></span>
+<span id="cb54-21"><a href="loo-stan.html#cb54-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb54-22"><a href="loo-stan.html#cb54-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; All 4 chains finished successfully.</span></span>
+<span id="cb54-23"><a href="loo-stan.html#cb54-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Mean chain execution time: 0.2 seconds.</span></span>
+<span id="cb54-24"><a href="loo-stan.html#cb54-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Total execution time: 0.3 seconds.</span></span></code></pre></div>
+<p>
+Un grafico che riporta un posterior predictive check si ottiene con l’istruzione seguente:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="loo-stan.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pp_check</span>(m1, <span class="at">ndraws =</span> <span class="dv">50</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb55-2"><a href="loo-stan.html#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb55-3"><a href="loo-stan.html#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Kid IQ&quot;</span>)</span></code></pre></div>
+<p><img src="092_loo_files/figure-html/unnamed-chunk-57-1.png" width="90%" style="display: block; margin: auto;" />
+
+Identifichiamo ora l’importanza relativa delle variabili indipendenti nei termini della loro importanza per la previsione:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="loo-stan.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Variable selection</span></span>
+<span id="cb56-2"><a href="loo-stan.html#cb56-2" aria-hidden="true" tabindex="-1"></a>vs <span class="ot">&lt;-</span> projpred<span class="sc">::</span><span class="fu">varsel</span>(m1)</span></code></pre></div>
+<p>
+Un grafico dell’importanza relativa di ciascuna variable per la previsione di <code>kid_score</code> si ottiene nel modo seguente:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="loo-stan.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot predictive performance on training data</span></span>
+<span id="cb57-2"><a href="loo-stan.html#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(vs, <span class="at">stats =</span> <span class="fu">c</span>(<span class="st">&quot;elpd&quot;</span>, <span class="st">&quot;rmse&quot;</span>))</span></code></pre></div>
+<p><img src="092_loo_files/figure-html/unnamed-chunk-58-1.png" width="90%" style="display: block; margin: auto;" />
+
+Troviamo ora il numero di variabili da mantenere, in base al modello completo:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="loo-stan.html#cb58-1" aria-hidden="true" tabindex="-1"></a>projpred<span class="sc">::</span><span class="fu">suggest_size</span>(vs)</span>
+<span id="cb58-2"><a href="loo-stan.html#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 5</span></span></code></pre></div>
+<p>
+Usiamo quindi il metodo <code>cv_varsel()</code> per eseguire la convalida incrociata per vedere quante variabili dovrebbero essere incluse nel modello:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="loo-stan.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># With cross-validation</span></span>
+<span id="cb59-2"><a href="loo-stan.html#cb59-2" aria-hidden="true" tabindex="-1"></a>cvs <span class="ot">&lt;-</span> projpred<span class="sc">::</span><span class="fu">cv_varsel</span>(m1, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>
+In base al metodo della convalida incrociata, il numero di variabili da mantenere è</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="loo-stan.html#cb60-1" aria-hidden="true" tabindex="-1"></a>projpred<span class="sc">::</span><span class="fu">suggest_size</span>(cvs)</span>
+<span id="cb60-2"><a href="loo-stan.html#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<p>
+Generiamo il grafico dei risultati della convalida incrociata, questa volta relativi al modello completo:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="loo-stan.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cvs, <span class="at">stats =</span> <span class="fu">c</span>(<span class="st">&quot;elpd&quot;</span>, <span class="st">&quot;rmse&quot;</span>), <span class="at">deltas =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="092_loo_files/figure-html/unnamed-chunk-61-1.png" width="90%" style="display: block; margin: auto;" />
+
+Stampiamo l’elenco delle variabili ordinate in base alla loro importanza relativa, secondo il metodo della convalida incrociata:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="loo-stan.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cvs, <span class="at">stats=</span><span class="fu">c</span>(<span class="st">&#39;mse&#39;</span>), <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&#39;mean&#39;</span>,<span class="st">&#39;se&#39;</span>))</span>
+<span id="cb62-2"><a href="loo-stan.html#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    size   solution_terms   mse mse.se</span></span>
+<span id="cb62-3"><a href="loo-stan.html#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     0             &lt;NA&gt; 1.001 0.0651</span></span>
+<span id="cb62-4"><a href="loo-stan.html#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     1           mom_iq 0.804 0.0536</span></span>
+<span id="cb62-5"><a href="loo-stan.html#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4     2    mom_iq:mom_hs 0.781 0.0519</span></span>
+<span id="cb62-6"><a href="loo-stan.html#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5     3           mom_hs 0.790 0.0530</span></span>
+<span id="cb62-7"><a href="loo-stan.html#cb62-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6     4   mom_hs:mom_age 0.808 0.0539</span></span>
+<span id="cb62-8"><a href="loo-stan.html#cb62-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7     5  mom_hs:mom_work 0.800 0.0541</span></span>
+<span id="cb62-9"><a href="loo-stan.html#cb62-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8     6 mom_work:mom_age 0.805 0.0539</span></span>
+<span id="cb62-10"><a href="loo-stan.html#cb62-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9     7  mom_iq:mom_work 0.796 0.0529</span></span>
+<span id="cb62-11"><a href="loo-stan.html#cb62-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10    8   mom_iq:mom_age 0.800 0.0530</span></span>
+<span id="cb62-12"><a href="loo-stan.html#cb62-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11    9         mom_work 0.799 0.0528</span></span>
+<span id="cb62-13"><a href="loo-stan.html#cb62-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12   10          mom_age 0.799 0.0528</span></span></code></pre></div>
+<p>Il metodo basato sulla proiezione produce le distribuzioni a posteriori basate su una proiezione dal modello completo sul modello semplificato. In altre parole, si pone la domanda: “Se vogliamo un modello con solo <code>mom_iq</code> nel modello, quali coefficienti dovrebbero essere usati per fare in modo che l’accuratezza della previsione risultante sia la più vicina possibile a quella del modello completo?”. I coefficienti ottenuti con il metodo basato sulla proiezione saranno dunque diversi da quelli che si avrebbero se si stimasse direttamente il modello utilizzando il solo predittore <code>mom_iq</code> (ad es. <code>m2</code>). I risultati ottenuti da studi basati sulla simulazione hanno mostrato che il metodo basato sulla proiezione produce un modello con prestazioni predittive migliori.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="loo-stan.html#cb63-1" aria-hidden="true" tabindex="-1"></a>proj1 <span class="ot">&lt;-</span> projpred<span class="sc">::</span><span class="fu">project</span>(</span>
+<span id="cb63-2"><a href="loo-stan.html#cb63-2" aria-hidden="true" tabindex="-1"></a>  cvs,</span>
+<span id="cb63-3"><a href="loo-stan.html#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">nv =</span> <span class="fu">suggest_size</span>(cvs),</span>
+<span id="cb63-4"><a href="loo-stan.html#cb63-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">123</span>,</span>
+<span id="cb63-5"><a href="loo-stan.html#cb63-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">ns =</span> <span class="dv">1000</span></span>
+<span id="cb63-6"><a href="loo-stan.html#cb63-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb63-7"><a href="loo-stan.html#cb63-7" aria-hidden="true" tabindex="-1"></a><span class="fu">posterior_summary</span>(proj1) <span class="sc">%&gt;%</span></span>
+<span id="cb63-8"><a href="loo-stan.html#cb63-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">3</span>)</span>
+<span id="cb63-9"><a href="loo-stan.html#cb63-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           Estimate Est.Error   Q2.5 Q97.5</span></span>
+<span id="cb63-10"><a href="loo-stan.html#cb63-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Intercept    0.002     0.037 -0.064 0.075</span></span>
+<span id="cb63-11"><a href="loo-stan.html#cb63-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mom_iq       0.445     0.037  0.374 0.516</span></span>
+<span id="cb63-12"><a href="loo-stan.html#cb63-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sigma        0.916     0.015  0.891 0.948</span></span></code></pre></div>
+<p>Per fare un confronto, stimiamo i coefficienti del modello di regressione che include unicamente la variabile <code>mom_iq</code>:</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="loo-stan.html#cb64-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">brm</span>(kid_score <span class="sc">~</span> mom_iq,</span>
+<span id="cb64-2"><a href="loo-stan.html#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> kidiq_scaled,</span>
+<span id="cb64-3"><a href="loo-stan.html#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">prior =</span> <span class="fu">c</span>(</span>
+<span id="cb64-4"><a href="loo-stan.html#cb64-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> <span class="st">&quot;Intercept&quot;</span>),</span>
+<span id="cb64-5"><a href="loo-stan.html#cb64-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb64-6"><a href="loo-stan.html#cb64-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> <span class="st">&quot;sigma&quot;</span>)</span>
+<span id="cb64-7"><a href="loo-stan.html#cb64-7" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb64-8"><a href="loo-stan.html#cb64-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">2302</span>,</span>
+<span id="cb64-9"><a href="loo-stan.html#cb64-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> 4L,</span>
+<span id="cb64-10"><a href="loo-stan.html#cb64-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">cores =</span> 4L,</span>
+<span id="cb64-11"><a href="loo-stan.html#cb64-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">refresh =</span> <span class="dv">0</span>,</span>
+<span id="cb64-12"><a href="loo-stan.html#cb64-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">backend =</span> <span class="st">&quot;cmdstan&quot;</span></span>
+<span id="cb64-13"><a href="loo-stan.html#cb64-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb64-14"><a href="loo-stan.html#cb64-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Running MCMC with 4 parallel chains...</span></span>
+<span id="cb64-15"><a href="loo-stan.html#cb64-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb64-16"><a href="loo-stan.html#cb64-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chain 1 finished in 0.0 seconds.</span></span>
+<span id="cb64-17"><a href="loo-stan.html#cb64-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chain 2 finished in 0.0 seconds.</span></span>
+<span id="cb64-18"><a href="loo-stan.html#cb64-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chain 3 finished in 0.0 seconds.</span></span>
+<span id="cb64-19"><a href="loo-stan.html#cb64-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chain 4 finished in 0.0 seconds.</span></span>
+<span id="cb64-20"><a href="loo-stan.html#cb64-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb64-21"><a href="loo-stan.html#cb64-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; All 4 chains finished successfully.</span></span>
+<span id="cb64-22"><a href="loo-stan.html#cb64-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Mean chain execution time: 0.0 seconds.</span></span>
+<span id="cb64-23"><a href="loo-stan.html#cb64-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Total execution time: 0.2 seconds.</span></span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="loo-stan.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m2)</span>
+<span id="cb65-2"><a href="loo-stan.html#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Family: gaussian </span></span>
+<span id="cb65-3"><a href="loo-stan.html#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Links: mu = identity; sigma = identity </span></span>
+<span id="cb65-4"><a href="loo-stan.html#cb65-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Formula: kid_score ~ mom_iq </span></span>
+<span id="cb65-5"><a href="loo-stan.html#cb65-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Data: kidiq_scaled (Number of observations: 434) </span></span>
+<span id="cb65-6"><a href="loo-stan.html#cb65-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Draws: 4 chains, each with iter = 1000; warmup = 0; thin = 1;</span></span>
+<span id="cb65-7"><a href="loo-stan.html#cb65-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          total post-warmup draws = 4000</span></span>
+<span id="cb65-8"><a href="loo-stan.html#cb65-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb65-9"><a href="loo-stan.html#cb65-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Population-Level Effects: </span></span>
+<span id="cb65-10"><a href="loo-stan.html#cb65-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS</span></span>
+<span id="cb65-11"><a href="loo-stan.html#cb65-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Intercept    -0.00      0.04    -0.08     0.08 1.00     4154     3062</span></span>
+<span id="cb65-12"><a href="loo-stan.html#cb65-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mom_iq        0.45      0.04     0.36     0.53 1.00     4078     2888</span></span>
+<span id="cb65-13"><a href="loo-stan.html#cb65-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb65-14"><a href="loo-stan.html#cb65-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Family Specific Parameters: </span></span>
+<span id="cb65-15"><a href="loo-stan.html#cb65-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS</span></span>
+<span id="cb65-16"><a href="loo-stan.html#cb65-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sigma     0.90      0.03     0.84     0.96 1.00     4067     3113</span></span>
+<span id="cb65-17"><a href="loo-stan.html#cb65-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb65-18"><a href="loo-stan.html#cb65-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Draws were sampled using sample(hmc). For each parameter, Bulk_ESS</span></span>
+<span id="cb65-19"><a href="loo-stan.html#cb65-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; and Tail_ESS are effective sample size measures, and Rhat is the potential</span></span>
+<span id="cb65-20"><a href="loo-stan.html#cb65-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; scale reduction factor on split chains (at convergence, Rhat = 1).</span></span></code></pre></div>
+<p>Eseguiamo ora un confronto tra il modello completo e il modello semplificato in base alla statistica LOO-CV:</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="loo-stan.html#cb66-1" aria-hidden="true" tabindex="-1"></a>loo1 <span class="ot">&lt;-</span> loo<span class="sc">::</span><span class="fu">loo</span>(m1)</span>
+<span id="cb66-2"><a href="loo-stan.html#cb66-2" aria-hidden="true" tabindex="-1"></a>loo2 <span class="ot">&lt;-</span> loo<span class="sc">::</span><span class="fu">loo</span>(m2)</span>
+<span id="cb66-3"><a href="loo-stan.html#cb66-3" aria-hidden="true" tabindex="-1"></a>loo<span class="sc">::</span><span class="fu">loo_compare</span>(loo1, loo2)</span>
+<span id="cb66-4"><a href="loo-stan.html#cb66-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    elpd_diff se_diff</span></span>
+<span id="cb66-5"><a href="loo-stan.html#cb66-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; m1  0.0       0.0   </span></span>
+<span id="cb66-6"><a href="loo-stan.html#cb66-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; m2 -2.2       5.0</span></span></code></pre></div>
+<p>I risultati indicano che il Modello <code>m1</code> ha il valore LOO-IC più basso (e quindi sarebbe quello da preferire). Tuttavia, se si confronta la differenza LOO-IC tra il Modello <code>m1</code> e il Modello <code>m2</code> e si tiene in considerazione l’errore standard corrispondente (nella colonna <code>se_diff</code>), la differenza tra <code>m1</code> e <code>m2</code> risulta essere relativamente piccola. Dato che il Modello <code>m2</code> è più semplice di <code>m2</code>, e dato che la diminuzione di capacità predittiva è trascurabile (<code>elpd_diff</code> / <code>se_diff</code> <span class="math inline">\(&lt; 2\)</span>), possiamo concludere che il Modello <code>m2</code> è il modello migliore tra i due modelli considerati.</p>
+<p>Di seguito vengono calcolati i coefficienti di determinazione bayesiani dei due modelli:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="loo-stan.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">loo_R2</span>(m1, <span class="at">robust =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb67-2"><a href="loo-stan.html#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">3</span>)</span>
+<span id="cb67-3"><a href="loo-stan.html#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Estimate Est.Error  Q2.5 Q97.5</span></span>
+<span id="cb67-4"><a href="loo-stan.html#cb67-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; R2    0.201     0.036 0.125  0.27</span></span>
+<span id="cb67-5"><a href="loo-stan.html#cb67-5" aria-hidden="true" tabindex="-1"></a><span class="fu">loo_R2</span>(m2, <span class="at">robust =</span> <span class="cn">TRUE</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb67-6"><a href="loo-stan.html#cb67-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">3</span>)</span>
+<span id="cb67-7"><a href="loo-stan.html#cb67-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Estimate Est.Error  Q2.5 Q97.5</span></span>
+<span id="cb67-8"><a href="loo-stan.html#cb67-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; R2    0.196     0.033 0.128 0.255</span></span></code></pre></div>
+<p>
+Nel caso presente, le differenze sono minime, ma questo non è sempre vero.</p>
+</div>
+<div id="considerazioni-conclusive" class="section level2 unnumbered">
+<h2>Considerazioni conclusive</h2>
+<p>Dati due modelli computazionali che forniscono resoconti diversi di un set di dati, come possiamo decidere quale modello è maggiormente supportato dai dati? Nel presente Capitolo abbiamo visto come il problema del confronto di modelli possa essere formulato nei termini di un problema di inferenza statistica. È però necessaria una nota di cautela. <span class="citation"><a href="#ref-navarro2019between" role="doc-biblioref">Navarro</a> (<a href="#ref-navarro2019between" role="doc-biblioref">2019</a>)</span> ci fa notare che il problema statistico del confronto di modelli non risolve il problema scientifico della selezione di teorie. A questo proposito usa una citazione di George Box:</p>
+<blockquote>
+<p>Since all models are wrong the scientist must be alert to what is importantly wrong. It is inappropriate to be concerned about mice when there are tigers abroad.</p>
+</blockquote>
+<p>La metafora delle tigri di George Box fa riferimento evidentemente all’assunzione che sta alla base delle procedure discusse in questo Capitolo, ovvero all’ipotesi che il vero meccanismo generatore dei dati sia noto e che l’unica incognita corrisponda ai parametri. Tuttavia le cose non sono così semplici: nei casi di interesse scientifico è lo stesso meccanismo generatore dei dati ad essere sconosciuto. I ricercatori non comprendono appieno i fenomeni che stanno studiando (altrimenti perché studiarli?) e qualunque descrizione formale di un fenomeno (modello) è sbagliata in un modo sconosciuto e sistematico. Di conseguenza, è “facile” fare inferenza sulla capacità predittiva del modello, ma è molto difficile fare inferenza sulla struttura causale dei fenomeni. In altre parole, se le analisi statistiche ci dicono che un modello ha una buona accuratezza predittiva, con ciò non abbiamo imparato nulla sulla struttura causale del fenomeno. Ma è anche vera l’affermazione opposta: un modello che non ha <em>neppure</em> una buona accuratezza predittiva esso è sicuramente inutile: non è in grado né di fare previsioni accurate né di catturare la struttura causale.</p>
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div class="csl-entry">
+Burger, Edward B, e Michael Starbird. 2012. <em>The 5 elements of effective thinking</em>. Princeton University Press.
+</div>
+<div class="csl-entry">
+Gelman, Andrew, John B Carlin, Hal S Stern, e Donald B Rubin. 1995. <em>Bayesian data analysis</em>. Chapman; Hall/CRC.
+</div>
+<div class="csl-entry">
+Gelman, Andrew, Jennifer Hill, e Aki Vehtari. 2020. <em>Regression and other stories</em>. Cambridge University Press.
+</div>
+<div class="csl-entry">
+Gelman, Andrew, Jessica Hwang, e Aki Vehtari. 2014. <span>«Understanding predictive information criteria for Bayesian models»</span>. <em>Statistics and Computing</em> 24 (6): 997–1016.
+</div>
+<div class="csl-entry">
+Horn, Samantha, e George Loewenstein. 2021. <span>«Underestimating Learning by Doing»</span>. <em>Available at SSRN 3941441</em>.
+</div>
+<div class="csl-entry">
+Johnson, Alicia A., Miles Ott, e Mine Dogucu. 2022. <em><span>Bayes Rules! An Introduction to Bayesian Modeling with R</span></em>. CRC Press.
+</div>
+<div class="csl-entry">
+McElreath, Richard. 2020. <em>Statistical rethinking: <span>A</span> <span>Bayesian</span> course with examples in <span>R</span> and <span>Stan</span></em>. 2nd Edition. Boca Raton, Florida: CRC Press.
+</div>
+<div class="csl-entry">
+Navarro, Danielle J. 2019. <span>«Between the devil and the deep blue sea: Tensions between scientific judgement and statistical model selection»</span>. <em>Computational Brain &amp; Behavior</em> 2 (1): 28–34.
+</div>
+<div class="csl-entry">
+Vehtari, Aki, Andrew Gelman, e Jonah Gabry. 2017. <span>«Practical Bayesian model evaluation using leave-one-out cross-validation and WAIC»</span>. <em>Statistics and computing</em> 27 (5): 1413–32.
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-gelman1995bayesian" class="csl-entry">
+Gelman, Andrew, John B Carlin, Hal S Stern, e Donald B Rubin. 1995. <em>Bayesian data analysis</em>. Chapman; Hall/CRC.
+</div>
+<div id="ref-gelman2020regression" class="csl-entry">
+Gelman, Andrew, Jennifer Hill, e Aki Vehtari. 2020. <em>Regression and other stories</em>. Cambridge University Press.
+</div>
+<div id="ref-gelman2014understanding" class="csl-entry">
+Gelman, Andrew, Jessica Hwang, e Aki Vehtari. 2014. <span>«Understanding predictive information criteria for Bayesian models»</span>. <em>Statistics and Computing</em> 24 (6): 997–1016.
+</div>
+<div id="ref-Johnson2022bayesrules" class="csl-entry">
+Johnson, Alicia A., Miles Ott, e Mine Dogucu. 2022. <em><span>Bayes Rules! An Introduction to Bayesian Modeling with R</span></em>. CRC Press.
+</div>
+<div id="ref-McElreath_rethinking" class="csl-entry">
+McElreath, Richard. 2020. <em>Statistical rethinking: <span>A</span> <span>Bayesian</span> course with examples in <span>R</span> and <span>Stan</span></em>. 2nd Edition. Boca Raton, Florida: CRC Press.
+</div>
+<div id="ref-navarro2019between" class="csl-entry">
+Navarro, Danielle J. 2019. <span>«Between the devil and the deep blue sea: Tensions between scientific judgement and statistical model selection»</span>. <em>Computational Brain &amp; Behavior</em> 2 (1): 28–34.
+</div>
+<div id="ref-vehtari2017practical" class="csl-entry">
+Vehtari, Aki, Andrew Gelman, e Jonah Gabry. 2017. <span>«Practical Bayesian model evaluation using leave-one-out cross-validation and WAIC»</span>. <em>Statistics and computing</em> 27 (5): 1413–32.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="2">
+<li id="fn2"><p>La nozione di entropia fu introdotta agli inizi del XIX secolo nel campo della termodinamica classica; il secondo principio della termodinamica è infatti basato sul concetto di entropia che, in generale, è assunto come una misura del disordine di un sistema fisico. Successivamente Boltzmann fornì una definizione statistica di entropia. Nel 1948 Shannon impiegò la nozione di entropia nell’ambito della teoria delle comunicazioni.<a href="loo-stan.html#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Se il modello sottostante i dati fosse noto non avremmo bisogno di cercare il modello migliore, perché <span class="math inline">\(p_t\)</span> è il modello migliore.<a href="loo-stan.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>In riferimento alla notazione, ricordiamo che <span class="citation"><a href="#ref-gelman2014understanding" role="doc-biblioref">Gelman, Hwang, e Vehtari</a> (<a href="#ref-gelman2014understanding" role="doc-biblioref">2014</a>)</span> distinguono tra <span class="math inline">\(y^{rep}\)</span> e <span class="math inline">\(\tilde{y}\)</span>. I valori <span class="math inline">\(y^{rep}\)</span> corrispondono ad un’altra possibile realizzazione del medesimo modello statistico che ha prodotto <span class="math inline">\(y\)</span> mediante determinati valori dei parametri <span class="math inline">\(\theta\)</span> (repliche sotto lo stesso modello statistico). I valori <span class="math inline">\(\tilde{y}\)</span> corrispondono invece ad un campione empirico di dati osservato in qualche futura occasione.<a href="loo-stan.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>A questo proposito, è necessario aggiungere una nota di cautela. Come fa notare <span class="citation"><a href="#ref-McElreath_rethinking" role="doc-biblioref">McElreath</a> (<a href="#ref-McElreath_rethinking" role="doc-biblioref">2020</a>)</span>, fare previsioni e inferire i rapporti causali sono due cose molto diverse. Statistiche quali AIC, WAIC e LOO-CV consentono di individuare modelli con buone capacità predittive. Tali modelli, tuttavia, non riflettono necessariamente la struttura causale del fenomeno considerato: la selezione di modelli basata unicamente sull’accuratezza predittiva non garantisce che venga selezionato il modello che riflette la struttura causale del fenomeno <span class="citation">(si veda anche <a href="#ref-navarro2019between" role="doc-biblioref">Navarro 2019</a>)</span>.<a href="loo-stan.html#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p><span class="citation"><a href="#ref-McElreath_rethinking" role="doc-biblioref">McElreath</a> (<a href="#ref-McElreath_rethinking" role="doc-biblioref">2020</a>)</span> nota che, spesso, i ricercatori eliminano i valori anomali prima di adattare un modello ai dati, basandosi solo sulla distanza dal valore medio della variabile dipendente misurata in termini di unità di deviazione standard. Secondo <span class="citation"><a href="#ref-McElreath_rethinking" role="doc-biblioref">McElreath</a> (<a href="#ref-McElreath_rethinking" role="doc-biblioref">2020</a>)</span> questo non dovrebbe mai essere fatto: un’osservazione può essere considerata come un valore anomalo o un valore influente solo alla luce delle predizioni di un modello (mai prima di avere adattato il modello ai dati). Se ci sono solo pochi valori anomali una strategia possibile è quella di riportare i risultati delle analisi statistiche svolte su tutto il campione dei dati oppure dopo avere eliminato le osservazioni anomale e influenti.<a href="loo-stan.html#fnref6" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="prefazione.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["DataScience.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
