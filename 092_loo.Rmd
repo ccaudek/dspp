@@ -79,7 +79,7 @@ $$
 $$
 dove $log()$ è il logaritmo in base 2 e $p(x)$ è la probabilità dell'evento $x$.
 
-La scelta del logaritmo in base 2 significa che l'unità di misura dell'informazione è in bit (cifre binarie). Questo può essere interpretato dicendo che l'informazione misura il numero di bit richiesti per rappresentare l'evento. Solitamente, la quantità di informazione viene denotata con $h()$:
+La scelta del logaritmo in base 2 significa che l'unità di misura dell'informazione è in bit (cifre binarie). Questo può essere interpretato dicendo che l'informazione misura il numero di bit richiesti per rappresentare l'evento.^[È possibile pensare all'entropia nei termini del numero di domande sì/no che devono essere poste per ridurre l'incertezza. Per esempio, se in un certo giorno ci può essere solo sole o pioggia, per ridurre l'incertezza, a fine giornata chiediamo: "ha piovuto?" La risposta (sì/no) ad una singola domanda elimina l'incertezza, e quindi l'informazione ottenuta (ovvero, la riduzione dell'incertezza) è uguale ad 1 bit. Se in una certa giornata ci potrebbero essere sole, pioggia o neve, per ridurre l'incertezza sono necessarie due domande: "c'era sole?"; "ha piovuto?" In questo secondo caso, l'informazione ottenuta (ovvero, la riduzione dell'incertezza) è uguale ad 2 bit. Usando un logaritmo in base 2, dunque, l'entropia può essere interpretata come il numero minimo di bit necessari per codificare la quantità di informazione nei dati.] Solitamente, la quantità di informazione viene denotata con $h()$:
 $$
 h(x) = -log\big( p(x) \big).
 $$
