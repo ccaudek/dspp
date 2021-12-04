@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.7)  3 DEC 2021 21:13
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.7)  4 DEC 2021 07:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2673,17 +2673,17 @@ Sidefoothsep and sidefootwidth: 7pt and 117pt
 Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 ******************************************************
 
-LaTeX Info: Redefining \rmfamily on input line 2011.
-LaTeX Info: Redefining \sffamily on input line 2011.
-LaTeX Info: Redefining \ttfamily on input line 2011.
+LaTeX Info: Redefining \rmfamily on input line 2023.
+LaTeX Info: Redefining \sffamily on input line 2023.
+LaTeX Info: Redefining \ttfamily on input line 2023.
 
-Underfull \hbox (badness 10000) in paragraph at lines 2015--2017
+Underfull \hbox (badness 10000) in paragraph at lines 2027--2029
 
  []
 
-LaTeX Info: Redefining \rmfamily on input line 2018.
-LaTeX Info: Redefining \sffamily on input line 2018.
-LaTeX Info: Redefining \ttfamily on input line 2018.
+LaTeX Info: Redefining \rmfamily on input line 2030.
+LaTeX Info: Redefining \sffamily on input line 2030.
+LaTeX Info: Redefining \ttfamily on input line 2030.
 The property list \polyglossia@langsetup contains the pairs (without outer
 braces):
 >  {latex/script}  =>  {latin}
@@ -2744,8 +2744,8 @@ braces):
 \tf@lof=\write9
 \openout9 = `DataScience.lof'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2023.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2023.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2035.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2035.
 (./DataScience.aux
 LaTeX Info: Redefining \rmfamily on input line 26.
 LaTeX Info: Redefining \sffamily on input line 26.
@@ -2757,8 +2757,8 @@ LaTeX Info: Redefining \rmfamily on input line 193.
 LaTeX Info: Redefining \sffamily on input line 193.
 LaTeX Info: Redefining \ttfamily on input line 193.
 )
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 2023.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2023.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 2035.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2035.
 
 Package rerunfilecheck Info: File `DataScience.out' has not changed.
 (rerunfilecheck)             Checksum: D983161C583D9B91EBDD4A6768183D4D;4380.
@@ -2775,7 +2775,7 @@ Package logreq Info: Writing requests to 'DataScience.run.xml'.
 Here is how much of TeX's memory you used:
  47383 strings out of 479418
  915277 string characters out of 5884586
- 1862142 words of memory out of 5000000
+ 1862141 words of memory out of 5000000
  64082 multiletter control sequences out of 15000+600000
  547378 words of font info for 95 fonts, out of 8000000 for 9000
  1350 hyphenation exceptions out of 8191

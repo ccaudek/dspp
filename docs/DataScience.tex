@@ -321,7 +321,7 @@
 
 \author{Corrado Caudek}
 
-\date{2021-12-03}
+\date{2021-12-04}
 
 
 % Include headers (preamble.tex) here
@@ -498,7 +498,7 @@ Copyright \(\copyright\) 2022.
 
 \normalsize
 
-Data della versione presente: Dicembre 03, 2021.
+Data della versione presente: Dicembre 04, 2021.
 
 \hypertarget{prefazione}{%
 \chapter{Prefazione}\label{prefazione}}
@@ -1890,13 +1890,13 @@ Per fare un confronto, stimiamo i coefficienti del modello di regressione che in
 \CommentTok{\#\textgreater{} Running MCMC with 4 parallel chains...}
 \CommentTok{\#\textgreater{} }
 \CommentTok{\#\textgreater{} Chain 1 finished in 0.0 seconds.}
-\CommentTok{\#\textgreater{} Chain 2 finished in 0.1 seconds.}
-\CommentTok{\#\textgreater{} Chain 3 finished in 0.1 seconds.}
+\CommentTok{\#\textgreater{} Chain 2 finished in 0.0 seconds.}
+\CommentTok{\#\textgreater{} Chain 3 finished in 0.0 seconds.}
 \CommentTok{\#\textgreater{} Chain 4 finished in 0.0 seconds.}
 \CommentTok{\#\textgreater{} }
 \CommentTok{\#\textgreater{} All 4 chains finished successfully.}
 \CommentTok{\#\textgreater{} Mean chain execution time: 0.0 seconds.}
-\CommentTok{\#\textgreater{} Total execution time: 0.3 seconds.}
+\CommentTok{\#\textgreater{} Total execution time: 0.2 seconds.}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1925,12 +1925,25 @@ Per fare un confronto, stimiamo i coefficienti del modello di regressione che in
 \end{Highlighting}
 \end{Shaded}
 
-Eseguiamo ora un confronto tra il modello completo e il modello semplificato in base alla statistica LOO-CV:
+\noindent
+Nel caso presente, le differenze sono minime, ma questo non è sempre vero.
+
+Calcoliamo ora la quantità \(\elpd\) per i due modelli:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{loo1 }\OtherTok{\textless{}{-}}\NormalTok{ loo}\SpecialCharTok{::}\FunctionTok{loo}\NormalTok{(m1)}
 \NormalTok{loo2 }\OtherTok{\textless{}{-}}\NormalTok{ loo}\SpecialCharTok{::}\FunctionTok{loo}\NormalTok{(m2)}
+\FunctionTok{c}\NormalTok{(loo1}\SpecialCharTok{$}\NormalTok{estimates[}\DecValTok{1}\NormalTok{], loo2}\SpecialCharTok{$}\NormalTok{estimates[}\DecValTok{1}\NormalTok{])}
+\CommentTok{\#\textgreater{} [1] {-}567 {-}570}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Eseguiamo ora un confronto tra il modello completo e il modello semplificato in base alla statistica LOO-CV:
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{loo}\SpecialCharTok{::}\FunctionTok{loo\_compare}\NormalTok{(loo1, loo2)}
 \CommentTok{\#\textgreater{}    elpd\_diff se\_diff}
 \CommentTok{\#\textgreater{} m1  0.0       0.0   }
@@ -1938,7 +1951,7 @@ Eseguiamo ora un confronto tra il modello completo e il modello semplificato in 
 \end{Highlighting}
 \end{Shaded}
 
-I risultati indicano che il Modello \texttt{m1} ha il valore LOO-IC più basso (e quindi sarebbe quello da preferire). Tuttavia, se si confronta la differenza LOO-IC tra il Modello \texttt{m1} e il Modello \texttt{m2} e si tiene in considerazione l'errore standard corrispondente (nella colonna \texttt{se\_diff}), la differenza tra \texttt{m1} e \texttt{m2} risulta essere relativamente piccola. Dato che il Modello \texttt{m2} è più semplice di \texttt{m2}, e dato che la diminuzione di capacità predittiva è trascurabile (\texttt{elpd\_diff} / \texttt{se\_diff} \(< 2\)), possiamo concludere che il Modello \texttt{m2} è il modello migliore tra i due modelli considerati.
+I risultati indicano che il Modello \texttt{m1} ha il valore \(\elpd\) più basso (e quindi sarebbe quello da preferire). Tuttavia, se si confronta la differenza \(\elpd\) tra il Modello \texttt{m1} e il Modello \texttt{m2} e si tiene in considerazione l'errore standard corrispondente (nella colonna \texttt{se\_diff}), la differenza ottenuta risulta essere relativamente piccola. Per il Modello \texttt{m1} \(\elpd\) è uguale a -567.2684 e per \texttt{m2} abbiamo -569.5050. La differenza è (-567.2684 - -569.5050) pari a 2.24 con un errore standard stimato di 5.0. In altre parole, possiamo dire che i dati suggeriscono che la vera differenza in \(\elpd\) tra \texttt{m1} e \texttt{m2} sia compresa tra \(\pm\) 2 errori standard (ovvero nel caso presente, 10 unità) dalla differenza stimata di -2.2 unità, ovvero \(-2.2 \pm 2 \cdot 5 = (-12.2, 7.8)\). Dato che la differenza \(\elpd\) pari a zero è compresa entro l'intervallo di \(\pm\) due standard error dalla differenza stimata, non c'è evidenza che l'accuratezza predittiva a posteriori di \texttt{m1} sia superiore a quella di \texttt{m2}. Inoltre, dato che il Modello \texttt{m2} è più semplice di \texttt{m1}, possiamo concludere che \texttt{m2} è il modello migliore tra i due considerati.
 
 Di seguito vengono calcolati i coefficienti di determinazione bayesiani dei due modelli:
 
@@ -1955,8 +1968,7 @@ Di seguito vengono calcolati i coefficienti di determinazione bayesiani dei due 
 \end{Highlighting}
 \end{Shaded}
 
-\noindent
-Nel caso presente, le differenze sono minime, ma questo non è sempre vero.
+Considerando l'intervallo a posteriori del 95\%, anche in questo caso concludiamo che non c'è evidenza che l'uso di un solo predittore faccia diminuire la capacità predittiva del modello.
 
 \hypertarget{considerazioni-conclusive}{%
 \section*{Considerazioni conclusive}\label{considerazioni-conclusive}}
