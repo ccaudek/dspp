@@ -423,23 +423,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\usepackage{amsthm}
-\newtheorem{theorem}{Teorema}[chapter]
-\newtheorem{lemma}{Lemma}[chapter]
-\newtheorem{corollary}{Corollario}[chapter]
-\newtheorem{proposition}{Proposizione}[chapter]
-\newtheorem{conjecture}{Congettura}[chapter]
-\theoremstyle{definition}
-\newtheorem{definition}{Definizione}[chapter]
-\theoremstyle{definition}
-\newtheorem{example}{Esempio}[chapter]
-\theoremstyle{definition}
-\newtheorem{exercise}{Exercizio}[chapter]
-\theoremstyle{definition}
-\newtheorem{hypothesis}{Hypothesis}[chapter]
-\theoremstyle{remark}
-\newtheorem*{remark}{Osservazione}
-\newtheorem*{solution}{Soluzione}
 \begin{document}
 \frontmatter
 
@@ -578,600 +561,593 @@ Febbraio 2022
 
 \mainmatter
 
-\hypertarget{loo-stan}{%
-\chapter{Valutare e confrontare i modelli}\label{loo-stan}}
+\hypertarget{regr-models-intro}{%
+\chapter{Introduzione alla regressione lineare}\label{regr-models-intro}}
+
+Lo scopo della ricerca è trovare le associazioni tra le variabili e fare
+confronti fra le condizioni sperimentali. Nel caso della psicologia, il
+ricercatore vuole scoprire le leggi generali che descrivono le relazioni
+tra i costrutti psicologici e le relazioni che intercorrono tra i
+fenomeni psicologici e quelli non psicologici (sociali, economici,
+storici, \ldots). Abbiamo già visto come la correlazione di Pearson sia uno
+strumento adatto a questo scopo. Infatti, essa ci informa sulla
+direzione e sull'intensità della relazione lineare tra due variabili.
+Tuttavia, la correlazione non è sufficiente, in quanto il ricercatore ha
+a disposizione solo i dati di un campione, mentre vorrebbe descrivere la
+relazione tra le variabili nella popolazione. A causa della variabilità
+campionaria, le proprietà dei campioni sono necessariamente diverse da
+quelle della popolazione: ciò che si può osservare nella popolazione
+potrebbe non emergere nel campione e, al contrario, il campione
+manifesta caratteristiche che non sono necessariamente presenti nella
+popolazione. È dunque necessario chiarire, dal punto di vista
+statistico, il legame che intercorre tra le proprietà del campione e le
+proprietà della popolazione da cui esso è stato estratto.
+Il modello di regressione utilizza la funzione matematica più semplice
+per descrivere la relazione fra due variabili, ovvero la funzione
+lineare. In questo Capitolo vedremo come si possa fare inferenza sulla relazione tra due variabili mediante il modello di regressione bayesiano. Inizieremo a descrivere le proprietà geometriche della funzione lineare per poi utilizzare questa semplice funzione per costruire un modello statistico secondo un approccio bayesiano.
+
+\hypertarget{la-funzione-lineare}{%
+\section{La funzione lineare}\label{la-funzione-lineare}}
+
+Iniziamo con un ripasso sulla funzione di lineare. Si chiama \emph{funzione lineare} una funzione del tipo
+
+\begin{equation}
+f(x) = a + b x,
+\end{equation}
+
+dove \(a\) e \(b\) sono delle costanti. Il grafico di tale funzione è una retta di cui il parametro \(b\) è detto \emph{coefficiente angolare} e il parametro \(a\) è detto \emph{intercetta} con l'asse delle \(y\) {[}infatti, la retta interseca l'asse \(y\) nel punto \((0,a)\), se \(b \neq 0\){]}.
+
+Per assegnare un'interpretazione geometrica alle costanti \(a\) e \(b\) si consideri la funzione
+
+\begin{equation}
+y = b x.
+\end{equation}
+
+Tale funzione rappresenta un caso particolare, ovvero quello della \emph{proporzionalità diretta} tra \(x\) e \(y\). Il caso generale della linearità
+
+\begin{equation}
+y = a + b x
+\end{equation}
+
+non fa altro che sommare una costante \(a\) a ciascuno dei valori \(y = b x\). Nella funzione lineare \(y = a + b x\), se \(b\) è positivo allora \(y\) aumenta al crescere di \(x\); se \(b\) è negativo allora \(y\) diminuisce al crescere di \(x\); se \(b=0\) la retta è orizzontale, ovvero \(y\) non muta al variare di \(x\).
+
+Consideriamo ora il coefficiente \(b\). Si consideri un punto \(x_0\) e un incremento arbitrario \(\varepsilon\) come indicato nella figura \ref{fig:linearfunction}. Le differenze \(\Delta x = (x_0 + \varepsilon) - x_0\) e \(\Delta y = f(x_0 + \varepsilon) - f(x_0)\) sono detti \emph{incrementi} di \(x\) e \(y\). Il coefficiente angolare \(b\) è uguale al rapporto
+
+\begin{equation}
+    b = \frac{\Delta y}{\Delta x} = \frac{f(x_0 + \varepsilon) - f(x_0)}{(x_0 + \varepsilon) - x_0},
+\end{equation}
+
+indipendentemente dalla grandezza degli incrementi \(\Delta x\) e \(\Delta y\). Il modo più semplice per assegnare un'interpretazione geometrica al coefficiente angolare (o pendenza) della retta è dunque quello di porre \(\Delta x = 1\). In tali circostanze infatti \(b = \Delta y\).
+
+\begin{figure}[h]
+
+{\centering \includegraphics[width=0.7\linewidth]{images/linear_function} 
+
+}
+
+\caption{La funzione lineare $y = a + bx$.}\label{fig:linearfunction}
+\end{figure}
+
+\hypertarget{lerrore-di-misurazione}{%
+\section{L'errore di misurazione}\label{lerrore-di-misurazione}}
+
+Per descrivere l'associazione tra due variabili, tuttavia, la funzione lineare non è sufficiente. Nel mondo empirico, infatti, la relazione tra variabili non è mai perfettamente lineare. È dunque necessario includere nel modello di regressione anche una componente d'errore, ovvero una componente della \(y\) che non può essere spiegata dal modello lineare. Nel caso di due sole variabili, questo ci conduce alla seguente formulazione del modello di regressione:
+
+\begin{equation}
+y = \alpha + \beta x + \varepsilon,
+\label{eq:regbivpop}
+\end{equation}
+
+laddove i parametri \(\alpha\) e \(\beta\) descrivono l'associazione tra le variabili casuali \(y\) e \(x\), e il termine d'errore \(\varepsilon\) specifica quant'è grande la porzione della variabile \(y\) che non può essere predetta nei termini di una relazione lineare con la \(x\).
+
+Si noti che la \eqref{eq:regbivpop} consente di formulare una predizione, nei termini di un modello lineare, del valore atteso della \(y\) conoscendo \(x\), ovvero
+
+\begin{equation}
+\hat{y} = \mathbb{E}(y \mid x) = \alpha + \beta x.
+\label{eq:regbivpop2}
+\end{equation}
+
+In altri termini, se i parametri del modello (\(\alpha\) e \(\beta\)) sono noti, allora è possibile predire la \(y\) sulla base della nostra conoscenza della \(x\).
+Per esempio, se conosciamo la relazione lineare tra quoziente di intelligenza ed aspettativa di vita, allora possiamo prevedere quanto a lungo vivrà una persona sulla base del suo QI. Sì, c'è una relazione lineare tra intelligenza e aspettativa di vita \autocite{hambrick2015research}! Ma quando è accurata la previsione? Ciò dipende dal termine d'errore della \eqref{eq:regbivpop}. L'analisi di regressione fornisce un metodo per rispondere a domande di questo tipo\footnote{Per una discussione sugli aspetti di base della regressione lineare, si veda il \href{https://openintro-ims.netlify.app/model-slr.html}{capitolo 7} di \emph{Introduction to Modern Statistics}.}.
+
+\hypertarget{una-media-per-ciascuna-osservazione}{%
+\section{Una media per ciascuna osservazione}\label{una-media-per-ciascuna-osservazione}}
+
+In precedenza abbiamo visto come sia possibile stimare i parametri di un modello bayesiano Normale nel quale le osservazioni sono indipendenti e identicamente distribuite secondo una densità Normale,
+\begin{equation}
+Y_i \stackrel{i.i.d.}{\sim} \mathcal{N}(\mu, \sigma), \quad i = 1, \dots, n.
+\label{eq:normalsamplingmodel}
+\end{equation}
+
+Il modello \eqref{eq:normalsamplingmodel} assume che ogni \(Y_i\) sia una realizzazione della stessa \(\mathcal{N}(\mu, \sigma^2)\). Da un punto di vista bayesiano\footnote{Per un'introduzione alla trattazione frequentista dell'analisi di regressione, si veda l'Appendice \ref{least-squares}.}, si assegnano distribuzioni a priori ai parametri \(\mu\) e \(\sigma\), si genera la verosimiglianza in base ai dati osservati e, con queste informazioni, si generano le distribuzione a posteriori dei parametri \autocite{gelman2020regression}:
+\begin{align}
+Y_i \mid \mu, \sigma & \stackrel{iid}{\sim} \mathcal{N}(\mu, \sigma^2)\notag\\
+\mu       & \sim \mathcal{N}(\mu_0, \tau^2) \notag\\
+\sigma    & \sim \Cauchy(x_0, \gamma) \notag
+\end{align}
+
+È comune però che vengano però registrate altre variabili \(x_i\) che possono essere associate alla risposta di interesse \(y_i\). La variabile \(x_i\) viene chiamata \emph{predittore} (o variabile indipendente) in quanto il ricercatore è tipicamente interessato a predire il valore \(y_i\) a partire da \(x_i\). Come si può estende il modello Normale della \eqref{eq:normalsamplingmodel} per lo studio della possibile relazione tra \(y_i\) e \(x_i\)?
+
+Il modello \eqref{eq:normalsamplingmodel} assume una media \(\mu\) comune per ciascuna osservazione \(Y_i\). Dal momento che desideriamo introdurre una nuova variabile \(x_i\) che assume un valore specifico per ciascuna osservazione \(y_i\), il modello \eqref{eq:normalsamplingmodel} può essere modificato in modo che la media comune \(\mu\) venga sostituita da una media \(\mu_i\) specifica a ciascuna \(i\)-esima osservazione:
+
+\begin{equation}
+Y_i \mid \mu_i, \sigma \stackrel{ind}{\sim} \mathcal{N}(\mu_i, \sigma), \quad i = 1, \dots, n.
+\label{eq:normalsamplinglinearmodel}
+\end{equation}
+
+Si noti che le osservazioni \(Y_1, \dots, Y_n\) non sono più identicamente distribuite poiché hanno medie diverse, ma sono ancora indipendenti come indicato dalla notazione \texttt{ind} posta sopra il simbolo \(\sim\) nella \eqref{eq:normalsamplinglinearmodel}
+
+\hypertarget{relazione-lineare-tra-la-media-y-mid-x-e-il-predittore}{%
+\subsection{\texorpdfstring{Relazione lineare tra la media \(y \mid x\) e il predittore}{Relazione lineare tra la media y \textbackslash mid x e il predittore}}\label{relazione-lineare-tra-la-media-y-mid-x-e-il-predittore}}
+
+L'approccio che consente di mettere in relazione un predittore \(x_i\) con la risposta \(Y_i\) è quello di assumere che la media di ciascuna \(Y_i\), ovvero \(\mu_i\), sia una funzione lineare del predittore \(x_i\). Una tale relazione lineare è scritta come
+
+\begin{equation}
+\mu_i = \beta_0 + \beta_ 1 x_i, \quad i = 1, \dots, n.
+\label{eq:regmodel}
+\end{equation}
+
+Nella \eqref{eq:regmodel}, ciascuna \(x_i\) è una costante nota (ecco perché viene usata una lettera minuscola per la \(x\)) e \(\beta_0\) e \(\beta_ 1\) sono parametri incogniti. Questi parametri che rappresentano l'intercetta e la pendenza della retta di regressione sono variabili casuali. Si assegna una distribuzione a priori a \(\beta_0\) e a \(\beta_ 1\) e si esegue l'inferenza riassumendo la distribuzione a posteriori di questi parametri.
+
+In questo modello, la funzione lineare \(\beta_0 + \beta_ 1 x_i\) è interpretata come il valore atteso della \(Y_i\) per ciascun valore \(x_i\), mentre l'intercetta \(\beta_0\) rappresenta il valore atteso della \(Y_i\) quando \(x_i = 0\). Il parametro \(\beta_ 1\) (pendenza) rappresenta invece l'aumento medio della \(Y_i\) quando \(x_i\) aumenta di un'unità. È importante notare che la relazione lineare \eqref{eq:normalsamplinglinearmodel} di parametri \(\beta_0\) e \(\beta_ 1\) descrive l'associazione tra \emph{la media} \(\mu_i\) e il predittore \(x_i\). In altri termini, tale relazione lineare ci fornisce una predizione sul valore medio \(\mu_i\), non sul valore \emph{effettivo} \(Y_i\).
+
+\hypertarget{il-modello-di-regressione-lineare}{%
+\subsection{Il modello di regressione lineare}\label{il-modello-di-regressione-lineare}}
+
+Sostituendo la \eqref{eq:regmodel} nel modello \eqref{eq:normalsamplinglinearmodel} otteniamo il modello di regressione lineare:
+
+\begin{equation}
+Y_i \mid \beta_0, \beta_ 1, \sigma \stackrel{ind}{\sim} \mathcal{N}(\beta_0 + \beta_ 1 x_i, \sigma), \quad i = 1, \dots, n.
+\label{eq:samplinglinearmodel}
+\end{equation}
+
+Questo è un caso speciale del modello di campionamento Normale, dove le \(Y_i\) seguono indipendentemente una densità Normale con una media (\(\beta_0 + \beta_ 1 x_i\)) specifica per ciascuna osservazione e con una deviazione standard (\(\sigma\)) comune a tutte le osservazioni. Poiché include un solo predittore (\(x\)), questo modello è comunemente chiamato \emph{modello di regressione lineare semplice}.
+
+In maniera equivalente, il modello \eqref{eq:samplinglinearmodel} può essere formulato come
+
+\begin{equation}
+Y_i = \mu_i + \varepsilon_i, \quad i = 1, \dots, n,
+\label{eq:samplinglinearmodel2}
+\end{equation}
+
+dove la risposta media è \(\mu_i = \beta_0 + \beta_ 1 x_i\) e i residui \(\varepsilon_1, \dots, \varepsilon_n\) sono i.i.d. da una Normale con media 0 e deviazione standard \(\sigma\).
+
+\begin{center}\includegraphics[width=0.8\linewidth]{051_reglin1_files/figure-latex/unnamed-chunk-2-1} \end{center}
+
+Nel modello di regressione lineare, l'osservazione \(Y_i\) è una variabile casuale, il predittore \(x_i\) è una costante fissa, e \(\beta_0\), \(\beta_1\) e \(\sigma\) sono parametri incogniti. Utilizzando il paradigma bayesiano, viene assegnata una distribuzione a priori congiunta a \((\beta_0, \beta_1, \sigma)\). Dopo avere osservato le risposte \(Y_i, i = 1, \dots, n\), l'inferenza procede stimando la distribuzione a posteriori dei parametri.
+
+Nella costruzione di un modello di regressione bayesiano, è importante iniziare dalle basi e procedere un passo alla volta. Sia \(Y\) una variabile di risposta e
+sia \(x\) un predittore o un insieme di predittori. È possibile costruire un modello di regressione di \(Y\) su \(x\) applicando i seguenti principi generali:
+
+\begin{itemize}
+\tightlist
+\item
+  Stabilire se \(Y\) è discreto o continuo. Di conseguenza, identificare l'appropriata struttura dei dati (per esempio, Normale, di Poisson, o Binomiale).
+\item
+  Esprimere la media di \(Y\) come funzione dei predittori \(x\) (per esempio, \(\mu = \beta_0 + \beta_1 x\)).
+\item
+  Identificare tutti i parametri incogniti del modello (per esempio, \(\mu, \beta_1, \beta_2\)).
+\item
+  Valutare quali valori che ciascuno di questi parametri potrebbe assumere. Di conseguenza, identificare le distribuzioni a priori appropriate per questi parametri.
+\end{itemize}
+
+Nel caso di una variabile \(Y\) continua che segue la legge Normale e un solo predittore, ad esempio, il modello diventa:
+
+\begin{align} 
+Y_i \mid \beta_0, \beta_1, \sigma  &\stackrel{ind}{\sim} \mathcal{N}\left(\mu_i, \sigma^2\right) \;\; \text{ con } \;\; \mu_i = \beta_0 + \beta_1 x_i \notag\\
+\beta_0  &\sim \mathcal{N}\left(\mu_0, \sigma_0^2 \right)  \notag\\
+\beta_1  & \sim \mathcal{N}\left(\mu_1, \sigma_1^2 \right) \notag\\
+\sigma & \sim \text{Cauchy}(x_0, \gamma) \; .\notag
+\end{align}
+
+Un algoritmo MCMC viene usato per simulare i campioni dalle distribuzioni a posteriori e, mediante tali campioni, si fanno inferenze sulla risposta attesa \(\beta_0 + \beta_1 x\) per ciascuno specifico valore del predittore \(x\). Inoltre, è possibile valutare le dimensioni degli errori di previsione mediante un indice sintetico della densità a posteriori della deviazione standard \(\sigma\).
+
+\hypertarget{considerazioni-conclusive}{%
+\section*{Considerazioni conclusive}\label{considerazioni-conclusive}}
+\addcontentsline{toc}{section}{Considerazioni conclusive}
+
+Il modello di regressione lineare semplice viene usato per descrivere la
+relazione tra due variabili e per determinare il segno e l'intensità di
+tale relazione. Inoltre, il modello di regressione ci consente di
+prevedere il valore della variabile dipendente in base ad alcuni nuovi
+valori della variabile indipendente. Il modello di regressione lineare
+semplice è in realtà molto limitato, in quanto descrive soltanto la
+relazione tra la variabile dipendente \(y\) e una sola variabile
+esplicativa \(x\). Esso diventa molto più utile quando incorpora più
+variabili indipendenti. In questo secondo caso, però, i calcoli per la
+stima dei coefficienti del modello diventano più complicati. Abbiamo
+deciso di iniziare considerando il modello di regressione lineare semplice
+perché, in questo caso, sia la logica dell'inferenza sia le procedure di
+calcolo sono facilmente maneggiabili. Nel caso più generale, quello del
+modello di regressione multipla, la logica dell'inferenza rimarrà
+identica a quella discussa qui, ma le procedure di calcolo richiedono
+l'uso dell'algebra matriciale. Il modello di regressione multipla può includere sia regressori quantitativi, sia regressori qualitativi, utilizzando un
+opportuna schema di codifica. È interessante notare come un modello di
+regressione multipla che include una sola variabile esplicativa
+quantitativa corrisponde all'analisi della varianza ad una via; un
+modello di regressione multipla che include più di una variabile
+esplicativa quantitativa corrisponde all'analisi della varianza più vie.
+Possiamo qui concludere dicendo che il modello di regressione, nelle sue varie forme e varianti, costituisce la tecnica di analisi dei dati maggiormente usata in psicologia.
+
+\hypertarget{regr-ml}{%
+\chapter{Adattare il modello di regressione ai dati}\label{regr-ml}}
 
 \begin{Summary}
-Il principio base del metodo scientifico è la \emph{replicabilità} delle
-osservazioni: le osservazioni che non possono essere replicate sono poco
-interessanti. Parallelamente, una caratteristica fondamentale di un
-modello scientifico è la \emph{generalizzabilità}: se un modello è
-capace di descrivere soltanto le proprietà di uno specifico campione di
-osservazioni, allora è poco utile. Ma come è possibile valutare la
-generalizzabilità di un modello statistico? Questa è la domanda a cui
-cercheremo di rispondere in questo Capitolo.
+In questo Capitolo verranno esposte alcune nozioni matematiche che
+stanno alla base dell'inferenza per i modelli di regressione e un po' di
+algebra che ci aiuterà a comprendere la stima della regressione lineare.
+Spiegheremo anche la logica per l'uso della funzione bayesiana
+\texttt{brm()} e la sua connessione con la regressione lineare classica.
 \end{Summary}
 
-Nel valutare un modello, il ricercatore deve porsi tre domande critiche.
+\hypertarget{minimi-quadrati}{%
+\section{Minimi quadrati}\label{minimi-quadrati}}
 
-\begin{itemize}
-\item
-  Quali conseguenze più ampie derivano dall'inferenza? Come e chi ha raccolto i dati? Colui che svolge la ricerca otterrebbe di benefici manipolando i dati (escludendo delle osservazioni; selezionando il campione)? Che impatto hanno inferenze che vengono tratte dai dati sugli individui e sulla società? Quali pregiudizi o strutture di potere possono essere coinvolti in questa analisi?
-\item
-  Che tipo di distorsioni sistematiche potrebbero essere presenti nell'analisi statistica? Ricordiamo la famosa citazione di George Box: ``Tutti i modelli sono sbagliati, ma alcuni sono utili''. È dunque importante sapere quanto è sbagliato il modello. Le assunzioni che stanno alla base del modello sono ragionevoli? Il meccanismo generatore dei dati che è stato ipotizzato è adeguato per il fenomeno in esame?
-\item
-  Quanto è accurato il modello? Quanto sono lontane dalla realtà le previsioni del modello?
-\end{itemize}
+Nel modello di regressione lineare classico, \(y_i = a + b x_i + \varepsilon_i\), i coefficienti \(a\) e \(b\) sono stimati in modo tale da minimizzare gli errori \(\varepsilon_i\). Se il numero dei dati \(n\) è maggiore di 2, non è generalmente possibile trovare una retta che passi per tutte le osservazioni (\(x, y\)) (sarebbe \(y_i = a + b x_i\), senza errori, per tutti i punti \(i = 1, \dots, n\)). L'obiettivo della stima dei minimi quadrati è quello di scegliere i valori (\(\hat{a}, \hat{b}\)) che minimizzano la somma dei quadrati dei residui,
+\begin{equation}
+e_i = y_i − (\hat{a} + \hat{b} x_i)\,.
+\end{equation}
+Distinguiamo tra i residui \(e_i = y_i - (\hat{a} + \hat{b} x_i)\) e gli \emph{errori} \(\varepsilon_i = y_i − (a + b x_i)\). Il modello di regressione è scritto in termini degli errori, ma possiamo solo lavorare con i residui: non possiamo calcolare gli errori perché per farlo sarebbe necessario conoscere i parametri ignoti \(a\) e \(b\).
 
-Per approfondire questi temi, si rinvia al testo di \textcite{Johnson2022bayesrules}. Qui ci concentreremo sul tema della generalizzabilità del modello.
+La somma dei residui quadratici (\emph{residual sum of squares}) è
+\begin{equation}
+\text{RSS} = \sum_{i=1}^n (y_i = (\hat{a} + \hat{b} x_i))^2\,.
+\end{equation}
+I coefficienti (\(\hat{a}, \hat{b}\)) che minimizzano RSS sono chiamati stime dei minimi quadrati, o minimi quadrati ordinari (\emph{ordinari least squares}), o stime OLS.
 
-\hypertarget{capacituxe0-predittiva}{%
-\section{Capacità predittiva}\label{capacituxe0-predittiva}}
+\hypertarget{stima-della-deviazione-standard-dei-residui-sigma}{%
+\subsection{\texorpdfstring{Stima della deviazione standard dei residui \(\sigma\)}{Stima della deviazione standard dei residui \textbackslash sigma}}\label{stima-della-deviazione-standard-dei-residui-sigma}}
 
-Nel framework bayesiano il problema della generalizzabilità di un modello viene affrontato calcolandone la sua capacità predittiva, laddove per capacità predittiva si intende la capacità di un modello, i cui parametri sono stati stimati usando le informazioni di un campione, di ben adattarsi ad un campione di nuove osservazioni future. In questo Capitolo cercheremo di rispondere a tre domande.
+Nel modello di regressione, gli errori \(\varepsilon_i\) provengono da una distribuzione con media 0 e deviazione standard \(\sigma\): la media è zero per definizione (qualsiasi media diversa da zero viene assorbita nell'intercetta, \(a\)), e la deviazione standard degli errori può essere stimata dai dati. Un modo apparentemente naturale per stimare \(\sigma\) potrebbe essere quello di calcolare la deviazione standard dei residui, \(\sqrt{\frac{1}{n} \sum_{i=1}^n e_i^2} = \sqrt{ \frac{1}{n} \sum_{i=1}^n y_i - (\hat{a} + \hat{b} x_i))^2}\), ma questo approccio finisce per sottostimare \(\sigma\).
+La correzione standard di questa sottostima consiste nel sostituire \(n\) con \(n - 2\) al denominatore (la sottrazione di 2 deriva dal fatto che il valore atteso della regressione è stato calcolato utilizzando i due coefficienti nel modello, l'intercetta e la pendenza, i quali sono stati stimati dai dati campionari -- si dice che, in questo modo, abbiamo perso due gradi di libertà). Così facendo otteniamo
+\begin{equation}
+\hat{\sigma} = \sqrt{\frac{1}{n-2} \sum_{i=1}^n (y_i - (\hat{a} + \hat{b} x_i))^2}\,.
+\end{equation}
+Quando \(n = 1\) o \(2\) l'equazione precedente è priva di significato, il che ha senso: con solo due osservazioni è possibile adattare esattamente una retta al diagramma di dispersione e quindi non c'è modo di stimare l'errore dai dati.
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  Quali criteri devono essere presi in considerazione se vogliamo valutare la capacità predittiva di un modello?
-\item
-  Come è possibile quantificare la capacità predittiva di un modello sulla base delle informazioni di un campione di osservazioni?
-\item
-  Come possiamo confrontare le capacità predittive di modelli alternativi?
-\end{enumerate}
+\hypertarget{calcolare-la-somma-dei-quadrati}{%
+\section{Calcolare la somma dei quadrati}\label{calcolare-la-somma-dei-quadrati}}
 
-\hypertarget{il-rasoio-di-ockham}{%
-\section{Il rasoio di Ockham}\label{il-rasoio-di-ockham}}
+Seguendo \href{https://github.com/ASKurz/Working-through-Regression-and-other-stories/blob/main/08.Rmd}{Solomon Kurz}, creiamo una funzione per calcolare la somma dei quadrati per diversi valori di \(a\) e \(b\):
 
-Iniziamo prendendo in considerazione quello che è uno dei problemi più importanti in campo scientifico: il problema di scegliere il modello più adatto a spiegare un insieme di informazioni che riguardano un fenomeno di interesse. Le domande che i ricercatori si pongono sono: il modello è completo? È necessario aggiungere un nuovo parametro al modello? Come può essere migliorato il modello? Se ci sono modelli diversi, qual'è il modello migliore?
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rss }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x, y, a, b) \{  }
+  \CommentTok{\# x and y are vectors, }
+  \CommentTok{\# a and b are scalars }
+\NormalTok{  resid }\OtherTok{\textless{}{-}}\NormalTok{ y }\SpecialCharTok{{-}}\NormalTok{ (a }\SpecialCharTok{+}\NormalTok{ b }\SpecialCharTok{*}\NormalTok{ x)}
+  \FunctionTok{return}\NormalTok{(}\FunctionTok{sum}\NormalTok{(resid}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
 
-Un principio che può essere usato per rispondere a queste domande è il rasoio di Ockham: \emph{frustra fit per plura quod potest fieri per pauciora} (``si fa inutilmente con molte cose ciò che si può fare con poche cose''). Parafrasando la massima potremmo dire: quando due modelli approssimano egualmente bene i dati viene sempre preferito il modello più semplice. Questo principio sta alla base della ricerca scientifica.
+Useremo i dati \ldots.
 
-Il rasoio di Ockham, però, non fornisce sempre la soluzione al problema della selezione tra modelli alternativi. Due modelli possono fare le stesse predizioni pur differendo in termini di complessità --- per esempio, relativamente al numero di parametri di cui sono costituiti. In questo caso, è facile decidere: viene preferito il modello più semplice anche perché, pragmaticamente, è il più facile da usare. Tuttavia, in generale, i modelli differiscono sia per complessità (ovvero, per il numero di parametri) che per accuratezza (ovvero, per la grandezza degli errori di predizione). In questa situazione, il rasoio di Ockham non è sufficiente: non consente infatti di trovare un equilibrio tra la necessità di ottenere la masssima accuratezza e quella di diminuire la complessità.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{read.dta}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"kidiq.dta"}\NormalTok{))}
+\FunctionTok{head}\NormalTok{(df)}
+\CommentTok{\#\textgreater{}   kid\_score mom\_hs mom\_iq mom\_work mom\_age}
+\CommentTok{\#\textgreater{} 1        65      1  121.1        4      27}
+\CommentTok{\#\textgreater{} 2        98      1   89.4        4      25}
+\CommentTok{\#\textgreater{} 3        85      1  115.4        4      27}
+\CommentTok{\#\textgreater{} 4        83      1   99.4        3      25}
+\CommentTok{\#\textgreater{} 5       115      1   92.7        4      27}
+\CommentTok{\#\textgreater{} 6        98      0  107.9        1      18}
+\end{Highlighting}
+\end{Shaded}
 
-In questo Capitolo ci chiederemo come sia possibile misurare l'accuratezza predittiva di un modello. Ciò ci consentirà, in seguito, di usare il rasoio di Ockham: a parità di accuratezza, verrà scelto il modello più semplice. Ma nella pratica scientifica non si sacrifica mai l'accuratezza per la semplicità: il criterio prioritario è sempre quello dell'accuratezza.
+Nell'esempio, \texttt{kid\_score} è la variabile \(y\) e \texttt{mom\_iq} è il predittore. Le stime dei minimi quadrati sono fornite dalla funzione \texttt{lm()}:
 
-Ma come è possibile valutare l'accuratezza (predittiva) di un modello? Per rispondere a questa domanda \textcite{McElreath_rethinking} ci fa notare che è necessario evitare due opposti errori:
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(kid\_score }\SpecialCharTok{\textasciitilde{}}\NormalTok{ mom\_iq, }\AttributeTok{data =}\NormalTok{ df)}
+\NormalTok{fm }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tidy}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(term }\SpecialCharTok{==} \FunctionTok{c}\NormalTok{(}\StringTok{"(Intercept)"}\NormalTok{, }\StringTok{"mom\_iq"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pull}\NormalTok{(estimate)}
+\CommentTok{\#\textgreater{} [1] 25.80  0.61}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{itemize}
-\item
-  il \emph{sovra-adattamento} (\emph{overfitting}) --- il modello non si generalizza bene a nuovi dati futuri perché fa leva informazioni irrilevanti presenti nel campione esaminato; tali aspetti idiosincratici del campione necessariamente non si ritroveranno in altri campioni di dati;
-\item
-  il \emph{sotto-adattamento} (\emph{underfitting}) --- il modello non è neppure in grado di rendere conto delle regolarità presenti nei dati esaminati.
-\end{itemize}
+Calcoliamo la somma dei residui quadratici in base al modello di regressione \(\hat{y}_i = 25.8 + 0.61 x_i\):
 
-In questo capitolo verranno presentati due metodi {[}detti \emph{criterio di informazione} (\emph{information criteria}) e \emph{validazione incrociata} (\emph{cross-validation}){]} che, evitando il sovra- e il sotto-adattamento, consentono di valutare la capacità predittiva di un modello e di determinare quale, tra due o più modelli, sia quello da preferire.
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rss}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{mom\_iq, df}\SpecialCharTok{$}\NormalTok{kid\_score, }\FloatTok{25.8}\NormalTok{, }\FloatTok{0.61}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 144137}
+\end{Highlighting}
+\end{Shaded}
 
-\hypertarget{stargazing}{%
-\subsection{Stargazing}\label{stargazing}}
+Esploriamo ora i valori assunti da \(rss\) per diversi valori di \(a\) e \(b\). Per iniziare, utilizziamo un vettore di valori \texttt{a}, mantenendo costante \texttt{b\ =\ 0.61}.
 
-Nella pratica concreta della ricerca, il metodo più comune per la selezione tra modelli statistici utilizza i test di ipotesi statistiche di stampo frequentista. Questo metodo viene chiamato \emph{stargazing}, poiché richiede soltanto l'esame degli asterischi (\(**\)) che si trovano nell'output di un software statistico (gli asterischi marcano i coefficienti del modello che sono ``statisticamente significativi''): alcuni ricercatori ritengono che il modello con più stelline sia il modello migliore. Ma però questo non è vero. Al di là dei problemi legati ai test dell'ipotesi nulla, è sicuramente un errore usare i test di significatività per la selezione di modelli: i valori-\emph{p} non consentono di trovare un equilibrio tra \emph{underfitting} e \emph{overfitting}. Infatti, le variabili che migliorano la capacità predittiva di un modello non risultano sempre statisticamente significative; inoltre, le variabili che sono statisticamente significative non migliorano sempre la capacità predittiva di un modello.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# set the global plotting theme}
+\CommentTok{\# theme\_set(theme\_linedraw() +}
+\CommentTok{\#             theme(panel.grid = element\_blank()))}
+\CommentTok{\# simulate}
+\FunctionTok{tibble}\NormalTok{(}\AttributeTok{a =} \FunctionTok{seq}\NormalTok{(}\DecValTok{20}\NormalTok{, }\DecValTok{30}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{30}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{rss =} \FunctionTok{map\_dbl}\NormalTok{(}
+\NormalTok{      a, }
+\NormalTok{      rss, }
+      \AttributeTok{x =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{mom\_iq, }
+      \AttributeTok{y =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{kid\_score,  }
+      \AttributeTok{b =} \FloatTok{0.61}\NormalTok{)}
+\NormalTok{    ) }\SpecialCharTok{\%\textgreater{}\%} 
+  
+  \CommentTok{\# plot}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ a, }\AttributeTok{y =}\NormalTok{ rss)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Il valore b è tenuto costante (b = 0.61)"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
 
-L'obiettivo del confronto tra modelli è la selezione del modello che più da vicino rappresenta il ``vero'' processo di generazione dei dati. Un modello che rappresenta meglio il ``vero'' processo di generazione dei dati è da preferire ad un modello che rappresenta meno bene un tale processo. Pertanto, è necessario quantificare il grado di ``vicinanza'' di un modello al ``vero'' processo di generazione dei dati. Si noti che, in questo contesto, facciamo riferimento sia alla famiglia distributiva così come ai valori dei parametri. Ad esempio, il modello \(y_i \sim \mathcal{N}(5, 3)\) è diverso dal modello \(y_i \sim \mathcal{N}(5, 6)\), ed è anche diverso dal modello \(y_i \sim \Gamma(2, 2)\). I primi due modelli appartengono alla stessa famiglia distributiva ma differiscono nei termini dei valori dei parametri; gli ultimi due modelli appartengono a famiglie distributive diverse (Normale vs.~Gamma). Per misurare il grado di ``vicinanza'' tra due modelli, \(\mathcal{M}_1\) e \(\mathcal{M}_2\), la metrica di gran lunga più popolare in statistica è la \emph{divergenza di Kullback-Liebler}. Prima di definire tale nozione è però necessario chiarire il concetto di entropia. Nei Paragrafi successivi vedremo di sviluppare una comprensione intuitiva della nozione di entropia. Avendo fatto questo, saremo poi in grado di discutere la divergenza di Kullback-Liebler.
+\begin{center}\includegraphics[width=0.8\linewidth]{052_reglin2_files/figure-latex/unnamed-chunk-7-1} \end{center}
 
-\hypertarget{entropia}{%
-\section{Entropia}\label{entropia}}
+Ora variamo sia \texttt{a} che \texttt{b}, facendo assumere a ciascun parametro un insieme di valori in un intevallo, e rappresentiamo i risultati in una heat map che rappresenta l'intensitè di \texttt{rss} in funzione dei valori \texttt{a} e \texttt{b}.
 
-Per discutere la divergenza di Kullback-Liebler è prima necessario introdurre il concetto di entropia.\footnote{La nozione di entropia fu introdotta agli inizi del XIX secolo nel campo della termodinamica classica; il secondo principio della termodinamica è infatti basato sul concetto di entropia che, in generale, è assunto come una misura del disordine di un sistema fisico. Successivamente Boltzmann fornì una definizione statistica di entropia. Nel 1948 Shannon impiegò la nozione di entropia nell'ambito della teoria delle comunicazioni.} La definizione di entropia richiede il calcolo della quantità di informazione di un evento. L'intuizione dietro la quantificazione delle informazioni è l'idea di misurare quanta sorpresa fornisce un evento: gli eventi rari (a bassa probabilità) sono più sorprendenti e quindi forniscono più informazione degli eventi non rari (ad alta probabilità).
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d }\OtherTok{\textless{}{-}}
+  \FunctionTok{crossing}\NormalTok{(}\AttributeTok{a =} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{20}\NormalTok{, }\DecValTok{70}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{400}\NormalTok{),}
+           \AttributeTok{b =} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.2}\NormalTok{, }\FloatTok{1.4}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{400}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{rss =} \FunctionTok{map2\_dbl}\NormalTok{(a, b, rss, }\AttributeTok{x =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{mom\_iq, }\AttributeTok{y =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{kid\_score))}
+\NormalTok{d }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ a, }\AttributeTok{y =}\NormalTok{ b, }\AttributeTok{fill =}\NormalTok{ rss)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_tile}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_viridis\_c}\NormalTok{(}\StringTok{"RSS"}\NormalTok{, }\AttributeTok{option =} \StringTok{"A"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{itemize}
-\tightlist
-\item
-  Evento a bassa probabilità: molta informazione (sorprendente).
-\item
-  Evento ad alta probabilità: poca informazione (non sorprende).
-\end{itemize}
+\begin{center}\includegraphics[width=0.8\linewidth]{052_reglin2_files/figure-latex/unnamed-chunk-8-1} \end{center}
 
-\noindent
-Apprendere che si è verificato un evento improbabile è più informativo che apprendere che si è verificato un evento probabile. Gli eventi rari sono più incerti, o più sorprendenti, e per essere rappresentati richiedono una quantità di maggiore di informazione rispetto agli eventi non rari.
+Poiché la stima dei minimi quadrati enfatizza il valore RSS minimo, la soluzione che cerchiamo corrisponde alle combinazione di \texttt{a} e \texttt{b} nell'intervallo più scuro rappresentato nella figura. Tra gli \texttt{a} e \texttt{b} che abbiamo preso in considerazione, la coppia di valori a cui è associato il minimo valore \texttt{rss} si trova nel modo seguente:
 
-È possibile calcolare la quantità di informazione fornita da un evento usando la probabilità dell'evento. Una tale quantità di informazione è chiamata ``informazione Shannon'', ``autoinformazione'' o semplicemente ``informazione'' e, per un evento discreto \(x\), può essere calcolata come segue:
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(rss) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\CommentTok{\#\textgreater{} \# A tibble: 1 x 3}
+\CommentTok{\#\textgreater{}       a     b     rss}
+\CommentTok{\#\textgreater{}   \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}   \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1  25.8 0.610 144137.}
+\end{Highlighting}
+\end{Shaded}
+
+Si noti che i valori trovati in questo modo corrispondono alla soluzione fornita nell'output della funzione \texttt{lm()}.
+
+\hypertarget{massima-verosimiglianza}{%
+\section{Massima verosimiglianza}\label{massima-verosimiglianza}}
+
+Se gli errori del modello lineare sono indipendenti e distribuiti normalmente, in modo che \(y_i \sim \mathcal{N}(a + b x_i, \sigma^2)\) per ogni \(i\), allora la stima ai minimi quadrati di (\texttt{a}, \texttt{b}) è anche la stima di massima verosimiglianza. La \emph{funzione di verosimiglianza} in un modello di regressione è definita come la densità di probabilità delle osservazioni dati i parametri e i predittori; quindi, in questo esempio,
 \[
-\text{informazione}(x) = -\log_2 p(x),
-\]
-dove \(\log_2\) è il logaritmo in base 2 e \(p(x)\) è la probabilità dell'evento \(x\).
+ p(y \mid a, b, \sigma, x) = \prod_{i=1}^n \mathcal{N}(y_i \mid a + b x_i, \sigma^2),
+ \]
 
-La scelta del logaritmo in base 2 significa che l'unità di misura dell'informazione è in bit (cifre binarie). Questo può essere interpretato dicendo che l'informazione misura il numero di bit richiesti per rappresentare l'evento.\footnote{È possibile pensare all'entropia nei termini del numero di domande sì/no che devono essere poste per ridurre l'incertezza. Per esempio, se in un certo giorno ci può essere solo sole o pioggia, per ridurre l'incertezza, a fine giornata chiediamo: ``ha piovuto?'' La risposta (sì/no) ad una singola domanda elimina l'incertezza, e quindi l'informazione ottenuta (ovvero, la riduzione dell'incertezza) è uguale ad 1 bit. Se in una certa giornata ci potrebbero essere sole, pioggia o neve, per ridurre l'incertezza sono necessarie due domande: ``c'era sole?''; ``ha piovuto?'' In questo secondo caso, l'informazione ottenuta (ovvero, la riduzione dell'incertezza) è uguale ad 2 bit. Usando un logaritmo in base 2, dunque, l'entropia può essere interpretata come il numero minimo di bit necessari per codificare la quantità di informazione nei dati.} Solitamente, la quantità di informazione viene denotata con \(h()\):
+dove \(\mathcal{N}(\cdot | \cdot, \cdot)\) è la funzione di densità di probabilità normale,
 \[
-h(x) = -\log p(x).
+\mathcal{N}(y \mid \mu, \sigma^2) = \frac{1}{\sqrt{2 \pi \sigma}} \exp \left(-\frac{1}{2} \left( \frac{y - \mu}{\sigma} \right)^2 \right).
 \]
-Il segno negativo garantisce che il risultato sia sempre positivo o zero. L'informazione è zero quando la probabilità dell'evento è 1.0, ovvero l'evento è certo (assenza di sorpresa).
 
-\begin{example}
-Consideriamo il lancio di una moneta equilibrata. La probabilità di testa (e croce) è 0.5. La quantità di informazione di ottenere ``testa'' è dunque
+Un studio della funzione precedente rivela che la massimizzazione della verosimiglianza richiede la minimizzazione della somma dei quadrati dei residui; quindi la stima dei minimi quadrati \(\hat{\beta} = (\hat{a}, \hat{b})\) può essere vista come una stima di massima verosimiglianza nel modello normale:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\SpecialCharTok{{-}}\FunctionTok{log2}\NormalTok{(}\FloatTok{0.5}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 1}
+\NormalTok{ll }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x, y, a, b) \{}
+\NormalTok{  resid }\OtherTok{\textless{}{-}}\NormalTok{ y }\SpecialCharTok{{-}}\NormalTok{ (a }\SpecialCharTok{+}\NormalTok{ b }\SpecialCharTok{*}\NormalTok{ x)}
+\NormalTok{  sigma }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{sum}\NormalTok{(resid}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{/} \FunctionTok{length}\NormalTok{(x))}
+\NormalTok{  d }\OtherTok{\textless{}{-}} \FunctionTok{dnorm}\NormalTok{(y, }\AttributeTok{mean =}\NormalTok{ a }\SpecialCharTok{+}\NormalTok{ b }\SpecialCharTok{*}\NormalTok{ x, }\AttributeTok{sd =}\NormalTok{ sigma, }\AttributeTok{log =} \ConstantTok{TRUE}\NormalTok{)}
+  \FunctionTok{tibble}\NormalTok{(}\AttributeTok{sigma =}\NormalTok{ sigma, }\AttributeTok{ll =} \FunctionTok{sum}\NormalTok{(d))}
+\NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
 
-Per rappresentare questo evento abbiamo bisogno di 1 bit di informazione. Se la stessa moneta venisse lanciata \(n\) volte, la quantità di informazione necessaria per rappresentare questo evento (ovvero, questa sequenza di lanci) sarebbe pari a \(n\) bit. Se la moneta non è equilibrata e la probabilità di testa è 0.1, allora l'evento ``testa'' è più raro e richiede più di 3 bit di informazione:
+Calcoliamo dunque le stime di verosimiglianza logaritmica per varie combinazioni di (\texttt{a}, \texttt{b}), date due colonne di dati, \texttt{x} e \texttt{y}. La funzione resituisce anche il valore \(\hat{\sigma}\).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\SpecialCharTok{{-}}\FunctionTok{log2}\NormalTok{(}\FloatTok{0.1}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 3.32}
+\NormalTok{d }\OtherTok{\textless{}{-}}
+  \FunctionTok{crossing}\NormalTok{(}\AttributeTok{a =} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{20}\NormalTok{, }\DecValTok{70}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{200}\NormalTok{),}
+           \AttributeTok{b =} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.2}\NormalTok{, }\FloatTok{1.4}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{200}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{ll =} \FunctionTok{map2}\NormalTok{(a, b, ll, }\AttributeTok{x =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{mom\_iq, }\AttributeTok{y =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{kid\_score)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{unnest}\NormalTok{(ll)}
+\NormalTok{p1 }\OtherTok{\textless{}{-}}
+\NormalTok{  d }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ a, }\AttributeTok{y =}\NormalTok{ b, }\AttributeTok{fill =}\NormalTok{ ll)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_tile}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_viridis\_c}\NormalTok{(}\AttributeTok{option =} \StringTok{"A"}\NormalTok{, }\AttributeTok{breaks =} \ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Verosimiglianza, p(a, b | y)"}\NormalTok{)}
+\NormalTok{p1}
 \end{Highlighting}
 \end{Shaded}
 
-Consideriamo ora il lancio di un dado. Ci possiamo chiedere quanta informazione sia fornita, ad esempio, dall'evento ``esce il valore 6''. Dato che la probabilità di ottenere un 6 è più piccola della probabilità di ottenere ``testa'' nel lancio di una moneta, ci possiamo aspettare, nel lancio del dado, una maggiore sorpresa, ovvero una maggiore quantità di informazione. La quantità di informazione dell'evento ``esce un 6'' nel lancio di un dado
+\begin{center}\includegraphics[width=0.8\linewidth]{052_reglin2_files/figure-latex/unnamed-chunk-11-1} \end{center}
+
+Le stime di \(\hat{a}, \hat{b}\) ottenute mediante il metodo di massima verosimiglianza sono:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\SpecialCharTok{{-}}\FunctionTok{log2}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{6}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 2.58}
+\NormalTok{d }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(ll)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\CommentTok{\#\textgreater{} \# A tibble: 1 x 4}
+\CommentTok{\#\textgreater{}       a     b sigma     ll}
+\CommentTok{\#\textgreater{}   \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1  25.7 0.612  18.2 {-}1876.}
 \end{Highlighting}
 \end{Shaded}
 
-\noindent
-è infatti più del doppio della quantità di informazione dell'evento ``esce testa'' nel lancio di una moneta.
-\end{example}
+\hypertarget{inferenza-bayesiana}{%
+\subsection{Inferenza bayesiana}\label{inferenza-bayesiana}}
 
-\begin{example}
-Nella figura successiva viene esaminata la relazione tra probabilità e informazione, per valori di probabilità nell'intervallo tra 0 e 1.
+Usiamo ora la funzione \texttt{brms::brm()} per eseguire l'analisi mediante un approccio bayesiano:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{1000}\NormalTok{)}
-\NormalTok{h }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\FunctionTok{log2}\NormalTok{(p)}
-\FunctionTok{ggplot}\NormalTok{(}\FunctionTok{tibble}\NormalTok{(p, h), }\FunctionTok{aes}\NormalTok{(p, h)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
+\NormalTok{m }\OtherTok{\textless{}{-}}
+  \FunctionTok{brm}\NormalTok{(}
+\NormalTok{    kid\_score }\SpecialCharTok{\textasciitilde{}}\NormalTok{ mom\_iq,}
+    \AttributeTok{data =}\NormalTok{ df, }
+    \AttributeTok{backend =} \StringTok{"cmdstan"}\NormalTok{,}
+    \AttributeTok{refresh =} \DecValTok{0}
+\NormalTok{  )}
+\CommentTok{\#\textgreater{} Running MCMC with 4 chains, at most 8 in parallel...}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Chain 1 finished in 0.0 seconds.}
+\CommentTok{\#\textgreater{} Chain 2 finished in 0.0 seconds.}
+\CommentTok{\#\textgreater{} Chain 3 finished in 0.0 seconds.}
+\CommentTok{\#\textgreater{} Chain 4 finished in 0.0 seconds.}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} All 4 chains finished successfully.}
+\CommentTok{\#\textgreater{} Mean chain execution time: 0.0 seconds.}
+\CommentTok{\#\textgreater{} Total execution time: 0.3 seconds.}
+\end{Highlighting}
+\end{Shaded}
+
+Utilizzando i coefficienti calcolati da \texttt{brms::brm()}, aggiungiamo la stima della retta di regressione al diagramma di dispersione dei dati:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ mom\_iq, }\AttributeTok{y =}\NormalTok{ kid\_score)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_abline}\NormalTok{(}
+    \AttributeTok{intercept =} \FunctionTok{fixef}\NormalTok{(m, }\AttributeTok{robust =} \ConstantTok{TRUE}\NormalTok{)[}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{], }
+    \AttributeTok{slope =} \FunctionTok{fixef}\NormalTok{(m, }\AttributeTok{robust =} \ConstantTok{TRUE}\NormalTok{)[}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{],}
+    \AttributeTok{size =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{3}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{annotate}\NormalTok{(}
+    \AttributeTok{geom =} \StringTok{"text"}\NormalTok{,}
+    \AttributeTok{x =} \DecValTok{130}\NormalTok{, }\AttributeTok{y =} \DecValTok{30}\NormalTok{,}
+    \AttributeTok{label =} \FunctionTok{expression}\NormalTok{(y }\SpecialCharTok{==} \FloatTok{25.7} \SpecialCharTok{+} \FloatTok{0.61} \SpecialCharTok{*}\NormalTok{ x)}
+\NormalTok{  ) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}
-    \AttributeTok{x =} \StringTok{"Probabilità"}\NormalTok{,}
-    \AttributeTok{y =} \StringTok{"Informazione"}
-\NormalTok{  )}
+    \AttributeTok{subtitle =} \StringTok{"Dati e retta di regressione"}\NormalTok{,}
+    \AttributeTok{x =} \StringTok{"x"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"y"}
+\NormalTok{  ) }
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{092_loo_files/figure-latex/unnamed-chunk-6-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{052_reglin2_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
-\noindent
-La figura mostra che questa relazione non è lineare, è infatti leggermente sublineare. Questo ha senso dato che abbiamo usato una funzione logaritmica.
-\end{example}
+La funzione \texttt{brms::posterior\_samples()} consente di estrarre molti campioni dalla distribuzione a posteriori del modello \texttt{m}. In questo modo otteniamo un vettore di valori per ciascuno dei tre parametri, i quali, in questo output sono chiamati \texttt{b\_Intercept}, \texttt{b\_mom\_iq} e \texttt{sigma}. Abbiamo quindi usato \texttt{slice\_sample()} per ottenere un sottoinsieme casuale di 50 righe. Per semplicità, qui ne stampiamo solo 5.
 
-\hypertarget{entropia-di-una-variabile-casuale}{%
-\subsection{Entropia di una variabile casuale}\label{entropia-di-una-variabile-casuale}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{8}\NormalTok{)}
 
-È possibile quantificare la quantità di informazione fornita da una variabile casuale.
+\FunctionTok{posterior\_samples}\NormalTok{(m) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{slice\_sample}\NormalTok{(}\AttributeTok{n =} \DecValTok{5}\NormalTok{)}
+\CommentTok{\#\textgreater{}   b\_Intercept b\_mom\_iq sigma Intercept  lp\_\_}
+\CommentTok{\#\textgreater{} 1        18.7    0.671  19.2      85.8 {-}1883}
+\CommentTok{\#\textgreater{} 2        20.4    0.663  17.9      86.7 {-}1881}
+\CommentTok{\#\textgreater{} 3        33.3    0.546  18.5      87.8 {-}1882}
+\CommentTok{\#\textgreater{} 4        25.5    0.620  18.3      87.5 {-}1881}
+\CommentTok{\#\textgreater{} 5        29.0    0.577  18.2      86.7 {-}1881}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{definition}
-Sia \(Y = y_1, \dots, y_n\) una variabile casuale e \(p_t(y)\) una distribuzione di probabilità su \(Y\). Si definisce la sua entropia (detta di Shannon) come:
-\begin{equation}
-H(Y) = - \sum_{i=1}^n p_t(y_i) \cdot \log_2 p_t(y_i).
-\label{eq:entropy}
-\end{equation}
-\end{definition}
+Possiamo interpretare i valori \texttt{b\_Intercept}, \texttt{b\_mom\_iq} come un insieme di valori credibili per i parametri \(a\) e \(b\). Dati questi valori credibili per i parametri del modello di regressione, possiamo aggiungere al diagramma a dispersione 50 stime possibili della retta di regressione, alla luce dei dati osservati.
 
-\hypertarget{proprietuxe0}{%
-\subsection{Proprietà}\label{proprietuxe0}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{8}\NormalTok{)}
 
-Si possono evidenziare due proprietà dell'entropia.
+\FunctionTok{posterior\_samples}\NormalTok{(m) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{slice\_sample}\NormalTok{(}\AttributeTok{n =} \DecValTok{50}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_abline}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{intercept =}\NormalTok{ b\_Intercept, }\AttributeTok{slope =}\NormalTok{ b\_mom\_iq),}
+        \AttributeTok{size =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{4}\NormalTok{, }\AttributeTok{alpha =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{, }\AttributeTok{color =} \StringTok{"grey25"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}
+    \AttributeTok{data =}\NormalTok{ df,}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ mom\_iq, }\AttributeTok{y =}\NormalTok{ kid\_score)}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{subtitle =} \StringTok{"Dati e possibili rette di regressione"}\NormalTok{,}
+    \AttributeTok{x =} \StringTok{"x"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"y"}
+\NormalTok{  ) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{052_reglin2_files/figure-latex/unnamed-chunk-16-1} \end{center}
+
+I minimi quadrati o la massima verosimiglianza trovano i parametri che meglio si adattano ai dati (secondo un criterio prestabilito), ma senza altrimenti vincolare o guidare l'adattamento. Ma di solito abbiamo informazioni preliminari sui parametri del modello. L'inferenza bayesiana produce un compromesso tra informazioni a priori e i dati, moltiplicando la verosimiglianza con una distribuzione a priori che codifica probabilisticamente le informazioni esterne sui parametri. Il prodotto della verosimiglianza \(p(y \mid a, b, \sigma)\) e della distribuzione a priori è chiamato \emph{distribuzione a posteriori} e, dopo aver visto i dati, riassume la nostra credenza sui valori dei parametri.
+
+La soluzione dei minimi quadrati fornisce una stima puntuale dei coefficienti che producono il miglior adattamento complessivo ai dati. Per un modello bayesiano, la corrispondente stima puntuale è la moda a posteriori, la quale fornisce il miglior adattamento complessivo ai dati e alla distribuzione a priori. La stima dei minimi quadrati o di massima verosimiglianza è la moda a posteriori corrispondente al modello bayesiano che utilizza una distribuzione a priori uniforme.
+
+Ma non vogliamo solo una stima puntuale; vogliamo anche una misura dell'incertezza della stima. La figura precedente fornisce, in forma grafica, una descrizione di tale incertezza.
+
+Gli intervalli di credibilità al 95\% si ottengono nel modo seguente:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(m, }\AttributeTok{robust =} \ConstantTok{TRUE}\NormalTok{)}
+\CommentTok{\#\textgreater{}  Family: gaussian }
+\CommentTok{\#\textgreater{}   Links: mu = identity; sigma = identity }
+\CommentTok{\#\textgreater{} Formula: kid\_score \textasciitilde{} mom\_iq }
+\CommentTok{\#\textgreater{}    Data: df (Number of observations: 434) }
+\CommentTok{\#\textgreater{}   Draws: 4 chains, each with iter = 1000; warmup = 0; thin = 1;}
+\CommentTok{\#\textgreater{}          total post{-}warmup draws = 4000}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Population{-}Level Effects: }
+\CommentTok{\#\textgreater{}           Estimate Est.Error l{-}95\% CI u{-}95\% CI Rhat Bulk\_ESS Tail\_ESS}
+\CommentTok{\#\textgreater{} Intercept    25.83      5.80    14.44    37.47 1.00     3329     3005}
+\CommentTok{\#\textgreater{} mom\_iq        0.61      0.06     0.49     0.72 1.00     3310     3009}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Family Specific Parameters: }
+\CommentTok{\#\textgreater{}       Estimate Est.Error l{-}95\% CI u{-}95\% CI Rhat Bulk\_ESS Tail\_ESS}
+\CommentTok{\#\textgreater{} sigma    18.26      0.61    17.13    19.53 1.00     3824     3105}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Draws were sampled using sample(hmc). For each parameter, Bulk\_ESS}
+\CommentTok{\#\textgreater{} and Tail\_ESS are effective sample size measures, and Rhat is the potential}
+\CommentTok{\#\textgreater{} scale reduction factor on split chains (at convergence, Rhat = 1).}
+\end{Highlighting}
+\end{Shaded}
+
+In alternativa, è possibile usare la funzione \texttt{posterior\_interval()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{posterior\_interval}\NormalTok{(m)}
+\CommentTok{\#\textgreater{}                  2.5\%     97.5\%}
+\CommentTok{\#\textgreater{} b\_Intercept    14.445    37.471}
+\CommentTok{\#\textgreater{} b\_mom\_iq        0.495     0.722}
+\CommentTok{\#\textgreater{} sigma          17.132    19.529}
+\CommentTok{\#\textgreater{} Intercept      85.119    88.563}
+\CommentTok{\#\textgreater{} lp\_\_        {-}1885.190 {-}1880.580}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{reg-lin-stan}{%
+\chapter{Regressione lineare in Stan}\label{reg-lin-stan}}
+
+\hypertarget{la-specificazione-del-modello-in-linguaggio-stan}{%
+\section{La specificazione del modello in linguaggio Stan}\label{la-specificazione-del-modello-in-linguaggio-stan}}
+
+Obiettivo di questo Capitolo è illustrare come svolgere l'analisi di regressione bayesiana usando il linguaggio Stan.\footnote{Una descrizione dell'approccio frequentista all'analisi di regressione è fornita nell'Appendice \ref{regr-lin-frequentista}.} Per fare un esempio concreto useremo un famoso dataset chiamato \texttt{kidiq} \autocite{gelman2020regression} che riporta i dati di un'indagine del 2007 su un campione di donne americane adulte e sui loro bambini di età compres tra i 3 e i 4 anni. I dati sono costituiti da 434 osservazioni e 4 variabili:
 
 \begin{itemize}
 \tightlist
 \item
-  L'entropia aumenta all'aumentare della varianza di una variabile casuale.
+  \texttt{kid\_score}: QI del bambino; è il punteggio totale del \emph{Peabody Individual Achievement Test} (PIAT) costituito dalla somma dei punteggi di tre sottoscale (Mathematics, Reading comprehension, Reading recognition);
 \item
-  L'entropia aumenta all'aumentare del numero delle possibilità con cui un evento può verificarsi.
+  \texttt{mom\_hs}: variabile dicotomica (0 or 1) che indica se la madre del bambino ha completato le scuole superiori (1) oppure no (0);
+\item
+  \texttt{mom\_iq}: QI della madre;
+\item
+  \texttt{mom\_age}: età della madre.
 \end{itemize}
-
-\begin{example}
-Consideriamo un esempio riguardante le previsioni del tempo. Supponiamo che le probabilità di pioggia e sole siano, rispettivamente, \(p_1 = 0.3\) e \(p_2 = 0.7\). Quindi
-\[
-H(p) = − [p(y_1) \log_2 p(y_1) + p(y_2) \log_2 p(y_2)] \approx 0.61.
-\]
-\noindent
-Svolgendo i calcoli in \(\R\) abbiamo:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{0.3}\NormalTok{ , }\FloatTok{0.7}\NormalTok{)}
-\SpecialCharTok{{-}}\FunctionTok{sum}\NormalTok{(p}\SpecialCharTok{*}\FunctionTok{log}\NormalTok{(p))}
-\CommentTok{\#\textgreater{} [1] 0.611}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Se però viviamo a Las Vegas, allora le probabilità di pioggia e sole saranno qualcosa come \(p(y_1) = 0.01\) e \(p(y_2) = 0.99\). In questo secondo caso, l'entropia è 0.06, ovvero, molto minore di prima. Infatti, a Las Vegas non piove quasi mai, per cui quando abbiamo imparato che, in un certo giorno, non ha piovuto, abbiamo imparato molto poco rispetto a quello che già sapevamo in precedenza.
-\end{example}
-
-\begin{example}
-
-Abbiamo visto in precedenza che, se gli esiti possibili sono pioggia o sole con \(p(y_1) = 0.7\), \(p(y_2) = 0.3\), allora l'entropia è
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\SpecialCharTok{{-}}\NormalTok{(}\FloatTok{0.7} \SpecialCharTok{*} \FunctionTok{log}\NormalTok{(}\FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+} \FloatTok{0.3} \SpecialCharTok{*} \FunctionTok{log}\NormalTok{(}\FloatTok{0.3}\NormalTok{))}
-\CommentTok{\#\textgreater{} [1] 0.611}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Se gli esiti possibili sono pioggia, neve o sole con \(p(y_1) = 0.7\), \(p(y_2) = 0.15\) e \(p(y_3) = 0.15\), rispettivamente, allora l'entropia sarà maggiore, ovvero pari a 0.82.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\SpecialCharTok{{-}}\NormalTok{(}\FloatTok{0.7} \SpecialCharTok{*} \FunctionTok{log}\NormalTok{(}\FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+} \FloatTok{0.15} \SpecialCharTok{*} \FunctionTok{log}\NormalTok{(}\FloatTok{0.15}\NormalTok{) }\SpecialCharTok{+} \FloatTok{0.15} \SpecialCharTok{*} \FunctionTok{log}\NormalTok{(}\FloatTok{0.15}\NormalTok{))}
-\CommentTok{\#\textgreater{} [1] 0.819}
-\end{Highlighting}
-\end{Shaded}
-
-\end{example}
-
-\hypertarget{dallentropia-allaccuratezza}{%
-\section{Dall'entropia all'accuratezza}\label{dallentropia-allaccuratezza}}
-
-Il valore assoluto dell'entropia è difficile da interpretare. Vedremo però come sia possibile usare l'entropia per misurare l'accuratezza di un modello statistico. Nello specifico, ci porremo il problema di misurare la distanza tra la distribuzione di probabilità ipotizzata da un modello, chiamiamola \(p_{\mathcal{M}}\), e la distribuzione di probabilità del vero modello generatore dei dati, \(p_t\). La teoria delle probabilità quantifica l'informazione che viene perduta quando \(p_{\mathcal{M}}\) approssima \(p_t\) mediante la \emph{divergenza di Kullback-Liebler}. La divergenza di Kullback-Liebler, denotata con \(D_{KL}(p_t \mid\mid p_{\mathcal{M}})\), misura dunque l'incremento della nostra incertezza quando una distribuzione ``approssimata'' viene usata al posto della ``vera'' distribuzione di probabilità.
-
-\begin{definition}
-Per due distribuzioni discrete \(p_t\) e \(p_{\mathcal{M}}\), la divergenza KL di \(p_{\mathcal{M}}\) da \(p_t\) è definita come:
-\begin{equation}
-D_{KL}(p_t \mid\mid p_{\mathcal{M}}) = \sum_{i=1}^n p_t(y_i) \cdot \left[\log p_t(y_i) - \log p_{\mathcal{M}}(y_i)\right].
-\label{eq:kldivergence}
-\end{equation}
-\end{definition}
-
-La divergenza di Kullback-Liebler introduce un piccolo cambiamento alla \eqref{eq:entropy}: anziché considerare una sola distribuzione di probabilità, \(p_t\), considera anche una approssimazione a tale distribuzione, ovvero \(p_{\mathcal{M}}\). Calcolando la differenza dei logaritmi dei valori delle due distribuzioni si giunge alla \eqref{eq:kldivergence}.
-
-La divergenza KL misura dunque la quantità di informazione che viene perduta quando una distribuzione approssimata viene usata per descrivere le proprietà della distribuzione di riferimento.
-Se c'è una perfetta corrispondenza tra le due distribuzioni, \(p_t = p_{\mathcal{M}}\), allora
-\[
-D_{KL}(p_t \mid\mid p_{\mathcal{M}}) = D_{KL}(p_t \mid\mid p_t) = \sum_{i=1}^n p_t(y_i) \cdot \left[\log p_t(y_i) - \log p_t(y_i)\right] = 0,
-\]
-ovvvero: nessuna incertezza aggiuntiva viene introdotta se una distribuzione viene usata per rappresentare se stessa. Altrimenti, cioè se \(p_t \neq p_{\mathcal{M}}\), la divergenza KL assume valori nell'intervallo \([0, \infty]\): all'aumentare della differenza tra \(p_{\mathcal{M}}\) e \(p_t\) aumenta il valore \(D_{KL}(p_t \mid\mid p_{\mathcal{M}})\).
-
-\begin{example}
-\autocite[da][]{McElreath_rethinking} Sia la distribuzione target \(p = \{0.3, 0.7\}\). Supponiamo che la distribuzione approssimata \(q\) possa assumere valori da \(q = \{0.01, 0.99\}\) a \(q = \{0.99, 0.01\}\). Calcoliamo la divergenza KL.
-
-Le istruzioni \(\R\) sono le seguenti:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{t }\OtherTok{\textless{}{-}}
-  \FunctionTok{tibble}\NormalTok{(}
-    \AttributeTok{p\_1 =}\NormalTok{ .}\DecValTok{3}\NormalTok{,}
-    \AttributeTok{p\_2 =}\NormalTok{ .}\DecValTok{7}\NormalTok{,}
-    \AttributeTok{q\_1 =} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from =}\NormalTok{ .}\DecValTok{01}\NormalTok{, }\AttributeTok{to =}\NormalTok{ .}\DecValTok{99}\NormalTok{, }\AttributeTok{by =}\NormalTok{ .}\DecValTok{01}\NormalTok{)}
-\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}
-    \AttributeTok{q\_2 =} \DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ q\_1}
-\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}
-    \AttributeTok{d\_kl =}\NormalTok{ (p\_1 }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(p\_1 }\SpecialCharTok{/}\NormalTok{ q\_1)) }\SpecialCharTok{+}\NormalTok{ (p\_2 }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(p\_2 }\SpecialCharTok{/}\NormalTok{ q\_2))}
-\NormalTok{  )}
-
-\FunctionTok{head}\NormalTok{(t)}
-\CommentTok{\#\textgreater{} \# A tibble: 6 x 5}
-\CommentTok{\#\textgreater{}     p\_1   p\_2   q\_1   q\_2  d\_kl}
-\CommentTok{\#\textgreater{}   \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}}
-\CommentTok{\#\textgreater{} 1   0.3   0.7  0.01  0.99 0.778}
-\CommentTok{\#\textgreater{} 2   0.3   0.7  0.02  0.98 0.577}
-\CommentTok{\#\textgreater{} 3   0.3   0.7  0.03  0.97 0.462}
-\CommentTok{\#\textgreater{} 4   0.3   0.7  0.04  0.96 0.383}
-\CommentTok{\#\textgreater{} 5   0.3   0.7  0.05  0.95 0.324}
-\CommentTok{\#\textgreater{} 6   0.3   0.7  0.06  0.94 0.276}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Nella figura seguente sull'asse delle ascisse sono rappresentati i valori \(q\) e sull'asse delle ordinante sono riportati i corrispondenti valori \(D_{KL}\).
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{t }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ q\_1, }\AttributeTok{y =}\NormalTok{ d\_kl)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept =}\NormalTok{ .}\DecValTok{3}\NormalTok{, }\AttributeTok{linetype =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size =} \DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{annotate}\NormalTok{(}\AttributeTok{geom =} \StringTok{"text"}\NormalTok{, }\AttributeTok{x =}\NormalTok{ .}\DecValTok{4}\NormalTok{, }\AttributeTok{y =} \FloatTok{1.5}\NormalTok{, }\AttributeTok{label =} \StringTok{"q = p"}\NormalTok{,}
-           \AttributeTok{size =} \FloatTok{3.5}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"q[1]"}\NormalTok{,}
-       \AttributeTok{y =} \StringTok{"Divergenza di q da p"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.8\linewidth]{092_loo_files/figure-latex/unnamed-chunk-11-1} \end{center}
-
-\noindent
-Tanto meglio la distribuzione \(q\) approssima la distribuzione target tanto più piccolo è il valore di divergenza KL.
-\end{example}
-
-\begin{example}
-Sia \(p\) una distribuzione binomiale di parametri \(\theta = 0.2\) e \(n = 5\)
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{4}
-\NormalTok{p }\OtherTok{\textless{}{-}} \FloatTok{0.2}
-\NormalTok{true\_py }\OtherTok{\textless{}{-}} \FunctionTok{dbinom}\NormalTok{(}\DecValTok{0}\SpecialCharTok{:}\NormalTok{n, n, }\FloatTok{0.2}\NormalTok{)}
-\NormalTok{true\_py}
-\CommentTok{\#\textgreater{} [1] 0.4096 0.4096 0.1536 0.0256 0.0016}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Sia \(q_1\) una approssimazione a \(p\):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{q1 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{0.46}\NormalTok{, }\FloatTok{0.42}\NormalTok{, }\FloatTok{0.10}\NormalTok{, }\FloatTok{0.01}\NormalTok{, }\FloatTok{0.01}\NormalTok{)}
-\NormalTok{q1}
-\CommentTok{\#\textgreater{} [1] 0.46 0.42 0.10 0.01 0.01}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Sia \(q_2\) una distribuzione uniforme:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{q2 }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\FloatTok{0.2}\NormalTok{, }\DecValTok{5}\NormalTok{)}
-\NormalTok{q2}
-\CommentTok{\#\textgreater{} [1] 0.2 0.2 0.2 0.2 0.2}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-La divergenza KL di \(q_1\) da \(p\) è
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{sum}\NormalTok{(true\_py }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(true\_py }\SpecialCharTok{/}\NormalTok{ q1))}
-\CommentTok{\#\textgreater{} [1] 0.0293}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-La divergenza KL di \(q_2\) da \(p\) è:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{sum}\NormalTok{(true\_py }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(true\_py }\SpecialCharTok{/}\NormalTok{ q2))}
-\CommentTok{\#\textgreater{} [1] 0.486}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-È chiaro che perdiamo una quantità maggiore di informazioni se, per descrivere la distribuzione binomiale \(p\), usiamo la distribuzione uniforme \(q_2\) anziché \(q_1\).
-\end{example}
-
-\hypertarget{la-divergenza-dipende-dalla-direzione}{%
-\subsection{La divergenza dipende dalla direzione}\label{la-divergenza-dipende-dalla-direzione}}
-
-La divergenza KL non è simmetrica: la KL da \(p_t\) a \(p_{\mathcal{M}}\) in generale è diversa dalla KL da \(p_{\mathcal{M}}\) a \(p_t\).
-
-\begin{example}
-
-Usando le seguenti istruzioni \(\R\) otteniamo:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{tibble}\NormalTok{(}\AttributeTok{direction =} \FunctionTok{c}\NormalTok{(}\StringTok{"Da q a p"}\NormalTok{, }\StringTok{"Da p a q"}\NormalTok{),}
-       \AttributeTok{p\_1 =} \FunctionTok{c}\NormalTok{(.}\DecValTok{01}\NormalTok{, .}\DecValTok{7}\NormalTok{),}
-       \AttributeTok{q\_1 =} \FunctionTok{c}\NormalTok{(.}\DecValTok{7}\NormalTok{, .}\DecValTok{01}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{p\_2 =} \DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ p\_1,}
-         \AttributeTok{q\_2 =} \DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ q\_1) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{d\_kl =}\NormalTok{ (p\_1 }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(p\_1 }\SpecialCharTok{/}\NormalTok{ q\_1)) }\SpecialCharTok{+}\NormalTok{ (p\_2 }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(p\_2 }\SpecialCharTok{/}\NormalTok{ q\_2)))}
-\CommentTok{\#\textgreater{} \# A tibble: 2 x 6}
-\CommentTok{\#\textgreater{}   direction   p\_1   q\_1   p\_2   q\_2  d\_kl}
-\CommentTok{\#\textgreater{}   \textless{}chr\textgreater{}     \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}}
-\CommentTok{\#\textgreater{} 1 Da q a p   0.01  0.7   0.99  0.3   1.14}
-\CommentTok{\#\textgreater{} 2 Da p a q   0.7   0.01  0.3   0.99  2.62}
-\end{Highlighting}
-\end{Shaded}
-
-\end{example}
-
-\hypertarget{expected-log-predictive-density}{%
-\section{Expected log predictive density}\label{expected-log-predictive-density}}
-
-Nel caso continuo, la divergenza KL diventa:
-\begin{equation}
-D_{KL}(p_t \mid\mid p_{\mathcal{M}}) = \int_{-\infty}^{+\infty} p_{t}(y) \,\log p_{t}(y) \,\operatorname {d}\!y - \int_{-\infty}^{+\infty}p_{t}(y)\log p_{\mathcal{M}}(y) \,\operatorname {d}\!y.
-\label{eq:kl-div-cont}
-\end{equation}
-Se vengono confrontati due modelli, il primo termine della \eqref{eq:kl-div-cont} resta costante e il confronto si riduce al secondo termine della \eqref{eq:kl-div-cont}, ovvero
-\begin{equation}
-\int_{-\infty}^{+\infty}p_{t}(y)\log p_{\mathcal{M}}(y) \,\operatorname {d}\!y.
-\label{eq:kl-div-cont-t2}
-\end{equation}
-\noindent
-Riscriviamo ora la \eqref{eq:kl-div-cont-t2} facendo riferimento alla distribuzione predittiva a posteriori, \(p(\tilde{y} \mid y)\), perché ciò a cui siamo interessati è la divergenza di \(p(\tilde{y} \mid y)\) da \(p_{t}(y)\):
-\begin{equation}
-\elpd = \int_{\tilde{y}} p_{t}(\tilde{y}) \log p(\tilde{y} \mid y) \,\operatorname {d}\!\tilde{y}.
-\label{eq:elpd}
-\end{equation}
-La \eqref{eq:elpd} è chiamata \emph{expected log predictive density} (\(\elpd\)) e fornisce la risposta al problema che ci eravamo posti all'inizio di questo Capitolo, ovvero al problema di definire un criterio per valutare la capacità predittiva di un modello. Possiamo pensare alla \eqref{eq:elpd} dicendo che descrive la distribuzione predittiva a posteriori del modello ponderando la verosimiglianza dei possibili dati futuri con la vera distribuzione \(p_t\). Di conseguenza, valori \(\elpd\) più grandi corrispondono ad una maggiore capacità predittiva del modello.
-
-Non dobbiamo preoccuparci di trovare una formulazione analitica della distribuzione predittiva a posteriori \(p(\tilde{y} \mid y)\) perché, come abbiamo visto nel Capitolo \ref{chapter-ppc}, è possibile approssimare tale distribuzione mediante simulazione. Notiamo però che la \eqref{eq:elpd} è formulata nei termini del vero modello generatore dei dati, \(p_t\), il quale, ovviamente, è ignoto.\footnote{Se il modello sottostante i dati fosse noto non avremmo bisogno di cercare il modello migliore, perché \(p_t\) è il modello migliore.} Di conseguenza, la quantità \(\elpd\) non può mai essere calcolata in maniera esatta, ma può essere solo stimata. Il secondo problema di questo Capitolo è capire come la \eqref{eq:elpd} possa essere stimata utilizzando un campione di osservazioni.
-
-\hypertarget{log-pointwise-predictive-density}{%
-\subsection{Log pointwise predictive density}\label{log-pointwise-predictive-density}}
-
-Ingenuamente, potremmo pensare di stimare la \eqref{eq:elpd} ipotizzando che la distribuzione del campione coincida con \(p_t\). Usare la distribuzione del campione come proxy del vero modello generatore dei dati (ovvero, ipotizzare che la distribuzione del campione rappresenti fedelmente \(p_t\)) comporta due conseguenze:
-
-\begin{itemize}
-\tightlist
-\item
-  dato che il campione è finito, anziché eseguire un'operazione di integrazione, possiamo semplicemente sommare la densità predittiva a posteriori delle osservazioni;
-\item
-  non è necessario ponderare per \(p_t\), in quanto assumiamo che la distribuzione empirica del campione corrisponde a \(p_t\) (ciò significa assumere che i valori più comunemente osservati nel campione siano anche quelli più verosimili nella vera distribuzione \(p_t\)).
-\end{itemize}
-
-Questo conduce alla seguente equazione:\footnote{In riferimento alla notazione, ricordiamo che \textcite{gelman2014understanding} distinguono tra \(y^{rep}\) e \(\tilde{y}\). I valori \(y^{rep}\) corrispondono ad un'altra possibile realizzazione del medesimo modello statistico che ha prodotto \(y\) mediante determinati valori dei parametri \(\theta\) (repliche sotto lo stesso modello statistico). I valori \(\tilde{y}\) corrispondono invece ad un campione empirico di dati osservato in qualche futura occasione.}
-\begin{equation}
-\frac{1}{n} \sum_{i=1}^n \log p(y_i^{rep} \mid y).
-\label{eq:1n-lppd}
-\end{equation}
-La quantità \eqref{eq:1n-lppd}, senza il passaggio finale della divisione per il numero di osservazioni, è chiamata \emph{log pointwise predictive density} (\(\lppd\))
-\begin{equation}
-\lppd = \sum_{i=1}^n \log p(y_i^{rep} \mid y)
-\label{eq:lppd}
-\end{equation}
-e corrisponde alla somma delle densità predittive logaritmiche delle \(n\) osservazioni. Valori più grandi della \eqref{eq:lppd} sono da preferire perché indicano una maggiore accuratezza media. È anche comune vedere espressa la quantità precedente nei termini della \emph{devianza}, ovvero alla \(\lppd\) moltiplicata per -2. In questo secondo caso sono da preferire valori piccoli.
-
-È importante notare che \(\lppd\) fornisce una \emph{sovrastima} della \eqref{eq:elpd}. Tale sovrastima è dovuta al fatto che, nel calcolo della \eqref{eq:lppd}, abbiamo usato \(p(y^{rep} \mid y)\) al posto di \(p(\tilde{y} \mid y)\): in altri termini, abbiamo considerato le osservazioni del campione come se fossero un nuovo campione di dati. In una serie di simulazioni, \textcite{McElreath_rethinking} esamina il significato di questa sovrastima. Nelle simulazioni la devianza viene calcolata come funzione della complessità (ovvero, il numero di parametri) del modello. La simulazione mostra che \(\lppd\) aumenta al crescere del numero di parametri del modello. Ciò significa che \(\lppd\) mostra lo stesso limite del coefficiente di determinazione: aumenta all'aumentare della complessità del modello.
-
-\begin{example}
-Esaminiamo un esempio tratto da \href{https://vasishth.github.io/bayescogsci/book/expected-log-predictive-density-of-a-model.html}{Bayesian Data Analysis for Cognitive Science} nel quale la \(\elpd\) viene calcolata in forma esatta oppure mediante approssimazione. Supponiamo di disporre di un campione di \(n\) osservazioni. Supponiamo inoltre di conoscere il vero processo generativo dei dati (qualcosa che in pratica non è mai possibile), ovvero:
-
-\[
-p_t(y) = \Beta(1, 3).
-\]
-I dati sono
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{set.seed}\NormalTok{(}\DecValTok{75}\NormalTok{)}
-\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{10000}
-\NormalTok{y\_data }\OtherTok{\textless{}{-}} \FunctionTok{rbeta}\NormalTok{(n, }\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{)}
-\FunctionTok{head}\NormalTok{(y\_data)}
-\CommentTok{\#\textgreater{} [1] 0.5506 0.1335 0.8025 0.2143 0.0191 0.0868}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Supponiamo inoltre di avere adattato ai dati un modello bayesiano \(\mathcal{M}\) e di avere ottenuto la distribuzione a posteriori per i parametri del modello. Inoltre, supponiamo di avere derivato la forma analitica della distribuzione predittiva a posteriori per il modello:
-\[
-p(y^{rep} \mid y) \sim \Beta(2, 2).
-\]
-Questa distribuzione ci dice quanto sono credibili i possibili dati futuri.
-
-Conoscendo la vera distribuzione dei dati \(p_t(y)\) possiamo calcolare in forma esatta la quantità \(\elpd\), ovvero
-\[
-\elpd = \int_{y^{rep}}p_{t}(y^{rep})\log p(y^{rep} \mid y) \,\operatorname {d}\!y^{rep}.
-\]
-\noindent
-Svolgiamo i calcoli in \(\R\) otteniamo:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# True distribution}
-\NormalTok{p\_t }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(y) }\FunctionTok{dbeta}\NormalTok{(y, }\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{)}
-\CommentTok{\# Predictive distribution}
-\NormalTok{p }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(y) }\FunctionTok{dbeta}\NormalTok{(y, }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{)}
-\CommentTok{\# Integration}
-\NormalTok{integrand }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(y) }\FunctionTok{p\_t}\NormalTok{(y) }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(}\FunctionTok{p}\NormalTok{(y))}
-\FunctionTok{integrate}\NormalTok{(}\AttributeTok{f =}\NormalTok{ integrand, }\AttributeTok{lower =} \DecValTok{0}\NormalTok{, }\AttributeTok{upper =} \DecValTok{1}\NormalTok{)}
-\CommentTok{\#\textgreater{} {-}0.375 with absolute error \textless{} 6.8e{-}07}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Tuttavia, in pratica non conosciamo mai \(p_t(y)\). Quindi approssimiamo \(\elpd\) usando la \eqref{eq:elpd}:
-\[
-\frac{1}{n} \sum_{i=1}^n \log p(y_i \mid y).
-\]
-\noindent
-Così facendo, e svolgendo i calcoli in \(\R\), otteniamo
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\DecValTok{1}\SpecialCharTok{/}\NormalTok{n }\SpecialCharTok{*} \FunctionTok{sum}\NormalTok{(}\FunctionTok{log}\NormalTok{(}\FunctionTok{p}\NormalTok{(y\_data)))}
-\CommentTok{\#\textgreater{} [1] {-}0.364}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-un valore diverso da quello trovato in precedenza.
-\end{example}
-
-\hypertarget{criterio-di-informazione-e-convalida-incrociata-k-fold}{%
-\section{Criterio di informazione e convalida incrociata K-fold}\label{criterio-di-informazione-e-convalida-incrociata-k-fold}}
-
-Nel Paragrafo precedente abbiamo visto che la \eqref{eq:lppd} fornisce una sovrastima della \(\elpd\). Il modo migliore per stimare \(\elpd\) è raccogliere un nuovo campione indipendente di dati, che si ritiene condivida lo stesso processo di generazione dei dati del campione corrente, e stimare \(\elpd\) sul nuovo campione. Questa procedura è chiamata \emph{out-of-sample validation}. Il problema, ovviamente, è che di solito non abbiamo le risorse per raccogliere un nuovo campione. Di conseguenza, gli statistici hanno messo a punto vari metodi per evitare la sovrastima della \(\elpd\) che deriva dal solo utizzo del campione corrente. Ci sono due approcci generali:
-
-\begin{itemize}
-\tightlist
-\item
-  l'introduzione di un fattore di correzione;
-\item
-  la convalida incrociata cosiddetta K-fold.
-\end{itemize}
-
-\hypertarget{aic-dic-e-waic}{%
-\subsection{AIC, DIC e WAIC}\label{aic-dic-e-waic}}
-
-Allo scopo di evitare la sovrastima della \eqref{eq:lppd}, le statistiche \emph{Akaike Information Criterion} (AIC), \emph{Deviance Information Criterion} (DIC) e \emph{Widely Applicable Information Criterion} (WAIC) introducono un fattore di correzione. Le statistiche DIC e WAIC sono più complesse di AIC, ma producono un'approssimazione migliore. Tuttavia, i valori AIC, DIC e WAIC sono spesso molto simili tra loro. Per convenienza, dunque, qui ci accontenteremo di esaminare da vicino la statistica più semplice, ovvero AIC.
-
-\hypertarget{criterio-dinformazione-di-akaike}{%
-\subsubsection{Criterio d'informazione di Akaike}\label{criterio-dinformazione-di-akaike}}
-
-Il criterio d'informazione di Akaike (in inglese \emph{Akaike information criterion}, indicato come AIC) fornisce un metodo molto semplice per stimare la devianza media \emph{out-of-sample}.
-
-\begin{definition}
-Il criterio d'informazione di Akaike è definito come
-
-\begin{equation}
-AIC = -2 \log p(y \mid \hat{\theta}_{MLE}) + 2k,
-\end{equation}
-dove \(k\) è il numero di parametri stimati nel modello e \(p(y \mid \hat{\theta}_{MLE})\) è il valore massimizzato della funzione di verosimiglianza del modello stimato.
-\end{definition}
-
-\noindent
-Dividendo per -2, otteniamo \(\elpd_{AIC}\):
-
-\begin{equation}
-\widehat{\elpd}_{AIC} = \log p(y \mid \hat{\theta}_{MLE}) - k,
-\end{equation}
-
-\noindent
-dove \(k\) è il fattore di correzione introdotto per evitare la sovrastima discussa in precedenza.
-
-AIC è di interesse principalmente storico e produce una approssimazione attendibile di \(\elpd\) quando:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  le distribuzioni a priori sono non informative;
-\item
-  la distribuzione a posteriori è approssimativamente gaussiana multivariata;
-\item
-  la dimensione \(n\) del campione è molto maggiore del numero \(k\) dei parametri.
-\end{enumerate}
-
-\begin{example}
-
-Per meglio comprendere la statistica \(\widehat{\elpd}_{AIC}\), esaminiamo un esempio discusso da \textcite{gelman2014understanding}. Sia \(y_1, \dots, y_n \sim \mathcal{N}(\theta, 1)\) un campione di osservazioni. Nel caso di una distribuzione a priori non-informativa \(p(\theta) \propto 1\), la stima di massima verosimiglianza è \(\bar{y}\). La log-verosimiglianza è
-\begin{align}
-\log p(y \mid \hat{\theta}_{MLE}) &= -\frac{n}{2} \log (2\pi) - \frac{1}{2}\sum_{i=1}^n (y_i - \bar{y})^2 \notag\\
-&= -\frac{n}{2} \log (2\pi) - \frac{1}{2} (n-1)s_y^2,
-\end{align}
-\noindent
-dove \(s_y^2\) è la varianza campionaria.
-
-Nel caso di un modello Normale con con varianza nota e una distribuzione a priori uniforme viene stimato un solo parametro, per cui
-\begin{align}
-\widehat{\elpd}_{AIC} &= \log p(y \mid \hat{\theta}_{MLE}) - k \notag \\
-&= -\frac{n}{2} \log (2\pi) - \frac{1}{2} (n-1)s_y^2 - 1.
-\end{align}
-
-\end{example}
-
-\hypertarget{convalida-incrociata-k-fold}{%
-\subsection{Convalida incrociata K-fold}\label{convalida-incrociata-k-fold}}
-
-La sovrastima della \eqref{eq:lppd} può anche essere evitata usando una tecnica chiamata \emph{K-fold cross-validation}. Mediante questo metodo vengono stimati i parametri del modello tralasciando una porzione di osservazioni (chiamata \emph{fold}) dal campione per poi valutare il modello sulle osservazioni che sono state escluse. Una stima complessiva dell'accuratezza si ottiene poi calcolando la media del punteggio di accuratezza ottenuto in ogni fold. Il numero minimo di fold è 2; all'altro estremo, è possibile impiegare una singola osservazione in ciascun fold e adattare il modello tante volte (\(n\)) quante sono le singole osservazioni. Questa strategia è chiamata \emph{leave-one-out cross-validation} (LOO-CV).
-
-\hypertarget{importance-sampling}{%
-\subsubsection{Importance sampling}\label{importance-sampling}}
-
-La strategia LOO-CV è computazionalmente onerosa (ovvero, richiede un tempo di esecuzione molto lungo). È però possibile approssimare LOO-CV mediante un metodo chiamato \emph{Pareto-smoothed importance sampling cross-validation} {[}PSIS; \textcite{vehtari2017practical}{]}. Tralasciando qui i dettagli matematici, l'intuizione di base è che PSIS fa leva sul punteggio di ``importanza'' posseduto da ciascuna osservazione all'interno della distribuzione a posteriori. Per ``importanza'' si intende il fatto che alcune osservazioni hanno un impatto maggiore sulle proprietà della distribuzione a posteriori di altre: se viene rimossa un'osservazione importante, le proprietà della distribuzione a posteriori cambiano molto; se viene rimossa un'osservazione poco importante, la distribuzione a posteriori cambia poco.
-L'``importanza'' così intesa viene chiamata ``peso'' (\emph{weight}) e tali pesi vengono utilizzati per stimare l'accuratezza \emph{out-of-sample} del modello.
-PSIS-LOO-CV richiede che il modello venga adattato una volta soltanto ai dati e fornisce una stima della devianza \emph{out-of-sample} che evita la sovrastima della \eqref{eq:lppd}. Inoltre, PSIS-LOO-CV fornisce un feedback sulla propria affidabilità identificando le osservazioni i cui pesi molto elevati potrebbero rendere imprecisa la predizione.
-
-Valori \(\widehat{\elpd}_{\LOO}\) più grandi indicano una maggiore accuratezza predittiva. In alternativa, anziché considerare \(\widehat{\elpd}\), è possibile usare la quantità \(-2 \cdot \widehat{\elpd}\),
-la quale è chiamata \emph{LOO Information Criterion} (LOOIC). In questo secondo caso, valori LOOIC più piccoli sono da preferire.
-
-La quantità \(\widehat{\elpd}_{\LOO}\) viene calcolata dai pacchetti \texttt{loo} e \texttt{brms} ed è chiamata \texttt{elpd\_loo} o \texttt{elpd\_kfold}. È anche possibile calcolare la differenza della quantità \texttt{elpd\_loo} per modelli alternativi, insieme alla deviazione standard della distribuzione campionaria di tale differenza.
-
-\hypertarget{confronto-tra-aic-e-loo-cv}{%
-\subsubsection{Confronto tra AIC e LOO-CV}\label{confronto-tra-aic-e-loo-cv}}
-
-Per fare un esempio, faremo qui un confronto tra \(\widehat{\elpd}_{AIC}\) e \(\widehat{\elpd}_{LOO-CV}\). Esaminiamo nuovamente l'associazione tra il QI dei figli e il QI delle madri nel campione di dati discusso da \textcite{gelman2020regression}. Una tale relazione può essere descritta da un modello di regressione nel quale la \(y\) corrisponde al QI dei figli e la \(x\) al QI delle madri.
 
 Leggiamo i dati in \R:
 
@@ -1179,98 +1155,284 @@ Leggiamo i dati in \R:
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(}\StringTok{"foreign"}\NormalTok{)}
 \NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{read.dta}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"kidiq.dta"}\NormalTok{))}
-\NormalTok{df}\SpecialCharTok{$}\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{scale}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{kid\_score)[, }\DecValTok{1}\NormalTok{]}
-\NormalTok{df}\SpecialCharTok{$}\NormalTok{x1 }\OtherTok{\textless{}{-}} \FunctionTok{scale}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{mom\_iq)[, }\DecValTok{1}\NormalTok{]}
 \FunctionTok{head}\NormalTok{(df)}
-\CommentTok{\#\textgreater{}   kid\_score mom\_hs mom\_iq mom\_work mom\_age       y      x1}
-\CommentTok{\#\textgreater{} 1        65      1  121.1        4      27 {-}1.0679  1.4078}
-\CommentTok{\#\textgreater{} 2        98      1   89.4        4      25  0.5489 {-}0.7092}
-\CommentTok{\#\textgreater{} 3        85      1  115.4        4      27 {-}0.0881  1.0295}
-\CommentTok{\#\textgreater{} 4        83      1   99.4        3      25 {-}0.1860 {-}0.0367}
-\CommentTok{\#\textgreater{} 5       115      1   92.7        4      27  1.3818 {-}0.4836}
-\CommentTok{\#\textgreater{} 6        98      0  107.9        1      18  0.5489  0.5268}
+\CommentTok{\#\textgreater{}   kid\_score mom\_hs mom\_iq mom\_work mom\_age}
+\CommentTok{\#\textgreater{} 1        65      1  121.1        4      27}
+\CommentTok{\#\textgreater{} 2        98      1   89.4        4      25}
+\CommentTok{\#\textgreater{} 3        85      1  115.4        4      27}
+\CommentTok{\#\textgreater{} 4        83      1   99.4        3      25}
+\CommentTok{\#\textgreater{} 5       115      1   92.7        4      27}
+\CommentTok{\#\textgreater{} 6        98      0  107.9        1      18}
 \end{Highlighting}
 \end{Shaded}
 
-Dato che AIC non è una statistica bayesiana, può essere calcolata mediante strumenti frequentisti:
+Calcoliamo alcune statistiche descrittive:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{m1\_freq }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x1, }\AttributeTok{data =}\NormalTok{ df)}
-\FunctionTok{AIC}\NormalTok{(m1\_freq) }\SpecialCharTok{/} \SpecialCharTok{{-}}\DecValTok{2}
-\CommentTok{\#\textgreater{} [1] {-}570}
+\FunctionTok{summary}\NormalTok{(df)}
+\CommentTok{\#\textgreater{}    kid\_score         mom\_hs          mom\_iq         mom\_work      mom\_age    }
+\CommentTok{\#\textgreater{}  Min.   : 20.0   Min.   :0.000   Min.   : 71.0   Min.   :1.0   Min.   :17.0  }
+\CommentTok{\#\textgreater{}  1st Qu.: 74.0   1st Qu.:1.000   1st Qu.: 88.7   1st Qu.:2.0   1st Qu.:21.0  }
+\CommentTok{\#\textgreater{}  Median : 90.0   Median :1.000   Median : 97.9   Median :3.0   Median :23.0  }
+\CommentTok{\#\textgreater{}  Mean   : 86.8   Mean   :0.786   Mean   :100.0   Mean   :2.9   Mean   :22.8  }
+\CommentTok{\#\textgreater{}  3rd Qu.:102.0   3rd Qu.:1.000   3rd Qu.:110.3   3rd Qu.:4.0   3rd Qu.:25.0  }
+\CommentTok{\#\textgreater{}  Max.   :144.0   Max.   :1.000   Max.   :138.9   Max.   :4.0   Max.   :29.0}
 \end{Highlighting}
 \end{Shaded}
 
-Per ottenere LOO-CV adattiamo ai dati un modello di regressione bayesiano:
+Il QI medio dei bambini è di circa 87 mentre quello della madre è di 100. La gamma di età delle madri va da 17 a 29 anni con una media di circa 23 anni. Si noti infine che il 79\% delle mamme ha un diploma di scuola superiore.
+
+Ci poniamo il problema di descrivere l'associazione tra il QI dei figli e il QI delle madri mediante un modello di regressione lineare. Per farci un'idea del valore dei parametri, adattiamo il modello di regressione ai dati mediante la procedura di massima verosimiglianza:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{coef}\NormalTok{(}\FunctionTok{lm}\NormalTok{(kid\_score }\SpecialCharTok{\textasciitilde{}}\NormalTok{ mom\_iq, }\AttributeTok{data =}\NormalTok{ df))}
+\CommentTok{\#\textgreater{} (Intercept)      mom\_iq }
+\CommentTok{\#\textgreater{}       25.80        0.61}
+\end{Highlighting}
+\end{Shaded}
+
+Il modello statistico bayesiano di regressione lineare è:
+\[
+\begin{aligned}
+y_i &\sim \mathcal{N}(\mu_i, \sigma) \\
+\mu_i &= \alpha + \beta x_i \\
+\alpha &\sim \mathcal{N}(25, 10) \\
+\beta &\sim \mathcal{N}(0, 1) \\
+\sigma &\sim \text{Cauchy}(18, 5) 
+\end{aligned}
+\]
+La prima riga definisce la funzione di verosimiglianza e righe successive definiscono le distribuzioni a priori dei parametri. Il segno \(\sim\) (tilde) si può leggere ``si distribuisce come''. La prima riga, dunque, ci dice che ciascuna osservazione \(y_i\) è una variabile casuale che segue la distribuzione Normale di parametri \(\mu_i\) e \(\sigma\). La seconda riga specifica, in maniera deterministica, che ciascun \(\mu_i\) è una funzione lineare di \(x_i\), con parametri \(\alpha\) e \(\beta\). Le due righe successive specificano le distribuzioni a priori per \(\alpha\) e \(\beta\); per \(\alpha\), la distribuzione a priori è una distribuzione Normale di parametri \(\mu_{\alpha} = 25\) e deviazione standard \(\sigma_{\alpha} = 10\); per \(\beta\), la distribuzione a priori è una distribuzione Normale standardizzata. L'ultima riga definisce la la distribuzione a priori di \(\sigma\), ovvero una Cauchy di parametri 18 e 5.
+
+Poniamoci ora il problema di specificare il modello bayesiano descritto sopra in linguaggio Stan\footnote{Nella discussione che segue ripeto pari pari ciò che è riportato nel manuale del linguaggio \href{https://mc-stan.org/docs/2_27/stan-users-guide/standardizing-predictors-and-outputs.html}{Stan}.}. Il codice Stan viene eseguito più velocemente se l'input è standardizzato così da avere una media pari a zero e una varianza unitaria.\footnote{Si noti un punto importante. Il fatto di standardizzare i dati fa in modo che le distribuzioni a priori sui parametri andranno espresse sulla scala delle v.c. normali standardizzate. Se centriamo sullo 0 tali distribuzioni a priori, con una deviazione standard dell'ordine di grandezza dell'unità, i discorsi sull'arbitrarietà delle distribuzioni a priori perdono di significato: nel caso di dati standardizzati le distribuzioni a priori formulate come indicato sopra sono sicuramente distribuzioni vagamente informative il cui unico scopo è quello della regolarizzazione dei dati, ovvero l'obiettivo di mantenere le inferenze in una gamma ragionevole di valori; ciò contribuisce nel contempo a limitare l'influenza eccessiva delle osservazioni estreme (valori anomali) --- certamente tali distribuzioni a priori non introducono alcuna distorsione sistematica nella stima a posteriori.}
+Ponendo \(y = (y_1, \dots, y_n)\) e \(x = (x_1, \dots, x_n)\), il modello di regressione può essere scritto come
+\[
+y_i = \alpha + \beta x_i + \varepsilon_i,
+\]
+\noindent
+dove
+\[
+\varepsilon_i \sim \mathcal{N}(0, \sigma).
+\]
+
+I dati devono essere prima centrati sottraendo la media campionaria, quindi scalati dividendo per la deviazione standard campionaria. Quindi un'osservazione \(u\) viene standardizzata dalla funzione \(z\) definita da
+\[
+z_y(u) = \frac{u - \bar{y}}{\texttt{sd}(y)}
+\]
+\noindent
+dove la media \(\bar{y}\) è
+\[
+\bar{y} = \frac{1}{n} \sum_{i=1}^n y_i,
+\]
+\noindent
+e la deviazione standard è
+\[
+\texttt{sd} = \left(\frac{1}{n}\sum_{i=1}^n(y_i - \bar{y})^2\right)^{-\frac{1}{2}}.
+\]
+
+La trasformata inversa è definita invertendo i due passaggi precedenti, ovvero usando la deviazione standard per scalare di nuovo i valori \(u\) per poi traslarli con la media campionaria:
+\[
+z_y^{-1}(u) = \texttt{sd}(y)u + \bar{y}.
+\]
+
+Consideriamo il seguente modello iniziale nel linguaggio Stan:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{modelString }\OtherTok{=} \StringTok{"}
 \StringTok{data \{}
 \StringTok{  int\textless{}lower=0\textgreater{} N;}
-\StringTok{  vector[N] x1;}
 \StringTok{  vector[N] y;}
+\StringTok{  vector[N] x;}
 \StringTok{\}}
 \StringTok{parameters \{}
 \StringTok{  real alpha;}
-\StringTok{  real beta1;}
+\StringTok{  real beta;}
 \StringTok{  real\textless{}lower=0\textgreater{} sigma;}
 \StringTok{\}}
-\StringTok{transformed parameters \{}
-\StringTok{  vector[N] mu;}
-\StringTok{  for (n in 1:N)\{}
-\StringTok{    mu[n] = alpha + beta1*x1[n];}
-\StringTok{  \}}
-\StringTok{\}}
 \StringTok{model \{}
-\StringTok{  alpha \textasciitilde{} normal(0, 1);}
-\StringTok{  beta1 \textasciitilde{} normal(0, 1);}
-\StringTok{  sigma \textasciitilde{} cauchy(0, 1);}
-\StringTok{  y \textasciitilde{} normal(mu, sigma);}
-\StringTok{\}}
-\StringTok{generated quantities \{}
-\StringTok{  vector[N] y\_rep;}
-\StringTok{  vector[N] log\_lik;}
-\StringTok{  for (n in 1:N)\{}
-\StringTok{    y\_rep[n] = normal\_rng(mu[n], sigma);}
-\StringTok{    log\_lik[n] = normal\_lpdf(y[n] | x1[n] * beta1, sigma);}
-\StringTok{  \}}
+\StringTok{  // priors}
+\StringTok{  alpha \textasciitilde{} normal(25, 10);}
+\StringTok{  beta \textasciitilde{} normal(0, 1);}
+\StringTok{  sigma \textasciitilde{} cauchy(18, 5);}
+\StringTok{  // likelihood}
+\StringTok{  for (n in 1:N)}
+\StringTok{    y[n] \textasciitilde{} normal(alpha + beta * x[n], sigma);}
 \StringTok{\}}
 \StringTok{"}
-\FunctionTok{writeLines}\NormalTok{(modelString, }\AttributeTok{con =} \StringTok{"code/simplereg.stan"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{data1\_list }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
-  \AttributeTok{N =} \FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{kid\_score),}
-  \AttributeTok{y =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{y,}
-  \AttributeTok{x1 =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{x1}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{file1 }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(}\StringTok{"code"}\NormalTok{, }\StringTok{"simplereg.stan"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{mod1 }\OtherTok{\textless{}{-}} \FunctionTok{cmdstan\_model}\NormalTok{(file1)}
+\FunctionTok{writeLines}\NormalTok{(modelString, }\AttributeTok{con =} \StringTok{"code/simpleregkidiq.stan"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \noindent
-Eseguiamo il campionamento MCMC:
+La funzione \texttt{modelString()} registra una stringa di testo mentre \texttt{writeLines()} crea un file nell'indirizzo specificato. Tale file deve avere l'estensione \texttt{.stan}.
+
+Qui sotto è invece riportato il modello per i dati standardizzati. Il blocco \texttt{data} è identico a quello del caso precedente. I predittori e la risposta standardizzati sono definiti nel blocco \texttt{transformed\ data}. Per semplificare la notazione (e per velocizzare l'esecuzione), nel blocco \texttt{model} l'istruzione di campionamento è espressa in forma vettorializzata: \texttt{y\_std\ \textasciitilde{}\ normal(alpha\_std\ +\ beta\_std\ *\ x\_std,\ sigma\_std);}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fit1 }\OtherTok{\textless{}{-}}\NormalTok{ mod1}\SpecialCharTok{$}\FunctionTok{sample}\NormalTok{(}
-  \AttributeTok{data =}\NormalTok{ data1\_list,}
+\NormalTok{modelString }\OtherTok{=} \StringTok{"}
+\StringTok{data \{}
+\StringTok{  int\textless{}lower=0\textgreater{} N;}
+\StringTok{  vector[N] y;}
+\StringTok{  vector[N] x;}
+\StringTok{\}}
+\StringTok{transformed data \{}
+\StringTok{  vector[N] x\_std;}
+\StringTok{  vector[N] y\_std;}
+\StringTok{  x\_std = (x {-} mean(x)) / sd(x);}
+\StringTok{  y\_std = (y {-} mean(y)) / sd(y);}
+\StringTok{\}}
+\StringTok{parameters \{}
+\StringTok{  real alpha\_std;}
+\StringTok{  real beta\_std;}
+\StringTok{  real\textless{}lower=0\textgreater{} sigma\_std;}
+\StringTok{\}}
+\StringTok{model \{}
+\StringTok{  alpha\_std \textasciitilde{} normal(0, 2);}
+\StringTok{  beta\_std \textasciitilde{} normal(0, 2);}
+\StringTok{  sigma\_std \textasciitilde{} cauchy(0, 2);}
+\StringTok{  y\_std \textasciitilde{} normal(alpha\_std + beta\_std * x\_std, sigma\_std);}
+\StringTok{\}}
+\StringTok{generated quantities \{}
+\StringTok{  real alpha;}
+\StringTok{  real beta;}
+\StringTok{  real\textless{}lower=0\textgreater{} sigma;}
+\StringTok{  alpha = sd(y) * (alpha\_std {-} beta\_std * mean(x) / sd(x))}
+\StringTok{           + mean(y);}
+\StringTok{  beta = beta\_std * sd(y) / sd(x);}
+\StringTok{  sigma = sd(y) * sigma\_std;}
+\StringTok{\}}
+\StringTok{"}
+\FunctionTok{writeLines}\NormalTok{(modelString, }\AttributeTok{con =} \StringTok{"code/simpleregstd.stan"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Si noti che i parametri vengono rinominati per indicare che non sono i parametri ``naturali'', ma per il resto il modello è identico. Le distribuzioni a priori per i parametri sono vagamente informative.
+
+I parametri originali possono essere recuperati con un po' di algebra.
+
+\begin{align}
+y_n &= \textrm{z}_y^{-1}(\textrm{z}_y(y_n)) \notag\\
+    &= \textrm{z}_y^{-1}
+\left( \alpha' + \beta' \textrm{z}_x(x_n) + \epsilon_n' \right) \notag\\
+    &= \textrm{z}_y^{-1}
+\left( \alpha' + \beta' \left( \frac{x_n - \bar{x}}{\texttt{sd}(x)} \right) + \epsilon_n' \right) \notag\\
+    &= \texttt{sd}(y)
+\left( \alpha' + \beta' \left( \frac{x_n - \bar{x}}{\texttt{sd}(x)} \right) + \epsilon_n' \right) + \bar{y} \notag\\
+    &=
+\left( \texttt{sd}(y) \left( \alpha' - \beta' \frac{\bar{x}}{\texttt{sd}(x)} \right) + \bar{y} \right)
++ \left( \beta' \frac{\texttt{sd}(y)}{\texttt{sd}(x)} \right) x_n
++ \texttt{sd}(y) \epsilon'_n,
+\end{align}
+
+\noindent
+da cui
+\[
+\alpha
+=
+\texttt{sd}(y)
+      \left(
+          \alpha'
+          - \beta' \frac{\bar{x}}{\texttt{sd}(x)}
+      \right)
+  + \bar{y};
+\qquad
+\beta = \beta' \frac{\texttt{sd}(y)}{\texttt{sd}(x)};
+\qquad
+\sigma = \texttt{sd}(y) \sigma'.
+\]
+\noindent
+I valori dei parametri sulle scale originali vengono calcolati nel blocco \texttt{generated\ quantities}.
+
+Per svolgere l'analisi bayesiana sistemiamo i dati nel formato appropriato per Stan:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_list }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
+  \AttributeTok{N =} \FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{kid\_score),}
+  \AttributeTok{y =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{kid\_score,}
+  \AttributeTok{x =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{mom\_iq}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+La funzione \texttt{file.path()} ritorna l'indirizzo del file con il codice Stan:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(}\StringTok{"code"}\NormalTok{, }\StringTok{"simpleregstd.stan"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Prendendo come input un file contenente un programma Stan, la funzione \texttt{cmdstan\_model()} ritorna un oggetto di classe \texttt{CmdStanModel}. In pratica, \texttt{CmdStan} traduce un programma Stan in C++ e crea un eseguibile compilato.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{cmdstan\_model}\NormalTok{(file)}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Il codice Stan può essere stampato usando il metodo \texttt{\$print()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod}\SpecialCharTok{$}\FunctionTok{print}\NormalTok{()}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} data \{}
+\CommentTok{\#\textgreater{}   int\textless{}lower=0\textgreater{} N;}
+\CommentTok{\#\textgreater{}   vector[N] y;}
+\CommentTok{\#\textgreater{}   vector[N] x;}
+\CommentTok{\#\textgreater{} \}}
+\CommentTok{\#\textgreater{} transformed data \{}
+\CommentTok{\#\textgreater{}   vector[N] x\_std;}
+\CommentTok{\#\textgreater{}   vector[N] y\_std;}
+\CommentTok{\#\textgreater{}   x\_std = (x {-} mean(x)) / sd(x);}
+\CommentTok{\#\textgreater{}   y\_std = (y {-} mean(y)) / sd(y);}
+\CommentTok{\#\textgreater{} \}}
+\CommentTok{\#\textgreater{} parameters \{}
+\CommentTok{\#\textgreater{}   real alpha\_std;}
+\CommentTok{\#\textgreater{}   real beta\_std;}
+\CommentTok{\#\textgreater{}   real\textless{}lower=0\textgreater{} sigma\_std;}
+\CommentTok{\#\textgreater{} \}}
+\CommentTok{\#\textgreater{} model \{}
+\CommentTok{\#\textgreater{}   alpha\_std \textasciitilde{} normal(0, 2);}
+\CommentTok{\#\textgreater{}   beta\_std \textasciitilde{} normal(0, 2);}
+\CommentTok{\#\textgreater{}   sigma\_std \textasciitilde{} cauchy(0, 2);}
+\CommentTok{\#\textgreater{}   y\_std \textasciitilde{} normal(alpha\_std + beta\_std * x\_std, sigma\_std);}
+\CommentTok{\#\textgreater{} \}}
+\CommentTok{\#\textgreater{} generated quantities \{}
+\CommentTok{\#\textgreater{}   real alpha;}
+\CommentTok{\#\textgreater{}   real beta;}
+\CommentTok{\#\textgreater{}   real\textless{}lower=0\textgreater{} sigma;}
+\CommentTok{\#\textgreater{}   alpha = sd(y) * (alpha\_std {-} beta\_std * mean(x) / sd(x))}
+\CommentTok{\#\textgreater{}            + mean(y);}
+\CommentTok{\#\textgreater{}   beta = beta\_std * sd(y) / sd(x);}
+\CommentTok{\#\textgreater{}   sigma = sd(y) * sigma\_std;}
+\CommentTok{\#\textgreater{} \}}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+L'indirizzo dell'eseguibile compilato viene ritornato da \texttt{\$exe\_file()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod}\SpecialCharTok{$}\FunctionTok{exe\_file}\NormalTok{()}
+\CommentTok{\#\textgreater{} [1] "/Users/corrado/\_repositories/dspp/code/simpleregstd"}
+\end{Highlighting}
+\end{Shaded}
+
+Applicando il metodo \texttt{\$sample()} ad un oggetto \texttt{CmdStanModel} eseguiamo il campionamento MCMC:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit }\OtherTok{\textless{}{-}}\NormalTok{ mod}\SpecialCharTok{$}\FunctionTok{sample}\NormalTok{(}
+  \AttributeTok{data =}\NormalTok{ data\_list,}
   \AttributeTok{iter\_sampling =}\NormalTok{ 4000L,}
   \AttributeTok{iter\_warmup =}\NormalTok{ 2000L,}
   \AttributeTok{seed =}\NormalTok{ SEED,}
@@ -1283,112 +1445,126 @@ Eseguiamo il campionamento MCMC:
 \end{Shaded}
 
 \noindent
-Calcoliamo infine la quantità \(\widehat{\elpd}_{LOO-CV}\):
+Al metodo \texttt{\$sample()} possono essere passati molti argomenti. La pagina di documentazione è disponibile al seguente \href{https://mc-stan.org/cmdstanr/reference/model-method-sample.html}{link}.
+
+Un sommario della distribuzione a posteriori per i parametri stimati si ottiene con il metodo \texttt{\$summary()}, il quale chiama la funzione \texttt{summarise\_draws()} del pacchetto \texttt{posterior}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{loo1\_result }\OtherTok{\textless{}{-}}\NormalTok{ fit1}\SpecialCharTok{$}\FunctionTok{loo}\NormalTok{(}\AttributeTok{cores =} \DecValTok{4}\NormalTok{)}
-\FunctionTok{print}\NormalTok{(loo1\_result)}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Computed from 16000 by 434 log{-}likelihood matrix}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}          Estimate   SE}
-\CommentTok{\#\textgreater{} elpd\_loo   {-}568.6 14.5}
-\CommentTok{\#\textgreater{} p\_loo         1.9  0.2}
-\CommentTok{\#\textgreater{} looic      1137.2 28.9}
-\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}}
-\CommentTok{\#\textgreater{} Monte Carlo SE of elpd\_loo is 0.0.}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} All Pareto k estimates are good (k \textless{} 0.5).}
-\CommentTok{\#\textgreater{} See help(\textquotesingle{}pareto{-}k{-}diagnostic\textquotesingle{}) for details.}
+\NormalTok{fit}\SpecialCharTok{$}\FunctionTok{summary}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta"}\NormalTok{, }\StringTok{"sigma"}\NormalTok{))}
+\CommentTok{\#\textgreater{} \# A tibble: 3 x 10}
+\CommentTok{\#\textgreater{}   variable   mean median     sd    mad     q5    q95  rhat ess\_bulk ess\_tail}
+\CommentTok{\#\textgreater{}   \textless{}chr\textgreater{}     \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}    \textless{}dbl\textgreater{}    \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 alpha    25.8   25.9   5.98   5.97   15.8   35.7    1.00   16460.   11859.}
+\CommentTok{\#\textgreater{} 2 beta      0.610  0.609 0.0594 0.0590  0.513  0.709  1.00   16455.   11999.}
+\CommentTok{\#\textgreater{} 3 sigma    18.3   18.3   0.616  0.611  17.3   19.3    1.00   16786.   12022.}
 \end{Highlighting}
 \end{Shaded}
 
 \noindent
-Si noti la somiglianza tra \(\widehat{\elpd}_{LOO-CV}\) e \(\widehat{\elpd}_{AIC}\). In conclusione, possiamo dunque dire che \(\widehat{\elpd}_{LOO-CV}\) è la risposta bayesiana allo stesso problema che trova una soluzione frequentista nella statistica \(\widehat{\elpd}_{AIC}\).
+Da questo output possiamo valutare rapidamente la convergenza del modello osservando i valori di Rhat per ciascun parametro. Quando questi sono pari o vicini a 1, le catene hanno realizzato la convergenza. Ci sono molti altri test diagnostici, ma questo test è importante per Stan.
 
-\hypertarget{confronto-tra-modelli-mediante-loo-cv}{%
-\subsection{Confronto tra modelli mediante LOO-CV}\label{confronto-tra-modelli-mediante-loo-cv}}
-
-Come menzionato in precedenza, l'obiettivo centrale della misurazione dell'accuratezza predittiva è il confronto di modelli. Una volta capito come calcolare LOO-CV con un condice scritto in linguaggio Stan, svolgeremo ora un confronto di modelli.\footnote{A questo proposito, è necessario aggiungere una nota di cautela. Come fa notare \textcite{McElreath_rethinking}, fare previsioni e inferire i rapporti causali sono due cose molto diverse. Statistiche quali AIC, WAIC e LOO-CV consentono di individuare modelli con buone capacità predittive. Tali modelli, tuttavia, non riflettono necessariamente la struttura causale del fenomeno considerato: la selezione di modelli basata unicamente sull'accuratezza predittiva non garantisce che venga selezionato il modello che riflette la struttura causale del fenomeno \autocite[si veda anche][]{navarro2019between}.}
-
-Considereremo qui un confronto di modelli di regressione. Il modello di regressione discusso nel Paragrafo precedente prevede il QI dei bambini dal QI delle madri. Aggiungiamo a tale modello un secondo predittore che corrisponde all'età della madre. L'aggiunta di tale predittore migliori l'accuratezza predittiva del modello?
+Oppure è possibile usare:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{modelString }\OtherTok{=} \StringTok{"}
-\StringTok{data \{}
-\StringTok{  int\textless{}lower=0\textgreater{} N;}
-\StringTok{  vector[N] x1;}
-\StringTok{  vector[N] x2;}
-\StringTok{  vector[N] y;}
-\StringTok{\}}
-\StringTok{parameters \{}
-\StringTok{  real alpha;}
-\StringTok{  real beta1;}
-\StringTok{  real beta2;}
-\StringTok{  real\textless{}lower=0\textgreater{} sigma;}
-\StringTok{\}}
-\StringTok{transformed parameters \{}
-\StringTok{  vector[N] mu;}
-\StringTok{  for (n in 1:N)\{}
-\StringTok{    mu[n] = alpha + beta1*x1[n] + beta2*x2[n];}
-\StringTok{  \}}
-\StringTok{\}}
-\StringTok{model \{}
-\StringTok{  alpha \textasciitilde{} normal(0, 1);}
-\StringTok{  beta1 \textasciitilde{} normal(0, 1);}
-\StringTok{  beta2 \textasciitilde{} normal(0, 1);}
-\StringTok{  sigma \textasciitilde{} cauchy(0, 1);}
-\StringTok{  y \textasciitilde{} normal(mu, sigma);}
-\StringTok{\}}
-\StringTok{generated quantities \{}
-\StringTok{  vector[N] y\_rep;}
-\StringTok{  vector[N] log\_lik;}
-\StringTok{  for (n in 1:N)\{}
-\StringTok{    y\_rep[n] = normal\_rng(mu[n], sigma);}
-\StringTok{    log\_lik[n] = normal\_lpdf(y[n] | x1[n] * beta1 + x2[n] * beta2, sigma);}
-\StringTok{  \}}
-\StringTok{\}}
-\StringTok{"}
-\FunctionTok{writeLines}\NormalTok{(modelString, }\AttributeTok{con =} \StringTok{"code/mreg2.stan"}\NormalTok{)}
+\NormalTok{fit}\SpecialCharTok{$}\FunctionTok{cmdstan\_summary}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
+Le statistiche diagnostiche sono fornite dal metodo \texttt{\$cmdstan\_diagnose()}:
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{df}\SpecialCharTok{$}\NormalTok{x2 }\OtherTok{\textless{}{-}} \FunctionTok{scale}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{mom\_age)[, }\DecValTok{1}\NormalTok{]}
+\NormalTok{fit}\SpecialCharTok{$}\FunctionTok{cmdstan\_diagnose}\NormalTok{()}
+\CommentTok{\#\textgreater{} Processing csv files: /var/folders/hl/dt523djx7\_q7xjrthzjpdvc40000gn/T/RtmpyS0NAw/simpleregstd{-}202112040921{-}1{-}94a4db.csv, /var/folders/hl/dt523djx7\_q7xjrthzjpdvc40000gn/T/RtmpyS0NAw/simpleregstd{-}202112040921{-}2{-}94a4db.csv, /var/folders/hl/dt523djx7\_q7xjrthzjpdvc40000gn/T/RtmpyS0NAw/simpleregstd{-}202112040921{-}3{-}94a4db.csv, /var/folders/hl/dt523djx7\_q7xjrthzjpdvc40000gn/T/RtmpyS0NAw/simpleregstd{-}202112040921{-}4{-}94a4db.csv}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Checking sampler transitions treedepth.}
+\CommentTok{\#\textgreater{} Treedepth satisfactory for all transitions.}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Checking sampler transitions for divergences.}
+\CommentTok{\#\textgreater{} No divergent transitions found.}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Checking E{-}BFMI {-} sampler transitions HMC potential energy.}
+\CommentTok{\#\textgreater{} E{-}BFMI satisfactory.}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Effective sample size satisfactory.}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Split R{-}hat values satisfactory all parameters.}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Processing complete, no problems detected.}
 \end{Highlighting}
 \end{Shaded}
+
+È anche possibile creare un oggetto di classe \texttt{stanfit}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{stanfit }\OtherTok{\textless{}{-}}\NormalTok{ rstan}\SpecialCharTok{::}\FunctionTok{read\_stan\_csv}\NormalTok{(fit}\SpecialCharTok{$}\FunctionTok{output\_files}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+per poi utilizzare le funzioni del pacchetto \texttt{bayesplot}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{stanfit }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mcmc\_trace}\NormalTok{(}\AttributeTok{pars =} \FunctionTok{c}\NormalTok{(}\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta"}\NormalTok{, }\StringTok{"sigma"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{053_reglin3_files/figure-latex/unnamed-chunk-17-1} \end{center}
+
+Infine, eseguendo la funzione \texttt{launch\_shinystan(fit)} è possibile analizzare oggetti di classe \texttt{stanfit} mediante le funzionalità del pacchetto \texttt{ShinyStan}.
+
+\hypertarget{interpretazione-dei-parametri}{%
+\section{Interpretazione dei parametri}\label{interpretazione-dei-parametri}}
+
+Assegnamo ai parametri la seguente interpretazione.
+
+\begin{itemize}
+\tightlist
+\item
+  L'intercetta pari a 25.8 indica il QI medio dei bamini la cui madre ha un QI = 0. Ovviamente questo non ha alcun significato. Vedremo nel modello successivo come trasformare il modello in modo da potere assegnare all'intercetta un'interpretazione sensata.
+\item
+  La pendenza di 0.61 indica che, all'aumentare di un punto del QI delle madri, il QI medio dei loro bambini aumenta di 0.61 unità. Se consideriamo la gamma di variazione del QI delle madri nel campione, il QI medio dei bambini cambia di 41 punti. Questo indica un sostanziale effetto del QI delle madri sul QI dei loro bambini:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\FloatTok{138.89} \SpecialCharTok{{-}} \FloatTok{71.04}\NormalTok{) }\SpecialCharTok{*} \FloatTok{0.61}
+\CommentTok{\#\textgreater{} [1] 41.4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Il parametro \(\sigma\) fornisce una stima della dispersione delle osservazioni attorno al valore predetto dal modello di regressione, ovvero fornisce una stima della deviazione standard dei residui attorno alla retta di regressione.
+\end{itemize}
+
+\hypertarget{centrare-i-predittori}{%
+\subsection{Centrare i predittori}\label{centrare-i-predittori}}
+
+Per migliorare l'interpretazione dell'intercetta possiamo ``centrare'' la \(x\), ovvero esprimere la \(x\) nei termini di scarti dalla media: \(x - \bar{x}\). In tali circostanze, la pendenza della retta di regressione resterà immutata, ma l'intercetta corrisponderà a \(\E(y \mid x = \bar{x})\). Per ottenere questo risultato, modifichiamo i dati da passare a Stan:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{data2\_list }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
   \AttributeTok{N =} \FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{kid\_score),}
-  \AttributeTok{y =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{y,}
-  \AttributeTok{x1 =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{x1,}
-  \AttributeTok{x2 =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{x2}
+  \AttributeTok{y =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{kid\_score,}
+  \AttributeTok{x =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{mom\_iq }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{mom\_iq)}
 \NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{file2 }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(}\StringTok{"code"}\NormalTok{, }\StringTok{"mreg2.stan"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+\noindent
+Adattiamo il modello:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# compile model}
-\NormalTok{mod2 }\OtherTok{\textless{}{-}} \FunctionTok{cmdstan\_model}\NormalTok{(file2)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Running MCMC}
-\NormalTok{fit2 }\OtherTok{\textless{}{-}}\NormalTok{ mod2}\SpecialCharTok{$}\FunctionTok{sample}\NormalTok{(}
+\NormalTok{fit2 }\OtherTok{\textless{}{-}}\NormalTok{ mod}\SpecialCharTok{$}\FunctionTok{sample}\NormalTok{(}
   \AttributeTok{data =}\NormalTok{ data2\_list,}
   \AttributeTok{iter\_sampling =}\NormalTok{ 4000L,}
   \AttributeTok{iter\_warmup =}\NormalTok{ 2000L,}
@@ -1401,113 +1577,272 @@ Considereremo qui un confronto di modelli di regressione. Il modello di regressi
 \end{Highlighting}
 \end{Shaded}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{fit2}\SpecialCharTok{$}\FunctionTok{summary}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta1"}\NormalTok{, }\StringTok{"beta2"}\NormalTok{, }\StringTok{"sigma"}\NormalTok{))}
-\CommentTok{\#\textgreater{} \# A tibble: 4 x 10}
-\CommentTok{\#\textgreater{}   variable     mean  median     sd    mad      q5    q95  rhat ess\_bulk ess\_tail}
-\CommentTok{\#\textgreater{}   \textless{}chr\textgreater{}       \textless{}dbl\textgreater{}   \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}   \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}    \textless{}dbl\textgreater{}    \textless{}dbl\textgreater{}}
-\CommentTok{\#\textgreater{} 1 alpha    0.000387 5.70e{-}4 0.0431 0.0427 {-}0.0706 0.0709  1.00   18092.   12482.}
-\CommentTok{\#\textgreater{} 2 beta1    0.442    4.42e{-}1 0.0434 0.0428  0.372  0.514   1.00   18884.   12262.}
-\CommentTok{\#\textgreater{} 3 beta2    0.0510   5.11e{-}2 0.0431 0.0431 {-}0.0192 0.122   1.00   19099.   12929.}
-\CommentTok{\#\textgreater{} 4 sigma    0.896    8.96e{-}1 0.0306 0.0303  0.847  0.947   1.00   18776.   13031.}
-\end{Highlighting}
-\end{Shaded}
+\noindent
+Trasformiamo l'oggetto \texttt{fit} in un oggetto di classe \texttt{stanfit}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{loo2\_result }\OtherTok{\textless{}{-}}\NormalTok{ fit2}\SpecialCharTok{$}\FunctionTok{loo}\NormalTok{(}\AttributeTok{cores =} \DecValTok{4}\NormalTok{)}
-\FunctionTok{print}\NormalTok{(loo2\_result)}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Computed from 16000 by 434 log{-}likelihood matrix}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}          Estimate   SE}
-\CommentTok{\#\textgreater{} elpd\_loo   {-}569.0 14.5}
-\CommentTok{\#\textgreater{} p\_loo         3.0  0.3}
-\CommentTok{\#\textgreater{} looic      1137.9 29.0}
-\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}}
-\CommentTok{\#\textgreater{} Monte Carlo SE of elpd\_loo is 0.0.}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} All Pareto k estimates are good (k \textless{} 0.5).}
-\CommentTok{\#\textgreater{} See help(\textquotesingle{}pareto{-}k{-}diagnostic\textquotesingle{}) for details.}
+\NormalTok{stanfit }\OtherTok{\textless{}{-}}\NormalTok{ rstan}\SpecialCharTok{::}\FunctionTok{read\_stan\_csv}\NormalTok{(fit2}\SpecialCharTok{$}\FunctionTok{output\_files}\NormalTok{())}
 \end{Highlighting}
 \end{Shaded}
 
-Consideriamo infine un terzo modello che utilizza come predittori, oltre al QI della madre, una variabile dicotomica (codificata 0 o 1) che distingue madri che hanno completato le scuole superiori da quelle che non le hanno completate. Nuovamente, la domanda è se l'aggiunta di tale predittore migliori la capacità predittiva del modello.
+\noindent
+Le stime a posteriori dei parametri si ottengono con
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit2}\SpecialCharTok{$}\FunctionTok{summary}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta"}\NormalTok{, }\StringTok{"sigma"}\NormalTok{))}
+\CommentTok{\#\textgreater{} \# A tibble: 3 x 10}
+\CommentTok{\#\textgreater{}   variable   mean median     sd    mad     q5    q95  rhat ess\_bulk ess\_tail}
+\CommentTok{\#\textgreater{}   \textless{}chr\textgreater{}     \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}    \textless{}dbl\textgreater{}    \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 alpha    86.8   86.8   0.872  0.863  85.4   88.2    1.00   16613.   12276.}
+\CommentTok{\#\textgreater{} 2 beta      0.610  0.609 0.0591 0.0592  0.512  0.708  1.00   17947.   12419.}
+\CommentTok{\#\textgreater{} 3 sigma    18.3   18.3   0.616  0.616  17.3   19.3    1.00   16622.   11073.}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Si noti che la nuova intercetta, ovvero 86.8, corrisponde al QI medio dei bambini le cui madri hanno un QI pari alla media del campione. Centrare i dati consente dunque di assegnare un'interpretazione utile all'intercetta.
+
+\hypertarget{inference-reg-lin-stan}{%
+\chapter{Inferenza sul modello di regressione}\label{inference-reg-lin-stan}}
+
+I minimi quadrati o la massima verosimiglianza trovano i parametri che meglio si adattano ai dati (secondo un criterio prestabilito), ma senza altrimenti vincolare la stima. Ma di solito il ricercatore dispone di informazioni preliminari sui parametri del modello. L'inferenza bayesiana produce invece un compromesso tra tali informazioni pregresse e i dati.
+
+La soluzione dei minimi quadrati è una stima puntuale che rappresenta il vettore dei coefficienti che fornisce il miglior adattamento complessivo ai dati. Per un modello bayesiano, la stima puntuale corrispondente è la \emph{moda a posteriori}, che fornisce il miglior adattamento complessivo ai dati e alla distribuzione a priori. Si noti inoltre che la stima dei minimi quadrati (o di massima verosimiglianza) corrisponde alla moda a posteriori di un modello bayesiano con una distribuzione a priori uniforme.
+
+\hypertarget{rappresentazione-grafica-dellincertezza-della-stima}{%
+\section{Rappresentazione grafica dell'incertezza della stima}\label{rappresentazione-grafica-dellincertezza-della-stima}}
+
+Un primo modo per rappresentare l'incertezza dell'inferenza in un ottica bayesiana è quella di rappresentare graficamente la retta di regressione. Continuando con l'esempio descritto nel Capitolo precedente (ovvero, i dati \texttt{kid\_score} e \texttt{mom\_iq} centrati), usando la funzione \texttt{extract()}, salvo le stime a posteriori dei parametri in formato \texttt{list}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{stanfit }\OtherTok{\textless{}{-}}\NormalTok{ rstan}\SpecialCharTok{::}\FunctionTok{read\_stan\_csv}\NormalTok{(fit2}\SpecialCharTok{$}\FunctionTok{output\_files}\NormalTok{())}
+\NormalTok{posterior }\OtherTok{\textless{}{-}} \FunctionTok{extract}\NormalTok{(stanfit)}
+\end{Highlighting}
+\end{Shaded}
+
+Un diagramma a dispersione dei dati con sovrapposto il valore atteso della \(y\) in base al modello bayesiano si ottiene nel modo seguente:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(}
+\NormalTok{  df}\SpecialCharTok{$}\NormalTok{kid\_score }\SpecialCharTok{\textasciitilde{}} \FunctionTok{I}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{mom\_iq }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{mom\_iq)), }
+  \AttributeTok{pch =} \DecValTok{20}\NormalTok{,}
+  \AttributeTok{xlab =} \StringTok{"mom\_iq (centered)"}\NormalTok{,}
+  \AttributeTok{ylab =} \StringTok{"kid\_score"}
+\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\FunctionTok{mean}\NormalTok{(posterior}\SpecialCharTok{$}\NormalTok{alpha), }\FunctionTok{mean}\NormalTok{(posterior}\SpecialCharTok{$}\NormalTok{beta), }\AttributeTok{col =} \DecValTok{6}\NormalTok{, }\AttributeTok{lw =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{054_reglin4_files/figure-latex/unnamed-chunk-4-1} \end{center}
+
+Un modo per visualizzare l'incertezza della stima della retta di regressione è quello di tracciare molteplici rette di regressione, ciascuna delle quali definita da una diversa stima dei parametri \(\alpha\) e \(\beta\) che vengono estratti a caso dalle rispettive distribuzioni a posteriori.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(}
+\NormalTok{  df}\SpecialCharTok{$}\NormalTok{kid\_score }\SpecialCharTok{\textasciitilde{}} \FunctionTok{I}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{mom\_iq }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{mom\_iq)), }
+  \AttributeTok{pch =} \DecValTok{20}\NormalTok{,}
+  \AttributeTok{xlab =} \StringTok{"mom\_iq (centered)"}\NormalTok{,}
+  \AttributeTok{ylab =} \StringTok{"kid\_score"}
+\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{50}\NormalTok{) \{}
+ \FunctionTok{abline}\NormalTok{(posterior}\SpecialCharTok{$}\NormalTok{alpha[i], posterior}\SpecialCharTok{$}\NormalTok{beta[i], }\AttributeTok{col =} \StringTok{"gray"}\NormalTok{, }\AttributeTok{lty =} \DecValTok{1}\NormalTok{)}
+\NormalTok{\}}
+\FunctionTok{abline}\NormalTok{(}\FunctionTok{mean}\NormalTok{(posterior}\SpecialCharTok{$}\NormalTok{alpha), }\FunctionTok{mean}\NormalTok{(posterior}\SpecialCharTok{$}\NormalTok{beta), }\AttributeTok{col =} \DecValTok{6}\NormalTok{, }\AttributeTok{lw =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{054_reglin4_files/figure-latex/unnamed-chunk-5-1} \end{center}
+
+\hypertarget{intervalli-di-credibilituxe0}{%
+\section{Intervalli di credibilità}\label{intervalli-di-credibilituxe0}}
+
+L'incertezza inferenziale sui parametri può anche essere rappresentata mediante gli \emph{intervalli di credibilità}, ovvero gli intervalli che contengono la quota desiderata (es., il 95\%) della distribuzione a posteriori.
+
+Per l'esempio che stiamo discutendo, gli intervalli di credibilità al 95\% si ottengono nel modo seguente:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{posterior }\OtherTok{\textless{}{-}} \FunctionTok{extract}\NormalTok{(stanfit)}
+\NormalTok{rstantools}\SpecialCharTok{::}\FunctionTok{posterior\_interval}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(stanfit), }\AttributeTok{prob =} \FloatTok{0.95}\NormalTok{)}
+\CommentTok{\#\textgreater{}                2.5\%     97.5\%}
+\CommentTok{\#\textgreater{} alpha\_std   {-}0.0838    0.0845}
+\CommentTok{\#\textgreater{} beta\_std     0.3633    0.5324}
+\CommentTok{\#\textgreater{} sigma\_std    0.8404    0.9580}
+\CommentTok{\#\textgreater{} alpha       85.0865   88.5229}
+\CommentTok{\#\textgreater{} beta         0.4943    0.7244}
+\CommentTok{\#\textgreater{} sigma       17.1538   19.5538}
+\CommentTok{\#\textgreater{} lp\_\_      {-}172.8280 {-}168.2490}
+\end{Highlighting}
+\end{Shaded}
+
+Un grafico che riporta l'intervallo di credibilità ai livelli di probabilità desiderati per \(\beta\) si ottiene con le seguenti istruzioni:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mcmc\_areas}\NormalTok{(}
+\NormalTok{  fit2}\SpecialCharTok{$}\FunctionTok{draws}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"beta"}\NormalTok{)),}
+  \AttributeTok{prob =} \FloatTok{0.8}\NormalTok{,}
+  \AttributeTok{prob\_outer =} \FloatTok{0.95}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{054_reglin4_files/figure-latex/unnamed-chunk-7-1} \end{center}
+
+Per i parametri ottenuti analizzando i dati standardizzati, abbiamo
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{stanfit }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mcmc\_intervals}\NormalTok{(}
+    \AttributeTok{pars =} \FunctionTok{c}\NormalTok{(}\StringTok{"alpha\_std"}\NormalTok{, }\StringTok{"beta\_std"}\NormalTok{, }\StringTok{"sigma\_std"}\NormalTok{), }
+    \AttributeTok{prob =} \FloatTok{0.8}\NormalTok{,}
+    \AttributeTok{prob\_outer =} \FloatTok{0.95}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{054_reglin4_files/figure-latex/unnamed-chunk-8-1} \end{center}
+
+\hypertarget{rappresentazione-grafica-della-distribuzione-a-posteriori}{%
+\section{Rappresentazione grafica della distribuzione a posteriori}\label{rappresentazione-grafica-della-distribuzione-a-posteriori}}
+
+Non c'è niente di ``magico'' o necessario relativamente al livello di 0.95: il valore 0.95 è arbitrario. Sono possibili tantissime altre soglie per quantificare la nostra incertezza: alcuni ricercatori usano il livello di 0.89, altri quello di 0.5. Se l'obiettivo è quello di descrivere il livello della nostra incertezza relativamente alla stima del parametro, allora dobbiamo riconoscere che la nostra incertezza è descritta dall'\emph{intera} distribuzione a posteriori. Per cui il metodo più semplice, più diretto e più completo per descrivere la nostra incertezza rispetto alla stima dei parametri è quello di riportare graficamente tutta la distribuzione a posteriori. Una rappresentazione della distribuzione a posteriori dei parametri del modello dell'esempio si ottiene nel modo seguente:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{stan\_dens}\NormalTok{(}
+\NormalTok{  stanfit, }
+  \AttributeTok{pars =} \FunctionTok{c}\NormalTok{(}\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta"}\NormalTok{, }\StringTok{"sigma"}\NormalTok{),}
+  \AttributeTok{fill =} \StringTok{"\#4ca5ff"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{054_reglin4_files/figure-latex/unnamed-chunk-9-1} \end{center}
+
+\hypertarget{test-di-ipotesi}{%
+\section{Test di ipotesi}\label{test-di-ipotesi}}
+
+In Stan è facile valutare ipotesi direzionali. Per esempio, la probabilità di \(\hat{\beta} > 0\) è
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(posterior}\SpecialCharTok{$}\NormalTok{beta }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) }\SpecialCharTok{/} \FunctionTok{length}\NormalTok{(posterior}\SpecialCharTok{$}\NormalTok{beta)}
+\CommentTok{\#\textgreater{} [1] 1}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{regressione-robusta}{%
+\section{Regressione robusta}\label{regressione-robusta}}
+
+Spesso i ricercatori devono affrontare il problema degli outlier: in presenza di outlier, un modello statistico basato sulla distribuzione Normale produrrà delle stime dei parametri che non si generalizzano ad altri campioni di dati. Il metodo tradizoinale per affrontare questo problema è quello di eliminare gli outlier prima di eseguire l'analisi statistica. Il problema di questo approccio, però, è che il criterio utilizzato per eliminare gli outlier, quale esso sia, è arbitrario; dunque, usando criteri diversi per eliminare gli outlier, i ricercatori finiscono per trovare risultati diversi.
+
+Questo problema trova una semplice soluzione nell'approccio bayesiano. Nel modello di regressione che abbiamo dicusso finora è stato ipotizzato che \(\varepsilon \sim \mathcal{N}(0, \sigma_{\varepsilon})\). Per un modello formulato in questi termini, la presenza di solo un valore anomalo e influente può avere un effetto drammatico sulle stime dei parametri.
+
+Per fare un esempio, introduciamo un singlo valore anomalo nel set dei dati dell'esempio che stiamo discutendo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df2 }\OtherTok{\textless{}{-}}\NormalTok{ df}
+\NormalTok{df2}\SpecialCharTok{$}\NormalTok{kid\_score[}\DecValTok{434}\NormalTok{] }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\DecValTok{500}
+\NormalTok{df2}\SpecialCharTok{$}\NormalTok{mom\_iq[}\DecValTok{434}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{140}
+\end{Highlighting}
+\end{Shaded}
+
+Per comodità, calcoliamo le stime di \(\alpha\) e \(\beta\) con il metodo dei minimi quadrati (le stime dei parametri sono simili a quelle di un modello bayesiano Normale con distribuzioni a priori vagamente informative). Sappiamo che, nel campione originari di dati, \(\hat{\beta} \approx 0.6\). In presenza di un solo outlier troviamo
+che
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{coef}\NormalTok{(}\FunctionTok{lm}\NormalTok{(kid\_score }\SpecialCharTok{\textasciitilde{}}\NormalTok{ mom\_iq, }\AttributeTok{data =}\NormalTok{ df2))}
+\CommentTok{\#\textgreater{} (Intercept)      mom\_iq }
+\CommentTok{\#\textgreater{}      49.188       0.363}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+la stima di \(\beta\) viene drammaticamente ridotta (di quasi la metà!).
+
+Non è però necessario assumere \(\varepsilon \sim \mathcal{N}(0, \sigma_{\varepsilon})\). È altrettanto valido un modello che ipotizza una diversa distribuzione di densità per i residui come, ad esempio, la distribuzione \(t\) di Student con un piccolo numero di gradi di libertà. Una caratteristica della \(t\) di Student è che le code della distribuzione contengono una massa di probabilità maggiore della Normale. Ciò fornisce alla \(t\) di Student la possibilità di ``rendere conto'' della presenza di osservazioni lontane dalla media della distribuzione. In altri termini, se in modello di regressione usiamo la \(t\) di Student quale distribuzione dei residui, la presenza di outlier avrà una minore influenza sulle stime dei parametri di quanto avvenga nel modello Normale.
+
+Per verificare questa affermazione, modifichiamo il codice Stan in modo tale da ipotizzare che la distribuzione della \(y\) segua una \(t\) di Student con un numero \(\nu\) gradi di libertà stimato dal modello: \texttt{student\_t(nu,\ mu,\ sigma)}.\footnote{È equivalente scrivere
+  \[
+  y_i = \mu_i + \varepsilon_i, \quad \text{dove } \mu_i = \alpha + \beta x_i, \varepsilon_i \sim \mathcal{N}(0, \sigma_\varepsilon),
+  \]
+  oppure
+  \[
+  y_i \sim \mathcal{N}(\mu_i, \sigma_\varepsilon).
+  \]}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{modelString }\OtherTok{=} \StringTok{"}
 \StringTok{data \{}
 \StringTok{  int\textless{}lower=0\textgreater{} N;}
-\StringTok{  vector[N] x1;}
-\StringTok{  vector[N] x3;}
 \StringTok{  vector[N] y;}
+\StringTok{  vector[N] x;}
+\StringTok{\}}
+\StringTok{transformed data \{}
+\StringTok{  vector[N] x\_std;}
+\StringTok{  vector[N] y\_std;}
+\StringTok{  x\_std = (x {-} mean(x)) / sd(x);}
+\StringTok{  y\_std = (y {-} mean(y)) / sd(y);}
 \StringTok{\}}
 \StringTok{parameters \{}
-\StringTok{  real alpha;}
-\StringTok{  real beta1;}
-\StringTok{  real beta3;}
-\StringTok{  real\textless{}lower=0\textgreater{} sigma;}
-\StringTok{\}}
-\StringTok{transformed parameters \{}
-\StringTok{  vector[N] mu;}
-\StringTok{  for (n in 1:N)\{}
-\StringTok{    mu[n] = alpha + beta1*x1[n] + beta3*x3[n];}
-\StringTok{  \}}
+\StringTok{  real alpha\_std;}
+\StringTok{  real beta\_std;}
+\StringTok{  real\textless{}lower=0\textgreater{} sigma\_std;}
+\StringTok{  real\textless{}lower=1\textgreater{} nu;    // degrees of freedom is constrained \textgreater{}1}
 \StringTok{\}}
 \StringTok{model \{}
-\StringTok{  alpha \textasciitilde{} normal(0, 1);}
-\StringTok{  beta1 \textasciitilde{} normal(0, 1);}
-\StringTok{  beta3 \textasciitilde{} normal(0, 1);}
-\StringTok{  sigma \textasciitilde{} cauchy(0, 1);}
-\StringTok{  y \textasciitilde{} normal(mu, sigma);}
+\StringTok{  alpha\_std \textasciitilde{} normal(0, 2);}
+\StringTok{  beta\_std \textasciitilde{} normal(0, 2);}
+\StringTok{  sigma\_std \textasciitilde{} cauchy(0, 2);}
+\StringTok{  nu \textasciitilde{} gamma(2, 0.1);   // Juárez and Steel(2010)}
+\StringTok{  y\_std \textasciitilde{} student\_t(nu, alpha\_std + beta\_std * x\_std, sigma\_std);}
 \StringTok{\}}
 \StringTok{generated quantities \{}
-\StringTok{  vector[N] y\_rep;}
-\StringTok{  vector[N] log\_lik;}
-\StringTok{  for (n in 1:N)\{}
-\StringTok{    y\_rep[n] = normal\_rng(mu[n], sigma);}
-\StringTok{    log\_lik[n] = normal\_lpdf(y[n] | x1[n] * beta1 + x3[n] * beta3, sigma);}
-\StringTok{  \}}
+\StringTok{  real alpha;}
+\StringTok{  real beta;}
+\StringTok{  real\textless{}lower=0\textgreater{} sigma;}
+\StringTok{  alpha = sd(y) * (alpha\_std {-} beta\_std * mean(x) / sd(x))}
+\StringTok{           + mean(y);}
+\StringTok{  beta = beta\_std * sd(y) / sd(x);}
+\StringTok{  sigma = sd(y) * sigma\_std;}
 \StringTok{\}}
 \StringTok{"}
-\FunctionTok{writeLines}\NormalTok{(modelString, }\AttributeTok{con =} \StringTok{"code/mreg3.stan"}\NormalTok{)}
+\FunctionTok{writeLines}\NormalTok{(modelString, }\AttributeTok{con =} \StringTok{"code/simpleregstdrobust.stan"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{df}\SpecialCharTok{$}\NormalTok{x3 }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{mom\_hs}
-\end{Highlighting}
-\end{Shaded}
+\noindent
+Costruiamo la lista dei dati usando il data.frame \texttt{df2} che include l'outlier:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{data3\_list }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
-  \AttributeTok{N =} \FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{kid\_score),}
-  \AttributeTok{y =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{y,}
-  \AttributeTok{x1 =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{x1,}
-  \AttributeTok{x3 =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{x3}
+  \AttributeTok{N =} \FunctionTok{length}\NormalTok{(df2}\SpecialCharTok{$}\NormalTok{kid\_score),}
+  \AttributeTok{y =}\NormalTok{ df2}\SpecialCharTok{$}\NormalTok{kid\_score,}
+  \AttributeTok{x =}\NormalTok{ df2}\SpecialCharTok{$}\NormalTok{mom\_iq }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(df2}\SpecialCharTok{$}\NormalTok{mom\_iq)}
 \NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{file3 }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(}\StringTok{"code"}\NormalTok{, }\StringTok{"mreg3.stan"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+\noindent
+Adattiamo il modello di regressione robusta ai dati:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{mod3 }\OtherTok{\textless{}{-}} \FunctionTok{cmdstan\_model}\NormalTok{(file3)}
-\end{Highlighting}
-\end{Shaded}
+\NormalTok{file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(}\StringTok{"code"}\NormalTok{, }\StringTok{"simpleregstdrobust.stan"}\NormalTok{)}
+\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{cmdstan\_model}\NormalTok{(file)}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{fit3 }\OtherTok{\textless{}{-}}\NormalTok{ mod3}\SpecialCharTok{$}\FunctionTok{sample}\NormalTok{(}
+\NormalTok{fit4 }\OtherTok{\textless{}{-}}\NormalTok{ mod}\SpecialCharTok{$}\FunctionTok{sample}\NormalTok{(}
   \AttributeTok{data =}\NormalTok{ data3\_list,}
   \AttributeTok{iter\_sampling =}\NormalTok{ 4000L,}
   \AttributeTok{iter\_warmup =}\NormalTok{ 2000L,}
@@ -1520,104 +1855,160 @@ Consideriamo infine un terzo modello che utilizza come predittori, oltre al QI d
 \end{Highlighting}
 \end{Shaded}
 
+\noindent
+Esaminando le stime dei parametri
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fit3}\SpecialCharTok{$}\FunctionTok{summary}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta1"}\NormalTok{, }\StringTok{"beta3"}\NormalTok{, }\StringTok{"sigma"}\NormalTok{))}
+\NormalTok{fit4}\SpecialCharTok{$}\FunctionTok{summary}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta"}\NormalTok{, }\StringTok{"sigma"}\NormalTok{, }\StringTok{"nu"}\NormalTok{))}
 \CommentTok{\#\textgreater{} \# A tibble: 4 x 10}
-\CommentTok{\#\textgreater{}   variable   mean median     sd    mad     q5     q95  rhat ess\_bulk ess\_tail}
-\CommentTok{\#\textgreater{}   \textless{}chr\textgreater{}     \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}   \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}    \textless{}dbl\textgreater{}    \textless{}dbl\textgreater{}}
-\CommentTok{\#\textgreater{} 1 alpha    {-}0.225 {-}0.225 0.0951 0.0939 {-}0.380 {-}0.0673  1.00    7808.    8235.}
-\CommentTok{\#\textgreater{} 2 beta1     0.414  0.414 0.0445 0.0440  0.340  0.487   1.00   10200.    9870.}
-\CommentTok{\#\textgreater{} 3 beta3     0.287  0.288 0.108  0.106   0.108  0.463   1.00    7832.    8542.}
-\CommentTok{\#\textgreater{} 4 sigma     0.890  0.889 0.0300 0.0295  0.842  0.941   1.00   11733.   10064.}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{loo3\_result }\OtherTok{\textless{}{-}}\NormalTok{ fit3}\SpecialCharTok{$}\FunctionTok{loo}\NormalTok{(}\AttributeTok{cores =} \DecValTok{4}\NormalTok{)}
-\FunctionTok{print}\NormalTok{(loo3\_result)}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Computed from 16000 by 434 log{-}likelihood matrix}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}          Estimate   SE}
-\CommentTok{\#\textgreater{} elpd\_loo   {-}584.2 16.4}
-\CommentTok{\#\textgreater{} p\_loo         7.4  0.6}
-\CommentTok{\#\textgreater{} looic      1168.4 32.8}
-\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}}
-\CommentTok{\#\textgreater{} Monte Carlo SE of elpd\_loo is 0.0.}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} All Pareto k estimates are good (k \textless{} 0.5).}
-\CommentTok{\#\textgreater{} See help(\textquotesingle{}pareto{-}k{-}diagnostic\textquotesingle{}) for details.}
-\end{Highlighting}
-\end{Shaded}
-
-Per eseguire un confronto tra modelli in termini della loro capacità predittiva esaminiamo la differenza di LOO-CV tra coppie di modelli. Le seguenti istruzioni \(\R\) producono la quantità \texttt{elpd\_diff}, ovvero la differenza tra stime della \(\elpd\) fornite da due modelli. Il primo argomento della funzione \texttt{loo\_compare()} specifica il modello che viene usato come confronto. Nella prima riga dell'output, il valore \texttt{elpd\_diff} è 0 (cioè, \(x − x = 0\)). Nelle righe successive sono riportate le differenze rispetto al modello di confronto (in questo caso, il modello 1). La colonna \texttt{se\_diff} riporta l'errore standard di tali differenze.
-
-L'incertezza della stima dell'accuratezza \emph{out-of-sample} si distribuisce in maniera approssimativamente normale con media uguale al valore riportato dal software e deviazione standard uguale a ciò che è indicato nell'output come errore standard. Quando il campione è piccolo, questa approssimazione produce una forte sottostima dell'incertezza, ma fornisce comunque una stima migliore di AIC, DIC e WAIC.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{w }\OtherTok{\textless{}{-}} \FunctionTok{loo\_compare}\NormalTok{(loo1\_result, loo2\_result, loo3\_result)}
-\FunctionTok{print}\NormalTok{(w)}
-\CommentTok{\#\textgreater{}        elpd\_diff se\_diff}
-\CommentTok{\#\textgreater{} model1   0.0       0.0  }
-\CommentTok{\#\textgreater{} model2  {-}0.4       1.3  }
-\CommentTok{\#\textgreater{} model3 {-}15.6       6.0}
-\end{Highlighting}
-\end{Shaded}
-
-Per interpretare l'output, usiamo il criterio suggerito da \textcite{gelman1995bayesian}: consideriamo ``credibile'' una differenza se \texttt{elpd\_diff} è almeno due volte maggiore di \texttt{se\_diff}. Nel caso presente, dunque, il confronto tra il modello 2 e il modello 1 indica che la quantità \texttt{elpd\_diff} è molto piccola rispetto al suo errore standard.
-Questo accade se un predittore è associato in modo trascurabile con la variabile dipendente. I dati presenti, dunque, non offrono alcuna evidenza che aggiungere dell'età della madre come predittore migliori la capacità predittiva del modello. Nel confronto tra modello 3 e modello 1, invece, la quantità \texttt{elpd\_diff} è maggiore di due volte il valore dell'errore standard. Questo suggerisce un incremento della capacità predittiva del modello quiando il livello di istruzione della madre viene incluso tra i predittori.
-
-È anche possibile calcolare l'intervallo di credibilità per \texttt{elpd\_diff}:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FloatTok{15.5} \SpecialCharTok{+} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{) }\SpecialCharTok{*} \FunctionTok{qnorm}\NormalTok{(.}\DecValTok{95}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{) }\SpecialCharTok{*} \FloatTok{6.0}
-\CommentTok{\#\textgreater{} [1]  5.63 25.37}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{outlier}{%
-\subsection{Outlier}\label{outlier}}
-
-Si è soliti pensare che la maggior parte delle osservazioni del campione sia prodotta da un unico meccanismo generatore dei dati, mentre le rimanenti osservazioni sono la realizzazione di un diverso processo stocastico. Le osservazioni che appartengono a questo secondo gruppo si chiamano \emph{outlier}. È dunque necessario identificare gli outlier e limitare la loro influenza sull'inferenza.\footnote{\textcite{McElreath_rethinking} nota che, spesso, i ricercatori eliminano i valori anomali prima di adattare un modello ai dati, basandosi solo sulla distanza dal valore medio della variabile dipendente misurata in termini di unità di deviazione standard. Secondo \textcite{McElreath_rethinking} questo non dovrebbe mai essere fatto: un'osservazione può essere considerata come un valore anomalo o un valore influente solo alla luce delle predizioni di un modello (mai prima di avere adattato il modello ai dati). Se ci sono solo pochi valori anomali una strategia possibile è quella di riportare i risultati delle analisi statistiche svolte su tutto il campione dei dati oppure dopo avere eliminato le osservazioni anomale e influenti.}
-
-Poniamoci ora il problema di identificare gli outlier con la tecnica PSIS-LOO-CV. Quando PSIS-LOO-CV viene calcolato con il pacchetto \texttt{loo}, l'output riporta il parametro di forma della distribuzione di Pareto (valore \texttt{k}). Tale valore può essere utilizzato per identificare gli outlier. Infatti, il valore \texttt{k} valuta, per ciascun punto del campione, l'approssimazione usata da PSIS-LOO-CV. Se \(k < 0.5\), i pesi di importanza vengono stimati in modo accurato; se il valore \(k\) di Pareto di un punto è \(> 0.7\), i pesi di importanza possono essere inaccurati. Le osservazioni con \(k > 0.7\) sono dunque osservazioni outlier.
-
-Per fare un esempio concreto, introduciamo nel campione dell'esempio precedente una singola osservazione outlier.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{df1 }\OtherTok{\textless{}{-}}\NormalTok{ df}
-\FunctionTok{dim}\NormalTok{(df1)}
-\CommentTok{\#\textgreater{} [1] 434   9}
-\NormalTok{df1}\SpecialCharTok{$}\NormalTok{x1[}\DecValTok{434}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{10}
-\NormalTok{df1}\SpecialCharTok{$}\NormalTok{y[}\DecValTok{434}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{10}
+\CommentTok{\#\textgreater{}   variable   mean median     sd    mad     q5    q95  rhat ess\_bulk ess\_tail}
+\CommentTok{\#\textgreater{}   \textless{}chr\textgreater{}     \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}    \textless{}dbl\textgreater{}    \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 alpha    87.8   87.8   0.887  0.899  86.3   89.3    1.00   13776.   11987.}
+\CommentTok{\#\textgreater{} 2 beta      0.603  0.603 0.0585 0.0577  0.506  0.698  1.00   14185.   11067.}
+\CommentTok{\#\textgreater{} 3 sigma    15.9   15.9   0.806  0.812  14.6   17.3    1.00   12699.   11256.}
+\CommentTok{\#\textgreater{} 4 nu        5.58   5.44  1.15   1.11    3.94   7.65   1.00   12258.   12033.}
 \end{Highlighting}
 \end{Shaded}
 
 \noindent
-Sistemiamo i dati nel formato appropriato per Stan:
+notiamo che la stima di \(\beta\) è rimasta praticamente immutata. La regressione ``robusta'' non risente dunque della presenza degli outlier.
+
+\hypertarget{comparison-two-means-stan}{%
+\chapter{Confronto tra due gruppi indipendenti}\label{comparison-two-means-stan}}
+
+Il problema del confronto tra due gruppi indipendenti può essere formulato nei termini di un modello di regressione nel quale la variabile \(x\) è dicotomica, ovvero assume solo due valori.
+
+\hypertarget{regressione-lineare-con-una-variabile-dicotomica}{%
+\section{Regressione lineare con una variabile dicotomica}\label{regressione-lineare-con-una-variabile-dicotomica}}
+
+Se \(x\) è una variabile dicotomica con valori 0 e 1, allora per il modello di regressione \(\mu_i = \alpha + \beta x_i\) abbiamo quanto segue. Quando \(x=0\), il modello diventa
+\[
+\mu_i = \alpha
+\]
+\noindent
+mentre, quando \(X=1\), il modello diventa
+\[
+\mu_i = \alpha + \beta.
+\]
+\noindent
+Ciò significa che il parametro \(\alpha\) è uguale al valore atteso del gruppo codificato con \(X=0\) e il parametro \(\beta\) è uguale alla differenza tra le medie dei due gruppi (essendo la media del secondo gruppo uguale a \(\alpha + \beta\)). Il parametro \(\beta\), dunque, codifica l'effetto di una manipolazione sperimentale o di un trattamento, e l'inferenza su \(\beta\) corrisponde direttamente all'inferenza sull'efficacia di un trattamento o di un effetto sperimentale.\footnote{Per ``effetto di un trattamento'' si intende la differenza tra le medie di due gruppi (per esempio, il gruppo ``sperimentale'' e il gruppo ``di controllo'').} L'inferenza su \(\beta\), dunque, viene utilizzata per capire quanto ``credibile'' può essere considerato l'effetto di un trattamento o di una manipolazione sperimentale.
+
+\hypertarget{un-esempio-concreto}{%
+\subsection{Un esempio concreto}\label{un-esempio-concreto}}
+
+Esaminiamo nuovamente un sottoinsieme di dati tratto dal \emph{National Longitudinal Survey of Youth} i quali sono stati discussi da \textcite{gelman2020regression}. I soggetti sono bambini di 3 e 4 anni. La variabile dipendente, \texttt{kid\_score}, è il punteggio totale del \emph{Peabody Individual Achievement Test} (PIAT) costituito dalla somma dei punteggi di tre sottoscale (Mathematics, Reading comprehension, Reading recognition). La variabile indipendente, \texttt{mom\_hs}, è il livello di istruzione della madre, codificato con due livelli: scuola media superiore completata oppure no. La domanda della ricerca è se il QI del figlio (misurato sulla scala PIAT) risulta o meno associato al livello di istruzione della madre.
+
+Codifichiamo il livello di istruzione della madre (\(x\)) con una \emph{variabile indicatrice} (ovvero, una variabile che assume solo i valori 0 e 1) tale per cui:
+
+\begin{itemize}
+\item
+  \(x=0\): la madre non ha completato la scuola secondaria di secondo grado (scuola media superiore);
+\item
+  \(x=1\): la madre ha completato la scuola media superiore.
+\end{itemize}
+
+\noindent
+Supponiamo che i dati siano contenuti nel data.frame \texttt{df}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{data1a\_list }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
-  \AttributeTok{N =} \FunctionTok{length}\NormalTok{(df1}\SpecialCharTok{$}\NormalTok{kid\_score),}
-  \AttributeTok{y =}\NormalTok{ df1}\SpecialCharTok{$}\NormalTok{y,}
-  \AttributeTok{x1 =}\NormalTok{ df1}\SpecialCharTok{$}\NormalTok{x1}
+\FunctionTok{library}\NormalTok{(}\StringTok{"foreign"}\NormalTok{)}
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{read.dta}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"kidiq.dta"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Calcoliamo le statistiche descrittive per i due gruppi:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(mom\_hs) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{mean\_kid\_score =} \FunctionTok{mean}\NormalTok{(kid\_score),}
+    \AttributeTok{std =} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{var}\NormalTok{(kid\_score))}
+\NormalTok{  )}
+\CommentTok{\#\textgreater{} \# A tibble: 2 x 3}
+\CommentTok{\#\textgreater{}   mom\_hs mean\_kid\_score   std}
+\CommentTok{\#\textgreater{}    \textless{}dbl\textgreater{}          \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1      0           77.5  22.6}
+\CommentTok{\#\textgreater{} 2      1           89.3  19.0}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Il punteggio medio PIAT è pari a 77.5 per i bambini la cui madre non ha il diploma di scuola media superiore e pari a 89.3 per i bambini la cui madre ha completato la scuola media superiore. Questa differenza suggerisce un'associazione tra le variabili, ma tale differenza potrebbe essere soltanto la conseguenza della variabilità campionaria, senza riflettere una caratteristica generale della popolazione. Come possiamo usare il modello statistico lineare per fare inferenza sulla differenza osservata tra i due gruppi? Non dobbiamo fare nient'altro che usare lo stesso modello di regressione che abbiamo definito in precedenza.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modelString }\OtherTok{=} \StringTok{"}
+\StringTok{data \{}
+\StringTok{  int\textless{}lower=0\textgreater{} N;}
+\StringTok{  vector[N] y;}
+\StringTok{  vector[N] x;}
+\StringTok{\}}
+\StringTok{transformed data \{}
+\StringTok{  vector[N] x\_std;}
+\StringTok{  vector[N] y\_std;}
+\StringTok{  x\_std = (x {-} mean(x)) / sd(x);}
+\StringTok{  y\_std = (y {-} mean(y)) / sd(y);}
+\StringTok{\}}
+\StringTok{parameters \{}
+\StringTok{  real alpha\_std;}
+\StringTok{  real beta\_std;}
+\StringTok{  real\textless{}lower=0\textgreater{} sigma\_std;}
+\StringTok{\}}
+\StringTok{model \{}
+\StringTok{  alpha\_std \textasciitilde{} normal(0, 2);}
+\StringTok{  beta\_std \textasciitilde{} normal(0, 2);}
+\StringTok{  sigma\_std \textasciitilde{} cauchy(0, 2);}
+\StringTok{  y\_std \textasciitilde{} normal(alpha\_std + beta\_std * x\_std, sigma\_std);}
+\StringTok{\}}
+\StringTok{generated quantities \{}
+\StringTok{  real alpha;}
+\StringTok{  real beta;}
+\StringTok{  real\textless{}lower=0\textgreater{} sigma;}
+\StringTok{  alpha = sd(y) * (alpha\_std {-} beta\_std * mean(x) / sd(x))}
+\StringTok{           + mean(y);}
+\StringTok{  beta = beta\_std * sd(y) / sd(x);}
+\StringTok{  sigma = sd(y) * sigma\_std;}
+\StringTok{\}}
+\StringTok{"}
+\FunctionTok{writeLines}\NormalTok{(modelString, }\AttributeTok{con =} \StringTok{"code/simpleregstd.stan"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Come in precedenza, salviamo i dati in un oggetto di classe \texttt{list}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_list }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
+  \AttributeTok{N =} \FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{kid\_score),}
+  \AttributeTok{y =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{kid\_score,}
+  \AttributeTok{x =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{mom\_hs}
 \NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \noindent
-Adattiamo nuovamente il modello 1 ad un campione di dati che contiene un outlier.
+Compiliamo il modello:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fit1a }\OtherTok{\textless{}{-}}\NormalTok{ mod1}\SpecialCharTok{$}\FunctionTok{sample}\NormalTok{(}
-  \AttributeTok{data =}\NormalTok{ data1a\_list,}
+\NormalTok{file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(}\StringTok{"code"}\NormalTok{, }\StringTok{"simpleregstd.stan"}\NormalTok{)}
+\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{cmdstan\_model}\NormalTok{(file)}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Adattiamo il modello ai dati:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit }\OtherTok{\textless{}{-}}\NormalTok{ mod}\SpecialCharTok{$}\FunctionTok{sample}\NormalTok{(}
+  \AttributeTok{data =}\NormalTok{ data\_list,}
   \AttributeTok{iter\_sampling =}\NormalTok{ 4000L,}
   \AttributeTok{iter\_warmup =}\NormalTok{ 2000L,}
   \AttributeTok{seed =}\NormalTok{ SEED,}
@@ -1631,402 +2022,82 @@ Adattiamo nuovamente il modello 1 ad un campione di dati che contiene un outlier
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{loo1a\_result }\OtherTok{\textless{}{-}}\NormalTok{ fit1a}\SpecialCharTok{$}\FunctionTok{loo}\NormalTok{(}\AttributeTok{cores =} \DecValTok{4}\NormalTok{)}
+\NormalTok{stanfit }\OtherTok{\textless{}{-}}\NormalTok{ rstan}\SpecialCharTok{::}\FunctionTok{read\_stan\_csv}\NormalTok{(fit}\SpecialCharTok{$}\FunctionTok{output\_files}\NormalTok{())}
+\NormalTok{posterior }\OtherTok{\textless{}{-}} \FunctionTok{extract}\NormalTok{(stanfit)}
 \end{Highlighting}
 \end{Shaded}
 
-\noindent
-Una tabella diagnostica che riassume le stime dei parametri di forma della distribuzione di Pareto si ottiene nel modo seguente:
-
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{print}\NormalTok{(loo1a\_result)}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Computed from 16000 by 434 log{-}likelihood matrix}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}          Estimate   SE}
-\CommentTok{\#\textgreater{} elpd\_loo   {-}586.6 20.1}
-\CommentTok{\#\textgreater{} p\_loo         7.1  5.4}
-\CommentTok{\#\textgreater{} looic      1173.2 40.3}
-\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}}
-\CommentTok{\#\textgreater{} Monte Carlo SE of elpd\_loo is NA.}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Pareto k diagnostic values:}
-\CommentTok{\#\textgreater{}                          Count Pct.    Min. n\_eff}
-\CommentTok{\#\textgreater{} ({-}Inf, 0.5]   (good)     433   99.8\%   9998      }
-\CommentTok{\#\textgreater{}  (0.5, 0.7]   (ok)         0    0.0\%   \textless{}NA\textgreater{}      }
-\CommentTok{\#\textgreater{}    (0.7, 1]   (bad)        0    0.0\%   \textless{}NA\textgreater{}      }
-\CommentTok{\#\textgreater{}    (1, Inf)   (very bad)   1    0.2\%   13        }
-\CommentTok{\#\textgreater{} See help(\textquotesingle{}pareto{-}k{-}diagnostic\textquotesingle{}) for details.}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Un grafico che riporta le stime dei parametri di forma della distribuzione di Pareto per ciascuna osservazione è dato da:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{plot}\NormalTok{(loo1a\_result)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.8\linewidth]{092_loo_files/figure-latex/unnamed-chunk-52-1} \end{center}
-
-\noindent
-Il valore \texttt{k} stimato da PSIS-LOO-CV mette chiaramente in luce il fatto che il valore introdotto nel campione è un outlier. L'indice dell'osservazione outlier è identificato con:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{pareto\_k\_ids}\NormalTok{(loo1a\_result, }\AttributeTok{threshold =} \FloatTok{0.7}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 434}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{selezione-di-variabili}{%
-\section{Selezione di variabili}\label{selezione-di-variabili}}
-
-I concetti che sono stati introdotti in questo Capitolo, tra le altre cose, risultano utili per affrontare un problema importante in psicologia, ovvero quello della semplificazione di un modello di regressione che contiene molti predittori. Il problema è quello di selezionare un insieme di variabili indipendenti così che tale selezione non comporti una apprezzabile perdita nella capacità predittiva del modello ristretto rispetto al modello completo. Un modo per identificare le variabili rilevanti per prevedere una determinata variabile risposta è quello di utilizzare il metodo basato sulla proiezione, come discusso nel seguente \href{https://cran.r-project.org/web/packages/projpred/vignettes/quickstart.html}{link} e in \textcite{piironen2017comparison}. Per descrivere questa procedura, adatto qui un esempio discusso da Mark Lai in \href{https://bookdown.org/marklhc/notes_bookdown/model-comparison-and-regularization.html}{Course Handouts for Bayesian Data Analysis Class}. Iniziamo a leggere i dati.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{kidiq }\OtherTok{\textless{}{-}}\NormalTok{ rio}\SpecialCharTok{::}\FunctionTok{import}\NormalTok{(here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"kidiq.dta"}\NormalTok{))}
-\NormalTok{kidiq }\OtherTok{\textless{}{-}}\NormalTok{ kidiq }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}
-    \AttributeTok{mom\_hs =} \FunctionTok{factor}\NormalTok{(mom\_hs, }\AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"no"}\NormalTok{, }\StringTok{"yes"}\NormalTok{))}
-\NormalTok{  )}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Per potere usare delle distribuzione a priori sensate per i parametri, standardizzo le variabili numeriche.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{scale\_this }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{as.vector}\NormalTok{(}\FunctionTok{scale}\NormalTok{(x))}
-\NormalTok{kidiq\_scaled }\OtherTok{\textless{}{-}}\NormalTok{ kidiq }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric), scale\_this))}
-\NormalTok{kidiq\_scaled }\OtherTok{\textless{}{-}}\NormalTok{ kidiq\_scaled }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}
-    \AttributeTok{mom\_hs =}\NormalTok{ kidiq}\SpecialCharTok{$}\NormalTok{mom\_hs}
-\NormalTok{  )}
-\FunctionTok{glimpse}\NormalTok{(kidiq\_scaled)}
-\CommentTok{\#\textgreater{} Rows: 434}
-\CommentTok{\#\textgreater{} Columns: 5}
-\CommentTok{\#\textgreater{} $ kid\_score \textless{}dbl\textgreater{} {-}1.06793, 0.54887, {-}0.08805, {-}0.18604, 1.38176, 0.54887, {-}0.\textasciitilde{}}
-\CommentTok{\#\textgreater{} $ mom\_hs    \textless{}fct\textgreater{} yes, yes, yes, yes, yes, no, yes, yes, yes, yes, yes, yes, y\textasciitilde{}}
-\CommentTok{\#\textgreater{} $ mom\_iq    \textless{}dbl\textgreater{} 1.40784, {-}0.70921, 1.02954, {-}0.03669, {-}0.48362, 0.52679, 2.5\textasciitilde{}}
-\CommentTok{\#\textgreater{} $ mom\_work  \textless{}dbl\textgreater{} 0.9342, 0.9342, 0.9342, 0.0878, 0.9342, {-}1.6051, 0.9342, 0.0\textasciitilde{}}
-\CommentTok{\#\textgreater{} $ mom\_age   \textless{}dbl\textgreater{} 1.5602, 0.8198, 1.5602, 0.8198, 1.5602, {-}1.7718, {-}1.0313, 0.\textasciitilde{}}
-\end{Highlighting}
-\end{Shaded}
-
-Il seguente modello di regressione utilizza \texttt{kid\_score} quale variabile dipendente e, quali predittori, include tutte le altre variabili disponibili e le loro interazioni a due vie.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{m1 }\OtherTok{\textless{}{-}} \FunctionTok{brm}\NormalTok{(}
-\NormalTok{  kid\_score }\SpecialCharTok{\textasciitilde{}}\NormalTok{ (mom\_iq }\SpecialCharTok{+}\NormalTok{ mom\_hs }\SpecialCharTok{+}\NormalTok{ mom\_work }\SpecialCharTok{+}\NormalTok{ mom\_age)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{,}
-  \AttributeTok{data =}\NormalTok{ kidiq\_scaled,}
-  \AttributeTok{prior =} \FunctionTok{c}\NormalTok{(}
-    \FunctionTok{prior}\NormalTok{(}\FunctionTok{normal}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\AttributeTok{class =} \StringTok{"Intercept"}\NormalTok{),}
-    \FunctionTok{prior}\NormalTok{(}\FunctionTok{normal}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\AttributeTok{class =} \StringTok{"b"}\NormalTok{),}
-    \FunctionTok{prior}\NormalTok{(}\FunctionTok{student\_t}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\AttributeTok{class =} \StringTok{"sigma"}\NormalTok{)}
-\NormalTok{  ),}
-  \AttributeTok{seed =} \DecValTok{2302}\NormalTok{,}
-  \AttributeTok{chains =}\NormalTok{ 4L,}
-  \AttributeTok{cores =}\NormalTok{ 4L,}
-  \AttributeTok{refresh =} \DecValTok{0}\NormalTok{,}
-  \AttributeTok{backend =} \StringTok{"cmdstan"}
+\FunctionTok{plot}\NormalTok{(}
+\NormalTok{  df}\SpecialCharTok{$}\NormalTok{kid\_score }\SpecialCharTok{\textasciitilde{}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{mom\_hs, }
+  \AttributeTok{pch =} \DecValTok{20}\NormalTok{,}
+  \AttributeTok{xlab =} \StringTok{"mom\_hs"}\NormalTok{,}
+  \AttributeTok{ylab =} \StringTok{"kid\_score"}
 \NormalTok{)}
-\CommentTok{\#\textgreater{} Running MCMC with 4 parallel chains...}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Chain 1 finished in 0.2 seconds.}
-\CommentTok{\#\textgreater{} Chain 2 finished in 0.2 seconds.}
-\CommentTok{\#\textgreater{} Chain 3 finished in 0.2 seconds.}
-\CommentTok{\#\textgreater{} Chain 4 finished in 0.2 seconds.}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} All 4 chains finished successfully.}
-\CommentTok{\#\textgreater{} Mean chain execution time: 0.2 seconds.}
-\CommentTok{\#\textgreater{} Total execution time: 0.3 seconds.}
+\FunctionTok{abline}\NormalTok{(}\FunctionTok{mean}\NormalTok{(posterior}\SpecialCharTok{$}\NormalTok{alpha), }\FunctionTok{mean}\NormalTok{(posterior}\SpecialCharTok{$}\NormalTok{beta), }\AttributeTok{col =} \DecValTok{6}\NormalTok{, }\AttributeTok{lw =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-9-1} \end{center}
+
+\noindent
+Le stime a posteriori dei parametri si ottengono con:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit}\SpecialCharTok{$}\FunctionTok{summary}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta"}\NormalTok{, }\StringTok{"sigma"}\NormalTok{))}
+\CommentTok{\#\textgreater{} \# A tibble: 3 x 10}
+\CommentTok{\#\textgreater{}   variable  mean median    sd   mad    q5   q95  rhat ess\_bulk ess\_tail}
+\CommentTok{\#\textgreater{}   \textless{}chr\textgreater{}    \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}    \textless{}dbl\textgreater{}    \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 alpha     77.5   77.6 2.07  2.06  74.2   81.0  1.00   17948.   11861.}
+\CommentTok{\#\textgreater{} 2 beta      11.8   11.8 2.34  2.33   7.91  15.6  1.00   18036.   12038.}
+\CommentTok{\#\textgreater{} 3 sigma     19.9   19.9 0.679 0.673 18.8   21.0  1.00   18897.   11950.}
+\end{Highlighting}
+\end{Shaded}
+
+I risultati confermano ciò che ci aspettavamo:
+
+\begin{itemize}
+\tightlist
+\item
+  il coefficiente \(\texttt{alpha} = 77.56\) corrisponde alla media del gruppo codificato con \(x = 0\), ovvero la media dei punteggi PIAT per i bambini la cui madre non ha completato la scuola media superiore;
+\item
+  il coefficiente \(\texttt{beta} = 11.76\) corrisponde alla differenza tra le medie dei due gruppi, ovvero 89.32 - 77.55 = 11.77 (con piccoli errori di approssimazione).
+\end{itemize}
+
+La seguente chiamata ritorna l'intervallo di credibilità al 95\% per tutti i parametri del modello:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rstantools}\SpecialCharTok{::}\FunctionTok{posterior\_interval}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(stanfit), }\AttributeTok{prob =} \FloatTok{0.95}\NormalTok{)}
+\CommentTok{\#\textgreater{}                2.5\%     97.5\%}
+\CommentTok{\#\textgreater{} alpha\_std   {-}0.0904    0.0916}
+\CommentTok{\#\textgreater{} beta\_std     0.1447    0.3289}
+\CommentTok{\#\textgreater{} sigma\_std    0.9120    1.0437}
+\CommentTok{\#\textgreater{} alpha       73.4854   81.6092}
+\CommentTok{\#\textgreater{} beta         7.1877   16.3437}
+\CommentTok{\#\textgreater{} sigma       18.6155   21.3025}
+\CommentTok{\#\textgreater{} lp\_\_      {-}209.0430 {-}204.3220}
+\end{Highlighting}
+\end{Shaded}
+
+Possiamo dunque concludere che i bambini la cui madre ha completato la scuola superiore ottengono in media circa 12 punti in più rispetto ai bambini la cui madre non ha completato la scuola superiore. L'intervallo di credibilità al 95\% ci dice che possiamo essere sicuri al 95\% che tale differenza sia di almeno 7 punti e possa arrivare fino a ben 16 punti. Per riassumere, possiamo concludere, con un grado di certezza soggettiva del 95\%, che c'è un'associazione positiva tra il livello di scolarità della madre e l'intelligenza del bambino: le madri che hanno livello di istruzione più alto della media tendo ad avere bambini il cui QI è anch'esso più alto della media.
+
+\hypertarget{la-dimensione-delleffetto}{%
+\section{La dimensione dell'effetto}\label{la-dimensione-delleffetto}}
+
+Avendo a disposizione le informazioni sulle distribuzioni a posteriori dei parametri è facile calcolare la dimensione dell'effetto nei termini del \(d\) di Cohen:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FloatTok{11.75398} \SpecialCharTok{/} \FloatTok{19.90159} 
+\CommentTok{\#\textgreater{} [1] 0.591}
 \end{Highlighting}
 \end{Shaded}
 
 \noindent
-Un grafico che riporta un posterior predictive check si ottiene con l'istruzione seguente:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{pp\_check}\NormalTok{(m1, }\AttributeTok{ndraws =} \DecValTok{50}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlim}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{5}\NormalTok{, }\DecValTok{4}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Kid IQ"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.8\linewidth]{092_loo_files/figure-latex/unnamed-chunk-57-1} \end{center}
-
-\noindent
-Identifichiamo ora l'importanza relativa delle variabili indipendenti nei termini della loro importanza per la previsione:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Variable selection}
-\NormalTok{vs }\OtherTok{\textless{}{-}}\NormalTok{ projpred}\SpecialCharTok{::}\FunctionTok{varsel}\NormalTok{(m1)}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Un grafico dell'importanza relativa di ciascuna variable per la previsione di \texttt{kid\_score} si ottiene nel modo seguente:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# plot predictive performance on training data}
-\FunctionTok{plot}\NormalTok{(vs, }\AttributeTok{stats =} \FunctionTok{c}\NormalTok{(}\StringTok{"elpd"}\NormalTok{, }\StringTok{"rmse"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.8\linewidth]{092_loo_files/figure-latex/unnamed-chunk-58-1} \end{center}
-
-\noindent
-Troviamo ora il numero di variabili da mantenere, in base al modello completo:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{projpred}\SpecialCharTok{::}\FunctionTok{suggest\_size}\NormalTok{(vs)}
-\CommentTok{\#\textgreater{} [1] 5}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Usiamo quindi il metodo \texttt{cv\_varsel()} per eseguire la convalida incrociata per vedere quante variabili dovrebbero essere incluse nel modello:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# With cross{-}validation}
-\NormalTok{cvs }\OtherTok{\textless{}{-}}\NormalTok{ projpred}\SpecialCharTok{::}\FunctionTok{cv\_varsel}\NormalTok{(m1, }\AttributeTok{verbose =} \ConstantTok{FALSE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-In base al metodo della convalida incrociata, il numero di variabili da mantenere è
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{projpred}\SpecialCharTok{::}\FunctionTok{suggest\_size}\NormalTok{(cvs)}
-\CommentTok{\#\textgreater{} [1] 1}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Generiamo il grafico dei risultati della convalida incrociata, questa volta relativi al modello completo:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{plot}\NormalTok{(cvs, }\AttributeTok{stats =} \FunctionTok{c}\NormalTok{(}\StringTok{"elpd"}\NormalTok{, }\StringTok{"rmse"}\NormalTok{), }\AttributeTok{deltas =} \ConstantTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.8\linewidth]{092_loo_files/figure-latex/unnamed-chunk-61-1} \end{center}
-
-\noindent
-Stampiamo l'elenco delle variabili ordinate in base alla loro importanza relativa, secondo il metodo della convalida incrociata:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{summary}\NormalTok{(cvs, }\AttributeTok{stats=}\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}mse\textquotesingle{}}\NormalTok{), }\AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}mean\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}se\textquotesingle{}}\NormalTok{))}
-\CommentTok{\#\textgreater{}    size   solution\_terms   mse mse.se}
-\CommentTok{\#\textgreater{} 2     0             \textless{}NA\textgreater{} 1.001 0.0651}
-\CommentTok{\#\textgreater{} 3     1           mom\_iq 0.804 0.0536}
-\CommentTok{\#\textgreater{} 4     2    mom\_iq:mom\_hs 0.781 0.0519}
-\CommentTok{\#\textgreater{} 5     3           mom\_hs 0.790 0.0530}
-\CommentTok{\#\textgreater{} 6     4   mom\_hs:mom\_age 0.808 0.0539}
-\CommentTok{\#\textgreater{} 7     5  mom\_hs:mom\_work 0.800 0.0541}
-\CommentTok{\#\textgreater{} 8     6 mom\_work:mom\_age 0.805 0.0539}
-\CommentTok{\#\textgreater{} 9     7  mom\_iq:mom\_work 0.796 0.0529}
-\CommentTok{\#\textgreater{} 10    8   mom\_iq:mom\_age 0.800 0.0530}
-\CommentTok{\#\textgreater{} 11    9         mom\_work 0.799 0.0528}
-\CommentTok{\#\textgreater{} 12   10          mom\_age 0.799 0.0528}
-\end{Highlighting}
-\end{Shaded}
-
-Il metodo basato sulla proiezione produce le distribuzioni a posteriori basate su una proiezione dal modello completo sul modello semplificato. In altre parole, si pone la domanda: ``Se vogliamo un modello con solo \texttt{mom\_iq} nel modello, quali coefficienti dovrebbero essere usati per fare in modo che l'accuratezza della previsione risultante sia la più vicina possibile a quella del modello completo?''. I coefficienti ottenuti con il metodo basato sulla proiezione saranno dunque diversi da quelli che si avrebbero se si stimasse direttamente il modello utilizzando il solo predittore \texttt{mom\_iq} (ad es. \texttt{m2}). I risultati ottenuti da studi basati sulla simulazione hanno mostrato che il metodo basato sulla proiezione produce un modello con prestazioni predittive migliori.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{proj1 }\OtherTok{\textless{}{-}}\NormalTok{ projpred}\SpecialCharTok{::}\FunctionTok{project}\NormalTok{(}
-\NormalTok{  cvs,}
-  \AttributeTok{nv =} \FunctionTok{suggest\_size}\NormalTok{(cvs),}
-  \AttributeTok{seed =} \DecValTok{123}\NormalTok{,}
-  \AttributeTok{ns =} \DecValTok{1000}
-\NormalTok{)}
-\FunctionTok{posterior\_summary}\NormalTok{(proj1) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{round}\NormalTok{(}\DecValTok{3}\NormalTok{)}
-\CommentTok{\#\textgreater{}           Estimate Est.Error   Q2.5 Q97.5}
-\CommentTok{\#\textgreater{} Intercept    0.002     0.037 {-}0.064 0.075}
-\CommentTok{\#\textgreater{} mom\_iq       0.445     0.037  0.374 0.516}
-\CommentTok{\#\textgreater{} sigma        0.916     0.015  0.891 0.948}
-\end{Highlighting}
-\end{Shaded}
-
-\indent
-
-Per fare un confronto, stimiamo i coefficienti del modello di regressione che include unicamente la variabile \texttt{mom\_iq}:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{m2 }\OtherTok{\textless{}{-}} \FunctionTok{brm}\NormalTok{(kid\_score }\SpecialCharTok{\textasciitilde{}}\NormalTok{ mom\_iq,}
-  \AttributeTok{data =}\NormalTok{ kidiq\_scaled,}
-  \AttributeTok{prior =} \FunctionTok{c}\NormalTok{(}
-    \FunctionTok{prior}\NormalTok{(}\FunctionTok{normal}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\AttributeTok{class =} \StringTok{"Intercept"}\NormalTok{),}
-    \FunctionTok{prior}\NormalTok{(}\FunctionTok{normal}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\AttributeTok{class =} \StringTok{"b"}\NormalTok{),}
-    \FunctionTok{prior}\NormalTok{(}\FunctionTok{student\_t}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\AttributeTok{class =} \StringTok{"sigma"}\NormalTok{)}
-\NormalTok{  ),}
-  \AttributeTok{seed =} \DecValTok{2302}\NormalTok{,}
-  \AttributeTok{chains =}\NormalTok{ 4L,}
-  \AttributeTok{cores =}\NormalTok{ 4L,}
-  \AttributeTok{refresh =} \DecValTok{0}\NormalTok{,}
-  \AttributeTok{backend =} \StringTok{"cmdstan"}
-\NormalTok{)}
-\CommentTok{\#\textgreater{} Running MCMC with 4 parallel chains...}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Chain 1 finished in 0.0 seconds.}
-\CommentTok{\#\textgreater{} Chain 2 finished in 0.0 seconds.}
-\CommentTok{\#\textgreater{} Chain 3 finished in 0.0 seconds.}
-\CommentTok{\#\textgreater{} Chain 4 finished in 0.0 seconds.}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} All 4 chains finished successfully.}
-\CommentTok{\#\textgreater{} Mean chain execution time: 0.0 seconds.}
-\CommentTok{\#\textgreater{} Total execution time: 0.2 seconds.}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{summary}\NormalTok{(m2)}
-\CommentTok{\#\textgreater{}  Family: gaussian }
-\CommentTok{\#\textgreater{}   Links: mu = identity; sigma = identity }
-\CommentTok{\#\textgreater{} Formula: kid\_score \textasciitilde{} mom\_iq }
-\CommentTok{\#\textgreater{}    Data: kidiq\_scaled (Number of observations: 434) }
-\CommentTok{\#\textgreater{}   Draws: 4 chains, each with iter = 1000; warmup = 0; thin = 1;}
-\CommentTok{\#\textgreater{}          total post{-}warmup draws = 4000}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Population{-}Level Effects: }
-\CommentTok{\#\textgreater{}           Estimate Est.Error l{-}95\% CI u{-}95\% CI Rhat Bulk\_ESS Tail\_ESS}
-\CommentTok{\#\textgreater{} Intercept    {-}0.00      0.04    {-}0.08     0.08 1.00     4154     3062}
-\CommentTok{\#\textgreater{} mom\_iq        0.45      0.04     0.36     0.53 1.00     4078     2888}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Family Specific Parameters: }
-\CommentTok{\#\textgreater{}       Estimate Est.Error l{-}95\% CI u{-}95\% CI Rhat Bulk\_ESS Tail\_ESS}
-\CommentTok{\#\textgreater{} sigma     0.90      0.03     0.84     0.96 1.00     4067     3113}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Draws were sampled using sample(hmc). For each parameter, Bulk\_ESS}
-\CommentTok{\#\textgreater{} and Tail\_ESS are effective sample size measures, and Rhat is the potential}
-\CommentTok{\#\textgreater{} scale reduction factor on split chains (at convergence, Rhat = 1).}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Nel caso presente, le differenze sono minime, ma questo non è sempre vero.
-
-\hypertarget{confronto-di-modelli-tramite-elpd}{%
-\section{\texorpdfstring{Confronto di modelli tramite \(\elpd\)}{Confronto di modelli tramite \textbackslash elpd}}\label{confronto-di-modelli-tramite-elpd}}
-
-Confrontiamo ora la capacità predittiva a posteriori dei due modelli rispetto alla loro \(\elpd\). Ricordiamo che tanto maggiore è \(\elpd\) rispetto ad un nuovo insieme di dati futuri \(\tilde{y}\), \(\log p(\tilde{y} \mid y)\), tanto maggiore è l'accuratezza predittiva del modello. Iniziamo a calcolare \(\elpd\) per i due modelli:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{loo1 }\OtherTok{\textless{}{-}}\NormalTok{ loo}\SpecialCharTok{::}\FunctionTok{loo}\NormalTok{(m1)}
-\NormalTok{loo2 }\OtherTok{\textless{}{-}}\NormalTok{ loo}\SpecialCharTok{::}\FunctionTok{loo}\NormalTok{(m2)}
-\FunctionTok{c}\NormalTok{(loo1}\SpecialCharTok{$}\NormalTok{estimates[}\DecValTok{1}\NormalTok{], loo2}\SpecialCharTok{$}\NormalTok{estimates[}\DecValTok{1}\NormalTok{])}
-\CommentTok{\#\textgreater{} [1] {-}567 {-}570}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-La quantità \(\elpd\) non fornisce una metrica interpretabile per l'accuratezza predittiva di un singolo modello. Risulta invece utile per il confronto tra modelli alternativi. Un confronto tra il modello completo e il modello semplificato si ottiene mediante la funzione \texttt{loo\_compare()}:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{loo}\SpecialCharTok{::}\FunctionTok{loo\_compare}\NormalTok{(loo1, loo2)}
-\CommentTok{\#\textgreater{}    elpd\_diff se\_diff}
-\CommentTok{\#\textgreater{} m1  0.0       0.0   }
-\CommentTok{\#\textgreater{} m2 {-}2.2       5.0}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-I risultati di tale confronto indicano che il Modello \texttt{m1} ha il valore \(\elpd\) più basso e, dunque, sarebbe quello da preferire. Tuttavia, se si considera la differenza in \(\elpd\) in riferimento all'errore standard corrispondente (nella colonna \texttt{se\_diff}), ne risulta una differenza relativamente piccola. Per il Modello \texttt{m1} \(\elpd\) è uguale a -567.3 e per \texttt{m2} è -569.5. La differenza è pari a (-567.3 - -569.5) = 2.2, con un errore standard stimato di 5.0. I dati dunque suggeriscono che la vera differenza in \(\elpd\) tra \texttt{m1} e \texttt{m2} sia compresa tra \(\pm\) 2 errori standard (ovvero nel caso presente, 10 unità) dalla differenza stimata di -2.2 unità, ovvero sia inclusa nell'intervallo \(-2.2 \pm 2 \cdot 5 = (-12.2, 7.8)\). Dato il valore \(\elpd = 0\) è compreso nell'intervallo di \(\pm\) due standard error dalla differenza stimata, i dati non forniscono evidenze convincenti che l'accuratezza predittiva a posteriori di \texttt{m1} sia superiore a quella di \texttt{m2}. Inoltre, dato che il Modello \texttt{m2} è più semplice di \texttt{m1}, concludiamo che \texttt{m2} sia il modello migliore tra i due considerati (rasoio di Ockham).
-
-\hypertarget{coefficiente-di-determinazione-bayesiano}{%
-\section{Coefficiente di determinazione bayesiano}\label{coefficiente-di-determinazione-bayesiano}}
-
-\textcite{gelman2019r} definiscono il \href{https://avehtari.github.io/bayes_R2/bayes_R2.html}{coefficiente di determinazione bayesiano} come
-\begin{equation}
-R^2 = \frac{\Var_{\mu}}{\Var_{\mu} + \Var_{\text{res}}},
-\end{equation}
-dove \(\Var_{\mu}\) è la varianza del valore atteso predetto dal modello e \(\Var_{\text{res}}\) è la varianza dei residui. Entrambe queste quantità sono stimate considerando gli indici a posteriori del modello adattato.
-
-Di seguito vengono calcolati i coefficienti di determinazione bayesiani dei due modelli discussi sopra:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{loo\_R2}\NormalTok{(m1, }\AttributeTok{robust =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{round}\NormalTok{(}\DecValTok{3}\NormalTok{)}
-\CommentTok{\#\textgreater{}    Estimate Est.Error  Q2.5 Q97.5}
-\CommentTok{\#\textgreater{} R2    0.201     0.036 0.125  0.27}
-\FunctionTok{loo\_R2}\NormalTok{(m2, }\AttributeTok{robust =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{round}\NormalTok{(}\DecValTok{3}\NormalTok{)}
-\CommentTok{\#\textgreater{}    Estimate Est.Error  Q2.5 Q97.5}
-\CommentTok{\#\textgreater{} R2    0.196     0.033 0.128 0.255}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Una rappresentazione grafica della distribuzione a posteriori dei due coefficienti di determinazione bayesiani si ottiene com le seguenti istruzioni:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(}\StringTok{"patchwork"}\NormalTok{)}
-\FunctionTok{library}\NormalTok{(}\StringTok{"latex2exp"}\NormalTok{)}
-
-\NormalTok{m1\_fit\_r2 }\OtherTok{\textless{}{-}} \FunctionTok{loo\_R2}\NormalTok{(m1, }\AttributeTok{summary =} \ConstantTok{FALSE}\NormalTok{)}
-\NormalTok{foo }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{R2 =} \FunctionTok{as.numeric}\NormalTok{(m1\_fit\_r2))}
-\NormalTok{h1 }\OtherTok{\textless{}{-}}\NormalTok{ foo }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{R2)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\FunctionTok{TeX}\NormalTok{(}\StringTok{"$R\^{}2$"}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Density"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Bayesian R squared}\SpecialCharTok{\textbackslash{}n}\StringTok{ posterior distribution for model m1"}\NormalTok{)}
-
-\NormalTok{m2\_fit\_r2 }\OtherTok{\textless{}{-}} \FunctionTok{loo\_R2}\NormalTok{(m2, }\AttributeTok{summary =} \ConstantTok{FALSE}\NormalTok{)}
-\NormalTok{foo2 }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{R2 =} \FunctionTok{as.numeric}\NormalTok{(m2\_fit\_r2))}
-\NormalTok{h2 }\OtherTok{\textless{}{-}}\NormalTok{ foo2 }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{R2)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\FunctionTok{TeX}\NormalTok{(}\StringTok{"$R\^{}2$"}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Density"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Bayesian R squared}\SpecialCharTok{\textbackslash{}n}\StringTok{ posterior distribution for model m2"}\NormalTok{)}
-
-\NormalTok{h1 }\SpecialCharTok{|}\NormalTok{ h2}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.8\linewidth]{092_loo_files/figure-latex/unnamed-chunk-69-1} \end{center}
-
-\noindent
-Considerato l'intervallo a posteriori del 95\%, anche in questo caso non abbiamo evidenze convincenti che l'uso di un solo predittore faccia diminuire la capacità predittiva del modello.
-
-\hypertarget{considerazioni-conclusive}{%
-\section*{Considerazioni conclusive}\label{considerazioni-conclusive}}
-\addcontentsline{toc}{section}{Considerazioni conclusive}
-
-Dati due modelli computazionali che forniscono resoconti diversi di un set di dati, come possiamo decidere quale modello è maggiormente supportato dai dati? Nel presente Capitolo abbiamo visto come il problema del confronto di modelli possa essere formulato nei termini di un problema di inferenza statistica. È però necessaria una nota di cautela. \textcite{navarro2019between} ci fa notare che il problema statistico del confronto di modelli non risolve il problema scientifico della selezione di teorie. A questo proposito usa una citazione di George Box:
-
-\begin{quote}
-Since all models are wrong the scientist must be alert to what is importantly wrong. It is inappropriate to be concerned about mice when there are tigers abroad.
-\end{quote}
-
-La metafora delle tigri di George Box fa riferimento evidentemente all'assunzione che sta alla base delle procedure discusse in questo Capitolo, ovvero all'ipotesi che il vero meccanismo generatore dei dati sia noto e che l'unica incognita corrisponda ai parametri. Tuttavia le cose non sono così semplici: nei casi di interesse scientifico è lo stesso meccanismo generatore dei dati ad essere sconosciuto. I ricercatori non comprendono appieno i fenomeni che stanno studiando (altrimenti perché studiarli?) e qualunque descrizione formale di un fenomeno (modello) è sbagliata in un modo sconosciuto e sistematico. Di conseguenza, è ``facile'' fare inferenza sulla capacità predittiva del modello, ma è molto difficile fare inferenza sulla struttura causale dei fenomeni. In altre parole, se le analisi statistiche ci dicono che un modello ha una buona accuratezza predittiva, con ciò non abbiamo imparato nulla sulla struttura causale del fenomeno. Ma è anche vera l'affermazione opposta: un modello che non ha \emph{neppure} una buona accuratezza predittiva esso è sicuramente inutile: non è in grado né di fare previsioni accurate né di catturare la struttura causale.
+Il \(d\) di Cohen di entità ``media'' {[}\(d\) \textgreater{} 0.5; \textcite{sawilowsky2009new}{]} conferma l'importanza dell'influenza della scolarità delle madri sul QI dei bambini.
 
 
 % Bibliography

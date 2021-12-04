@@ -103,7 +103,7 @@ Consideriamo il seguente modello iniziale nel linguaggio Stan:
 
 
 ```r
-modelString <- "
+modelString = "
 data {
   int<lower=0> N;
   vector[N] y;
@@ -133,7 +133,7 @@ Qui sotto è invece riportato il modello per i dati standardizzati. Il blocco `d
 
 
 ```r
-modelString <- "
+modelString = "
 data {
   int<lower=0> N;
   vector[N] y;
@@ -313,7 +313,7 @@ Le statistiche diagnostiche sono fornite dal metodo `$cmdstan_diagnose()`:
 
 ```r
 fit$cmdstan_diagnose()
-#> Processing csv files: /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/RtmpOPzI0G/simpleregstd-202111250808-1-9446f6.csv, /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/RtmpOPzI0G/simpleregstd-202111250808-2-9446f6.csv, /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/RtmpOPzI0G/simpleregstd-202111250808-3-9446f6.csv, /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/RtmpOPzI0G/simpleregstd-202111250808-4-9446f6.csv
+#> Processing csv files: /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/RtmpyS0NAw/simpleregstd-202112040921-1-94a4db.csv, /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/RtmpyS0NAw/simpleregstd-202112040921-2-94a4db.csv, /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/RtmpyS0NAw/simpleregstd-202112040921-3-94a4db.csv, /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/RtmpyS0NAw/simpleregstd-202112040921-4-94a4db.csv
 #> 
 #> Checking sampler transitions treedepth.
 #> Treedepth satisfactory for all transitions.
@@ -340,7 +340,7 @@ stanfit <- rstan::read_stan_csv(fit$output_files())
 per poi utilizzare le funzioni del pacchetto `bayesplot`:
 
 ```r
-stanfit %>%
+stanfit %>% 
   mcmc_trace(pars = c("alpha", "beta", "sigma"))
 ```
 

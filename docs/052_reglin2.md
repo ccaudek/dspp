@@ -42,12 +42,12 @@ Seguendo [Solomon Kurz](https://github.com/ASKurz/Working-through-Regression-and
 
 
 ```r
-rss <- function(x, y, a, b) {
-  # x and y are vectors,
-  # a and b are scalars
+rss <- function(x, y, a, b) {  
+  # x and y are vectors, 
+  # a and b are scalars 
   resid <- y - (a + b * x)
   return(sum(resid^2))
-}
+  }
 ```
 
 Useremo i dati ....
@@ -70,8 +70,8 @@ Nell'esempio, `kid_score` è la variabile $y$ e `mom_iq` è il predittore. Le st
 ```r
 fm <- lm(kid_score ~ mom_iq, data = df)
 fm %>%
-  tidy() %>%
-  filter(term == c("(Intercept)", "mom_iq")) %>%
+  tidy() %>% 
+  filter(term == c("(Intercept)", "mom_iq")) %>% 
   pull(estimate)
 #> [1] 25.80  0.61
 ```
@@ -92,20 +92,20 @@ Esploriamo ora i valori assunti da $rss$ per diversi valori di $a$ e $b$. Per in
 # theme_set(theme_linedraw() +
 #             theme(panel.grid = element_blank()))
 # simulate
-tibble(a = seq(20, 30, length.out = 30)) %>%
+tibble(a = seq(20, 30, length.out = 30)) %>% 
   mutate(
     rss = map_dbl(
-      a,
-      rss,
-      x = df$mom_iq,
-      y = df$kid_score,
-      b = 0.61
-    )
-  ) %>%
+      a, 
+      rss, 
+      x = df$mom_iq, 
+      y = df$kid_score,  
+      b = 0.61)
+    ) %>% 
+  
   # plot
   ggplot(aes(x = a, y = rss)) +
   geom_point() +
-  labs(subtitle = "Il valore b è tenuto costante (b = 0.61)")
+  labs(subtitle = "Il valore b è tenuto costante (b = 0.61)") 
 ```
 
 
@@ -116,10 +116,8 @@ Ora variamo sia `a` che `b`, facendo assumere a ciascun parametro un insieme di 
 
 ```r
 d <-
-  crossing(
-    a = seq(-20, 70, length.out = 400),
-    b = seq(-0.2, 1.4, length.out = 400)
-  ) %>%
+  crossing(a = seq(-20, 70, length.out = 400),
+           b = seq(-0.2, 1.4, length.out = 400)) %>% 
   mutate(rss = map2_dbl(a, b, rss, x = df$mom_iq, y = df$kid_score))
 d %>%
   ggplot(aes(x = a, y = b, fill = rss)) +
@@ -135,8 +133,8 @@ d %>%
 Poiché la stima dei minimi quadrati enfatizza il valore RSS minimo, la soluzione che cerchiamo corrisponde alle combinazione di `a` e `b` nell'intervallo più scuro rappresentato nella figura. Tra gli `a` e `b` che abbiamo preso in considerazione, la coppia di valori a cui è associato il minimo valore `rss` si trova nel modo seguente:
 
 ```r
-d %>%
-  arrange(rss) %>%
+d %>% 
+  arrange(rss) %>% 
   slice(1)
 #> # A tibble: 1 x 3
 #>       a     b     rss
@@ -173,11 +171,9 @@ Calcoliamo dunque le stime di verosimiglianza logaritmica per varie combinazioni
 
 ```r
 d <-
-  crossing(
-    a = seq(-20, 70, length.out = 200),
-    b = seq(-0.2, 1.4, length.out = 200)
-  ) %>%
-  mutate(ll = map2(a, b, ll, x = df$mom_iq, y = df$kid_score)) %>%
+  crossing(a = seq(-20, 70, length.out = 200),
+           b = seq(-0.2, 1.4, length.out = 200)) %>% 
+  mutate(ll = map2(a, b, ll, x = df$mom_iq, y = df$kid_score)) %>% 
   unnest(ll)
 p1 <-
   d %>%
@@ -197,8 +193,8 @@ p1
 Le stime di $\hat{a}, \hat{b}$ ottenute mediante il metodo di massima verosimiglianza sono:
 
 ```r
-d %>%
-  arrange(desc(ll)) %>%
+d %>% 
+  arrange(desc(ll)) %>% 
   slice(1)
 #> # A tibble: 1 x 4
 #>       a     b sigma     ll
@@ -215,7 +211,7 @@ Usiamo ora la funzione `brms::brm()` per eseguire l'analisi mediante un approcci
 m <-
   brm(
     kid_score ~ mom_iq,
-    data = df,
+    data = df, 
     backend = "cmdstan",
     refresh = 0
   )
@@ -234,13 +230,13 @@ m <-
 Utilizzando i coefficienti calcolati da `brms::brm()`, aggiungiamo la stima della retta di regressione al diagramma di dispersione dei dati:
 
 ```r
-df %>%
+df %>% 
   ggplot(aes(x = mom_iq, y = kid_score)) +
   geom_point() +
   geom_abline(
-    intercept = fixef(m, robust = TRUE)[1, 1],
+    intercept = fixef(m, robust = TRUE)[1, 1], 
     slope = fixef(m, robust = TRUE)[2, 1],
-    size = 1 / 3
+    size = 1/3
   ) +
   annotate(
     geom = "text",
@@ -251,7 +247,7 @@ df %>%
     subtitle = "Dati e retta di regressione",
     x = "x",
     y = "y"
-  )
+  ) 
 ```
 
 
@@ -264,7 +260,7 @@ La funzione `brms::posterior_samples()` consente di estrarre molti campioni dall
 ```r
 set.seed(8)
 
-posterior_samples(m) %>%
+posterior_samples(m) %>% 
   slice_sample(n = 5)
 #>   b_Intercept b_mom_iq sigma Intercept  lp__
 #> 1        18.7    0.671  19.2      85.8 -1883
@@ -280,13 +276,13 @@ Possiamo interpretare i valori `b_Intercept`, `b_mom_iq` come un insieme di valo
 ```r
 set.seed(8)
 
-posterior_samples(m) %>%
-  slice_sample(n = 50) %>%
+posterior_samples(m) %>% 
+  slice_sample(n = 50) %>% 
+  
   ggplot() +
   geom_abline(
     aes(intercept = b_Intercept, slope = b_mom_iq),
-    size = 1 / 4, alpha = 1 / 2, color = "grey25"
-  ) +
+        size = 1/4, alpha = 1/2, color = "grey25") +
   geom_point(
     data = df,
     aes(x = mom_iq, y = kid_score)
@@ -295,7 +291,7 @@ posterior_samples(m) %>%
     subtitle = "Dati e possibili rette di regressione",
     x = "x",
     y = "y"
-  )
+  ) 
 ```
 
 

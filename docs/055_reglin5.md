@@ -44,8 +44,8 @@ Calcoliamo le statistiche descrittive per i due gruppi:
 
 
 ```r
-df %>%
-  group_by(mom_hs) %>%
+df %>% 
+  group_by(mom_hs) %>% 
   summarise(
     mean_kid_score = mean(kid_score),
     std = sqrt(var(kid_score))
@@ -62,7 +62,7 @@ Il punteggio medio PIAT è pari a 77.5 per i bambini la cui madre non ha il dipl
 
 
 ```r
-modelString <- "
+modelString = "
 data {
   int<lower=0> N;
   vector[N] y;
@@ -145,7 +145,7 @@ posterior <- extract(stanfit)
 
 ```r
 plot(
-  df$kid_score ~ df$mom_hs,
+  df$kid_score ~ df$mom_hs, 
   pch = 20,
   xlab = "mom_hs",
   ylab = "kid_score"
@@ -199,7 +199,7 @@ Avendo a disposizione le informazioni sulle distribuzioni a posteriori dei param
 
 
 ```r
-11.75398 / 19.90159
+11.75398 / 19.90159	
 #> [1] 0.591
 ```
 \noindent
