@@ -17,7 +17,7 @@ SEED <- 374237 # set random seed for reproducibility
 
 # theme_set(bayesplot::theme_default(base_family = "sans"))
 theme_set(bayesplot::theme_default(base_size = 12))
-bayesplot::color_scheme_set("mix-blue-green") # "brightblue"
+bayesplot::color_scheme_set("brightblue") #  mix-blue-green
 # theme_update(plot.title = element_text(hjust = 0.5))
 
 # theme_clean <- function() {
