@@ -1928,7 +1928,10 @@ Per fare un confronto, stimiamo i coefficienti del modello di regressione che in
 \noindent
 Nel caso presente, le differenze sono minime, ma questo non è sempre vero.
 
-Calcoliamo ora la quantità \(\elpd\) per i due modelli:
+\hypertarget{confronto-di-modelli-tramite-elpd}{%
+\section{\texorpdfstring{Confronto di modelli tramite \(\elpd\)}{Confronto di modelli tramite \textbackslash elpd}}\label{confronto-di-modelli-tramite-elpd}}
+
+Confrontiamo ora la capacità predittiva a posteriori dei due modelli rispetto alla loro \(\elpd\). Ricordiamo che tanto maggiore è \(\elpd\) rispetto ad un nuovo insieme di dati futuri \(\tilde{y}\), \(\log p(\tilde{y} \mid y)\), tanto maggiore è l'accuratezza predittiva del modello. Iniziamo a calcolare \(\elpd\) per i due modelli:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1940,7 +1943,7 @@ Calcoliamo ora la quantità \(\elpd\) per i due modelli:
 \end{Shaded}
 
 \noindent
-Eseguiamo ora un confronto tra il modello completo e il modello semplificato in base alla statistica LOO-CV:
+La quantità \(\elpd\) non fornisce una metrica interpretabile per l'accuratezza predittiva di un singolo modello. Risulta invece utile per il confronto tra modelli alternativi. Un confronto tra il modello completo e il modello semplificato si ottiene mediante la funzione \texttt{loo\_compare()}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1951,9 +1954,19 @@ Eseguiamo ora un confronto tra il modello completo e il modello semplificato in 
 \end{Highlighting}
 \end{Shaded}
 
-I risultati indicano che il Modello \texttt{m1} ha il valore \(\elpd\) più basso (e quindi sarebbe quello da preferire). Tuttavia, se si confronta la differenza \(\elpd\) tra il Modello \texttt{m1} e il Modello \texttt{m2} e si tiene in considerazione l'errore standard corrispondente (nella colonna \texttt{se\_diff}), la differenza ottenuta risulta essere relativamente piccola. Per il Modello \texttt{m1} \(\elpd\) è uguale a -567.2684 e per \texttt{m2} abbiamo -569.5050. La differenza è (-567.2684 - -569.5050) pari a 2.24 con un errore standard stimato di 5.0. In altre parole, possiamo dire che i dati suggeriscono che la vera differenza in \(\elpd\) tra \texttt{m1} e \texttt{m2} sia compresa tra \(\pm\) 2 errori standard (ovvero nel caso presente, 10 unità) dalla differenza stimata di -2.2 unità, ovvero \(-2.2 \pm 2 \cdot 5 = (-12.2, 7.8)\). Dato che la differenza \(\elpd\) pari a zero è compresa entro l'intervallo di \(\pm\) due standard error dalla differenza stimata, non c'è evidenza che l'accuratezza predittiva a posteriori di \texttt{m1} sia superiore a quella di \texttt{m2}. Inoltre, dato che il Modello \texttt{m2} è più semplice di \texttt{m1}, possiamo concludere che \texttt{m2} è il modello migliore tra i due considerati.
+\noindent
+I risultati di tale confronto indicano che il Modello \texttt{m1} ha il valore \(\elpd\) più basso e, dunque, sarebbe quello da preferire. Tuttavia, se si considera la differenza in \(\elpd\) in riferimento all'errore standard corrispondente (nella colonna \texttt{se\_diff}), ne risulta una differenza relativamente piccola. Per il Modello \texttt{m1} \(\elpd\) è uguale a -567.3 e per \texttt{m2} è -569.5. La differenza è pari a (-567.3 - -569.5) = 2.2, con un errore standard stimato di 5.0. I dati dunque suggeriscono che la vera differenza in \(\elpd\) tra \texttt{m1} e \texttt{m2} sia compresa tra \(\pm\) 2 errori standard (ovvero nel caso presente, 10 unità) dalla differenza stimata di -2.2 unità, ovvero sia inclusa nell'intervallo \(-2.2 \pm 2 \cdot 5 = (-12.2, 7.8)\). Dato il valore \(\elpd = 0\) è compreso nell'intervallo di \(\pm\) due standard error dalla differenza stimata, i dati non forniscono evidenze convincenti che l'accuratezza predittiva a posteriori di \texttt{m1} sia superiore a quella di \texttt{m2}. Inoltre, dato che il Modello \texttt{m2} è più semplice di \texttt{m1}, concludiamo che \texttt{m2} sia il modello migliore tra i due considerati (rasoio di Ockham).
 
-Di seguito vengono calcolati i coefficienti di determinazione bayesiani dei due modelli:
+\hypertarget{coefficiente-di-determinazione-bayesiano}{%
+\section{Coefficiente di determinazione bayesiano}\label{coefficiente-di-determinazione-bayesiano}}
+
+\textcite{gelman2019r} definiscono il \href{https://avehtari.github.io/bayes_R2/bayes_R2.html}{coefficiente di determinazione bayesiano} come
+\begin{equation}
+R^2 = \frac{\Var_{\mu}}{\Var_{\mu} + \Var_{\text{res}}},
+\end{equation}
+dove \(\Var_{\mu}\) è la varianza del valore atteso predetto dal modello e \(\Var_{\text{res}}\) è la varianza dei residui. Entrambe queste quantità sono stimate considerando gli indici a posteriori del modello adattato.
+
+Di seguito vengono calcolati i coefficienti di determinazione bayesiani dei due modelli discussi sopra:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1961,14 +1974,47 @@ Di seguito vengono calcolati i coefficienti di determinazione bayesiani dei due 
   \FunctionTok{round}\NormalTok{(}\DecValTok{3}\NormalTok{)}
 \CommentTok{\#\textgreater{}    Estimate Est.Error  Q2.5 Q97.5}
 \CommentTok{\#\textgreater{} R2    0.201     0.036 0.125  0.27}
-\FunctionTok{loo\_R2}\NormalTok{(m2, }\AttributeTok{robust =} \ConstantTok{TRUE}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{loo\_R2}\NormalTok{(m2, }\AttributeTok{robust =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{round}\NormalTok{(}\DecValTok{3}\NormalTok{)}
 \CommentTok{\#\textgreater{}    Estimate Est.Error  Q2.5 Q97.5}
 \CommentTok{\#\textgreater{} R2    0.196     0.033 0.128 0.255}
 \end{Highlighting}
 \end{Shaded}
 
-Considerando l'intervallo a posteriori del 95\%, anche in questo caso concludiamo che non c'è evidenza che l'uso di un solo predittore faccia diminuire la capacità predittiva del modello.
+\noindent
+Una rappresentazione grafica della distribuzione a posteriori dei due coefficienti di determinazione bayesiani si ottiene com le seguenti istruzioni:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(}\StringTok{"patchwork"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(}\StringTok{"latex2exp"}\NormalTok{)}
+
+\NormalTok{m1\_fit\_r2 }\OtherTok{\textless{}{-}} \FunctionTok{loo\_R2}\NormalTok{(m1, }\AttributeTok{summary =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{foo }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{R2 =} \FunctionTok{as.numeric}\NormalTok{(m1\_fit\_r2))}
+\NormalTok{h1 }\OtherTok{\textless{}{-}}\NormalTok{ foo }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{R2)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\FunctionTok{TeX}\NormalTok{(}\StringTok{"$R\^{}2$"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Density"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Bayesian R squared}\SpecialCharTok{\textbackslash{}n}\StringTok{ posterior distribution for model m1"}\NormalTok{)}
+
+\NormalTok{m2\_fit\_r2 }\OtherTok{\textless{}{-}} \FunctionTok{loo\_R2}\NormalTok{(m2, }\AttributeTok{summary =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{foo2 }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{R2 =} \FunctionTok{as.numeric}\NormalTok{(m2\_fit\_r2))}
+\NormalTok{h2 }\OtherTok{\textless{}{-}}\NormalTok{ foo2 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{R2)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\FunctionTok{TeX}\NormalTok{(}\StringTok{"$R\^{}2$"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Density"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Bayesian R squared}\SpecialCharTok{\textbackslash{}n}\StringTok{ posterior distribution for model m2"}\NormalTok{)}
+
+\NormalTok{h1 }\SpecialCharTok{|}\NormalTok{ h2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{092_loo_files/figure-latex/unnamed-chunk-69-1} \end{center}
+
+\noindent
+Considerato l'intervallo a posteriori del 95\%, anche in questo caso non abbiamo evidenze convincenti che l'uso di un solo predittore faccia diminuire la capacità predittiva del modello.
 
 \hypertarget{considerazioni-conclusive}{%
 \section*{Considerazioni conclusive}\label{considerazioni-conclusive}}

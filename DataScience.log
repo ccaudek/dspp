@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.7)  4 DEC 2021 07:54
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.7)  4 DEC 2021 09:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1991,12 +1991,12 @@ Package csquotes Info: ... found 'polyglossia' package.
 LaTeX Info: Redefining \rmfamily on input line 26.
 LaTeX Info: Redefining \sffamily on input line 26.
 LaTeX Info: Redefining \ttfamily on input line 26.
-LaTeX Info: Redefining \rmfamily on input line 188.
-LaTeX Info: Redefining \sffamily on input line 188.
-LaTeX Info: Redefining \ttfamily on input line 188.
-LaTeX Info: Redefining \rmfamily on input line 192.
-LaTeX Info: Redefining \sffamily on input line 192.
-LaTeX Info: Redefining \ttfamily on input line 192.
+LaTeX Info: Redefining \rmfamily on input line 198.
+LaTeX Info: Redefining \sffamily on input line 198.
+LaTeX Info: Redefining \ttfamily on input line 198.
+LaTeX Info: Redefining \rmfamily on input line 202.
+LaTeX Info: Redefining \sffamily on input line 202.
+LaTeX Info: Redefining \ttfamily on input line 202.
 )
 \openout1 = `DataScience.aux'.
 
@@ -2499,12 +2499,12 @@ LaTeX Font Warning: Font shape `TU/lmr/bx/sc' undefined
 LaTeX Info: Redefining \rmfamily on input line 3.
 LaTeX Info: Redefining \sffamily on input line 3.
 LaTeX Info: Redefining \ttfamily on input line 3.
-LaTeX Info: Redefining \rmfamily on input line 61.
-LaTeX Info: Redefining \sffamily on input line 61.
-LaTeX Info: Redefining \ttfamily on input line 61.
-LaTeX Info: Redefining \rmfamily on input line 63.
-LaTeX Info: Redefining \sffamily on input line 63.
-LaTeX Info: Redefining \ttfamily on input line 63.
+LaTeX Info: Redefining \rmfamily on input line 65.
+LaTeX Info: Redefining \sffamily on input line 65.
+LaTeX Info: Redefining \ttfamily on input line 65.
+LaTeX Info: Redefining \rmfamily on input line 67.
+LaTeX Info: Redefining \sffamily on input line 67.
+LaTeX Info: Redefining \ttfamily on input line 67.
 )
 
 ******************************************************
@@ -2591,7 +2591,18 @@ File: 092_loo_files/figure-latex/unnamed-chunk-58-1.pdf Graphic file (type pdf)
 File: 092_loo_files/figure-latex/unnamed-chunk-61-1.pdf Graphic file (type pdf)
 
 <use 092_loo_files/figure-latex/unnamed-chunk-61-1.pdf>
-[23] [24] [25] [26]
+[23] [24]
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 12.0pt on input line 1932.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 12.0011pt on input line 1932.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 11.99872pt on input line 1932.
+[25] [26]
+File: 092_loo_files/figure-latex/unnamed-chunk-69-1.pdf Graphic file (type pdf)
+
+<use 092_loo_files/figure-latex/unnamed-chunk-69-1.pdf>
+[27] [28]
 
 ******************************************************
 Stock height and width: 845.04684pt by 597.50787pt
@@ -2612,11 +2623,11 @@ Sidefoothsep and sidefootwidth: 7pt and 117pt
 Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 ******************************************************
 
-[27
+[29
 
 
 
-] [28
+] [30
 
 
 ]
@@ -2650,7 +2661,7 @@ LaTeX Info: Redefining \ttfamily on input line 9.
 LaTeX Info: Redefining \rmfamily on input line 11.
 LaTeX Info: Redefining \sffamily on input line 11.
 LaTeX Info: Redefining \ttfamily on input line 11.
-) [29
+) [31
 
 ]
 
@@ -2673,17 +2684,17 @@ Sidefoothsep and sidefootwidth: 7pt and 117pt
 Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 ******************************************************
 
-LaTeX Info: Redefining \rmfamily on input line 2023.
-LaTeX Info: Redefining \sffamily on input line 2023.
-LaTeX Info: Redefining \ttfamily on input line 2023.
+LaTeX Info: Redefining \rmfamily on input line 2069.
+LaTeX Info: Redefining \sffamily on input line 2069.
+LaTeX Info: Redefining \ttfamily on input line 2069.
 
-Underfull \hbox (badness 10000) in paragraph at lines 2027--2029
+Underfull \hbox (badness 10000) in paragraph at lines 2073--2075
 
  []
 
-LaTeX Info: Redefining \rmfamily on input line 2030.
-LaTeX Info: Redefining \sffamily on input line 2030.
-LaTeX Info: Redefining \ttfamily on input line 2030.
+LaTeX Info: Redefining \rmfamily on input line 2076.
+LaTeX Info: Redefining \sffamily on input line 2076.
+LaTeX Info: Redefining \ttfamily on input line 2076.
 The property list \polyglossia@langsetup contains the pairs (without outer
 braces):
 >  {latex/script}  =>  {latin}
@@ -2734,7 +2745,7 @@ braces):
 >  {english/babelname}  =>  {american}
 >  {english/localnumeral}  =>  {polyglossia@C@localnumeral}
 >  {english/Localnumeral}  =>  {polyglossia@C@localnumeral}.
-[30
+[32
 
 
 ]
@@ -2744,24 +2755,24 @@ braces):
 \tf@lof=\write9
 \openout9 = `DataScience.lof'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2035.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2035.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2081.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2081.
 (./DataScience.aux
 LaTeX Info: Redefining \rmfamily on input line 26.
 LaTeX Info: Redefining \sffamily on input line 26.
 LaTeX Info: Redefining \ttfamily on input line 26.
-LaTeX Info: Redefining \rmfamily on input line 189.
-LaTeX Info: Redefining \sffamily on input line 189.
-LaTeX Info: Redefining \ttfamily on input line 189.
-LaTeX Info: Redefining \rmfamily on input line 193.
-LaTeX Info: Redefining \sffamily on input line 193.
-LaTeX Info: Redefining \ttfamily on input line 193.
+LaTeX Info: Redefining \rmfamily on input line 199.
+LaTeX Info: Redefining \sffamily on input line 199.
+LaTeX Info: Redefining \ttfamily on input line 199.
+LaTeX Info: Redefining \rmfamily on input line 203.
+LaTeX Info: Redefining \sffamily on input line 203.
+LaTeX Info: Redefining \ttfamily on input line 203.
 )
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 2035.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2035.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 2081.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2081.
 
 Package rerunfilecheck Info: File `DataScience.out' has not changed.
-(rerunfilecheck)             Checksum: D983161C583D9B91EBDD4A6768183D4D;4380.
+(rerunfilecheck)             Checksum: BBF0611E2ADD5DAFCC767AC00FA9CF06;4884.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -2773,12 +2784,12 @@ Package logreq Info: Writing requests to 'DataScience.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 47383 strings out of 479418
- 915277 string characters out of 5884586
- 1862141 words of memory out of 5000000
- 64082 multiletter control sequences out of 15000+600000
- 547378 words of font info for 95 fonts, out of 8000000 for 9000
+ 47414 strings out of 479418
+ 916366 string characters out of 5884586
+ 1862460 words of memory out of 5000000
+ 64108 multiletter control sequences out of 15000+600000
+ 548339 words of font info for 101 fonts, out of 8000000 for 9000
  1350 hyphenation exceptions out of 8191
- 75i,12n,121p,2169b,5783s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 75i,13n,121p,2169b,5783s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on DataScience.pdf (40 pages).
+Output written on DataScience.pdf (42 pages).
