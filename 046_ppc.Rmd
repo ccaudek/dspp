@@ -461,7 +461,7 @@ In conclusione, per i dati di Newcomb l'accuratezza predittiva del modello basat
 
 ## Considerazioni conclusive {-}
 
-Questo capitolo abbiamo discusso i controlli predittivi a posteriori. A questo proposito è necessario notare un punto importante: i controlli predittivi a posteriori, quando suggeriscono un buon adattamento del modello alle caratterische dei dati previsti futuri $y^{rep}$, non forniscono una forte evidenza della capacità del modello di generalizzarsi a nuovi campioni di dati.  Infatti, una tale evidenza sulla generalizzabilità del modello può essere solo fornita da studi di _cross-validation_, ovvero da studi nei quali viene utilizzato un _nuovo_ campione di dati. D'altra parte, invece, se i PPC mostrano un cattivo  adattamento del modello ai dati previsti futuri, questo fornisce una forte evidenza di una errata specificazione del modello.
+Questo capitolo abbiamo discusso i controlli predittivi a posteriori. A questo proposito è necessario notare un punto importante: i controlli predittivi a posteriori, quando suggeriscono un buon adattamento del modello alle caratterische dei dati previsti futuri $y^{rep}$, non forniscono necessariamente una forte evidenza della capacità del modello di generalizzarsi a nuovi campioni di dati. Una tale evidenza sulla generalizzabilità del modello può solo essere fornita da studi di _cross-validation_, ovvero da studi nei quali viene utilizzato un _nuovo_ campione di dati. Se i PPC mostrano un cattivo adattamento del modello ai dati previsti futuri, però, questo sicuramente fornisce una forte evidenza di una errata specificazione del modello.
 
 
 
