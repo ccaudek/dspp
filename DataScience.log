@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.7)  5 DEC 2021 10:37
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.7)  5 DEC 2021 10:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2574,6 +2574,7 @@ File: 046_ppc_files/figure-latex/unnamed-chunk-22-1.pdf Graphic file (type pdf)
 File: 046_ppc_files/figure-latex/unnamed-chunk-23-1.pdf Graphic file (type pdf)
 
 <use 046_ppc_files/figure-latex/unnamed-chunk-23-1.pdf>
+Missing character: There is no 𝑦 in font [lmroman10-regular]:mapping=tex-text;!
 File: 046_ppc_files/figure-latex/unnamed-chunk-24-1.pdf Graphic file (type pdf)
 
 <use 046_ppc_files/figure-latex/unnamed-chunk-24-1.pdf>
@@ -2667,17 +2668,17 @@ Sidefoothsep and sidefootwidth: 7pt and 117pt
 Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 ******************************************************
 
-LaTeX Info: Redefining \rmfamily on input line 1162.
-LaTeX Info: Redefining \sffamily on input line 1162.
-LaTeX Info: Redefining \ttfamily on input line 1162.
+LaTeX Info: Redefining \rmfamily on input line 1164.
+LaTeX Info: Redefining \sffamily on input line 1164.
+LaTeX Info: Redefining \ttfamily on input line 1164.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1166--1168
+Underfull \hbox (badness 10000) in paragraph at lines 1168--1170
 
  []
 
-LaTeX Info: Redefining \rmfamily on input line 1169.
-LaTeX Info: Redefining \sffamily on input line 1169.
-LaTeX Info: Redefining \ttfamily on input line 1169.
+LaTeX Info: Redefining \rmfamily on input line 1171.
+LaTeX Info: Redefining \sffamily on input line 1171.
+LaTeX Info: Redefining \ttfamily on input line 1171.
 The property list \polyglossia@langsetup contains the pairs (without outer
 braces):
 >  {latex/script}  =>  {latin}
@@ -2738,8 +2739,8 @@ braces):
 \tf@lof=\write9
 \openout9 = `DataScience.lof'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1174.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1174.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1176.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1176.
 (./DataScience.aux
 LaTeX Info: Redefining \rmfamily on input line 26.
 LaTeX Info: Redefining \sffamily on input line 26.
@@ -2751,8 +2752,8 @@ LaTeX Info: Redefining \rmfamily on input line 96.
 LaTeX Info: Redefining \sffamily on input line 96.
 LaTeX Info: Redefining \ttfamily on input line 96.
 )
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1174.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1174.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1176.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1176.
 
 Package rerunfilecheck Info: File `DataScience.out' has not changed.
 (rerunfilecheck)             Checksum: 00E140A0953CC88AB7D88D7770D3203B;2526.

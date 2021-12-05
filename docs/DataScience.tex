@@ -994,7 +994,7 @@ Anche se trova la media giusta, il modello non è comunque adeguato a prevedere 
 \end{Shaded}
 
 \noindent
-Il confronto tra l'istogramma della \(y\) e gli istogrammi di diversi campioni \(y^{rep}\) mostra una scarsa corrispondenza tra i due:
+I valori \texttt{y\_rep} sono i dati della distribuzione predittiva a posteriori che sono stati simulati usando gli stessi valori \(X\) dei predittori che sono stati utilizzati per adattare il modello. Il confronto tra l'istogramma della \(y\) e gli istogrammi di diversi campioni \(y^{rep}\) mostra una scarsa corrispondenza tra i due:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1014,6 +1014,8 @@ Alla stessa conclusione si giunge tramite un confronto tra la funzione di densit
 \end{Shaded}
 
 \begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-23-1} \end{center}
+
+La funzione \texttt{ppc\_hist()} genera un di grafici che confrontano il risultato osservato 𝑦 con set di dati simulati rep dalla distribuzione predittiva posteriore utilizzando le stesse osservazioni dei predittori utilizzate per adattare il modello.
 
 \noindent
 Eseguiamo ora i PPC per la media e il minimo della distribuzione:
@@ -1084,7 +1086,7 @@ Adattiamo questo secondo modello ai dati.
 \CommentTok{\#\textgreater{} }
 \CommentTok{\#\textgreater{} All 4 chains finished successfully.}
 \CommentTok{\#\textgreater{} Mean chain execution time: 0.3 seconds.}
-\CommentTok{\#\textgreater{} Total execution time: 0.7 seconds.}
+\CommentTok{\#\textgreater{} Total execution time: 0.8 seconds.}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1113,7 +1115,7 @@ Inoltre, anche la statistica ``minimo della distribuzione'' viene ben predetta d
 \begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-28-1} \end{center}
 
 \noindent
-In conclusione, per questi dati l'accuratezza predittiva del modello basato sulla distribuzione \(t\) di Student è chiaramente migliore di quella del modello normale.
+In conclusione, per le misurazioni della velocità della luce di Newcomb l'accuratezza predittiva del modello basato sulla distribuzione \(t\) di Student è chiaramente migliore di quella del modello normale.
 
 \hypertarget{considerazioni-conclusive}{%
 \section*{Considerazioni conclusive}\label{considerazioni-conclusive}}
