@@ -321,7 +321,7 @@
 
 \author{Corrado Caudek}
 
-\date{2021-12-04}
+\date{2021-12-05}
 
 
 % Include headers (preamble.tex) here
@@ -481,7 +481,7 @@ Copyright \(\copyright\) 2022.
 
 \normalsize
 
-Data della versione presente: Dicembre 04, 2021.
+Data della versione presente: Dicembre 05, 2021.
 
 \hypertarget{prefazione}{%
 \chapter{Prefazione}\label{prefazione}}
@@ -564,7 +564,27 @@ Febbraio 2022
 \hypertarget{chapter-ppc}{%
 \chapter{Distribuzione predittiva a posteriori}\label{chapter-ppc}}
 
-Oltre ad una sintesi della distribuzione a posteriori attraverso il computo di indici caratteristici e alla verifica di ipotesi, un altro compito dell'analisi bayesiana è la predizione di nuovi dati futuri. Dopo aver visto i dati e ottenuto le distribuzioni a posteriori dei parametri, è infatti possibile ottenere qualche indicazione su come potrebbero essere i dati futuri. Una volta trovata la distribuzione a posteriori \(p(\theta \mid y)\) possiamo derivare le previsioni relative ai possibili dati futuri in base a questa distribuzione:
+\begin{Summary}
+Oltre ad una sintesi della distribuzione a posteriori attraverso il
+computo di indici caratteristici e alla verifica di ipotesi, un altro
+compito dell'analisi bayesiana è la predizione di nuovi dati futuri.
+Dopo aver osservato i dati di un campione e ottenuto le distribuzioni a
+posteriori dei parametri, è infatti possibile ottenere una qualche
+indicazione su come potrebbero essere i dati futuri. L'uso più immediato
+della stima della distribuzione dei possibili valori futuri della
+variabile di esito è la verifica del modello. Infatti, il modo più
+diretto per testare un modello è quello di utilizzare il modello per
+fare previsioni sui possibili dati futuri per poi confrontare tali dati
+predetti con i dati effettivi.
+\end{Summary}
+
+La distribuzione dei possibili valori futuri della variabile di esito può essere predetta da un modello statistico sulla base della distribuzione a posteriori dei parametri, \(p(\theta \mid y)\) e avendo già osservato \(n\) manifestazioni dello stesso fenomeno \(y\). . Tala distribuzione va sotto il nome di \emph{distribuzione predittiva a posteriori} (\emph{posterior predictive distribution}, PPD). La distribuzione predittiva a posteriori è la distribuzione della variabile di esito predetta dal modello dopo aver osservato i dati campione per aggiornare le nostre credenze sul valore dei parametri sconosciuti.
+
+Quando vengono simulate le osservazioni della distribuzione predittiva a posteriori si usa la notazione \(y^{rep}\) (dove \(rep\) sta per \emph{replica}) quando, nella simulazione, vengono utilizzate le stesse osservazioni di \(X\) che erano state usate per stimare i parametri del modello; si usa invece la notazione \(\tilde{y}\) per fare riferimento a possibili valori \(X\) che non sono contenuti nel campione osservato (ovvero, ad un campione di dati che potrebbe essere osservati in qualche futura occasione).
+
+La distribuzione predittiva a posteriori viene usata per fare inferenze predittive, cioè per prevedere la distribuzione di nuovi dati non osservati. L'idea è che se il modello si adatta bene ai dati dovremmo essere in grado di generare dati \(y^{rep}\) dalla distribuzione predittiva a posteriori che sono molto simili ai dati osservati \(y\). Cioè, dato \(y\), la simulazione della distribuzione \(y^{rep}\) dovrebbe risultare plausibile.
+
+La distribuzione predittiva a posterioried è data da:
 \begin{equation}
 p(\tilde{y} \mid y) = \int_{\theta} p(\tilde{y}, \theta \mid y) d \theta = \int_{\theta} p(\tilde{y} \mid \theta, y) p(\theta \mid y) d\theta.\notag
 \end{equation}
@@ -575,12 +595,12 @@ p(\tilde{y} \mid y) = \int_{\theta} p(\tilde{y} \mid \theta) p(\theta \mid y) d\
 \label{eq:dist-pred-post}
 \end{equation}
 \noindent
-La distribuzione \(p(\tilde{y} \mid y)\) è la distribuzione di un nuovo campione di possibili osservazioni \(\tilde{y}\) avendo già osservato \(n\) manifestazioni dello stesso fenomeno \(y\) e si chiama \emph{distribuzione predittiva a posteriori} (\emph{posterior predictive distribution}, PPD). Si noti che, nella \eqref{eq:dist-pred-post}, \(\tilde{y}\) è condizionato da \(y\) ma non da ciò che è incognito, ovvero \(\theta\). La distribuzione predittiva a posteriori è invece ottenuta mediante marginalizzazione sopra le variabili da ``scartare'', ovvero sopra i parametri incogniti \(\theta\). La \eqref{eq:dist-pred-post} descrive la nostra incertezza sulla distribuzione di future osservazioni di dati, data la distribuzione a posteriori di \(\theta\), ovvero tenendo conto della scelta del modello e della stima dei parametri mediante i dati osservati. La distribuzione predittiva a posteriori viene usata per fare inferenze predittive, cioè per prevedere la distribuzione di nuovi dati non osservati.
+La \eqref{eq:dist-pred-post} descrive la nostra incertezza sulla distribuzione di future osservazioni di dati, data la distribuzione a posteriori di \(\theta\), ovvero tenendo conto della scelta del modello e della stima dei parametri mediante i dati osservati. Si noti che, nella \eqref{eq:dist-pred-post}, \(\tilde{y}\) è condizionato da \(y\) ma non da ciò che è incognito, ovvero \(\theta\). La distribuzione predittiva a posteriori è invece ottenuta mediante marginalizzazione sopra le variabili da ``scartare'', ovvero sopra i parametri incogniti \(\theta\).
 
 \hypertarget{schema-beta-bin-distr-pred-post}{%
-\section{Schema Beta-Binomiale}\label{schema-beta-bin-distr-pred-post}}
+\section{Come generare la PPD: lo schema Beta-Binomiale}\label{schema-beta-bin-distr-pred-post}}
 
-Consideriamo un'altra volta il campione di pazienti clinici depressi di \textcite{zetschefuture2019} -- si veda l'Appendice \ref{es-pratico-zetsche}. Supponiamo di volere esaminare in futuro altri 20 pazienti clinici e ci chiediamo quanti di essi (\(\tilde{y} \in \{0, 1, \dots, 20\}\)) manifesteranno una depressione grave.
+Poniamoci ora il problema di trovare la distribuzione \(p(\tilde{y} \mid y)\) considerado un caso semplice, ovvero lo schema Beta-Binomiale. Per fare questo, useremo un'altra volta il campione di pazienti clinici depressi di \textcite{zetschefuture2019} -- si veda l'Appendice \ref{es-pratico-zetsche}. Supponiamo di volere esaminare in futuro altri 20 pazienti clinici e ci chiediamo quanti di essi (\(\tilde{y} \in \{0, 1, \dots, 20\}\)) manifesteranno una depressione grave.
 
 Se vogliamo fare predizioni su \(\tilde{y}\) dobbiamo innanzitutto riconoscere che i valori \(\tilde{y} \in [0, 20]\) non sono tutti egualmente plausibili. Sappiamo che \(\tilde{y}\) è una v.c. binomiale con distribuzione
 \begin{equation}
@@ -645,7 +665,7 @@ Svolgendo i calcoli in \(\R\), per i dati dell'esempio otteniamo:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-2-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-3-1} \end{center}
 
 \noindent
 È facile vedere che, in questo esempio, la distribuzione predittiva a posteriori \(p(\tilde{y} \mid y)\) è diversa dalla binomiale di parametro \(\theta = 23/30\):
@@ -670,20 +690,18 @@ Svolgendo i calcoli in \(\R\), per i dati dell'esempio otteniamo:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-3-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 \noindent
 In particolare, la \(p(\tilde{y} \mid y)\) ha una varianza maggiore di \(\Bin(y \mid \theta = 0.77, n = 20)\). Questa maggiore varianza riflette le due fonti di incertezza che sono presenti nella \eqref{eq:dist-pred-post}: l'incertezza sul valore del parametro (descritta dalla distribuzione a posteriori) e l'incertezza dovuta alla variabilità campionaria (descritta dalla funzione di verosimiglianza).
 Possiamo concludere la discussione di questo esempio dicendo che, nel caso di 20 nuovi pazienti clinici, ci aspettiamo di osservare 12 pazienti che manifestano una depressione severa, anche se è ragionevole aspettarci un numero compreso, diciamo, tra 8 e 16.
 
-Una volta trovata la distribuzione predittiva a posteriori \(p(\tilde{y} \mid y)\) diventa possibile rispondere a domande come: qual è la probabilità che almeno 10 dei 20 pazienti futuri mostrino una depressione grave? Rispondere a domande di questo tipo è possibile, ma richiede un po' di lavoro --- non ci sono funzioni \(\R\) che svolgano questi calcoli per noi. Tuttavia, non è importante imparare a risolvere problemi di questo tipo perché, in generale, anche per problemi solo leggermente più complessi di quello discusso qui, non sono disponibili espressioni analitiche della distribuzione predittiva a posteriori. Mediante simulazioni MCMC, invece, è possibile trovare una approssimazione numerica della \(p(\tilde{y} \mid y)\). In tali circostanze, è più facile rispondere alle domande che ci siamo posti.
+Una volta trovata la distribuzione predittiva a posteriori \(p(\tilde{y} \mid y)\) diventa possibile rispondere a domande come: qual è la probabilità che almeno 10 dei 20 pazienti futuri mostrino una depressione grave? Rispondere a domande di questo tipo è possibile, ma richiede un po' di lavoro --- non ci sono funzioni \(\R\) che svolgano questi calcoli per noi. Tuttavia, non è importante imparare a risolvere problemi di questo tipo perché, in generale, anche per problemi solo leggermente più complessi di quello discusso qui, non sono disponibili espressioni analitiche della distribuzione predittiva a posteriori. Invece, è possibile trovare una approssimazione numerica della \(p(\tilde{y} \mid y)\) mediante simulazioni MCMC. Mediante un tale metodo è più facile rispondere a domande simili a quelle che ci siamo posti in questo Paragrafo.
 
 \hypertarget{metodi-mcmc-per-la-distribuzione-predittiva-a-posteriori}{%
 \section{Metodi MCMC per la distribuzione predittiva a posteriori}\label{metodi-mcmc-per-la-distribuzione-predittiva-a-posteriori}}
 
-Utilizzando la notazione di \textcite{gelman2014understanding}, chiamiamo \(y^{rep}\) i dati previsti futuri che potrebbero venire osservati se l'esperimento casuale che ha prodotto \(y\) venisse ripetuto, ovvero una realizzazione futura del modello statistico con gli stessi valori dei parametri \(\theta\) che hanno prodotto \(y\). \textcite{gelman2014understanding} distinguono \(y^{rep}\) (repliche sotto lo stesso modello statistico) da \(\tilde{y}\), che corrisponde invece ad un effettivo campione empirico di dati osservato in qualche futura occasione.
-
-Mostreremo qui come ottenere \(p(y^{rep} \mid y)\) quale \emph{stima} di \(p(\tilde{y} \mid y)\). Se svolgiamo l'analisi bayesiana con il metodo MCMC, \(p(y^{rep} \mid y)\) può essere ottenuta nel modo seguente:
+Se svolgiamo l'analisi bayesiana con il metodo MCMC, le repliche \(p(y^{rep} \mid y)\) (ovvero le predizioni delle possibili osservazioni future \(p(\tilde{y} \mid y)\)) possono essere ottenute nel modo seguente:
 
 \begin{itemize}
 \tightlist
@@ -694,9 +712,9 @@ Mostreremo qui come ottenere \(p(y^{rep} \mid y)\) quale \emph{stima} di \(p(\ti
 \end{itemize}
 
 \noindent
-Se i due passaggi descritti sopra vengono ripetuti un numero sufficiente di volte, l'istogramma risultante approssimerà la distribuzione predittiva a posteriori che, in teoria (ma non in pratica) potrebbe essere ottenuta per via analitica (si veda il Paragrafo \ref{schema-beta-bin-distr-pred-post}). Vediamo ora come calcolare \(p(y^{rep} \mid y)\) usando Stan.
+Se i due passaggi descritti sopra vengono ripetuti un numero sufficiente di volte, l'istogramma risultante approssimerà la distribuzione predittiva a posteriori che, in teoria (ma non in pratica) potrebbe essere ottenuta per via analitica (si veda il Paragrafo \ref{schema-beta-bin-distr-pred-post}).
 
-Qui di seguito è riportato il codice Stan per il modello che può essere usato per fare inferenza su una proporzione --- si veda il Capitolo \ref{mod-binom}:
+Per fare un esempio concreto, esaminiamo il codice Stan che può essere usato per simulare \(p(y^{rep} \mid y)\). Consideriamo il caso semplice dell'inferenza su una proporzione --- si veda il Capitolo \ref{mod-binom}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -726,7 +744,7 @@ Qui di seguito è riportato il codice Stan per il modello che può essere usato 
 \end{Shaded}
 
 \noindent
-Si noti che nel nel blocco \texttt{generated\ quantities} sono state aggiunte le istruzioni necessarie per simulare \(y^{rep}\), ovvero, \texttt{y\_rep{[}n{]}\ =\ bernoulli\_rng(theta);}. Svolgiamo ora la simulazione. I dati dell'esempio che stiamo discutendo sono:
+Si noti che nel nel blocco \texttt{generated\ quantities} sono state aggiunte le istruzioni necessarie per simulare \(y^{rep}\), ovvero, \texttt{y\_rep{[}n{]}\ =\ bernoulli\_rng(theta)}. I dati dell'esempio sono:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -775,7 +793,7 @@ Per comodità, trasformiamo l'oggetto \texttt{fit} in un oggetto di classe \text
 \end{Shaded}
 
 \noindent
-Il contenuto dell'oggetto \texttt{stanfit} si può esaminare nel modo seguente:
+Il contenuto dell'oggetto \texttt{stanfit} può essere esaminato nel modo seguente:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -785,7 +803,8 @@ Il contenuto dell'oggetto \texttt{stanfit} si può esaminare nel modo seguente:
 \end{Highlighting}
 \end{Shaded}
 
-Occupiamoci ora della distribuzione predittiva a posteriori\footnote{Un approfondimento di questa analisi statistica è fornita nell'Appendice \ref{inference-one-prop}}. Usando l'oggetto \texttt{stanfit} creiamo \texttt{y\_bern}:
+\noindent 
+Dall'oggetto \texttt{list\_of\_draws} recuperiamo \texttt{y\_rep}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -820,90 +839,31 @@ Occupiamoci ora della distribuzione predittiva a posteriori\footnote{Un approfon
 \end{Highlighting}
 \end{Shaded}
 
-Dato che il codice Stan definisce un modello per i dati grezzi (ovvero, per ciascuna singola prova Bernoulliana del campione), ogni riga di \texttt{y\_bern} include 30 colonne, ciascuna delle quali è una stima di un nuovo futuro valore possibile \(y_i \in \{0, 1\}\). Per ottenere \texttt{y\_rep}, ovvero, il numero previsto di ``successi'' in nuove future \(N = 30\) prove è sufficiente calcolare la somma dei valori di ciascuna riga. Ripetendo questa operazione per tutte le 16000 righe otteniamo una stima della distribuzione predittiva a posteriori:
+\noindent
+Dato che il codice Stan definisce un modello per i dati grezzi (ovvero, per ciascuna singola prova Bernoulliana del campione), ogni riga di \texttt{y\_bern} include 30 colonne, ciascuna delle quali corrisponde ad un campione (\(n\) = 16000 in questa simulazione) di possibili valori futuri \(y_i \in \{0, 1\}\). Per ottenere una stima della distribuzione predittiva a posteriori \texttt{p(y\_rep)}, ovvero, una stima della probabilità associata a ciascuno dei possibili numeri di ``successi'' in \(N = 30\) nuove prove future, è sufficiente calcolare la proporzione di valori 1 in ciascuna riga:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{y\_rep =} \FunctionTok{rowSums}\NormalTok{(y\_bern)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ y\_rep)) }\SpecialCharTok{+} 
-  \FunctionTok{stat\_count}\NormalTok{()}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ y\_rep, }\FunctionTok{after\_stat}\NormalTok{(density))) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{binwidth =} \DecValTok{1}\NormalTok{) }
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-11-1} \end{center}
-
-Si noti che la simulazione di \texttt{y\_rep} assume che l'ampiezza del campione di dati futuri sia uguale all'ampiezza del campione di dati osservati --- nel caso presente \(n = 30\).
+\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
 \hypertarget{posterior-predictive-checks}{%
 \section{Posterior predictive checks}\label{posterior-predictive-checks}}
 
 La distribuzione predittiva a posteriori viene utilizzata per eseguire i cosiddetti \emph{Posterior Predictive Checks} (PPC). Ricordiamo che la distribuzione predittiva a posteriori corrisponde alla simulazione di un campione di dati generati utilizzando le proprietà del modello adattato. Nei PPC si realizza un confronto grafico tra \(p(y^{rep} \mid y)\) e i dati osservati \(y\).
-Confrontando visivamente gli aspetti chiave dei dati previsti futuri \(y^{rep}\) e dei dati osservati \(y\) possiamo determinare se il modello è adeguato. Se il modello si adatta bene ai dati, la distribuzione di \(y^{rep}\) sarà molto simile alla distribuzione dei dati osservati \(y\). In altre parole, i dati osservati devono risultare plausibili alla luce della distribuzione predittiva a posteriori.
+Confrontando visivamente gli aspetti chiave dei dati previsti futuri \(y^{rep}\) e dei dati osservati \(y\) possiamo determinare se il modello è adeguato.
 
-Oltre al confronto tra le distribuzioni di \(y\) e di \(y^{rep}\) è anche possibile un confronto tra la distribuzione di varie statistiche descrittive, i cui valori sono calcolati su diversi campioni \(y^{rep}\), e le corrispondenti statistiche descrittive calcolate sui dati osservati. Vengono solitamente considerate statistiche descrittive quali la media, la varianza, la deviazione standard, il minimo o il massimo. Ma confronti di questo tipo sono possibili per qualunque statistica descrittiva. Questi confronti sono appunto chiamati PPC.
-
-Per l'esempio presente, una volta eseguito il campionamento MCMC e ottenuto un oggetto di classe \texttt{stanfit}, è possibile usare le funzionalità del pacchetto \texttt{bayesplot} per eseguire i PPC. Nel caso presente, il campione di dati ha dimensioni esigue, per cui i PPC rifletteranno la grande incertenzza dell'inferenza.
-
-Dall'oggetto \texttt{stanfit} estraiamo \(y^{rep}\):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{y\_rep }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(stanfit, }\AttributeTok{pars =} \StringTok{"y\_rep"}\NormalTok{)}
-\FunctionTok{dim}\NormalTok{(y\_rep)}
-\CommentTok{\#\textgreater{} [1] 16000    30}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Qui sotto esaminiamo la distribuzione della \(y\) insieme alla distribuzione di 8 campioni \(y^{rep}\):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{ppc\_hist}\NormalTok{(data\_list}\SpecialCharTok{$}\NormalTok{y, y\_rep[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{8}\NormalTok{, ], }\AttributeTok{binwidth =} \DecValTok{1}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-13-1} \end{center}
-
-La corrispondenza tra le distribuzioni della \(y\) e di \(y^{rep}\) è solo parziale. Il confronto è più facile se sovrapponiamo graficamente i kernel density plot della \(y\) e di \(y^{rep}\) (qui usiamo 50 campioni \(y^{rep}\)):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{ppc\_dens\_overlay}\NormalTok{(data\_list}\SpecialCharTok{$}\NormalTok{y, y\_rep[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{50}\NormalTok{, ])}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-14-1} \end{center}
-
-Anche in questo caso c'è una corrispondenza solo approssimativa tra l'istogramma lisciato della \(y\) e quello di \(y^{rep}\) --- ciò è dovuto al fatto che il campione è molto piccolo.
-
-La distribuzione predittiva a posteriori è comunque in grado di rappresentare abbastanza bene la media di \(y\):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{ppc\_stat}\NormalTok{(data\_list}\SpecialCharTok{$}\NormalTok{y, y\_rep, }\AttributeTok{stat =} \StringTok{"mean"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-15-1} \end{center}
-
-\noindent
-Lo stesso si può dire della varianza:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{ppc\_stat}\NormalTok{(data\_list}\SpecialCharTok{$}\NormalTok{y, y\_rep, }\AttributeTok{stat =} \StringTok{"var"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-16-1} \end{center}
-
-Nell'esempio successivo vedremo come i PPC possano fornirci delle indicazioni sulla mancanza di adattamento del modello ai dati.
+Oltre al confronto tra le distribuzioni \(p(y)\) e \(p(y^{rep})\) è anche possibile un confronto tra la distribuzione di varie statistiche descrittive, i cui valori sono calcolati su diversi campioni \(y^{rep}\), e le corrispondenti statistiche descrittive calcolate sui dati osservati. Vengono solitamente considerate statistiche descrittive quali la media, la varianza, la deviazione standard, il minimo o il massimo. Ma confronti di questo tipo sono possibili per qualunque statistica descrittiva. Questi confronti sono chiamati PPC.
 
 \hypertarget{ppc-per-la-velocituxe0-della-luce}{%
 \subsection{PPC per la velocità della luce}\label{ppc-per-la-velocituxe0-della-luce}}
 
-I PPC mostrano che il modo più semplice per verificare l'adattamento del modello è quello di visualizzare i dati \(y^{rep}\) insieme ai dati effettivi. Qui di seguito, useremo nuovamente i PPC per esaminare un set di dati i quali non si adattano alla distribuzione normale \autocite{gelman2020regression}. L'obiettivo dell'esempio è quello di dimostrare come i PPC possono rivelare la mancanza di adattamento di un modello ai dati. I dati corrispondono ad una serie di misurazioni prese da Simon Newcomb nel 1882 come parte di un esperimento per stimare la velocità della luce. A questi dati verrà (inappropriatamente) adattata una distribuzione normale.
+Qui di seguito esamineremo un set di dati che non seguono la distribuzione normale \autocite{gelman2020regression}. L'obiettivo dell'esempio è quello di mostrare come i PPC possono rivelare la mancanza di adattamento di un modello ai dati. I dati corrispondono ad una serie di misurazioni prese da Simon Newcomb nel 1882 come parte di un esperimento per stimare la velocità della luce. A questi dati verrà (inappropriatamente) adattata una distribuzione normale.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -913,7 +873,7 @@ I PPC mostrano che il modo più semplice per verificare l'adattamento del modell
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-17-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 \noindent
 Creiamo un oggetto di tipo \texttt{list} dove inserire i dati:
@@ -992,17 +952,7 @@ e otteniamo le seguenti stime dei parametri \(\mu\) e \(\sigma\):
 \end{Shaded}
 
 \noindent
-Confrontiamo \(\mu\) con la media di \(y\):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{mean}\NormalTok{(newcomb)}
-\CommentTok{\#\textgreater{} [1] 26.2}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Anche se trova la media giusta, il modello non è comunque adeguato a prevedere le altre proprietà della \(y\). Trasformiamo \texttt{fit} in un oggetto \texttt{stanfit}:
+Trasformiamo \texttt{fit} in un oggetto \texttt{stanfit}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1020,10 +970,20 @@ La distribuzione a posteriori di \(\mu\) è
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-24-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
 \noindent
-Estraiamo \(y^{rep}\) dall'oggetto \texttt{stanfit}:
+Confrontiamo \(\mu\) con la media di \(y\):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(newcomb)}
+\CommentTok{\#\textgreater{} [1] 26.2}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Anche se trova la media giusta, il modello non è comunque adeguato a prevedere le altre proprietà della \(y\). Estraiamo \(y^{rep}\) dall'oggetto \texttt{stanfit}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1042,7 +1002,7 @@ Il confronto tra l'istogramma della \(y\) e gli istogrammi di diversi campioni \
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-26-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-22-1} \end{center}
 
 \noindent
 Alla stessa conclusione si giunge tramite un confronto tra la funzione di densità empirica della \(y\) e quella di diversi campioni \(y^{rep}\):
@@ -1053,7 +1013,7 @@ Alla stessa conclusione si giunge tramite un confronto tra la funzione di densit
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-27-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-23-1} \end{center}
 
 \noindent
 Eseguiamo ora i PPC per la media e il minimo della distribuzione:
@@ -1064,10 +1024,10 @@ Eseguiamo ora i PPC per la media e il minimo della distribuzione:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-28-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-24-1} \end{center}
 
 \noindent
-Mentre la media viene riprodotta accuratamente dal modello, ciò non è vero per il minimo dela distribuzione. L'origine di questa mancanza di adattamento è evidentemente il fatto che la distribuzione è asimmetrica negativa. Dato che ci sono poche osservazioni nella coda negativa della distribuzione, solo per fare un esempio, utilizzeremo qui un secondo modello che ipotizza una distribuzione \(t\) di Student:
+Mentre la media viene riprodotta accuratamente dal modello (come abbiamo visto sopra), ciò non è vero per il minimo dela distribuzione. L'origine di questa mancanza di adattamento è il fatto che la distribuzione delle misurazioni della velocità della luce è asimmetrica negativa. Dato che ci sono poche osservazioni nella coda negativa della distribuzione, solo per fare un esempio, utilizzeremo ora un secondo modello che ipotizza una distribuzione \(t\) di Student:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1125,18 +1085,11 @@ Adattiamo questo secondo modello ai dati.
 \CommentTok{\#\textgreater{} All 4 chains finished successfully.}
 \CommentTok{\#\textgreater{} Mean chain execution time: 0.3 seconds.}
 \CommentTok{\#\textgreater{} Total execution time: 0.7 seconds.}
-\NormalTok{fit}\SpecialCharTok{$}\FunctionTok{summary}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"mu"}\NormalTok{, }\StringTok{"sigma"}\NormalTok{, }\StringTok{"nu"}\NormalTok{))}
-\CommentTok{\#\textgreater{} \# A tibble: 3 x 10}
-\CommentTok{\#\textgreater{}   variable  mean median    sd   mad    q5   q95  rhat ess\_bulk ess\_tail}
-\CommentTok{\#\textgreater{}   \textless{}chr\textgreater{}    \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}    \textless{}dbl\textgreater{}    \textless{}dbl\textgreater{}}
-\CommentTok{\#\textgreater{} 1 mu       27.4   27.4  0.634 0.617 26.4  28.5   1.00   10626.    9650.}
-\CommentTok{\#\textgreater{} 2 sigma     4.08   4.04 0.649 0.643  3.10  5.20  1.00    9783.    9080.}
-\CommentTok{\#\textgreater{} 3 nu        2.54   2.39 0.852 0.754  1.46  4.14  1.00   10454.   10827.}
 \end{Highlighting}
 \end{Shaded}
 
 \noindent
-Per il secondo modello il confronto tra la funzione di densità empirica della \(y\) e quella di diversi campioni \(y^{rep}\) è adeguato:
+Per questo secondo modello il confronto tra la funzione di densità empirica della \(y\) e quella di diversi campioni \(y^{rep}\) risulta adeguato:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1146,10 +1099,10 @@ Per il secondo modello il confronto tra la funzione di densità empirica della \
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-31-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-27-1} \end{center}
 
 \noindent
-Inoltre, anche la statistica ``minimo della distribuzione'' viene ben predetta dal modello. In conclusione, per questi dati l'accuratezza predittiva del modello basato sulla distribuzione \(t\) di Student è chiaramente migliore di quella del modello normale.
+Inoltre, anche la statistica ``minimo della distribuzione'' viene ben predetta dal modello.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1157,16 +1110,16 @@ Inoltre, anche la statistica ``minimo della distribuzione'' viene ben predetta d
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-32-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{046_ppc_files/figure-latex/unnamed-chunk-28-1} \end{center}
 
 \noindent
-In conclusione, per i dati di Newcomb l'accuratezza predittiva del modello basato sulla distribuzione \(t\) di Student è chiaramente migliore di quella del modello normale.
+In conclusione, per questi dati l'accuratezza predittiva del modello basato sulla distribuzione \(t\) di Student è chiaramente migliore di quella del modello normale.
 
 \hypertarget{considerazioni-conclusive}{%
 \section*{Considerazioni conclusive}\label{considerazioni-conclusive}}
 \addcontentsline{toc}{section}{Considerazioni conclusive}
 
-Questo capitolo abbiamo discusso i controlli predittivi a posteriori. A questo proposito è necessario notare un punto importante: i controlli predittivi a posteriori, quando suggeriscono un buon adattamento del modello alle caratterische dei dati previsti futuri \(y^{rep}\), non forniscono una forte evidenza della capacità del modello di generalizzarsi a nuovi campioni di dati. Infatti, una tale evidenza sulla generalizzabilità del modello può essere solo fornita da studi di \emph{cross-validation}, ovvero da studi nei quali viene utilizzato un \emph{nuovo} campione di dati. D'altra parte, invece, se i PPC mostrano un cattivo adattamento del modello ai dati previsti futuri, questo fornisce una forte evidenza di una errata specificazione del modello.
+Questo capitolo abbiamo discusso i controlli predittivi a posteriori. A questo proposito è necessario notare un punto importante: i controlli predittivi a posteriori, quando suggeriscono un buon adattamento del modello alle caratterische dei dati previsti futuri \(y^{rep}\), non forniscono necessariamente una forte evidenza della capacità del modello di generalizzarsi a nuovi campioni di dati. Una tale evidenza sulla generalizzabilità del modello può solo essere fornita da studi di \emph{cross-validation}, ovvero da studi nei quali viene utilizzato un \emph{nuovo} campione di dati. Se i PPC mostrano un cattivo adattamento del modello ai dati previsti futuri, però, questo sicuramente fornisce una forte evidenza di una errata specificazione del modello.
 
 
 % Bibliography

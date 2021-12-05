@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.7)  4 DEC 2021 12:17
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.7)  5 DEC 2021 10:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1971,12 +1971,12 @@ Package csquotes Info: ... found 'polyglossia' package.
 LaTeX Info: Redefining \rmfamily on input line 26.
 LaTeX Info: Redefining \sffamily on input line 26.
 LaTeX Info: Redefining \ttfamily on input line 26.
-LaTeX Info: Redefining \rmfamily on input line 97.
-LaTeX Info: Redefining \sffamily on input line 97.
-LaTeX Info: Redefining \ttfamily on input line 97.
-LaTeX Info: Redefining \rmfamily on input line 101.
-LaTeX Info: Redefining \sffamily on input line 101.
-LaTeX Info: Redefining \ttfamily on input line 101.
+LaTeX Info: Redefining \rmfamily on input line 91.
+LaTeX Info: Redefining \sffamily on input line 91.
+LaTeX Info: Redefining \ttfamily on input line 91.
+LaTeX Info: Redefining \rmfamily on input line 95.
+LaTeX Info: Redefining \sffamily on input line 95.
+LaTeX Info: Redefining \ttfamily on input line 95.
 )
 \openout1 = `DataScience.aux'.
 
@@ -2527,77 +2527,64 @@ LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 (Font)              scaled to size 5.99936pt on input line 547.
 [9] [10]
-
-LaTeX Warning: Reference `es-pratico-zetsche' on page 1 undefined on input line
- 583.
-
+Package hyperref Info: bookmark level for unknown bclogo defaults to 0 on input
+ line 567.
+File: bc-trombone.mps Graphic file (type mps)
+<bc-trombone.mps>
+Package mdframed Info: mdframed works in twoside mode on input line 567.
 [1
 
 
 ]
+
+LaTeX Warning: Reference `es-pratico-zetsche' on page 2 undefined on input line
+ 603.
+
 LaTeX Font Info:    Font shape `TU/OperatorMonoSSmLigBook(0)/m/n' will be
-(Font)              scaled to size 7.5pt on input line 611.
+(Font)              scaled to size 7.5pt on input line 631.
 LaTeX Font Info:    Font shape `TU/OperatorMonoSSmLigBook(0)/m/it' will be
-(Font)              scaled to size 7.5pt on input line 612.
+(Font)              scaled to size 7.5pt on input line 632.
 LaTeX Font Info:    Font shape `TU/OperatorMonoSSmLigBook(0)/b/n' will be
-(Font)              scaled to size 7.5pt on input line 615.
+(Font)              scaled to size 7.5pt on input line 635.
 [2]
-File: 046_ppc_files/figure-latex/unnamed-chunk-2-1.pdf Graphic file (type pdf)
-<use 046_ppc_files/figure-latex/unnamed-chunk-2-1.pdf>
 File: 046_ppc_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 <use 046_ppc_files/figure-latex/unnamed-chunk-3-1.pdf>
 [3]
+File: 046_ppc_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pdf)
+<use 046_ppc_files/figure-latex/unnamed-chunk-4-1.pdf>
+[4]
 
-LaTeX Warning: Reference `mod-binom' on page 4 undefined on input line 699.
+LaTeX Warning: Reference `mod-binom' on page 5 undefined on input line 717.
 
-[4] [5]
+[5] [6]
+File: 046_ppc_files/figure-latex/unnamed-chunk-12-1.pdf Graphic file (type pdf)
 
-LaTeX Warning: Reference `inference-one-prop' on page 6 undefined on input line
- 788.
-
-File: 046_ppc_files/figure-latex/unnamed-chunk-11-1.pdf Graphic file (type pdf)
-
-<use 046_ppc_files/figure-latex/unnamed-chunk-11-1.pdf>
-[6]
+<use 046_ppc_files/figure-latex/unnamed-chunk-12-1.pdf>
 File: 046_ppc_files/figure-latex/unnamed-chunk-13-1.pdf Graphic file (type pdf)
 
 <use 046_ppc_files/figure-latex/unnamed-chunk-13-1.pdf>
-[7]
-File: 046_ppc_files/figure-latex/unnamed-chunk-14-1.pdf Graphic file (type pdf)
+[7] [8]
+File: 046_ppc_files/figure-latex/unnamed-chunk-19-1.pdf Graphic file (type pdf)
 
-<use 046_ppc_files/figure-latex/unnamed-chunk-14-1.pdf>
-File: 046_ppc_files/figure-latex/unnamed-chunk-15-1.pdf Graphic file (type pdf)
+<use 046_ppc_files/figure-latex/unnamed-chunk-19-1.pdf>
+[9]
+File: 046_ppc_files/figure-latex/unnamed-chunk-22-1.pdf Graphic file (type pdf)
 
-<use 046_ppc_files/figure-latex/unnamed-chunk-15-1.pdf>
-[8]
-File: 046_ppc_files/figure-latex/unnamed-chunk-16-1.pdf Graphic file (type pdf)
+<use 046_ppc_files/figure-latex/unnamed-chunk-22-1.pdf>
+File: 046_ppc_files/figure-latex/unnamed-chunk-23-1.pdf Graphic file (type pdf)
 
-<use 046_ppc_files/figure-latex/unnamed-chunk-16-1.pdf>
-File: 046_ppc_files/figure-latex/unnamed-chunk-17-1.pdf Graphic file (type pdf)
-
-<use 046_ppc_files/figure-latex/unnamed-chunk-17-1.pdf>
-[9] [10]
+<use 046_ppc_files/figure-latex/unnamed-chunk-23-1.pdf>
 File: 046_ppc_files/figure-latex/unnamed-chunk-24-1.pdf Graphic file (type pdf)
 
 <use 046_ppc_files/figure-latex/unnamed-chunk-24-1.pdf>
-[11]
-File: 046_ppc_files/figure-latex/unnamed-chunk-26-1.pdf Graphic file (type pdf)
-
-<use 046_ppc_files/figure-latex/unnamed-chunk-26-1.pdf>
+[10] [11]
 File: 046_ppc_files/figure-latex/unnamed-chunk-27-1.pdf Graphic file (type pdf)
 
 <use 046_ppc_files/figure-latex/unnamed-chunk-27-1.pdf>
 File: 046_ppc_files/figure-latex/unnamed-chunk-28-1.pdf Graphic file (type pdf)
 
 <use 046_ppc_files/figure-latex/unnamed-chunk-28-1.pdf>
-[12] [13]
-File: 046_ppc_files/figure-latex/unnamed-chunk-31-1.pdf Graphic file (type pdf)
-
-<use 046_ppc_files/figure-latex/unnamed-chunk-31-1.pdf>
-File: 046_ppc_files/figure-latex/unnamed-chunk-32-1.pdf Graphic file (type pdf)
-
-<use 046_ppc_files/figure-latex/unnamed-chunk-32-1.pdf>
-[14] [15] [16
+[12] [13] [14
 
 ]
 
@@ -2620,10 +2607,10 @@ Sidefoothsep and sidefootwidth: 7pt and 117pt
 Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 ******************************************************
 
-[17
+[15
 
 
-] [18
+] [16
 
 
 ]
@@ -2657,7 +2644,7 @@ LaTeX Info: Redefining \ttfamily on input line 9.
 LaTeX Info: Redefining \rmfamily on input line 11.
 LaTeX Info: Redefining \sffamily on input line 11.
 LaTeX Info: Redefining \ttfamily on input line 11.
-) [19
+) [17
 
 ]
 
@@ -2680,17 +2667,17 @@ Sidefoothsep and sidefootwidth: 7pt and 117pt
 Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 ******************************************************
 
-LaTeX Info: Redefining \rmfamily on input line 1209.
-LaTeX Info: Redefining \sffamily on input line 1209.
-LaTeX Info: Redefining \ttfamily on input line 1209.
+LaTeX Info: Redefining \rmfamily on input line 1162.
+LaTeX Info: Redefining \sffamily on input line 1162.
+LaTeX Info: Redefining \ttfamily on input line 1162.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1213--1215
+Underfull \hbox (badness 10000) in paragraph at lines 1166--1168
 
  []
 
-LaTeX Info: Redefining \rmfamily on input line 1216.
-LaTeX Info: Redefining \sffamily on input line 1216.
-LaTeX Info: Redefining \ttfamily on input line 1216.
+LaTeX Info: Redefining \rmfamily on input line 1169.
+LaTeX Info: Redefining \sffamily on input line 1169.
+LaTeX Info: Redefining \ttfamily on input line 1169.
 The property list \polyglossia@langsetup contains the pairs (without outer
 braces):
 >  {latex/script}  =>  {latin}
@@ -2741,7 +2728,7 @@ braces):
 >  {english/babelname}  =>  {american}
 >  {english/localnumeral}  =>  {polyglossia@C@localnumeral}
 >  {english/Localnumeral}  =>  {polyglossia@C@localnumeral}.
-[20
+[18
 
 
 ]
@@ -2751,24 +2738,24 @@ braces):
 \tf@lof=\write9
 \openout9 = `DataScience.lof'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1221.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1221.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1174.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1174.
 (./DataScience.aux
 LaTeX Info: Redefining \rmfamily on input line 26.
 LaTeX Info: Redefining \sffamily on input line 26.
 LaTeX Info: Redefining \ttfamily on input line 26.
-LaTeX Info: Redefining \rmfamily on input line 98.
-LaTeX Info: Redefining \sffamily on input line 98.
-LaTeX Info: Redefining \ttfamily on input line 98.
-LaTeX Info: Redefining \rmfamily on input line 102.
-LaTeX Info: Redefining \sffamily on input line 102.
-LaTeX Info: Redefining \ttfamily on input line 102.
+LaTeX Info: Redefining \rmfamily on input line 92.
+LaTeX Info: Redefining \sffamily on input line 92.
+LaTeX Info: Redefining \ttfamily on input line 92.
+LaTeX Info: Redefining \rmfamily on input line 96.
+LaTeX Info: Redefining \sffamily on input line 96.
+LaTeX Info: Redefining \ttfamily on input line 96.
 )
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1221.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1221.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1174.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1174.
 
 Package rerunfilecheck Info: File `DataScience.out' has not changed.
-(rerunfilecheck)             Checksum: 8468A7CE3524D28488BAEED76213878F;2386.
+(rerunfilecheck)             Checksum: 00E140A0953CC88AB7D88D7770D3203B;2526.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -2780,12 +2767,12 @@ Package logreq Info: Writing requests to 'DataScience.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 47081 strings out of 479418
- 910357 string characters out of 5884586
- 1857942 words of memory out of 5000000
- 63774 multiletter control sequences out of 15000+600000
- 547386 words of font info for 96 fonts, out of 8000000 for 9000
+ 47230 strings out of 479418
+ 913864 string characters out of 5884586
+ 1860084 words of memory out of 5000000
+ 63929 multiletter control sequences out of 15000+600000
+ 547378 words of font info for 95 fonts, out of 8000000 for 9000
  1350 hyphenation exceptions out of 8191
  75i,16n,121p,2169b,5782s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on DataScience.pdf (30 pages).
+Output written on DataScience.pdf (28 pages).
