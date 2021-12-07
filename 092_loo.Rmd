@@ -581,6 +581,7 @@ fit1 <- mod1$sample(
   seed = SEED,
   chains = 4L,
   parallel_chains = 2L,
+  cores = 4L,
   refresh = 0,
   thin = 1
 )
@@ -674,6 +675,7 @@ fit2 <- mod2$sample(
   seed = SEED,
   chains = 4L,
   parallel_chains = 2L,
+  cores = 4L,
   refresh = 0,
   thin = 1
 )
@@ -758,6 +760,7 @@ fit3 <- mod3$sample(
   seed = SEED,
   chains = 4L,
   parallel_chains = 2L,
+  cores = 4L,
   refresh = 0,
   thin = 1
 )
@@ -828,6 +831,7 @@ fit1a <- mod1$sample(
   seed = SEED,
   chains = 4L,
   parallel_chains = 2L,
+  cores = 4L,
   refresh = 0,
   thin = 1
 )
@@ -1055,7 +1059,7 @@ h1 <- foo %>%
   geom_density(alpha = 0.5) +
   xlab(TeX("$R^2$")) +
   ylab("Density") +
-  ggtitle("Bayesian R squared\n posterior for model m1")
+  ggtitle("Bayesian R squared\n posterior for model 1")
 
 m2_fit_r2 <- loo_R2(m2, summary = FALSE)
 foo2 <- tibble(R2 = as.numeric(m2_fit_r2))
@@ -1064,7 +1068,7 @@ h2 <- foo2 %>%
   geom_density(alpha = 0.5) +
   xlab(TeX("$R^2$")) +
   ylab("Density") +
-  ggtitle("Bayesian R squared\n posterior for model m2")
+  ggtitle("Bayesian R squared\n posterior for model 2")
 
 h1 | h2
 ```
@@ -1079,4 +1083,4 @@ Dati due modelli computazionali che forniscono resoconti diversi di un set di da
 
 > Since all models are wrong the scientist must be alert to what is importantly wrong. It is inappropriate to be concerned about mice when there are tigers abroad.
 
-La metafora delle tigri di George Box fa riferimento evidentemente all'assunzione che sta alla base delle procedure discusse in questo Capitolo, ovvero all'ipotesi che il vero meccanismo generatore dei dati sia noto e che l'unica incognita corrisponda ai parametri. Tuttavia le cose non sono così semplici: nei casi di interesse scientifico è lo stesso meccanismo generatore dei dati ad essere sconosciuto. I ricercatori non comprendono appieno i fenomeni che stanno studiando (altrimenti perché studiarli?) e qualunque descrizione formale di un fenomeno (modello) è sbagliata in un modo sconosciuto e sistematico. Di conseguenza, è "facile" fare inferenza sulla capacità predittiva del modello, ma è molto difficile fare inferenza sulla struttura causale dei fenomeni. In altre parole, se le analisi statistiche ci dicono che un modello ha una buona accuratezza predittiva, con ciò non abbiamo imparato nulla sulla struttura causale del fenomeno. Ma è anche vera l'affermazione opposta: un modello che non ha _neppure_ una buona accuratezza predittiva esso è sicuramente inutile: non è in grado né di fare previsioni accurate né di catturare la struttura causale.
+La metafora delle tigri di George Box fa riferimento evidentemente all'assunzione che sta alla base delle procedure discusse in questo Capitolo, ovvero all'ipotesi che il vero meccanismo generatore dei dati sia noto e che l'unica incognita corrisponda ai parametri. Tuttavia le cose non sono così semplici: nei casi di interesse scientifico è lo stesso meccanismo generatore dei dati ad essere sconosciuto. I ricercatori non comprendono appieno i fenomeni che stanno studiando (altrimenti perché studiarli?) e qualunque descrizione formale di un fenomeno (modello) è sbagliata in un modo sconosciuto e sistematico. Di conseguenza, è "facile" fare inferenza sulla capacità predittiva del modello, ma è molto difficile fare inferenza sulla struttura causale dei fenomeni. In altre parole, se le analisi statistiche ci dicono che un modello ha una buona accuratezza predittiva, con ciò non abbiamo imparato nulla sulla struttura causale del fenomeno. Ma è anche vera l'affermazione opposta: un modello che non ha _neppure_ una buona accuratezza predittiva è sicuramente inutile --- non è in grado né di fare previsioni accurate né di catturare la struttura causale.
