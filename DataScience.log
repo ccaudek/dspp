@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.7)  5 DEC 2021 10:52
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.7)  7 DEC 2021 07:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2538,14 +2538,14 @@ Package mdframed Info: mdframed works in twoside mode on input line 567.
 ]
 
 LaTeX Warning: Reference `es-pratico-zetsche' on page 2 undefined on input line
- 603.
+ 604.
 
 LaTeX Font Info:    Font shape `TU/OperatorMonoSSmLigBook(0)/m/n' will be
-(Font)              scaled to size 7.5pt on input line 631.
-LaTeX Font Info:    Font shape `TU/OperatorMonoSSmLigBook(0)/m/it' will be
 (Font)              scaled to size 7.5pt on input line 632.
+LaTeX Font Info:    Font shape `TU/OperatorMonoSSmLigBook(0)/m/it' will be
+(Font)              scaled to size 7.5pt on input line 633.
 LaTeX Font Info:    Font shape `TU/OperatorMonoSSmLigBook(0)/b/n' will be
-(Font)              scaled to size 7.5pt on input line 635.
+(Font)              scaled to size 7.5pt on input line 636.
 [2]
 File: 046_ppc_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 <use 046_ppc_files/figure-latex/unnamed-chunk-3-1.pdf>
@@ -2554,7 +2554,7 @@ File: 046_ppc_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pdf)
 <use 046_ppc_files/figure-latex/unnamed-chunk-4-1.pdf>
 [4]
 
-LaTeX Warning: Reference `mod-binom' on page 5 undefined on input line 717.
+LaTeX Warning: Reference `mod-binom' on page 5 undefined on input line 718.
 
 [5] [6]
 File: 046_ppc_files/figure-latex/unnamed-chunk-12-1.pdf Graphic file (type pdf)
@@ -2574,7 +2574,6 @@ File: 046_ppc_files/figure-latex/unnamed-chunk-22-1.pdf Graphic file (type pdf)
 File: 046_ppc_files/figure-latex/unnamed-chunk-23-1.pdf Graphic file (type pdf)
 
 <use 046_ppc_files/figure-latex/unnamed-chunk-23-1.pdf>
-Missing character: There is no 𝑦 in font [lmroman10-regular]:mapping=tex-text;!
 File: 046_ppc_files/figure-latex/unnamed-chunk-24-1.pdf Graphic file (type pdf)
 
 <use 046_ppc_files/figure-latex/unnamed-chunk-24-1.pdf>
@@ -2668,17 +2667,17 @@ Sidefoothsep and sidefootwidth: 7pt and 117pt
 Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 ******************************************************
 
-LaTeX Info: Redefining \rmfamily on input line 1164.
-LaTeX Info: Redefining \sffamily on input line 1164.
-LaTeX Info: Redefining \ttfamily on input line 1164.
+LaTeX Info: Redefining \rmfamily on input line 1163.
+LaTeX Info: Redefining \sffamily on input line 1163.
+LaTeX Info: Redefining \ttfamily on input line 1163.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1168--1170
+Underfull \hbox (badness 10000) in paragraph at lines 1167--1169
 
  []
 
-LaTeX Info: Redefining \rmfamily on input line 1171.
-LaTeX Info: Redefining \sffamily on input line 1171.
-LaTeX Info: Redefining \ttfamily on input line 1171.
+LaTeX Info: Redefining \rmfamily on input line 1170.
+LaTeX Info: Redefining \sffamily on input line 1170.
+LaTeX Info: Redefining \ttfamily on input line 1170.
 The property list \polyglossia@langsetup contains the pairs (without outer
 braces):
 >  {latex/script}  =>  {latin}
@@ -2739,8 +2738,8 @@ braces):
 \tf@lof=\write9
 \openout9 = `DataScience.lof'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1176.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1176.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1175.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1175.
 (./DataScience.aux
 LaTeX Info: Redefining \rmfamily on input line 26.
 LaTeX Info: Redefining \sffamily on input line 26.
@@ -2752,8 +2751,8 @@ LaTeX Info: Redefining \rmfamily on input line 96.
 LaTeX Info: Redefining \sffamily on input line 96.
 LaTeX Info: Redefining \ttfamily on input line 96.
 )
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1176.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1176.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1175.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1175.
 
 Package rerunfilecheck Info: File `DataScience.out' has not changed.
 (rerunfilecheck)             Checksum: 00E140A0953CC88AB7D88D7770D3203B;2526.
@@ -2770,7 +2769,7 @@ Package logreq Info: Writing requests to 'DataScience.run.xml'.
 Here is how much of TeX's memory you used:
  47230 strings out of 479418
  913864 string characters out of 5884586
- 1860084 words of memory out of 5000000
+ 1860083 words of memory out of 5000000
  63929 multiletter control sequences out of 15000+600000
  547378 words of font info for 95 fonts, out of 8000000 for 9000
  1350 hyphenation exceptions out of 8191
