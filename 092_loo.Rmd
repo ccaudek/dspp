@@ -176,7 +176,7 @@ Se gli esiti possibili sono pioggia, neve o sole con $p(y_1) = 0.7$,  $p(y_2) = 
 
 ## Dall'entropia all'accuratezza
 
-Il valore assoluto dell'entropia è difficile da interpretare. Vedremo però come sia possibile usare l'entropia per misurare l'accuratezza di un modello statistico. Nello specifico, ci porremo il problema di misurare la distanza tra la distribuzione di probabilità ipotizzata da un modello, chiamiamola $p_{\mathcal{M}}$, e la distribuzione di probabilità del vero modello generatore dei dati, $p_t$. La teoria delle probabilità quantifica l'informazione che viene perduta quando $p_{\mathcal{M}}$ approssima $p_t$ mediante la _divergenza di Kullback-Leibler_. La divergenza di Kullback-Leibler, denotata con $D_{KL}(p_t \mid\mid p_{\mathcal{M}})$, misura dunque l'incremento della nostra incertezza quando una distribuzione "approssimata" viene usata al posto della "vera" distribuzione di probabilità.
+Il valore assoluto dell'entropia è difficile da interpretare. Vedremo però come sia possibile usare l'entropia per misurare l'accuratezza di un modello statistico. Nello specifico, ci porremo il problema di misurare la distanza tra la distribuzione di probabilità ipotizzata da un modello, chiamiamola $p_{\mathcal{M}}$, e la distribuzione di probabilità del vero modello generatore dei dati, $p_t$. La teoria delle probabilità quantifica l'informazione che viene perduta quando $p_{\mathcal{M}}$ approssima $p_t$ mediante la _divergenza di Kullback-Leibler_ (chiamata anche _entropia relativa_). La divergenza di Kullback-Leibler, denotata con $D_{KL}(p_t \mid\mid p_{\mathcal{M}})$, misura l'incremento della nostra incertezza (o, in altri termini, l'informazione che viene perduta) quando una distribuzione "approssimata" viene usata in luogo della "vera" distribuzione di probabilità.
 
 :::{.definition}
 Per due distribuzioni discrete $p_t$ e $p_{\mathcal{M}}$, la divergenza KL di $p_{\mathcal{M}}$ da $p_t$ è definita come:
@@ -186,9 +186,9 @@ D_{KL}(p_t \mid\mid p_{\mathcal{M}}) = \sum_{i=1}^n p_t(y_i) \cdot \left[\log p_
 \end{equation}
 :::
 
-La divergenza di Kullback-Leibler introduce un piccolo cambiamento alla \@ref(eq:entropy): anziché considerare una sola distribuzione di probabilità, $p_t$, considera anche una approssimazione a tale distribuzione, ovvero $p_{\mathcal{M}}$. Calcolando la differenza dei logaritmi dei valori delle due distribuzioni si giunge alla \@ref(eq:kldivergence).
+La $D_{KL}$ introduce un piccolo cambiamento alla \@ref(eq:entropy): anziché considerare una sola distribuzione di probabilità, $p_t$, considera anche un'approssimazione a tale distribuzione, ovvero $p_{\mathcal{M}}$. Calcolando la differenza dei logaritmi dei valori delle due distribuzioni si giunge alla \@ref(eq:kldivergence).
 
-La divergenza KL misura dunque la quantità di informazione che viene perduta quando una distribuzione approssimata viene usata per descrivere le proprietà della distribuzione di riferimento.
+La $D_{KL}$ misura dunque la quantità di informazione che viene perduta quando una distribuzione approssimata viene usata per descrivere le proprietà della distribuzione di riferimento.
 <!-- Infatti, ciò che viene calcolato nella divergenza KL è il valore atteso della differenza tra il logaritmo delle probabilità dei dati nella distribuzione $p_t$ e il logaritmo delle probabilità dei dati nella distribuzione approssimata $p_{\mathcal{M}}$: -->
 <!-- \begin{equation} -->
 <!-- D_{KL}(p_t \mid\mid p_{\mathcal{M}})  = \E \left[\log p_t(y) - \log p_{\mathcal{M}}(y) \right]. -->
@@ -198,7 +198,7 @@ Se c'è una perfetta corrispondenza tra le due distribuzioni, $p_t = p_{\mathcal
 $$
 D_{KL}(p_t \mid\mid p_{\mathcal{M}}) = D_{KL}(p_t \mid\mid p_t) = \sum_{i=1}^n p_t(y_i) \cdot \left[\log p_t(y_i) - \log p_t(y_i)\right] = 0,
 $$
-ovvvero: nessuna incertezza aggiuntiva viene introdotta se una distribuzione viene usata per rappresentare se stessa. Altrimenti, cioè se $p_t \neq p_{\mathcal{M}}$, la divergenza KL assume valori nell'intervallo $[0, \infty]$: all'aumentare della differenza tra $p_{\mathcal{M}}$ e $p_t$ aumenta il valore $D_{KL}(p_t \mid\mid p_{\mathcal{M}})$.
+ovvvero: nessuna incertezza aggiuntiva viene introdotta se una distribuzione viene usata per rappresentare se stessa. Altrimenti, cioè se $p_t \neq p_{\mathcal{M}}$, la $D_{KL}$ assume valori nell'intervallo $[0, \infty]$: all'aumentare della differenza tra $p_{\mathcal{M}}$ e $p_t$ aumenta il valore $D_{KL}(p_t \mid\mid p_{\mathcal{M}})$.
 
 ::: {.example}
 [da @McElreath_rethinking] Sia la distribuzione target $p = \{0.3, 0.7\}$. Supponiamo  che la distribuzione approssimata $q$ possa assumere valori da $q = \{0.01, 0.99\}$ a $q = \{0.99, 0.01\}$. Calcoliamo la divergenza KL.
@@ -223,7 +223,7 @@ head(t)
 ```
 
 \noindent
-Nella figura seguente sull'asse delle ascisse sono rappresentati i valori $q$ e  sull'asse delle ordinante sono riportati i corrispondenti valori $D_{KL}$.
+Nella figura seguente sull'asse delle ascisse sono rappresentati i valori $q$ e sull'asse delle ordinante sono riportati i corrispondenti valori $D_{KL}$.
 
 ```{r}
 t %>%
@@ -239,7 +239,6 @@ t %>%
 Tanto meglio la distribuzione $q$ approssima la distribuzione target tanto più piccolo è il valore di divergenza KL.
 :::
 
-
 ::: {.example}
 Sia $p$ una distribuzione binomiale di parametri $\theta = 0.2$ e $n = 5$
 
@@ -249,6 +248,7 @@ p <- 0.2
 true_py <- dbinom(0:n, n, 0.2)
 true_py
 ```
+
 \noindent
 Sia $q_1$ una approssimazione a $p$:
 
@@ -256,6 +256,7 @@ Sia $q_1$ una approssimazione a $p$:
 q1 <- c(0.46, 0.42, 0.10, 0.01, 0.01)
 q1
 ```
+
 \noindent
 Sia $q_2$ una distribuzione uniforme:
 
@@ -285,7 +286,7 @@ sum(true_py * log(true_py / q2))
 
 ### La divergenza dipende dalla direzione
 
-La divergenza KL non è simmetrica: la KL da $p_t$ a $p_{\mathcal{M}}$ in generale è diversa dalla KL da $p_{\mathcal{M}}$ a $p_t$.
+La divergenza KL non è una vera e propria metrica: per esempio, non è simmetrica. In generale, $D_{KL}(p_t \mid\mid p_{\mathcal{M}}) \neq D_{KL}(p_{\mathcal{M}} \mid\mid p_t)$, ovvero la $D_{KL}$ da $p_t$ a $p_{\mathcal{M}}$ è diversa dalla $D_{KL}$ da $p_{\mathcal{M}}$ a $p_t$.
 
 ::: {.example}
 Usando le seguenti istruzioni $\R$ otteniamo:
@@ -476,7 +477,7 @@ Nel caso di un modello Normale con con varianza nota e una distribuzione a prior
 
 ### Convalida incrociata K-fold
 
-La sovrastima della \@ref(eq:lppd) può anche essere evitata usando una tecnica chiamata _K-fold cross-validation_. Mediante questo metodo vengono stimati i parametri del modello tralasciando una porzione di osservazioni (chiamata _fold_) dal campione per poi valutare il modello sulle osservazioni che sono state escluse. Una stima complessiva dell'accuratezza si ottiene poi calcolando la media del punteggio di accuratezza ottenuto in ogni fold. Il numero minimo di fold è 2; all'altro estremo, è possibile impiegare una singola  osservazione in ciascun fold e adattare il modello tante volte ($n$) quante sono le singole osservazioni. Questa strategia è chiamata _leave-one-out cross-validation_ (LOO-CV).
+La sovrastima della \@ref(eq:lppd) può anche essere evitata usando una tecnica chiamata _K-fold cross-validation_. Mediante questo metodo vengono stimati i parametri del modello tralasciando una porzione di osservazioni (chiamata _fold_) dal campione per poi valutare il modello sulle osservazioni che sono state escluse. Una stima complessiva dell'accuratezza si ottiene poi calcolando la media del punteggio di accuratezza ottenuto in ogni fold. Il numero minimo di fold è 2; all'altro estremo, è possibile impiegare una singola osservazione in ciascun fold e adattare il modello tante volte ($n$) quante sono le singole osservazioni. Questa strategia è chiamata _leave-one-out cross-validation_ (LOO-CV).
 
 
 #### Importance sampling
@@ -1079,7 +1080,19 @@ Considerato l'intervallo a posteriori del 95%, anche in questo caso non abbiamo 
 
 ## Considerazioni conclusive {-}
 
-Dati due modelli computazionali che forniscono resoconti diversi di un set di dati, come possiamo decidere quale modello è maggiormente supportato dai dati? Nel presente Capitolo abbiamo visto come il problema del confronto di modelli possa essere formulato nei termini di un problema di inferenza statistica. È però necessaria una nota di cautela. @navarro2019between ci fa notare che il problema statistico del confronto di modelli non risolve il problema scientifico della selezione di teorie. A questo proposito usa una citazione di George Box:
+Dati due modelli computazionali che forniscono resoconti diversi di un set di dati, come possiamo decidere quale modello è maggiormente supportato dai dati? Nel presente Capitolo abbiamo visto come il problema del confronto di modelli possa essere formulato nei termini di un problema di inferenza statistica. 
+
+Abbiamo visto come la divergenza KL possa essere usata per confrontare una "vera" distribuzione di probabilità con una sua approssimazione. Abbiamo anche visto come che, da un punto di vista Bayesiano, il problema del confronto tra modelli viene presentato nei termini della capacità predittiva di un modello per nuove osservazioni future. 
+
+> The central question is then how one should decide among a set of competing models. A short answer is that a model should be selected based on its generalizability, which is defined as a model's ability to fit current data but also to predict future data. [@myung2003tutorial]
+
+Se un modello non si generalizza bene a nuovi dati, si può sostenere che il modello è inappropriato o almeno manca di alcune caratteristiche importanti dato che non cattura la natura del vero processo di generazione dei dati sottostante $p_t(\tilde{y})$. La capacità predittiva di un modello viene comunemente descritta in termini della sua densità predittiva logaritmica attesa (ELPD):
+$$
+\overline{\text{ELPD}} = \int \log p_{\mathcal{M}} (\tilde{y} \mid y) p_t(\tilde{y}) d \tilde{y}.
+$$
+L'ELPD per il modello $\mathcal{M}$ può essere interpretata come la media pesata della densità predittiva logaritmica $\log p_{\mathcal{M}} (\tilde{y}_i \mid y)$ per una nuova osservazione per il modello $\mathcal{M}$, dove i pesi derivano dal vero processo di generazione dei dati $p_t(\tilde{y})$. Grandi valori di $\overline{\text{ELPD}}(\mathcal{M})$ indicano che il modello prevede bene nuove osservazioni $\tilde{y}$, mentre piccoli valori $\overline{\text{ELPD}}(\mathcal{M})$ mostrano che il modello non si generalizza bene a nuovi dati. In pratica, però, la vera densità $p_t(\tilde{y})$ è incognita. Una _stima_ di $\overline{\text{ELPD}}(\mathcal{M})$ può essere ottenuta con il metodo di validazione incrociata leave-one-out (LOO) in cui il modello tante volte ($n$) quante sono le singole osservazioni (_leave-one-out cross-validation_, LOO-CV). La strategia LOO-CV è computazionalmente troppo onerosa per qualunque scopo pratico e viene quindi approssimata mediante un metodo chiamato _Pareto-smoothed importance sampling cross-validation_ [PSIS; @vehtari2017practical] -- che non richiede di adattare il modello $n$ volte. Tale stima della densità predittiva logaritmica viene chiamata ELPD-LOO. Maggiore è il punteggio ELPD-LOO di un modello, migliore è l'accuratezza predittiva out-of-sample del modello. L'errore standard di ELPD-LOO fornisce una descrizione dell'incertezza sulle prestazioni predittive per dati futuri sconosciuti. Nel confronto dei modelli, quando la differenza in ELPD-LOO è maggiore di 4, il numero di osservazioni è maggiore di 100, e in assenza di un errore di specificazione del modello, la differenza dei valori ELPD-LOO di due modelli segue la distribuzione normale. Nel confronto di modelli, un valore $|\text{elpd}_{\text{diff}} / SE_{\text{diff}}|$ maggiore di 2 può dunque essere considerato degno di menzione ("noteworthy") [@gelman2020regression]. 
+
+Anche se la procedura descritta sopra viene correntemente usata dai ricercatori, è però necessaria una nota di cautela. @navarro2019between ci fa notare che il problema statistico del confronto di modelli non risolve il problema scientifico della selezione di teorie. A questo proposito usa una citazione di George Box:
 
 > Since all models are wrong the scientist must be alert to what is importantly wrong. It is inappropriate to be concerned about mice when there are tigers abroad.
 
