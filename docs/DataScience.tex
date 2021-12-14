@@ -321,7 +321,7 @@
 
 \author{Corrado Caudek}
 
-\date{2021-12-11}
+\date{2021-12-14}
 
 
 % Include headers (preamble.tex) here
@@ -399,6 +399,7 @@
 \usepackage{upquote} % print correct quotes in verbatim-environments
 \usepackage{empheq} 
 \usepackage{xfrac}
+\usepackage{lstbayes}
 
 
 
@@ -498,7 +499,7 @@ Copyright \(\copyright\) 2022.
 
 \normalsize
 
-Data della versione presente: Dicembre 11, 2021.
+Data della versione presente: Dicembre 14, 2021.
 
 \hypertarget{prefazione}{%
 \chapter{Prefazione}\label{prefazione}}
@@ -653,7 +654,7 @@ La variabile \texttt{y\_rep} è ciò a cui siamo interessati. Nel codice precede
   la variabilità a posteriori della distribuzione dei parametri, ovvero il fatto che di ciascun parametro non conosciamo il ``valore vero'' ma solo una distribuzione (a posteriori) di valori.
 \end{itemize}
 
-Nel caso dell'esempio presente, l'integrale della \eqref{eq:dist-pred-post} può essere interpretato dicendo che, nella matrice dell'esempio di dimensioni \(30 \times 2000\), marginalizziamo rispetto alle colonne, ovvero, facciamo la media dei valori colonna per ciascuna riga. Otteniamo così un vettore di 30 osservazioni, \texttt{y\^{}\{rep\}}. L'istogramma del vettore \texttt{y\^{}\{rep\}} può essere usato come stima di \(p(\tilde{y} \mid y)\).
+Nel caso dell'esempio presente, l'integrale della \eqref{eq:dist-pred-post} può essere interpretato dicendo che, nella matrice dell'esempio di dimensioni \(30 \times 2000\), marginalizziamo rispetto alle colonne, ovvero, facciamo la media dei valori colonna per ciascuna riga. Otteniamo così un vettore di 30 osservazioni, \texttt{y\^{}\{rep\}}. L'istogramma di \texttt{y\^{}\{rep\}} può essere usato come stima di \(p(\tilde{y} \mid y)\).
 
 Quando, con metodi grafici, vengono esaminati i valori della distribuzione predittiva a posteriori, possiamo esaminare un numero arbitrario di previsioni. Per esempio, possiamo rappresentare graficamente 50 rette di regressione predette -- o un qualsiasi altro numero. Questa rappresentazione grafica quantifica la nostra incertezza a posteriori, in questo esempio, relativamente all'orientamento della retta di regressione.
 \end{example}
@@ -822,7 +823,7 @@ Compiliamo il codice Stan
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(}\StringTok{"code"}\NormalTok{, }\StringTok{"betabin23{-}30{-}2{-}10.stan"}\NormalTok{)}
-\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{cmdstan\_model}\NormalTok{(file)}
+\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{cmdstan\_model}\NormalTok{(file, }\AttributeTok{cpp\_options =} \FunctionTok{list}\NormalTok{(}\AttributeTok{stan\_opencl =} \ConstantTok{TRUE}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -836,8 +837,10 @@ ed eseguiamo il campionamento MCMC:
   \AttributeTok{iter\_sampling =}\NormalTok{ 4000L,}
   \AttributeTok{iter\_warmup =}\NormalTok{ 2000L,}
   \AttributeTok{seed =}\NormalTok{ SEED,}
+  \AttributeTok{cores =}\NormalTok{ 4L,}
   \AttributeTok{chains =}\NormalTok{ 4L,}
   \AttributeTok{parallel\_chains =}\NormalTok{ 4L,}
+  \AttributeTok{opencl\_ids =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{),}
   \AttributeTok{refresh =} \DecValTok{0}\NormalTok{,}
   \AttributeTok{thin =} \DecValTok{1}
 \NormalTok{)}
@@ -991,7 +994,7 @@ Adattiamo il modello ai dati
   \AttributeTok{iter\_warmup =}\NormalTok{ 2000L,}
   \AttributeTok{seed =}\NormalTok{ SEED,}
   \AttributeTok{chains =}\NormalTok{ 4L,}
-  \AttributeTok{parallel\_chains =}\NormalTok{ 4L,}
+  \AttributeTok{cores =}\NormalTok{ 4L,}
   \AttributeTok{refresh =} \DecValTok{0}\NormalTok{,}
   \AttributeTok{thin =} \DecValTok{1}
 \NormalTok{)}
@@ -1130,13 +1133,14 @@ Adattiamo questo secondo modello ai dati.
   \AttributeTok{data =}\NormalTok{ data\_list,}
   \AttributeTok{iter\_sampling =}\NormalTok{ 4000L,}
   \AttributeTok{iter\_warmup =}\NormalTok{ 2000L,}
-  \AttributeTok{seed =} \DecValTok{123456}\NormalTok{,}
+  \AttributeTok{seed =}\NormalTok{ SEED,}
   \AttributeTok{chains =}\NormalTok{ 4L,}
+  \AttributeTok{cores =}\NormalTok{ 4L,}
   \AttributeTok{parallel\_chains =}\NormalTok{ 2L,}
   \AttributeTok{refresh =} \DecValTok{0}\NormalTok{,}
   \AttributeTok{thin =} \DecValTok{1}
 \NormalTok{)}
-\CommentTok{\#\textgreater{} Running MCMC with 4 chains, at most 2 in parallel...}
+\CommentTok{\#\textgreater{} Running MCMC with 4 parallel chains...}
 \CommentTok{\#\textgreater{} }
 \CommentTok{\#\textgreater{} Chain 1 finished in 0.3 seconds.}
 \CommentTok{\#\textgreater{} Chain 2 finished in 0.3 seconds.}
@@ -1145,7 +1149,7 @@ Adattiamo questo secondo modello ai dati.
 \CommentTok{\#\textgreater{} }
 \CommentTok{\#\textgreater{} All 4 chains finished successfully.}
 \CommentTok{\#\textgreater{} Mean chain execution time: 0.3 seconds.}
-\CommentTok{\#\textgreater{} Total execution time: 0.7 seconds.}
+\CommentTok{\#\textgreater{} Total execution time: 0.4 seconds.}
 \end{Highlighting}
 \end{Shaded}
 

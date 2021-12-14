@@ -3,6 +3,7 @@
 ```{r, include = FALSE}
 source("_common.R")
 source("_stan_options.R")
+register_knitr_engine()
 ```
 
 ```{block, type='Summary'}
@@ -217,7 +218,7 @@ Compiliamo il codice Stan
 
 ```{r, message=FALSE, comment=FALSE, error=FALSE, results='hide'}
 file <- file.path("code", "betabin23-30-2-10.stan")
-mod <- cmdstan_model(file)
+mod <- cmdstan_model(file, cpp_options = list(stan_opencl = TRUE))
 ```
 
 \noindent
@@ -229,8 +230,10 @@ fit <- mod$sample(
   iter_sampling = 4000L,
   iter_warmup = 2000L,
   seed = SEED,
+  cores = 4L,
   chains = 4L,
   parallel_chains = 4L,
+  opencl_ids = c(0, 0),
   refresh = 0,
   thin = 1
 )
@@ -379,7 +382,7 @@ fit <- mod$sample(
   iter_warmup = 2000L,
   seed = SEED,
   chains = 4L,
-  parallel_chains = 4L,
+  cores = 4L,
   refresh = 0,
   thin = 1
 )
@@ -482,8 +485,9 @@ fit <- mod$sample(
   data = data_list,
   iter_sampling = 4000L,
   iter_warmup = 2000L,
-  seed = 123456,
+  seed = SEED,
   chains = 4L,
+  cores = 4L,
   parallel_chains = 2L,
   refresh = 0,
   thin = 1
@@ -507,7 +511,7 @@ ppc_stat_2d(data_list$y, y_rep, stat = c("mean", "min"))
 ```
 
 \noindent
-In conclusione, per le misurazioni della velocità della luce di Newcomb  l'accuratezza predittiva del modello basato sulla distribuzione $t$ di Student è chiaramente migliore di quella del modello normale.
+In conclusione, per le misurazioni della velocità della luce di Newcomb l'accuratezza predittiva del modello basato sulla distribuzione $t$ di Student è chiaramente migliore di quella del modello normale.
 
 
 ## Considerazioni conclusive {-}
