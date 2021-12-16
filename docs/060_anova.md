@@ -1,9 +1,6 @@
 # Confronto di $k$ gruppi
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
-source("_common.R")
-source("_stan_options.R")
-```
+
 
 L'Analisi della Varianza (ANOVA) consente ai ricercatori di valutare gli effetti di predittori categoriali su una variabile di esito continua. L'ANOVA è un'analisi di regressione nella quale tutte le variabili indipendenti sono qualitative. 
 
@@ -21,13 +18,15 @@ Pertanto, il disegno di questo studio è un'ANOVA tra i soggetti 2 (_Interaction
 
 Iniziamo a leggere i dati
 
-```{r}
+
+```r
 d <- rio::import(here("data", "pone.0201581.s001.sav"))
 ```
 
 Per comodità creiamo la variabile `cond` con quattro modalità (`SO`, `FO`, `SN`, `FN`), dove `S` significa _social interaction_, `F` sta per _funcitonal interaction_, `O` sta per _objection_ e `N` sta per _no objection_.
 
-```{r}
+
+```r
 d$cond <- factor(d$Condition)
 
 d$cond <- factor(
@@ -38,7 +37,8 @@ d$cond <- factor(
 
 Ci sono alcuni dati mancanti, quindi verranno omesse le righe con `NA`. Selezionando le colonne di interesse dal data.frame originario otteniamo:
 
-```{r}
+
+```r
 dd <- d %>% 
   select(cond, SwitchOff_Time) %>% 
   na.omit()
@@ -46,18 +46,27 @@ dd <- d %>%
 
 Nelle quattro condizioni si osservano le seguenti medie [si veda la Tabella 3 di @horstmann2018robot]:
 
-```{r}
+
+```r
 dd %>% 
   group_by(cond) %>% 
   summarise(
     avg_sot = mean(SwitchOff_Time, na.rm = TRUE),
     sd_sot = sd(SwitchOff_Time, na.rm = TRUE)
   )
+#> # A tibble: 4 x 3
+#>   cond  avg_sot sd_sot
+#>   <fct>   <dbl>  <dbl>
+#> 1 SO       6.19   4.61
+#> 2 FO      14.4   15.4 
+#> 3 SN       5.05   2.18
+#> 4 FN       4.28   2.49
 ```
 \noindent
 Visualizziamo i dati:
 
-```{r}
+
+```r
 dd_summary <- dd %>%
   group_by(cond) %>%
   summarize(
@@ -84,54 +93,49 @@ dd %>%
   ) +
   theme(legend.position = "none")
 ```
+
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{060_anova_files/figure-latex/unnamed-chunk-6-1} \end{center}
 \noindent
 Su scala logaritmica, l'asimmetria positiva della variabile `dd$SwitchOff_Time` viene ridotta.
 
-```{r, echo=FALSE}
-dd_summary <- dd %>%
-  group_by(cond) %>%
-  summarize(
-    sot_mean = mean(log(SwitchOff_Time)),
-    sot_sd = sd(log(SwitchOff_Time)),
-    sot_median = median(log(SwitchOff_Time))
-  ) %>% 
-  ungroup()
 
-dd %>%
-  ggplot(
-    aes(x = cond, y = log(SwitchOff_Time), color = cond)
-  ) +
-  ggforce::geom_sina(aes(color = cond, size = 3, alpha = .5)) +
-  geom_errorbar(
-    aes(y = sot_median, ymin = sot_median, ymax = sot_median),
-    data = dd_summary, width = 0.5, size = 3
-  ) +
-  scale_color_okabe_ito(name = "cond", alpha = .9) +
-  labs(
-    x = "",
-    y = "SwitchOff Time (log)",
-    color = "Condizione"
-  ) +
-  theme(legend.position = "none")
-```
+\begin{center}\includegraphics[width=0.8\linewidth]{060_anova_files/figure-latex/unnamed-chunk-7-1} \end{center}
 
 \noindent
 Per i dati trasformati, la mediana in ciascuna condizione è:
 
-```{r}
+
+```r
 dd$y <- log(dd$SwitchOff_Time + 0.01)
 dd %>% 
   group_by(cond) %>% 
   summarise(
     avg_y = median(y)
   )
+#> # A tibble: 4 x 2
+#>   cond  avg_y
+#>   <fct> <dbl>
+#> 1 SO     1.61
+#> 2 FO     2.01
+#> 3 SN     1.39
+#> 4 FN     1.39
 ```
 \noindent
 Creiamo ora la variabile `x` che indicizza le quattro condizioni (la variabile `x` verrà usata nel modello Stan):
 
-```{r}
+
+```r
 dd$x <- as.numeric(dd$cond)
 head(dd)
+#>   cond SwitchOff_Time    y x
+#> 3   SN              6 1.79 3
+#> 4   FO              7 1.95 2
+#> 5   FO              3 1.10 2
+#> 6   FN              4 1.39 4
+#> 7   FN              4 1.39 4
+#> 8   FO             12 2.49 2
 ```
 
 Il modello bayesiano che usiamo qui per il confronto tra le medie dei quattro gruppi è una semplice estensione del modello per la media di un solo gruppo. Il codice usato è ispirato da quello fornito nella seguente [pagina web](http://avehtari.github.io/BDA_R_demos/demos_rstan/rstan_demo.html#8_Comparison_of_(k)_groups_with_hierarchical_models). Per adattare un modello "robusto", ipotizzeremo che la `y` segua una distribuzione $t$ di Student con un numero di gradi di libertà stimato dal modello.
@@ -144,7 +148,8 @@ Il modello classico dell'ANOVA è basato sulle seguenti assunzioni:
 
 Nella presenta formulazione dell'ANOVA bayesiana, l'assunto di normalità non è richiesto, mentre devono essere soddisfatte le condizioni di omoschedasticità e indipendenza. L'ANOVA bayesiana può comunque essere estesa a condizioni che violano sia l'assunto di omoschedasticità sia quello di indipendenza. Ma qui ci limitiamo a discutere il caso più semplice.
 
-```{r}
+
+```r
 modelString = "
 // Comparison of k groups with common variance (ANOVA)
 data {
@@ -170,7 +175,8 @@ writeLines(modelString, con = "code/grp_aov.stan")
 
 Creiamo un oggetto che contiene i dati nel formato appropriato per Stan:
 
-```{r}
+
+```r
 data_grp <- list(
   N = nrow(dd),
   K = 4,
@@ -181,14 +187,16 @@ data_grp <- list(
 
 Compiliamo il modello:
 
-```{r}
+
+```r
 file <- file.path("code", "grp_aov.stan")
 mod <- cmdstan_model(file)
 ```
 
 Eseguiamo il campionamento MCMC:
 
-```{r, message=FALSE, warning=FALSE, error=FALSE, results='hide'}
+
+```r
 fit <- mod$sample(
   data = data_grp,
   iter_sampling = 4000L,
@@ -203,44 +211,72 @@ fit <- mod$sample(
 
 Esaminando i risultati
 
-```{r}
+
+```r
 fit$summary()
+#> # A tibble: 7 x 10
+#>   variable    mean  median     sd    mad      q5     q95  rhat ess_bulk ess_tail
+#>   <chr>      <dbl>   <dbl>  <dbl>  <dbl>   <dbl>   <dbl> <dbl>    <dbl>    <dbl>
+#> 1 lp__     -41.1   -40.8   1.84   1.68   -44.6   -38.8    1.00    7131.    9908.
+#> 2 mu[1]      1.69    1.68  0.173  0.171    1.41    1.98   1.00   21997.   10950.
+#> 3 mu[2]      2.05    2.04  0.192  0.190    1.74    2.37   1.00   21206.   12287.
+#> 4 mu[3]      1.52    1.52  0.119  0.119    1.32    1.72   1.00   23360.   11247.
+#> 5 mu[4]      1.28    1.28  0.127  0.123    1.07    1.49   1.00   20076.   10902.
+#> 6 sigma      0.476   0.472 0.0744 0.0726   0.361   0.605  1.00   13820.   11330.
+#> # ... with 1 more row
 ```
 \noindent
 ci rendiamo conto che cìè una buona corrispondenza tra le medie a posteriori e le medie campionarie.
 
 Trasformiamo l'oggetto `fit` in un oggetto di classe `stanfit`:
 
-```{r}
+
+```r
 stanfit <- rstan::read_stan_csv(fit$output_files())
 ```
 
 La funzione `rstan::extract()` estrae i campioni a posteriori da un oggetto di classe `stanfit`:
 
-```{r}
+
+```r
 posterior <- extract(stanfit, permuted = TRUE)
 ```
 
 Una rappresentazione grafica della distribuzione a posteriori delle quattro medie si ottiene con le seguenti istruzioni:
 
-```{r}
+
+```r
 temps <- data.frame(posterior$mu) %>%
   setNames(c('SO', 'FO', 'SN', 'FN'))
 ```
 
-```{r}
+
+```r
 mcmc_areas(temps, prob = 0.95) + 
   xlab('Gruppi')
 ```
 
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{060_anova_files/figure-latex/unnamed-chunk-18-1} \end{center}
+
 I quattro intervalli di credibilità al 95% sono:
 
-```{r}
+
+```r
 ci95 <- rstanarm::posterior_interval(
   as.matrix(stanfit), 
   prob = 0.95
 )
 round(ci95, 2)
+#>         2.5%  97.5%
+#> mu[1]   1.36   2.04
+#> mu[2]   1.68   2.44
+#> mu[3]   1.28   1.76
+#> mu[4]   1.03   1.54
+#> sigma   0.34   0.63
+#> nu      1.37   4.53
+#> lp__  -45.65 -38.64
 ```
 
 
@@ -258,17 +294,32 @@ Si parla di interazione quando l'effetto di un fattore sulla variabile dipendent
 
 Vengono presentati qui di seguito alcuni esempi. Le figure seguenti mostrano le medie di ciascuna condizione nel caso di un disegno 3 (fattore riga) $\times$ 2 (fattore colonna). La spiegazione delle figure è presentata nelle didascalie.
 
-```{r fig-anova1, echo=FALSE, fig.height=3, fig.width=6, fig.cap="Il fattore colonna è indicato dal colore. **Sinistra** La figura mostra un effetto principale del fattore riga e un effetto principale del fattore colonna. Non c'è interazione tra i fattori riga e colonna. **Destra** La figura mostra un effetto principale del fattore riga. L'effetto principale del fattore colonna è zero. Non c'è interazione tra i fattori riga e colonna.", fig.align="center"}
-knitr::include_graphics("images/anova1.pdf")
-```
+\begin{figure}[h]
 
-```{r fig-anova2, echo=FALSE, fig.height=3, fig.width=6, fig.cap="Il fattore colonna è indicato dal colore. **Sinistra** La figura mostra che l'effetto principale del fattore riga è zero, mentre c'è un effetto principale del fattore colonna. Non c'è interazione tra i fattori riga e colonna. **Destra** Non c'è né un effetto principale del fattore riga, né un effetto pricipale del fattore colonna, né un'interazione tra i fattori riga e colonna.", fig.align="center"}
-knitr::include_graphics("images/anova2.pdf")
-```
+{\centering \includegraphics[width=0.8\linewidth]{images/anova1} 
 
-```{r fig-anova3, echo=FALSE, fig.height=3, fig.width=6, fig.cap="Il fattore colonna è indicato dal colore. Entrambe le figure mostrano un'interazione tra i fattori riga e colonna. Nella figura di sinistra gli effetti principali non sono interpretabili; nella figura di destra gli effetti principali sono interpretabili in quanto l'interazione è di lieve entità.", fig.align="center"}
-knitr::include_graphics("images/anova3.pdf")
-```
+}
+
+\caption{Il fattore colonna è indicato dal colore. **Sinistra** La figura mostra un effetto principale del fattore riga e un effetto principale del fattore colonna. Non c'è interazione tra i fattori riga e colonna. **Destra** La figura mostra un effetto principale del fattore riga. L'effetto principale del fattore colonna è zero. Non c'è interazione tra i fattori riga e colonna.}(\#fig:fig-anova1)
+\end{figure}
+
+\begin{figure}[h]
+
+{\centering \includegraphics[width=0.8\linewidth]{images/anova2} 
+
+}
+
+\caption{Il fattore colonna è indicato dal colore. **Sinistra** La figura mostra che l'effetto principale del fattore riga è zero, mentre c'è un effetto principale del fattore colonna. Non c'è interazione tra i fattori riga e colonna. **Destra** Non c'è né un effetto principale del fattore riga, né un effetto pricipale del fattore colonna, né un'interazione tra i fattori riga e colonna.}(\#fig:fig-anova2)
+\end{figure}
+
+\begin{figure}[h]
+
+{\centering \includegraphics[width=0.8\linewidth]{images/anova3} 
+
+}
+
+\caption{Il fattore colonna è indicato dal colore. Entrambe le figure mostrano un'interazione tra i fattori riga e colonna. Nella figura di sinistra gli effetti principali non sono interpretabili; nella figura di destra gli effetti principali sono interpretabili in quanto l'interazione è di lieve entità.}(\#fig:fig-anova3)
+\end{figure}
 
 Dagli esempi precedenti si evince che c'è un'interazione ogni qualvolta i profili delle medie non sono paralleli. Anche se, nella popolazione, non c'è interazione, a causa della variabilità campionaria i profili delle medie non sono mai perfettamente paralleli nel campione. Il problema è quello di stabilire se l'assenza di parallelismo nel campione fornisce sufficiente evidenza di presenza di interazione nella popolazione. 
 
@@ -290,12 +341,14 @@ Quindi, `mean(posterior$mu[, 1] - posterior$mu[, 3])` corrisponde alla stima a p
 
 Per sottoporre a verifica questa ipotesi, calcoliamo la proporzione di volte in cui questo _non_ si verifica nella distribuzione a posteriori:
 
-```{r}
+
+```r
 sum(
   (posterior$mu[, 1] - posterior$mu[, 3]) > 
     (posterior$mu[, 2] - posterior$mu[, 4])
   ) / 
   length(posterior$mu[, 1])
+#> [1] 0.0297
 ```
 
 La stima di questa probabilità in un test direzionale è molto simile alla probabilità frequentista riportata da @horstmann2018robot, ovvero $p = 0.016$. @horstmann2018robot riportano la presenza di un'interazione tra _Interaction type_ e _Robot's objection_ (com'è stato anche trovato con la presente ANOVA bayesiana). Per interpretare l'interazione è necessario esaminare le mediane dei quattro gruppi.^[In presenza di outlier la mediana fornisce una misura di tenenza centrale più robusta della media.] L'esame delle mediane indica che l'effetto del fattore _Robot's objection_ è più grande quando il fattore _Interaction type_ assume la modalità _Functional_ piuttosto che _Social_. Ma possiamo anche leggere l'interazione nella direzione opposta: l'effetto del fattore _Interaction type_ è più grande quando il fattore _Robot's objection_ assume la modalità _Objection_ anziché _No objection_. 
@@ -307,40 +360,50 @@ L'effetto principale descrive l'effetto marginale di un fattore. Nel caso presen
 
 L'effetto principale del fattore _Interaction type_ è la differenza tra le medie di _Social_ e di _Functional_, ignorando _Robot's objection_. @horstmann2018robot riportano che gli individui che avevano avuto un'interazione funzionale con il robot impiegavano più tempo a spegnere il robot di coloro che avevano avuto un'interazione sociale con il robot ($p$ = 0.045). Il presente modello bayesiano offre scarse evidenze di ciò:
 
-```{r}
+
+```r
 mean((exp(posterior$mu[, 2]) + exp(posterior$mu[, 4])) / 2)
+#> [1] 5.76
 mean((exp(posterior$mu[, 1]) + exp(posterior$mu[, 3])) / 2)
+#> [1] 5.05
 ```
 
 Infatti, all'evento _complementare_ possiamo associare la seguente probabilità:
 
-```{r}
+
+```r
 sum(
   (posterior$mu[, 2] + posterior$mu[, 4]) < 
     (posterior$mu[, 1] + posterior$mu[, 3])
   ) / 
   length(posterior$mu[, 1])
+#> [1] 0.344
 ```
 
 L'effetto principale del fattore _Robot's objection_  è la differenza tra le medie di _Objection_ e di _No Objection_, ignorando _Interaction type_. @horstmann2018robot riportano che i partecipanti avevano aspettato più a lungo prima di spegnere il robot quando il robot aveva avanzato un'obiezione rispetto a quando non si era opposto ad essere spento:
 
-```{r}
+
+```r
 mean(
   (exp(posterior$mu[, 1]) + exp(posterior$mu[, 2])) / 2
 )
+#> [1] 6.69
 
 mean(
   (exp(posterior$mu[, 3]) + exp(posterior$mu[, 4])) / 2
 )
+#> [1] 4.12
 ```
 In base al modello bayesiano, la probabilità direzionale per l'evento complementare è
 
-```{r}
+
+```r
 sum(
   (posterior$mu[, 1] + posterior$mu[, 2]) < 
     (posterior$mu[, 3] + posterior$mu[, 4])
   ) / 
   length(posterior$mu[, 1])
+#> [1] 0.00162
 ```
 e corrisponde, in ordine di grandezza, alla probabilità frequentista riportata da @horstmann2018robot, ovvero $p$ = 0.004.
 
@@ -349,7 +412,8 @@ e corrisponde, in ordine di grandezza, alla probabilità frequentista riportata 
 
 È possibile modificare il codice Stan precedente così da avere i dati grezzi in input ed eseguire la standardizzazione all'interno del programma.
 
-```{r}
+
+```r
 modelString = "
 // Comparison of k groups with common variance (ANOVA)
 data {
@@ -385,14 +449,16 @@ generated quantities {
 writeLines(modelString, con = "code/grp_aovstd.stan")
 ```
 
-```{r}
+
+```r
 file <- file.path("code", "grp_aovstd.stan")
 mod <- cmdstan_model(file)
 ```
 
 Eseguiamo il campionamento MCMC usando gli stessi dati discussi in precedenza:
 
-```{r, message=FALSE, warning=FALSE, error=FALSE, results='hide'}
+
+```r
 fit2 <- mod$sample(
   data = data_grp,
   iter_sampling = 4000L,
@@ -407,8 +473,18 @@ fit2 <- mod$sample(
 
 I risultati sono equivalenti a quelli trovati in precedenza:
 
-```{r}
+
+```r
 fit2$summary(c("mu", "sigma", "nu"))
+#> # A tibble: 6 x 10
+#>   variable  mean median     sd    mad    q5   q95  rhat ess_bulk ess_tail
+#>   <chr>    <dbl>  <dbl>  <dbl>  <dbl> <dbl> <dbl> <dbl>    <dbl>    <dbl>
+#> 1 mu[1]    1.70   1.69  0.174  0.169  1.43  1.99   1.00   22741.   11872.
+#> 2 mu[2]    2.07   2.06  0.196  0.192  1.75  2.39   1.00   20489.   11561.
+#> 3 mu[3]    1.52   1.52  0.122  0.121  1.33  1.72   1.00   22019.   11683.
+#> 4 mu[4]    1.29   1.28  0.127  0.122  1.08  1.50   1.00   20968.   11550.
+#> 5 sigma    0.480  0.475 0.0763 0.0754 0.364 0.611  1.00   15408.   11838.
+#> 6 nu       2.57   2.43  0.824  0.716  1.52  4.12   1.00   15730.    9798.
 ```
 
 

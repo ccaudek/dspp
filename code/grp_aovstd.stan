@@ -12,14 +12,14 @@ transformed data {
 }
 parameters {
   vector[K] mu_std;        // group means
-  real<lower=0> sigma_std; // common standard deviation
+  real<lower=0> sigma_std; // common standard deviation 
   real<lower=1> nu;
 }
 model {
-  mu_std ~ normal(0, 2);
-  sigma_std ~ normal(0, 2);
+  mu_std ~ normal(0, 2);  
+  sigma_std ~ normal(0, 2);     
   nu ~ gamma(2, 0.1);   // Juárez and Steel(2010)
-  y_std ~ student_t(nu, mu_std[x], sigma_std);
+  y_std ~ student_t(nu, mu_std[x], sigma_std); 
 }
 generated quantities {
   vector[K] mu;

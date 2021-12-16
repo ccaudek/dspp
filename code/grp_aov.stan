@@ -8,8 +8,8 @@ data {
 }
 parameters {
   vector[K] mu;        // group means
-  real<lower=0> sigma; // common standard deviation
-  real<lower=1> nu;
+  real<lower=0> sigma; // common standard deviation 
+  real<lower=1> nu; 
 }
 model {
   mu ~ normal(0, 2);      // weakly informative prior

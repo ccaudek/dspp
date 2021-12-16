@@ -11,7 +11,7 @@ library("projpred")
 Il principio base del metodo scientifico è la _replicabilità_ delle osservazioni: le osservazioni che non possono essere replicate sono poco interessanti. Parallelamente, una caratteristica fondamentale di un modello scientifico è la _generalizzabilità_: se un modello è capace di descrivere soltanto le proprietà di uno specifico campione di osservazioni, allora è poco utile. Ma come è possibile valutare la generalizzabilità di un modello statistico? Questa è la domanda a cui cercheremo di rispondere in questo Capitolo.
 ```
 
-Nel valutare un modello, il ricercatore deve porsi tre domande critiche.
+Secondo @Johnson2022bayesrules, nel valutare un modello, il ricercatore deve porsi tre domande critiche.
 
 - Quali conseguenze più ampie derivano dall'inferenza? Come e chi ha raccolto i dati? Colui che svolge la ricerca otterrebbe di benefici manipolando i dati (escludendo delle osservazioni; selezionando il campione)? Che impatto hanno inferenze che vengono tratte dai dati sugli individui e sulla società? Quali pregiudizi o strutture di potere possono essere coinvolti in questa analisi?
 
@@ -19,19 +19,23 @@ Nel valutare un modello, il ricercatore deve porsi tre domande critiche.
 
 - Quanto è accurato il modello? Quanto sono lontane dalla realtà le previsioni del modello?
 
-Per approfondire questi temi, si rinvia al testo di @Johnson2022bayesrules. Qui ci concentreremo sul tema della generalizzabilità del modello. 
+Per approfondire questi temi, si rinvia al testo di @Johnson2022bayesrules. Qui ci concentreremo su uno dei temi critici relativa alla validità di un modello, ovvero sul tema della generalizzabilità del modello. 
 
-Nella scienza l'utilità di una teoria viene verificata eseguendo previsioni per osservazioni fatte in un esperimento in grado di falsificare detta teoria. Discrepanze significative tra osservazioni e previsioni suggeriscono che la teoria, o nella nostra visione più ristretta, il modello statistico, non è utile. La corrispondenza tra previsioni e osservazioni descrive, non soltanto la capacità del modello di rendere conto delle osservazioni di un campione di dati, ma anche la sua capacità di generalizzazione.
+Nella scienza l'utilità di una teoria viene verificata esaminando la corrispondenza tra predizioni teoriche e osservazioni. Se vi sono discrepanze significative tra predizioni e osservazioni ciò suggerisce che la teoria, o nella nostra visione più ristretta, il modello statistico, è poco utile. Il problema della capacità predittiva del modello non riguarda soltanto l'adeguatezza del modello in riferimento ad uno specifico campione di dati, ma riguarda anche la capacità di un modello statistico sviluppato in un campione di dati di ben adattarsi ad altri campioni della stessa popolazione.
 
+In generale, i modelli statistici tendono a non generalizzarsi bene a un nuovo campione; questo perché sfruttano le caratteristiche specifiche dei dati del campione e tendono a produrre risultati eccessivamente ottimistici (cioè le dimensioni dell'effetto) che sovrastimano la dimensione dell'effetto atteso sia nella popolazione che in nuovi campioni. Benché i problemi della generalizzabilità dei modelli e il metodo chiave per valutarli -- ovvero, la convalida incrociata (_cross-validation_) -- siano stati discussi sin dagli esordi della letteratura psicometrica [@lord1950efficiency], tali temi sono stati sottovalutati nella formazione psicologica contemporanea e nella ricerca. Tuttavia, questi concetti diventeranno sempre più importanti considerata l'enfasi corrente sulla necessità di condurre ricerche replicabili. Un'introduzione a questi temi è fornita, da esempio, da @song2021making. Nello specifico, @song2021making mostrano che un modello che viene adattato a un campione (_campione di calibrazione_) non si generalizza bene a un altro campione (_campione di convalida_): la capacità predittiva del modello è minore quando il modello viene applicato al campione di convalida piuttosto che al campione di calibrazione. Questo problema è detto _sovra-adattamento_ (_overfitting_). In generale, @song2021making mostrano come la capacità di generalizzazione del modello diminuisce (a) all'aumentare della complessità del modello, (b) al diminuire dell'ampiezza del campione di calibrazione, e (c) al diminuire della dimensione dell'effetto nella popolazione.
+
+Sebbene i modelli statistici producono comunemente un sovra-adattamento, è anche possibile che essi producano un _sotto-adattamento_ (_underfitting_) dei dati. Tale mancanza di adattamento è dovuta dalla variabilità campionaria e dalla complessità del modello. Il sotto-adattamento porta ad un $R^2$ basso e ad un _MSE_ alto, sia nei campioni di calibrazione che in quelli di convalida. Per questo motivo, la scarsa generalizzabilità del modello può essere dovuta sia al sovra-adattamento che al sotto-adattamento del modello.
+
+Per aumentarne la capacità di generalizzazione del modello devono essere soddisfatte tre condizioni: (a) campioni di calibrazione grandi, (b) dimensioni dell'effetto non piccole nella popolazione, e (c) modelli che non siano inutilmente complessi. Tuttavia, nella ricerca psicologica queste tre condizioni sono difficili da soddisfare: l'aumento della dimensione del campione spesso richiede l'utilizzo di maggiori risorse, la dimensione di un dato effetto nella popolazione non è soggetta alla discrezione dei ricercatori e la complessità del modello è spesso guidata da motivazioni teoriche. Pertanto, negli studi psicologici la generalizzabilità dei modelli è spesso problematica. Ciò rende necessario che il ricercatore fornisca informazioni aggiuntive relative alla capacità del modello di generalizzarsi a nuovi campioni. L'obiettivo di questo capitolo è di descrivere come questo possa essere fatto utilizzando l'approccio bayesiano.
 
 ## Capacità predittiva
 
-Nel framework bayesiano il problema della generalizzabilità di un modello viene affrontato calcolandone la sua capacità predittiva, laddove per capacità predittiva si intende la capacità di un modello, i cui parametri sono stati stimati usando le informazioni di un campione, di ben adattarsi ad un campione di nuove osservazioni future. In questo Capitolo cercheremo di rispondere a tre domande.
+Nel framework bayesiano il problema della generalizzabilità di un modello viene affrontato valutando la capacità predittiva del modello, laddove per capacità predittiva si intende la capacità di un modello, i cui parametri sono stati stimati usando le informazioni di un campione, di ben adattarsi ad un campione di osservazioni future. In questo Capitolo cercheremo di rispondere a tre domande.
 
 1. Quali criteri devono essere presi in considerazione se vogliamo valutare la capacità predittiva di un modello?
 1. Come è possibile quantificare la capacità predittiva di un modello sulla base delle informazioni di un campione di osservazioni?
 1. Come possiamo confrontare le capacità predittive di modelli alternativi?
-
 
 ## Il rasoio di Ockham
 
@@ -43,17 +47,11 @@ Il rasoio di Ockham, però, non fornisce sempre la soluzione al problema della s
 
 In questo Capitolo ci chiederemo come sia possibile misurare l'accuratezza predittiva di un modello. Ciò ci consentirà, in seguito, di usare il rasoio di Ockham: a parità di accuratezza, verrà scelto il modello più semplice. Ma nella pratica scientifica non si sacrifica mai l'accuratezza per la semplicità: il criterio prioritario è sempre quello dell'accuratezza.
 
-Ma come è possibile valutare l'accuratezza (predittiva) di un modello? Per rispondere a questa domanda @McElreath_rethinking nota che è necessario evitare due errori opposti:
-
-- il _sovra-adattamento_ (_overfitting_) --- il modello non si generalizza bene a nuovi dati futuri perché fa leva informazioni irrilevanti presenti nel campione  esaminato; tali aspetti idiosincratici del campione necessariamente non si ritroveranno in futuri campioni di dati;
-
-- il _sotto-adattamento_ (_underfitting_) --- il modello non è neppure in grado di rendere conto delle regolarità presenti nei dati esaminati.
-
-Tale problema va sotto il nome di _bias-variance trade-off_: il sotto-adattamento può portare a distorsioni (_bias_) dei parametri mentre il sovra-adattamento può portare a previsioni scadenti in campioni futuri. Spesso l'incertezza relativa alla scelta del modello (sotto-adattamento versus sovra-adattamento) passa inosservata anche se il suo impatto può essere molto grave.
+Ma come è possibile valutare l'accuratezza (predittiva) di un modello? Per rispondere a questa domanda @McElreath_rethinking nota che è necessario evitare i due opposti errori del sovra-adattamento e del sotto-adattamento. Tale problema va sotto il nome di _bias-variance trade-off_: il sotto-adattamento può portare a distorsioni (_bias_) dei parametri mentre il sovra-adattamento può portare a previsioni scadenti in campioni futuri. Spesso l'incertezza relativa alla scelta del modello (sotto-adattamento versus sovra-adattamento) passa inosservata ma il suo impatto può essere molto grave.
 
 > Standard statistical practice ignores model uncertainty. Data analysts typically select a model from some class of models and then proceed as if the selected model had generated the data. This approach ignores the uncertainty in model selection, leading to over-confident inferences and decisions that are more risky than one thinks they are. [@hoeting1999bayesian]
 
-Il framework bayesiano riconosce che la selezione dei modelli è condotta in condizioni di incertezza dato che un particolare modello è tipicamente scelto all'interno di un insieme di modelli concorrenti i quali potrebbero descrivere almeno altrettanto bene il processo generativo dei dati. In questo capitolo esamineremo alcune tecniche bayesiane che possono essere utilizzate per scegliere tra modelli alternativi, tenendo sotto controllo i pericoli del sovra- e del sotto-adattamento. In particolare, valuteremo la capacità predittiva di un modello e stabiliremo quale, tra due o più modelli, sia quello da preferire.
+Il framework bayesiano riconosce che la selezione dei modelli è condotta in condizioni di incertezza dato che un particolare modello è tipicamente scelto all'interno di un insieme di modelli concorrenti i quali potrebbero descrivere almeno altrettanto bene il processo generativo dei dati. In questo capitolo esamineremo alcune tecniche bayesiane che possono essere utilizzate per scegliere tra modelli alternativi, tenendo sotto controllo i pericoli del sovra-adattamento e del sotto-adattamento. In particolare, valuteremo la capacità predittiva di un modello e stabiliremo quale, tra due o più modelli, sia quello da preferire.
 
 
 ### Stargazing
