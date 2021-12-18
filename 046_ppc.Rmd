@@ -325,11 +325,10 @@ Oltre al confronto tra le distribuzioni $p(y)$ e $p(y^{rep})$ è anche possibile
 
 
 ::: {.guidedpractice data-latex=""}
-Qui di seguito esamineremo un set di dati che non seguono la distribuzione normale [@gelman2020regression]. I dati corrispondono ad una serie di misurazioni prese da Simon Newcomb nel 1882 come parte di un esperimento per stimare la velocità della luce. A questi dati verrà (inappropriatamente) adattata una distribuzione normale. L'obiettivo dell'esempio è quello di mostrare come i PPC possono rivelare la mancanza di adattamento di un modello ai dati.
+Esaminiamo ora un set di dati che non seguono la distribuzione normale [@gelman2020regression]. I dati corrispondono ad una serie di misurazioni prese da Simon Newcomb nel 1882 come parte di un esperimento per stimare la velocità della luce. A questi dati verrà (inappropriatamente) adattata una distribuzione normale. L'obiettivo dell'esempio è quello di mostrare come i PPC possono rivelare la mancanza di adattamento di un modello ai dati.
 :::
 
-<!-- I PPC mostrano che il modo più semplice per verificare l'adattamento del modello è quello di visualizzare i dati $y^{rep}$ insieme ai dati effettivi.  -->
-
+I PPC mostrano che il modo più semplice per verificare l'adattamento del modello è quello di visualizzare $y^{rep}$ insieme ai dati effettivi. Iniziamo a caricare i dati:
 
 ```{r}
 library("MASS")
@@ -375,7 +374,7 @@ writeLines(modelString, con = "code/newcomb.stan")
 ```
 
 \noindent
-Adattiamo il modello ai dati
+Adattando il modello ai dati
 
 ```{r, results='hide'}
 file <- file.path("code", "newcomb.stan")
@@ -393,7 +392,7 @@ fit <- mod$sample(
 ```
 
 \noindent
-e otteniamo le seguenti stime dei parametri $\mu$ e $\sigma$:
+otteniamo le seguenti stime dei parametri $\mu$ e $\sigma$:
 
 ```{r}
 fit$summary(c("mu", "sigma"))

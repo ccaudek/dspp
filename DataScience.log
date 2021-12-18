@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.7)  18 DEC 2021 16:01
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.7)  18 DEC 2021 16:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2672,12 +2672,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 1141--1143
  []
 
 
-Underfull \hbox (badness 1237) in paragraph at lines 1141--1143
-\TU/phv/m/n/10 (inappropriatamente) adattata una distribuzione normale. L’obiet
-tivo
- []
-
-
 Overfull \hbox (2.22pt too wide) in paragraph at lines 1141--1144
 [][]  []
  []
@@ -2795,17 +2789,17 @@ Sidefoothsep and sidefootwidth: 7pt and 117pt
 Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 ******************************************************
 
-LaTeX Info: Redefining \rmfamily on input line 1442.
-LaTeX Info: Redefining \sffamily on input line 1442.
-LaTeX Info: Redefining \ttfamily on input line 1442.
+LaTeX Info: Redefining \rmfamily on input line 1444.
+LaTeX Info: Redefining \sffamily on input line 1444.
+LaTeX Info: Redefining \ttfamily on input line 1444.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1446--1448
+Underfull \hbox (badness 10000) in paragraph at lines 1448--1450
 
  []
 
-LaTeX Info: Redefining \rmfamily on input line 1449.
-LaTeX Info: Redefining \sffamily on input line 1449.
-LaTeX Info: Redefining \ttfamily on input line 1449.
+LaTeX Info: Redefining \rmfamily on input line 1451.
+LaTeX Info: Redefining \sffamily on input line 1451.
+LaTeX Info: Redefining \ttfamily on input line 1451.
 The property list \polyglossia@langsetup contains the pairs (without outer
 braces):
 >  {latex/script}  =>  {latin}
@@ -2866,8 +2860,8 @@ braces):
 \tf@lof=\write9
 \openout9 = `DataScience.lof'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1454.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1454.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1456.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1456.
 (./DataScience.aux
 LaTeX Info: Redefining \rmfamily on input line 26.
 LaTeX Info: Redefining \sffamily on input line 26.
@@ -2879,8 +2873,8 @@ LaTeX Info: Redefining \rmfamily on input line 96.
 LaTeX Info: Redefining \sffamily on input line 96.
 LaTeX Info: Redefining \ttfamily on input line 96.
 )
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1454.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1454.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1456.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1456.
 
 Package rerunfilecheck Info: File `DataScience.out' has not changed.
 (rerunfilecheck)             Checksum: 9A5330045C935F8BC33F6C69696FB882;1998.

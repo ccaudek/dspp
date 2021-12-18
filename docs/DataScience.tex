@@ -1139,9 +1139,11 @@ Confrontando visivamente gli aspetti chiave dei dati previsti futuri \(y^{rep}\)
 Oltre al confronto tra le distribuzioni \(p(y)\) e \(p(y^{rep})\) è anche possibile un confronto tra la distribuzione di varie statistiche descrittive, i cui valori sono calcolati su diversi campioni \(y^{rep}\), e le corrispondenti statistiche descrittive calcolate sui dati osservati. Vengono solitamente considerate statistiche descrittive quali la media, la varianza, la deviazione standard, il minimo o il massimo. Ma confronti di questo tipo sono possibili per qualunque statistica descrittiva. Questi confronti sono chiamati PPC.
 
 \begin{guidedpractice}
-Qui di seguito esamineremo un set di dati che non seguono la distribuzione normale \autocite{gelman2020regression}. I dati corrispondono ad una serie di misurazioni prese da Simon Newcomb nel 1882 come parte di un esperimento per stimare la velocità della luce. A questi dati verrà (inappropriatamente) adattata una distribuzione normale. L'obiettivo dell'esempio è quello di mostrare come i PPC possono rivelare la mancanza di adattamento di un modello ai dati.
+Esaminiamo ora un set di dati che non seguono la distribuzione normale \autocite{gelman2020regression}. I dati corrispondono ad una serie di misurazioni prese da Simon Newcomb nel 1882 come parte di un esperimento per stimare la velocità della luce. A questi dati verrà (inappropriatamente) adattata una distribuzione normale. L'obiettivo dell'esempio è quello di mostrare come i PPC possono rivelare la mancanza di adattamento di un modello ai dati.
 
 \end{guidedpractice}
+
+I PPC mostrano che il modo più semplice per verificare l'adattamento del modello è quello di visualizzare \(y^{rep}\) insieme ai dati effettivi. Iniziamo a caricare i dati:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1196,7 +1198,7 @@ Il codice Stan per il modello normale è il seguente:
 \end{Shaded}
 
 \noindent
-Adattiamo il modello ai dati
+Adattando il modello ai dati
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1216,7 +1218,7 @@ Adattiamo il modello ai dati
 \end{Shaded}
 
 \noindent
-e otteniamo le seguenti stime dei parametri \(\mu\) e \(\sigma\):
+otteniamo le seguenti stime dei parametri \(\mu\) e \(\sigma\):
 
 \begin{Shaded}
 \begin{Highlighting}[]
