@@ -1,10 +1,10 @@
 # (PART\*) Nozioni preliminari {-}
 
-
 # Concetti chiave 
 
-La _data science_ si pone all'intersezione tra statistica e informatica. La statistica è un insieme di metodi per raccogliere i dati ed estrarne informazione; l'informatica implementa tali procedure in un software. Iniziamo la nostra discussione introducendo alcuni concetti fondamentali.
-
+::: {.chapterintro data-latex=""}
+La _data science_ si pone all'intersezione tra statistica e informatica. La statistica è un insieme di metodi ugilizzati per estrarre informazioni dai dati; l'informatica implementa tali procedure in un software. In questo Capitolo vengono introdotti i  concetti fondamentali.
+:::
 
 ## Popolazioni e campioni
 
