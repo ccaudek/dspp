@@ -2,7 +2,9 @@
 
 
 
+::: {.chapterintro data-latex=""}
 Spesso risulta utile fornire una rappresentazione sintetica della distribuzione di una variabile casuale attraverso degli indicatori caratteristici piuttosto che fare riferimento ad una sua rappresentazione completa mediante la funzione di ripartizione, o la funzione di massa o di densità di probabilità. Una descrizione più sintetica di una variabile casuale, tramite pochi valori, ci consente di cogliere le caratteristiche essenziali della distribuzione, quali: la posizione, cioè il baricentro della distribuzione di probabilità; la variabilità, cioè la dispersione della distribuzione di probabilità attorno ad un centro; la forma della distribuzione di probabilità, considerando la simmetria e la curtosi (pesantezza delle code). In questo Capitolo introdurremo quegli indici sintetici che descrivono il centro di una distribuzione di probabilità e la sua variabilità.
+:::
 
 ## Valore atteso
 
@@ -30,20 +32,18 @@ per definizione il *valore atteso* di $Y$, $\E(Y)$, è
 
 A parole: il valore atteso (o speranza matematica, o aspettazione, o valor medio) di una variabile casuale è definito come la somma di tutti i valori che la variabile casuale può prendere, ciascuno pesato dalla probabilità con cui il valore è preso.
 
-::: {.example}
+::: {.workedexample data-latex=""}
 Calcoliamo il valore atteso della variabile casuale $Y$ corrispondente al lancio di una moneta equilibrata (testa: _Y_ = 1; croce: _Y_ = 0). 
 $$
 \E(Y) = \sum_{i=1}^{2} y_i \cdot P(y_i) = 0 \cdot \frac{1}{5} + 1 \cdot \frac{1}{5} = 0.5.
 $$
 ::: 
-
-::: {.example}
+::: {.workedexample data-latex=""}
 Supponiamo ora che _Y_ sia il risultato del lancio di un dado equilibrato. Il valore atteso di _Y_ diventa:
 $$
 \E(Y) = \sum_{i=1}^{6} y_i \cdot P(y_i) = 1 \cdot \frac{1}{6} + 2 \cdot \frac{1}{6} + \dots + 6 \cdot \frac{1}{6} = \frac{21}{6} = 3.5.
 $$
 ::: 
-
 
 ### Interpretazione
 
@@ -74,8 +74,7 @@ La \@ref(eq:prop-expval-const) ci dice che possiamo estrarre una costante dall'o
 (\#eq:expval-prod-ind-rv)
 \end{equation}
 
-
-:::{.exercise}
+::: {.workedexample data-latex=""}
 Si considerino le seguenti variabili casuali: $Y$, ovvero il numero che si ottiene dal lancio di un dado equilibrato, e $Y$, il numero di teste prodotto dal lancio di una moneta equilibrata. 
 Poniamoci il problema di trovare il valore atteso di $X+Y$.
 
@@ -96,19 +95,16 @@ ovvero
 
 \noindent
 Il risultato del lancio del dado è indipendente dal risultato del lancio della moneta. Pertanto, ciascun evento elementare dello spazio campionario avrà la stessa probabilità di verificarsi, ovvero $Pr(\omega) = \frac{1}{12}$. Il valore atteso di $X+Y$ è dunque uguale a:
-
 $$
 \E(X+Y) = 1 \cdot \frac{1}{12} + 2 \cdot \frac{1}{12} + \dots + 7 \cdot \frac{1}{12} = 4.0.
 $$
 Lo stesso risultato si ottiene nel modo seguente:
-
 $$
 \E(X+Y) = \E(X) + E(Y) = 3.5 + 0.5 = 4.0.
 $$
 :::
 
-
-:::{.exercise}
+::: {.workedexample data-latex=""}
 Si considerino le variabili casuali $X$ e $Y$ definite nel caso del lancio di tre monete equilibrate, dove $X$ conta il numero delle teste nei tre lanci e $Y$ conta il numero delle teste al primo lancio. Si calcoli il valore atteso del prodotto delle variabili casuali $X$ e $Y$. 
 
 La distribuzione di probabilità congiunta $P(X, Y)$ è fornita nella tabella seguente. 
@@ -152,8 +148,6 @@ Nel caso di una variabile casuale continua $Y$ il valore atteso diventa:
 
 Anche in questo caso il valore atteso è una media ponderata della $y$, nella quale ciascun possibile valore $y$ è ponderato per il corrispondente valore della densità $p(y)$. Possiamo leggere l'integrale pensando che $y$ rappresenti l'ampiezza delle barre infinitamente strette di un istogramma, con la densità $p(y)$ che corrisponde all'altezza di tali barre e la notazione $\int_{-\infty}^{\infty}$ che corrisponde ad una somma.
 
-\bigskip
-  
 Un'altra misura di tendenza centrale delle variabili casuali continue è la moda. La moda della $Y$ individua il valore $y$ più plausibile, ovvero il valore $y$ che massimizza la funzione di densità $p(y)$:
 
 \begin{equation}
@@ -176,7 +170,7 @@ Se $Y$ è una variabile casuale discreta con distribuzione $p(y)$, per definizio
 
 A parole: la varianza è la deviazione media quadratica della variabile dalla sua media.^[Data una variabile casuale $Y$ con valore atteso $\E(Y)$, le "distanze" tra i valori di $Y$ e il valore atteso $\E(Y)$ definiscono la variabile casuale $Y - \E(Y)$ chiamata _scarto_, oppure _deviazione_ oppure _variabile casuale centrata_. La variabile $Y - \E(Y)$ equivale ad una traslazione di sistema di riferimento che porta il valore atteso nell'origine degli assi. Si può dimostrare facilmente che il valore atteso della variabile scarto $Y - \E(Y)$ vale zero, dunque la media di tale variabile non può essere usata per quantificare la "dispersione" dei valori di $Y$ relativamente al suo valore medio. Occorre rendere sempre positivi i valori di $Y - \E(Y)$ e tale risultato viene ottenuto considerando la variabile casuale $\left(Y - \E(Y)\right)^2$.] Se denotiamo $\E(Y) = \mu$, la varianza $\Var(Y)$ diventa il valore atteso di $(Y - \mu)^2$.  
 
-:::{.example #somma-due-dadi}
+::: {.workedexample data-latex=""}
 Posta $S$ uguale alla somma dei punti ottenuti nel lancio di due dadi equilibrati, poniamoci il problema di calcolare la varianza di $S$.
 
 La variabile casuale $S$ ha la seguente distribuzione di probabilità:
@@ -187,7 +181,6 @@ La variabile casuale $S$ ha la seguente distribuzione di probabilità:
 
 \noindent
 Essendo $\E(S) = 7$, la varianza diventa
-
 \begin{align}
 \Var(S) &= \sum \left(S- \mathbb{E}(S)\right)^2 \cdot P(S) \notag\\
 &= (2 - 7)^2 \cdot 0.0278 + (3-7)^2 \cdot 0.0556 + \dots + (12 - 7)^2 \cdot 0.0278 \notag\\
@@ -198,20 +191,18 @@ Essendo $\E(S) = 7$, la varianza diventa
 ### Formula alternativa per la varianza
 
 C'è un modo più semplice per calcolare la varianza:
-
 \begin{align}
 \E\Big[\big(X - \E(Y)\big)^2\Big] &= \E\big(X^2 - 2X\E(Y) + \E(Y)^2\big)\notag\\
 &= \E(Y^2) - 2\E(Y)\E(Y) + \E(Y)^2,\notag
 \end{align}
 dato che $\E(Y)$ è una costante; pertanto
-
 \begin{equation}
 \Var(Y) = \E(Y^2) - \big(\E(Y) \big)^2.
 (\#eq:def-alt-var-rv)
 \end{equation}
 A parole: la varianza è la media dei quadrati meno il quadrato della media.
 
-::: {.example}
+::: {.workedexample data-latex=""}
 Consideriamo la variabile casuale $Y$ che corrisponde al numero di teste che si osservano nel lancio di una moneta truccata con probabilità di testa uguale a 0.8.
 Il valore atteso di $Y$ è
 $$
@@ -239,7 +230,6 @@ Nel caso di una variabile casuale continua $Y$, la varianza diventa:
 \Var(Y) = \int_{-\infty}^{+\infty} [y - \E(Y)]^2 p(y) dy
 (\#eq:def-var-rv-cont)
 \end{equation}
-
 Come nel caso discreto, la varianza di una v.c. continua $y$ misura approssimativamente la distanza al quadrato tipica o prevista dei possibili valori $y$ dalla loro media.
 
 ## Deviazione standard
@@ -256,8 +246,8 @@ Si definisce scarto quadratico medio (o deviazione standard o scarto tipo) la ra
 
 Interpretiamo la deviazione standard di una variabile casuale come nella statistica descrittiva: misura approssimativamente la distanza tipica o prevista dei possibili valori $y$ dalla loro media.
 
-:::{.example}
-Per i dadi equilibrati dell'esercizio \@ref(exm:somma-due-dadi), la deviazione standard della variabile casuale $S$ è uguale a $\sqrt{5.8333} =  2.4152$. 
+::: {.workedexample data-latex=""}
+Per i dadi equilibrati dell'esempio precedente, la deviazione standard della variabile casuale $S$ è uguale a $\sqrt{5.8333} = 2.4152$. 
 :::
 
 ## Standardizzazione
@@ -288,7 +278,7 @@ Se $X$ è una v.c. discreta, i suoi momenti valgono:
 :::
 
 I momenti sono importanti parametri indicatori di certe proprietà di $X$. I più
-noti sono senza dubbio quelli per $q = 1$ e $q = 2$. Il momento del primo ordine corrisponde al valore atteso o speranza matematica di $X$. Spesso i momenti di ordine superiore al primo vengono calcolati rispetto al valor medio di $X$, operando una traslazione $x_0 = x − \E(X)$ che individua lo scarto dalla media. Ne deriva che il momento centrale di ordine 2 corrisponde alla varianza.
+noti sono senza dubbio quelli per $q = 1$ e $q = 2$. Il momento del primo ordine corrisponde al valore atteso di $X$. Spesso i momenti di ordine superiore al primo vengono calcolati rispetto al valor medio di $X$, operando una traslazione $x_0 = x − \E(X)$ che individua lo scarto dalla media. Ne deriva che il momento centrale di ordine 2 corrisponde alla varianza.
 
 ## Funzione di ripartizione
 
@@ -309,7 +299,7 @@ $$
 \lim_{x \to -\infty} F_x(X) = F_X(-\infty) = 0, \quad \lim_{x \to +\infty} F_X(X) = F_X(+\infty) = 1.
 $$
 
-:::{.example}
+::: {.workedexample data-latex=""}
 Consideriamo l'esperimento casuale corrispondente al lancio di due monete. Sia $X$ il numero di volte in cui esce testa. La distribuzione di probabilità di $X$ è:
 $$
 P(X) = 

@@ -7,37 +7,49 @@
 % https://ctan.crest.fr/tex-archive/info/latex-samples/MemoirChapStyles/MemoirChapStyles.pdf
 \usepackage{soul}
 \definecolor{nicered}{rgb}{.647,.129,.149}
+
 \makeatletter
-\newlength\dlf@normtxtw
-\setlength\dlf@normtxtw{\textwidth}
-\def\myhelvetfont{\def\sfdefault{mdput}}
-\newsavebox{\feline@chapter}
-\newcommand\feline@chapter@marker[1][4cm]{%
-  \sbox\feline@chapter{%
-    \resizebox{!}{#1}{\fboxsep=1pt%
-	  \colorbox{nicered}{\color{white}\bfseries\sffamily\thechapter}%
-	}}%
-  \rotatebox{90}{%
-    \resizebox{%
-	  \heightof{\usebox{\feline@chapter}}+\depthof{\usebox{\feline@chapter}}}%
-	{!}{\scshape\so\@chapapp}}\quad%
-  \raisebox{\depthof{\usebox{\feline@chapter}}}{\usebox{\feline@chapter}}%
- }
-\newcommand\feline@chm[1][4cm]{%
-  \sbox\feline@chapter{\feline@chapter@marker[#1]}%
-  \makebox[0pt][l]{% aka \rlap
-    \makebox[1cm][r]{\usebox\feline@chapter}%
-  }}
-\makechapterstyle{daleif1}{
-  \renewcommand\chapnamefont{\normalfont\Large\scshape\raggedleft\so}
-  \renewcommand\chaptitlefont{\normalfont\huge\bfseries\scshape\color{nicered}}
-  \renewcommand\chapternamenum{}
-  \renewcommand\printchaptername{}
-  \renewcommand\printchapternum{\null\hfill\feline@chm[2.5cm]\par}
-  \renewcommand\afterchapternum{\par\vskip\midchapskip}
-  \renewcommand\printchaptertitle[1]{\chaptitlefont\raggedleft ##1\par}
-}
+\makechapterstyle{pedersen}
 \makeatother
+
+
+
+%\makeatletter
+%\newlength\dlf@normtxtw
+%\setlength\dlf@normtxtw{\textwidth}
+%\def\myhelvetfont{\def\sfdefault{mdput}}
+%\newsavebox{\feline@chapter}
+%\newcommand\feline@chapter@marker[1][4cm]{%
+%  \sbox\feline@chapter{%
+%    \resizebox{!}{#1}{\fboxsep=1pt%
+%	  \colorbox{nicered}{\color{white}\bfseries\sffamily\thechapter}%
+%	}}%
+%  \rotatebox{90}{%
+%    \resizebox{%
+%	  \heightof{\usebox{\feline@chapter}}+\depthof{\usebox{\feline@chapter}}}%
+%	{!}{\scshape\so\@chapapp}}\quad%
+%  \raisebox{\depthof{\usebox{\feline@chapter}}}{\usebox{\feline@chapter}}%
+% }
+%\newcommand\feline@chm[1][4cm]{%
+%  \sbox\feline@chapter{\feline@chapter@marker[#1]}%
+%  \makebox[0pt][l]{% aka \rlap
+%    \makebox[1cm][r]{\usebox\feline@chapter}%
+%  }}
+%\makechapterstyle{pedersen}{ %daleif1
+%
+%  \renewcommand\chapnamefont{\normalfont\Large\scshape\raggedleft\so}
+%  
+%  % I changed this!!
+%  %\renewcommand\chaptitlefont{\normalfont\huge\bfseries\scshape\color{nicered}}
+%  \renewcommand\chaptitlefont{\normalfont\huge\fontencoding{T1}\fontfamily{phv}\selectfont\color{nicered}}
+%    
+%  \renewcommand\chapternamenum{}
+%  \renewcommand\printchaptername{}
+%  \renewcommand\printchapternum{\null\hfill\feline@chm[2.5cm]\par}
+%  \renewcommand\afterchapternum{\par\vskip\midchapskip}
+%  \renewcommand\printchaptertitle[1]{\chaptitlefont\raggedleft ##1\par}
+%}
+%\makeatother
 
 \DeclareMathOperator{\Var}{Var} % Define variance operator
 \DeclareMathOperator{\SD}{SD} % Define sd operator
@@ -74,5 +86,221 @@
 \usepackage{lstbayes}
 
 
+% Introduction to Modern statistics ------------------------------------------------
+% https://github.com/OpenIntroStat/ims/blob/main/latex/ims-style.tex
+
+\usepackage[framemethod=tikz]{mdframed} 
+\usepackage{helvet} 
+\usepackage{xcolor}
+
+
+\definecolor{oiB}{HTML}{000000}            % COL["blue","full"]
+\definecolor{oiLB}{HTML}{e0e0e0}           % lighter version of oiB
+
+\definecolor{oiY}{HTML}{000000}            % COL["yellow","full"]
+\definecolor{oiLY}{HTML}{e0e0e0}           % lighter version of oiY
+
+\definecolor{oiR}{HTML}{000000}            % COL["red","full"]
+\definecolor{oiLR}{HTML}{e0e0e0}           % lighter version of oiR
+
+\definecolor{oiGray}{HTML}{808080}         % COL["gray","full"]
+\definecolor{oiLGray}{HTML}{f8f8f8}        % lighter version of oiR
+
+\definecolor{oiGB}{rgb}{0.5,0.5,.5}        % from OS4 - for footnotes
+
+
+% Helper environments ------------------------------------------------------------
+
+% mdframedwithfootChapterintro: for chapterintro box
+
+\newenvironment{mdframedwithfootChapterintro}
+{   
+    \savenotes
+    \begin{mdframed}[%
+    topline=true, bottomline=true, linecolor=oiB, linewidth=1.4pt,
+    rightline=false, leftline=false,
+    backgroundcolor=oiLB]
+    %\stepcounter{footnote} % don't increment footnote counter
+    \renewcommand{\thempfootnote}{\arabic{footnote}}
+    }
+{
+    \end{mdframed}
+    \spewnotes
+}
+
+
+% mdframedwithfootGPWE: for guidedpractice and workedexample
+
+\newenvironment{mdframedwithfootGPWE}
+{   
+    \savenotes
+    \begin{mdframed}[%
+    topline=true, bottomline=true, linecolor=oiB, linewidth=0.5pt,
+    rightline=false, leftline=false,
+    backgroundcolor=oiLGray]
+    %\stepcounter{footnote}
+    \renewcommand{\thempfootnote}{\arabic{footnote}}
+    }
+{
+    \end{mdframed}
+    \spewnotes
+}
+
+
+% mdframedwithfootImportant: for important
+
+\newenvironment{mdframedwithfootImportant}
+{   
+    \savenotes
+    \begin{mdframed}[%
+    topline=true, bottomline=true, linecolor=oiR, linewidth=0.5pt,
+    rightline=false, leftline=false,
+    backgroundcolor=oiLGray]
+    %\stepcounter{footnote}
+    \renewcommand{\thempfootnote}{\arabic{footnote}}
+    }
+{
+    \end{mdframed}
+    \spewnotes
+}
+
+
+% mdframedwithfootTip: for tip, data, and pronunciation
+
+\newenvironment{mdframedwithfootTipDataPro}
+{   
+    \savenotes
+    \begin{mdframed}[%
+    topline=true, bottomline=true, linecolor=oiGray, linewidth=0.5pt,
+    rightline=false, leftline=false,
+    backgroundcolor=oiLGray]
+    %\stepcounter{footnote}
+    \renewcommand{\thempfootnote}{\arabic{footnote}}
+    }
+{
+    \end{mdframed}
+    \spewnotes
+}
+
+
+% Custom environments/boxes -------------------------------------------------------
+
+% chapterintro
+
+\newenvironment{chapterintro}{
+\vspace{4mm}
+\begin{mdframedwithfootChapterintro}
+\begin{minipage}[t]{0.10\textwidth}
+{$\:$ \\ \setkeys{Gin}{width=2.5em,keepaspectratio}\includegraphics{images/_icons/chapterintro.png}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.90\textwidth}
+\setlength{\parskip}{1em}
+\large
+}{\end{minipage}
+\end{mdframedwithfootChapterintro}
+\vspace{4mm}
+}
+
+% guidedpractice
+
+\newenvironment{guidedpractice}{
+\vspace{4mm}
+\begin{mdframedwithfootGPWE}
+\begin{minipage}[t]{0.10\textwidth}
+{$\:$ \\ \setkeys{Gin}{width=2.5em,keepaspectratio}\includegraphics{images/_icons/guided-practice.png}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.90\textwidth}
+\vspace{-2mm}
+\setlength{\parskip}{1em}
+\noindent\textbf{\color{oiB}\small\fontencoding{T1}\fontfamily{phv}\selectfont{\MakeUppercase{Pratica guidata}}} $\:$ \\ \\
+}{\end{minipage}
+\end{mdframedwithfootGPWE}
+\vspace{4mm}
+}
+
+
+% workedexample
+
+\newenvironment{workedexample}{
+    \let\oldrule\rule
+    \renewcommand{\rule}[2]{\vspace{-2mm}\oldrule{##1}{##2}\vspace{-2mm}}
+\vspace{4mm}
+\begin{mdframedwithfootGPWE}
+\begin{minipage}[t]{0.10\textwidth}
+{$\:$ \\ \setkeys{Gin}{width=2.5em,keepaspectratio}\includegraphics{images/_icons/worked-example.png}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.90\textwidth}
+\vspace{-2mm}
+\setlength{\parskip}{1em}
+\noindent\textbf{\color{oiB}\small\fontencoding{T1}\fontfamily{phv}\selectfont{\MakeUppercase{Esempio}}} $\:$ \\ \\
+}{\end{minipage}
+\end{mdframedwithfootGPWE}
+\vspace{4mm}
+}
+
+
+% important
+
+\newenvironment{important}{
+    \let\oldtextbf\textbf
+    \renewcommand{\textbf}[1]{{\textcolor{oiR}{\oldtextbf{##1}}}}
+\vspace{4mm}
+\begin{mdframedwithfootImportant}
+\begin{minipage}[t]{0.10\textwidth}
+{$\:$ \\ \setkeys{Gin}{width=2.5em,keepaspectratio}\includegraphics{images/_icons/important.png}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.90\textwidth}
+\vspace{-2mm}
+\setlength{\parskip}{1em}
+}{\end{minipage}
+\end{mdframedwithfootImportant}
+\vspace{4mm}
+}
+
+% tip
+
+\newenvironment{tip}{
+\vspace{4mm}
+\begin{mdframedwithfootTipDataPro}
+\begin{minipage}[t]{0.10\textwidth}
+{$\:$ \\ \setkeys{Gin}{width=2em,keepaspectratio}\includegraphics{images/_icons/tip.png}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.90\textwidth}
+\vspace{-2mm}
+\setlength{\parskip}{1em}
+}{\end{minipage}
+\end{mdframedwithfootTipDataPro}
+\vspace{4mm}
+}
+
+% data
+
+\newenvironment{data}{
+\vspace{4mm}
+\begin{mdframedwithfootTipDataPro}
+\begin{minipage}[t]{0.10\textwidth}
+{$\:$ \\ \setkeys{Gin}{width=2em,keepaspectratio}\includegraphics{images/_icons/data.png}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.90\textwidth}
+\vspace{-2mm}
+\setlength{\parskip}{1em}
+}{\end{minipage}
+\end{mdframedwithfootTipDataPro}
+\vspace{4mm}
+}
+
+%\usepackage{titlesec}
+%\titleformat{\chapter}[display]
+%  {\normalfont\sffamily\huge\bfseries\color{blue}}
+%  {\chaptertitlename\ \thechapter}{20pt}{\Huge}
+%\titleformat{\section}
+%  {\normalfont\sffamily\Large\bfseries\color{cyan}}
+%  {\thesection}{1em}{}
 
 

@@ -36,16 +36,16 @@ Tabella [1.1](#tab:term_st_desc){reference-type="ref"
 reference="tab:term_st_desc"}).
 
 
-::: {.example}
+::: {.workedexample data-latex=""}
 Supponiamo che il fenomeno studiato sia l'intelligenza. In uno studio, la popolazione potrebbe corrispondere all'insieme di tutti gli italiani adulti. La variabile considerata potrebbe essere il punteggio del test standardizzato WAIS-IV. Le modalità di tale variabile potrebbero essere $112, 92, 121, \dots$. Tale variabile è di tipo quantitativo discreto.
 ::: 
 
-::: {.example}
-In un altro esempio, il fenomeno studiato è la velocità di esecuzione nel compito Stroop. La popolazione potrebbe corrispondere all'insieme dei bambini dai 6 agli 8 anni. La variabile considerata potrebbe essere il reciproco dei tempi di reazione in secondi. Le modalità di tale variabile potrebbero essere $1 / 2.35, 1/ 1.49, 1/2.93, \dots$. Tale variabile è di tipo quantitativo continuo. 
+::: {.workedexample data-latex=""}
+Supponiamo che il fenomeno studiato sia il compito Stroop. La popolazione potrebbe corrispondere all'insieme dei bambini dai 6 agli 8 anni. La variabile considerata potrebbe essere il reciproco dei tempi di reazione in secondi. Le modalità di tale variabile potrebbero essere $1 / 2.35, 1/ 1.49, 1/2.93, \dots$. La variabile è di tipo quantitativo continuo. 
 ::: 
 
-::: {.example}
-In un altro esempio ancora, il fenomeno studiato potrebbe essere il disturbo di personalità. La popolazione potrebbe corrispondere all'insieme dei detenuti nelle carceri italiane. La variabile considerata potrebbe essere l'assessment del disturbo di personalità tramite interviste cliniche strutturate. Le modalità di tale variabile potrebbero essere i Cluster A, Cluster B, Cluster C descritti dal DSM-V. Tale variabile è di tipo qualitativo. 
+::: {.workedexample data-latex=""}
+Supponiamo che il fenomeno studiato sia il disturbo di personalità. La popolazione potrebbe corrispondere all'insieme dei detenuti nelle carceri italiane. La variabile considerata potrebbe essere l'assessment del disturbo di personalità tramite interviste cliniche strutturate. Le modalità di tale variabile potrebbero essere i Cluster A, Cluster B, Cluster C descritti dal DSM-V. Tale variabile è di tipo qualitativo. 
 ::: 
 
 
@@ -60,7 +60,7 @@ Un primo compito fondamentale in qualsiasi analisi dei dati è l'identificazione
 
 Se una variabile è una variabile indipendente o dipendente dipende dalla domanda di ricerca. A volte può essere difficile decidere quale variabile è dipendente e quale è indipendente, in particolare quando siamo specificamente interessati ai rapporti di causa/effetto. Ad esempio, supponiamo di indagare l'associazione tra esercizio fisico e insonnia. Vi sono evidenze che l'esercizio fisico (fatto al momento giusto della giornata) può ridurre l'insonnia. Ma l'insonnia può anche ridurre la capacità di una persona di fare esercizio fisico. In questo caso, dunque, non è facile capire quale sia la causa e quale l'effetto, quale sia la variabile dipendente e quale la variabile indipendente. La possibilità di identificare il ruolo delle variabili (dipendente/indipendente) dipende dalla nostra comprensione del fenomeno in esame. 
 
-::: {.example}
+::: {.workedexample data-latex=""}
 Uno psicologo convoca 120 studenti universitari per un test di memoria.
 Prima di iniziare l'esperimento, a metà dei soggetti viene detto che si
 tratta di un compito particolarmente difficile; agli altri soggetti non

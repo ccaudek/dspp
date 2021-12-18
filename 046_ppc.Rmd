@@ -6,9 +6,9 @@ source("_stan_options.R")
 register_knitr_engine()
 ```
 
-```{block, type='Summary'}
+::: {.chapterintro data-latex=""}
 Oltre ad una sintesi della distribuzione a posteriori attraverso il computo di indici caratteristici e alla verifica di ipotesi, un altro compito dell'analisi bayesiana è la predizione di nuovi dati futuri. Dopo aver osservato i dati di un campione e ottenuto le distribuzioni a posteriori dei parametri, è infatti possibile ottenere una qualche indicazione su come potrebbero essere i dati futuri. L'uso più immediato della stima della distribuzione dei possibili valori futuri della variabile di esito è la verifica del modello. Infatti, il modo più diretto per testare un modello è quello di utilizzare il modello per fare previsioni sui possibili dati futuri per poi confrontare tali dati predetti con i dati effettivi. Questa pratica va sotto il nome di controllo predittivo a posteriori. 
-```
+:::
 
 La distribuzione dei possibili valori futuri della variabile di esito può essere predetta da un modello statistico sulla base della distribuzione a posteriori dei parametri, $p(\theta \mid y)$, avendo già osservato $n$ manifestazioni dello stesso fenomeno $y$. Una tale distribuzione va sotto il nome di _distribuzione predittiva a posteriori_ (_posterior predictive distribution_, PPD). 
 
@@ -32,8 +32,8 @@ La \@ref(eq:dist-pred-post) descrive la nostra incertezza sulla distribuzione di
 <!-- distribuzione di future osservazioni di dati, ovvero la distribuzione sui possibili dati previsti futuri $\tilde{y}$  -->
 <!-- La distribuzione $p(\tilde{y} \mid y)$ è la distribuzione di un nuovo campione di possibili osservazioni $\tilde{y}$ avendo già osservato $n$ manifestazioni dello stesso fenomeno $y$.  -->
 
-::: {.example}
-Un esempio formulato mediante il codice Stan può chiarire questo concetto.  Consideriamo il codice relativo alla distribuzione predittiva a posteriori nel caso di un modello di regressione lineare classico con un solo predittore $x$. Il blocco _Model_ sarà:
+Un esempio formulato mediante il codice Stan può chiarire questo concetto. 
+Consideriamo il codice relativo alla distribuzione predittiva a posteriori nel caso di un modello di regressione lineare classico con un solo predittore $x$. Il blocco _Model_ sarà:
 
 ```{r eval=FALSE}
 model {
@@ -65,12 +65,12 @@ Nel caso dell'esempio presente, l'integrale della \@ref(eq:dist-pred-post) può 
 <!-- NON SONO SICURO DI QUESTA ULTIMA AFFERMAZIONE! -->
 
 Quando, con metodi grafici, vengono esaminati i valori della distribuzione predittiva a posteriori, possiamo esaminare un numero arbitrario di previsioni.  Per esempio, possiamo rappresentare graficamente 50 rette di regressione predette -- o un qualsiasi altro numero. Questa rappresentazione grafica quantifica la nostra incertezza a posteriori, in questo esempio, relativamente all'orientamento della retta di regressione. 
-::: 
 
+::: {.guidedpractice data-latex=""}
+Illustreremo ora il problema di trovare la distribuzione $p(\tilde{y} \mid y)$ in un caso semplice, ovvero quello dello schema Beta-Binomiale. 
+:::
 
-## Come generare la PPD: lo schema Beta-Binomiale {#schema-beta-bin-distr-pred-post}
-
-Illustreremo ora il problema di trovare la distribuzione $p(\tilde{y} \mid y)$ in un caso semplice, ovvero quello dello schema Beta-Binomiale. Nell'esempio, useremo un'altra volta i dati del campione di pazienti clinici depressi di @zetschefuture2019 -- si veda l'Appendice \@ref(es-pratico-zetsche). Supponiamo di volere esaminare in futuro altri 20 pazienti clinici; ci chiediamo quanti di essi ($\tilde{y} \in \{0, 1, \dots, 20\}$) manifesteranno una depressione grave. 
+Nell'esempio, useremo un'altra volta i dati del campione di pazienti clinici depressi di @zetschefuture2019 -- si veda l'Appendice \@ref(es-pratico-zetsche). Supponiamo di volere esaminare in futuro altri 20 pazienti clinici; ci chiediamo quanti di essi ($\tilde{y} \in \{0, 1, \dots, 20\}$) manifesteranno una depressione grave.
 
 Se vogliamo fare predizioni su $\tilde{y}$ dobbiamo innanzitutto riconoscere che i valori $\tilde{y} \in [0, 20]$ non sono tutti egualmente plausibili. Sappiamo che $\tilde{y}$ è una v.c. binomiale con distribuzione
 \begin{equation}
@@ -104,8 +104,8 @@ Svolgendo i calcoli in $\R$, per i dati dell'esempio otteniamo:
 # https://rpubs.com/FJRubio/BetaBinomialPred
 BetaBinom <- Vectorize(
   function(rp){
-  log_val <- lchoose(np, rp) + 
-    lbeta(rp+a+y, b+n-y+np-rp) - 
+  log_val <- lchoose(np, rp) +
+    lbeta(rp+a+y, b+n-y+np-rp) -
     lbeta(a+y, b+n-y)
   return(exp(log_val))
   }
@@ -117,7 +117,7 @@ a <- 2
 b <- 10
 np <- 20
 data.frame(
-  heads = 0:20, 
+  heads = 0:20,
   pmf = BetaBinom(0:20)
 ) %>%
 ggplot(aes(x = factor(heads), y = pmf)) +
@@ -132,7 +132,7 @@ ggplot(aes(x = factor(heads), y = pmf)) +
     title = "Distribuzione predittiva a posteriori",
     x = "y'",
     y = "P(Y = y' | Data)"
-  ) 
+  )
 ```
 
 \noindent
@@ -140,7 +140,7 @@ ggplot(aes(x = factor(heads), y = pmf)) +
 
 ```{r}
 tibble(
-  heads = 0:20, 
+  heads = 0:20,
   pmf = dbinom(x = 0:20, size = 20, prob = 23/30)
 ) %>%
 ggplot(aes(x = factor(heads), y = pmf)) +
@@ -153,17 +153,16 @@ ggplot(aes(x = factor(heads), y = pmf)) +
   ) +
   labs(title = "p(y | theta = 0.77)",
        x = "y",
-       y = "Probabilità") 
+       y = "Probabilità")
 ```
 
 \noindent
-In particolare, la $p(\tilde{y} \mid y)$ ha una varianza maggiore di $\Bin(y \mid \theta = 0.77, n = 20)$. Questa maggiore varianza riflette le due fonti di incertezza che sono presenti nella \@ref(eq:dist-pred-post): l'incertezza sul valore del parametro (descritta dalla distribuzione a posteriori) e l'incertezza dovuta alla variabilità campionaria (descritta dalla funzione di verosimiglianza). 
+In particolare, la $p(\tilde{y} \mid y)$ ha una varianza maggiore di $\Bin(y \mid \theta = 0.77, n = 20)$. Questa maggiore varianza riflette le due fonti di incertezza che sono presenti nella \@ref(eq:dist-pred-post): l'incertezza sul valore del parametro (descritta dalla distribuzione a posteriori) e l'incertezza dovuta alla variabilità campionaria (descritta dalla funzione di verosimiglianza).
 Possiamo concludere la discussione di questo esempio dicendo che, nel caso di 20 nuovi pazienti clinici, ci aspettiamo di osservare 12 pazienti che manifestano una depressione severa, anche se è ragionevole aspettarci un numero compreso, diciamo, tra 8 e 16.
 
 Una volta trovata la distribuzione predittiva a posteriori $p(\tilde{y} \mid y)$ diventa possibile rispondere a domande come: qual è la probabilità che almeno 10 dei 20 pazienti futuri mostrino una depressione grave? Rispondere a domande di questo tipo è possibile, ma richiede un po' di lavoro --- non ci sono funzioni $\R$ che svolgano questi calcoli per noi. Tuttavia, non è importante imparare a risolvere problemi di questo tipo perché, in generale, anche per problemi solo leggermente più complessi di quello discusso qui, non sono disponibili espressioni analitiche della distribuzione predittiva a posteriori. Invece, è possibile trovare una approssimazione numerica della $p(\tilde{y} \mid y)$ mediante simulazioni MCMC. Mediante un tale metodo è più facile rispondere a domande simili a quelle che ci siamo posti in questo Paragrafo.
 
-
-## Metodi MCMC per la distribuzione predittiva a posteriori 
+## Metodi MCMC per la distribuzione predittiva a posteriori
 
 <!-- Utilizzando la notazione di @gelman2014understanding, chiamiamo $y^{rep}$ i dati previsti futuri che potrebbero venire osservati se l'esperimento casuale che ha prodotto $y$ venisse ripetuto, ovvero una realizzazione futura del modello statistico con gli stessi valori dei parametri $\theta$ che hanno prodotto $y$.  @gelman2014understanding distinguono $y^{rep}$ (repliche sotto lo stesso modello statistico) da $\tilde{y}$, che corrisponde invece ad un effettivo campione empirico di dati osservato in qualche futura occasione.  -->
 
@@ -174,9 +173,13 @@ Se svolgiamo l'analisi bayesiana con il metodo MCMC, le repliche $p(y^{rep} \mid
 
 <!-- Questo processo in due fasi riflette le due fonti di incertezza che sono presenti: l'_incertezza sul valore del parametro_ (riflessa dalla distribuzione a posteriori) e l'_incertezza dovuta alla variabilità campionaria_ (riflessa dalla funzione di verosimiglianza).  -->
 \noindent
-Se i due passaggi descritti sopra vengono ripetuti un numero sufficiente di volte, l'istogramma risultante approssimerà la distribuzione predittiva a posteriori che, in teoria (ma non in pratica) potrebbe essere ottenuta per via analitica (si veda il Paragrafo \@ref(schema-beta-bin-distr-pred-post)). 
+Se i due passaggi descritti sopra vengono ripetuti un numero sufficiente di volte, l'istogramma risultante approssimerà la distribuzione predittiva a posteriori che, in teoria (ma non in pratica) potrebbe essere ottenuta per via analitica (si veda il Paragrafo \@ref(schema-beta-bin-distr-pred-post)).
 
-Per fare un esempio concreto, esaminiamo il codice Stan che può essere usato per simulare $p(y^{rep} \mid y)$. Consideriamo il caso semplice dell'inferenza su una proporzione --- si veda il Capitolo \@ref(mod-binom):
+::: {.guidedpractice data-latex=""}
+Generiamo ora $p(y^{rep} \mid y)$ nel caso dell'inferenza su una proporzione.
+:::
+
+Riportiamo qui sotto il codice Stan --- si veda il Capitolo \@ref(mod-binom).
 
 ```{r}
 modelString = "
@@ -218,11 +221,11 @@ Compiliamo il codice Stan
 
 ```{r, message=FALSE, comment=FALSE, error=FALSE, results='hide'}
 file <- file.path("code", "betabin23-30-2-10.stan")
-mod <- cmdstan_model(file, cpp_options = list(stan_opencl = TRUE))
+mod <- cmdstan_model(file)
 ```
 
 \noindent
-ed eseguiamo il campionamento MCMC: 
+ed eseguiamo il campionamento MCMC:
 
 ```{r, message=FALSE, comment=FALSE, error=FALSE, results='hide'}
 fit <- mod$sample(
@@ -233,7 +236,6 @@ fit <- mod$sample(
   cores = 4L,
   chains = 4L,
   parallel_chains = 4L,
-  opencl_ids = c(0, 0),
   refresh = 0,
   thin = 1
 )
@@ -254,7 +256,7 @@ list_of_draws <- extract(stanfit)
 print(names(list_of_draws))
 ```
 
-\noindent 
+\noindent
 Dall'oggetto `list_of_draws` recuperiamo `y_rep`:
 <!-- Occupiamoci ora della distribuzione predittiva a posteriori^[Un approfondimento di questa analisi statistica è fornita nell'Appendice \@ref(inference-one-prop)]. Usando l'oggetto `stanfit` creiamo `y_bern`: -->
 
@@ -268,9 +270,9 @@ head(y_bern)
 Dato che il codice Stan definisce un modello per i dati grezzi (ovvero, per ciascuna singola prova Bernoulliana del campione), ogni riga di `y_bern` include 30 colonne, ciascuna delle quali corrisponde ad un campione ($n$ = 16000 in questa simulazione) di possibili valori futuri $y_i \in \{0, 1\}$. Per ottenere una stima della distribuzione predittiva a posteriori `p(y_rep)`, ovvero, una stima della probabilità associata a ciascuno dei possibili numeri di "successi" in $N = 30$ nuove prove future, è sufficiente calcolare la proporzione di valori 1 in ciascuna riga:
 
 ```{r}
-data.frame(y_rep = rowSums(y_bern)) %>% 
-  ggplot(aes(x = y_rep, after_stat(density))) + 
-  geom_histogram(binwidth = 1) 
+data.frame(y_rep = rowSums(y_bern)) %>%
+  ggplot(aes(x = y_rep, after_stat(density))) +
+  geom_histogram(binwidth = 1)
 ```
 
 
@@ -278,10 +280,10 @@ data.frame(y_rep = rowSums(y_bern)) %>%
 
 La distribuzione predittiva a posteriori viene utilizzata per eseguire i cosiddetti _controlli predittivi a posteriori_ (_Posterior Predictive Checks_, PPC). Ricordiamo che la distribuzione predittiva a posteriori corrisponde alla simulazione di un campione di dati generati utilizzando le proprietà del modello adattato. Nei PPC si realizza un confronto grafico tra $p(y^{rep} \mid y)$ e i dati osservati $y$.
 <!-- I PPC vengono utilizzati per valutare l'_accuratezza predittiva_ del modello, ovvero per confrontare con metodi grafici la distribuzione dei dati osservati $y$ con la stima della distribuzione predittiva a posteriori $p(y^{rep} \mid y)$.-->
-Confrontando visivamente gli aspetti chiave dei dati previsti futuri $y^{rep}$ e dei dati osservati $y$ possiamo determinare se il modello è adeguato. 
+Confrontando visivamente gli aspetti chiave dei dati previsti futuri $y^{rep}$ e dei dati osservati $y$ possiamo determinare se il modello è adeguato.
 <!-- Se il modello si adatta bene ai dati, la distribuzione di $y^{rep}$ sarà molto simile alla distribuzione dei dati osservati $y$. In altre parole, i dati osservati devono risultare plausibili alla luce della distribuzione predittiva a posteriori.  -->
 
-Oltre al confronto tra le distribuzioni $p(y)$ e $p(y^{rep})$ è anche possibile un confronto tra la distribuzione di varie statistiche descrittive, i cui valori sono calcolati su diversi campioni $y^{rep}$, e le corrispondenti statistiche descrittive calcolate sui dati osservati. Vengono solitamente considerate statistiche descrittive quali la media, la varianza, la deviazione standard, il minimo o il massimo. Ma confronti di questo tipo sono possibili per qualunque statistica descrittiva. Questi confronti sono chiamati PPC. 
+Oltre al confronto tra le distribuzioni $p(y)$ e $p(y^{rep})$ è anche possibile un confronto tra la distribuzione di varie statistiche descrittive, i cui valori sono calcolati su diversi campioni $y^{rep}$, e le corrispondenti statistiche descrittive calcolate sui dati osservati. Vengono solitamente considerate statistiche descrittive quali la media, la varianza, la deviazione standard, il minimo o il massimo. Ma confronti di questo tipo sono possibili per qualunque statistica descrittiva. Questi confronti sono chiamati PPC.
 
 <!-- Per l'esempio presente, una volta eseguito il campionamento MCMC e ottenuto un oggetto di classe `stanfit`, è possibile usare le funzionalità del pacchetto `bayesplot` per eseguire i PPC. Nel caso presente, il campione di dati ha dimensioni esigue, per cui i PPC rifletteranno la grande incertenzza dell'inferenza. -->
 
@@ -322,10 +324,12 @@ Oltre al confronto tra le distribuzioni $p(y)$ e $p(y^{rep})$ è anche possibile
 <!-- Nell'esempio successivo vedremo come i PPC possano fornirci delle indicazioni sulla mancanza di adattamento del modello ai dati. -->
 
 
-### PPC per la velocità della luce
+::: {.guidedpractice data-latex=""}
+Qui di seguito esamineremo un set di dati che non seguono la distribuzione normale [@gelman2020regression]. I dati corrispondono ad una serie di misurazioni prese da Simon Newcomb nel 1882 come parte di un esperimento per stimare la velocità della luce. A questi dati verrà (inappropriatamente) adattata una distribuzione normale. L'obiettivo dell'esempio è quello di mostrare come i PPC possono rivelare la mancanza di adattamento di un modello ai dati.
+:::
 
 <!-- I PPC mostrano che il modo più semplice per verificare l'adattamento del modello è quello di visualizzare i dati $y^{rep}$ insieme ai dati effettivi.  -->
-Qui di seguito esamineremo un set di dati che non seguono la distribuzione normale [@gelman2020regression]. I dati corrispondono ad una serie di misurazioni prese da Simon Newcomb nel 1882 come parte di un esperimento per stimare la velocità della luce. A questi dati verrà (inappropriatamente) adattata una distribuzione normale. L'obiettivo dell'esempio è quello di mostrare come i PPC possono rivelare la mancanza di adattamento di un modello ai dati.
+
 
 ```{r}
 library("MASS")
@@ -422,7 +426,7 @@ Anche se trova la media giusta, il modello non è comunque adeguato a prevedere 
 
 ```{r}
 y_rep <- as.matrix(stanfit, pars = "y_rep")
-dim(y_rep) 
+dim(y_rep)
 ```
 
 \noindent
@@ -504,7 +508,7 @@ ppc_dens_overlay(data_list$y, y_rep[1:50, ])
 ```
 
 \noindent
-Inoltre, anche la statistica "minimo della distribuzione" viene ben predetta dal modello. 
+Inoltre, anche la statistica "minimo della distribuzione" viene ben predetta dal modello.
 
 ```{r}
 ppc_stat_2d(data_list$y, y_rep, stat = c("mean", "min"))
