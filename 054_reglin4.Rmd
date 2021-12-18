@@ -1,4 +1,4 @@
-# Inferenza sul modello di regressione {#inference-reg-lin-stan}
+# Inferenza sul modello lineare {#inference-reg-lin-stan}
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
 source("_common.R")
@@ -13,7 +13,7 @@ La soluzione dei minimi quadrati è una stima puntuale che rappresenta il vettor
 
 ## Rappresentazione grafica dell'incertezza della stima
 
-Un primo modo per rappresentare l'incertezza dell'inferenza in un ottica bayesiana è quella di rappresentare graficamente la retta di regressione. Continuando con l'esempio descritto nel Capitolo precedente (ovvero, i dati `kid_score` e `mom_iq` centrati), usando la funzione `extract()`, salvo le stime a posteriori dei parametri in  formato `list`:
+Un primo modo per rappresentare l'incertezza dell'inferenza in un ottica bayesiana è quella di rappresentare graficamente la retta specificata dal modello lineare Continuando con l'esempio descritto nel Capitolo precedente (ovvero, i dati `kid_score` e `mom_iq` centrati), usando la funzione `extract()`, salvo le stime a posteriori dei parametri in  formato `list`:
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE, results='hide'}
 library("foreign")
@@ -92,7 +92,7 @@ plot(
 abline(mean(posterior$alpha), mean(posterior$beta), col = 6, lw = 2)
 ```
 
-Un modo per visualizzare l'incertezza della stima della retta di regressione è quello di tracciare molteplici rette di regressione, ciascuna delle quali definita da una diversa stima dei parametri $\alpha$ e $\beta$ che vengono estratti a caso dalle rispettive distribuzioni a posteriori.
+Un modo per visualizzare l'incertezza della stima della retta specifiata dal modello è quello di tracciare molteplici rette, ciascuna delle quali risulta definita da una diversa stima dei parametri $\alpha$ e $\beta$ che vengono estratti a caso dalle rispettive distribuzioni a posteriori.
 
 ```{r}
 plot(
@@ -163,11 +163,11 @@ sum(posterior$beta > 0) / length(posterior$beta)
 ```
 
 
-## Regressione robusta
+## Modello lineare robusto
 
 Spesso i ricercatori devono affrontare il problema degli outlier: in presenza di outlier, un modello statistico basato sulla distribuzione Normale produrrà delle stime dei parametri che non si generalizzano ad altri campioni di dati. Il metodo tradizoinale per affrontare questo problema è quello di eliminare gli outlier prima di eseguire l'analisi statistica. Il problema di questo approccio, però, è che il criterio utilizzato per eliminare gli outlier, quale esso sia, è arbitrario; dunque, usando criteri diversi per eliminare gli outlier, i ricercatori finiscono per trovare risultati diversi.
 
-Questo problema trova una semplice soluzione nell'approccio bayesiano. Nel modello di regressione che abbiamo dicusso finora è stato ipotizzato che $\varepsilon \sim \mathcal{N}(0, \sigma_{\varepsilon})$. Per un modello formulato in questi termini, la presenza di solo un valore anomalo e influente può avere un effetto drammatico sulle stime dei parametri. 
+Questo problema trova una semplice soluzione nell'approccio bayesiano. Nel modello lineare che abbiamo dicusso finora è stato ipotizzato che $\varepsilon \sim \mathcal{N}(0, \sigma_{\varepsilon})$. Per un modello formulato in questi termini, la presenza di solo un valore anomalo e influente può avere un effetto drammatico sulle stime dei parametri. 
 
 Per fare un esempio, introduciamo un singlo valore anomalo nel set dei dati dell'esempio che stiamo discutendo:
 
@@ -184,7 +184,7 @@ coef(lm(kid_score ~ mom_iq, data = df2))
 \noindent
 la stima di $\beta$ viene drammaticamente ridotta (di quasi la metà!). 
 
-Non è però necessario assumere $\varepsilon \sim \mathcal{N}(0, \sigma_{\varepsilon})$.  È altrettanto valido un modello che ipotizza una diversa distribuzione di densità per i residui come, ad esempio, la distribuzione $t$ di Student con un piccolo numero di gradi di libertà. Una caratteristica della $t$ di Student è che le code della distribuzione contengono una massa di probabilità maggiore della Normale. Ciò fornisce alla $t$ di Student la possibilità di "rendere conto" della presenza di osservazioni lontane dalla media della distribuzione. In altri termini, se in modello di regressione usiamo la $t$ di Student quale distribuzione dei residui, la presenza di outlier avrà una minore influenza sulle stime dei parametri di quanto avvenga nel modello Normale.
+Non è però necessario assumere $\varepsilon \sim \mathcal{N}(0, \sigma_{\varepsilon})$.  È altrettanto valido un modello che ipotizza una diversa distribuzione di densità per i residui come, ad esempio, la distribuzione $t$ di Student con un piccolo numero di gradi di libertà. Una caratteristica della $t$ di Student è che le code della distribuzione contengono una massa di probabilità maggiore della Normale. Ciò fornisce alla $t$ di Student la possibilità di "rendere conto" della presenza di osservazioni lontane dalla media della distribuzione. In altri termini, se in modello lineare usiamo la $t$ di Student quale distribuzione dei residui, la presenza di outlier avrà una minore influenza sulle stime dei parametri di quanto avvenga nel modello Normale.
 
 Per verificare questa affermazione, modifichiamo il codice Stan in modo tale da ipotizzare che la distribuzione della $y$ segua una $t$ di Student con un numero $\nu$ gradi di libertà stimato dal modello: `student_t(nu, mu, sigma)`.^[È equivalente scrivere
 $$
@@ -248,7 +248,7 @@ data3_list <- list(
 ```
 
 \noindent
-Adattiamo il modello di regressione robusta ai dati:
+Adattiamo il modello lineare robusto ai dati:
 
 ```{r, message=FALSE, warning=FALSE, error=FALSE, results='hide'}
 file <- file.path("code", "simpleregstdrobust.stan")
@@ -274,5 +274,5 @@ fit4$summary(c("alpha", "beta", "sigma", "nu"))
 ```
 
 \noindent
-notiamo che la stima di $\beta$ è rimasta praticamente immutata. La regressione "robusta" non risente dunque della presenza degli outlier.
+notiamo che la stima di $\beta$ è rimasta praticamente immutata. Il modello lineare robustao non risente dunque della presenza degli outlier.
 

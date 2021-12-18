@@ -53,17 +53,15 @@ Ma come è possibile valutare l'accuratezza (predittiva) di un modello? Per risp
 
 Il framework bayesiano riconosce che la selezione dei modelli è condotta in condizioni di incertezza dato che un particolare modello è tipicamente scelto all'interno di un insieme di modelli concorrenti i quali potrebbero descrivere almeno altrettanto bene il processo generativo dei dati. In questo capitolo esamineremo alcune tecniche bayesiane che possono essere utilizzate per scegliere tra modelli alternativi, tenendo sotto controllo i pericoli del sovra-adattamento e del sotto-adattamento. In particolare, valuteremo la capacità predittiva di un modello e stabiliremo quale, tra due o più modelli, sia quello da preferire.
 
-
 ### Stargazing
 
-Nella pratica concreta della ricerca, il metodo più comune per la selezione tra  modelli statistici utilizza i test di ipotesi statistiche di stampo frequentista. Questo metodo viene chiamato _stargazing_, poiché richiede soltanto l'esame degli asterischi ($**$) che si trovano nell'output di un software statistico (gli asterischi marcano i coefficienti del modello che sono "statisticamente significativi"): alcuni ricercatori ritengono che il modello con più stelline sia il modello migliore. Ma però questo non è vero. Al di là dei problemi legati ai test dell'ipotesi nulla, è sicuramente un errore usare i test di significatività per la selezione di modelli: i valori-_p_ non consentono di trovare un equilibrio tra _underfitting_ e _overfitting_. Infatti, le variabili che migliorano la capacità predittiva di un modello non risultano sempre statisticamente significative; inoltre, le variabili che sono statisticamente significative non  migliorano sempre la capacità predittiva di un modello.
+Nella pratica concreta della ricerca, il metodo più comune per la selezione tra  modelli statistici utilizza i test di ipotesi statistiche di stampo frequentista. Questo metodo viene chiamato _stargazing_, poiché richiede soltanto l'esame degli asterischi ($**$) che si trovano nell'output di un software statistico (gli asterischi marcano i coefficienti del modello che sono "statisticamente significativi"): alcuni ricercatori ritengono che il modello con più stelline sia il modello migliore. Ma però questo non è vero. Al di là dei problemi legati ai test dell'ipotesi nulla, è sicuramente un errore usare i test di significatività per la selezione di modelli: i valori-_p_ non consentono di trovare un equilibrio tra _underfitting_ e _overfitting_. Infatti, le variabili che migliorano la capacità predittiva di un modello non risultano sempre statisticamente significative; inoltre, le variabili che sono statisticamente significative non migliorano sempre la capacità predittiva di un modello.
 
 <!-- ### Problemi con l'incremento del numero di parametri -->
 
 <!-- TODO: numero di parametri e r2 -->
 
 L'obiettivo del confronto tra modelli è la selezione del modello che più da vicino rappresenta il "vero" processo di generazione dei dati. Un modello che rappresenta meglio il "vero" processo di generazione dei dati è da preferire ad un modello che rappresenta meno bene tale processo. Pertanto, è necessario quantificare il grado di "vicinanza" di un modello al "vero" processo di generazione dei dati. Si noti che facciamo riferimento sia alla famiglia distributiva così come ai valori dei parametri. Ad esempio, il modello $y_i \sim \mathcal{N}(5, 3)$ è diverso dal modello $y_i \sim \mathcal{N}(5, 6)$, ed è anche diverso dal modello $y_i \sim \Gamma(2, 2)$. I primi due modelli appartengono alla stessa famiglia distributiva ma differiscono nei termini dei valori dei parametri; gli ultimi due modelli appartengono a famiglie distributive diverse (Normale vs. Gamma). Per misurare il grado di "vicinanza" tra due modelli, $\mathcal{M}_1$ e $\mathcal{M}_2$, la metrica di gran lunga più popolare è la _divergenza di Kullback-Leibler_. Per capire questo concetto è però necessario prima chiarire la nozione di entropia. Nei Paragrafi successivi svilupperemo una comprensione intuitiva della nozione di entropia; poi discuteremo la divergenza di Kullback-Leibler.
-
 
 ## Entropia
 
@@ -121,7 +119,6 @@ ggplot(tibble(p, h), aes(p, h)) +
 La figura mostra che questa relazione non è lineare, è infatti leggermente sublineare. Questo ha senso dato che abbiamo usato una funzione logaritmica.
 :::
 
-
 ### Entropia di una variabile casuale
 
 È possibile quantificare la quantità di informazione fornita da una variabile casuale.
@@ -133,7 +130,6 @@ H(Y) = - \sum_{i=1}^n p_t(y_i) \cdot \log_2 p_t(y_i).
 (\#eq:entropy)
 \end{equation}
 :::
-
 
 ### Proprietà
 
@@ -174,7 +170,6 @@ Se gli esiti possibili sono pioggia, neve o sole con $p(y_1) = 0.7$,  $p(y_2) = 
 -(0.7 * log(0.7) + 0.15 * log(0.15) + 0.15 * log(0.15))
 ```
 :::
-
 
 ## Dall'entropia all'accuratezza
 
@@ -285,7 +280,6 @@ sum(true_py * log(true_py / q2))
 È chiaro che perdiamo una quantità maggiore di informazioni se, per descrivere la distribuzione binomiale $p$, usiamo la distribuzione uniforme $q_2$ anziché $q_1$.
 :::
 
-
 ### La divergenza dipende dalla direzione
 
 La divergenza KL non è una vera e propria metrica: per esempio, non è simmetrica. In generale, $D_{KL}(p_t \mid\mid p_{\mathcal{M}}) \neq D_{KL}(p_{\mathcal{M}} \mid\mid p_t)$, ovvero la $D_{KL}$ da $p_t$ a $p_{\mathcal{M}}$ è diversa dalla $D_{KL}$ da $p_{\mathcal{M}}$ a $p_t$.
@@ -302,7 +296,6 @@ tibble(direction = c("Da q a p", "Da p a q"),
   mutate(d_kl = (p_1 * log(p_1 / q_1)) + (p_2 * log(p_2 / q_2)))
 ```
 :::
-
 
 ## Expected log predictive density
 
@@ -325,7 +318,6 @@ Riscriviamo ora la \@ref(eq:kl-div-cont-t2) facendo riferimento alla distribuzio
 La \@ref(eq:elpd) è chiamata _expected log predictive density_ ($\elpd$) e fornisce la risposta al problema che ci eravamo posti all'inizio di questo Capitolo, ovvero il problema di definire un criterio per valutare la capacità predittiva di un modello. Possiamo pensare alla \@ref(eq:elpd) dicendo che essa descrive la distribuzione predittiva a posteriori del modello ponderando la verosimiglianza dei possibili dati futuri con la vera distribuzione $p_t$. Di conseguenza, valori $\elpd$ più grandi corrispondono ad una maggiore capacità predittiva del modello.
 
 Non dobbiamo preoccuparci di trovare una formulazione analitica della distribuzione predittiva a posteriori $p(\tilde{y} \mid y)$ perché, come abbiamo visto nel Capitolo \@ref(chapter-ppc), è possibile approssimare tale distribuzione mediante simulazione. Notiamo però che la \@ref(eq:elpd) è formulata nei termini del vero modello generatore dei dati, $p_t$, il quale, ovviamente, è ignoto.^[Se il modello sottostante i dati fosse noto non avremmo bisogno di cercare il modello migliore, perché $p_t$ è il modello migliore.] Di conseguenza, la quantità $\elpd$ non può mai essere calcolata in maniera esatta, ma può essere solo stimata. Il secondo problema di questo Capitolo è capire come la \@ref(eq:elpd) possa essere stimata utilizzando un campione di osservazioni.
-
 
 ### Log pointwise predictive density{}
 
@@ -409,7 +401,6 @@ Così facendo, e svolgendo i calcoli in $\R$, otteniamo
 un valore diverso da quello trovato in precedenza.
 :::
 
-
 ## Criterio di informazione e convalida incrociata K-fold
 
 Nel Paragrafo precedente abbiamo visto che la \@ref(eq:lppd) fornisce una sovrastima della $\elpd$. Il modo migliore per stimare $\elpd$ è raccogliere un nuovo campione indipendente di dati, che si ritiene condivida lo stesso processo di generazione dei dati del campione corrente, e stimare $\elpd$ sul nuovo campione. Questa procedura è chiamata _out-of-sample validation_. Il problema, ovviamente, è che di solito non abbiamo le risorse per raccogliere un nuovo campione. Di conseguenza, gli statistici hanno messo a punto vari metodi per evitare la sovrastima della $\elpd$ che deriva dal solo utizzo del campione corrente. Ci sono due approcci generali:
@@ -417,11 +408,9 @@ Nel Paragrafo precedente abbiamo visto che la \@ref(eq:lppd) fornisce una sovras
 - l'introduzione di un fattore di correzione;
 - la convalida incrociata cosiddetta K-fold.
 
-
 ### AIC, DIC e WAIC
 
 Allo scopo di evitare la sovrastima della \@ref(eq:lppd), le statistiche _Akaike Information Criterion_ (AIC), _Deviance Information Criterion_ (DIC) e _Widely Applicable Information Criterion_ (WAIC) introducono un fattore di correzione. Le statistiche DIC e WAIC sono più complesse di AIC, ma producono un'approssimazione migliore. Tuttavia, i valori AIC, DIC e WAIC sono spesso molto simili tra loro. Per convenienza, dunque, qui ci accontenteremo di esaminare da vicino la statistica più semplice, ovvero AIC.
-
 
 #### Criterio d'informazione di Akaike
 
@@ -476,11 +465,9 @@ Nel caso di un modello Normale con con varianza nota e una distribuzione a prior
 <!-- \end{align} -->
 :::
 
-
 ### Convalida incrociata K-fold
 
 La sovrastima della \@ref(eq:lppd) può anche essere evitata usando una tecnica chiamata _K-fold cross-validation_. Mediante questo metodo vengono stimati i parametri del modello tralasciando una porzione di osservazioni (chiamata _fold_) dal campione per poi valutare il modello sulle osservazioni che sono state escluse. Una stima complessiva dell'accuratezza si ottiene poi calcolando la media del punteggio di accuratezza ottenuto in ogni fold. Il numero minimo di fold è 2; all'altro estremo, è possibile impiegare una singola osservazione in ciascun fold e adattare il modello tante volte ($n$) quante sono le singole osservazioni. Questa strategia è chiamata _leave-one-out cross-validation_ (LOO-CV).
-
 
 #### Importance sampling
 
@@ -498,7 +485,6 @@ la quale è chiamata _LOO Information Criterion_ (LOOIC). In questo secondo caso
 <!-- Una stima di $\widehat{\elpd}_{\LOO}$ può facilmente essere ottenuta con un programma scritto in linguaggio Stan. -->
 
 La quantità $\widehat{\elpd}_{\LOO}$ viene calcolata dai pacchetti `loo` e `brms` ed è chiamata `elpd_loo` o `elpd_kfold`. È anche possibile calcolare la differenza della quantità `elpd_loo` per modelli alternativi, insieme alla deviazione standard della distribuzione campionaria di tale differenza.
-
 
 #### Confronto tra AIC e LOO-CV
 
@@ -600,7 +586,6 @@ print(loo1_result)
 
 \noindent
 Si noti la somiglianza tra $\widehat{\elpd}_{LOO-CV}$ e $\widehat{\elpd}_{AIC}$. In conclusione, possiamo dunque dire che $\widehat{\elpd}_{LOO-CV}$ è la risposta bayesiana allo stesso problema che trova una soluzione frequentista nella statistica $\widehat{\elpd}_{AIC}$.
-
 
 ### Confronto tra modelli mediante LOO-CV
 
@@ -796,7 +781,6 @@ Questo accade se un predittore è associato in modo trascurabile con la variabil
 15.5 + c(-1, 1) * qnorm(.95, 0, 1) * 6.0
 ```
 
-
 ### Outlier
 
 Si è soliti pensare che la maggior parte delle osservazioni del campione sia prodotta da un unico meccanismo generatore dei dati, mentre le rimanenti osservazioni sono la realizzazione di un diverso processo stocastico. Le osservazioni che appartengono a questo secondo gruppo si chiamano _outlier_. È dunque necessario identificare gli outlier e limitare la loro influenza sull'inferenza.^[@McElreath_rethinking nota che, spesso, i ricercatori eliminano i valori anomali  prima di adattare un modello ai dati, basandosi solo sulla distanza dal valore medio della variabile dipendente misurata in termini di unità di deviazione standard. Secondo @McElreath_rethinking questo non dovrebbe mai essere fatto: un'osservazione può essere considerata come un valore anomalo o un valore influente solo alla luce delle predizioni di un modello (mai prima di avere adattato il modello ai dati). Se ci sono solo pochi valori anomali una strategia possibile è quella di riportare i risultati delle analisi statistiche svolte su tutto il campione dei dati oppure dopo avere eliminato le osservazioni anomale e influenti.]
@@ -864,7 +848,6 @@ Il valore `k` stimato da PSIS-LOO-CV mette chiaramente in luce il fatto che il  
 ```{r}
 pareto_k_ids(loo1a_result, threshold = 0.7)
 ```
-
 
 ## Selezione di variabili
 
@@ -1009,7 +992,6 @@ summary(m2)
 \noindent
 Nel caso presente, le differenze sono minime, ma questo non è sempre vero.
 
-
 ## Confronto di modelli tramite $\elpd$
 
 Confrontiamo ora la capacità predittiva a posteriori dei due modelli rispetto alla loro $\elpd$. Ricordiamo che tanto maggiore è $\elpd$ rispetto ad un nuovo insieme di dati futuri $\tilde{y}$, $\log p(\tilde{y} \mid y)$, tanto maggiore è l'accuratezza predittiva del modello. Iniziamo a calcolare $\elpd$ per i due modelli:
@@ -1029,7 +1011,6 @@ loo::loo_compare(loo1, loo2)
 
 \noindent
 I risultati di tale confronto indicano che il Modello `m1` ha il valore $\elpd$ più basso e, dunque, sarebbe quello da preferire. Tuttavia, se si considera la differenza in $\elpd$ in riferimento all'errore standard corrispondente (nella colonna `se_diff`), ne risulta una differenza relativamente piccola. Per il Modello `m1` $\elpd$ è uguale a -567.3 e per `m2` è -569.5.  La differenza è pari a (-567.3 - -569.5) = 2.2, con un errore standard stimato di 5.0. I dati dunque suggeriscono che la vera differenza in $\elpd$ tra `m1` e `m2` sia compresa tra $\pm$ 2 errori standard (ovvero nel caso presente, 10 unità) dalla differenza stimata di -2.2 unità, ovvero sia inclusa nell'intervallo $-2.2 \pm 2 \cdot 5 = (-12.2, 7.8)$. Dato il valore $\elpd = 0$ è compreso nell'intervallo di $\pm$ due standard error dalla differenza stimata, i dati non forniscono evidenze convincenti che l'accuratezza predittiva a posteriori di `m1` sia superiore a quella di `m2`. Inoltre, dato che il Modello `m2` è più semplice di `m1`, concludiamo che `m2` sia il modello migliore tra i due considerati (rasoio di Ockham).
-
 
 ## Coefficiente di determinazione bayesiano
 
@@ -1078,7 +1059,6 @@ h1 | h2
 
 \noindent
 Considerato l'intervallo a posteriori del 95%, anche in questo caso non abbiamo evidenze convincenti che l'uso di un solo predittore faccia diminuire la capacità predittiva del modello.
-
 
 ## Considerazioni conclusive {-}
 

@@ -6,7 +6,6 @@ source("_common.R")
 
 Spesso risulta utile fornire una rappresentazione sintetica della distribuzione di una variabile casuale attraverso degli indicatori caratteristici piuttosto che fare riferimento ad una sua rappresentazione completa mediante la funzione di ripartizione, o la funzione di massa o di densità di probabilità. Una descrizione più sintetica di una variabile casuale, tramite pochi valori, ci consente di cogliere le caratteristiche essenziali della distribuzione, quali: la posizione, cioè il baricentro della distribuzione di probabilità; la variabilità, cioè la dispersione della distribuzione di probabilità attorno ad un centro; la forma della distribuzione di probabilità, considerando la simmetria e la curtosi (pesantezza delle code). In questo Capitolo introdurremo quegli indici sintetici che descrivono il centro di una distribuzione di probabilità e la sua variabilità.
 
-
 ## Valore atteso
 
 Quando vogliamo conoscere il comportamento tipico di una variabile casuale spesso vogliamo sapere qual è il suo "valore tipico". La nozione di "valore tipico", tuttavia, è ambigua. Infatti, essa può essere definita in almeno tre modi diversi:
@@ -15,9 +14,8 @@ Quando vogliamo conoscere il comportamento tipico di una variabile casuale spess
 - la _mediana_ (il valore centrale della distribuzione, quando la variabile è ordinata in senso crescente o decrescente),
 - la _moda_ (il valore che ricorre più spesso).
 
-Per esempio, la media di $\{3, 1, 4, 1, 5\}$ è $\frac{3+1+4+1+5}{5} = 2.8$, la mediana è $3$ e la moda è $1$. Tuttavia, la teoria delle probabilità si occupa di variabili casuali piuttosto che di sequenze di numeri. Diventa dunque necessario precisare che cosa intendiamo per "valore tipico" quando facciamo riferimento alle variabili casuali. 
-
-Supponiamo di ripetere un esperimento casuale molte volte in modo tale che ciascun valore $Y$ si presenti con una frequenza approssimativamente uguale alla sua probabilità. Per esempio, possiamo lanciare una coppia di dadi e osservare i valori di $S$ = "somma dei punti" e di $P$ = "prodotto dei punti". Ci poniamo il problema di definire il "risultato tipico" di questo esperimento in modo tale che esso corrisponda al valore medio dei valori della variabile casuale, quando l'esperimento casuale viene ripetuto tante volte. Giungiamo così alla seguente definizione.
+Per esempio, la media di $\{3, 1, 4, 1, 5\}$ è $\frac{3+1+4+1+5}{5} = 2.8$, la mediana è $3$ e la moda è $1$. Tuttavia, la teoria delle probabilità si occupa di variabili casuali piuttosto che di sequenze di numeri. Diventa dunque necessario precisare che cosa intendiamo per "valore tipico" quando facciamo riferimento alle variabili casuali. Giungiamo così alla seguente definizione.
+<!-- Supponiamo di ripetere un esperimento casuale molte volte in modo tale che ciascun valore $Y$ si presenti con una frequenza approssimativamente uguale alla sua probabilità. Per esempio, possiamo lanciare una coppia di dadi e osservare i valori di $S$ = "somma dei punti" e di $P$ = "prodotto dei punti". Ci poniamo il problema di definire il "risultato tipico" di questo esperimento in modo tale che esso corrisponda al valore medio dei valori della variabile casuale, quando l'esperimento casuale viene ripetuto tante volte.  -->
 
 ::: {.definition}
 Sia $Y$ è una variabile casuale discreta che assume i valori $y_1, \dots, y_n$ con distribuzione $p(y)$,
@@ -34,9 +32,7 @@ per definizione il *valore atteso* di $Y$, $\E(Y)$, è
 
 A parole: il valore atteso (o speranza matematica, o aspettazione, o valor medio) di una variabile casuale è definito come la somma di tutti i valori che la variabile casuale può prendere, ciascuno pesato dalla probabilità con cui il valore è preso.
 
-
 ::: {.example}
-
 Calcoliamo il valore atteso della variabile casuale $Y$ corrispondente al lancio di una moneta equilibrata (testa: _Y_ = 1; croce: _Y_ = 0). 
 $$
 \E(Y) = \sum_{i=1}^{2} y_i \cdot P(y_i) = 0 \cdot \frac{1}{5} + 1 \cdot \frac{1}{5} = 0.5.
@@ -45,7 +41,6 @@ $$
 
 ::: {.example}
 Supponiamo ora che _Y_ sia il risultato del lancio di un dado equilibrato. Il valore atteso di _Y_ diventa:
-
 $$
 \E(Y) = \sum_{i=1}^{6} y_i \cdot P(y_i) = 1 \cdot \frac{1}{6} + 2 \cdot \frac{1}{6} + \dots + 6 \cdot \frac{1}{6} = \frac{21}{6} = 3.5.
 $$
@@ -54,28 +49,7 @@ $$
 
 ### Interpretazione
 
-Che interpretazione può essere assegnata alla nozione di valore atteso?
-Il valore atteso di una variabile casuale non è altro che una media.
-Possiamo pensare al valore atteso della variabile casuale $Y$come alla media di un enorme numero di realizzazioni di $Y$. Se potessimo esaminare un numero infinito di realizzazioni $Y$, allora la media di tali infiniti valori sarebbe esattamente uguale al valore atteso.
-
-Allora perché abbiamo bisogno di introdurre un concetto diverso da quello di "media"? La risposta è che la media aritmetica è una somma divisa per $n$:
-
-$$
-\bar{Y} = \frac{\sum_{i=1}^n y_i}{n}.
-$$
-Le variabili casuali possono generare un numero infinito di valori possibili. Dato che dividere per infinito non è possibile, è necessario procedere in un altro modo. Possiamo dire che il valore atteso di una variabile casuale è una _media ponderata_ in cui il valore assegnato a ciacun evento elementare dello spazio campionario viene "pesato" per la sua probabilità di verificarsi, nel caso di variabili casuali discrete, o per la sua densità di probabilità, nel caso di variabili casuali continue.
-
-Il termine valore atteso è però un po' fuorviante. Infatti, esso potrebbe non corrispondere a nessuno dei valori che possono essere generati dalla variabile casuale. Quindi il valore atteso non è "atteso" nel senso che ci aspettiamo di vederlo comparire spesso. Ci aspettiamo invece che sia simile alla media di qualsiasi campione sufficientemente grande di realizzazioni della variabile casuale:
-
-$$
-\E(Y) = \lim_{n \rightarrow \infty} \frac{1}{n} \sum_{i = 1}^n y_i.
-$$
-<!-- Infatti, se una variabile casuale discreta $Y$ ha una distribuzione di massa di probabilità $p(Y)$, allora il suo valore atteso sarà -->
-
-<!-- $$ -->
-<!-- \E(Y) = \sum_{-\infty}^{\infty} y_i p(y_i). -->
-<!-- $$ -->
-
+Che interpretazione può essere assegnata alla nozione di valore atteso? Bruno de Finetti adottò lo stesso termine di _previsione_ (e lo stesso simbolo) tanto per la probabilità che per la speranza matematica. Si può pertanto dire che, dal punto di vista bayesiano, la speranza matematica è l'estensione naturale della nozione di probabilità soggettiva.^[Per completezza -- che potrebbe anche essere evitata -- aggiungo qui l'interpretazione frequentista. I frequentisti pensano al valore atteso della variabile casuale $Y$ come alla media di un enorme numero di realizzazioni della $Y$. Se si potesse esaminare un numero infinito di realizzazioni $Y$, allora la media di tali infiniti valori sarebbe esattamente uguale al valore atteso. Allora perché abbiamo bisogno di introdurre un concetto diverso da quello di "media"? La risposta è che la media aritmetica è una somma divisa per $n$: $\bar{Y} = \frac{\sum_{i=1}^n y_i}{n}.$ Le variabili casuali possono generare un numero infinito di valori possibili. Dato che dividere per infinito non è possibile, è necessario procedere in un altro modo. Possiamo dire, in termini frequentisti, che il valore atteso di una variabile casuale è una _media ponderata_ in cui il valore assegnato a ciacun evento elementare dello spazio campionario viene "pesato" per la sua probabilità di verificarsi, nel caso di variabili casuali discrete, o per la sua densità di probabilità, nel caso di variabili casuali continue. Il termine valore atteso è però un po' fuorviante. Infatti, esso potrebbe non corrispondere a nessuno dei valori che possono essere generati dalla variabile casuale. Quindi il valore atteso non è "atteso" nel senso che ci aspettiamo di vederlo comparire spesso. Ci aspettiamo invece che sia simile alla media di qualsiasi campione sufficientemente grande di realizzazioni della variabile casuale: $\E(Y) = \lim_{n \rightarrow \infty} \frac{1}{n} \sum_{i = 1}^n y_i.$.]
 
 ### Proprietà del valore atteso
 
@@ -180,7 +154,6 @@ Nel caso di una variabile casuale continua $Y$ il valore atteso diventa:
 
 Anche in questo caso il valore atteso è una media ponderata della $y$, nella quale ciascun possibile valore $y$ è ponderato per il corrispondente valore della densità $p(y)$. Possiamo leggere l'integrale pensando che $y$ rappresenti l'ampiezza delle barre infinitamente strette di un istogramma, con la densità $p(y)$ che corrisponde all'altezza di tali barre e la notazione $\int_{-\infty}^{\infty}$ che corrisponde ad una somma.
 
-
 \bigskip
   
 Un'altra misura di tendenza centrale delle variabili casuali continue è la moda. La moda della $Y$ individua il valore $y$ più plausibile, ovvero il valore $y$ che massimizza la funzione di densità $p(y)$:
@@ -224,7 +197,6 @@ Essendo $\E(S) = 7$, la varianza diventa
 \end{align}
 :::
 
-
 ### Formula alternativa per la varianza
 
 C'è un modo più semplice per calcolare la varianza:
@@ -261,7 +233,6 @@ $$
 $$
 ::: 
 
-
 ### Variabili casuali continue
 
 Nel caso di una variabile casuale continua $Y$, la varianza diventa:
@@ -272,7 +243,6 @@ Nel caso di una variabile casuale continua $Y$, la varianza diventa:
 \end{equation}
 
 Come nel caso discreto, la varianza di una v.c. continua $y$ misura approssimativamente la distanza al quadrato tipica o prevista dei possibili valori $y$ dalla loro media.
-
 
 ## Deviazione standard
 
@@ -292,7 +262,6 @@ Interpretiamo la deviazione standard di una variabile casuale come nella statist
 Per i dadi equilibrati dell'esercizio \@ref(exm:somma-due-dadi), la deviazione standard della variabile casuale $S$ è uguale a $\sqrt{5.8333} =  2.4152$. 
 :::
 
-
 ## Standardizzazione
 
 :::{.definition}
@@ -306,42 +275,55 @@ Z = \frac{Y - \E(Y)}{\sigma_Y}.
 
 Solitamente, una variabile standardizzata viene denotata con la lettera $Z$.
 
+## Momenti di variabili casuali
+
+:::{.definition}
+Si chiama *momento* di ordine $q$ di una v.c. $X$, dotata di densità $p(x)$, la
+quantità
+\begin{equation}
+\E(X^q) = \int_{-\infty}^{+\infty} x^q p(x) \; dx.
+\end{equation}
+Se $X$ è una v.c. discreta, i suoi momenti valgono:
+\begin{equation}
+\E(X^q) = \sum_i x_i^q p(x_i).
+\end{equation}
+:::
+
+I momenti sono importanti parametri indicatori di certe proprietà di $X$. I più
+noti sono senza dubbio quelli per $q = 1$ e $q = 2$. Il momento del primo ordine corrisponde al valore atteso di $X$. Spesso i momenti di ordine superiore al primo vengono calcolati rispetto al valor medio di $X$, operando una traslazione $x_0 = x − \E(X)$ che individua lo scarto dalla media. Ne deriva che il momento centrale di ordine 2 corrisponde alla varianza.
 
 ## Funzione di ripartizione
 
-Il concetto di funzione di ripartizione è molto importante nella teoria della probabilità, sia nel caso discreto, sia in quello continuo. L'insieme $\{\omega: Y \leq y\}$ è un evento in $\Omega$ e si può scrivere $(Y \leq y)$. 
-A tale evento è possibile assegnare una probabilità $P(Y \leq y)$ che, al variare di $y \in \mathbb{R}$, definisce la funzione di ripartizione della variabile casuale $Y$. 
+Il concetto di funzione di ripartizione è molto importante nella teoria della probabilità, sia nel caso discreto, sia in quello continuo. L'insieme $\{\omega: Y \leq y\}$ è un evento in $\Omega$ e si può scrivere $(Y \leq y)$. A tale evento è possibile assegnare una probabilità $P(Y \leq y)$ che, al variare di $y \in \mathbb{R}$, definisce la funzione di ripartizione della variabile casuale $Y$.
 
 :::{.definition}
-Si chiama funzione di ripartizione o funzione di distribuzione della variabile casuale $Y$ la funzione $F(Y)$ definita da
+Si chiama *funzione di ripartizione* o *funzione di distribuzione* della variabile casuale $X$ la funzione $F(X)$ definita da
 \begin{equation}
-F(Y) \triangleq P(Y \le y), \qquad y \in \mathbb{R}.
+F(X) \triangleq P(X \le x), \qquad x \in \mathbb{R}.
 (\#eq:funrip)
 \end{equation}
 :::
 
-Detto a parole: la funzione di distribuzione cumulata, o funzione di ripartizione di $Y$,  misura la probabilità che $Y$ assuma valori minori o uguali al valore $Y$.
+Detto a parole: la funzione di distribuzione cumulata, o funzione di ripartizione di $X$, misura la probabilità che $X$ assuma valori minori o uguali al valore $x$.
 
 La funzione di ripartizione è sempre non negativa, monotona non decrescente tra $0$ e $1$, tale che:
 $$
-\lim_{y \to -\infty} F_Y(Y) = F_X(-\infty) = 0, \quad \lim_{y \to +\infty} F_X(Y) = F_X(+\infty) = 1.
+\lim_{x \to -\infty} F_x(X) = F_X(-\infty) = 0, \quad \lim_{x \to +\infty} F_X(X) = F_X(+\infty) = 1.
 $$
 
 :::{.example}
-Consideriamo l'esperimento casuale corrispondente al lancio di due monete. 
-Sia $Y$ il numero di volte in cui esce testa. 
-La distribuzione di probabilità di $Y$ è:
+Consideriamo l'esperimento casuale corrispondente al lancio di due monete. Sia $X$ il numero di volte in cui esce testa. La distribuzione di probabilità di $X$ è:
 $$
-    P(Y) = 
+P(X) = 
 \begin{cases}
     0, & 0.25,\\
     1, & 0.50,\\
     2, & 0.25.
 \end{cases}
 $$
-La funzione di ripartizione di $Y$ è:
+La funzione di ripartizione di $X$ è:
 $$
-    F(Y) = 
+    F(X) = 
 \begin{cases}
     0,   & \text{se } x < 0,\\
     1/4, & \text{se } 0 \leq x < 1,\\
@@ -351,7 +333,7 @@ $$
 $$
 Il valore della funzione di ripartizione in corrispondenza di $x = 1.5$, ad esempio, è:
 $$
-F(1.5) = P(Y \leq 1.5) = P(Y=0) + P(Y=1) = \frac{1}{4} + \frac{2}{4} = \frac{3}{4}.
+F(1.5) = P(X \leq 1.5) = P(X=0) + P(X=1) = \frac{1}{4} + \frac{2}{4} = \frac{3}{4}.
 $$
 :::
 

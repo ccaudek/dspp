@@ -45,6 +45,10 @@ source("_common.R")
 <!-- il lancio di una moneta quale esempio generico. -->
 
 
+> Le probabilità sono stati della mente e non stati di natura. 
+>
+> -- <cite>Leonard J. Savage</cite>
+x
 ## La probabilità come la logica della scienza {#inf-stat-probl-inv}
 
 La figura \@ref(fig:cycle-of-science) fornisce una rappresentazione schematica del processo dell'indagine scientifica. Possiamo pensare al progresso scientifico come alla ripetizione di questo ciclo mentre i fenomeni naturali (e, ovviamente psicologici) vengono esplorati e i ricercatori imparano sempre di più sul loro funzionamento. Le caselle della figura riportano le varie fasi del processo di ingagine scientifica e lungo le frecce sono riportati i compiti che conducono i ricercatori da una fase alla successiva.
@@ -88,8 +92,17 @@ In termini epistemici, la probabilità fornisce una misura della nostra incertez
 
 - Nell'interpretazione bayesiana della probabilità $P(A)$ rappresenta direttamente il grado di credenza, o plausibilità, a proposito di $A$, dove $A$ può essere qualsiasi proposizione logica.
 
-In questo insegnamento utilizzeremo l'interpretazione bayesiana della probabilità.
+In questo insegnamento utilizzeremo l'interpretazione bayesiana della probabilità. Possiamo citare De Finetti, ad esempio, il quale ha formulato la seguente definizione "soggettiva" di probabilità.
 
+```{definition, def-prob-sogg}
+La probabilità di un evento $E$ è la quota $p(E)$ che un individuo reputa di dover pagare ad un banco per ricevere "1" ovvero "0" verificandosi o non verificandosi $E$. Le valutazioni di probabilità degli eventi devono rispondere ai pricipi di equità e coerenza.
+```
+
+I principi di equità e coerenza sono definiti come segue.
+
+```{definition, def-equi-coe}
+Una scommessa risponde ai pricipi di *equità* se il ruolo di banco e giocatore sono scambiabili in ogni momento del gioco e sempre alle stesse condizioni; *coerenza* se non vi sono combinazioni di scommesse che consentano (sia al banco che al giocatore) di realizzare perdite o vincite certe.
+```
 
 ## Variabili casuali e probabilità di un evento
 

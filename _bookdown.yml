@@ -14,7 +14,7 @@ language:
     cnj: 'Congettura '
     def: 'Definizione '
     exm: 'Esempio '
-    exr: 'Exercizio '
+    exr: 'Esercizio '
     proof: 'Dimostrazione. '
     remark: 'Osservazione. '
     solution: 'Soluzione. '
@@ -31,7 +31,7 @@ rmd_files:
     # - "017_bayes_theorem.Rmd"
     # - "018_joint_prob.Rmd"
     # - "019_density_func.Rmd"
-    # - "020_expval_var.Rmd"
+    - "020_expval_var.Rmd"
     # - "022_discr_rv_distr.Rmd"
     # - "023_cont_rv_distr.Rmd"
     # - "024_likelihood.Rmd"
@@ -51,7 +51,7 @@ rmd_files:
     # - "055_reglin5.Rmd"
     # - "060_anova.Rmd"
     # - "070_mod_hier.Rmd"
-    - "092_loo.Rmd"
+    # - "092_loo.Rmd"
     # - "900_appendici.Rmd"
     # - "901_simbologia.Rmd"
     # - "902_numeri.Rmd"

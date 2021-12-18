@@ -43,13 +43,17 @@
 <!-- il lancio di una moneta quale esempio generico. -->
 
 
+> Le probabilità sono stati della mente e non stati di natura. 
+>
+> -- <cite>Leonard J. Savage</cite>
+x
 ## La probabilità come la logica della scienza {#inf-stat-probl-inv}
 
 La figura \@ref(fig:cycle-of-science) fornisce una rappresentazione schematica del processo dell'indagine scientifica. Possiamo pensare al progresso scientifico come alla ripetizione di questo ciclo mentre i fenomeni naturali (e, ovviamente psicologici) vengono esplorati e i ricercatori imparano sempre di più sul loro funzionamento. Le caselle della figura riportano le varie fasi del processo di ingagine scientifica e lungo le frecce sono riportati i compiti che conducono i ricercatori da una fase alla successiva.
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{images/cycle_of_science} 
+{\centering \includegraphics[width=0.8\linewidth]{images/cycle_of_science} 
 
 }
 
@@ -91,8 +95,17 @@ In termini epistemici, la probabilità fornisce una misura della nostra incertez
 
 - Nell'interpretazione bayesiana della probabilità $P(A)$ rappresenta direttamente il grado di credenza, o plausibilità, a proposito di $A$, dove $A$ può essere qualsiasi proposizione logica.
 
-In questo insegnamento utilizzeremo l'interpretazione bayesiana della probabilità.
+In questo insegnamento utilizzeremo l'interpretazione bayesiana della probabilità. Possiamo citare De Finetti, ad esempio, il quale ha formulato la seguente definizione "soggettiva" di probabilità.
 
+\BeginKnitrBlock{definition}
+<span class="definition" id="def:def-prob-sogg"><strong>(\#def:def-prob-sogg) </strong></span>La probabilità di un evento $E$ è la quota $p(E)$ che un individuo reputa di dover pagare ad un banco per ricevere "1" ovvero "0" verificandosi o non verificandosi $E$. Le valutazioni di probabilità degli eventi devono rispondere ai pricipi di equità e coerenza.
+\EndKnitrBlock{definition}
+
+I principi di equità e coerenza sono definiti come segue.
+
+\BeginKnitrBlock{definition}
+<span class="definition" id="def:def-equi-coe"><strong>(\#def:def-equi-coe) </strong></span>Una scommessa risponde ai pricipi di *equità* se il ruolo di banco e giocatore sono scambiabili in ogni momento del gioco e sempre alle stesse condizioni; *coerenza* se non vi sono combinazioni di scommesse che consentano (sia al banco che al giocatore) di realizzare perdite o vincite certe.
+\EndKnitrBlock{definition}
 
 ## Variabili casuali e probabilità di un evento
 
@@ -169,9 +182,9 @@ Supponiamo di ripetere questo esperimento casuale 100 volte e di registrare i ri
 M <- 10
 y <- rep(NA, M)
 for (m in 1:M) {
-  y[m] <- rbinom(1, 1, 0.5)
+  y[m] = rbinom(1, 1, 0.5)
 }
-estimate <- sum(y) / M
+estimate = sum(y) / M
 
 cat("estimated Pr[Y = 1] =", estimate)
 #> estimated Pr[Y = 1] = 0.7
@@ -185,7 +198,7 @@ Ripetiamo questa procedura 10 volte.
 flip_coin <- function(M) {
   y <- rep(NA, M)
   for (m in 1:M) {
-    y[m] <- rbinom(1, 1, 0.5)
+    y[m] = rbinom(1, 1, 0.5)
   }
   estimate <- sum(y) / M
   cat("estimated Pr[Y = 1] =", estimate, "\n")
@@ -194,7 +207,7 @@ flip_coin <- function(M) {
 
 
 ```r
-for (i in 1:10) {
+for(i in 1:10) {
   flip_coin(10)
 }
 #> estimated Pr[Y = 1] = 0.5 
@@ -214,7 +227,7 @@ Dato che la moneta è equilibrata, la stima delle probabilità dell'evento $Pr[Y
 
 
 ```r
-for (i in 1:10) {
+for(i in 1:10) {
   flip_coin(100)
 }
 #> estimated Pr[Y = 1] = 0.54 
@@ -234,19 +247,19 @@ In questo secondo caso, gli errori tendono ad essere più piccoli della simulazi
 
 
 ```r
-for (i in 1:10) {
+for(i in 1:10) {
   flip_coin(1e4)
 }
-#> estimated Pr[Y = 1] = 0.5045 
-#> estimated Pr[Y = 1] = 0.5004 
-#> estimated Pr[Y = 1] = 0.4965 
-#> estimated Pr[Y = 1] = 0.4986 
-#> estimated Pr[Y = 1] = 0.5092 
-#> estimated Pr[Y = 1] = 0.5033 
-#> estimated Pr[Y = 1] = 0.5028 
-#> estimated Pr[Y = 1] = 0.5011 
-#> estimated Pr[Y = 1] = 0.4974 
-#> estimated Pr[Y = 1] = 0.5024
+#> estimated Pr[Y = 1] = 0.504 
+#> estimated Pr[Y = 1] = 0.5 
+#> estimated Pr[Y = 1] = 0.496 
+#> estimated Pr[Y = 1] = 0.499 
+#> estimated Pr[Y = 1] = 0.509 
+#> estimated Pr[Y = 1] = 0.503 
+#> estimated Pr[Y = 1] = 0.503 
+#> estimated Pr[Y = 1] = 0.501 
+#> estimated Pr[Y = 1] = 0.497 
+#> estimated Pr[Y = 1] = 0.502
 ```
 
 \noindent
@@ -266,28 +279,28 @@ flip_coin <- function(m) {
   phat <- sum(y) / m
   phat
 }
-for (i in 1:nrep) {
+for(i in 1:nrep) {
   estimate[i] <- flip_coin(i)
 }
 d <- data.frame(
-  n = 1:nrep,
+  n = 1:nrep, 
   estimate
 )
-d %>%
+d %>% 
   ggplot(
     aes(x = n, y = estimate)
   ) +
   geom_line() +
   theme(legend.title = element_blank()) +
   labs(
-    x = "Numero di lanci della moneta",
+    x = "Numero di lanci della moneta", 
     y = "Stima Pr[Y = 1]"
-  )
+)
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{015_prob_intro_files/figure-latex/legge-grandi-n-1-1} 
+{\centering \includegraphics[width=0.8\linewidth]{015_prob_intro_files/figure-latex/legge-grandi-n-1-1} 
 
 }
 
@@ -298,27 +311,25 @@ Dato che il grafico \@ref(fig:legge-grandi-n-1) su una scala lineare non rivela 
 
 
 ```r
-d %>%
+d %>% 
   ggplot(
     aes(x = n, y = estimate)
   ) +
   geom_line() +
   scale_x_log10(
-    breaks = c(
-      1, 3, 10, 50, 200,
-      700, 2500, 10000
-    )
+    breaks = c(1, 3, 10, 50, 200, 
+               700, 2500, 10000)
   ) +
   theme(legend.title = element_blank()) +
   labs(
-    x = "Numero di lanci della moneta",
+    x = "Numero di lanci della moneta", 
     y = "Stima Pr[Y = 1]"
-  )
+)
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{015_prob_intro_files/figure-latex/legge-grandi-n-2-1} 
+{\centering \includegraphics[width=0.8\linewidth]{015_prob_intro_files/figure-latex/legge-grandi-n-2-1} 
 
 }
 
@@ -386,7 +397,7 @@ Possiamo ripetere questa simulazione $M = 1e5$ volte:
 ```r
 M <- 1e5
 z <- rep(NA, M)
-for (i in 1:M) {
+for(i in 1:M) {
   y <- rbinom(3, 1, 0.5)
   z[i] <- sum(y)
 }
@@ -399,8 +410,8 @@ e calcolare una stima della probabilità che la variabile casuale $Z$ assuma i v
 ```r
 table(z) / M
 #> z
-#>       0       1       2       3 
-#> 0.12608 0.37225 0.37666 0.12501
+#>     0     1     2     3 
+#> 0.126 0.372 0.377 0.125
 ```
 
 Nel caso di 4 monete equilibrate, avremo:
@@ -409,14 +420,14 @@ Nel caso di 4 monete equilibrate, avremo:
 ```r
 M <- 1e5
 z <- rep(NA, M)
-for (i in 1:M) {
+for(i in 1:M) {
   y <- rbinom(4, 1, 0.5)
   z[i] <- sum(y)
 }
 table(z) / M
 #> z
-#>       0       1       2       3       4 
-#> 0.06303 0.24984 0.37314 0.25090 0.06309
+#>      0      1      2      3      4 
+#> 0.0630 0.2498 0.3731 0.2509 0.0631
 ```
 
 Viene detta _variabile casuale discreta_ una variabile casuale le cui modalità possono essere costituite solo da numeri interi:
@@ -461,12 +472,11 @@ M <- 1e5
 nflips <- 4
 u <- rbinom(M, nflips, 0.5)
 x <- 0:nflips
-y <- rep(NA, nflips + 1)
-for (n in 0:nflips) {
+y <- rep(NA, nflips+1)
+for (n in 0:nflips)
   y[n + 1] <- sum(u == n) / M
-}
 bar_plot <-
-  data.frame(Z = x, count = y) %>%
+  data.frame(Z = x, count = y) %>% 
   ggplot(
     aes(x = Z, y = count)
   ) +
@@ -477,13 +487,13 @@ bar_plot <-
   ) +
   labs(
     y = "Probabilità stimata Pr[Z = z]"
-  )
+)
 bar_plot
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{015_prob_intro_files/figure-latex/barplot-mdf-4coins-1} 
+{\centering \includegraphics[width=0.8\linewidth]{015_prob_intro_files/figure-latex/barplot-mdf-4coins-1} 
 
 }
 

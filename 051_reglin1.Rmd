@@ -1,31 +1,12 @@
-# Introduzione alla regressione lineare {#regr-models-intro}
+# Introduzione al modello lineare {#regr-models-intro}
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
 source("_common.R")
 source("_stan_options.R")
 ```
 
-Lo scopo della ricerca è trovare le associazioni tra le variabili e fare
-confronti fra le condizioni sperimentali. Nel caso della psicologia, il
-ricercatore vuole scoprire le leggi generali che descrivono le relazioni
-tra i costrutti psicologici e le relazioni che intercorrono tra i
-fenomeni psicologici e quelli non psicologici (sociali, economici,
-storici, ...). Abbiamo già visto come la correlazione di Pearson sia uno
-strumento adatto a questo scopo. Infatti, essa ci informa sulla
-direzione e sull'intensità della relazione lineare tra due variabili.
-Tuttavia, la correlazione non è sufficiente, in quanto il ricercatore ha
-a disposizione solo i dati di un campione, mentre vorrebbe descrivere la
-relazione tra le variabili nella popolazione. A causa della variabilità
-campionaria, le proprietà dei campioni sono necessariamente diverse da
-quelle della popolazione: ciò che si può osservare nella popolazione
-potrebbe non emergere nel campione e, al contrario, il campione
-manifesta caratteristiche che non sono necessariamente presenti nella
-popolazione. È dunque necessario chiarire, dal punto di vista
-statistico, il legame che intercorre tra le proprietà del campione e le
-proprietà della popolazione da cui esso è stato estratto. 
-Il modello di regressione utilizza la funzione matematica più semplice
-per descrivere la relazione fra due variabili, ovvero la funzione
-lineare. In questo Capitolo vedremo come si possa fare inferenza sulla relazione tra due variabili mediante il modello di regressione bayesiano. Inizieremo a descrivere le proprietà geometriche della funzione lineare per poi utilizzare questa semplice funzione per costruire un modello statistico secondo un approccio bayesiano. 
+Lo scopo della ricerca è trovare le associazioni tra le variabili e fare confronti fra le condizioni sperimentali. Nel caso della psicologia, il ricercatore vuole scoprire le leggi generali che descrivono le relazioni tra i costrutti psicologici e le relazioni che intercorrono tra i fenomeni psicologici e quelli non psicologici (sociali, economici, storici, ...). Abbiamo già visto come la correlazione di Pearson sia uno strumento adatto a questo scopo. Infatti, essa ci informa sulla direzione e sull'intensità della relazione lineare tra due variabili. Tuttavia, la correlazione non è sufficiente, in quanto il ricercatore ha a disposizione solo i dati di un campione, mentre vorrebbe descrivere la relazione tra le variabili nella popolazione. A causa della variabilità campionaria, le proprietà dei campioni sono necessariamente diverse da quelle della popolazione: ciò che si può osservare nella popolazione potrebbe non emergere nel campione e, al contrario, il campione manifesta caratteristiche che non sono necessariamente presenti nella popolazione. È dunque necessario chiarire, dal punto di vista statistico, il legame che intercorre tra le proprietà del campione e le proprietà della popolazione da cui esso è stato estratto. 
+Il modello lineare utilizza la funzione matematica più semplice per descrivere la relazione fra due variabili, ovvero la funzione lineare. In questo Capitolo vedremo come si possa fare inferenza sulla relazione tra due variabili mediante il modello  lineare bayesiano. Inizieremo a descrivere le proprietà geometriche della funzione lineare per poi utilizzare questa semplice funzione per costruire un modello statistico secondo un approccio bayesiano. 
 
 
 ## La funzione lineare
@@ -67,7 +48,7 @@ knitr::include_graphics("images/linear_function.png")
 
 ## L'errore di misurazione
 
-Per descrivere l'associazione tra due variabili, tuttavia, la funzione lineare non è sufficiente. Nel mondo empirico, infatti, la relazione tra variabili non è mai perfettamente lineare. È dunque necessario includere nel modello di regressione anche una componente d'errore, ovvero una componente della $y$ che non può essere spiegata dal modello lineare. Nel caso di due sole variabili, questo ci conduce alla seguente formulazione del modello di regressione:
+Per descrivere l'associazione tra due variabili, tuttavia, la funzione lineare non è sufficiente. Nel mondo empirico, infatti, la relazione tra variabili non è mai perfettamente lineare. È dunque necessario includere nel modello lineare anche una componente d'errore, ovvero una componente della $y$ che non può essere spiegata dal modello lineare. Nel caso di due sole variabili, questo ci conduce alla seguente formulazione del modello lineare:
 
 \begin{equation}
 y = \alpha + \beta x + \varepsilon,
@@ -84,7 +65,7 @@ Si noti che la \@ref(eq:regbivpop) consente di formulare una predizione, nei ter
 \end{equation}
 
 In altri termini, se i parametri del modello ($\alpha$ e $\beta$) sono noti, allora è possibile predire la $y$ sulla base della nostra conoscenza della $x$. 
-Per esempio, se conosciamo la relazione lineare tra quoziente di intelligenza ed aspettativa di vita, allora possiamo prevedere quanto a lungo vivrà una persona sulla base del suo QI. Sì, c'è una relazione lineare tra intelligenza e aspettativa di vita [@hambrick2015research]! Ma quando è accurata la previsione? Ciò dipende dal termine d'errore della \@ref(eq:regbivpop). L'analisi di regressione fornisce un metodo per rispondere a domande di questo tipo^[Per una discussione sugli aspetti di base della regressione lineare, si veda il [capitolo 7](https://openintro-ims.netlify.app/model-slr.html) di _Introduction to Modern Statistics_.].
+Per esempio, se conosciamo la relazione lineare tra quoziente di intelligenza ed aspettativa di vita, allora possiamo prevedere quanto a lungo vivrà una persona sulla base del suo QI. Sì, c'è una relazione lineare tra intelligenza e aspettativa di vita [@hambrick2015research]! Ma quando è accurata la previsione? Ciò dipende dal termine d'errore della \@ref(eq:regbivpop). Il modello lineare fornisce un metodo per rispondere a domande di questo tipo^[Per una discussione sugli aspetti di base del modello lineare, si veda il [capitolo 7](https://openintro-ims.netlify.app/model-slr.html) di _Introduction to Modern Statistics_.].
 
 
 ## Una media per ciascuna osservazione
@@ -95,7 +76,7 @@ Y_i \stackrel{i.i.d.}{\sim} \mathcal{N}(\mu, \sigma), \quad i = 1, \dots, n.
 (\#eq:normalsamplingmodel)
 \end{equation}
 
-Il modello \@ref(eq:normalsamplingmodel) assume che ogni $Y_i$ sia una realizzazione della stessa $\mathcal{N}(\mu, \sigma^2)$. Da un punto di vista bayesiano^[Per un'introduzione alla trattazione frequentista dell'analisi di regressione, si veda l'Appendice \@ref(least-squares).], si assegnano distribuzioni a priori ai parametri $\mu$ e $\sigma$, si genera la verosimiglianza in base ai dati osservati e, con queste informazioni, si generano le distribuzione a posteriori dei parametri [@gelman2020regression]:
+Il modello \@ref(eq:normalsamplingmodel) assume che ogni $Y_i$ sia una realizzazione della stessa $\mathcal{N}(\mu, \sigma^2)$. Da un punto di vista bayesiano^[Per un'introduzione alla trattazione frequentista del modello lineare, si veda l'Appendice \@ref(least-squares).], si assegnano distribuzioni a priori ai parametri $\mu$ e $\sigma$, si genera la verosimiglianza in base ai dati osservati e, con queste informazioni, si generano le distribuzione a posteriori dei parametri [@gelman2020regression]:
 \begin{align}
 Y_i \mid \mu, \sigma & \stackrel{iid}{\sim} \mathcal{N}(\mu, \sigma^2)\notag\\
 \mu       & \sim \mathcal{N}(\mu_0, \tau^2) \notag\\
@@ -128,24 +109,20 @@ Nella \@ref(eq:regmodel), ciascuna $x_i$ è una costante nota (ecco perché vien
 In questo modello, la funzione lineare $\beta_0 + \beta_ 1 x_i$ è interpretata come il valore atteso della $Y_i$ per ciascun valore $x_i$, mentre l'intercetta $\beta_0$ rappresenta il valore atteso della $Y_i$ quando $x_i = 0$. Il parametro $\beta_ 1$ (pendenza) rappresenta invece l'aumento medio della $Y_i$ quando $x_i$ aumenta di un'unità. È importante notare che la relazione lineare  \@ref(eq:normalsamplinglinearmodel) di parametri $\beta_0$ e  $\beta_ 1$ descrive l'associazione tra _la media_ $\mu_i$ e il predittore $x_i$. In altri termini, tale relazione lineare ci fornisce una predizione sul valore medio $\mu_i$, non sul valore _effettivo_ $Y_i$.
 
 
-### Il modello di regressione lineare
+### Il modello lineare
 
-Sostituendo la \@ref(eq:regmodel) nel modello  \@ref(eq:normalsamplinglinearmodel) otteniamo il modello di regressione lineare:
-
+Sostituendo la \@ref(eq:regmodel) nella \@ref(eq:normalsamplinglinearmodel) otteniamo il modello lineare:
 \begin{equation}
 Y_i \mid \beta_0, \beta_ 1, \sigma \stackrel{ind}{\sim} \mathcal{N}(\beta_0 + \beta_ 1 x_i, \sigma), \quad i = 1, \dots, n.
 (\#eq:samplinglinearmodel)
 \end{equation}
-
 Questo è un caso speciale del modello di campionamento Normale, dove le $Y_i$ seguono indipendentemente una densità Normale con una media ($\beta_0 + \beta_ 1 x_i$) specifica per ciascuna osservazione e con una deviazione standard ($\sigma$) comune a tutte le osservazioni. Poiché include un solo predittore ($x$), questo modello è comunemente chiamato _modello di regressione lineare semplice_.
 
 In maniera equivalente, il modello \@ref(eq:samplinglinearmodel) può essere formulato come
-
 \begin{equation}
 Y_i = \mu_i + \varepsilon_i, \quad i = 1, \dots, n,
 (\#eq:samplinglinearmodel2)
 \end{equation}
-
 dove la risposta media è $\mu_i = \beta_0 + \beta_ 1 x_i$ e i residui $\varepsilon_1, \dots, \varepsilon_n$ sono i.i.d. da una Normale con media 0 e deviazione standard $\sigma$. 
 
 ```{r, echo = FALSE, message=FALSE, warning=FALSE}
@@ -190,7 +167,7 @@ ggplot(df, mapping = aes(x=x, y=y)) +
     )
 ```
 
-Nel modello di regressione lineare, l'osservazione $Y_i$ è una variabile casuale, il predittore $x_i$ è una costante fissa, e $\beta_0$, $\beta_1$ e $\sigma$ sono parametri incogniti. Utilizzando il paradigma bayesiano, viene assegnata una distribuzione a priori congiunta a $(\beta_0, \beta_1, \sigma)$. Dopo avere osservato le risposte $Y_i, i = 1, \dots, n$, l'inferenza procede stimando la distribuzione a posteriori dei parametri. 
+Nel modello lineare, l'osservazione $Y_i$ è una variabile casuale, il predittore $x_i$ è una costante fissa, e $\beta_0$, $\beta_1$ e $\sigma$ sono parametri incogniti. Utilizzando il paradigma bayesiano, viene assegnata una distribuzione a priori congiunta a $(\beta_0, \beta_1, \sigma)$. Dopo avere osservato le risposte $Y_i, i = 1, \dots, n$, l'inferenza procede stimando la distribuzione a posteriori dei parametri. 
 
 ::: {.rmdnote}
 Nella costruzione di un modello di regressione bayesiano, è importante iniziare dalle basi e procedere un passo alla volta. Sia $Y$ una variabile di risposta e
@@ -216,27 +193,7 @@ Un algoritmo MCMC viene usato per simulare i campioni dalle distribuzioni a post
 
 ## Considerazioni conclusive {-}
 
-Il modello di regressione lineare semplice viene usato per descrivere la
-relazione tra due variabili e per determinare il segno e l'intensità di
-tale relazione. Inoltre, il modello di regressione ci consente di
-prevedere il valore della variabile dipendente in base ad alcuni nuovi
-valori della variabile indipendente. Il modello di regressione lineare
-semplice è in realtà molto limitato, in quanto descrive soltanto la
-relazione tra la variabile dipendente $y$ e una sola variabile
-esplicativa $x$. Esso diventa molto più utile quando incorpora più
-variabili indipendenti. In questo secondo caso, però, i calcoli per la
-stima dei coefficienti del modello diventano più complicati. Abbiamo
-deciso di iniziare considerando il modello di regressione lineare semplice
-perché, in questo caso, sia la logica dell'inferenza sia le procedure di
-calcolo sono facilmente maneggiabili. Nel caso più generale, quello del
-modello di regressione multipla, la logica dell'inferenza rimarrà
-identica a quella discussa qui, ma le procedure di calcolo richiedono
-l'uso dell'algebra matriciale. Il modello di regressione multipla può includere sia regressori quantitativi, sia regressori qualitativi, utilizzando un
-opportuna schema di codifica. È interessante notare come un modello di
-regressione multipla che include una sola variabile esplicativa
-quantitativa corrisponde all'analisi della varianza ad una via; un
-modello di regressione multipla che include più di una variabile
-esplicativa quantitativa corrisponde all'analisi della varianza più vie.
-Possiamo qui concludere dicendo che il modello di regressione, nelle sue varie forme e varianti, costituisce la tecnica di analisi dei dati maggiormente usata in psicologia.
+Il modello lineare semplice viene usato per descrivere la relazione tra due variabili e per determinare il segno e l'intensità di tale relazione. Inoltre, il modello lineare ci consente di prevedere il valore della variabile dipendente in base ai  valori della variabile indipendente. Il modello lineare semplice è in realtà molto limitato, in quanto descrive soltanto la relazione tra la variabile dipendente $y$ e una sola variabile esplicativa $x$. Esso diventa molto più utile quando incorpora più variabili indipendenti. In questo secondo caso, però, i calcoli per la stima dei coefficienti del modello diventano più complicati. Abbiamo deciso di iniziare considerando il modello lineare semplice perché, in questo caso, sia la logica dell'inferenza sia le procedure di calcolo sono facilmente maneggiabili. Nel caso più generale, quello del modello lineare multiplo (ovvero, con più di un predittore), la logica dell'inferenza rimane identica a quella discussa qui, ma le procedure di calcolo richiedono l'uso dell'algebra matriciale. Il modello lineare multiplo può includere sia regressori quantitativi, sia regressori qualitativi, utilizzando un opportuno schema di codifica. È interessante notare come un modello lineare multiplo che include una sola variabile esplicativa qualitativa corrisponde all'analisi della varianza ad una via; un modello lineare multiplo che include più di una variabile
+esplicativa qualitativa corrisponde all'analisi della varianza più vie. Possiamo qui concludere dicendo che il modello lineare, nelle sue varie forme e varianti, costituisce la tecnica di analisi dei dati maggiormente usata in psicologia.
 
 

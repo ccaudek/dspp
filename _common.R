@@ -10,8 +10,14 @@ suppressPackageStartupMessages({
 })  
   
 # R options set globally
-# options(width = 60)
-options(digits = 3)
+options(
+  digits = 3,
+  width = 68,
+  str = strOptions(strict.width = "cut"),
+  crayon.enabled = TRUE
+)
+knitr::opts_chunk$set(width = 68)
+
 set.seed(42)
 SEED <- 374237 # set random seed for reproducibility
 
@@ -20,14 +26,12 @@ theme_set(bayesplot::theme_default(base_size = 12))
 bayesplot::color_scheme_set("brightblue") #  mix-blue-green
 # theme_update(plot.title = element_text(hjust = 0.5))
 
-# theme_clean <- function() {
-#   theme_minimal() +
-#     theme(
-#       panel.grid.minor = element_blank(),
-#       strip.background = element_rect(fill = "grey80", color = NA)
-#     )
-# }
-# theme_set(theme_clean())
+# LaTeX options ----------------------------------------------------------------
+
+if (knitr::is_latex_output()) {
+  options(crayon.enabled = FALSE)
+  options(cli.unicode = TRUE)
+}
 
 # knitr chunk options ----------------------------------------------------------
 

@@ -682,15 +682,12 @@ pesantemente influenzato dalla presenza di valori anomali.
 
 ### Varianza
 
-Dati i limiti delle statistiche precedenti è più comune misurare la
-variabilità di una variabile statistica come la dispersione dei dati
-attorno ad un indice di tendenza centrale. Infatti, la misura di variabilità di gran lunga più usata per valutare la variabilità di una variabile statistica è senza dubbio la varianza. La varianza
+Dati i limiti delle statistiche precedenti è più comune misurare la variabilità di una variabile statistica come la dispersione dei dati attorno ad un indice di tendenza centrale. Infatti, la misura di variabilità di gran lunga più usata per valutare la variabilità di una variabile statistica è senza dubbio la varianza. La varianza
 \begin{equation}
 s^2 = \frac{1}{n} \sum_{i=1}^n (x_i - \bar{x})^2
 (\#eq:var-descr)
 \end{equation}
-è la media dei quadrati degli scarti $x_i - \bar{x}$ tra ogni valore e la media della distribuzione. 
-La varianza è una misura di dispersione più complessa di quelle esaminate in precedenza. È appropriata solo nel caso di distribuzioni simmetriche e, anch'essa, è fortemente influenzata dai valori anomali. Inoltre, è espressa in un'unità di misura che è il quadrato dell'unità di misura dei dati originari e quindi ad essa non può essere assegnata un'interpretazione intuitiva.
+è la media dei quadrati degli scarti $x_i - \bar{x}$ tra ogni valore e la media della distribuzione. La varianza è una misura di dispersione più complessa di quelle esaminate in precedenza. È appropriata solo nel caso di distribuzioni simmetriche e, anch'essa, è fortemente influenzata dai valori anomali. Inoltre, è espressa in un'unità di misura che è il quadrato dell'unità di misura dei dati originari e quindi ad essa non può essere assegnata un'interpretazione intuitiva.
 
 ::: {.example}
 Calcoliamo la varianza dei punteggi BDI-II nei due gruppi di soggetti di @zetschefuture2019.
@@ -708,7 +705,7 @@ bysubj %>%
 
 Per le ragioni espresse sopra, la misura più usata della dispersione di una distribuzione di dati è la _deviazione standard_, ovvero la radice quadrata della varianza. A differenza della varianza, dunque, la deviazione standard è espressa nella stessa unità di misura dei dati. Come nel caso della varianza, anche la deviazione standard $s$ dovrebbe essere usata soltanto quando la media è adeguata per misurare il centro della distribuzione, ovvero, nel caso di distribuzioni simmetriche. Come nel caso della media $\bar{x}$, anche la deviazione standard è fortemente influenzata dai dati anomali (*outlier*), ovvero dalla presenza di uno o di pochi dati che sono molto più distanti dalla media rispetto agli altri valori della distribuzione. Quando tutte le osservazioni sono uguali, $s=0$, altrimenti $s > 0$.
 
-Alla deviazione standard può essere assegnata una semplice interpretazione: la deviazione standard è __simile__ (ma non identica) allo scostamento medio semplice dalla media. La deviazione standard ci dice, dunque, quanto sono distanti, in media, le singole osservazioni dal centro della distribuzione. 
+Alla deviazione standard può essere assegnata una semplice interpretazione: la deviazione standard è **simile** (ma non identica) allo scarto semplice medio campionario, ovvero alla media aritmetica dei valori assoluti degli scarti dalla media. La deviazione standard ci dice, dunque, quanto sono distanti, in media, le singole osservazioni dal centro della distribuzione. Un'interpretazione più precisa del significato della deviazione standard è fornita nel Paragrafo successivo.
 
 ::: {.example}
 Calcoliamo la deviazione standard per il BDI-II dei due gruppi di soggetti di @zetschefuture2019.
@@ -752,19 +749,11 @@ bysubj %>%
 
 ### Indici di variabilità relativi
 
-A volte può essere interessante effettuare un confronto fra due misure
-di variabilità di grandezze incommensurabili, ovvero di caratteri
-rilevati mediante differenti unità di misura. In questi casi, le misure
-di variabilità precedentemente descritte si rivelano inadeguate in
-quanto dipendono dall'unità di misura adottata. Diventa dunque
-necessario ricorrere a particolari numeri adimensionali detti indici
-relativi di variabilità. Il più importante di tali indici è il
-coefficiente di variazione, ovvero il numero puro
-$$C_v = \frac{\sigma}{\bar{x}}$$ ottenuto dal rapporto tra la deviazione
-standard e la media dei dati. Un altro indice relativo di variabilità è
-la differenza interquartile rapportata al primo quartile oppure al terzo
-quartile oppure alla mediana, cioè:
-$$\frac{x_{0.75} - x_{0.25}}{x_{0.25}}, \qquad \frac{x_{0.75} - x_{0.25}}{x_{0.75}}, \qquad \frac{x_{0.75} - x_{0.25}}{x_{0.50}}.\notag$$
+A volte può essere interessante effettuare un confronto fra due misure di variabilità di grandezze incommensurabili, ovvero di caratteri rilevati mediante differenti unità di misura. In questi casi, le misure di variabilità precedentemente descritte si rivelano inadeguate in quanto dipendono dall'unità di misura adottata. Diventa dunque necessario ricorrere a particolari numeri adimensionali detti indici relativi di variabilità. Il più importante di tali indici è il coefficiente di variazione, ovvero il numero puro
+$$C_v = \frac{\sigma}{\bar{x}}$$ 
+ottenuto dal rapporto tra la deviazione standard e la media dei dati. Un altro indice relativo di variabilità è la differenza interquartile rapportata al primo quartile oppure al terzo quartile oppure alla mediana, cioè:
+$$\frac{x_{0.75} - x_{0.25}}{x_{0.25}}, \qquad \frac{x_{0.75} - x_{0.25}}{x_{0.75}}, \qquad \frac{x_{0.75} - x_{0.25}}{x_{0.50}}.\notag
+$$
 
 ## Le relazioni tra variabili
 
