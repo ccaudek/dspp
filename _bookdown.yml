@@ -23,7 +23,7 @@ language:
     appendix_name: 'Appendice '
 rmd_files:
     - "index.Rmd"
-    - "001_key_notions.Rmd"
+    # - "001_key_notions.Rmd"
     # - "005_measurement.Rmd"
     # - "013_eda.Rmd"
     # - "015_prob_intro.Rmd"
@@ -35,7 +35,7 @@ rmd_files:
     # - "022_discr_rv_distr.Rmd"
     # - "023_cont_rv_distr.Rmd"
     # - "024_likelihood.Rmd"
-    # - "025_intro_bayes.Rmd"
+    - "025_intro_bayes.Rmd"
     # - "026_conjugate_families.Rmd"
     # - "027_balance_prior_post.Rmd"
     # - "036_posterior_sim.Rmd"

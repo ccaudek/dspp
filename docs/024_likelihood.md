@@ -4,6 +4,10 @@
 
 
 
+::: {.chapterintro data-latex=""}
+Si usa una procedura di aggiornamento bayesiano per passare dalle credenze precedenti alle credenze posteriori. L'aggiornamento bayesiano è descritto dalla regola di Bayes. La regola di Bayes include tre componenti: distribuzione a priori, verosimiglianza e distribuzione a posteriori. Verrà qui esaminata la verosimiglianza.
+:::
+
 Per introdurre la funzione di verosimiglianza utilizzeremo un esempio proposto da @McElreath_rethinking.^[Per una trattazione più formale, si consulti il tutorial di @etz2018introduction.] Supponiamo di tenere in mano un mappamondo e di chiederci: "qual'è la proporzione della superficie terreste ricoperta d'acqua?" Sembra una domanda a cui è difficile rispondere. Ma @McElreath_rethinking propone questa idea brillante: lanciamo in aria il mappamondo e, quando lo riprendiamo, osserviamo se la superfice del mappamondo sotto il nostro dito indice destro rappresenta acqua o terra. Possiamo ripetere questa procedura più volte, così da ottenere un campione causale di diverse porzioni della superficie dal mappamondo. Eseguiamo l'esperimento casuale nove volte e osserviamo i seguenti risultati: A, T, A, A, A, T, A, T, A, dove "A" indica acqua e "T" indica terra. 
 
 ## Dati e parametri

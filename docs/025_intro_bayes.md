@@ -1,17 +1,12 @@
 # (PART\*) Inferenza statistica bayesiana {.unnumbered}
 
-
 # Il problema inverso {#chapter-intro-bayes-inference}
 
 
 
-\begin{Summary}
-Pensare in termini bayesiani: la credenza a posteriori che attribuiamo
-ad un'ipotesi, formulata nei termini di un parametro di un modello
-statistico, dopo avere osservato i dati empirici, costituisce
-l'aggiornamento delle nostre credenze iniziali sul parametro mediante le
-informazioni fornite dai dati.
-\end{Summary}
+::: {.chapterintro data-latex=""}
+Pensare in termini bayesiani significa aggiornare le nostre credenze combinando le credenze iniziali con le informazioni fornite dai dati. Ciò produce una credenza "a posteriori". L'aggiornamento bayesiano richiede che le credenze siano descritte nei termini di un modello probabilistico formulato in termini di uno o più parametri. La nostra incertezza riguarda il valore dei parametri. L'aggiornamento bayesiano ha lo scopo di ottenere le migliori stime possibili dei parametri del modello, alla luce delle nostre credenze a priori e dei dati osservati.
+:::
 
 <!-- La statistica descrittiva si occupa della descrizione, sintesi e presentazione delle informazioni contenute nei dati osservati. Essa spesso rappresenta la fase preliminare di uno studio e un ausilio per l'individuazione di possibili modelli da utilizzare nella successiva fase dell'analisi inferenziale. A differenza della statistica descrittiva, quella inferenziale assume che le osservazioni siano il risultato di un campionamento statistico e il suo obiettivo è ricavare informazioni circa l'intera popolazione a partire dall'osservazione di un suo sottoinsieme. -->
 
@@ -21,11 +16,11 @@ informazioni fornite dai dati.
 
 ## Inferenza bayesiana come un problema inverso
 
-L'inferenza bayesiana è formulata nei termini di un problema inverso che segue la regola di Bayes (si veda la Sezione \@ref(inf-stat-probl-inv)).^[Nell'approccio bayesiano non si fa riferimento ad un modello probabilistico $f(y \mid \theta)$ rappresentativo del fenomeno d'interesse noto a meno del valore assunto dal parametro (o dei parametri) che lo caratterizza. Si fa invece riferimento ad una distribuzione congiunta (di massa o di densità di probabilità) $f(y, \theta)$. Entrambi gli argomenti della funzione $y$ e $\theta$ hanno natura di variabili casuali, laddove la nostra incertezza relativa a $y$ è dovuta alla naturale variabilità del fenomeno indagato (_variabilità aleatoria_), mentre la nostra incertezza relativa a $\theta$ è dovuta alla mancata conoscenza del suo valore numerico (_variabilità epistemica_).] Per fissare la notazione, nel seguito $y$ rappresenterà le variabili osservate, ovvero i dati, e $\theta$ rappresenterà i parametri incogniti di un modello statistico. Sia $y$ che $\theta$ sono concepiti come delle variabili casuali. Con $x$ verranno invece denotate le quantità note, come i predittori nel modello di regressione.
+L'inferenza bayesiana può essere descritta come la soluziome di un problema inverso mediante la regola di Bayes, ovvero la quantificazione della plausibilità di una teoria alla luce dei dati osservati -- (si veda la Sezione \@ref(inf-stat-probl-inv)). Per fissare la notazione, nel seguito $y$ rappresenterà i dati e $\theta$ rappresenterà i parametri incogniti di un modello statistico. Sia $y$ che $\theta$ saranno concepiti come delle variabili casuali.^[Nell'approccio bayesiano non si fa riferimento ad un modello probabilistico $f(y \mid \theta)$ rappresentativo del fenomeno d'interesse noto a meno del valore assunto dal parametro (o dei parametri) che lo caratterizza. Si fa inoltre riferimento ad una distribuzione congiunta (di massa o di densità di probabilità) $f(y, \theta)$. Entrambi gli argomenti della funzione $y$ e $\theta$ hanno natura di variabili casuali, laddove la nostra incertezza relativa a $y$ è dovuta alla naturale variabilità del fenomeno indagato (_variabilità aleatoria_), mentre la nostra incertezza relativa a $\theta$ è dovuta alla mancata conoscenza del suo valore numerico (_variabilità epistemica_).] Con $x$ verranno invece denotate le quantità note, come ad esempio i predittori del modello lineare.
 
 ### Funzioni di probabilità
 
-L'inferenza bayesiana utilizza le seguenti distribuzioni di probabilità (o densità di probabilità): 
+Nell'aggiornamento bayesiano vengono utilizzate le seguenti distribuzioni di probabilità (o di massa di probabilità): 
 
 - la *distribuzione a priori* $p(\theta)$ --- la credenza iniziale (prima di avere osservato i dati $Y = y$) riguardo a $\theta$;
 - la *funzione di verosimiglianza* $p(y \mid \theta)$ --- quanto sono compatibili i dati osservati $Y = y$ con i diversi valori possibili di $\theta$? 
@@ -37,7 +32,7 @@ $$
 
 ### La regola di Bayes
 
-Nel contesto di un modello statistico, la formula di Bayes permette di giungere alla distribuzione a posteriori $p(\theta \mid y)$ per il parametro di interesse $\theta$, come indicato dalla seguente catena di equazioni:
+Assumendo un modello statistico, la formula di Bayes consente di giungere alla distribuzione a posteriori $p(\theta \mid y)$ per il parametro di interesse $\theta$, come indicato dalla seguente catena di equazioni:
 \begin{align}
 p(\theta \mid y)  &= \displaystyle \frac{p(\theta,y)}{p(y)}
  \ \ \ \ \ \mbox{ [definizione di probabilità condizionata]}
@@ -59,13 +54,19 @@ p(\theta \mid y)  &= \displaystyle \frac{p(\theta,y)}{p(y)}
 
 La regola di Bayes "inverte" la probabilità della distribuzione a posteriori $p(\theta \mid y)$, esprimendola nei termini della funzione di verosimiglianza $p(y \mid \theta)$ e della distribuzione a priori $p(\theta)$. L'ultimo passo è importante per la stima della distribuzione a posteriori mediante i metodi Monte Carlo a catena di Markov, in quanto per questi metodi richiedono soltanto che le funzioni di probabilità siano definite a meno di una costante di proporzionalità. In altri termini, per la maggior parte degli scopi dell'inferenza inversa, è sufficiente calcolare la densità a posteriori non normalizzata, ovvero è possibile ignorare il denominatore bayesiano $p(y)$. La distribuzione a posteriori non normalizzata, dunque, si riduce al prodotto della varosimiglianza e della distribuzione a priori.
 
-Possiamo dire che la regola di Bayes viene usata per aggiornare le credenze a priori su $\theta$ (ovvero, la distribuzione a priori) in modo tale da produrre le nuove credenze a posteriori $p(\theta \mid y)$ che combinano le informazioni fornite dai dati $y$ con le credenze precedenti. La distribuzione a posteriori riflette dunque l'aggiornamento delle credenze del ricercatore alla luce dei dati.
+Possiamo dire che la regola di Bayes viene usata per aggiornare le credenze a priori su $\theta$ (ovvero, la distribuzione a priori) in modo tale da produrre le nuove credenze a posteriori $p(\theta \mid y)$ che combinano le informazioni fornite dai dati $y$ con le credenze precedenti. La distribuzione a posteriori riflette dunque l'aggiornamento delle credenze del ricercatore alla luce dei dati. La distribuzione a posteriori $p(\theta \mid y)$ contiene tutta l'informazione riguardante il parametro $\theta$ e viene utilizzata per produrre indicatori sintetici, per la determinazione di stime puntuali o intervallari, e per la verifica d'ipotesi.
 
-La \@ref(eq:bayesmodel) rende evidente che, in ottica bayesiana, la quantità di interesse $\theta$ non è fissata come nell'impostazione frequentista, ma è una variabile casuale la cui distribuzione di probabilità è influenzata sia dalle informazioni a priori sia dai dati a disposizione. In altre parole, nell'approccio bayesiano non esiste un valore vero di $\theta$, ma vogliamo fornire invece un giudizio di probabilità. Prima delle osservazioni, sulla base delle nostre conoscenze assegniamo a $\theta$ una distribuzione a priori di probabilità. Dopo le osservazioni, correggiamo il nostro giudizio e assegniamo a $\theta$ una distribuzione a posteriori di probabilità. La distribuzione a posteriori $p(\theta \mid y)$ contiene tutta l'informazione riguardante il parametro $\theta$ e viene utilizzata per produrre indicatori sintetici, per la determinazione di stime puntuali o intervallari, e per la verifica d'ipotesi.
+::: {.important data-latex=""}
+La \@ref(eq:bayesmodel) rende evidente che, in ottica bayesiana, la quantità di interesse $\theta$ non è fissata (come nell'impostazione frequentista), ma è una variabile casuale la cui distribuzione di probabilità è influenzata sia dalle informazioni a priori sia dai dati a disposizione. In altre parole, nell'approccio bayesiano non esiste un valore vero di $\theta$, ma invece lo scopo è quello di  fornire invece un giudizio di probabilità (o di formulare una "previsione", nel linguaggio di de Finetti). Prima delle osservazioni, sulla base delle nostre conoscenze assegnamo a $\theta$ una distribuzione a priori di probabilità. Dopo le osservazioni, correggiamo il nostro giudizio e assegniamo a $\theta$ una distribuzione a posteriori di probabilità. 
+:::
 
-## Inferenza bayesiana
+## Aggiornamento bayesiano per v.c. discrete
 
-Un esempio di inferenza bayesiana è quello nel quale i dati sono rappresentati da una proporzione. Per questo tipo di dati possiamo adottare il seguente modello statistico 
+Per introdurre la procedura dell'aggiornamento bayesiano discuteremo un esempio riguardante la sfida tra Gary Kasparov e il supercomputer Deep Blue [@Johnson2022bayesrules]. Nel 1996 Kasparov giocò sei partite contro Deep Blue vincendone tre, perdendone una, con due patte, e vincendo così il match. Nel 1997 si svolse la rivincita, sempre al meglio di sei partite. Nella rivincita, Kasparov vinse una partita, perse due partite, con tre patte, perdendo dunque il match. Quello che vogliamo fare è descrivere la nostra credenza relativa all'abilità di Kasparov di battere Deep Blue, alla luce delle credenze iniziali che possiamo avere avuto e considerati i dati relativi alla sfida del 1997. 
+
+### Modello probabilistico
+
+Se i dati rappresentano una proporzione, come in precedenza, possiamo adottare un modello probabilistico binomiale: 
 \begin{equation}
 y  \sim \mbox{Bin}(n, \theta),
 (\#eq:binomialmodel)
@@ -76,22 +77,17 @@ p(y \mid \theta)
 \ = \
 \mbox{Bin}(y \mid n, \theta).
 $$
-
 Nei capitoli precedenti è stato mostrato come, sulla base del modello binomiale, sia possibile assegnare una probabilità a ciascun possibile valore $y \in \{0, 1, \dots, n\}$ _assumendo noto il valore del parametro_ $\theta$. Ma ora abbiamo il problema inverso, ovvero quello di fare inferenza su $\theta$ alla luce dei dati campionari $y$. In altre parole, riteniamo di conoscere il modello probabilistico che ha generato i dati, ma di tale modello non conosciamo i parametri. Nel caso presente, il modello probabilistico è quello binomiale. Noi vogliamo ottenere informazioni sul valore di $\theta$ conoscendo il numero $y$ di successi osservati nel campione.
 
-
-::: {.rmdnote}
-
-La \@ref(eq:binomialmodel) è un _modello statistico_. Tale modello non spiega perché, in ciascuna realizzazione, $Y$ assuma un particolare valore. Questo modello deve piuttosto essere inteso come un costrutto matematico che ha lo scopo di riflettere alcune proprietà del processo corrispondente ad una sequenza di prove Bernoulliane. In questo senso, è simile al modello di Isaac Newton dei moti planetari che utilizza equazioni differenziali. Le equazioni non sono i pianeti, ma solo descrizioni di come si muovono i pianeti in risposta alle forze gravitazionali. Modelli come quello di Newton ci permettono di prevedere alcuni fenomeni, come il moto dei pianeti, ad esempio. Ma in generale i modelli sono solo delle approssimazioni del fenomeno che vogliono descrivere.  Anche il modello di Newton, che produce previsioni estremamente accurate di ciò che possiamo osservare a occhio nudo a proposito del moto dei corpi celesti, è solo un'approssimazione dei modelli del moto e dei fenomeni gravitazionali che, in seguito, sono stati introdotti da Albert Einstein. E anche tali modelli successivi sono, a loro volta, solo un caso speciale della più generale teoria della relatività. In altre parole, modelli sempre migliori vengono proposti, laddove ogni successivo modello è migliore di quello precedente in quanto ne migliora le capacità di previsione, è più generale, o è più elegante.
+La \@ref(eq:binomialmodel) è un _modello probabilistico_. Tale modello non spiega perché, in ciascuna realizzazione, $Y$ assuma un particolare valore. Questo modello deve piuttosto essere inteso come un costrutto matematico che ha lo scopo di riflettere alcune proprietà del processo corrispondente ad una sequenza di prove Bernoulliane. In questo senso, è simile al modello di Isaac Newton dei moti planetari che utilizza equazioni differenziali. Le equazioni non sono i pianeti, ma solo descrizioni di come si muovono i pianeti in risposta alle forze gravitazionali. Modelli come quello di Newton ci permettono di prevedere alcuni fenomeni, come il moto dei pianeti, ad esempio. Ma in generale i modelli sono solo delle approssimazioni del fenomeno che vogliono descrivere.  Anche il modello di Newton, che produce previsioni estremamente accurate di ciò che possiamo osservare a occhio nudo a proposito del moto dei corpi celesti, è solo un'approssimazione dei modelli del moto e dei fenomeni gravitazionali che, in seguito, sono stati introdotti da Albert Einstein. E anche tali modelli successivi sono, a loro volta, solo un caso speciale della più generale teoria della relatività. In altre parole, modelli sempre migliori vengono proposti, laddove ogni successivo modello è migliore di quello precedente in quanto ne migliora le capacità di previsione, è più generale, o è più elegante.
 
 Una parte del lavoro della ricerca in tutte le scienze consiste nel verificare le assunzioni dei modelli e, se necessario, nel migliorare i modelli dei fenomeni considerati. Un modello viene giudicato in relazione al suo obiettivo. Se l'obiettivo del modello molto semplice che stiamo discutendo è quello di prevedere la proporzione di casi nei quali $y_i = 1$, $i = 1, \dots, n$, allora un modello con un solo parametro come quello che abbiamo introdotto sopra può essere sufficiente. Ma l'evento $y_i=1$ (supponiamo: superare l'esame di Psicometria, oppure risultare positivi al COVID-19) dipende da molti fattori e se vogliamo rendere conto di una tale complessità, un modello come quello che stiamo discutendo qui certamente non sarà sufficiente.
 
 Per concludere, un modello è un costrutto matematico il cui scopo è quello di rappresentare un qualche aspetto della realtà. Il valore di un tale strumento dipende dalla sua capacità di ottenere lo scopo per cui è stato costruito.
-:::
 
-### Notazione
+#### Notazione
 
-Per rappresentare in un modo conciso i modelli statistici viene usata una notazione particolare. Ad esempio, invece di scrivere
+Per rappresentare in un modo conciso i modelli probabilistici viene usata una notazione particolare. Ad esempio, invece di scrivere
 $$
 p(\theta) = \text{Beta}(1, 1),
 $$
@@ -104,9 +100,16 @@ $$
 y \sim \text{Bin}(n, \theta).
 $$
 
+#### Significato dei parametri del modello
+
+Il parametro di un modello è un valore che influenza la credibilità dei dati. Ad esempio, il singolo parametro $\theta$ del modello binomiale determina la forma della funzione di verosimiglianza binomiale. Ricordiamo che, per il modello binomiale, la funzione di verosimiglianza è:
+$$
+p(y \mid \theta, n) = \text{Bin}(y, n, \theta) = \binom{n}{y}\theta^y(1-\theta)^{n-y}.
+$$
+
 ### Il problema inverso
 
-Nel modello statistico che stiamo esaminando, il termine $n$ viene trattato come una costante nota e $\theta$ come una *variabile casuale*. Il parametro $\theta$ del modello rappresenta la probabilità che ciascuna prova Bernoulliana sia un "successo". Dato che $\theta$ è incognito, ma abbiamo a disposione un campione di dati, l'inferenza su $\theta$ può essere svolta, mediante la regola di Bayes, costruendo la distribuzione a posteriori $p(\theta \mid y)$. Una volta ottenuta la distribuzione a posteriori possiamo riassumerla, ad esempio, riportando l'intervallo centrale al 95% della distribuzione di densità, ovvero
+Nel modello probabilistico che stiamo esaminando, il termine $n$ viene trattato come una costante nota e $\theta$ come una *variabile casuale*. Il parametro $\theta$ del modello rappresenta la probabilità che ciascuna prova Bernoulliana sia un "successo". Dato che $\theta$ è incognito, ma abbiamo a disposione un campione di dati, l'inferenza su $\theta$ può essere svolta, mediante la regola di Bayes, costruendo la distribuzione a posteriori $p(\theta \mid y)$. Una volta ottenuta la distribuzione a posteriori possiamo riassumerla, ad esempio, riportando l'intervallo centrale al 95% della distribuzione di densità, ovvero
 $$
 \mbox{Pr}\left[ 0.025 \leq \theta \leq 0.975
                 \ \Big| \
@@ -121,33 +124,120 @@ $$
          \right].
 $$
 
-### Cos'è un parametro del modello?
 
-Il parametro di un modello è un valore che influenza la credibilità dei dati. Ad esempio, il singolo parametro $\theta$ del modello binomiale determina la forma della funzione di verosimiglianza binomiale. Ricordiamo che, per il modello binomiale, la funzione di verosimiglianza è:
+### Distribuzione a priori
+
+Per scopi didattici, @Johnson2022bayesrules ipotizzano che le credenze a priori relative a $\pi$ (la probabilità Kasparov che batta Deep Blue) siano le seguenti: 
+
+| $\theta$  |  0.2 |  0.5 |  0.8 | Totale |
+|:---------:|:----:|:----:|:----:|:------:|
+|$P(\theta)$| 0.10 | 0.65 | 0.15 |  1.0   |
+
+Anche se $\theta \in [0, 1]$ è una variabile continua, per semplificare la discussione, @Johnson2022bayesrules considerano solo tre possibili valori di $\theta \in \{0.2, 0.5, 0.8\}$ e assegnano a tali valori possibili le probabilità indicate sopra. Questa tabella descrive le credenze iniziali relative alla capacità di Kasparov di battere Deep Blue; indica che le credenze iniziali pongono la massa maggiore della nostra credenza sull'evento $\theta = 0.5$ --- in altre parole, più che ogni altra possibilità, a priori crediamo che Kasparov abbia solo il 50% di possibilità di battere Deep Blue.
+
+## Verosimiglianza
+
+La sfida del 1997 ci fornisce i dati: una vittoria su sei partite; considerate le due vittorie di Deep Blue e le tre patte, Kasparov perse dunque il match. Per formulare la funzione di verosimiglianza dobbiamo utilizzare un modello statistico che descriva il "processo generatore" dei dati che abbiamo osservato. Semolifichiamo la situazione descrivendo i dati nei termini di un successo su sei prove. Ipotizziamo inoltre che le sei partite siano indipendenti le une dalle altre e che la probabilità di vittoria di Kasparov rimanga costante nelle sei partite. Descritta la situazione in questi termini, possiamo individuare nel modello binomiale il processo statistico che potrebbe avere generato i dati che abbiamo osservato. Questo modello probabilistico è formulato nei termini di un parametro: $\theta$, ovvero la probabilità di vittoria (di Kasparov). Nel Paragrafo precedente abbiamo descritto la distribuzione di probabilità a priori del parametro $\theta$. Poniamoci ora il problema di descrivere la verosimiglianza dei valori $\theta$ alla luce dei dati osservati (ovvero, solo una vittoria su sei partite). 
+
+Nel caso di una v.c. discreta, la verosimiglianza si ottiene utilizzando la distribuzione di massa di probabilità espressa in funzione dei parametri, quando i dati vengono tenuti costanti. Nel caso presente, la funzione di massa di probabilità è quella binomiale, ovvero
 $$
-p(y \mid \theta, n) = \text{Bin}(y, n, \theta) = \binom{n}{y}\theta^y(1-\theta)^{n-y}.
+p(y \mid \theta) = \binom{n}{y} \cdot \theta^y (1-\theta)^{N-y}
 $$
+e i dati sono $y = 1$ vittoria su $n = 6$ partite. 
 
-<!-- Per comprendere il ruolo del parametro $\theta$, possiamo generare un grafico della verosimiglianza dei dati come funzione di $\theta$. Poniamo $y = 23$ e $n = 30$. La figura mostra, per ogni possibile valore di $\theta \in [0, 1]$ (sull'asse orizzontale), la verosimiglianza dei dati (sull'asse verticale). Dalla figura notiamo che la credibilità dei dati dipende dal valore del parametro $\theta$: i dati risultano più o meno verosimili a seconda del valore di $\theta$. -->
+In questo esercizio, $\theta$ assume solo tre valori: $\theta_1 = 0.2$, $\theta_2 = 0.5$ e $\theta_3 = 0.8$. Svolgiamo ora i calcoli. Quando $\theta = 0.2$ otteniamo
+$$
+ p(y \mid \theta_1) = \binom{6}{1} \cdot 0.2^1 (1-0.2)^{6-1} = 0.39322,
+$$
+con $\theta = 0.5$ otteniamo
+$$
+ p(y \mid \theta_2) = \binom{6}{1} \cdot 0.5^1 (1-0.5)^{6-1} = 0.09375,
+$$
+con $\theta = 0.8$ otteniamo
+$$
+ p(y \mid \theta_3) = \binom{6}{1} \cdot 0.8^1 (1-0.8)^{6-1} = 0.00154.
+$$
+Lo stesso risultato si ottiene nel modo seguente usando $\textsf{R}$:
 
-<!-- ```{r ch-03-02-LH-Binomial-Model, fig.cap= "Funzione di verosimiglianza per il modello binomiale con $y = 23$ e $n = 30$.", echo = FALSE} -->
-<!-- y <- 23 -->
-<!-- n <- 30 -->
-<!-- tibble( -->
-<!--   theta = seq(0, 1, length.out = 4001), -->
-<!--   L = dbinom(x = y, size = n, prob = theta) -->
-<!-- ) %>% -->
-<!--   ggplot(aes(x = theta, y = L)) + -->
-<!--   geom_line() + -->
-<!--   labs( -->
-<!--     x = latex2exp::TeX("Probabilità di $Y=1$, ovvero $\\theta$"), -->
-<!--     y = latex2exp::TeX("Verosimiglianza, $ Bin(k=23, N=30, \\theta)$") -->
-<!--   ) -->
-<!-- ``` -->
+
+```r
+theta <- c(0.2, 0.5, 0.8)
+dbinom(1, 6, theta)
+#> [1] 0.39322 0.09375 0.00154
+```
+
+I tre valori che abbiamo trovato costisuiscono (in questo esempio semplificato) la funzione di verosimiglianza di $\theta$ alla luce dei dati. La funzione di verosimiglianza ci dice quanto risultano compatibili i dati ($y = 1$, $n = 6$) con i possibili valori del parametro $\theta$, considerato il modello probabilistico binomiale.
+
+| $\theta$             |  0.2    |  0.5    |  0.8    | 
+|:--------------------:|:-------:|:-------:|:-------:|
+|$p(y = 1 \mid \theta)$| 0.39322 | 0.09375 | 0.00154 | 
+
+Nel caso presente, i dati (ovvero, una vittoria su sei partite) risultano maggiormente compatibili con il valore $\theta = 0.2$ (Kasparov è molto meno forte di Deep Blue): la verosimiglianza di $\theta = 0.2$ è 0.39. All'altro estremo, i dati risultano poco compatibili con il valore $\theta = 0.8$ (Kasparov è molto più forte di Deep Blue): la verosimiglianza di $\theta = 0.8$ è 0.0015.  
+
+### La costante di normalizzazione
+
+Per calcolare la distribuzione a posteriori del parametro $\theta$ il prodotto tra la distribuzione a priori e la verosimiglianza va diviso per una costante di normalizzazione. La costante di normalizzazione  (o verosimiglianza marginale) ha lo scopo di fare in modo che la distribuzione a posteriori di $\theta$ (quando tale v.c. è discreta) sommi ad 1.0. La _verosimiglianza marginale_ $p(y = 1, n = 6)$ si ottiene marginalizzando la funzione di verosimiglianza
+$$
+p(y = 1, n = 6 \mid \theta) = \binom{6}{1} \theta^{1} (1-\theta)^{5}.
+$$
+sopra $\theta$: per ogni possibile valore $\theta$, si moltiplica il valore della verosimiglianza in corrisopndenza di $\theta$ per la sua probabilità a priori di  $\theta$; si sommano poi tutti i prodotti ottenuti in questo modo.
+
+Nell'esempio precedente abbiamo considerato solo tre possibili valori $\theta$:  $\theta_1 = 0.2$, $\theta_2 = 0.5$ e $\theta_3 = 0.8$. A tali valori $\theta$ sono state assegnate le probabilità a priori $p(\theta_1) = 0.10$, $p(\theta_2) = 0.65$ e $p(\theta_3) = 0.15$. Date queste informazioni possiamo calcolare la verosimiglianza marginale come segue:
+\begin{align}
+p(y = 1, n = 6) &= \binom{6}{1} \theta_1^{1} (1-\theta_1)^{5} \cdot p(\theta_1) \notag\\
+&= \binom{6}{1} \theta_2^{1} (1-\theta_2)^{5} \cdot p(\theta_2) \notag\\
+&= \binom{6}{1} \theta_3^{1} (1-\theta_3)^{5} \cdot p(\theta_3) \notag,
+\end{align}
+\noindent
+ovvero
+\begin{align}
+p(y = 1, n = 6) &= \binom{6}{1} 0.2^{1} (1-0.2)^{5} \cdot 0.10 \notag\\
+&+ \binom{6}{1} 0.5^{1} (1-0.5)^{5} \cdot 0.65 \notag\\
+&+ \binom{6}{1} 0.8^{1} (1-0.8)^{5} \cdot 0.15 \notag\\
+&\approx 0.0638.
+\end{align}
+È dunque possibile considerare la verosimiglianza marginale come una sorta di media ponderata della verosimiglianza, nella quale i "pesi" dipendono dalla credibilità dei valori del parametro.
+
+Svolgendo i calcoli con $\mathsf{R}$ otteniamo
+
+
+```r
+prior <- c(0.10, 0.25, 0.65)
+sum(dbinom(1, 6, theta) * prior)
+#> [1] 0.0638
+```
+
+Quello che stiamo discutendo è però un esempio artificiale perché al parametro $\theta$ sono stati attribuiti solo tre valori possibili. In realtà, $\theta$ è una variabile casuale continua. Vedremo in seguito come si affronta questo problema.
+
+### Distribuzione a posteriori
+
+La distribuzione a postreriori si trova applicando il teorema di Bayes:
+$$
+\text{probabilità a posteriori} = \frac{\text{probabilità a priori} \cdot \text{verosimiglianza}}{\text{costante di normalizzazione}}
+$$
+\noindent
+Nel caso presente abbiamo
+$$
+p(\theta \mid y = 1) = \frac{p(y = 1 \mid \theta) p(\theta)}{p(y = 1)}, \quad \theta \in \{0.2, 0.5, 0.8\}.
+$$
+\noindent
+Svolgendo i calcoli in $\textsf{R}$ otteniamo
+
+
+```r
+(dbinom(1, 6, theta) * prior) / sum(dbinom(1, 6, theta) * prior) 
+#> [1] 0.6167 0.3676 0.0157
+```
+
+In conclusione, dopo avere osservato i dati corrispondenti ad una sola vittoria di Kasparov sul sei partite, la _previsione_ (per usare il linguaggio di de Finetti) che Kasparov sia il giocatore dominante ($\theta$ = 0.8) scende da 0.65 (a priori) a 0.0157 (a posteriori). Nella distribuzione a posteriori, invece, lo scenario che riceve il supporto maggiore è quello che descrive Kasparov come il giocatore più debole ($\theta$ = 0.2) -- la previsione dell'evento $\theta$ = 0.2 è 0.6167.
+
+## Aggiornamento bayesiano per v.c. continue
+
+Riprendiamo ora gli stessi concetti descritti nell'esempio precedente formulandoli in un modo più generale. Descriveremo inoltre l'aggiornamento bayesiano facendo riferimento alle variabili casuali continue. 
 
 ### La distribuzione a priori sui parametri
 
-Quando adottiamo un approccio bayesiano, i parametri non più delle costanti incognite ma delle variabili casuali governate da una propria legge di distribuzione delle probabilità (probabilità a priori). La distribuzione a priori sui valori dei parametri $p(\theta)$ è parte integrante del modello statistico. Ciò implica che due modelli bayesiani possono condividere la stessa funzione di verosimiglianza, ma tuttavia devono essere considerati come modelli diversi se specificano diverse distribuzioni a priori. Ciò significa che, quando diciamo "Modello binomiale", intendiamo in realtà un'intera classe di modelli, ovvero tutti i possibili modelli che hanno la stessa verosimiglianza ma diverse distribuzioni a priori su $\theta$.
+Quando adottiamo un approccio bayesiano, i parametri non sono delle costanti incognite ma delle variabili casuali governate da una propria legge di distribuzione delle probabilità (probabilità a priori). La distribuzione a priori sui valori dei parametri $p(\theta)$ è parte integrante del modello statistico. Ciò implica che due modelli bayesiani possono condividere la stessa funzione di verosimiglianza, ma tuttavia devono essere considerati come modelli diversi se specificano diverse distribuzioni a priori. Ciò significa che, quando diciamo "Modello binomiale", intendiamo in realtà un'intera classe di modelli, ovvero tutti i possibili modelli che hanno la stessa verosimiglianza ma diverse distribuzioni a priori su $\theta$.
 
 Nell'analisi dei dati bayesiana, la distribuzione a priori $p(\theta)$ codifica le credenze del ricercatore a proposito dei valori dei parametri, prima di avere osservato i dati. Idealmente, le credenze a priori che supportano la specificazione di una distribuzione a priori dovrebbero essere supportate da una qualche motivazione, come ad esempio i risultati di ricerche precedenti, o altre motivazioni giustificabili. 
 
@@ -155,14 +245,6 @@ Nell'analisi dei dati bayesiana, la distribuzione a priori $p(\theta)$ codifica 
 - Tuttavia, quando una nuova osservazione (p. es., vedo un cigno nero) non corrisponde alle mie convinzioni precedenti, ciò contribuisca a diminuire la certezza delle mie convinzioni precedenti: più nuove osservazioni non corrispondenti raccolgo (p. es., più cigni neri vedo ), più deboli diventano le mie convinzioni precedenti. Fondamentalmente, più forti sono le mie credenze precedenti, più osservazioni non corrispondenti (ad esempio, cigni neri) devo raccogliere per cambiarle.
 
 Pertanto, da una prospettiva bayesiana, l'incertezza intorno ai parametri di un modello *dopo* aver visto i dati (ovvero le distribuzioni a posteriori) deve includere anche le credenze precedenti. Se questo modo di ragionare sembra molto intuitivo, non è una coincidenza: vi sono infatti diverse teorie psicologiche che prendono l'aggiornamento bayesiano come modello di funzionamento di diversi processi cognitivi.
-
-
-<!-- Tuttavia, le credenze soggettive sono solo uno dei possibili modi per giustificare le distribuzioni a priori sui parametri. -->
-
-<!-- Possiamo distinguere tre tipi principali di motivazioni per le distribuzioni a priori $p(\theta)$. -->
-
-<!-- 1. Le *distribuzioni a priori soggettive* catturano le credenze del ricercatore nel senso sopra descritto. -->
-<!-- 2. Le *distribuzioni a priori con finalità pratiche* sono distribuzioni a priori che vengono utilizzate pragmaticamente a causa di una loro utilità specifica, ad esempio, perché semplificano un calcolo matematico o una simulazione al computer, o perché aiutano nel ragionamento statistico, come ad esempio quando vengono formulate gli *skeptical priors* che hanno l'obiettivo di lavorare in senso contrario ad una particolare conclusione. -->
 
 Oltre alla motivazione che giustifica una distribuzione a priori, possiamo distinguere tra diverse distribuzioni a priori in base a quanto fortemente impegnano il ricercatore a ritenere come plausibile un particolare intervallo di valori dei parametri. Il caso più estremo è quello che rivela una totale assenza di conoscenze a priori, il che conduce alle *distribuzioni a priori non informative*, ovvero quelle che assegnano lo stesso livello di credibilità a tutti i valori dei parametri. Le distribuzioni a priori informative, d'altra parte, possono essere *debolmente informative* o *fortemente informative*, a seconda della forza della credenza che esprimono. Il caso più estremo di credenza a priori è quello che riassume il punto di vista del ricercatore nei termini di un  *unico valore* del parametro, il che assegna tutta la probabilità (massa o densità) su di un singolo valore di un parametro. Poiché questa non è più una distribuzione di probabilità, sebbene ne soddisfi la definizione, in questo caso si parla di una *distribuzione a priori degenerata*.
 
@@ -182,77 +264,49 @@ La figura seguente mostra esempi di distribuzioni a priori non informative, debo
 \caption{Esempi di distribuzioni a priori per il parametro $\theta_c$ nel Modello Binomiale.}(\#fig:ch-03-02-models-types-of-priors)
 \end{figure}
 
-### Scelta della distribuzione a priori
-
+::: {.important data-latex=""}
 La selezione delle distribuzioni a priori è stata spesso vista come una delle scelte più importanti che un ricercatore fa quando implementa un modello bayesiano in quanto può avere un impatto sostanziale sui risultati finali.  La soggettività delle distribuzioni a priori è evidenziata dai critici come un potenziale svantaggio dei metodi bayesiani. A questa critica, @vandeSchoot2021modelling rispondono dicendo che, al di là della scelta delle distribuzioni a priori, ci sono molti elementi del processo di inferenza statistica che sono soggettivi, ovvero la scelta del modello statistico e le ipotesi sulla distribuzione degli errori. In secondo luogo, @vandeSchoot2021modelling notano come le distribuzioni a priori svolgono due importanti ruoli statistici: quello della "regolarizzazione della stima", ovvero, il processo che porta ad indebolire l'influenza indebita di osservazioni estreme, e quello del miglioramento dell'efficienza della stima, ovvero, la facilitazione dei processi di calcolo numerico di stima della distribuzione a posteriori. L'effetto della distribuzione a priori sulla distribuzione a posteriori verrà discusso nel Capitolo \@ref(chapter-balance).
+:::
 
-## Verosimiglianza marginale {#verosim-marginale}
+### Verosimiglianza marginale {#verosim-marginale}
 
-Al denominatore della regola di Bayes abbiamo la verosimiglianza marginale $p(y)$. Tale denominatore è espresso nei termini di un integrale che, tranne in pochi casi particolari, non ha una soluzione analitica. Per questa ragione, l'inferenza bayesiana procede calcolando una approssimazione della distribuzione a posteriori mediante metodi numerici. Obiettivo di questo Paragrafo è chiarire il concetto di verosimiglianza marginale mediante un esempio molto artificiale che fa uso della distribuzione binomiale.
+Al denominatore della regola di Bayes abbiamo la verosimiglianza marginale $p(y)$. Tale denominatore è espresso nei termini di un integrale che, tranne in pochi casi particolari, non ha una soluzione analitica. Per questa ragione, l'inferenza bayesiana procede calcolando una approssimazione della distribuzione a posteriori mediante metodi numerici. 
 
-Sia $Y$ una variabile casuale binomiale con funzione di massa di probabilità $p(Y)$:
+L'esempio presentato sopra era artificiale perché al parametro $\theta$ sono stati attribuiti solo tre possibili valori. In  realtà, $\theta$ può assumere tutti i possibili valori compresi nell'intervallo [0, 1] e dunque la somma che dobbiamo calcolare avrà infiniti addendi. Dal punto di vista matematico, una tale somma corrisponde all'integrale:
 $$
-p(y, n \mid \theta) = \binom{n}{y} \theta^{y} (1-\theta)^{n-y}.
-$$
-Supponiamo che $\theta$ possa assumere solo i valori 0.1, 0.5, 0.9, ciascuno con eguale probabilità. In altre parole, la probabilità che $\theta$ sia 0.1, 0.5, o 0.9 è sempre 1/3.
-
-Ponendo $n = 30$ e $y = 23$, ad esempio, la funzione di verosimiglianza diventa:
-$$
-p(y = 23, n = 30 \mid \theta) = \binom{30}{23} \theta^{23} (1-\theta)^{7}.
-$$
-La _verosimiglianza marginale_ $p(y = 23, n = 30)$ si ottiene marginalizzando la funzione precedente sopra $\theta$: per ogni possibile valore del parametro $\theta$, calcoliamo il valore della verosimiglianza e lo moltiplichiamo per la probabilità di quel possibile valore $\theta$; sommiamo poi tutti i prodotti che abbiamo ottenuto in questo modo. Matematicamente, ciò significa eseguire l'operazione descritta di seguito.
-
-Nell'esempio abbiamo tre possibili valori $\theta$ che chiameremo $\theta_1 = 0.1$, $\theta_2 = 0.5$ e $\theta_3 = 0.9$. Ciascuno ha probabilità 1/3, quindi $p(\theta_1) = p(\theta_2) = p(\theta_3) = 1/3$. Date queste informazioni possiamo calcolare la verosimiglianza marginale come segue:
-\begin{align}
-p(y = 23, n = 30) &= \binom{30}{23} \theta_1^{23} (1-\theta_1)^{7} \cdot p(\theta_1) \notag\\
-&+ \binom{30}{23} \theta_2^{23} (1-\theta_2)^{7} \cdot p(\theta_2) \notag\\
-&+ \binom{30}{23} \theta_3^{23} (1-\theta_3)^{7} \cdot p(\theta_3) \notag,
-\end{align}
-\noindent
-ovvero
-\begin{align}
-p(y = 23, n = 30) &= \binom{30}{23} 0.1^{23} (1-0.1)^{7} \cdot \frac{1}{3} \notag\\
-&+ \binom{30}{23} 0.5^{23} (1-0.5)^{7} \cdot \frac{1}{3} \notag\\
-&+ \binom{30}{23} 0.9^{23} (1-0.9)^{7} \cdot \frac{1}{3} \notag.
-\end{align}
-È dunque possibile considerare la verosimiglianza marginale come una sorta di media ponderata della verosimiglianza, nella quale i "pesi" dipendono dalla credibilità dei valori del parametro.
-
-L'esempio presentato sopra è artificiale perché al parametro $\theta$ sono stati attribuiti solo tre possibili valori. In  realtà, $\theta$ può assumere tutti i possibili valori compresi nell'intervallo [0, 1] e dunque la somma che dobbiamo calcolare avrà infiniti addendi. Dal punto di vista matematico, una tale somma corrisponde all'integrale:
-$$
-p(y = 23, n = 30) = \int_0^1 \binom{30}{23} \theta^{23} (1-\theta)^{7} d\theta.
+p(y = 1, n = 6) = \int_0^1 \binom{6}{1} \theta^{1} (1-\theta)^{5} d\theta.
 $$
 \noindent
 L'integrale precedente descrive esattamente le stesse operazioni che abbiamo discusso nell'esempio "artificiale" in cui $\theta$ poteva assumere solo tre valori, eccetto che ora dobbiamo eseguire la somma dei prodotti calcolati su tutti gli infiniti valori $\theta$. Questo integrale corrisponde alla marginalizzazione del parametro $\theta$. Non è tuttavia necessario eseguire una tale operazione di maginalizzazione in forma analitica in quanto il precedente integrale può essere calcolato con \R:
 
 ```r
 BinLik <- function(theta) {
-  choose(30, 23) * theta^23 * (1 - theta)^7
+  choose(6, 1) * theta^1 * (1 - theta)^5
 }
 integrate(BinLik, lower = 0, upper = 1)$value
-#> [1] 0.03225806
+#> [1] 0.143
 ```
 
-
-### Soluzione analitica
+#### Soluzione analitica
 
 Qui di seguito è riportata la derivazione analitica. Sia $\theta \sim \Beta(a, b)$ e sia $y = \{y_1, \dots, y_n\} \sim \Bin(\theta, n)$. Ponendo
 $$
-B(a, b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)},
+\Beta(a, b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)},
 $$
 \noindent
 la verosimiglianza marginale diventa
 \begin{align}
 p(y) &= \binom{n}{y} \int p(y \mid \theta) p(\theta) d\theta \notag\\
-&= \binom{n}{y}\int_0^1 \theta^{y} (1 - \theta)^{n- y} \frac{1}{B(a,b)} \theta^{a-1} (1-\theta)^{b-1} d \theta \notag\\
-&= \binom{n}{y}\frac{1}{B(a,b)} \int_0^1 \theta^{y + a - 1} (1-\theta)^{n- y + b-1} \notag\\
-&= \binom{n}{y}\frac{B(y + a, n- y + b)}{B(a,b)},
+&= \binom{n}{y}\int_0^1 \theta^{y} (1 - \theta)^{n- y} \frac{1}{\Beta(a,b)} \theta^{a-1} (1-\theta)^{b-1} d \theta \notag\\
+&= \binom{n}{y}\frac{1}{\Beta(a,b)} \int_0^1 \theta^{y + a - 1} (1-\theta)^{n- y + b-1} \notag\\
+&= \binom{n}{y}\frac{\Beta(y + a, n- y + b)}{\Beta(a,b)},
 \end{align}
 \noindent
 in quanto
 \begin{align}
-\int_0^1 \frac{1}{B(a,b)} \theta^{a-1} (1-\theta)^{b-1} d \theta &= 1\notag\\
-\frac{1}{B(a,b)} \int_0^1  \theta^{a-1} (1-\theta)^{b-1} d \theta &= 1\notag\\
-\int_0^1  \theta^{a-1} (1-\theta)^{b-1} d \theta &= B(a,b). \notag
+\int_0^1 \frac{1}{\Beta(a,b)} \theta^{a-1} (1-\theta)^{b-1} d \theta &= 1\notag\\
+\frac{1}{\Beta(a,b)} \int_0^1  \theta^{a-1} (1-\theta)^{b-1} d \theta &= 1\notag\\
+\int_0^1  \theta^{a-1} (1-\theta)^{b-1} d \theta &= \Beta(a,b). \notag
 \end{align}
 \noindent
 Continuiamo con l'esempio precedente. Per replicare il risultato trovato per via numerica con \R, assumiamo una distribuzione a priori uniforme, ovvero $\Beta(1, 1)$. I valori del problema sono i seguenti:
@@ -261,8 +315,8 @@ Continuiamo con l'esempio precedente. Per replicare il risultato trovato per via
 ```r
 a <- 1
 b <- 1
-y <- 23
-n <- 30
+y <- 1
+n <- 6
 ```
 
 \noindent
@@ -288,13 +342,13 @@ Il risultato cercato si ottiene con
 
 
 ```r
-choose(30, 23) * B(alpha, beta) / B(a, b)
-#> [1] 0.03225806
+choose(6, 1) * B(alpha, beta) / B(a, b)
+#> [1] 0.143
 ```
 
-In conclusione, nel caso di una verosimiglianza binomiale $y = \sim \Bin(\theta, n)$ e di una distribuzione a priori  $\theta \sim \Beta(a, b)$, la verosimiglianza marginale diventa
+In conclusione, nel caso di una verosimiglianza binomiale $y = \sim \Bin(\theta, n)$ e di una distribuzione a priori $\theta \sim \Beta(a, b)$, la verosimiglianza marginale diventa
 \begin{equation}
-\binom{n}{y}\frac{B(y + a, n - y + b)}{B(a, b)}.
+\binom{n}{y}\frac{\Beta(y + a, n - y + b)}{\Beta(a, b)}.
 (\#eq:constant-norm-beta-binom)
 \end{equation}
 
