@@ -95,9 +95,9 @@ In termini epistemici, la probabilità fornisce una misura della nostra incertez
 
 - Nell'interpretazione frequentista della probabilità, la probabilità $P(A)$ rappresenta la frequenza relativa a lungo termine nel caso di un grande numero di ripetizioni di un esperimento casuale sotto le medesime condizioni. L'evento $A$ deve essere una proposizione relativa alle variabili casuali^[Viene stressata qui l'idea che ciò di cui parliamo è qualcosa che emerge nel momento in cui è possibile ripetere l'esperimento casuale tante volte sotto le medesime condizioni. Le variabili casuali, infatti, forniscono una quantificazione dei risultati che si ottengono ripetendo tante volte l'esperimento casuale sotto le medesime condizioni.].
 
-- Nell'interpretazione bayesiana della probabilità $P(A)$ rappresenta direttamente il grado di credenza, o plausibilità, a proposito di $A$, dove $A$ può essere qualsiasi proposizione logica.
+- Nell'interpretazione bayesiana della probabilità $P(A)$ rappresenta il grado di credenza, o plausibilità, a proposito di $A$, dove $A$ può essere qualsiasi proposizione logica.
 
-In questo insegnamento utilizzeremo l'interpretazione bayesiana della probabilità. Possiamo citare De Finetti, ad esempio, il quale ha formulato la seguente definizione "soggettiva" di probabilità.
+In questo insegnamento utilizzeremo l'interpretazione bayesiana della probabilità. Possiamo citare De Finetti, ad esempio, il quale ha formulato la seguente definizione "soggettiva" di probabilità la quale risulta applicabile anche ad esperimenti casuali i cui eventi elementari non siano ritenuti ugualmente possibili e che non siano necessariamente ripetibili più volte sotto le stesse condizioni:
 
 ```{definition, def-prob-sogg}
 La probabilità di un evento $E$ è la quota $p(E)$ che un individuo reputa di dover pagare ad un banco per ricevere "1" ovvero "0" verificandosi o non verificandosi $E$. Le valutazioni di probabilità degli eventi devono rispondere ai pricipi di equità e coerenza.
