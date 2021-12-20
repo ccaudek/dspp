@@ -817,7 +817,7 @@ Febbraio 2022
 \chapter{Il problema inverso}\label{chapter-intro-bayes-inference}}
 
 \begin{chapterintro}
-Pensare in termini bayesiani significa aggiornare le nostre credenze combinando le credenze iniziali con le informazioni fornite dai dati, così da ottenere una credenza ``a posteriori''. L'aggiornamento bayesiano richiede che le credenze siano descritte nei termini di un modello probabilistico formulato nei termini di uno o più parametri. La nostra incertezza riguarda il valore dei parametri. L'aggiornamento bayesiano ha lo scopo di ottenere le migliori stime possibili dei parametri, considerando le informazioni fornite dalle nostre credenze a priori e dai dati osservati. In questo capitolo verrà descritto il significato di tutti e tre i termini a destra del segno di uguale nella formula di Bayes: la distribuzione a priori e la funzione di verosimiglianza al denominatore, la verosimiglianza marginale al denominatore.
+Pensare in termini bayesiani significa aggiornare le nostre credenze combinando le credenze iniziali con le informazioni fornite dai dati, così da ottenere una credenza ``a posteriori''. L'aggiornamento bayesiano richiede che le credenze siano descritte nei termini di un modello probabilistico formulato nei termini di uno o più parametri. La nostra incertezza riguarda il valore dei parametri. L'aggiornamento bayesiano ha lo scopo di ottenere le migliori stime possibili dei parametri, considerando le informazioni fornite dalle nostre credenze a priori e dai dati osservati. In questo capitolo verrà descritto il significato di tutti e tre i termini a destra del segno di uguale nella formula di Bayes: la distribuzione a priori e la funzione di verosimiglianza al numeratore, la verosimiglianza marginale al denominatore.
 
 \end{chapterintro}
 
@@ -1086,10 +1086,10 @@ e così via. La figura \ref{fig:likefutexpect} --- costruita utilizzando 100 val
 \caption{Funzione di verosimiglianza nel caso di 23 successi in 30 prove.}\label{fig:likefutexpect}
 \end{figure}
 
-Come possiamo interpretare la curva che abbiamo ottenuto? Per alcuni valori \(\theta\) la funzione di verosimiglianza assume valori piccoli; per altri valori \(\theta\) la funzione di verosimiglianza assume valori più grandi. Questi ultimi sono i valori di \(\theta\) ``più credibili'' e il valore 23/30 è il valore più credibile di tutti. La funzione di verosimiglianza di \(\theta\) valuta la compatibilità dei dati osservati \(Y = y\) con i diversi possibili valori \(\theta\). In termini più formali possiamo dire che la funzione di verosimiglianza ha la seguente interpretazione: sulla base dei dati, \(\theta_1 \in \Theta\) è più credibile di \(\theta_2 \in \Theta\) come indice del modello probabilistico generatore delle osservazioni se \(\mathcal{L}(\theta_1) > \mathcal{L}(\theta_1)\).
+Come possiamo interpretare la curva che abbiamo ottenuto? Per alcuni valori \(\theta\) la funzione di verosimiglianza assume valori piccoli; per altri valori \(\theta\) la funzione di verosimiglianza assume valori più grandi. Questi ultimi sono i valori di \(\theta\) ``più credibili'' e il valore 23/30 è il valore più credibile di tutti. La funzione di verosimiglianza di \(\theta\) valuta la compatibilità dei dati osservati \(Y = y\) con i diversi possibili valori \(\theta\). In termini più formali possiamo dire che la funzione di verosimiglianza ha la seguente interpretazione: sulla base dei dati, \(\theta_1 \in \Theta\) è più credibile di \(\theta_2 \in \Theta\) come indice del modello probabilistico generatore delle osservazioni se \(\mathcal{L}(\theta_1) > \mathcal{L}(\theta_1)\). Alcune considerazioni sulla stima di massima verosimiglianza sono fornite nell'Appendice \ref{appendix:max-like}.
 
-\hypertarget{la-verosimiglianza-marginale}{%
-\section{La verosimiglianza marginale}\label{la-verosimiglianza-marginale}}
+\hypertarget{sec:const-normaliz-bino23}{%
+\section{La verosimiglianza marginale}\label{sec:const-normaliz-bino23}}
 
 Per il calcolo di \(p(\theta \mid y)\) è necessario dividere il prodotto tra la distribuzione a priori e la verosimiglianza per una costante di normalizzazione. Tale costante di normalizzazione, detta \emph{verosimiglianza marginale}, ha lo scopo di fare in modo che \(p(\theta \mid y)\) abbia area unitaria.
 
@@ -1100,9 +1100,10 @@ Si trovi la verosimiglianza maginale per i dati di \textcite{zetschefuture2019}.
 
 \end{guidedpractice}
 
-Nel caso presente, la costante di normalizzazione si ottiene marginalizzando la funzione di verosimiglianza \(p(y = 23, n = 30 \mid \theta)\) sopra \(\theta\), ovvero risolvendo l'integrale:
+Supponiamo che nel numeratore bayesiano la verosimiglianza sia moltiplicata per una distribuzione uniforme, Beta(1, 1). In questo caso, il prodotto si riduce alla funzione di verosimiglianza. In riferimento ai dati di \textcite{zetschefuture2019}, la costante di normalizzazione per si ottiene semplicemente marginalizzando la funzione di verosimiglianza \(p(y = 23, n = 30 \mid \theta)\) sopra \(\theta\), ovvero risolvendo l'integrale:
 \begin{equation}
 p(y = 23, n = 30) = \int_0^1 \binom{30}{23} \theta^{23} (1-\theta)^{7} \,\operatorname {d}\!\theta.
+\label{eq:intlikebino23}
 \end{equation}
 \noindent
 Una soluzione numerica si trova facilmente usando \(\R\):
@@ -1117,10 +1118,307 @@ Una soluzione numerica si trova facilmente usando \(\R\):
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{derivazione-analitica}{%
-\subsubsection{Derivazione analitica}\label{derivazione-analitica}}
+\noindent
+La derivazione analitica della costante di normalizzazione qui discussa è fornita nell'Appendice \ref{appendix:const-norm-bino23}.
 
-Riportiamo di seguito la derivazione analitica dell'integrale precedente. Sia la distribuzione a priori \(\theta \sim \Beta(a, b)\) e sia \(y = \{y_1, \dots, y_n\} \sim \Bin(\theta, n)\). Scrivendo la \emph{funzione beta} come
+\hypertarget{distribuzione-a-posteriori}{%
+\section{Distribuzione a posteriori}\label{distribuzione-a-posteriori}}
+
+La distribuzione a postreriori si trova applicando il teorema di Bayes:
+\[
+\text{probabilità a posteriori} = \frac{\text{probabilità a priori} \cdot \text{verosimiglianza}}{\text{costante di normalizzazione}}
+\]
+
+Ci sono due metodi principali per calcolare la distribuzione a posteriori \(p(\theta \mid y)\):
+
+\begin{itemize}
+\tightlist
+\item
+  una precisa derivazione matematica formulata nei termini della distribuzione a priori coniugata alla distribuzione a posteriori (si veda il Capitolo \ref{chapter-distr-coniugate}); tale procedura però ha un'applicabilità molto limitata;
+\item
+  un metodo approssimato, molto facile da utilizzare in pratica, che dipende da metodi Monte Carlo basati su Catena di Markov (MCMC); questo problema verrà discusso nel Capitolo ??
+\end{itemize}
+
+Una volta calcolata la distribuzione a posteriori dobbiamo riassumerla in qualche modo. Questo problema verrà discusso nel Capitolo \ref{chapter-sintesi-distr-post}.
+
+\hypertarget{considerazioni-conclusive}{%
+\section*{Considerazioni conclusive}\label{considerazioni-conclusive}}
+\addcontentsline{toc}{section}{Considerazioni conclusive}
+
+Questo Capitolo ha brevemente passato in rassegna alcuni concetti di base dell'inferenza statistica bayesiana. In base all'approccio bayesiano, invece di dire che il parametro di interesse di un modello statistico ha un valore vero ma sconosciuto, diciamo che, prima di eseguire l'esperimento, è possibile assegnare una distribuzione di probabilità, che chiamano stato di credenza, a quello che è il vero valore del parametro. Questa distribuzione a priori può essere nota (per esempio, sappiamo che la distribuzione dei punteggi del QI è normale con media 100 e deviazione standard 15) o può essere del tutto arbitraria. L'inferenza bayesiana procede poi nel modo seguente: si raccolgono alcuni dati e si calcola la probabilità dei possibili valori del parametro alla luce dei dati osservati e delle credenze a priori. Questa nuova distribuzione di probabilità è chiamata ``distribuzione a posteriori'' e riassume l'incertezza dell'inferenza. I concetti importanti che abbiamo appreso in questo Capitolo sono quelli di distribuzione a priori, verosimiglianza, verosimiglianza marginale e distribuzione a posteriori. Questi sono i concetti fondamentali della statistica bayesiana.
+
+\hypertarget{appendix-appendix}{%
+\appendix}
+
+
+\hypertarget{appendix:max-like}{%
+\chapter{La stima di massima verosimiglianza}\label{appendix:max-like}}
+
+La funzione di verosimiglianza rappresenta la ``credibilità relativa'' dei valori del parametro di interesse. Ma qual è il valore più credibile? Se utilizziamo soltanto la funzione di verosimiglianza, allora la risposta è data dalla stima di massima verosimiglinza.
+
+\begin{definition}
+Un valore di \(\theta\) che massimizza \(\mathcal{L}(\theta \mid y)\) sullo spazio parametrico \(\Theta\) è detto \emph{stima di massima verosimiglinza} (s.m.v.) di \(\theta\) ed è indicato con \(\hat{\theta}\):
+\begin{equation}
+\hat{\theta} = \text{argmax}_{\theta \in \Theta} \mathcal{L}(\theta).
+\end{equation}
+\end{definition}
+
+Il paradigma frequentista utilizza la funzione di verosimiglianza quale unico strumento per giungere alla stima del valore più credibile del parametro sconosciuto \(\theta\). Tale stima corrisponde al punto di massimo della funzione di verosimiglianza. Nell'esempio presente, \(\hat{\theta} = 0.6667\). Il massimo della funzione di verosimiglianza, ovvero \(\hat{\theta}\), si può ottenere con metodi numerici o grafici.
+
+In base all'approccio bayesiano, invece, il valore più credibile del parametro sconosciuto \(\theta\) non corrisponde alla s.m.v.. Per l'approccio bayesiano, invece, il valore più credibile del parametro sconosciuto \(\theta\) è dato dalla moda (o media, o mediana) della distribuzione a posteriori \(p(\theta \mid y)\) che si ottiene combinando la verosimiglianza \(p(y \mid \theta)\) con la distribuzione a priori \(p(\theta)\).
+
+\hypertarget{derivation-smv-prop}{%
+\section{Derivazione della s.m.v. per una proporzione}\label{derivation-smv-prop}}
+
+La s.m.v. della proporzione di successi \(\theta\) in una sequenza di prove Bernoulliane è uguale data dalla proporzione di successi campionari. Questo risultato può essere dimostrato come segue.
+
+\begin{proof}
+Per \(n\) prove Bernoulliane indipendenti, le quali producono \(y\) successi e (\(n-y\)) insuccessi, la funzione nucleo (ovvero, la funzione di verosimiglianza da cui sono state escluse tutte le costanti moltiplicative che non hanno alcun effetto su \(\hat{\theta}\)) è
+\[
+\mathcal{L}(p \mid y) = \theta^y (1-\theta)^{n - y}.\notag
+\]
+La funzione nucleo di log-verosimiglianza è
+\[
+\begin{aligned}
+\ell(\theta \mid y) &= \log \mathcal{L}(\theta \mid y) \notag\\
+          &= \log \left(\theta^y (1-\theta)^{n - y} \right) \notag\\
+          &= \log \theta^y + \log \left( (1-\theta)^{n - y} \right) \notag\\
+          &= y \log \theta + (n - y) \log (1-\theta).\notag
+\end{aligned}
+\]
+Per calcolare il massimo della funzione di log-verosimiglianza è necessario differenziare \(\ell(\theta \mid y)\) rispetto a \(\theta\), porre la derivata a zero e risolvere. La derivata di \(\ell(\theta \mid y)\) è:
+\[
+\ell'(\theta \mid y) = \frac{y}{\theta} -\frac{n-y}{1-\theta}.
+\]
+Ponendo l'equazione uguale a zero e risolvendo otteniamo la s.m.v.:
+\begin{equation}
+  \hat{\theta} = \frac{y}{n},
+  \label{eq:mlprop}
+\end{equation}
+ovvero la frequenza relativa dei successi nel campione.
+\end{proof}
+
+\hypertarget{calcolo-numerico}{%
+\section*{Calcolo numerico}\label{calcolo-numerico}}
+\addcontentsline{toc}{section}{Calcolo numerico}
+
+In maniera più semplice, il risultato descritto nel Paragrafo \ref{derivation-smv-prop} può essere ottenuto mediante una simulazione in \R. Iniziamo a definire un insieme di valori possibili per il parametro incognito \(\theta\):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{theta }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\AttributeTok{length.out=}\FloatTok{1e3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Sappiamo che la funzione di verosimiglianza è la funzione di massa di probabilità espressa in funzione del parametro sconosciuto \(\theta\) assumendo come noti i dati. Questo si può esprimere in \(\R\) nel modo seguente:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{like }\OtherTok{\textless{}{-}} \FunctionTok{dbinom}\NormalTok{(}\AttributeTok{x =} \DecValTok{6}\NormalTok{, }\AttributeTok{size =} \DecValTok{9}\NormalTok{, }\AttributeTok{prob =}\NormalTok{ theta)}
+\end{Highlighting}
+\end{Shaded}
+
+Si noti che, nell'istruzione precedente, abbiamo passato alla funzione \texttt{dbinom()} i dati, ovvero \texttt{x\ =\ 6} successi in \texttt{size\ =\ 9} prove. Inoltre, abbiamo passato alla funzione il vettore \texttt{prob\ =\ theta} che contiene 1000 valori possibili per il parametro \(\theta \in [0, 1]\). Per ciascuno dei valori \(\theta\), la funzione \texttt{dbinom()} ritorna un valore che corrisopnde all'ordinata della funzione di verosimiglianza, tenendo sempre costanti i dati (ovvero, 6 successi in 9 prove). Un grafico della funzione di verosimiglianza è dato da:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{tibble}\NormalTok{(theta, like) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ theta, }\AttributeTok{y =}\NormalTok{ like)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{y =} \FunctionTok{expression}\NormalTok{(}\FunctionTok{L}\NormalTok{(theta)),}
+    \AttributeTok{x =} \FunctionTok{expression}\NormalTok{(}\StringTok{\textquotesingle{}Valori possibili di\textquotesingle{}} \SpecialCharTok{\textasciitilde{}}\NormalTok{ theta)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{840_max_like_files/figure-latex/unnamed-chunk-3-1} \end{center}
+
+Nella simulazione, il valore \(\theta\) che massimizza la funzione di verosimiglianza può essere trovato nel modo seguente:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{theta[}\FunctionTok{which.max}\NormalTok{(like)]}
+\CommentTok{\#\textgreater{} [1] 0.667}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Il valore così trovato è uguale al valore definito dalla \eqref{eq:mlprop}.
+
+\hypertarget{la-verosimiglianza-del-modello-normale}{%
+\section*{La verosimiglianza del modello Normale}\label{la-verosimiglianza-del-modello-normale}}
+\addcontentsline{toc}{section}{La verosimiglianza del modello Normale}
+
+Ora che abbiamo capito come costruire la funzione verosimiglianza di una binomiale è relativamente semplice fare un passo ulteriore e considerare la verosimiglianza del caso di una funzione di densità, ovvero nel caso di una variabile casuale continua. Consideriamo qui il caso della Normale.
+
+La densità di una distribuzione Normale di parametri \(\mu\) e \(\sigma\) è
+\[
+f(y \mid \mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left\{-\frac{1}{2\sigma^2}(y-\mu)^2\right\}.
+\label{eq:gausslike}
+\]
+
+Poniamoci ora il problema di trovare la s.m.v. dei parametri sconosciuti \(\mu\) e \(\sigma\) nel caso in cui le \(n\) osservazioni \(y = (y_1, \dots, y_n)\) sono realizzazioni indipendenti ed identicamente distribuite (di seguito, i.i.d.) della medesima variabile casuale \(Y \sim \mathcal{N}(\mu, \sigma)\). Per semplicità, scriveremo \(\theta = \{\mu, \sigma\}.\)
+
+Il campione osservato è un insieme di eventi, ciascuno dei quali corrisponde alla realizzazione di una variabile casuale --- possiamo pensare ad uno di tali eventi come all'estrazione casuale di un valore dalla ``popolazione'' \(\mathcal{N}(\mu, \sigma)\). Se le variabili casuali sono i.i.d., la loro densità congiunta è data da:
+\begin{align}
+f(y \mid \theta) &= f(y_1 \mid \theta) \cdot f(y_2 \mid \theta) \cdot \; \dots \; \cdot f(y_n \mid \theta)\notag\\
+                 &= \prod_{i=1}^n f(y_i \mid \theta),
+\label{eq:gauss-prob-cong}
+\end{align}
+\noindent
+laddove la funzione \(f(\cdot)\) è la \eqref{eq:gausslike}. Tenendo costanti i dati \(y\), la funzione di verosimiglianza è:
+\begin{equation}
+\mathcal{L}(\theta \mid y) = \prod_{i=1}^n f(y_i \mid \theta).
+\label{eq:gausslike2}
+\end{equation}
+L'obiettivo è quello di massimizzare la funzione di verosimiglianza per trovare i valori \(\theta\) ottimali. Usando la notazione matematica questo si esprime dicendo che cerchiamo l'argmax della \eqref{eq:gausslike2} rispetto a \(\theta\), ovvero
+\[
+\hat{\theta} = \text{argmax}_{\theta} \prod_{i=1}^n f(y_i \mid \theta).
+\]
+Questo problema si risolve calcolando le derivate della funzione rispetto a \(\theta\), ponendo le derivate uguali a zero e risolvendo. Saltando tutti i passaggi algebrici di questo procedimento, per \(\mu\) troviamo
+\begin{equation}
+\hat{\mu} = \frac{1}{n} \sum_{i=1}^n y_i
+\label{eq:maxlikemu}
+\end{equation}
+e per \(\sigma\) abbiamo
+\begin{equation}
+\hat{\sigma} = \sqrt{\sum_{i=1}^n\frac{1}{n}(y_i- \mu)^2}.
+\label{eq:maxlikesigma}
+\end{equation}
+In altri termini, la s.m.v. del parametro \(\mu\) è la media del campione e la s.m.v. del parametro \(\sigma\) è la deviazione standard del campione.
+
+\hypertarget{simulazione}{%
+\section*{Simulazione}\label{simulazione}}
+\addcontentsline{toc}{section}{Simulazione}
+
+Consideriamo ora un esempio che utilizza dei dati reali. I dati corrispondono ai valori BDI-II dei trenta soggetti del campione clinico di \textcite{zetschefuture2019}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
+  \AttributeTok{y =} \FunctionTok{c}\NormalTok{(}\DecValTok{26}\NormalTok{, }\DecValTok{35}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{44}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{33}\NormalTok{, }\DecValTok{43}\NormalTok{, }\DecValTok{22}\NormalTok{, }\DecValTok{43}\NormalTok{, }\DecValTok{24}\NormalTok{, }
+        \DecValTok{19}\NormalTok{, }\DecValTok{39}\NormalTok{, }\DecValTok{31}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{28}\NormalTok{, }\DecValTok{35}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{26}\NormalTok{, }\DecValTok{31}\NormalTok{, }\DecValTok{41}\NormalTok{, }\DecValTok{36}\NormalTok{, }
+        \DecValTok{26}\NormalTok{, }\DecValTok{35}\NormalTok{, }\DecValTok{33}\NormalTok{, }\DecValTok{28}\NormalTok{, }\DecValTok{27}\NormalTok{, }\DecValTok{34}\NormalTok{, }\DecValTok{27}\NormalTok{, }\DecValTok{22}\NormalTok{)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+Ci poniamo l'obiettivo di creare la funzione di verosimiglianza per questi dati, supponendo, in base ai risultati di ricerche precedenti, di sapere che i punteggi BDI-II si distribuiscono secondo una legge Normale.
+
+Per semplificare il problema, assumeremo di conoscere \(\sigma\) (lo porremo uguale alla deviazione standard del campione) in modo da avere un solo parametro sconosciuto, cioè \(\mu\). Il problema è dunque quello di trovare la funzione di verosimiglianza per il parametro \(\mu\), date le 30 osservazioni del campione e dato \(\sigma = s = 6.61\).
+
+Per una singola osservazione, la funzione di verosimiglianza è la densità Normale espressa in funzione dei parametri. Per un campione di osservazioni i.i.d., ovvero \(y = (y_1, y_2, \dots, y_n)\), la verosimiglianza è la funzione di densità congiunta \(f(y \mid \mu, \sigma)\) espressa in funzione dei parametri, ovvero \(\mathcal{L}(\mu, \sigma \mid y)\). Dato che le osservazioni sono i.i.d., la densità congiunta è data dal prodotto delle densità delle singole osservazioni.
+
+Per semplicità, assumiamo \(\sigma\) noto e uguale alla deviazione standard del campione:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{true\_sigma }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(d}\SpecialCharTok{$}\NormalTok{y)}
+\NormalTok{true\_sigma }
+\CommentTok{\#\textgreater{} [1] 6.61}
+\end{Highlighting}
+\end{Shaded}
+
+Avendo posto \(\sigma = 6.61\), per una singola osservazione \(y_i\) abbiamo
+\[
+f(y_i \mid \mu, \sigma) = \frac{1}{{6.61 \sqrt {2\pi}}}\exp\left\{{-\frac{(y_i - \mu)^2}{2\cdot 6.61^2}}\right\},\notag
+\]
+dove il pedice \(i\) specifica l'osservazione \(y_i\) tra le molteplici osservazioni \(y\), e \(\mu\) è il parametro sconosciuto che deve essere determinato (nell'esempio, \(\sigma = s\)). La densità congiunta è dunque
+\[
+f(y \mid \mu, \sigma) = \, \prod_{i=1}^n f(y_i \mid \mu, \sigma)\notag
+\]
+e, alla luce dei dati osservati, la verosimiglianza diventa
+\[
+\begin{aligned}
+\mathcal{L}(\mu, \sigma \mid y) =& \, \prod_{i=1}^n f(y_i \mid \mu, \sigma) = \notag\\
+& \frac{1}{{6.61 \sqrt {2\pi}}}\exp\left\{{-\frac{(26 - \mu)^2}{2\cdot 6.61^2}}\right\} \times \notag\\
+ & \frac{1}{{6.61 \sqrt {2\pi}}}\exp\left\{{-\frac{(35 - \mu)^2}{2\cdot 6.61^2}}\right\} \times  \notag\\
+& \vdots \notag\\
+ & \frac{1}{{6.61 \sqrt {2\pi}}}\exp\left\{{-\frac{(22 - \mu)^2}{2\cdot 6.61^2}}\right\}.
+\end{aligned}
+\label{eq:lldepression}
+\]
+Poniamoci ora il problema di rappresentare graficamente la funzione di verosimiglianza per il parametro \(\mu\). Avendo un solo parametro sconosciuto, possiamo rappresentare la verosimiglianza con una curva. In \R, definiamo la funzione di log-verosimiglianza nel modo seguente:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{log\_likelihood }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(y, mu, }\AttributeTok{sigma =}\NormalTok{ true\_sigma) \{}
+  \FunctionTok{sum}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(y, mu, sigma, }\AttributeTok{log =} \ConstantTok{TRUE}\NormalTok{))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Nella funzione \texttt{log\_likelihood()}, \texttt{y} è un vettore che, nel caso presente contiene \(n = 30\) valori. Per ciascuno di questi valori, la funzione \texttt{dnorm()} trova la densità Normale utilizzando il valore \(\mu\) che passato a \texttt{log\_likelihood()} e il valore \(\sigma\) uguale a 6.61 --- nell'esempio, questo parametro viene assunto come noto. L'argomento \texttt{log\ =\ TRUE} specifica che deve essere preso il logaritmo. La funzione \texttt{dnorm()} è un argomento della funzione \texttt{sum()}. Ciò significa che i 30 valori così trovati, espressi su scala logaritmica, verranno sommati --- sommare logaritmi è equivalente a fare il prodotto dei valori sulla scala originaria.
+
+Se applichiamo questa funzione ad un solo valore \(\mu\) otteniamo l'ordinata della funzione di log-verosimiglianza in corrispondenza del valore \(\mu\) (si veda la figura \eqref{eq:lldepression}). Si noti che, per trovare un tale valore, abbiamo utilizzato le seguenti informazioni:
+
+\begin{itemize}
+\tightlist
+\item
+  i 30 dati del campione,
+\item
+  il valore \(\sigma = s\) fissato a 6.61,
+\item
+  il singolo valore \(\mu\) passato alla funzione \texttt{log\_likelihood()}.
+\end{itemize}
+
+Avendo trovato un singolo punto della funzione di log-verosimiglianza, dobbiamo ripetere i calcoli precedenti per tutti i possibili valori che \(\mu\) può assumere.
+Nel seguente ciclo \texttt{for()} viene calcolata la log-verosimiglianza di 100,000 valori possibili del parametro \(\mu\):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{nrep }\OtherTok{\textless{}{-}} \FloatTok{1e5}
+\NormalTok{mu }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}
+  \FunctionTok{mean}\NormalTok{(d}\SpecialCharTok{$}\NormalTok{y) }\SpecialCharTok{{-}} \FunctionTok{sd}\NormalTok{(d}\SpecialCharTok{$}\NormalTok{y), }
+  \FunctionTok{mean}\NormalTok{(d}\SpecialCharTok{$}\NormalTok{y) }\SpecialCharTok{+} \FunctionTok{sd}\NormalTok{(d}\SpecialCharTok{$}\NormalTok{y), }
+  \AttributeTok{length.out =}\NormalTok{ nrep}
+\NormalTok{)}
+
+\NormalTok{ll }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, nrep)}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{nrep) \{}
+\NormalTok{  ll[i] }\OtherTok{\textless{}{-}} \FunctionTok{log\_likelihood}\NormalTok{(d}\SpecialCharTok{$}\NormalTok{y, mu[i], true\_sigma)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Il vettore \texttt{mu} contiene 100,000 possibili valori del parametro \(\mu\); tali valori sono stati scelti nell'intervallo \(\bar{y} \pm s\). Per ciascuno di questi valori la funzione \texttt{log\_likelihood()} calcola il valore di log-verosimiglianza. I 100,000 risultati vengono salvati nel vettore \texttt{ll}.
+
+I vettori \texttt{mu} e \texttt{ll} possono dunque essere usati per disegnare il grafico della funzione di log-verosimiglianza per il parametro \(\mu\):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{tibble}\NormalTok{(mu, ll) }\SpecialCharTok{\%\textgreater{}\%} 
+\FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ mu, }\AttributeTok{y =}\NormalTok{ ll)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{vline\_at}\NormalTok{(}\FunctionTok{mean}\NormalTok{(d}\SpecialCharTok{$}\NormalTok{y), }\AttributeTok{color =} \StringTok{"gray"}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{y =} \StringTok{"Log{-}verosimiglianza"}\NormalTok{,}
+    \AttributeTok{x =} \FunctionTok{expression}\NormalTok{(}\StringTok{"Parametro"}\SpecialCharTok{\textasciitilde{}}\NormalTok{mu)}
+\NormalTok{  ) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{840_max_like_files/figure-latex/unnamed-chunk-9-1} \end{center}
+
+Dalla figura notiamo che, per i dati osservati, il massimo della funzione di log-verosimiglianza calcolata per via numerica, ovvero 30.93, è identico alla media dei dati campionari e corrisponde al risultato teorico della \eqref{eq:lldepression}.
+
+\hypertarget{considerazioni-conclusive-1}{%
+\section*{Considerazioni conclusive}\label{considerazioni-conclusive-1}}
+\addcontentsline{toc}{section}{Considerazioni conclusive}
+
+La verosimiglianza viene utilizzata sia nell'inferenza bayesiana che in quella frequentista. In entrambi i paradigmi di inferenza, il suo ruolo è quantificare la forza con la quale i dati osservati supportano i possibili valori dei parametri sconosciuti.
+
+Nella funzione di verosimiglianza i dati (osservati) vengono trattati come fissi, mentre i valori del parametro (o dei parametri) \(\theta\) vengono variati: la verosimiglianza è una funzione di \(\theta\) per il dato fisso \(y\). Pertanto, la funzione di verosimiglianza riassume i seguenti elementi: un modello statistico che genera stocasticamente i dati (in questo capitolo abbiamo esaminato due modelli statistici: quello binomiale e quello Normale), un intervallo di valori possibili per \(\theta\) e i dati osservati \(y\).
+
+Nella statistica frequentista l'inferenza si basa solo sui dati a disposizione e qualunque informazione fornita dalle conoscenze precedenti non viene presa in considerazione. Nello specifico, nella statistica frequentista l'inferenza viene condotta massimizzando la funzione di (log) verosimiglianza, condizionatamente ai valori assunti dalle variabili casuali campionarie. Nella statistica bayesiana, invece, l'inferenza statistica viene condotta combinando la funzione di verosimiglianza con le distribuzioni a priori dei parametri incogniti \(\theta\).
+
+La differenza fondamentale tra inferenza bayesiana e frequentista è dunque che i frequentisti non ritengono utile descrivere in termini probabilistici i parametri: i parametri dei modelli statistici vengono concepiti come fissi ma sconosciuti. Nell'inferenza bayesiana, invece, i parametri sconosciuti sono intesi come delle variabili casuali e ciò consente di quantificare in termini probabilistici il nostro grado di intertezza relativamente al loro valore.
+
+\hypertarget{appendix:const-norm-bino23}{%
+\chapter{Verosimiglianza marginale}\label{appendix:const-norm-bino23}}
+
+Riportiamo di seguito la derivazione analitica per la costante di normalizzazione discussa nella Sezione \ref{sec:const-normaliz-bino23}, ovvero dell'integrale \eqref{eq:likebino23}. Sia la distribuzione a priori \(\theta \sim \Beta(a, b)\) e sia \(y = \{y_1, \dots, y_n\} \sim \Bin(\theta, n)\). Scrivendo la \emph{funzione beta} come
 \[
 \Beta(a, b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)},
 \]
@@ -1148,7 +1446,7 @@ Si verifichi la \eqref{eq:constant-norm-beta-binom} mediante di dati di \textcit
 
 \end{guidedpractice}
 
-Per replicare mediante la \eqref{eq:constant-norm-beta-binom} il risultato trovato sopra per via numerica assumiamo, ad esempio, una distribuzione a priori uniforme, ovvero \(\Beta(1, 1)\). I valori del problema dunque diventano i seguenti:
+Per replicare mediante la \eqref{eq:constant-norm-beta-binom} il risultato trovato per via numerica nella Sezione \ref{sec:const-normaliz-bino23} assumiamo una distribuzione a priori uniforme, ovvero \(\Beta(1, 1)\). I valori del problema dunque diventano i seguenti:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1176,35 +1474,12 @@ Il risultato cercato è
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{choose}\NormalTok{(}\DecValTok{30}\NormalTok{, }\DecValTok{23}\NormalTok{) }\SpecialCharTok{*} \FunctionTok{B}\NormalTok{(y }\SpecialCharTok{+}\NormalTok{ a, n }\SpecialCharTok{{-}}\NormalTok{ y }\SpecialCharTok{+}\NormalTok{ b) }\SpecialCharTok{/} \FunctionTok{B}\NormalTok{(a, b)}
-\CommentTok{\#\textgreater{} [1] 0.0323}
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{distribuzione-a-posteriori}{%
-\section{Distribuzione a posteriori}\label{distribuzione-a-posteriori}}
-
-La distribuzione a postreriori si trova applicando il teorema di Bayes:
-\[
-\text{probabilità a posteriori} = \frac{\text{probabilità a priori} \cdot \text{verosimiglianza}}{\text{costante di normalizzazione}}
-\]
-
-Ci sono due metodi principali per calcolare la distribuzione a posteriori \(p(\theta \mid y)\):
-
-\begin{itemize}
-\tightlist
-\item
-  una precisa derivazione matematica formulata nei termini della distribuzione a priori coniugata alla distribuzione a posteriori (si veda il Capitolo \ref{chapter-distr-coniugate}); tale procedura però ha un'applicabilità molto limitata;
-\item
-  un metodo approssimato, molto facile da utilizzare in pratica, che dipende da metodi Monte Carlo basati su Catena di Markov (MCMC); questo problema verrà discusso nel Capitolo ??
-\end{itemize}
-
-Una volta calcolata la distribuzione a posteriori dobbiamo riassumerla in qualche modo. Questo problema verrà discusso nel Capitolo \ref{chapter-sintesi-distr-post}.
-
-\hypertarget{considerazioni-conclusive}{%
-\section*{Considerazioni conclusive}\label{considerazioni-conclusive}}
-\addcontentsline{toc}{section}{Considerazioni conclusive}
-
-Questo Capitolo ha brevemente passato in rassegna alcuni concetti di base dell'inferenza statistica bayesiana. In base all'approccio bayesiano, invece di dire che il parametro di interesse di un modello statistico ha un valore vero ma sconosciuto, diciamo che, prima di eseguire l'esperimento, è possibile assegnare una distribuzione di probabilità, che chiamano stato di credenza, a quello che è il vero valore del parametro. Questa distribuzione a priori può essere nota (per esempio, sappiamo che la distribuzione dei punteggi del QI è normale con media 100 e deviazione standard 15) o può essere del tutto arbitraria. L'inferenza bayesiana procede poi nel modo seguente: si raccolgono alcuni dati e si calcola la probabilità dei possibili valori del parametro alla luce dei dati osservati e delle credenze a priori. Questa nuova distribuzione di probabilità è chiamata ``distribuzione a posteriori'' e riassume l'incertezza dell'inferenza. I concetti importanti che abbiamo appreso in questo Capitolo sono quelli di distribuzione a priori, verosimiglianza, verosimiglianza marginale e distribuzione a posteriori. Questi sono i concetti fondamentali della statistica bayesiana.
+\begin{verbatim}
+## [1] 0.03225806
+\end{verbatim}
 
 
 % Bibliography

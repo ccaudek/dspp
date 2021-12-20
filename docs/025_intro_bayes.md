@@ -5,7 +5,7 @@
 
 
 ::: {.chapterintro data-latex=""}
-Pensare in termini bayesiani significa aggiornare le nostre credenze combinando le credenze iniziali con le informazioni fornite dai dati, così da ottenere una credenza "a posteriori". L'aggiornamento bayesiano richiede che le credenze siano descritte nei termini di un modello probabilistico formulato nei termini di uno o più parametri. La nostra incertezza riguarda il valore dei parametri. L'aggiornamento bayesiano ha lo scopo di ottenere le migliori stime possibili dei parametri, considerando le informazioni fornite dalle nostre credenze a priori e dai dati osservati. In questo capitolo verrà descritto il significato di tutti e tre i termini a destra del segno di uguale nella formula di Bayes: la distribuzione a priori e la funzione di verosimiglianza al denominatore, la verosimiglianza marginale al denominatore.
+Pensare in termini bayesiani significa aggiornare le nostre credenze combinando le credenze iniziali con le informazioni fornite dai dati, così da ottenere una credenza "a posteriori". L'aggiornamento bayesiano richiede che le credenze siano descritte nei termini di un modello probabilistico formulato nei termini di uno o più parametri. La nostra incertezza riguarda il valore dei parametri. L'aggiornamento bayesiano ha lo scopo di ottenere le migliori stime possibili dei parametri, considerando le informazioni fornite dalle nostre credenze a priori e dai dati osservati. In questo capitolo verrà descritto il significato di tutti e tre i termini a destra del segno di uguale nella formula di Bayes: la distribuzione a priori e la funzione di verosimiglianza al numeratore, la verosimiglianza marginale al denominatore.
 :::
 
 ## Inferenza bayesiana come un problema inverso
@@ -176,6 +176,7 @@ Spesso per indicare la verosimiglianza si scrive $\mathcal{L}(\theta)$ se è chi
 
 In conclusione, la funzione di verosimiglianza descrive in termini relativi il sostegno empirico che $\theta \in \Theta$ riceve da $y$. Infatti, la funzione di verosimiglianza assume forme diverse al variare di $y$ (lasciamo come esercizio da svolgere la verifica di questa affermazione).
 
+
 ### La log-verosimiglianza
 
 Dal punto di vista pratico risulta più conveniente utilizzare, al posto della funzione di verosimiglianza, il suo logaritmo naturale, ovvero la funzione di log-verosimiglianza:
@@ -254,7 +255,7 @@ tibble(theta, like) %>%
 \caption{Funzione di verosimiglianza nel caso di 23 successi in 30 prove.}(\#fig:likefutexpect)
 \end{figure}
 
-Come possiamo interpretare la curva che abbiamo ottenuto? Per alcuni valori $\theta$ la funzione di verosimiglianza assume valori piccoli; per altri valori $\theta$ la funzione di verosimiglianza assume valori più grandi. Questi ultimi sono i valori di $\theta$ "più credibili" e il valore 23/30 è il valore più credibile di tutti. La funzione di verosimiglianza di $\theta$ valuta la compatibilità dei dati osservati $Y = y$ con i diversi possibili valori $\theta$. In termini più formali possiamo dire che la funzione di verosimiglianza ha la seguente interpretazione: sulla base dei dati, $\theta_1 \in \Theta$ è più credibile di $\theta_2 \in \Theta$ come indice del modello probabilistico generatore delle osservazioni se $\mathcal{L}(\theta_1) > \mathcal{L}(\theta_1)$.
+Come possiamo interpretare la curva che abbiamo ottenuto? Per alcuni valori $\theta$ la funzione di verosimiglianza assume valori piccoli; per altri valori $\theta$ la funzione di verosimiglianza assume valori più grandi. Questi ultimi sono i valori di $\theta$ "più credibili" e il valore 23/30 è il valore più credibile di tutti. La funzione di verosimiglianza di $\theta$ valuta la compatibilità dei dati osservati $Y = y$ con i diversi possibili valori $\theta$. In termini più formali possiamo dire che la funzione di verosimiglianza ha la seguente interpretazione: sulla base dei dati, $\theta_1 \in \Theta$ è più credibile di $\theta_2 \in \Theta$ come indice del modello probabilistico generatore delle osservazioni se $\mathcal{L}(\theta_1) > \mathcal{L}(\theta_1)$. Alcune considerazioni sulla stima di massima verosimiglianza sono fornite nell'Appendice \@ref(appendix:max-like).
 
 
 <!-- La sfida del 1997 ci fornisce i dati: una vittoria su sei partite; considerate le due vittorie di Deep Blue e le tre patte, Kasparov perse dunque il match. Per formulare la funzione di verosimiglianza dobbiamo utilizzare un modello statistico che descriva il "processo generatore" dei dati che abbiamo osservato. Semolifichiamo la situazione descrivendo i dati nei termini di un successo su sei prove. Ipotizziamo inoltre che le sei partite siano indipendenti le une dalle altre e che la probabilità di vittoria di Kasparov rimanga costante nelle sei partite. Descritta la situazione in questi termini, possiamo individuare nel modello binomiale il processo statistico che potrebbe avere generato i dati che abbiamo osservato. Questo modello probabilistico è formulato nei termini di un parametro: $\theta$, ovvero la probabilità di vittoria (di Kasparov). Nel Paragrafo precedente abbiamo descritto la distribuzione di probabilità a priori del parametro $\theta$. Poniamoci ora il problema di descrivere la verosimiglianza dei valori $\theta$ alla luce dei dati osservati (ovvero, solo una vittoria su sei partite).  -->
@@ -293,7 +294,7 @@ Come possiamo interpretare la curva che abbiamo ottenuto? Per alcuni valori $\th
 <!-- Nel caso presente, i dati (ovvero, una vittoria su sei partite) risultano maggiormente compatibili con il valore $\theta = 0.2$ (Kasparov è molto meno forte di Deep Blue): la verosimiglianza di $\theta = 0.2$ è 0.39. All'altro estremo, i dati risultano poco compatibili con il valore $\theta = 0.8$ (Kasparov è molto più forte di Deep Blue): la verosimiglianza di $\theta = 0.8$ è 0.0015.   -->
 
 
-## La verosimiglianza marginale
+## La verosimiglianza marginale {#sec:const-normaliz-bino23}
 
 Per il calcolo di $p(\theta \mid y)$ è necessario dividere il prodotto tra la distribuzione a priori e la verosimiglianza per una costante di normalizzazione. Tale costante di normalizzazione, detta _verosimiglianza marginale_, ha lo scopo di fare in modo che $p(\theta \mid y)$ abbia area unitaria. 
 
@@ -303,9 +304,10 @@ Si noti che il denominatore della regola di Bayes (ovvero la verosimiglianza mar
 Si trovi la verosimiglianza maginale per i dati di @zetschefuture2019.
 :::
 
-Nel caso presente, la costante di normalizzazione si ottiene marginalizzando la funzione di verosimiglianza $p(y = 23, n = 30 \mid \theta)$ sopra $\theta$, ovvero risolvendo l'integrale:
+Supponiamo che nel numeratore bayesiano la verosimiglianza sia moltiplicata per una distribuzione uniforme, Beta(1, 1). In questo caso, il prodotto si riduce alla funzione di verosimiglianza. In riferimento ai dati di @zetschefuture2019, la costante di normalizzazione per si ottiene semplicemente marginalizzando la funzione di verosimiglianza $p(y = 23, n = 30 \mid \theta)$ sopra $\theta$, ovvero risolvendo l'integrale:
 \begin{equation}
 p(y = 23, n = 30) = \int_0^1 \binom{30}{23} \theta^{23} (1-\theta)^{7} \,\operatorname {d}\!\theta.
+(\#eq:intlikebino23)
 \end{equation}
 \noindent
 Una soluzione numerica si trova facilmente usando $\R$:
@@ -319,65 +321,8 @@ integrate(like_bin, lower = 0, upper = 1)$value
 #> [1] 0.0323
 ```
 
-
-#### Derivazione analitica 
-
-Riportiamo di seguito la derivazione analitica dell'integrale precedente. Sia la distribuzione a priori $\theta \sim \Beta(a, b)$ e sia $y = \{y_1, \dots, y_n\} \sim \Bin(\theta, n)$. Scrivendo la _funzione beta_ come
-$$
-\Beta(a, b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)},
-$$
 \noindent
-la verosimiglianza marginale diventa
-\begin{align}
-p(y) &= \int p(y \mid \theta) p(\theta) \,\operatorname {d}\!\theta \notag\\
-&= \int_0^1 \binom{n}{y}\theta^{y} (1 - \theta)^{n- y} \frac{1}{\Beta(a,b)} \theta^{a-1} (1-\theta)^{b-1} \,\operatorname {d}\!\theta \notag\\
-&= \binom{n}{y}\frac{1}{\Beta(a,b)} \int_0^1 \theta^{y + a - 1} (1-\theta)^{n- y + b-1}  \,\operatorname {d}\!\theta \notag\\
-&= \binom{n}{y}\frac{\Beta(y + a, n- y + b)}{\Beta(a,b)},
-(\#eq:constant-norm-beta-binom)
-\end{align}
-\noindent
-in quanto
-\begin{align}
-\int_0^1 \frac{1}{\Beta(a,b)} \theta^{a-1} (1-\theta)^{b-1} \,\operatorname {d}\! \theta &= 1\notag\\
-\frac{1}{\Beta(a,b)} \int_0^1  \theta^{a-1} (1-\theta)^{b-1} \,\operatorname {d}\! \theta &= 1\notag\\
-\int_0^1  \theta^{a-1} (1-\theta)^{b-1} \,\operatorname {d}\!\theta &= \Beta(a,b). \notag
-\end{align}
-
-In conclusione, nel caso di una verosimiglianza binomiale $y = \sim \Bin(\theta, n)$ e di una distribuzione a priori $\theta \sim \Beta(a, b)$, la verosimiglianza marginale diventa uguale alla \@ref(eq:constant-norm-beta-binom).
-
-::: {.guidedpractice data-latex=""}
-Si verifichi la \@ref(eq:constant-norm-beta-binom) mediante di dati di @zetschefuture2019. 
-:::
-
-Per replicare mediante la \@ref(eq:constant-norm-beta-binom) il risultato trovato sopra per via numerica assumiamo, ad esempio, una distribuzione a priori uniforme, ovvero $\Beta(1, 1)$. I valori del problema dunque diventano i seguenti:
-
-
-```r
-a <- 1
-b <- 1
-y <- 23
-n <- 30
-```
-
-\noindent
-Definiamo
-
-
-```r
-B <- function(a, b) {
-  (gamma(a) * gamma(b)) / gamma(a + b)
-}
-```
-
-\noindent
-Il risultato cercato è
-
-
-```r
-choose(30, 23) * B(y + a, n - y + b) / B(a, b)
-#> [1] 0.0323
-```
-
+La derivazione analitica della costante di normalizzazione qui discussa è fornita nell'Appendice \@ref(appendix:const-norm-bino23).
 
 <!-- per ogni possibile valore $\theta$, si moltiplica il valore della verosimiglianza in corrisopndenza di $\theta$ per la sua probabilità a priori di  $\theta$; si sommano poi tutti i prodotti ottenuti in questo modo. -->
 
