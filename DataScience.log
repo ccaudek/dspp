@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.7)  19 DEC 2021 17:38
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.7)  20 DEC 2021 20:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1989,52 +1989,72 @@ Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
 \rotheadsize=\dimen393
 \c@nlinenum=\count556
 \TeXr@lab=\toks62
+) (/usr/local/texlive/2020/texmf-dist/tex/latex/amscls/amsthm.sty
+Package: amsthm 2017/10/31 v2.20.4
+\thm@style=\toks63
+\thm@bodyfont=\toks64
+\thm@headfont=\toks65
+\thm@notefont=\toks66
+\thm@headpunct=\toks67
+\thm@preskip=\skip373
+\thm@postskip=\skip374
+\thm@headsep=\skip375
+\dth@everypar=\toks68
 )
+\c@theorem=\count557
+\c@lemma=\count558
+\c@corollary=\count559
+\c@proposition=\count560
+\c@conjecture=\count561
+\c@definition=\count562
+\c@example=\count563
+\c@exercise=\count564
+\c@hypothesis=\count565
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'polyglossia' package.
 (./DataScience.aux
 LaTeX Info: Redefining \rmfamily on input line 26.
 LaTeX Info: Redefining \sffamily on input line 26.
 LaTeX Info: Redefining \ttfamily on input line 26.
-LaTeX Info: Redefining \rmfamily on input line 150.
-LaTeX Info: Redefining \sffamily on input line 150.
-LaTeX Info: Redefining \ttfamily on input line 150.
-LaTeX Info: Redefining \rmfamily on input line 154.
-LaTeX Info: Redefining \sffamily on input line 154.
-LaTeX Info: Redefining \ttfamily on input line 154.
+LaTeX Info: Redefining \rmfamily on input line 168.
+LaTeX Info: Redefining \sffamily on input line 168.
+LaTeX Info: Redefining \ttfamily on input line 168.
+LaTeX Info: Redefining \rmfamily on input line 172.
+LaTeX Info: Redefining \sffamily on input line 172.
+LaTeX Info: Redefining \ttfamily on input line 172.
 )
 \openout1 = `DataScience.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 657.
-LaTeX Font Info:    ... okay on input line 657.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 657.
-LaTeX Font Info:    ... okay on input line 657.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 657.
-LaTeX Font Info:    ... okay on input line 657.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 657.
-LaTeX Font Info:    ... okay on input line 657.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 657.
-LaTeX Font Info:    ... okay on input line 657.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 657.
-LaTeX Font Info:    ... okay on input line 657.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 657.
-LaTeX Font Info:    ... okay on input line 657.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 657.
-LaTeX Font Info:    ... okay on input line 657.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 657.
-LaTeX Font Info:    ... okay on input line 657.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 657.
-LaTeX Font Info:    ... okay on input line 657.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 674.
+LaTeX Font Info:    ... okay on input line 674.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 674.
+LaTeX Font Info:    ... okay on input line 674.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 674.
+LaTeX Font Info:    ... okay on input line 674.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 674.
+LaTeX Font Info:    ... okay on input line 674.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 674.
+LaTeX Font Info:    ... okay on input line 674.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 674.
+LaTeX Font Info:    ... okay on input line 674.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 674.
+LaTeX Font Info:    ... okay on input line 674.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 674.
+LaTeX Font Info:    ... okay on input line 674.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 674.
+LaTeX Font Info:    ... okay on input line 674.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 674.
+LaTeX Font Info:    ... okay on input line 674.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 657.
+(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 674.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 657.
+(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 674.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 657.
+(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 674.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/lmss/m/n --> TU/phv/m/n on input line 657.
+(Font)                  OT1/lmss/m/n --> TU/phv/m/n on input line 674.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/lmss/bx/n --> TU/phv/bx/n on input line 657.
+(Font)                  OT1/lmss/bx/n --> TU/phv/bx/n on input line 674.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -2063,7 +2083,7 @@ pt=math;language=dflt;"
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(0)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 657.
+(Font)              scaled to size 10.0pt on input line 674.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -2102,18 +2122,18 @@ pt=math;language=dflt;"
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 657.
+(Font)              scaled to size 10.0pt on input line 674.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 657.
+(Font)              `operators' in the math version `normal' on input line 674.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input
- line 657.
+ line 674.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 657.
+(Font)              `operators' in the math version `bold' on input line 674.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
 (Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on inpu
-t line 657.
+t line 674.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -2200,15 +2220,15 @@ t=math;language=dflt;"
 (fontspec)             \fontdimen 21\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `normal' on input line 657.
+(Font)              `symbols' in the math version `normal' on input line 674.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
 (Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on inpu
-t line 657.
+t line 674.
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `bold' on input line 657.
+(Font)              `symbols' in the math version `bold' on input line 674.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
 (Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on inpu
-t line 657.
+t line 674.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -2278,16 +2298,16 @@ pt=math;language=dflt;"
 
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
 (Font)              `largesymbols' in the math version `normal' on input line 6
-57.
+74.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
 (Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on inpu
-t line 657.
+t line 674.
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `bold' on input line 657
+(Font)              `largesymbols' in the math version `bold' on input line 674
 .
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
 (Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on inpu
-t line 657.
+t line 674.
 
 Package unicode-math Warning: Using \overbracket and \underbracket from
 (unicode-math)                `mathtools' package.
@@ -2306,7 +2326,7 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 (unicode-math)                colon-like commands, using them will lead to
 (unicode-math)                inconsistencies.
 
-LaTeX Info: Redefining \microtypecontext on input line 657.
+LaTeX Info: Redefining \microtypecontext on input line 674.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
 Package microtype Info: No adjustment of tracking.
@@ -2340,11 +2360,11 @@ Package biblatex Info: Automatic encoding selection.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'DataScience.bbl' found.
 (./DataScience.bbl)
-Package biblatex Info: Reference section=0 on input line 657.
-Package biblatex Info: Reference segment=0 on input line 657.
+Package biblatex Info: Reference section=0 on input line 674.
+Package biblatex Info: Reference segment=0 on input line 674.
 ABD: EveryShipout initializing macros
 \AtBeginShipoutBox=\box102
-Package hyperref Info: Link coloring ON on input line 657.
+Package hyperref Info: Link coloring ON on input line 674.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
 (/usr/local/texlive/2020/texmf-dist/tex/latex/refcount/refcount.sty
@@ -2354,14 +2374,14 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count557
+\c@section@level=\count566
 )
 Redoing nameref's sectioning
 Redoing nameref's label
-LaTeX Info: Redefining \nameref on input line 657.
-LaTeX Info: Redefining \ref on input line 657.
-LaTeX Info: Redefining \pageref on input line 657.
-LaTeX Info: Redefining \nameref on input line 657.
+LaTeX Info: Redefining \nameref on input line 674.
+LaTeX Info: Redefining \ref on input line 674.
+LaTeX Info: Redefining \pageref on input line 674.
+LaTeX Info: Redefining \nameref on input line 674.
 (./DataScience.out) (./DataScience.out)
 \@outlinefile=\write7
 \openout7 = `DataScience.out'.
@@ -2372,7 +2392,7 @@ Package caption Info: listings package is loaded.
 Package caption Info: threeparttable package is loaded.
 Package caption Info: wrapfig package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\c@lstlisting=\count558
+\c@lstlisting=\count567
 
 ******************************************************
 Stock height and width: 845.04684pt by 597.50787pt
@@ -2395,26 +2415,26 @@ Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 
 TextBlockOrigin set to \stockwidth -\paperwidth -\trimedge  x \trimtop 
 
-Overfull \hbox (10.30946pt too wide) in paragraph at lines 672--672
+Overfull \hbox (10.30946pt too wide) in paragraph at lines 689--689
 [][] 
  []
 
-LaTeX Font Info:    Trying to load font information for TU+qtm on input line 67
-2.
-LaTeX Font Info:    No file TUqtm.fd. on input line 672.
+LaTeX Font Info:    Trying to load font information for TU+qtm on input line 68
+9.
+LaTeX Font Info:    No file TUqtm.fd. on input line 689.
 
 LaTeX Font Warning: Font shape `TU/qtm/m/n' undefined
-(Font)              using `TU/lmr/m/n' instead on input line 672.
+(Font)              using `TU/lmr/m/n' instead on input line 689.
 
 (/usr/local/texlive/2020/texmf-dist/tex/latex/microtype/mt-ptm.cfg
 File: mt-ptm.cfg 2006/04/20 v1.7 microtype config. file: Times (RS)
 )
 
 LaTeX Font Warning: Font shape `TU/qtm/m/sc' undefined
-(Font)              using `TU/qtm/m/n' instead on input line 672.
+(Font)              using `TU/qtm/m/n' instead on input line 689.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 672--672
+Underfull \hbox (badness 10000) in paragraph at lines 689--689
 
  []
 
@@ -2425,49 +2445,49 @@ Underfull \hbox (badness 10000) in paragraph at lines 672--672
 ]
 TextBlockOrigin set to \trimedge  x \trimtop 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.0pt on input line 672.
+(Font)              scaled to size 7.0pt on input line 689.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 672.
+(Font)              scaled to size 5.0pt on input line 689.
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 6
-72.
+89.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.00092pt on input line 672.
+(Font)              scaled to size 10.00092pt on input line 689.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.00064pt on input line 672.
+(Font)              scaled to size 7.00064pt on input line 689.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00046pt on input line 672.
+(Font)              scaled to size 5.00046pt on input line 689.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 9.99893pt on input line 672.
+(Font)              scaled to size 9.99893pt on input line 689.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 6.99925pt on input line 672.
+(Font)              scaled to size 6.99925pt on input line 689.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 672.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 672
+(Font)              scaled to size 4.99947pt on input line 689.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 689
 .
 (/usr/local/texlive/2020/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 672
+LaTeX Font Info:    Trying to load font information for U+msb on input line 689
 .
 (/usr/local/texlive/2020/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-LaTeX Font Info:    Trying to load font information for TU+phv on input line 67
-2.
-LaTeX Font Info:    No file TUphv.fd. on input line 672.
+LaTeX Font Info:    Trying to load font information for TU+phv on input line 68
+9.
+LaTeX Font Info:    No file TUphv.fd. on input line 689.
 
 LaTeX Font Warning: Font shape `TU/phv/m/n' undefined
-(Font)              using `TU/lmr/m/n' instead on input line 672.
+(Font)              using `TU/lmr/m/n' instead on input line 689.
 
 
-Underfull \hbox (badness 2027) in paragraph at lines 672--672
+Underfull \hbox (badness 2027) in paragraph at lines 689--689
 []\TU/phv/m/n/10 bookdown ([][]$[][][][] [] [] [] [][][][][][][][] [] [][][][]$
 [][]) e memoiR ([][]$[][][][][] [] [] [] [][][][][][][][][][] [] [][][][][][] [
 ] [][] []
@@ -2476,7 +2496,7 @@ Underfull \hbox (badness 2027) in paragraph at lines 672--672
 File: images/logo.pdf Graphic file (type pdf)
 <use images/logo.pdf>
 
-Underfull \hbox (badness 10000) in paragraph at lines 672--672
+Underfull \hbox (badness 10000) in paragraph at lines 689--689
 
  []
 
@@ -2523,12 +2543,12 @@ LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 (Font)              scaled to size 7.99915pt on input line 15.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 (Font)              scaled to size 5.99936pt on input line 15.
-LaTeX Info: Redefining \rmfamily on input line 59.
-LaTeX Info: Redefining \sffamily on input line 59.
-LaTeX Info: Redefining \ttfamily on input line 59.
-LaTeX Info: Redefining \rmfamily on input line 61.
-LaTeX Info: Redefining \sffamily on input line 61.
-LaTeX Info: Redefining \ttfamily on input line 61.
+LaTeX Info: Redefining \rmfamily on input line 55.
+LaTeX Info: Redefining \sffamily on input line 55.
+LaTeX Info: Redefining \ttfamily on input line 55.
+LaTeX Info: Redefining \rmfamily on input line 57.
+LaTeX Info: Redefining \sffamily on input line 57.
+LaTeX Info: Redefining \ttfamily on input line 57.
 )
 
 ******************************************************
@@ -2561,1378 +2581,629 @@ Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 
 
 ] [2]
-Package mdframed Info: mdframed works in twoside mode on input line 802.
+Package mdframed Info: mdframed works in twoside mode on input line 819.
+Package mdframed Info: mdframed detected package amsthm 
+ changed the theorem header of amsthm
+(mdframed)              on input line 819.
 File: images/_icons/chapterintro.png Graphic file (type bmp)
 <images/_icons/chapterintro.png>
 
-Overfull \hbox (2.22pt too wide) in paragraph at lines 802--805
+Overfull \hbox (2.22pt too wide) in paragraph at lines 819--822
 [][]  []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 802--805
+Underfull \hbox (badness 10000) in paragraph at lines 819--822
 
  []
 
 
-LaTeX Warning: Reference `inf-stat-probl-inv' on page 3 undefined on input line
- 810.
+LaTeX Warning: Reference `intro-prob-1' on page 3 undefined on input line 827.
 
 [3
 
-]
-Package mdframed Info: mdframed works in twoside mode on input line 875.
+] [4] [5]
+Package mdframed Info: mdframed works in twoside mode on input line 915.
+Package mdframed Info: mdframed detected package amsthm 
+ changed the theorem header of amsthm
+(mdframed)              on input line 915.
 File: images/_icons/important.png Graphic file (type bmp)
 <images/_icons/important.png>
 
-Overfull \hbox (2.22pt too wide) in paragraph at lines 875--878
+Overfull \hbox (2.22pt too wide) in paragraph at lines 915--918
 [][]  []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 875--878
+Underfull \hbox (badness 10000) in paragraph at lines 915--918
 
  []
 
-
-Overfull \vbox (74.33522pt too high) detected at line 878
- []
-
-Package mdframed Info: Box was splittet wrong
- starting loop to iterate the splitting point
-(mdframed)              on input line 878.
-
-Overfull \vbox (75.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (76.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (77.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (78.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (79.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (80.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (81.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (82.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (83.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (84.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (85.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (86.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (87.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (88.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (89.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (90.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (91.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (92.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (93.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (94.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (95.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (96.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (97.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (98.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (99.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (100.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (101.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (102.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (103.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (104.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (105.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (106.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (107.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (108.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (109.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (110.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (111.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (112.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (113.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (114.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (115.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (116.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (117.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (118.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (119.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (120.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (121.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (122.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (123.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (124.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (125.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (126.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (127.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (128.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (129.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (130.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (131.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (132.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (133.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (134.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (135.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (136.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (137.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (138.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (139.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (140.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (141.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (142.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (143.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (144.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (145.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (146.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (147.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (148.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (149.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (150.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (151.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (152.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (153.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (154.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (155.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (156.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (157.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (158.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (159.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (160.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (161.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (162.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (163.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (164.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (165.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (166.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (167.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (168.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (169.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (170.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (171.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (172.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (173.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (174.33522pt too high) detected at line 878
- []
-
-
-Overfull \vbox (175.33522pt too high) detected at line 878
- []
-
-
-Package mdframed Warning: correct box splittet fails
- It seems you are using a non splittable contents
-(mdframed)                 on input line 878.
-
-Package mdframed Info: You first box width is to small
- mdframed fixed it
-(mdframed)              on input line 878.
-[4]
-Package mdframed Info: mdframed works in twoside mode on input line 903.
-File: images/_icons/important.png Graphic file (type bmp)
-<images/_icons/important.png>
-
-Overfull \hbox (2.22pt too wide) in paragraph at lines 903--906
-[][]  []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 903--906
-
- []
-
-[5]
-Package mdframed Info: Not enough space on this page on input line 906.
 [6]
-LaTeX Font Info:    Font shape `TU/OperatorMonoSSmLigBook(0)/m/n' will be
-(Font)              scaled to size 7.5pt on input line 970.
-LaTeX Font Info:    Font shape `TU/OperatorMonoSSmLigBook(0)/m/it' will be
-(Font)              scaled to size 7.5pt on input line 973.
-[7] [8]
-Package mdframed Info: mdframed works in twoside mode on input line 1063.
-File: images/_icons/important.png Graphic file (type bmp)
-<images/_icons/important.png>
-
-Overfull \hbox (2.22pt too wide) in paragraph at lines 1063--1070
-[][]  []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1063--1070
-
- []
-
-
-Overfull \vbox (170.20914pt too high) detected at line 1070
- []
-
-Package mdframed Info: Box was splittet wrong
- starting loop to iterate the splitting point
-(mdframed)              on input line 1070.
-
-Overfull \vbox (171.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (172.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (173.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (174.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (175.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (176.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (177.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (178.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (179.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (180.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (181.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (182.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (183.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (184.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (185.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (186.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (187.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (188.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (189.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (190.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (191.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (192.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (193.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (194.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (195.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (196.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (197.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (198.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (199.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (200.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (201.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (202.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (203.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (204.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (205.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (206.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (207.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (208.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (209.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (210.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (211.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (212.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (213.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (214.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (215.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (216.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (217.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (218.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (219.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (220.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (221.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (222.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (223.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (224.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (225.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (226.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (227.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (228.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (229.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (230.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (231.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (232.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (233.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (234.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (235.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (236.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (237.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (238.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (239.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (240.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (241.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (242.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (243.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (244.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (245.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (246.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (247.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (248.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (249.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (250.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (251.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (252.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (253.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (254.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (255.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (256.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (257.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (258.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (259.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (260.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (261.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (262.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (263.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (264.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (265.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (266.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (267.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (268.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (269.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (270.20914pt too high) detected at line 1070
- []
-
-
-Overfull \vbox (271.20914pt too high) detected at line 1070
- []
-
-
-Package mdframed Warning: correct box splittet fails
- It seems you are using a non splittable contents
-(mdframed)                 on input line 1070.
-
-Package mdframed Info: You first box width is to small
- mdframed fixed it
-(mdframed)              on input line 1070.
-[9]
 File: 025_intro_bayes_files/figure-latex/ch-03-02-models-types-of-priors-1.pdf 
 Graphic file (type pdf)
 <use 025_intro_bayes_files/figure-latex/ch-03-02-models-types-of-priors-1.pdf>
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 1097.
+(Font)              scaled to size 9.0pt on input line 957.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 9.00082pt on input line 1097.
+(Font)              scaled to size 9.00082pt on input line 957.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 8.99904pt on input line 1097.
+(Font)              scaled to size 8.99904pt on input line 957.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-Package mdframed Info: mdframed works in twoside mode on input line 1100.
+
+LaTeX Warning: Reference `chapter-balance' on page 7 undefined on input line 96
+3.
+
+[7]
+LaTeX Font Info:    Font shape `TU/OperatorMonoSSmLigBook(0)/m/n' will be
+(Font)              scaled to size 7.5pt on input line 976.
+File: 025_intro_bayes_files/figure-latex/unnamed-chunk-1-1.pdf Graphic file (ty
+pe pdf)
+<use 025_intro_bayes_files/figure-latex/unnamed-chunk-1-1.pdf>
+[8]
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
+(Font)              scaled to size 10.0pt on input line 997.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
+(Font)              scaled to size 7.0pt on input line 997.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
+(Font)              scaled to size 5.0pt on input line 997.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
+(Font)              scaled to size 10.00092pt on input line 997.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
+(Font)              scaled to size 7.00064pt on input line 997.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
+(Font)              scaled to size 5.00046pt on input line 997.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
+(Font)              scaled to size 9.99893pt on input line 997.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
+(Font)              scaled to size 6.99925pt on input line 997.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
+(Font)              scaled to size 4.99947pt on input line 997.
+Package mdframed Info: mdframed works in twoside mode on input line 1017.
+Package mdframed Info: mdframed detected package amsthm 
+ changed the theorem header of amsthm
+(mdframed)              on input line 1017.
 File: images/_icons/important.png Graphic file (type bmp)
 <images/_icons/important.png>
 
-LaTeX Warning: Reference `chapter-balance' on page 10 undefined on input line 1
-101.
-
-
-Overfull \hbox (2.22pt too wide) in paragraph at lines 1100--1103
+Overfull \hbox (2.22pt too wide) in paragraph at lines 1017--1020
 [][]  []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1100--1103
+Underfull \hbox (badness 10000) in paragraph at lines 1017--1020
 
  []
 
 
-Overfull \vbox (108.533pt too high) detected at line 1103
+Overfull \vbox (17.44695pt too high) detected at line 1020
  []
 
 Package mdframed Info: Box was splittet wrong
  starting loop to iterate the splitting point
-(mdframed)              on input line 1103.
+(mdframed)              on input line 1020.
 
-Overfull \vbox (109.533pt too high) detected at line 1103
+Overfull \vbox (18.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (110.533pt too high) detected at line 1103
+Overfull \vbox (19.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (111.533pt too high) detected at line 1103
+Overfull \vbox (20.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (112.533pt too high) detected at line 1103
+Overfull \vbox (21.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (113.533pt too high) detected at line 1103
+Overfull \vbox (22.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (114.533pt too high) detected at line 1103
+Overfull \vbox (23.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (115.533pt too high) detected at line 1103
+Overfull \vbox (24.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (116.533pt too high) detected at line 1103
+Overfull \vbox (25.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (117.533pt too high) detected at line 1103
+Overfull \vbox (26.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (118.533pt too high) detected at line 1103
+Overfull \vbox (27.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (119.533pt too high) detected at line 1103
+Overfull \vbox (28.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (120.533pt too high) detected at line 1103
+Overfull \vbox (29.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (121.533pt too high) detected at line 1103
+Overfull \vbox (30.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (122.533pt too high) detected at line 1103
+Overfull \vbox (31.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (123.533pt too high) detected at line 1103
+Overfull \vbox (32.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (124.533pt too high) detected at line 1103
+Overfull \vbox (33.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (125.533pt too high) detected at line 1103
+Overfull \vbox (34.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (126.533pt too high) detected at line 1103
+Overfull \vbox (35.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (127.533pt too high) detected at line 1103
+Overfull \vbox (36.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (128.533pt too high) detected at line 1103
+Overfull \vbox (37.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (129.533pt too high) detected at line 1103
+Overfull \vbox (38.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (130.533pt too high) detected at line 1103
+Overfull \vbox (39.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (131.533pt too high) detected at line 1103
+Overfull \vbox (40.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (132.533pt too high) detected at line 1103
+Overfull \vbox (41.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (133.533pt too high) detected at line 1103
+Overfull \vbox (42.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (134.533pt too high) detected at line 1103
+Overfull \vbox (43.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (135.533pt too high) detected at line 1103
+Overfull \vbox (44.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (136.533pt too high) detected at line 1103
+Overfull \vbox (45.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (137.533pt too high) detected at line 1103
+Overfull \vbox (46.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (138.533pt too high) detected at line 1103
+Overfull \vbox (47.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (139.533pt too high) detected at line 1103
+Overfull \vbox (48.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (140.533pt too high) detected at line 1103
+Overfull \vbox (49.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (141.533pt too high) detected at line 1103
+Overfull \vbox (50.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (142.533pt too high) detected at line 1103
+Overfull \vbox (51.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (143.533pt too high) detected at line 1103
+Overfull \vbox (52.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (144.533pt too high) detected at line 1103
+Overfull \vbox (53.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (145.533pt too high) detected at line 1103
+Overfull \vbox (54.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (146.533pt too high) detected at line 1103
+Overfull \vbox (55.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (147.533pt too high) detected at line 1103
+Overfull \vbox (56.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (148.533pt too high) detected at line 1103
+Overfull \vbox (57.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (149.533pt too high) detected at line 1103
+Overfull \vbox (58.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (150.533pt too high) detected at line 1103
+Overfull \vbox (59.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (151.533pt too high) detected at line 1103
+Overfull \vbox (60.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (152.533pt too high) detected at line 1103
+Overfull \vbox (61.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (153.533pt too high) detected at line 1103
+Overfull \vbox (62.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (154.533pt too high) detected at line 1103
+Overfull \vbox (63.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (155.533pt too high) detected at line 1103
+Overfull \vbox (64.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (156.533pt too high) detected at line 1103
+Overfull \vbox (65.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (157.533pt too high) detected at line 1103
+Overfull \vbox (66.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (158.533pt too high) detected at line 1103
+Overfull \vbox (67.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (159.533pt too high) detected at line 1103
+Overfull \vbox (68.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (160.533pt too high) detected at line 1103
+Overfull \vbox (69.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (161.533pt too high) detected at line 1103
+Overfull \vbox (70.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (162.533pt too high) detected at line 1103
+Overfull \vbox (71.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (163.533pt too high) detected at line 1103
+Overfull \vbox (72.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (164.533pt too high) detected at line 1103
+Overfull \vbox (73.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (165.533pt too high) detected at line 1103
+Overfull \vbox (74.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (166.533pt too high) detected at line 1103
+Overfull \vbox (75.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (167.533pt too high) detected at line 1103
+Overfull \vbox (76.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (168.533pt too high) detected at line 1103
+Overfull \vbox (77.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (169.533pt too high) detected at line 1103
+Overfull \vbox (78.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (170.533pt too high) detected at line 1103
+Overfull \vbox (79.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (171.533pt too high) detected at line 1103
+Overfull \vbox (80.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (172.533pt too high) detected at line 1103
+Overfull \vbox (81.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (173.533pt too high) detected at line 1103
+Overfull \vbox (82.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (174.533pt too high) detected at line 1103
+Overfull \vbox (83.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (175.533pt too high) detected at line 1103
+Overfull \vbox (84.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (176.533pt too high) detected at line 1103
+Overfull \vbox (85.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (177.533pt too high) detected at line 1103
+Overfull \vbox (86.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (178.533pt too high) detected at line 1103
+Overfull \vbox (87.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (179.533pt too high) detected at line 1103
+Overfull \vbox (88.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (180.533pt too high) detected at line 1103
+Overfull \vbox (89.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (181.533pt too high) detected at line 1103
+Overfull \vbox (90.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (182.533pt too high) detected at line 1103
+Overfull \vbox (91.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (183.533pt too high) detected at line 1103
+Overfull \vbox (92.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (184.533pt too high) detected at line 1103
+Overfull \vbox (93.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (185.533pt too high) detected at line 1103
+Overfull \vbox (94.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (186.533pt too high) detected at line 1103
+Overfull \vbox (95.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (187.533pt too high) detected at line 1103
+Overfull \vbox (96.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (188.533pt too high) detected at line 1103
+Overfull \vbox (97.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (189.533pt too high) detected at line 1103
+Overfull \vbox (98.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (190.533pt too high) detected at line 1103
+Overfull \vbox (99.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (191.533pt too high) detected at line 1103
+Overfull \vbox (100.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (192.533pt too high) detected at line 1103
+Overfull \vbox (101.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (193.533pt too high) detected at line 1103
+Overfull \vbox (102.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (194.533pt too high) detected at line 1103
+Overfull \vbox (103.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (195.533pt too high) detected at line 1103
+Overfull \vbox (104.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (196.533pt too high) detected at line 1103
+Overfull \vbox (105.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (197.533pt too high) detected at line 1103
+Overfull \vbox (106.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (198.533pt too high) detected at line 1103
+Overfull \vbox (107.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (199.533pt too high) detected at line 1103
+Overfull \vbox (108.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (200.533pt too high) detected at line 1103
+Overfull \vbox (109.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (201.533pt too high) detected at line 1103
+Overfull \vbox (110.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (202.533pt too high) detected at line 1103
+Overfull \vbox (111.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (203.533pt too high) detected at line 1103
+Overfull \vbox (112.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (204.533pt too high) detected at line 1103
+Overfull \vbox (113.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (205.533pt too high) detected at line 1103
+Overfull \vbox (114.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (206.533pt too high) detected at line 1103
+Overfull \vbox (115.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (207.533pt too high) detected at line 1103
+Overfull \vbox (116.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (208.533pt too high) detected at line 1103
+Overfull \vbox (117.44695pt too high) detected at line 1020
  []
 
 
-Overfull \vbox (209.533pt too high) detected at line 1103
+Overfull \vbox (118.44695pt too high) detected at line 1020
  []
 
 
 Package mdframed Warning: correct box splittet fails
  It seems you are using a non splittable contents
-(mdframed)                 on input line 1103.
+(mdframed)                 on input line 1020.
 
 Package mdframed Info: You first box width is to small
  mdframed fixed it
-(mdframed)              on input line 1103.
-[10] [11]
-LaTeX Font Info:    Font shape `TU/OperatorMonoSSmLigBook(0)/b/n' will be
-(Font)              scaled to size 7.5pt on input line 1119.
+(mdframed)              on input line 1020.
+[9]
+Package mdframed Info: mdframed works in twoside mode on input line 1022.
+Package mdframed Info: mdframed detected package amsthm 
+ changed the theorem header of amsthm
+(mdframed)              on input line 1022.
+File: images/_icons/guided-practice.png Graphic file (type bmp)
+<images/_icons/guided-practice.png>
+LaTeX Font Info:    Trying to load font information for T1+phv on input line 10
+22.
+(/usr/local/texlive/2020/texmf-dist/tex/latex/psnfss/t1phv.fd
+File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 
-Underfull \hbox (badness 1325) in paragraph at lines 1130--1131
-[]\TU/phv/m/n/10 Qui di seguito è riportata la derivazione analitica. Sia $[] [
-] [][][][] [][]$ e sia
+LaTeX Warning: Font shape declaration has incorrect series value `mc'.
+               It should not contain an `m'! Please correct it.
+               Found on input line 20.
+
+
+LaTeX Warning: Font shape declaration has incorrect series value `mc'.
+               It should not contain an `m'! Please correct it.
+               Found on input line 23.
+
+
+LaTeX Warning: Font shape declaration has incorrect series value `mc'.
+               It should not contain an `m'! Please correct it.
+               Found on input line 26.
+
+
+LaTeX Warning: Font shape declaration has incorrect series value `mc'.
+               It should not contain an `m'! Please correct it.
+               Found on input line 46.
+
+)
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <9> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 1022.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1022--1024
+
+ []
+
+
+Overfull \hbox (2.22pt too wide) in paragraph at lines 1022--1025
+[][]  []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1022--1025
+
+ []
+
+LaTeX Font Info:    Font shape `TU/OperatorMonoSSmLigBook(0)/m/it' will be
+(Font)              scaled to size 7.5pt on input line 1042.
+[10]
+File: 025_intro_bayes_files/figure-latex/likefutexpect-1.pdf Graphic file (type
+ pdf)
+<use 025_intro_bayes_files/figure-latex/likefutexpect-1.pdf>
+Package mdframed Info: mdframed works in twoside mode on input line 1098.
+Package mdframed Info: mdframed detected package amsthm 
+ changed the theorem header of amsthm
+(mdframed)              on input line 1098.
+File: images/_icons/guided-practice.png Graphic file (type bmp)
+<images/_icons/guided-practice.png>
+
+Underfull \hbox (badness 10000) in paragraph at lines 1098--1100
+
+ []
+
+
+Overfull \hbox (2.22pt too wide) in paragraph at lines 1098--1101
+[][]  []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1098--1101
+
+ []
+
+[11]
+LaTeX Font Info:    Font shape `TU/OperatorMonoSSmLigBook(0)/b/n' will be
+(Font)              scaled to size 7.5pt on input line 1112.
+Package mdframed Info: mdframed works in twoside mode on input line 1146.
+Package mdframed Info: mdframed detected package amsthm 
+ changed the theorem header of amsthm
+(mdframed)              on input line 1146.
+File: images/_icons/guided-practice.png Graphic file (type bmp)
+<images/_icons/guided-practice.png>
+
+Underfull \hbox (badness 10000) in paragraph at lines 1146--1148
+
+ []
+
+
+Overfull \hbox (2.22pt too wide) in paragraph at lines 1146--1149
+[][]  []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1146--1149
+
  []
 
 [12]
 
 LaTeX Warning: Reference `chapter-distr-coniugate' on page 13 undefined on inpu
-t line 1206.
+t line 1196.
 
 
 LaTeX Warning: Reference `chapter-sintesi-distr-post' on page 13 undefined on i
-nput line 1211.
+nput line 1201.
 
 [13] [14
 
@@ -3988,12 +3259,12 @@ Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 LaTeX Info: Redefining \rmfamily on input line 3.
 LaTeX Info: Redefining \sffamily on input line 3.
 LaTeX Info: Redefining \ttfamily on input line 3.
-LaTeX Info: Redefining \rmfamily on input line 11.
-LaTeX Info: Redefining \sffamily on input line 11.
-LaTeX Info: Redefining \ttfamily on input line 11.
 LaTeX Info: Redefining \rmfamily on input line 13.
 LaTeX Info: Redefining \sffamily on input line 13.
 LaTeX Info: Redefining \ttfamily on input line 13.
+LaTeX Info: Redefining \rmfamily on input line 15.
+LaTeX Info: Redefining \sffamily on input line 15.
+LaTeX Info: Redefining \ttfamily on input line 15.
 ) [17
 
 ]
@@ -4017,17 +3288,17 @@ Sidefoothsep and sidefootwidth: 7pt and 117pt
 Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 ******************************************************
 
-LaTeX Info: Redefining \rmfamily on input line 1257.
-LaTeX Info: Redefining \sffamily on input line 1257.
-LaTeX Info: Redefining \ttfamily on input line 1257.
+LaTeX Info: Redefining \rmfamily on input line 1247.
+LaTeX Info: Redefining \sffamily on input line 1247.
+LaTeX Info: Redefining \ttfamily on input line 1247.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1261--1263
+Underfull \hbox (badness 10000) in paragraph at lines 1251--1253
 
  []
 
-LaTeX Info: Redefining \rmfamily on input line 1264.
-LaTeX Info: Redefining \sffamily on input line 1264.
-LaTeX Info: Redefining \ttfamily on input line 1264.
+LaTeX Info: Redefining \rmfamily on input line 1254.
+LaTeX Info: Redefining \sffamily on input line 1254.
+LaTeX Info: Redefining \ttfamily on input line 1254.
 The property list \polyglossia@langsetup contains the pairs (without outer
 braces):
 >  {latex/script}  =>  {latin}
@@ -4088,24 +3359,24 @@ braces):
 \tf@lof=\write9
 \openout9 = `DataScience.lof'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1269.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1269.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1259.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1259.
 (./DataScience.aux
 LaTeX Info: Redefining \rmfamily on input line 26.
 LaTeX Info: Redefining \sffamily on input line 26.
 LaTeX Info: Redefining \ttfamily on input line 26.
-LaTeX Info: Redefining \rmfamily on input line 151.
-LaTeX Info: Redefining \sffamily on input line 151.
-LaTeX Info: Redefining \ttfamily on input line 151.
-LaTeX Info: Redefining \rmfamily on input line 155.
-LaTeX Info: Redefining \sffamily on input line 155.
-LaTeX Info: Redefining \ttfamily on input line 155.
+LaTeX Info: Redefining \rmfamily on input line 169.
+LaTeX Info: Redefining \sffamily on input line 169.
+LaTeX Info: Redefining \ttfamily on input line 169.
+LaTeX Info: Redefining \rmfamily on input line 173.
+LaTeX Info: Redefining \sffamily on input line 173.
+LaTeX Info: Redefining \ttfamily on input line 173.
 )
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1269.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1269.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1259.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1259.
 
 Package rerunfilecheck Info: File `DataScience.out' has not changed.
-(rerunfilecheck)             Checksum: FEE950411AF1059BECB5ECB76D91D861;4564.
+(rerunfilecheck)             Checksum: 9DCA3BB2CE6C2E84EF798C81A1914903;4472.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -4117,12 +3388,12 @@ Package logreq Info: Writing requests to 'DataScience.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 48429 strings out of 479418
- 930031 string characters out of 5884586
- 1890908 words of memory out of 5000000
- 65102 multiletter control sequences out of 15000+600000
- 549317 words of font info for 109 fonts, out of 8000000 for 9000
+ 48670 strings out of 479418
+ 934540 string characters out of 5884586
+ 1889346 words of memory out of 5000000
+ 65321 multiletter control sequences out of 15000+600000
+ 552411 words of font info for 120 fonts, out of 8000000 for 9000
  1350 hyphenation exceptions out of 8191
- 75i,14n,121p,2169b,5782s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 75i,14n,121p,2169b,6112s stack positions out of 5000i,500n,10000p,200000b,80000s
 
 Output written on DataScience.pdf (28 pages).

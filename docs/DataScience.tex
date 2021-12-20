@@ -321,7 +321,7 @@
 
 \author{Corrado Caudek}
 
-\date{2021-12-19}
+\date{2021-12-20}
 
 
 % Include headers (preamble.tex) here
@@ -654,6 +654,23 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+\usepackage{amsthm}
+\newtheorem{theorem}{Teorema}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{corollary}{Corollario}[chapter]
+\newtheorem{proposition}{Proposizione}[chapter]
+\newtheorem{conjecture}{Congettura}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Definizione}[chapter]
+\theoremstyle{definition}
+\newtheorem{example}{Esempio}[chapter]
+\theoremstyle{definition}
+\newtheorem{exercise}{Esercizio}[chapter]
+\theoremstyle{definition}
+\newtheorem{hypothesis}{Hypothesis}[chapter]
+\theoremstyle{remark}
+\newtheorem*{remark}{Osservazione}
+\newtheorem*{solution}{Soluzione}
 \begin{document}
 \frontmatter
 
@@ -712,7 +729,7 @@ Copyright \(\copyright\) 2022.
 
 \normalsize
 
-Data della versione presente: Dicembre 19, 2021.
+Data della versione presente: Dicembre 20, 2021.
 
 \hypertarget{prefazione}{%
 \chapter{Prefazione}\label{prefazione}}
@@ -800,30 +817,20 @@ Febbraio 2022
 \chapter{Il problema inverso}\label{chapter-intro-bayes-inference}}
 
 \begin{chapterintro}
-Pensare in termini bayesiani significa aggiornare le nostre credenze combinando le credenze iniziali con le informazioni fornite dai dati. Ciò produce una credenza ``a posteriori''. L'aggiornamento bayesiano richiede che le credenze siano descritte nei termini di un modello probabilistico formulato in termini di uno o più parametri. La nostra incertezza riguarda il valore dei parametri. L'aggiornamento bayesiano ha lo scopo di ottenere le migliori stime possibili dei parametri del modello, alla luce delle nostre credenze a priori e dei dati osservati.
+Pensare in termini bayesiani significa aggiornare le nostre credenze combinando le credenze iniziali con le informazioni fornite dai dati, così da ottenere una credenza ``a posteriori''. L'aggiornamento bayesiano richiede che le credenze siano descritte nei termini di un modello probabilistico formulato nei termini di uno o più parametri. La nostra incertezza riguarda il valore dei parametri. L'aggiornamento bayesiano ha lo scopo di ottenere le migliori stime possibili dei parametri, considerando le informazioni fornite dalle nostre credenze a priori e dai dati osservati. In questo capitolo verrà descritto il significato di tutti e tre i termini a destra del segno di uguale nella formula di Bayes: la distribuzione a priori e la funzione di verosimiglianza al denominatore, la verosimiglianza marginale al denominatore.
 
 \end{chapterintro}
 
 \hypertarget{inferenza-bayesiana-come-un-problema-inverso}{%
 \section{Inferenza bayesiana come un problema inverso}\label{inferenza-bayesiana-come-un-problema-inverso}}
 
-L'inferenza bayesiana può essere descritta come la soluziome di un problema inverso mediante la regola di Bayes, ovvero la quantificazione della plausibilità di una teoria alla luce dei dati osservati -- (si veda la Sezione \ref{inf-stat-probl-inv}).
+L'inferenza bayesiana può essere descritta come la soluziome di un problema inverso mediante la regola di Bayes, ovvero la quantificazione della plausibilità di una teoria alla luce dei dati osservati -- (si veda il Capitolo \ref{intro-prob-1}).
 
 \hypertarget{notazione}{%
 \subsection{Notazione}\label{notazione}}
 
-Per fissare la notazione, nel seguito \(y\) rappresenterà i dati e \(\theta\) rappresenterà i parametri incogniti di un modello statistico. Sia \(y\) che \(\theta\) saranno concepiti come delle variabili casuali.\footnote{Nell'approccio bayesiano si fa riferimento ad un modello probabilistico \(f(y \mid \theta)\) rappresentativo del fenomeno d'interesse noto a meno del valore assunto dal parametro (o dei parametri) che lo caratterizza. Si fa inoltre riferimento ad una distribuzione congiunta (di massa o di densità di probabilità) \(f(y, \theta)\). Entrambi gli argomenti della funzione \(y\) e \(\theta\) hanno natura di variabili casuali, laddove la nostra incertezza relativa a \(y\) è dovuta alla naturale variabilità del fenomeno indagato (\emph{variabilità aleatoria}), mentre la nostra incertezza relativa a \(\theta\) è dovuta alla mancata conoscenza del suo valore numerico (\emph{variabilità epistemica}).} Con \(x\) verranno invece denotate le quantità note, come ad esempio i predittori del modello lineare. Per rappresentare in un modo conciso i modelli probabilistici viene usata una notazione particolare. Ad esempio, invece di scrivere
-\[
-p(\theta) = \text{Beta}(1, 1),
-\]
-scriviamo:
-\[
-\theta \sim \text{Beta}(1, 1).
-\]
-Il simbolo ``\(\sim\)'' viene spesso letto ``è distribuito come''. Possiamo anche pensare che significhi che \(\theta\) costituisce un campione casuale estratto dalla distribuzione Beta(1, 1). Allo stesso modo, per l'esempio presente, la verosimiglianza può essere scritta come:
-\[
-y \sim \text{Bin}(n, \theta).
-\]
+Per fissare la notazione, nel seguito \(y\) rappresenterà i dati e \(\theta\) rappresenterà i parametri incogniti di un modello statistico. Sia \(y\) che \(\theta\) saranno concepiti come delle variabili casuali.\footnote{Nell'approccio bayesiano si fa riferimento ad un modello probabilistico \(f(y \mid \theta)\) rappresentativo del fenomeno d'interesse noto a meno del valore assunto dal parametro (o dei parametri) che lo caratterizza. Si fa inoltre riferimento ad una distribuzione congiunta (di massa o di densità di probabilità) \(f(y, \theta)\). Entrambi gli argomenti della funzione \(y\) e \(\theta\) hanno natura di variabili casuali, laddove la nostra incertezza relativa a \(y\) è dovuta alla naturale variabilità del fenomeno indagato (\emph{variabilità aleatoria}), mentre la nostra incertezza relativa a \(\theta\) è dovuta alla mancata conoscenza del suo valore numerico (\emph{variabilità epistemica}).} Con \(x\) verranno invece denotate le quantità note, come ad esempio i predittori del modello lineare. Per rappresentare in un modo conciso i modelli probabilistici viene usata una notazione particolare. Ad esempio, invece di scrivere \(p(\theta) = \text{Beta}(1, 1)\)
+scriviamo \(\theta \sim \text{Beta}(1, 1)\). Il simbolo ``\(\sim\)'' viene spesso letto ``è distribuito come''. Possiamo anche pensare che significhi che \(\theta\) costituisce un campione casuale estratto dalla distribuzione Beta(1, 1). Allo stesso modo, ad esempio, la verosimiglianza del modello binomiale può essere scritta come \(y \sim \text{Bin}(n, \theta)\).
 
 \hypertarget{funzioni-di-probabilituxe0}{%
 \subsection{Funzioni di probabilità}\label{funzioni-di-probabilituxe0}}
@@ -845,10 +852,12 @@ Nell'aggiornamento bayesiano vengono utilizzate le seguenti distribuzioni di pro
   la \emph{distribuzione a posteriori} \(p(\theta \mid y)\) --- la nuova credenza relativa alla credibilità di ciascun valore \(\theta\) dopo avere osservato i dati \(Y = y\).
 \end{itemize}
 
-\hypertarget{la-regola-di-bayes}{%
-\subsection{La regola di Bayes}\label{la-regola-di-bayes}}
+In questo Capitolo ci limiteremo ad introdurre le tre quantità che vengono utilizzate nella regola di Bayes: la distribuzione a priori, la verosimiglianza e la verosimiglianza marginale. Nei capitoli successivi vedremo come sia possibile, mediante queste tre distribuzione, giungere alla distribuzione a posteriori \(p(\theta \mid y)\).
 
-Assumendo un modello statistico, la formula di Bayes consente di giungere alla distribuzione a posteriori \(p(\theta \mid y)\) per il parametro di interesse \(\theta\), come indicato dalla seguente catena di equazioni:
+\hypertarget{la-regola-di-bayes}{%
+\section{La regola di Bayes}\label{la-regola-di-bayes}}
+
+Assumendo un modello statistico, la formula di Bayes consente di giungere alla distribuzione a posteriori \(p(\theta \mid y)\) per il parametro di interesse \(\theta\), come indicato dalla seguente catena di equazioni\footnote{In realtà, avremmo dovuto scrivere \(p(\theta \mid y, \mathcal{M})\), in quanto non condizioniamo la stima di \(\theta\) solo rispetto ai dati \(y\) ma anche ad un modello probabilistico \(\mathcal{M}\) che viene assunto quale meccanismo generatore dei dati. Per semplicità di notazione, omettiamo il riferimento a \(\mathcal{M}\).}:
 \begin{align}
 p(\theta \mid y)  &= \displaystyle \frac{p(\theta,y)}{p(y)}
  \ \ \ \ \ \mbox{ [definizione di probabilità condizionata]}
@@ -872,20 +881,21 @@ La regola di Bayes ``inverte'' la probabilità della distribuzione a posteriori 
 
 Possiamo dire che la regola di Bayes viene usata per aggiornare le credenze a priori su \(\theta\) (ovvero, la distribuzione a priori) in modo tale da produrre le nuove credenze a posteriori \(p(\theta \mid y)\) che combinano le informazioni fornite dai dati \(y\) con le credenze precedenti. La distribuzione a posteriori riflette dunque l'aggiornamento delle credenze del ricercatore alla luce dei dati. La distribuzione a posteriori \(p(\theta \mid y)\) contiene tutta l'informazione riguardante il parametro \(\theta\) e viene utilizzata per produrre indicatori sintetici, per la determinazione di stime puntuali o intervallari, e per la verifica d'ipotesi.
 
-\begin{important}
 La \eqref{eq:bayesmodel} rende evidente che, in ottica bayesiana, la quantità di interesse \(\theta\) non è fissata (come nell'impostazione frequentista), ma è una variabile casuale la cui distribuzione di probabilità è influenzata sia dalle informazioni a priori sia dai dati a disposizione. In altre parole, nell'approccio bayesiano non esiste un valore vero di \(\theta\), ma invece lo scopo è quello di fornire invece un giudizio di probabilità (o di formulare una ``previsione'', nel linguaggio di de Finetti). Prima delle osservazioni, sulla base delle nostre conoscenze assegnamo a \(\theta\) una distribuzione a priori di probabilità. Dopo le osservazioni, correggiamo il nostro giudizio e assegniamo a \(\theta\) una distribuzione a posteriori di probabilità.
 
-\end{important}
+\hypertarget{un-esempio-di-aggiornamento-bayesiano}{%
+\subsection{Un esempio di aggiornamento bayesiano}\label{un-esempio-di-aggiornamento-bayesiano}}
 
-\hypertarget{aggiornamento-bayesiano-per-v.c.-discrete}{%
-\section{Aggiornamento bayesiano per v.c. discrete}\label{aggiornamento-bayesiano-per-v.c.-discrete}}
+Per descrivere l'aggiornamento bayesiano, in questo Capitolo (così come nei successivi) considereremo i dati di \textcite{zetschefuture2019}. Questi ricercatori si sono chiesti se gli individui depressi manifestino delle aspettative accurate circa il loro umore futuro, oppure se tali aspettative siano distorte negativamente. Esamineremo qui i 30 partecipanti dello studio di \textcite{zetschefuture2019} che hanno riportato la presenza di un episodio di depressione maggiore in atto. All'inizio della settimana di test, a questi pazienti è stato chiesto di valutare l'umore che si aspettavano di esperire nei giorni seguenti della settimana. Mediante una app, i partecipanti dovevano poi valutare il proprio umore in cinque momenti diversi di ciascuno dei cinque giorni successivi. Lo studio considera diverse emozioni, ma qui ci concentriamo solo sulla tristezza.
 
-Per introdurre la procedura dell'aggiornamento bayesiano discuteremo un esempio riguardante la sfida tra Gary Kasparov e il supercomputer Deep Blue \autocite{Johnson2022bayesrules}. Nel 1996 Kasparov giocò sei partite contro Deep Blue vincendone tre, perdendone una, con due patte, e vincendo così il match. Nel 1997 si svolse la rivincita, sempre al meglio di sei partite. Nella rivincita, Kasparov vinse una partita, perse due partite, con tre patte, perdendo dunque il match. Quello che vogliamo fare è descrivere la nostra credenza relativa all'abilità di Kasparov di battere Deep Blue, alla luce delle credenze iniziali che possiamo avere avuto e considerati i dati relativi alla sfida del 1997.
+Sulla base dei dati forniti dagli autori, abbiamo calcolato la media dei giudizi relativi al livello di tristezza raccolti da ciascun partecipante tramite la app. Tale media è stata poi sottratta dall'aspettativa del livello di tristezza fornita all'inizio della settimana. La discrepanza tra aspettative e realtà è stata considerata come un evento dicotomico: valori positivi di tale differenza indicano che le aspettative circa il livello di tristezza erano maggiori del livello di tristezza effettivamente esperito --- ciò significa che le aspettative future risultano negativamente distorte (evento codificato con ``1''). Viceversa, si ha che le aspettative risultano positivamente distorte se la differenza descritta in precedenza assume un valore negativo (evento codificato con ``0'').
+
+Nel campione dei 30 partecipanti clinici di \textcite{zetschefuture2019}, le aspettative future di 23 partecipanti risultano distorte negativamente e quelle di 7 partecipanti risultano distorte positivamente. Chiameremo \(\theta\) la probabilità dell'evento ``le aspettative del partecipante sono distorte negativamente''. Ci poniamo il problema di ottenere una stima a posteriori di \(\theta\) avendo osservato 23 ``successi'' in 30 prove.\footnote{Si noti un punto importante: dire semplicemente che la stima di \(\theta\) è uguale a 23/30 = 0.77 ci porta ad ignorare il livello di incertezza associato a tale stima. Infatti, lo stesso valore (0.77) si può ottenere come 23/30, o 230/300, o 2300/3000, o 23000/30000, ma l'incertezza di una stima pari a 0.77 è molto diversa nei quattro casi. Quando si traggono conclusioni dai dati è invece necessario quantificare il livello della nostra incertezza relativamente alla stima del parametro di interesse (nel caso presente, \(\theta\)). Lo strumento ci consente di quantificare tale incertezza è la distribizione a posteriori \(p(\theta \mid y)\). Ovviamente, \(p(\theta \mid y)\) assume forme molto diverse nei quattro casi descritti sopra.}
 
 \hypertarget{modello-probabilistico}{%
-\subsection{Modello probabilistico}\label{modello-probabilistico}}
+\section{Modello probabilistico}\label{modello-probabilistico}}
 
-Se i dati rappresentano una proporzione, come in precedenza, possiamo adottare un modello probabilistico binomiale:
+Nel caso dello studio di \textcite{zetschefuture2019}, i dati qui considerati possono essere considerati la manifestazione di una variabile casuale Bernoulliana -- 23 ``successi'' in 30 prove. Se i dati rappresentano una proporzione, allora possiamo adottare un modello probabilistico binomiale quale meccanismo generatore dei dati:
 \begin{equation}
 y  \sim \mbox{Bin}(n, \theta),
 \label{eq:binomialmodel}
@@ -896,181 +906,31 @@ p(y \mid \theta)
 \ = \
 \mbox{Bin}(y \mid n, \theta).
 \]
-Nei capitoli precedenti è stato mostrato come, sulla base del modello binomiale, sia possibile assegnare una probabilità a ciascun possibile valore \(y \in \{0, 1, \dots, n\}\) \emph{assumendo noto il valore del parametro} \(\theta\). Ma ora abbiamo il problema inverso, ovvero quello di fare inferenza su \(\theta\) alla luce dei dati campionari \(y\). In altre parole, riteniamo di conoscere il modello probabilistico che ha generato i dati, ma di tale modello non conosciamo i parametri. Nel caso presente, il modello probabilistico è quello binomiale. Noi vogliamo ottenere informazioni sul valore di \(\theta\) conoscendo il numero \(y\) di successi osservati nel campione.
 
-Una parte del lavoro della ricerca in tutte le scienze consiste nel verificare le assunzioni dei modelli e, se necessario, nel migliorare i modelli dei fenomeni considerati. Un modello viene giudicato in relazione al suo obiettivo. Se l'obiettivo del modello molto semplice che stiamo discutendo è quello di prevedere la proporzione di casi nei quali \(y_i = 1\), \(i = 1, \dots, n\), allora un modello con un solo parametro come quello che abbiamo introdotto sopra può essere sufficiente. Ma l'evento \(y_i=1\) (supponiamo: superare l'esame di Psicometria, oppure risultare positivi al COVID-19) dipende da molti fattori e se vogliamo rendere conto di una tale complessità, un modello come quello che stiamo discutendo qui certamente non sarà sufficiente.
+Nei capitoli precedenti è stato mostrato come, sulla base del modello binomiale, sia possibile assegnare una probabilità a ciascun possibile valore \(y \in \{0, 1, \dots, n\}\) \emph{assumendo noto il valore del parametro} \(\theta\). Ma ora abbiamo il problema inverso, ovvero quello di fare inferenza su \(\theta\) alla luce dei dati campionari \(y\). In altre parole, riteniamo di conoscere il modello probabilistico che ha generato i dati, ma di tale modello non conosciamo i parametri: vogliamo dunque ottenere informazioni su \(\theta\) avendo osservato i dati \(y\).
+
+Nel modello probabilistico che stiamo esaminando, il termine \(n\) viene trattato come una costante nota e \(\theta\) come una \emph{variabile casuale}.
+Dato che \(\theta\) è incognito, ma abbiamo a disposione i dati \(y\), svolgeremo l'inferenza su \(\theta\) mediante la regola di Bayes per determinare la distribuzione a posteriori \(p(\theta \mid y)\).
 
 \begin{important}
-La \eqref{eq:binomialmodel} è un modello probabilistico. Tale modello non spiega perché, in ciascuna realizzazione, \(Y\) assuma un particolare valore. Questo modello deve piuttosto essere inteso come un costrutto matematico che ha lo scopo di riflettere alcune proprietà del processo corrispondente ad una sequenza di prove Bernoulliane. In questo senso, è simile al modello di Isaac Newton dei moti planetari che utilizza equazioni differenziali. Le equazioni non sono i pianeti, ma solo descrizioni di come si muovono i pianeti in risposta alle forze gravitazionali. Modelli come quello di Newton ci permettono di prevedere alcuni fenomeni, come il moto dei pianeti, ad esempio. Ma in generale i modelli sono solo delle approssimazioni del fenomeno che vogliono descrivere. Anche il modello di Newton, che produce previsioni estremamente accurate di ciò che possiamo osservare a occhio nudo a proposito del moto dei corpi celesti, è solo un'approssimazione dei modelli del moto e dei fenomeni gravitazionali che, in seguito, sono stati introdotti da Albert Einstein. E anche tali modelli successivi sono, a loro volta, solo un caso speciale della più generale teoria della relatività. In altre parole, modelli sempre migliori vengono proposti, laddove ogni successivo modello è migliore di quello precedente in quanto ne migliora le capacità di previsione, è più generale, o è più elegante.
+Si noti che il modello probabilistico \eqref{eq:binomialmodel} non spiega perché, in ciascuna realizzazione, \(Y\) assuma un particolare valore. Questo modello deve piuttosto essere inteso come un costrutto matematico che ha lo scopo di riflettere alcune proprietà del processo corrispondente ad una sequenza di prove Bernoulliane. Una parte del lavoro della ricerca in tutte le scienze consiste nel verificare le assunzioni dei modelli e, se necessario, nel migliorare i modelli dei fenomeni considerati. Un modello viene giudicato in relazione al suo obiettivo. Se l'obiettivo del modello molto semplice che stiamo discutendo è quello di prevedere la proporzione di casi nei quali \(y_i = 1\), \(i = 1, \dots, n\), allora un modello con un solo parametro come quello che abbiamo introdotto sopra può essere sufficiente. Ma l'evento \(y_i=1\) (supponiamo: superare l'esame di Psicometria, oppure risultare positivi al COVID-19) dipende da molti fattori e se vogliamo rendere conto di una tale complessità, un modello come quello che stiamo discutendo qui certamente non sarà sufficiente. In altre parole, modelli sempre migliori vengono proposti, laddove ogni successivo modello è migliore di quello precedente in quanto ne migliora le capacità di previsione, è più generale, o è più elegante. Per concludere, un modello è un costrutto matematico il cui scopo è quello di rappresentare un qualche aspetto della realtà. Il valore di un tale strumento dipende dalla sua capacità di ottenere lo scopo per cui è stato costruito.
 
 \end{important}
 
-Per concludere, un modello è un costrutto matematico il cui scopo è quello di rappresentare un qualche aspetto della realtà. Il valore di un tale strumento dipende dalla sua capacità di ottenere lo scopo per cui è stato costruito.
-
-\hypertarget{il-problema-inverso}{%
-\subsection{Il problema inverso}\label{il-problema-inverso}}
-
-Nel modello probabilistico che stiamo esaminando, il termine \(n\) viene trattato come una costante nota e \(\theta\) come una \emph{variabile casuale}. Il parametro \(\theta\) del modello rappresenta la probabilità che ciascuna prova Bernoulliana sia un ``successo''. Dato che \(\theta\) è incognito, ma abbiamo a disposione un campione di dati, l'inferenza su \(\theta\) può essere svolta, mediante la regola di Bayes, costruendo la distribuzione a posteriori \(p(\theta \mid y)\). Una volta ottenuta la distribuzione a posteriori possiamo riassumerla, ad esempio, riportando l'intervallo centrale al 95\% della distribuzione di densità, ovvero
-\[
-\mbox{Pr}\left[ 0.025 \leq \theta \leq 0.975
-                \ \Big| \
-        Y = y
-         \right].
-\]
-Se vogliamo sapere, per esempio, se la probabilità di \(y_i=1\) sia maggiore di 0.5, possiamo calcolare la probabilità dell'evento
-\[
-\mbox{Pr}\left[\theta > \frac{1}{2}
-                \ \Bigg| \
-        Y = y
-         \right].
-\]
-
-\hypertarget{distribuzione-a-priori}{%
-\subsection{Distribuzione a priori}\label{distribuzione-a-priori}}
-
-Per scopi didattici, \textcite{Johnson2022bayesrules} ipotizzano che le credenze a priori relative a \(\pi\) (la probabilità Kasparov che batta Deep Blue) siano le seguenti:
-
-\begin{longtable}[]{@{}ccccc@{}}
-\toprule
-\(\theta\) & 0.2 & 0.5 & 0.8 & Totale \\
-\midrule
-\endhead
-\(P(\theta)\) & 0.10 & 0.65 & 0.15 & 1.0 \\
-\bottomrule
-\end{longtable}
-
-Anche se \(\theta \in [0, 1]\) è una variabile continua, per semplificare la discussione, \textcite{Johnson2022bayesrules} considerano solo tre possibili valori di \(\theta \in \{0.2, 0.5, 0.8\}\) e assegnano a tali valori possibili le probabilità indicate sopra. Questa tabella descrive le credenze iniziali relative alla capacità di Kasparov di battere Deep Blue; indica che le credenze iniziali pongono la massa maggiore della nostra credenza sull'evento \(\theta = 0.5\) --- in altre parole, più che ogni altra possibilità, a priori crediamo che Kasparov abbia solo il 50\% di possibilità di battere Deep Blue.
-
-\hypertarget{verosimiglianza}{%
-\subsection{Verosimiglianza}\label{verosimiglianza}}
-
-La sfida del 1997 ci fornisce i dati: una vittoria su sei partite; considerate le due vittorie di Deep Blue e le tre patte, Kasparov perse dunque il match. Per formulare la funzione di verosimiglianza dobbiamo utilizzare un modello statistico che descriva il ``processo generatore'' dei dati che abbiamo osservato. Semolifichiamo la situazione descrivendo i dati nei termini di un successo su sei prove. Ipotizziamo inoltre che le sei partite siano indipendenti le une dalle altre e che la probabilità di vittoria di Kasparov rimanga costante nelle sei partite. Descritta la situazione in questi termini, possiamo individuare nel modello binomiale il processo statistico che potrebbe avere generato i dati che abbiamo osservato. Questo modello probabilistico è formulato nei termini di un parametro: \(\theta\), ovvero la probabilità di vittoria (di Kasparov). Nel Paragrafo precedente abbiamo descritto la distribuzione di probabilità a priori del parametro \(\theta\). Poniamoci ora il problema di descrivere la verosimiglianza dei valori \(\theta\) alla luce dei dati osservati (ovvero, solo una vittoria su sei partite).
-
-Nel caso di una v.c. discreta, la verosimiglianza si ottiene utilizzando la distribuzione di massa di probabilità espressa in funzione dei parametri, quando i dati vengono tenuti costanti. Nel caso presente, la funzione di massa di probabilità è quella binomiale, ovvero
-\[
-p(y \mid \theta) = \binom{n}{y} \cdot \theta^y (1-\theta)^{N-y}
-\]
-e i dati sono \(y = 1\) vittoria su \(n = 6\) partite.
-
-In questo esercizio, \(\theta\) assume solo tre valori: \(\theta_1 = 0.2\), \(\theta_2 = 0.5\) e \(\theta_3 = 0.8\). Svolgiamo ora i calcoli. Quando \(\theta = 0.2\) otteniamo
-\[
- p(y \mid \theta_1) = \binom{6}{1} \cdot 0.2^1 (1-0.2)^{6-1} = 0.39322,
-\]
-con \(\theta = 0.5\) otteniamo
-\[
- p(y \mid \theta_2) = \binom{6}{1} \cdot 0.5^1 (1-0.5)^{6-1} = 0.09375,
-\]
-con \(\theta = 0.8\) otteniamo
-\[
- p(y \mid \theta_3) = \binom{6}{1} \cdot 0.8^1 (1-0.8)^{6-1} = 0.00154.
-\]
-Lo stesso risultato si ottiene nel modo seguente usando \(\textsf{R}\):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{theta }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{0.2}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\FloatTok{0.8}\NormalTok{)}
-\FunctionTok{dbinom}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{6}\NormalTok{, theta)}
-\CommentTok{\#\textgreater{} [1] 0.39322 0.09375 0.00154}
-\end{Highlighting}
-\end{Shaded}
-
-I tre valori che abbiamo trovato costisuiscono (in questo esempio semplificato) la funzione di verosimiglianza di \(\theta\) alla luce dei dati. La funzione di verosimiglianza ci dice quanto risultano compatibili i dati (\(y = 1\), \(n = 6\)) con i possibili valori del parametro \(\theta\), considerato il modello probabilistico binomiale.
-
-\begin{longtable}[]{@{}cccc@{}}
-\toprule
-\(\theta\) & 0.2 & 0.5 & 0.8 \\
-\midrule
-\endhead
-\(p(y = 1 \mid \theta)\) & 0.39322 & 0.09375 & 0.00154 \\
-\bottomrule
-\end{longtable}
-
-Nel caso presente, i dati (ovvero, una vittoria su sei partite) risultano maggiormente compatibili con il valore \(\theta = 0.2\) (Kasparov è molto meno forte di Deep Blue): la verosimiglianza di \(\theta = 0.2\) è 0.39. All'altro estremo, i dati risultano poco compatibili con il valore \(\theta = 0.8\) (Kasparov è molto più forte di Deep Blue): la verosimiglianza di \(\theta = 0.8\) è 0.0015.
-
-\hypertarget{la-costante-di-normalizzazione}{%
-\subsection{La costante di normalizzazione}\label{la-costante-di-normalizzazione}}
-
-Per calcolare la distribuzione a posteriori del parametro \(\theta\) il prodotto tra la distribuzione a priori e la verosimiglianza va diviso per una costante di normalizzazione. La costante di normalizzazione (o verosimiglianza marginale) ha lo scopo di fare in modo che la distribuzione a posteriori di \(\theta\) (quando tale v.c. è discreta) sommi ad 1.0. La \emph{verosimiglianza marginale} \(p(y = 1, n = 6)\) si ottiene marginalizzando la funzione di verosimiglianza
-\[
-p(y = 1, n = 6 \mid \theta) = \binom{6}{1} \theta^{1} (1-\theta)^{5}.
-\]
-sopra \(\theta\): per ogni possibile valore \(\theta\), si moltiplica il valore della verosimiglianza in corrisopndenza di \(\theta\) per la sua probabilità a priori di \(\theta\); si sommano poi tutti i prodotti ottenuti in questo modo.
-
-Nell'esempio precedente abbiamo considerato solo tre possibili valori \(\theta\): \(\theta_1 = 0.2\), \(\theta_2 = 0.5\) e \(\theta_3 = 0.8\). A tali valori \(\theta\) sono state assegnate le probabilità a priori \(p(\theta_1) = 0.10\), \(p(\theta_2) = 0.65\) e \(p(\theta_3) = 0.15\). Date queste informazioni possiamo calcolare la verosimiglianza marginale come segue:
-\begin{align}
-p(y = 1, n = 6) &= \binom{6}{1} \theta_1^{1} (1-\theta_1)^{5} \cdot p(\theta_1) \notag\\
-&= \binom{6}{1} \theta_2^{1} (1-\theta_2)^{5} \cdot p(\theta_2) \notag\\
-&= \binom{6}{1} \theta_3^{1} (1-\theta_3)^{5} \cdot p(\theta_3) \notag,
-\end{align}
-\noindent
-ovvero
-\begin{align}
-p(y = 1, n = 6) &= \binom{6}{1} 0.2^{1} (1-0.2)^{5} \cdot 0.10 \notag\\
-&+ \binom{6}{1} 0.5^{1} (1-0.5)^{5} \cdot 0.65 \notag\\
-&+ \binom{6}{1} 0.8^{1} (1-0.8)^{5} \cdot 0.15 \notag\\
-&\approx 0.0638.
-\end{align}
-È dunque possibile considerare la verosimiglianza marginale come una sorta di media ponderata della verosimiglianza, nella quale i ``pesi'' dipendono dalla credibilità dei valori del parametro.
-
-Svolgendo i calcoli con \(\mathsf{R}\) otteniamo
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{prior }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{0.10}\NormalTok{, }\FloatTok{0.25}\NormalTok{, }\FloatTok{0.65}\NormalTok{)}
-\FunctionTok{sum}\NormalTok{(}\FunctionTok{dbinom}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{6}\NormalTok{, theta) }\SpecialCharTok{*}\NormalTok{ prior)}
-\CommentTok{\#\textgreater{} [1] 0.0638}
-\end{Highlighting}
-\end{Shaded}
-
-Quello che stiamo discutendo è però un esempio artificiale perché al parametro \(\theta\) sono stati attribuiti solo tre valori possibili. In realtà, \(\theta\) è una variabile casuale continua. Vedremo in seguito come si affronta questo problema.
-
-\hypertarget{distribuzione-a-posteriori}{%
-\subsection{Distribuzione a posteriori}\label{distribuzione-a-posteriori}}
-
-La distribuzione a postreriori si trova applicando il teorema di Bayes:
-\[
-\text{probabilità a posteriori} = \frac{\text{probabilità a priori} \cdot \text{verosimiglianza}}{\text{costante di normalizzazione}}
-\]
-\noindent
-Nel caso presente abbiamo
-\[
-p(\theta \mid y = 1) = \frac{p(y = 1 \mid \theta) p(\theta)}{p(y = 1)}, \quad \theta \in \{0.2, 0.5, 0.8\}.
-\]
-\noindent
-Svolgendo i calcoli in \(\textsf{R}\) otteniamo
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{(}\FunctionTok{dbinom}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{6}\NormalTok{, theta) }\SpecialCharTok{*}\NormalTok{ prior) }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(}\FunctionTok{dbinom}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{6}\NormalTok{, theta) }\SpecialCharTok{*}\NormalTok{ prior) }
-\CommentTok{\#\textgreater{} [1] 0.6167 0.3676 0.0157}
-\end{Highlighting}
-\end{Shaded}
-
-In conclusione, dopo avere osservato i dati corrispondenti ad una sola vittoria di Kasparov sul sei partite, la \emph{previsione} (per usare il linguaggio di de Finetti) che Kasparov sia il giocatore dominante (\(\theta\) = 0.8) scende da 0.65 (a priori) a 0.0157 (a posteriori). Nella distribuzione a posteriori, invece, lo scenario che riceve il supporto maggiore è quello che descrive Kasparov come il giocatore più debole (\(\theta\) = 0.2) -- la previsione dell'evento \(\theta\) = 0.2 è 0.6167.
-
-\hypertarget{aggiornamento-bayesiano-per-v.c.-continue}{%
-\section{Aggiornamento bayesiano per v.c. continue}\label{aggiornamento-bayesiano-per-v.c.-continue}}
-
-Riprendiamo ora gli stessi concetti descritti nell'esempio precedente formulandoli in un modo più generale. Descriveremo inoltre l'aggiornamento bayesiano facendo riferimento alle variabili casuali continue.
-
-\hypertarget{la-distribuzione-a-priori-sui-parametri}{%
-\subsection{La distribuzione a priori sui parametri}\label{la-distribuzione-a-priori-sui-parametri}}
+\hypertarget{distribuzioni-a-priori}{%
+\section{Distribuzioni a priori}\label{distribuzioni-a-priori}}
 
 Quando adottiamo un approccio bayesiano, i parametri non sono delle costanti incognite ma delle variabili casuali governate da una propria legge di distribuzione delle probabilità (probabilità a priori). La distribuzione a priori sui valori dei parametri \(p(\theta)\) è parte integrante del modello statistico. Ciò implica che due modelli bayesiani possono condividere la stessa funzione di verosimiglianza, ma tuttavia devono essere considerati come modelli diversi se specificano diverse distribuzioni a priori. Ciò significa che, quando diciamo ``Modello binomiale'', intendiamo in realtà un'intera classe di modelli, ovvero tutti i possibili modelli che hanno la stessa verosimiglianza ma diverse distribuzioni a priori su \(\theta\).
 
 Nell'analisi dei dati bayesiana, la distribuzione a priori \(p(\theta)\) codifica le credenze del ricercatore a proposito dei valori dei parametri, prima di avere osservato i dati. Idealmente, le credenze a priori che supportano la specificazione di una distribuzione a priori dovrebbero essere supportate da una qualche motivazione, come ad esempio i risultati di ricerche precedenti, o altre motivazioni giustificabili.
 
-\begin{important}
 Quando una nuova osservazione (p.~es., vedo un cigno bianco) corrisponde alle mie credenze precedenti (p.~es., la maggior parte dei cigni sono bianchi) la nuova osservazione rafforza le mie credenze precedenti: più nuove osservazioni raccolgo (p.~es., più cigni bianchi vedo), più forti diventano le mie credenze precedenti.
-
 Tuttavia, quando una nuova osservazione (p.~es., vedo un cigno nero) non corrisponde alle mie credenze precedenti, ciò contribuisce a diminuire la certezza che attribuisco alle mie credenze: tanto maggiori diventano le osservazioni non corrispondenti alle mie credenze (p.~es., più cigni neri vedo ), tanto più si indeboliscono le mie credenze. Fondamentalmente, tanto più forti sono le mie credenze precedenti, di tante più osservazioni incompatibili (ad esempio, cigni neri) ho bisogno per cambiare idea.
 
-Pertanto, da una prospettiva bayesiana, l'incertezza intorno ai parametri di un modello \emph{dopo} aver visto i dati (ovvero le distribuzioni a posteriori) deve includere anche le credenze precedenti. Se questo modo di ragionare sembra molto intuitivo, non è una coincidenza: vi sono infatti diverse teorie psicologiche che prendono l'aggiornamento bayesiano come modello di funzionamento di diversi processi cognitivi.
-
-\end{important}
+Pertanto, da una prospettiva bayesiana, l'incertezza intorno ai parametri di un modello \emph{dopo} aver visto i dati (ovvero le distribuzioni a posteriori) deve includere anche le credenze precedenti. Se questo modo di ragionare vi sembra molto intuitivo, non è una coincidenza: vi sono infatti diverse teorie psicologiche che prendono l'aggiornamento bayesiano come modello di funzionamento di diversi processi cognitivi.
 
 \hypertarget{tipologie-di-distribuzioni-a-priori}{%
-\subsubsection{Tipologie di distribuzioni a priori}\label{tipologie-di-distribuzioni-a-priori}}
+\subsection{Tipologie di distribuzioni a priori}\label{tipologie-di-distribuzioni-a-priori}}
 
 Possiamo distinguere tra diverse distribuzioni a priori in base a quanto fortemente impegnano il ricercatore a ritenere come plausibile un particolare intervallo di valori dei parametri. Il caso più estremo è quello che rivela una totale assenza di conoscenze a priori, il che conduce alle \emph{distribuzioni a priori non informative}, ovvero quelle che assegnano lo stesso livello di credibilità a tutti i valori dei parametri. Le distribuzioni a priori informative, d'altra parte, possono essere \emph{debolmente informative} o \emph{fortemente informative}, a seconda della forza della credenza che esprimono. Il caso più estremo di credenza a priori è quello che riassume il punto di vista del ricercatore nei termini di un \emph{unico valore} del parametro, il che assegna tutta la probabilità (massa o densità) su di un singolo valore di un parametro. Poiché questa non è più una distribuzione di probabilità, sebbene ne soddisfi la definizione, in questo caso si parla di una \emph{distribuzione a priori degenerata}.
 
@@ -1097,47 +957,181 @@ La figura seguente mostra esempi di distribuzioni a priori non informative, debo
 \caption{Esempi di distribuzioni a priori per il parametro $\theta_c$ nel Modello Binomiale.}\label{fig:ch-03-02-models-types-of-priors}
 \end{figure}
 
-\begin{important}
+\hypertarget{selezione-della-distribuzione-a-priori}{%
+\subsection{Selezione della distribuzione a priori}\label{selezione-della-distribuzione-a-priori}}
+
 La selezione delle distribuzioni a priori è stata spesso vista come una delle scelte più importanti che un ricercatore fa quando implementa un modello bayesiano in quanto può avere un impatto sostanziale sui risultati finali. La soggettività delle distribuzioni a priori è evidenziata dai critici come un potenziale svantaggio dei metodi bayesiani. A questa critica, \textcite{vandeSchoot2021modelling} rispondono dicendo che, al di là della scelta delle distribuzioni a priori, ci sono molti elementi del processo di inferenza statistica che sono soggettivi, ovvero la scelta del modello statistico e le ipotesi sulla distribuzione degli errori. In secondo luogo, \textcite{vandeSchoot2021modelling} notano come le distribuzioni a priori svolgono due importanti ruoli statistici: quello della ``regolarizzazione della stima'', ovvero, il processo che porta ad indebolire l'influenza indebita di osservazioni estreme, e quello del miglioramento dell'efficienza della stima, ovvero, la facilitazione dei processi di calcolo numerico di stima della distribuzione a posteriori. L'effetto della distribuzione a priori sulla distribuzione a posteriori verrà discusso nel Capitolo \ref{chapter-balance}.
 
-\end{important}
+\hypertarget{la-distribuzione-a-priori-per-i-dati-di-zetschefuture2019}{%
+\subsection{\texorpdfstring{La distribuzione a priori per i dati di \textcite{zetschefuture2019}}{La distribuzione a priori per i dati di @zetschefuture2019}}\label{la-distribuzione-a-priori-per-i-dati-di-zetschefuture2019}}
 
-\hypertarget{verosim-marginale}{%
-\subsection{Verosimiglianza marginale}\label{verosim-marginale}}
+In un problema concreto di analisi dei dati, la scelta della distribuzione a priori dipende dalle credenze a priori che vogliamo includere nell'analisi dei dati. Se non abbiamo alcuna informazione a priori, potremmo pensare di usare una distribuzione a priori uniforme, ovvero una Beta di parametri \(\alpha=1\) e \(\beta=1\). Questa, tuttavia, è una cattiva idea perché il risultato ottenuto non è invariante a seconda della trasformazione della scala dei dati (ad esempio, se esprimiamo l'altezza in cm piuttosto che in m). Il problema della \emph{riparametrizzazione} verrà discusso nel Capitolo ?? \textbf{TODO}. È invece raccomandato usare una distribuzione a priori vagamente informativa, come ad esempio \(\text{Beta}(2, 2)\).
 
-Al denominatore della regola di Bayes abbiamo la verosimiglianza marginale \(p(y)\). Tale denominatore è espresso nei termini di un integrale che, tranne in pochi casi particolari, non ha una soluzione analitica. Per questa ragione, l'inferenza bayesiana procede calcolando una approssimazione della distribuzione a posteriori mediante metodi numerici.
-
-L'esempio presentato sopra era artificiale perché al parametro \(\theta\) sono stati attribuiti solo tre possibili valori. In realtà, \(\theta\) può assumere tutti i possibili valori compresi nell'intervallo {[}0, 1{]} e dunque la somma che dobbiamo calcolare avrà infiniti addendi. Dal punto di vista matematico, una tale somma corrisponde all'integrale:
+Nella presente discussione, per fare un esempio, quale distribuzione a priori useremo una \(\mbox{Beta}(2, 10)\), ovvero:
 \[
-p(y = 1, n = 6) = \int_0^1 \binom{6}{1} \theta^{1} (1-\theta)^{5} \,\operatorname {d}\!\theta.
+p(\theta) = \frac{\Gamma(12)}{\Gamma(2)\Gamma(10)}\theta^{2-1} (1-\theta)^{10-1}.
 \]
-\noindent
-L'integrale precedente descrive esattamente le stesse operazioni che abbiamo discusso nell'esempio ``artificiale'' in cui \(\theta\) poteva assumere solo tre valori, eccetto che ora dobbiamo eseguire la somma dei prodotti calcolati su tutti gli infiniti valori \(\theta\). Questo integrale corrisponde alla marginalizzazione del parametro \(\theta\). Non è tuttavia necessario eseguire una tale operazione di maginalizzazione in forma analitica in quanto il precedente integrale può essere calcolato con \R:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{BinLik }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(theta) \{}
-  \FunctionTok{choose}\NormalTok{(}\DecValTok{6}\NormalTok{, }\DecValTok{1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ theta}\SpecialCharTok{\^{}}\DecValTok{1} \SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ theta)}\SpecialCharTok{\^{}}\DecValTok{5}
-\NormalTok{\}}
-\FunctionTok{integrate}\NormalTok{(BinLik, }\AttributeTok{lower =} \DecValTok{0}\NormalTok{, }\AttributeTok{upper =} \DecValTok{1}\NormalTok{)}\SpecialCharTok{$}\NormalTok{value}
-\CommentTok{\#\textgreater{} [1] 0.143}
+\NormalTok{bayesrules}\SpecialCharTok{::}\FunctionTok{plot\_beta}\NormalTok{(}\AttributeTok{alpha =} \DecValTok{2}\NormalTok{, }\AttributeTok{beta =} \DecValTok{10}\NormalTok{, }\AttributeTok{mean =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{mode =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{soluzione-analitica}{%
-\subsubsection{Soluzione analitica}\label{soluzione-analitica}}
+\begin{center}\includegraphics[width=0.8\linewidth]{025_intro_bayes_files/figure-latex/unnamed-chunk-1-1} \end{center}
 
-Qui di seguito è riportata la derivazione analitica. Sia \(\theta \sim \Beta(a, b)\) e sia \(y = \{y_1, \dots, y_n\} \sim \Bin(\theta, n)\). Ponendo
+\noindent
+La \(\mbox{Beta}(2, 10)\) esprime la credenza che \(\theta\) assume valori \(< 0.5\), con il valore più plausibile pari a circa 0.1. Questo è assolutamente implausibile, nel caso dell'esempio in discussione. Adotteremo una tale distribuzione a priori solo per scopi didattici, per esplorare le conseguenze di tale scelta (molto più sensato sarebbe stato usare \(\text{Beta}(2, 2)\)).
+
+\hypertarget{verosimiglianza}{%
+\section{Verosimiglianza}\label{verosimiglianza}}
+
+Oltre alla distribuzione a priori di \(\theta\), nel numeratore della regola di Bayes troviamo la funzione di verosimigliana. Iniziamo dunque con una definizione.
+
+\begin{definition}
+La \emph{funzione di verosimiglianza} \(\mathcal{L}(\theta \mid y) = f(y \mid \theta), \theta \in \Theta,\) è la funzione di massa o di densità di probabilità dei dati \(y\) vista come una funzione del parametro sconosciuto (o dei parametri sconosciuti) \(\theta\).
+\end{definition}
+
+Detto in altre parole, le funzioni di verosimiglianza e di (massa o densità di) probabilità sono formalmente identiche, ma è completamente diversa la loro interpretazione. Nel caso della funzione di massa o di densità di probabilità la distribuzione del vettore casuale delle osservazioni campionarie \(y\) dipende dai valori assunti dal parametro (o dai parametri) \(\theta\); nel caso della la funzione di verosimiglianza la credibilità assegnata a ciascun possibile valore \(\theta\) viene determinata avendo acquisita l'informazione campionaria \(y\) che rappresenta l'elemento condizionante. In altri termini, la funzione di verosimiglianza è lo strumento che consente di rispondere alla seguente domanda: avendo osservato i dati \(y\), quanto risultano (relativamente) credibili i diversi valori del parametro \(\theta\)?
+
+Spesso per indicare la verosimiglianza si scrive \(\mathcal{L}(\theta)\) se è chiaro a quali valori \(y\) ci si riferisce. La verosimiglianza \(\mathcal{L}\) è una curva (in generale, una superficie) nello spazio \(\Theta\) del parametro (in generale, dei parametri \(\boldsymbol\theta\)) che riflette la credibilità relativa dei valori \(\theta\) alla luce dei dati osservati. Notiamo un punto importante: la funzione \(\mathcal{L}(\theta \mid y)\) non è una funzione di densità. Infatti, essa non racchiude un'area unitaria.
+
+In conclusione, la funzione di verosimiglianza descrive in termini relativi il sostegno empirico che \(\theta \in \Theta\) riceve da \(y\). Infatti, la funzione di verosimiglianza assume forme diverse al variare di \(y\) (lasciamo come esercizio da svolgere la verifica di questa affermazione).
+
+\hypertarget{la-log-verosimiglianza}{%
+\subsection{La log-verosimiglianza}\label{la-log-verosimiglianza}}
+
+Dal punto di vista pratico risulta più conveniente utilizzare, al posto della funzione di verosimiglianza, il suo logaritmo naturale, ovvero la funzione di log-verosimiglianza:
+\begin{equation}
+\ell(\theta) = \log \mathcal{L}(\theta).
+\end{equation}
+Poiché il logaritmo è una funzione strettamente crescente (usualmente si considera il logaritmo naturale), allora \(\mathcal{L}(\theta)\) e \(\ell(\theta)\) assumono il massimo (o i punti di massimo) in corrispondenza degli stessi valori di \(\theta\):
+\[
+\hat{\theta} = \text{argmax}_{\theta \in \Theta} \ell(\theta).
+\]
+Per le proprietà del logaritmo, si ha
+\begin{equation}
+\ell(\theta) = \log \left( \prod_{i = 1}^n f(y \mid \theta) \right) = \sum_{i = 1}^n \log f(y \mid \theta).
+\end{equation}
+
+\begin{important}
+Si noti che non è necessario lavorare con i logaritmi, anche se è fortemente consigliato, e questo perché i valori della verosimiglianza, in cui si moltiplicano valori di probabilità molto piccoli, possono diventare estremamente piccoli (qualcosa come \(10^{-34}\)). In tali circostanze, non è sorprendente che i programmi dei computer mostrino problemi di arrotondamento numerico. Le trasformazioni logaritmiche risolvono questo problema.
+
+\end{important}
+
+\begin{guidedpractice}
+Si trovi e si interpreti la funzione di verosimiglianza per i dati di \textcite{zetschefuture2019}.
+
+\end{guidedpractice}
+
+Per i dati di \textcite{zetschefuture2019} la funzione di verosimiglianza corrisponde alla funzione binomiale di parametro \(\theta \in [0, 1]\) sconosciuto. Abbiamo osservato un ``successo'' 23 volte in 30 ``prove'', dunque, \(y = 23\) e \(n = 30\). Per i dati di \textcite{zetschefuture2019}, la funzione di verosimiglianza diventa
+\begin{equation}
+\mathcal{L}(\theta \mid y) = \frac{(23 + 7)!}{23!7!} \theta^{23} + (1-\theta)^7.
+\label{eq:likebino23}
+\end{equation}
+La definizione precedente ci dice che, per costruire la funzione di verosimiglianza, dobbiamo applicare la \eqref{eq:likebino23} tante volte, cambiando ogni volta il valore \(\theta\) ma \emph{tenendo sempre costante il valore dei dati}. Per esempio, se poniamo \(\theta = 0.1\)
+\[
+\mathcal{L}(\theta \mid y) = \frac{(23 + 7)!}{23!7!} 0.1^{23} + (1-0.1)^7
+\]
+\noindent
+otteniamo
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dbinom}\NormalTok{(}\DecValTok{23}\NormalTok{, }\DecValTok{30}\NormalTok{, }\FloatTok{0.1}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 9.74e{-}18}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Se poniamo \(\theta = 0.2\)
+\[
+\mathcal{L}(\theta \mid y) = \frac{(23 + 7)!}{23!7!} 0.2^{23} + (1-0.2)^7
+\]
+\noindent
+otteniamo
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dbinom}\NormalTok{(}\DecValTok{23}\NormalTok{, }\DecValTok{30}\NormalTok{, }\FloatTok{0.2}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 3.58e{-}11}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+e così via. La figura \ref{fig:likefutexpect} --- costruita utilizzando 100 valori equispaziati \(\theta \in [0, 1]\) --- fornisce una rappresentazione grafica della funzione di verosimiglianza.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{30}
+\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{23}
+\NormalTok{theta }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{100}\NormalTok{)}
+\NormalTok{like }\OtherTok{\textless{}{-}} \FunctionTok{choose}\NormalTok{(n, y) }\SpecialCharTok{*}\NormalTok{ theta}\SpecialCharTok{\^{}}\NormalTok{y }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ theta)}\SpecialCharTok{\^{}}\NormalTok{(n }\SpecialCharTok{{-}}\NormalTok{ y)}
+\FunctionTok{tibble}\NormalTok{(theta, like) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ theta, }\AttributeTok{y =}\NormalTok{ like)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{y =} \FunctionTok{expression}\NormalTok{(}\FunctionTok{L}\NormalTok{(theta)),}
+    \AttributeTok{x =} \FunctionTok{expression}\NormalTok{(}\StringTok{\textquotesingle{}Valori possibili di\textquotesingle{}} \SpecialCharTok{\textasciitilde{}}\NormalTok{ theta)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[h]
+
+{\centering \includegraphics[width=0.8\linewidth]{025_intro_bayes_files/figure-latex/likefutexpect-1} 
+
+}
+
+\caption{Funzione di verosimiglianza nel caso di 23 successi in 30 prove.}\label{fig:likefutexpect}
+\end{figure}
+
+Come possiamo interpretare la curva che abbiamo ottenuto? Per alcuni valori \(\theta\) la funzione di verosimiglianza assume valori piccoli; per altri valori \(\theta\) la funzione di verosimiglianza assume valori più grandi. Questi ultimi sono i valori di \(\theta\) ``più credibili'' e il valore 23/30 è il valore più credibile di tutti. La funzione di verosimiglianza di \(\theta\) valuta la compatibilità dei dati osservati \(Y = y\) con i diversi possibili valori \(\theta\). In termini più formali possiamo dire che la funzione di verosimiglianza ha la seguente interpretazione: sulla base dei dati, \(\theta_1 \in \Theta\) è più credibile di \(\theta_2 \in \Theta\) come indice del modello probabilistico generatore delle osservazioni se \(\mathcal{L}(\theta_1) > \mathcal{L}(\theta_1)\).
+
+\hypertarget{la-verosimiglianza-marginale}{%
+\section{La verosimiglianza marginale}\label{la-verosimiglianza-marginale}}
+
+Per il calcolo di \(p(\theta \mid y)\) è necessario dividere il prodotto tra la distribuzione a priori e la verosimiglianza per una costante di normalizzazione. Tale costante di normalizzazione, detta \emph{verosimiglianza marginale}, ha lo scopo di fare in modo che \(p(\theta \mid y)\) abbia area unitaria.
+
+Si noti che il denominatore della regola di Bayes (ovvero la verosimiglianza marginale) è sempre espresso nei termini di un integrale. Tranne in pochi casi particolari, tale integrale non ha una soluzione analitica. Per questa ragione, l'inferenza bayesiana procede calcolando una approssimazione della distribuzione a posteriori mediante metodi numerici.
+
+\begin{guidedpractice}
+Si trovi la verosimiglianza maginale per i dati di \textcite{zetschefuture2019}.
+
+\end{guidedpractice}
+
+Nel caso presente, la costante di normalizzazione si ottiene marginalizzando la funzione di verosimiglianza \(p(y = 23, n = 30 \mid \theta)\) sopra \(\theta\), ovvero risolvendo l'integrale:
+\begin{equation}
+p(y = 23, n = 30) = \int_0^1 \binom{30}{23} \theta^{23} (1-\theta)^{7} \,\operatorname {d}\!\theta.
+\end{equation}
+\noindent
+Una soluzione numerica si trova facilmente usando \(\R\):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{like\_bin }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(theta) \{}
+  \FunctionTok{choose}\NormalTok{(}\DecValTok{30}\NormalTok{, }\DecValTok{23}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ theta}\SpecialCharTok{\^{}}\DecValTok{23} \SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ theta)}\SpecialCharTok{\^{}}\DecValTok{7}
+\NormalTok{\}}
+\FunctionTok{integrate}\NormalTok{(like\_bin, }\AttributeTok{lower =} \DecValTok{0}\NormalTok{, }\AttributeTok{upper =} \DecValTok{1}\NormalTok{)}\SpecialCharTok{$}\NormalTok{value}
+\CommentTok{\#\textgreater{} [1] 0.0323}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{derivazione-analitica}{%
+\subsubsection{Derivazione analitica}\label{derivazione-analitica}}
+
+Riportiamo di seguito la derivazione analitica dell'integrale precedente. Sia la distribuzione a priori \(\theta \sim \Beta(a, b)\) e sia \(y = \{y_1, \dots, y_n\} \sim \Bin(\theta, n)\). Scrivendo la \emph{funzione beta} come
 \[
 \Beta(a, b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)},
 \]
 \noindent
 la verosimiglianza marginale diventa
 \begin{align}
-p(y) &= \binom{n}{y} \int p(y \mid \theta) p(\theta) \,\operatorname {d}\!\theta \notag\\
-&= \binom{n}{y}\int_0^1 \theta^{y} (1 - \theta)^{n- y} \frac{1}{\Beta(a,b)} \theta^{a-1} (1-\theta)^{b-1} \,\operatorname {d}\!\theta \notag\\
+p(y) &= \int p(y \mid \theta) p(\theta) \,\operatorname {d}\!\theta \notag\\
+&= \int_0^1 \binom{n}{y}\theta^{y} (1 - \theta)^{n- y} \frac{1}{\Beta(a,b)} \theta^{a-1} (1-\theta)^{b-1} \,\operatorname {d}\!\theta \notag\\
 &= \binom{n}{y}\frac{1}{\Beta(a,b)} \int_0^1 \theta^{y + a - 1} (1-\theta)^{n- y + b-1}  \,\operatorname {d}\!\theta \notag\\
 &= \binom{n}{y}\frac{\Beta(y + a, n- y + b)}{\Beta(a,b)},
+\label{eq:constant-norm-beta-binom}
 \end{align}
 \noindent
 in quanto
@@ -1146,25 +1140,22 @@ in quanto
 \frac{1}{\Beta(a,b)} \int_0^1  \theta^{a-1} (1-\theta)^{b-1} \,\operatorname {d}\! \theta &= 1\notag\\
 \int_0^1  \theta^{a-1} (1-\theta)^{b-1} \,\operatorname {d}\!\theta &= \Beta(a,b). \notag
 \end{align}
-\noindent
-Continuiamo con l'esempio precedente. Per replicare il risultato trovato per via numerica con \R, assumiamo una distribuzione a priori uniforme, ovvero \(\Beta(1, 1)\). I valori del problema sono i seguenti:
+
+In conclusione, nel caso di una verosimiglianza binomiale \(y = \sim \Bin(\theta, n)\) e di una distribuzione a priori \(\theta \sim \Beta(a, b)\), la verosimiglianza marginale diventa uguale alla \eqref{eq:constant-norm-beta-binom}.
+
+\begin{guidedpractice}
+Si verifichi la \eqref{eq:constant-norm-beta-binom} mediante di dati di \textcite{zetschefuture2019}.
+
+\end{guidedpractice}
+
+Per replicare mediante la \eqref{eq:constant-norm-beta-binom} il risultato trovato sopra per via numerica assumiamo, ad esempio, una distribuzione a priori uniforme, ovvero \(\Beta(1, 1)\). I valori del problema dunque diventano i seguenti:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{a }\OtherTok{\textless{}{-}} \DecValTok{1}
 \NormalTok{b }\OtherTok{\textless{}{-}} \DecValTok{1}
-\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{1}
-\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{6}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-e dunque
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{alpha }\OtherTok{\textless{}{-}}\NormalTok{ y }\SpecialCharTok{+}\NormalTok{ a}
-\NormalTok{beta }\OtherTok{\textless{}{-}}\NormalTok{ n }\SpecialCharTok{{-}}\NormalTok{ y }\SpecialCharTok{+}\NormalTok{ b}
+\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{23}
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{30}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1180,23 +1171,22 @@ Definiamo
 \end{Shaded}
 
 \noindent
-Il risultato cercato si ottiene con
+Il risultato cercato è
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{choose}\NormalTok{(}\DecValTok{6}\NormalTok{, }\DecValTok{1}\NormalTok{) }\SpecialCharTok{*} \FunctionTok{B}\NormalTok{(alpha, beta) }\SpecialCharTok{/} \FunctionTok{B}\NormalTok{(a, b)}
-\CommentTok{\#\textgreater{} [1] 0.143}
+\FunctionTok{choose}\NormalTok{(}\DecValTok{30}\NormalTok{, }\DecValTok{23}\NormalTok{) }\SpecialCharTok{*} \FunctionTok{B}\NormalTok{(y }\SpecialCharTok{+}\NormalTok{ a, n }\SpecialCharTok{{-}}\NormalTok{ y }\SpecialCharTok{+}\NormalTok{ b) }\SpecialCharTok{/} \FunctionTok{B}\NormalTok{(a, b)}
+\CommentTok{\#\textgreater{} [1] 0.0323}
 \end{Highlighting}
 \end{Shaded}
 
-In conclusione, nel caso di una verosimiglianza binomiale \(y = \sim \Bin(\theta, n)\) e di una distribuzione a priori \(\theta \sim \Beta(a, b)\), la verosimiglianza marginale diventa
-\begin{equation}
-\binom{n}{y}\frac{\Beta(y + a, n - y + b)}{\Beta(a, b)}.
-\label{eq:constant-norm-beta-binom}
-\end{equation}
+\hypertarget{distribuzione-a-posteriori}{%
+\section{Distribuzione a posteriori}\label{distribuzione-a-posteriori}}
 
-\hypertarget{la-distribuzione-a-posteriori}{%
-\subsection{La distribuzione a posteriori}\label{la-distribuzione-a-posteriori}}
+La distribuzione a postreriori si trova applicando il teorema di Bayes:
+\[
+\text{probabilità a posteriori} = \frac{\text{probabilità a priori} \cdot \text{verosimiglianza}}{\text{costante di normalizzazione}}
+\]
 
 Ci sono due metodi principali per calcolare la distribuzione a posteriori \(p(\theta \mid y)\):
 
@@ -1205,7 +1195,7 @@ Ci sono due metodi principali per calcolare la distribuzione a posteriori \(p(\t
 \item
   una precisa derivazione matematica formulata nei termini della distribuzione a priori coniugata alla distribuzione a posteriori (si veda il Capitolo \ref{chapter-distr-coniugate}); tale procedura però ha un'applicabilità molto limitata;
 \item
-  un metodo approssimato, molto facile da utilizzare in pratica, che dipende da metodi Monte Carlo basati su Catena di Markov (MCMC).
+  un metodo approssimato, molto facile da utilizzare in pratica, che dipende da metodi Monte Carlo basati su Catena di Markov (MCMC); questo problema verrà discusso nel Capitolo ??
 \end{itemize}
 
 Una volta calcolata la distribuzione a posteriori dobbiamo riassumerla in qualche modo. Questo problema verrà discusso nel Capitolo \ref{chapter-sintesi-distr-post}.
