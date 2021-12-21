@@ -44,12 +44,12 @@ Iniziamo con lo scenario che descrive il caso in cui abbiamo gli stessi dati ma 
 ```r
 data(bechdel, package = "bayesrules")
 set.seed(84735)
-bechdel_20 <- bechdel %>%
+bechdel_20 <- bechdel %>% 
   sample_n(20)
 
-bechdel_20 %>%
+bechdel_20 %>% 
   head(3)
-#> # A tibble: 3 x 3
+#> # A tibble: 3 × 3
 #>    year title      binary
 #>   <dbl> <chr>      <chr> 
 #> 1  2005 King Kong  FAIL  
@@ -61,8 +61,8 @@ Di questi 20 film, solo il 45% ($y$ = 9) passa il test di Bechdel:
 
 
 ```r
-bechdel_20 %>%
-  janitor::tabyl(binary) %>%
+bechdel_20 %>% 
+  janitor::tabyl(binary) %>% 
   janitor::adorn_totals("row")
 #>  binary  n percent
 #>    FAIL 11    0.55
@@ -81,19 +81,16 @@ bayesrules:::plot_beta_binomial(
 
 
 
-\begin{center}\includegraphics{027_balance_prior_post_files/figure-latex/unnamed-chunk-3-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{027_balance_prior_post_files/figure-latex/unnamed-chunk-3-1} \end{center}
 
 
 ```r
 bayesrules:::summarize_beta_binomial(
   alpha = 5, beta = 11, y = 9, n = 20
 )
-#>       model alpha beta      mean      mode        var
-#> 1     prior     5   11 0.3125000 0.2857143 0.01263787
-#> 2 posterior    14   22 0.3888889 0.3823529 0.00642309
-#>           sd
-#> 1 0.11241827
-#> 2 0.08014418
+#>       model alpha beta  mean  mode     var     sd
+#> 1     prior     5   11 0.312 0.286 0.01264 0.1124
+#> 2 posterior    14   22 0.389 0.382 0.00642 0.0801
 ```
 
 \noindent
@@ -108,19 +105,16 @@ bayesrules:::plot_beta_binomial(
 
 
 
-\begin{center}\includegraphics{027_balance_prior_post_files/figure-latex/unnamed-chunk-5-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{027_balance_prior_post_files/figure-latex/unnamed-chunk-5-1} \end{center}
 
 
 ```r
 bayesrules:::summarize_beta_binomial(
   alpha = 14, beta = 1, y = 9, n = 20
 )
-#>       model alpha beta      mean      mode         var
-#> 1     prior    14    1 0.9333333 1.0000000 0.003888889
-#> 2 posterior    23   12 0.6571429 0.6666667 0.006258503
-#>           sd
-#> 1 0.06236096
-#> 2 0.07911070
+#>       model alpha beta  mean  mode     var     sd
+#> 1     prior    14    1 0.933 1.000 0.00389 0.0624
+#> 2 posterior    23   12 0.657 0.667 0.00626 0.0791
 ```
 
 \noindent
@@ -135,16 +129,16 @@ bayesrules:::plot_beta_binomial(
 
 
 
-\begin{center}\includegraphics{027_balance_prior_post_files/figure-latex/unnamed-chunk-7-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{027_balance_prior_post_files/figure-latex/unnamed-chunk-7-1} \end{center}
 
 
 ```r
 bayesrules:::summarize_beta_binomial(
   alpha = 1, beta = 1, y = 9, n = 20
 )
-#>       model alpha beta      mean mode        var        sd
-#> 1     prior     1    1 0.5000000  NaN 0.08333333 0.2886751
-#> 2 posterior    10   12 0.4545455 0.45 0.01077973 0.1038255
+#>       model alpha beta  mean mode    var    sd
+#> 1     prior     1    1 0.500  NaN 0.0833 0.289
+#> 2 posterior    10   12 0.455 0.45 0.0108 0.104
 ```
 
 Per calcolare la distribuzione a posteriori, ho qui usato le funzioni del pacchetto `bayesrules`. Ma nel caso Beta-Binomiale è facile trovafre i parametri della distribuzione a posteriori. Per esempio, nel caso dell'amica femminista, la distribuzione a posteriori è una Beta di parametri 
@@ -171,20 +165,20 @@ Supponiamo che Maria, Anna e Sara condividano la stessa credenza a priori su $\p
 ```r
 p1 <- bayesrules:::plot_beta_binomial(
   alpha = 14, beta = 1, y = 6, n = 13
-) + theme(legend.position = "none")
+) + theme(legend.position = "none") 
 
 p2 <- bayesrules:::plot_beta_binomial(
   alpha = 14, beta = 1, y = 29, n = 63
-) + theme(legend.position = "none")
+) + theme(legend.position = "none") 
 
 p3 <- bayesrules:::plot_beta_binomial(
   alpha = 14, beta = 1, y = 46, n = 99
-) + theme(legend.position = "none")
+) + theme(legend.position = "none") 
 
 p1 + p2 + p3
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
 {\centering \includegraphics[width=0.95\linewidth]{027_balance_prior_post_files/figure-latex/unnamed-chunk-9-1} 
 
@@ -203,44 +197,44 @@ Nella figura successiva esaminiamo le distribuzioni a posteriori che si ottengon
 ```r
 p1 <- bayesrules:::plot_beta_binomial(
   alpha = 14, beta = 1, y = 6, n = 13
-) + theme(legend.position = "none")
+) + theme(legend.position = "none") 
 
 p2 <- bayesrules:::plot_beta_binomial(
   alpha = 14, beta = 1, y = 29, n = 63
-) + theme(legend.position = "none")
+) + theme(legend.position = "none") 
 
 p3 <- bayesrules:::plot_beta_binomial(
   alpha = 14, beta = 1, y = 46, n = 99
-) + theme(legend.position = "none")
+) + theme(legend.position = "none") 
 
 p4 <- bayesrules:::plot_beta_binomial(
   alpha = 5, beta = 11, y = 6, n = 13
-) + theme(legend.position = "none")
+) + theme(legend.position = "none") 
 
 p5 <- bayesrules:::plot_beta_binomial(
   alpha = 5, beta = 11, y = 29, n = 63
-) + theme(legend.position = "none")
+) + theme(legend.position = "none") 
 
 p6 <- bayesrules:::plot_beta_binomial(
   alpha = 5, beta = 11, y = 46, n = 99
-) + theme(legend.position = "none")
+) + theme(legend.position = "none") 
 
 p7 <- bayesrules:::plot_beta_binomial(
   alpha = 1, beta = 1, y = 6, n = 13
-) + theme(legend.position = "none")
+) + theme(legend.position = "none") 
 
 p8 <- bayesrules:::plot_beta_binomial(
   alpha = 1, beta = 1, y = 29, n = 63
-) + theme(legend.position = "none")
+) + theme(legend.position = "none") 
 
 p9 <- bayesrules:::plot_beta_binomial(
   alpha = 1, beta = 1, y = 46, n = 99
-) + theme(legend.position = "none")
+) + theme(legend.position = "none") 
 
 (p1 + p2 + p3) / (p4 + p5 + p6) / (p7 + p8 + p9)
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
 {\centering \includegraphics[width=0.95\linewidth]{027_balance_prior_post_files/figure-latex/unnamed-chunk-10-1} 
 

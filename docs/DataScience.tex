@@ -50,6 +50,46 @@
 % Strikeout
 
 % Necessary for code chunks
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 
 % Listings package
 
@@ -353,7 +393,13 @@
 \DeclareMathOperator{\elpd}{elpd} % Define elpd operator
 \DeclareMathOperator{\lppd}{lppd} % Define lppd operator
 \DeclareMathOperator{\LOO}{LOO} % Define LOO operator
-\DeclareMathOperator{\B}{\mathscr{B}} % Define Bernoulli operator
+\DeclareMathOperator{\Ber}{\mathscr{B}} % Define Bernoulli operator
+
+\DeclareMathOperator{\B}{B} % beta function
+
+% \mbox{B}(a, b) % beta function
+% \mbox{Beta}(a, b) % beta distribution
+
 \newcommand{\R}{\textsf{R}} % Define R programming language symbol
 \newcommand{\E}{\mathbb{E}} % Define expected value operator
 \newcommand{\Real}{\mathbb{R}} % Define real number operator
@@ -776,225 +822,295 @@ Febbraio 2022
 
 \mainmatter
 
-\hypertarget{chapter-prob-congiunta}{%
-\chapter{Probabilità congiunta}\label{chapter-prob-congiunta}}
+\hypertarget{chapter-distr-coniugate}{%
+\chapter{Distribuzioni a priori coniugate}\label{chapter-distr-coniugate}}
 
 \begin{chapterintro}
-Per descrivere la relazione tra due variabili casuali è necessario calcolare la \emph{covarianza} e la \emph{correlazione}. Il calcolo di questi due indici richiede la conoscenza della funzione di probabilità congiunta. Obiettivo di questo Capitolo è descrivere la funzione di probabilità congiunta di due variabili casuali; esamineremo in dettaglio il caso discreto.
+Obiettivo di questo Capitolo è fornire un esempio di derivazione della distribuzione a posteriori scegliendo quale distribuzione a priori una distribuzione coniugata. Esamineremo qui il caso più semplice, ovvero il modello Beta-Binomiale.
 
 \end{chapterintro}
 
-\hypertarget{funzione-di-probabilituxe0-congiunta}{%
-\section{Funzione di probabilità congiunta}\label{funzione-di-probabilituxe0-congiunta}}
+\hypertarget{il-denominatore-bayesiano}{%
+\section{Il denominatore bayesiano}\label{il-denominatore-bayesiano}}
 
-Dopo aver trattato della distribuzione di probabilità di una variabile casuale, la quale associa ad ogni evento elementare dello spazio campionario uno ed un solo numero reale, è naturale estendere questo concetto al caso di due o più variabili casuali. Iniziamo a descrivere il caso discreto con un esempio. Consideriamo l'esperimento casuale corrispondente al lancio di tre monete equilibrate. Lo spazio campionario è
-
-\[
-\Omega = \{TTT, TTC, TCT, CTT, CCT, CTC, TCC, CCC\}.
-\]
-\noindent
-Dato che i tre lanci sono tra loro indipendenti, non c'è ragione di aspettarsi che uno degli otto risultati possibili dell'esperimento sia più probabile degli altri, dunque possiamo associare a ciascuno degli otto eventi elementari dello spazio campionario la stessa probabilità, ovvero 1/8.
-
-Siano \(X \in \{0, 1, 2, 3\}\) = ``numero di realizzazioni con il risultato testa nei tre lanci'' e \(Y \in \{0, 1\}\) = ``numero di realizzazioni con il risultato testa nel primo lancio'' due variabili casuali definite sullo spazio campionario \(\Omega\). Indicando con T = `testa' e C = `croce', si ottiene la situazione riportata nella tabella \ref{tab:tre-monete-distr-cong-1}.
-
-\begin{longtable}[]{@{}cccc@{}}
-\caption{\label{tab:tre-monete-distr-cong-1} Spazio campionario dell'esperimento consistente nel lancio di tre monete equilibrate su cui sono state definite le variabili aleatorie \(X\) e \(Y\).}\tabularnewline
-\toprule
-\(\omega\) & \(X\) & \(Y\) & \(P(\omega)\) \\
-\midrule
-\endfirsthead
-\toprule
-\(\omega\) & \(X\) & \(Y\) & \(P(\omega)\) \\
-\midrule
-\endhead
-\(\omega_1\) = TTT & 3 & 1 & 1/8 \\
-\(\omega_2\) = TTC & 2 & 1 & 1/8 \\
-\(\omega_3\) = TCT & 2 & 1 & 1/8 \\
-\(\omega_4\) = CTT & 2 & 0 & 1/8 \\
-\(\omega_5\) = CCT & 1 & 0 & 1/8 \\
-\(\omega_6\) = CTC & 1 & 0 & 1/8 \\
-\(\omega_7\) = TCC & 1 & 1 & 1/8 \\
-\(\omega_8\) = CCC & 0 & 0 & 1/8 \\
-\bottomrule
-\end{longtable}
-
-Ci poniamo il problema di associare un livello di probabilità ad ogni coppia \((x, y)\) definita su \(\Omega\). La coppia \((X = 0, Y = 0)\) si realizza in corrispondenza di un solo evento elementare, ovvero CCC; avrà dunque una probabilità pari a \(P(X=0, Y=0) = P(CCC) = 1/8\). Nel caso della coppia \((X = 1, Y = 0)\) ci sono due eventi elementari che danno luogo al risultato considerato, ovvero, CCT e CTC; la probabilità \(P(X=1, Y=0)\) sarà dunque data dalla probabilità dell'unione dei due eventi elementari, cioé \(P(X=1, Y=0) = P(CCT \:\cup\: CTC) = 1/8 + 1/8 = 1/4\). Sono riportati qui sotto i calcoli per tutti i possibili valori di \(X\) e \(Y\).
-\begin{align}
-P(X = 0, Y = 0) &= P(\omega_8 = CCC) = 1/8; \notag\\
-P(X = 1, Y = 0) &= P(\omega_5 = CCT) + P(\omega_6 = CTC) = 2/8; \notag\\
-P(X = 1, Y = 1) &= P(\omega_7 = TCC) = 1/8; \notag\\
-P(X = 2, Y = 0) &= P(\omega_4 = CTT) = 1/8; \notag\\
-P(X = 2, Y = 1) &= P(\omega_3 = TCT) + P(\omega_2 = TTC) = 2/8; \notag\\
-P(X = 3, Y = 1) &= P(\omega_1 = TTT) = 1/8; \notag
-\end{align}
-Le probabilità così trovate sono riportate nella tabella \ref{tab:ditr-cong-biv-1} la quale descrive la distribuzione di probabilità congiunta delle variabili casuali \(X\) = ``numero di realizzazioni con il risultato testa nei tre lanci'' e \(Y\) = ``numero di realizzazioni con il risultato testa nel primo lancio'' per l'esperimento casuale consistente nel lancio di tre monete equilibrate.
-
-\begin{longtable}[]{@{}ccc@{}}
-\caption{\label{tab:ditr-cong-biv-1} Distribuzione di probabilità congiunta per i risultati dell'esperimento consistente nel lancio di tre monete equilibrate.}\tabularnewline
-\toprule
-\(x / y\) & 0 & 1 \\
-\midrule
-\endfirsthead
-\toprule
-\(x / y\) & 0 & 1 \\
-\midrule
-\endhead
-0 & 1/8 & 0 \\
-1 & 2/8 & 1/8 \\
-2 & 1/8 & 2/8 \\
-3 & 0 & 1/8 \\
-\bottomrule
-\end{longtable}
-
-In generale, possiamo dire che, dato uno spazio campionario discreto \(\Omega\), è possibile associare ad ogni evento elementare \(\omega_i\) dello spazio campionario una coppia di numeri reali \((x, y)\), essendo \(x = X(\omega)\) e \(y = Y(\omega)\), il che ci conduce alla seguente definizione.
-
-\begin{definition}
-Siano \(X\) e \(Y\) due variabili casuali. La funzione che associa ad ogni coppia \((x, y)\) un livello di probabilità prende il nome di funzione di probabilità congiunta:
-\[
-P(x, y) = P(X = x, Y = y).
-\]
-\end{definition}
-
-\noindent
-Il termine ``congiunta'' deriva dal fatto che questa probabilità è legata al verificarsi di una coppia di valori, il primo associato alla variabile casuale \(X\) ed il secondo alla variabile casuale \(Y\). Nel caso di due sole variabili casuali si parla di distribuzione bivariata, mentre nel caso di più variabili casuali si parla di distribuzione multivariata.
-
-\hypertarget{proprietuxe0}{%
-\subsection{Proprietà}\label{proprietuxe0}}
-
-Una distribuzione di massa di probabilità congiunta bivariata deve soddisfare due proprietà:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  \(0 \leq P(x_i, y_j) \leq 1\);
-\item
-  la probabilità totale deve essere uguale a \(1.0\). Tale proprietà può essere espressa nel modo seguente
-  \[
-  \sum_{i} \sum_{j} P(x_i, y_j) = 1.0.
-  \]
-\end{enumerate}
-
-\hypertarget{eventi}{%
-\subsection{Eventi}\label{eventi}}
-
-Si noti che dalla probabilità congiunta possiamo calcolare la probabilità di qualsiasi evento definito in base alle variabili aleatorie \(X\) e \(Y\). Per capire come questo possa essere fatto, consideriamo nuovamente l'esperimento casuale discusso in precedenza.
-
-\begin{example}
-Per la distribuzione di massa di probabilità congiunta riportata nella tabella~precedente si trovi la probabilità dell'evento \(X+Y \leq 1\).
-
-Per trovare la probabilità richiesta dobbiamo semplicemente sommare le probabilità associate a tutte le coppie \((x,y)\) che soddisfano la condizione \(X+Y \leq 1\), ovvero
-
+In un problema bayesiano i dati \(y\) provengono da una distribuzione \(p(y \mid \theta)\) e al parametro \(\theta\) viene assegnata una distribuzione a priori \(p(\theta)\). La scelta della distribuzione a priori ha importanti conseguenze di tipo computazionale. Infatti, a meno di non utilizzare particolari forme analitiche, risulta impossibile ottenere espressioni esplicite per la distribuzione a posteriori. Ciò dipende dall'espressione a denominatore della formula di Bayes
 \begin{equation}
-P_{XY}(X+Y \leq 1) = P_{XY}(0, 0) + P_{XY}(1, 0)= 3/8.\notag
+p(\theta \mid y) = \frac{p(\theta) p(y \mid \theta)}{\int p(\theta) p(y \mid \theta) \,\operatorname {d}\! \theta} \notag
 \end{equation}
-\end{example}
-
-\hypertarget{regola-della-catena}{%
-\subsection{Regola della catena}\label{regola-della-catena}}
-
-Regola della catena permette il calcolo di qualsiasi membro della distribuzione congiunta di un insieme di variabili casuali utilizzando solo le probabilità condizionate.
+il cui calcolo non è eseguibile in modo analitico in forma chiusa. Per non incorrere in problemi nel calcolo della distribuzione a posteriori vengono usate le distribuzioni provenienti da famiglie coniugate.
 
 \begin{definition}
-Dati due eventi \(A\) e \(B\), la regola della catena afferma che
-
-\[
-P(A \cap B) = P(A)P(B \mid A).
-\]
+\protect\hypertarget{def:def-conj-fam}{}{\label{def:def-conj-fam} }Una distribuzione di probabilità a priori \(p(\theta)\) si dice \emph{coniugata} al modello usato se la distribuzione a priori e la distribuzione a posteriori hanno la stessa forma funzionale. Dunque, le due distribuzioni differiscono solo per il valore dei parametri.
 \end{definition}
 
-Nel caso di 4 eventi, per esempio, la regola della catena diventa
+È possibile ottenere la distribuzione posteriore per via analitica solo per alcune specifiche combinazioni di distribuzione a priori e verosimiglianza, ma questo limita considerevolmente la flessibilità della modellizzazione.\footnote{Per questa ragione, la strada principale che viene seguita nella modellistica bayesiana è quella che porta a determinare la distribuzione a posteriori non per via analitica, ma bensì mediante metodi numerici. La simulazione fornisce dunque la strategia generale del calcolo bayesiano. A questo fine vengono usati i metodi di campionamento detti Monte-Carlo Markov-Chain (MCMC). Tali metodi costituiscono una potente e praticabile alternativa per la costruzione della distribuzione a posteriori per modelli complessi e consentono di decidere quali distribuzioni a priori e quali distribuzioni di verosimiglianza usare sulla base di considerazioni teoriche soltanto, senza dovere preoccuparsi di altri vincoli. Dato che è basata su metodi computazionalmente intensivi, la stima numerica della funzione a posteriori può essere svolta soltanto mediante software. In anni recenti i metodi bayesiani di analisi dei dati sono diventati sempre più popolari proprio perché la potenza di calcolo necessaria per svolgere tali calcoli è ora alla portata di tutti. Questo non era vero solo pochi decenni fa.}
+
+\hypertarget{chapter-distr-priori-coniugate}{%
+\section{Il modello Beta-Binomiale}\label{chapter-distr-priori-coniugate}}
+
+Per fare un esempio concreto, consideriamo nuovamente i dati di \textcite{zetschefuture2019}: nel campione di 30 partecipanti clinici le aspettative future di 23 partecipanti risultano distorte negativamente e quelle di 7 partecipanti risultano distorte positivamente. Nel seguito, indicheremo con \(\theta\) la probabilità che le aspettative di un paziente clinico siano distorte negativamente. Ci poniamo il problema di ottenere una stima a posteriori di \(\theta\) avendo osservato 23 ``successi'' in 30 prove.
+
+I dati osservati (\(y = 23\)) possono essere considerati la manifestazione di una variabile casuale Bernoulliana. In tali circostanze, esiste una famiglia di distribuzioni che, qualora venga scelta per la distribuzione a priori, fa sì che la distribuzione a posteriori abbia la stessa forma funzionale della distribuzione a priori. Questo consente una soluzione analitica dell'integrale che compare a denominatore nella formula di Bayes. Nel caso presente, la famiglia di distribuzioni che ha questa proprietà è la distribuzione Beta.
+
+\hypertarget{parametri-della-distribuzione-beta}{%
+\subsection{Parametri della distribuzione Beta}\label{parametri-della-distribuzione-beta}}
+
+È possibile esprimere diverse credenze iniziali rispetto a \(\theta\) mediante la distribuzione Beta. Ad esempio, la scelta di una \(\mbox{Beta}(\alpha = 4, \beta = 4)\) quale distribuzione a priori per il parametro \(\theta\) corrisponde alla credenza a priori che associa all'evento ``presenza di una aspettativa futura distorta negativamente'' una grande incertezza: il valore 0.5 è il valore di \(\theta\) più plausibile, ma anche gli altri valori del parametro (tranne gli estremi) sono ritenuti piuttosto plausibili. Questa distribuzione a priori esprime la credenza che sia egualmente probabile per un'aspettativa futura essere distorta negativamente o positivamente.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(}\StringTok{"bayesrules"}\NormalTok{)}
+\FunctionTok{plot\_beta}\NormalTok{(}\AttributeTok{alpha =} \DecValTok{4}\NormalTok{, }\AttributeTok{beta =} \DecValTok{4}\NormalTok{, }\AttributeTok{mean =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{mode =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{026_conjugate_families_files/figure-latex/unnamed-chunk-1-1} \end{center}
+
+Possiamo quantificare la nostra incertezza calcolando, con un grado di fiducia del 95\%, la regione nella quale, in base a tale credenza a priori, si trova il valore del parametro. Per ottenere tale intervallo di credibilità a priori, usiamo la funzione \texttt{qbeta()} di \(\R\). In \texttt{qbeta()} i parametri \(\alpha\) e \(\beta\) sono chiamati \texttt{shape1} e \texttt{shape2}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qbeta}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FloatTok{0.025}\NormalTok{, }\FloatTok{0.975}\NormalTok{), }\AttributeTok{shape1 =} \DecValTok{4}\NormalTok{, }\AttributeTok{shape2 =} \DecValTok{4}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 0.184 0.816}
+\end{Highlighting}
+\end{Shaded}
+
+Se poniamo \(\alpha=10\) e \(\beta=10\), questo corrisponde ad una credenza a priori che sia egualmente probabile per un'aspettativa futura essere distorta negativamente o positivamente,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot\_beta}\NormalTok{(}\AttributeTok{alpha =} \DecValTok{10}\NormalTok{, }\AttributeTok{beta =} \DecValTok{10}\NormalTok{, }\AttributeTok{mean =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{mode =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{026_conjugate_families_files/figure-latex/unnamed-chunk-3-1} \end{center}
+
+\noindent
+ma ora la nostra certezza a priori sul valore del parametro è maggiore, come indicato dall'intervallo al 95\%:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qbeta}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FloatTok{0.025}\NormalTok{, }\FloatTok{0.975}\NormalTok{), }\AttributeTok{shape1 =} \DecValTok{10}\NormalTok{, }\AttributeTok{shape2 =} \DecValTok{10}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 0.289 0.711}
+\end{Highlighting}
+\end{Shaded}
+
+Quale distribuzione a priori dobbiamo scegliere? In un problema concreto di analisi dei dati, la scelta della distribuzione a priori dipende dalle credenze a priori che vogliamo includere nell'analisi dei dati. Se non abbiamo alcuna informazione a priori, potremmo usare \(\alpha=1\) e \(\beta=1\), che produce una distribuzione a priori uniforme. Ma l'uso di distribuzioni a priori uniformi è sconsigliato per vari motivi, inclusa l'instabilità numerica della stima dei parametri. È meglio invece usare una distribuzione a priori poco informativa, come \(\mbox{Beta}(2, 2)\).
+
+Nella discussione successiva, solo per fare un esempio, useremo quale distribuzione a priori una \(\mbox{Beta}(2, 10)\), ovvero:
 \[
-P(A_1, A_2, A_3, A_4) = P(A_1) P(A_2 \mid A_1) P(A_3 \mid A_1, A_2) P(A_4 \mid A_1, A_2, A_3).
+p(\theta) = \frac{\Gamma(12)}{\Gamma(2)\Gamma(10)}\theta^{2-1} (1-\theta)^{10-1}.
 \]
 
-\hypertarget{funzioni-di-probabilituxe0-marginali}{%
-\subsection{Funzioni di probabilità marginali}\label{funzioni-di-probabilituxe0-marginali}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot\_beta}\NormalTok{(}\AttributeTok{alpha =} \DecValTok{2}\NormalTok{, }\AttributeTok{beta =} \DecValTok{10}\NormalTok{, }\AttributeTok{mean =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{mode =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-La distribuzione marginale di un sottoinsieme di variabili casuali è la distribuzione di probabilità delle variabili contenute nel sottoinsieme. Come spiegato da \href{https://it.wikipedia.org/wiki/Distribuzione_marginale}{Wikipedia}:
+\begin{center}\includegraphics[width=0.8\linewidth]{026_conjugate_families_files/figure-latex/unnamed-chunk-5-1} \end{center}
+
+\noindent
+La \(\mbox{Beta}(2, 10)\) esprime la credenza che \(\theta < 0.5\), con il valore più plausibile pari a cicrca 0.1.
+
+\hypertarget{la-specificazione-della-distribuzione-a-posteriori}{%
+\subsection{La specificazione della distribuzione a posteriori}\label{la-specificazione-della-distribuzione-a-posteriori}}
+
+Una volta scelta una distribuzione a priori di tipo Beta, i cui parametri rispecchiano le nostre credenze iniziali su \(\theta\), la distribuzione a posteriori viene specificata dalla formula di Bayes:
+\[
+\text{distribuzione a posteriori} = \frac{\text{verosimiglianza}\cdot\text{distribuzione a priori}}{\text{verosimiglianza marginale}}.
+\]
+Nel caso presente abbiamo
+\[
+p(\theta \mid n=30, y=23) = \frac{\Big[\binom{30}{23}\theta^{23}(1-\theta)^{30-23}\Big]\Big[\frac{\Gamma(12)}{\Gamma(2)\Gamma(10)}\theta^{2-1} (1-\theta)^{10-1}\Big]}{p(y = 23)},
+\]
+laddove \(p(y = 23)\), ovvero la verosimiglianza marginale, è una costante di normalizzazione che fa sì che l'area sottesa alla densità a posteriori sia unitaria.
+
+Riscriviamo ora l'equazione precedente in termini generali
+\[
+p(\theta \mid n, y) = \frac{\Big[\binom{n}{y}\theta^{y}(1-\theta)^{n-y}\Big]\Big[\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\theta^{a-1} (1-\theta)^{b-1}\Big]}{p(y)}
+\]
+\noindent
+e raccogliendo tutte le costanti otteniamo:
+\[
+p(\theta \mid n, y) =\left[\frac{\binom{n}{y}\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}}{p(y)}\right] \theta^{y}(1-\theta)^{n-y}\theta^{a-1} (1-\theta)^{b-1}.
+\]
+\noindent
+Se ignoriamo il termine costante all'interno della parentesi quadra
+\begin{align}
+p(\theta \mid n, y) &\propto \theta^{y}(1-\theta)^{n-y}\theta^{a-1} (1-\theta)^{b-1},\notag\\
+&\propto \theta^{a+y-1}(1-\theta)^{b+n-y-1},\notag
+\end{align}
+\noindent
+il termine di destra dell'equazione precedente identifica il \emph{kernel} della distribuzione a posteriori e corrisponde ad una Beta \emph{non normalizzata} di parametri \(a + y\) e \(b + n - y\).
+
+Per ottenere una distribuzione di densità, dobbiamo aggiungere una costante di normalizzazione al kernel della distribuzione a posteriori. In base alla definizione della distribuzione Beta, ed essendo \(a' = a+y\) e \(b' = b+n-y\), tale costante di normalizzazione sarà uguale a
+\[
+\frac{\Gamma(a'+b')}{\Gamma(a')\Gamma(b')} = \frac{\Gamma(a+b+n)}{\Gamma(a+y)\Gamma(b+n-y)}.
+\]
+\noindent
+In altri termini, la distribuzione a posteriori diventa una \(\mbox{Beta}(a+y, b+n-y)\):
+\[
+\mbox{Beta}(a+y, b+n-y) = \frac{\Gamma(a+b+n)}{\Gamma(a+y)\Gamma(b+n-y)} \theta^{a+y-1}(1-\theta)^{b+n-y-1}.
+\]
+
+Possiamo concludere dicendo che siamo partiti da una verosimiglianza \(\Bin(n = 30, y = 23 \mid \theta)\). Moltiplicando la verosimiglianza per la distribuzione a priori \(\theta \sim \mbox{Beta}(2, 10)\), abbiamo ottenuto la distribuzione a posteriori \(p(\theta \mid n, y) \sim \mbox{Beta}(25, 17)\). Questo è un esempio di analisi coniugata: la distribuzione a posteriori del parametro ha la stessa forma funzionale della distribuzione a priori. La presente combinazione di verosimiglianza e distribuzione a priori è chiamata caso coniugato \emph{Beta-Binomiale} ed è descritto dal seguente teorema.
+
+\begin{theorem}
+\protect\hypertarget{thm:beta-binom}{}\label{thm:beta-binom}Sia data la funzione di verosimiglianza \(\Bin(n, y \mid \theta)\) e sia \(\mbox{Beta}(\alpha, \beta)\) una distribuzione a priori. In tali circostanze, la distribuzione a posteriori del parametro \(\theta\) sarà una distribuzione \(\mbox{Beta}(\alpha + y, \beta + n - y)\).
+\end{theorem}
+
+È facile calcolare il valore atteso a posteriori di \(\theta\). Essendo \(\E[\mbox{Beta}(\alpha, \beta)] = \frac{\alpha}{\alpha + \beta}\), il risultato cercato diventa
+\begin{equation}
+\E_{\text{post}} [\mathrm{Beta}(\alpha + y, \beta + n - y)] = \frac{\alpha + y}{\alpha + \beta +n}.
+\label{eq:ev-post-beta-bin-1}
+\end{equation}
+
+\begin{guidedpractice}
+Usando le funzione \(\R\) \texttt{plot\_beta\_binomial()} e \texttt{plot\_beta\_binomial()} del pacchetto \texttt{bayesrules}, si rappresenti in maniera grafica e si descriva in forma numerica l'aggiornamento bayesiano Beta-Binomiale per i dati di \textcite{zetschefuture2019}.
+
+\end{guidedpractice}
+
+Per i dati in discussione, abbiamo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bayesrules}\SpecialCharTok{::}\FunctionTok{plot\_beta\_binomial}\NormalTok{(}
+  \AttributeTok{alpha =} \DecValTok{2}\NormalTok{, }\AttributeTok{beta =} \DecValTok{10}\NormalTok{, }\AttributeTok{y =} \DecValTok{23}\NormalTok{, }\AttributeTok{n =} \DecValTok{30}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{026_conjugate_families_files/figure-latex/unnamed-chunk-6-1} \end{center}
+
+\noindent
+Un sommario delle distribuzioni a priori e a posteriori si ottiene usando la funzione \texttt{summarize\_beta\_binomial()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bayesrules}\SpecialCharTok{:::}\FunctionTok{summarize\_beta\_binomial}\NormalTok{(}
+  \AttributeTok{alpha =} \DecValTok{2}\NormalTok{, }\AttributeTok{beta =} \DecValTok{10}\NormalTok{, }\AttributeTok{y =} \DecValTok{23}\NormalTok{, }\AttributeTok{n =} \DecValTok{30}
+\NormalTok{)}
+\CommentTok{\#\textgreater{}       model alpha beta  mean mode    var     sd}
+\CommentTok{\#\textgreater{} 1     prior     2   10 0.167  0.1 0.0107 0.1034}
+\CommentTok{\#\textgreater{} 2 posterior    25   17 0.595  0.6 0.0056 0.0749}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{guidedpractice}
+Per i dati di \textcite{zetschefuture2019}, si trovino la media, la moda, la deviazione standard della distribuzione a posteriori di \(\theta\). Si trovi inoltre l'intervallo di credibilità a posteriori del 95\% per il parametro \(\theta\).
+
+\end{guidedpractice}
+
+Usando la \ref{thm:beta-binom}, possiamo ottenere l'intervallo di credibilità a posteriori del 95\% per il parametro \(\theta\) come segue:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qbeta}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FloatTok{0.025}\NormalTok{, }\FloatTok{0.975}\NormalTok{), }\AttributeTok{shape1 =} \DecValTok{25}\NormalTok{, }\AttributeTok{shape2 =} \DecValTok{17}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 0.445 0.737}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+La media della distribuzione a posteriori è
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{25} \SpecialCharTok{/}\NormalTok{ (}\DecValTok{25} \SpecialCharTok{+} \DecValTok{17}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 0.595}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+La moda della distribuzione a posteriori è
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\DecValTok{25} \SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{25} \SpecialCharTok{+} \DecValTok{17} \SpecialCharTok{{-}} \DecValTok{2}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 0.6}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+La deviazione standard della distribuzione a priori è
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sqrt}\NormalTok{((}\DecValTok{25} \SpecialCharTok{*} \DecValTok{17}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ ((}\DecValTok{25} \SpecialCharTok{+} \DecValTok{17}\NormalTok{)}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ (}\DecValTok{25} \SpecialCharTok{+} \DecValTok{17} \SpecialCharTok{+} \DecValTok{1}\NormalTok{)))}
+\CommentTok{\#\textgreater{} [1] 0.0749}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{guidedpractice}
+Si trovino i parametri e le proprietà della distribuzione a posteriori del parametro \(\theta\) per i dati dell'esempio relativo alla ricerca di Stanley Milgram discussa da \textcite{Johnson2022bayesrules}.
+
+\end{guidedpractice}
+
+Nel 1963, Stanley Milgram presentò una ricerca sulla propensione delle persone a obbedire agli ordini di figure di autorità, anche quando tali ordini possono danneggiare altre persone \autocite{milgram1963behavioral}. Nell'articolo, Milgram descrive lo studio come
 
 \begin{quote}
-il termine variabile marginale è usato per riferirsi a quelle variabili nel sottoinsieme delle variabili che vengono trattenute ovvero utilizzate. Questo termine, marginale, è attribuito ai valori ottenuti ad esempio sommando in una tabella di valori lungo le righe oppure lungo le colonne, trascrivendo il risultato appunto a margine rispettivamente della riga o colonna sommata.{[}1{]} La distribuzione delle variabili marginali (la distribuzione marginale) è ottenuta mediante marginalizzazione sopra le variabili da ``scartare'', e le variabili scartate sono dette fuori marginalizzate.
+consist{[}ing{]} of ordering a naive subject to administer electric shock to a victim. A simulated shock generator is used, with 30 clearly marked voltage levels that range from IS to 450 volts. The instrument bears verbal designations that range from Slight Shock to Danger: Severe Shock. The responses of the victim, who is a trained confederate of the experimenter, are standardized. The orders to administer shocks are given to the naive subject in the context of a `learning experiment' ostensibly set up to study the effects of punishment on memory. As the experiment proceeds the naive subject is commanded to administer increasingly more intense shocks to the victim, even to the point of reaching the level marked Danger: Severe Shock.
 \end{quote}
 
-Nel caso di due variabili casuali discrete \(X\) e \(Y\) di cui conosciamo la cui distribuzione congiunta, la distribuzione marginale di \(X\) è calcolata sommando o integrando la distribuzione di probabilità congiunta sopra \(Y\). La funzione di massa di probabilità marginale \(P(X=x)\) è
-\begin{equation}
-P(X = x) = \sum_y P(X, Y = y) = \sum_y P(X \mid Y = y) P(Y = y),
-\end{equation}
 \noindent
-dove \(P(X = x,Y = y)\) è la distribuzione congiunta di \(X, Y\), mentre \(P(X = x \mid Y = y)\) è la distribuzione condizionata di \(X\) dato \(Y\). In questo caso, la variabile \(Y\) è stata marginalizzata. Le probabilità bivariate marginali e congiunte per variabili casuali discrete sono spesso mostrate come tabelle di contingenza.
+All'insaputa del partecipante, gli shock elettrici erano falsi e l'attore stava solo fingendo di provare il dolore dello shock.
 
-Si noti che \(P(X = x)\) e \(P(Y = y)\) sono normalizzate:
-\[
-\sum_x P(X=x) = 1.0, \quad \sum_y P(Y=y) = 1.0.
-\]
+\textcite{Johnson2022bayesrules} fanno inferenza sui risultati dello studio di Milgram mediante il modello Beta-Binomiale. Il parametro di interesse è \(\theta\), la probabiltà che una persona obbedisca all'autorità (in questo caso, somministrando lo shock più severo), anche se ciò significa recare danno ad altri. \textcite{Johnson2022bayesrules} ipotizzano che, prima di raccogliere dati, le credenze di Milgram relative a \(\theta\) possano essere rappresentate mediante una \(\mbox{Beta}(1, 10)\). Sia \(y = 26\) il numero di soggetti che, sui 40 partecipanti allo studio, aveva accettato di infliggere lo shock più severo. Assumendo che ogni partecipante si comporti indipendentemente dagli altri, possiamo modellare la dipendenza di \(y\) da \(\theta\) usando la distribuzione binomiale. Giungiamo dunque al seguente modello bayesiano Beta-Binomiale:
+\begin{align}
+y \mid \theta & \sim \Bin(n = 40, \theta) \notag\\
+\theta & \sim \text{Beta}(1, 10) \; . \notag
+\end{align}
+Usando le funzioni di \texttt{bayesrules} possiamo facilmente calcolare i parametri e le proprietà della distribuzione a posteriori:
 
-\begin{example}
-\protect\hypertarget{exm:flip3coins}{}\label{exm:flip3coins}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bayesrules}\SpecialCharTok{:::}\FunctionTok{summarize\_beta\_binomial}\NormalTok{(}
+  \AttributeTok{alpha =} \DecValTok{1}\NormalTok{, }\AttributeTok{beta =} \DecValTok{10}\NormalTok{, }\AttributeTok{y =} \DecValTok{26}\NormalTok{, }\AttributeTok{n =} \DecValTok{40}
+\NormalTok{)}
+\CommentTok{\#\textgreater{}       model alpha beta   mean  mode     var     sd}
+\CommentTok{\#\textgreater{} 1     prior     1   10 0.0909 0.000 0.00689 0.0830}
+\CommentTok{\#\textgreater{} 2 posterior    27   24 0.5294 0.531 0.00479 0.0692}
+\end{Highlighting}
+\end{Shaded}
 
-Per l'esperimento casuale consistente nel lancio di tre monete equilibrate, si calcolino le probabilità marginali di \(X\) e \(Y\).
+\noindent
+Il processo di aggiornamento bayesiano è descritto dalla figura seguente:
 
-Nell'ultima colonna a destra e nell'ultima riga in basso della tabella \ref{tab:ditr-cong-biv} sono riportate le distribuzioni di probabilità marginali di \(X\) e \(Y\). \(P_X\) si ottiene sommando su ciascuna riga fissata la colonna \(j\), \(P_X(X = j) = \sum_y p_{xy}(x = j, y)\). \(P_Y\) si trova sommando su ciascuna colonna fissata la riga \(i,\) \(P_Y (Y = i) = \sum_x p_{xy}(x, y = i)\).
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bayesrules}\SpecialCharTok{:::}\FunctionTok{plot\_beta\_binomial}\NormalTok{(}
+  \AttributeTok{alpha =} \DecValTok{1}\NormalTok{, }\AttributeTok{beta =} \DecValTok{10}\NormalTok{, }\AttributeTok{y =} \DecValTok{26}\NormalTok{, }\AttributeTok{n =} \DecValTok{40}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{longtable}[]{@{}cccc@{}}
-\caption{\label{tab:ditr-cong-biv} Distribuzione di probabilità congiunta \(p(x,y)\) per i risultati dell'esperimento consistente nel lancio di tre monete equilibrate e probabilità marginali \(P(x)\) e \(P(y)\).}\tabularnewline
-\toprule
-\(x / y\) & 0 & 1 & \(P(x)\) \\
-\midrule
-\endfirsthead
-\toprule
-\(x / y\) & 0 & 1 & \(P(x)\) \\
-\midrule
-\endhead
-0 & 1/8 & 0 & 1/8 \\
-1 & 2/8 & 1/8 & 3/8 \\
-2 & 1/8 & 2/8 & 3/8 \\
-3 & 0 & 1/8 & 1/8 \\
-\(P(y)\) & 4/8 & 4/8 & 1.0 \\
-\bottomrule
-\end{longtable}
+\begin{center}\includegraphics[width=0.8\linewidth]{026_conjugate_families_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
-\end{example}
+\hypertarget{principali-distribuzioni-coniugate}{%
+\section{Principali distribuzioni coniugate}\label{principali-distribuzioni-coniugate}}
 
-\hypertarget{indipendenza-stocastica}{%
-\section{Indipendenza stocastica}\label{indipendenza-stocastica}}
+Esistono molte altre combinazioni simili di verosimiglianza e distribuzione a priori le quali producono una distribuzione a posteriori che ha la stessa densità della distribuzione a priori. Sono elencate qui sotto le più note coniugazioni tra modelli statistici e distribuzioni a priori.
 
-Ora abbiamo tutti gli strumenti per dare una precisa definizione
-statistica al concetto di indipendenza. La definizione proposta
-sarà necessariamente coerente con la definizione di indipendenza che abbiamo usato fino ad ora. Ma, espressa in questi nuovi termini, potrà essere utilizzata in indagini probabilistiche e statistiche più complesse. Ricordiamo che gli eventi \(A\) e \(B\) si dicono indipendenti se \(P (A \cap B)\, = P(A) P(B)\). Diciamo quindi che \(X\) e \(Y\) sono indipendenti se qualsiasi evento definito da \(X\) è indipendente da qualsiasi evento definito da \(Y\). La definizione formale che garantisce che ciò accada è la seguente.
-
-\begin{definition}
-Le variabili aleatorie \(X\) e \(Y\) sono indipendenti se la loro distribuzione congiunta è il prodotto delle rispettive distribuzioni marginali:
-
-\begin{equation}
-P(X, Y)\, = P_X(x)P_Y(y).
-\end{equation}
-\end{definition}
-
-Nel caso discreto, dunque, l'indipendenza implica che la probabilità
-riportata in ciascuna cella della tabella di probabilità congiunta deve
-essere uguale al prodotto delle probabilità marginali di riga e di
-colonna:
-\[
-P(x_i, y_i)\, = P_X(x_i) P_Y(y_i).
-\]
-
-\begin{example}
-Per la situazione rappresentata nella tabella \ref{exm:flip3coins} le variabili casuali \(X\) e \(Y\) sono indipendenti?
-
-Nella tabella le variabili casuali \(X\) e \(Y\) non sono indipendenti: le probabilità congiunte non sono ricavabili dal prodotto delle marginali. Per esempio, nessuna delle probabilità marginali è uguale a \(0\) per cui nessuno dei valori dentro la tabella (probabilità congiunte) che risulta essere uguale a \(0\) può essere il prodotto delle probabilità marginali.
-\end{example}
+\begin{itemize}
+\item
+  Per il modello Normale-Normale \(\mathcal{N}(\mu, \sigma^2_0)\), la distribizione iniziale è \(\mathcal{N}(\mu_0, \tau^2)\) e la distribuzione finale è \(\mathcal{N}\left(\frac{\mu_0\sigma^2 + \bar{y}n\tau^2}{\sigma^2 + n\tau^2}, \frac{\sigma^2\tau^2}{\sigma^2 + n\tau^2} \right)\).
+\item
+  Per il modello Poisson-gamma \(\text{Po}(\theta)\), la distribizione iniziale è \(\Gamma(\lambda, \delta)\) e la distribuzione finale è \(\Gamma(\lambda + n \bar{y}, \delta +n)\).
+\item
+  Per il modello esponenziale \(\text{Exp}(\theta)\), la distribizione iniziale è \(\Gamma(\lambda, \delta)\) e la distribuzione finale è \(\Gamma(\lambda + n, \delta +n\bar{y})\).
+\item
+  Per il modello uniforme-Pareto \(\text{U}(0, \theta)\), la distribizione iniziale è \(\mbox{Pa}(\alpha, \varepsilon)\) e la distribuzione finale è \(\mbox{Pa}(\alpha + n, \max(y_{(n)}, \varepsilon))\).
+\end{itemize}
 
 \hypertarget{considerazioni-conclusive}{%
 \section*{Considerazioni conclusive}\label{considerazioni-conclusive}}
 \addcontentsline{toc}{section}{Considerazioni conclusive}
 
-La funzione di probabilità congiunta tiene simultaneamente conto del
-comportamento di due variabili casuali \(X\) e \(Y\) e di come esse si
-influenzano reciprocamente. In particolare, si osserva che se le due
-variabili non si influenzano, cioè se sono statisticamente indipendenti,
-allora la distribuzione di massa di probabilità congiunta si ottiene
-come prodotto delle funzioni di probabilità marginali di \(X\) e \(Y\):
-\(P_{X, Y}(x, y) = P_X(x) P_Y(y)\).
+Lo scopo di questa discussione è stato quello di mostrare come sia possibile combinare le nostre conoscenze a priori (espresse nei termini di una densità di probabilità) con le evidenze fornite dai dati (espresse nei termini della funzione di verosimiglianza), così da determinare, mediante il teorema di Bayes, una distribuzione a posteriori, la quale condensa l'incertezza che abbiamo sul parametro \(\theta\). Per illustrare tale problema, abbiamo considerato una situazione nella quale \(\theta\) corrisponde alla probabilità di successo in una sequenza di prove Bernoulliane. Abbiamo visto come, in queste circostanze, sia ragionevole esprimere le nostre credenze a priori mediante la densità Beta, con opportuni parametri. L'inferenza rispetto ad una proporzione rappresenta un caso particolare, ovvero un caso nel quale la distribuzione a priori è Beta e la verosimiglianza è Binomiale. In tali circostanze, la distribuzione a posteriori diventa una distribuzione Beta -- questo è il cosiddetto modello Beta-Binomiale. Dato che utilizza una distribuzione a priori coniugata, dunque, il modello Beta-Binomiale rende possibile la determinazione analitica dei parametri della distribuzione a posteriori.
+
+\hypertarget{appendix-appendix}{%
+\appendix}
+
 
 
 % Bibliography

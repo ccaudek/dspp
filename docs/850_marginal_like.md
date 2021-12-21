@@ -7,16 +7,16 @@ Riportiamo di seguito la derivazione analitica per la costante di normalizzazion
 
 
 ::: {.proof}
-Sia la distribuzione a priori $\theta \sim \Beta(a, b)$ e sia $y = \{y_1, \dots, y_n\} \sim \Bin(\theta, n)$. Scrivendo la _funzione beta_ come
+Sia la distribuzione a priori $\theta \sim \mbox{Beta}(a, b)$ e sia $y = \{y_1, \dots, y_n\} \sim \Bin(\theta, n)$. Scrivendo la _funzione beta_ come
 $$
-\Beta(a, b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)},
+\B(a, b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)},
 $$
 \noindent
 la verosimiglianza marginale diventa
 \begin{align}
 p(y) &= \int p(y \mid \theta) p(\theta) \,\operatorname {d}\!\theta \notag\\
-&= \int_0^1 \binom{n}{y}\theta^{y} (1 - \theta)^{n- y} \frac{1}{\Beta(a,b)} \theta^{a-1} (1-\theta)^{b-1} \,\operatorname {d}\!\theta \notag\\
-&= \binom{n}{y}\frac{1}{\Beta(a,b)} \int_0^1 \theta^{y + a - 1} (1-\theta)^{n- y + b-1}  \,\operatorname {d}\!\theta \notag\\
+&= \int_0^1 \binom{n}{y}\theta^{y} (1 - \theta)^{n- y} \frac{1}{\B(a,b)} \theta^{a-1} (1-\theta)^{b-1} \,\operatorname {d}\!\theta \notag\\
+&= \binom{n}{y}\frac{1}{\B(a,b)} \int_0^1 \theta^{y + a - 1} (1-\theta)^{n- y + b-1}  \,\operatorname {d}\!\theta \notag\\
 &= \binom{n}{y}\frac{\Beta(y + a, n- y + b)}{\Beta(a,b)},
 (\#eq:constant-norm-beta-binom)
 \end{align}
@@ -28,14 +28,14 @@ in quanto
 \int_0^1  \theta^{a-1} (1-\theta)^{b-1} \,\operatorname {d}\!\theta &= \Beta(a,b). \notag
 \end{align}
 
-In conclusione, nel caso di una verosimiglianza binomiale $y = \sim \Bin(\theta, n)$ e di una distribuzione a priori $\theta \sim \Beta(a, b)$, la verosimiglianza marginale diventa uguale alla \@ref(eq:constant-norm-beta-binom).
+In conclusione, nel caso di una verosimiglianza binomiale $y = \sim \Bin(\theta, n)$ e di una distribuzione a priori $\theta \sim \mbox{Beta}(a, b)$, la verosimiglianza marginale diventa uguale alla \@ref(eq:constant-norm-beta-binom).
 :::
 
 ::: {.guidedpractice data-latex=""}
 Si verifichi la \@ref(eq:constant-norm-beta-binom) mediante di dati di @zetschefuture2019. 
 :::
 
-Per replicare mediante la \@ref(eq:constant-norm-beta-binom) il risultato trovato per via numerica nella Sezione \@ref(sec:const-normaliz-bino23) assumiamo una distribuzione a priori uniforme, ovvero $\Beta(1, 1)$. I valori del problema dunque diventano i seguenti:
+Per replicare mediante la \@ref(eq:constant-norm-beta-binom) il risultato trovato per via numerica nella Sezione \@ref(sec:const-normaliz-bino23) assumiamo una distribuzione a priori uniforme, ovvero $\mbox{Beta}(1, 1)$. I valori del problema dunque diventano i seguenti:
 
 
 ```r

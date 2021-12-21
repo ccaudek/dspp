@@ -4,10 +4,9 @@
 source("_common.R")
 ```
 
-::: {.chapterintro data-latex=""}
+```{block, type='Summary'}
 Obiettivo di questo Capitolo è fornire un esempio di derivazione della distribuzione a posteriori scegliendo quale distribuzione a priori una distribuzione coniugata. Esamineremo qui il caso più semplice, ovvero il modello Beta-Binomiale.
-:::
-
+```
 
 ## Il denominatore bayesiano
 
@@ -80,72 +79,102 @@ $$
 p(\theta \mid n=30, y=23) = \frac{\Big[\binom{30}{23}\theta^{23}(1-\theta)^{30-23}\Big]\Big[\frac{\Gamma(12)}{\Gamma(2)\Gamma(10)}\theta^{2-1} (1-\theta)^{10-1}\Big]}{p(y = 23)},
 $$
 laddove $p(y = 23)$, ovvero la verosimiglianza marginale, è una costante di normalizzazione che fa sì che l'area sottesa alla densità a posteriori sia unitaria. 
-
-Riscriviamo ora l'equazione precedente in termini generali
+<!-- (si veda il Paragrafo \@ref(verosim-marginale)). -->
+Raccogliendo tutte le costanti dell'equazione precedente abbiamo:
 $$
-p(\theta \mid n, y) = \frac{\Big[\binom{n}{y}\theta^{y}(1-\theta)^{n-y}\Big]\Big[\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\theta^{a-1} (1-\theta)^{b-1}\Big]}{p(y)}
+p(\theta \mid n=30, y=23) =\left[\frac{\binom{30}{23}\frac{\Gamma(12)}{\Gamma(2)\Gamma(10)}}{p(y = 23)}\right] \theta^{23}(1-\theta)^{7}\theta^{1} (1-\theta)^{9}.
 $$
-\noindent
-e raccogliendo tutte le costanti otteniamo:
-$$
-p(\theta \mid n, y) =\left[\frac{\binom{n}{y}\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}}{p(y)}\right] \theta^{y}(1-\theta)^{n-y}\theta^{a-1} (1-\theta)^{b-1}.
-$$
-\noindent
-Se ignoriamo il termine costante all'interno della parentesi quadra 
+Se ignoriamo il termine costante all'interno della parentesi quadra otteniamo:
 \begin{align}
-p(\theta \mid n, y) &\propto \theta^{y}(1-\theta)^{n-y}\theta^{a-1} (1-\theta)^{b-1},\notag\\
-&\propto \theta^{a+y-1}(1-\theta)^{b+n-y-1},\notag
+p(\theta \mid n=30, y=23) &\propto \theta^{23}(1-\theta)^{7}\theta^{1} (1-\theta)^{9}\notag\\
+&\propto \theta^{24}(1-\theta)^{16}.\notag
 \end{align}
-\noindent
-il termine di destra dell'equazione precedente identifica il _kernel_ della distribuzione a posteriori e corrisponde ad una Beta _non normalizzata_ di parametri $a + y$ e $b + n - y$. 
+Il termine di destra dell'equazione precedente identifica il _kernel_ della distribuzione a posteriori, e corrisponde ad una distribuzione Beta _non normalizzata_ di parametri $\alpha=25$ e $\beta = 17$. Verifichiamo, infatti, che l'area sotto la curva (AUC) non è unitaria:
+```{r}
+postFun <- function(theta) {
+  theta^24 * (1 - theta)^16
+}
+(AUC <- integrate(postFun, lower = 0, upper = 1)$value)
+```
 
-Per ottenere una distribuzione di densità, dobbiamo aggiungere una costante di normalizzazione al kernel della distribuzione a posteriori. In base alla definizione della distribuzione Beta, ed essendo $a' = a+y$ e $b' = b+n-y$, tale costante di normalizzazione sarà uguale a
+\noindent
+Per ottenere una distribuzione di densità è necessario aggiungere una costante di normalizzazione al kernel della distribuzione a posteriori. In base alla definizione della distribuzione Beta, tale costante è uguale a
 $$
-\frac{\Gamma(a'+b')}{\Gamma(a')\Gamma(b')} = \frac{\Gamma(a+b+n)}{\Gamma(a+y)\Gamma(b+n-y)}.
+\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)} = \frac{\Gamma(42)}{\Gamma(25)\Gamma(17)}.
 $$
 \noindent
-In altri termini, la distribuzione a posteriori diventa una $\mbox{Beta}(a+y, b+n-y)$:
-$$
-\mbox{Beta}(a+y, b+n-y) = \frac{\Gamma(a+b+n)}{\Gamma(a+y)\Gamma(b+n-y)} \theta^{a+y-1}(1-\theta)^{b+n-y-1}.
-$$
+Questo termine non è altro che l'integrale della distribuzione a posteriori non normalizzata:
 
-Possiamo concludere dicendo che siamo partiti da una verosimiglianza $\Bin(n = 30, y = 23 \mid \theta)$. Moltiplicando la verosimiglianza per la distribuzione a priori $\theta \sim \mbox{Beta}(2, 10)$, abbiamo ottenuto la distribuzione a posteriori $p(\theta \mid n, y) \sim \mbox{Beta}(25, 17)$. Questo è un esempio di analisi coniugata: la distribuzione a posteriori del parametro ha la stessa forma funzionale della distribuzione a priori. La presente combinazione di verosimiglianza e distribuzione a priori è chiamata caso coniugato _Beta-Binomiale_ ed è descritto dal seguente teorema.
+```{r}
+postFun <- function(theta) {
+  theta^24 * (1 - theta)^16 / AUC
+}
+integrate(postFun, lower = 0, upper = 1)$value
+```
+\noindent
+Infatti, l'area sottesa alla funzione
+$$
+p(\theta \mid n=30, y=23) =  \frac{\Gamma(42)}{\Gamma(25)\Gamma(17)}\theta^{25-1}(1-\theta)^{17-1} = \text{Beta}(y+a, n-y+b)
+$$
+\noindent
+somma ad 1, ovvero,
+```{r}
+postFunNor <- function(theta) {
+  (factorial(42-1) / (factorial(25-1)*factorial(17-1))) * 
+    theta^(25-1) * (1 - theta)^(17-1)
+}
+(AUC2 <- integrate(postFunNor, lower = 0, upper = 1)$value)
+```
+
+<!-- \noindent -->
+<!-- In maniera equivalente, è possibile usare la formula della verosimiglianza marginale. Svolgendo i calcoli in R e mediante la \@ref(eq:constant-norm-beta-binom) otteniamo -->
+
+<!-- ```{r} -->
+<!-- B <- function(a, b) { -->
+<!--   (gamma(a) * gamma(b)) / gamma(a + b) -->
+<!-- } -->
+<!-- y <- 23 -->
+<!-- n <- 30 -->
+<!-- a <- 2 -->
+<!-- b <- 10 -->
+
+<!-- # marginal likelihood -->
+<!-- K <- choose(n, y) * B(y + a, n - y + b) / B(a, b)  -->
+
+<!-- postFunNor3 <- function(theta) { -->
+<!--   (dbinom(y, n, theta) * dbeta(theta, a, b)) / K   -->
+<!-- } -->
+<!-- (AUC3 <- integrate(postFunNor3, lower = 0, upper = 1)$value) -->
+<!-- ``` -->
+
+Possiamo quindi concludere dicendo che siamo partiti da una verosimiglianza $\Bin(n = 30, y = 23 \mid \theta)$ e, moltiplicando la verosimiglianza per la distribuzione a priori $\theta \sim \mbox{Beta}(2, 10)$, abbiamo ottenuto la distribuzione a posteriori $p(\theta \mid n, y) \sim \mbox{Beta}(25, 17)$. Questo è un esempio di analisi coniugata: la distribuzione a posteriori del parametro ha la stessa forma funzionale della distribuzione a priori. La presente combinazione di verosimiglianza e distribuzione a priori è chiamata caso coniugato _Beta-Binomiale_ ed è descritto dal seguente teorema.
 
 ::: {.theorem #beta-binom}
 Sia data la funzione di verosimiglianza $\Bin(n, y \mid \theta)$ e sia $\mbox{Beta}(\alpha, \beta)$ una distribuzione a priori. In tali circostanze, la distribuzione a posteriori del parametro $\theta$ sarà una distribuzione $\mbox{Beta}(\alpha + y, \beta + n - y)$.
 :::
 
-È facile calcolare il valore atteso a posteriori di $\theta$. Essendo $\E[\mbox{Beta}(\alpha, \beta)] = \frac{\alpha}{\alpha + \beta}$, il risultato cercato diventa
+\noindent
+In particolare, possiamo calcolare qual è il valore atteso a posteriori di $\theta$. Essendo $\E[\mbox{Beta}(\alpha, \beta)] = \frac{\alpha}{\alpha + \beta}$, il valore atteso a posteriori di $\theta$ sarà
 \begin{equation}
 \E_{\text{post}} [\mathrm{Beta}(\alpha + y, \beta + n - y)] = \frac{\alpha + y}{\alpha + \beta +n}.
 (\#eq:ev-post-beta-bin-1)
 \end{equation}
 
-::: {.guidedpractice data-latex=""}
-Usando le funzione $\R$ `plot_beta_binomial()` e `plot_beta_binomial()` del pacchetto `bayesrules`, si rappresenti in maniera grafica e si descriva in forma numerica l'aggiornamento bayesiano Beta-Binomiale per i dati di @zetschefuture2019. 
-:::
+<!-- Riscrivendo la \@ref(eq:ev-post-beta-bin-1) nel modo seguente -->
 
-Per i dati in discussione, abbiamo:
-```{r}
-bayesrules::plot_beta_binomial(
-  alpha = 2, beta = 10, y = 23, n = 30
-)
-```
+<!-- \begin{align} -->
+<!-- \E_{\text{post}} [\Beta(\alpha + y, \beta + n - y)] &= \frac{\alpha + y}{\alpha + \beta +n}\notag\\  -->
+<!-- &= \frac{a+b}{a+b+n} \cdot \frac{a}{a+b} + \frac{n}{a+b+n} \cdot \frac{y}{n} -->
+<!-- (\#eq:ev-post-beta-bin) -->
+<!-- \end{align} -->
 
-\noindent
-Un sommario delle distribuzioni a priori e a posteriori si ottiene usando la funzione `summarize_beta_binomial()`:
-```{r}
-bayesrules:::summarize_beta_binomial(
-  alpha = 2, beta = 10, y = 23, n = 30
-)
-```
+<!-- possiamo vedere che il valore atteso a posteriori è una media pesata fra il valore atteso a priori $\left( \frac{\alpha}{\alpha+\beta}\right)$ e la frequenze di successi osservata $\left(\frac{y}{n}\right)$. I pesi sono $\left( \frac{\alpha+\beta}{\alpha+\beta+n}\right)$ e $\left( \frac{n}{\alpha+\beta+n}\right)$; quindi, quando $n$ è grande rispetto ad $\alpha + \beta$, conta molto quanto abbiamo osservato e poco l'aspettativa a priori; viceversa, quando $n$ è piccolo rispetto a $\alpha + \beta$, le osservazioni contano poco rispetto all'aspettativa a priori. -->
+
+<!-- Queste osservazioni ci possono far capire come scegliere i parametri $\alpha$ e $\beta$: se vogliamo assumere totale ignoranza, la scelta coerente è $\alpha = \beta = 1$ (ogni valore di $\theta$ è ugualmente probabile); se invece abbiamo delle aspettative, possiamo scegliere $\alpha$ in modo che sia uguale al valore atteso a priori, mentre $\alpha + \beta$ esprime l’importanza che diamo all'informazione a priori: maggiore è il valore di $\alpha + \beta$, più dati servono per allontanare la distribuzione a priori da quella a posteriori. Se $n$ è abbastanza grande, la distribuzione a posteriori è molto poco influenzata dalla distribuzione a priori, a meno di scelte estreme. -->
 
 
-::: {.guidedpractice data-latex=""}
-Per i dati di @zetschefuture2019, si trovino la media, la moda, la deviazione standard della distribuzione a posteriori di $\theta$. Si trovi inoltre l'intervallo di credibilità a posteriori del 95% per il parametro $\theta$.
-:::
-
-Usando la \@ref(thm:beta-binom), possiamo ottenere l'intervallo di credibilità a posteriori del 95% per il parametro $\theta$ come segue:
+::: {.example}
+Per i dati esaminati, usando la \@ref(thm:beta-binom) possiamo ottenere l'intervallo di credibilità a posteriori del 95% per il parametro $\theta$ come:
 ```{r}
 qbeta(c(0.025, 0.975), shape1 = 25, shape2 = 17)
 ```
@@ -164,12 +193,26 @@ La deviazione standard della distribuzione a priori è
 ```{r}
 sqrt((25 * 17) / ((25 + 17)^2 * (25 + 17 + 1)))
 ```
+::: 
 
-::: {.guidedpractice data-latex=""}
-Si trovino i parametri e le proprietà della distribuzione a posteriori del parametro $\theta$ per i dati dell'esempio relativo alla ricerca di Stanley Milgram discussa da @Johnson2022bayesrules.
-:::
+::: {.example}
+La funzione $\R$ `plot_beta_binomial()` del pacchetto `bayesrules` descrive in maniera grafica l'aggiornamento bayesiano Beta-Binomiale:
+```{r}
+bayesrules::plot_beta_binomial(
+  alpha = 2, beta = 10, y = 23, n = 30
+)
+```
+Un sommario delle distribuzioni a priori e a posteriori si ottiene usando la funzione `summarize_beta_binomial()`:
+```{r}
+bayesrules:::summarize_beta_binomial(
+  alpha = 2, beta = 10, y = 23, n = 30
+)
+```
+::: 
 
-Nel 1963, Stanley Milgram presentò una ricerca sulla propensione delle persone a obbedire agli ordini di figure di autorità, anche quando tali ordini possono danneggiare altre persone [@milgram1963behavioral]. Nell'articolo, Milgram descrive lo studio come
+
+::: {.example}
+Consideriamo un altro esempio discusso da @Johnson2022bayesrules. Nel 1963, Stanley Milgram presentò una ricerca sulla propensione delle persone a obbedire agli ordini di figure di autorità, anche quando tali ordini possono danneggiare altre persone [@milgram1963behavioral]. Nell'articolo, Milgram descrive lo studio come
 
 > consist[ing] of ordering a naive subject to administer electric shock to a victim. A simulated shock generator is used, with 30 clearly marked voltage levels that range from IS to 450 volts. The instrument bears verbal designations that range from Slight Shock to Danger: Severe Shock. The responses of the victim, who is a trained confederate of the experimenter, are standardized. The orders to administer shocks are given to the naive subject in the context of a `learning experiment’ ostensibly set up to study the effects of punishment on memory. As the experiment proceeds the naive subject is commanded to administer increasingly more intense shocks to the victim, even to the point of reaching the level marked Danger: Severe Shock.
 
@@ -194,6 +237,7 @@ bayesrules:::plot_beta_binomial(
   alpha = 1, beta = 10, y = 26, n = 40
 )
 ```
+::: 
 
 
 ## Principali distribuzioni coniugate
