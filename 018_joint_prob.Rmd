@@ -6,10 +6,11 @@ source("_common.R")
 
 <!-- Finora abbiamo considerato unicamente le leggi di singole variabile -->
 <!-- aleatorie.  -->
-In psicologia e nella vita quotidiana siamo spesso interessati a studiare problemi di probabilità legati al valore congiunto di due o più variabili casuali. Ad esempio, potremmo misurare il QI dei bambini e il loro peso alla nascita, o l'altezza e il peso delle giraffe, o il livello di inquinamento atmosferico e il tasso di malattie respiratorie nelle città, o il numero di amici di Facebook e l'età. Ci potremmo chiedere che relazione esiste tra le coppie di variabili elencate in precedenza.
+<!-- In psicologia e nella vita quotidiana siamo spesso interessati a studiare problemi di probabilità legati al valore congiunto di due o più variabili casuali. Ad esempio, potremmo misurare il QI dei bambini e il loro peso alla nascita, o l'altezza e il peso delle giraffe, o il livello di inquinamento atmosferico e il tasso di malattie respiratorie nelle città, o il numero di amici di Facebook e l'età. Ci potremmo chiedere che relazione esiste tra le coppie di variabili elencate in precedenza. -->
 
-Per descrivere la relazione tra due variabili casuali è necessario calcolare la *covarianza* e la *correlazione*. Il calcolo di questi due indici richiede la conoscenza della funzione di probabilità congiunta. Obiettivo di questo Capitolo è chiarire cosa si intende per funzione di probabilità congiunta di due variabili casuali $X$ e $Y$. Esamineremo qui in dettaglio il caso discreto.
-
+::: {.chapterintro data-latex=""}
+Per descrivere la relazione tra due variabili casuali è necessario calcolare la *covarianza* e la *correlazione*. Il calcolo di questi due indici richiede la conoscenza della funzione di probabilità congiunta. Obiettivo di questo Capitolo è descrivere la funzione di probabilità congiunta di due variabili casuali; esamineremo in dettaglio il caso discreto.
+:::
 
 ## Funzione di probabilità congiunta
 
@@ -21,7 +22,7 @@ $$
 \noindent
 Dato che i tre lanci sono tra loro indipendenti, non c'è ragione di aspettarsi che uno degli otto risultati possibili dell'esperimento sia più probabile degli altri, dunque possiamo associare a ciascuno degli otto eventi elementari dello spazio campionario la stessa probabilità, ovvero 1/8.
 
-Su tale spazio campionario consideriamo le variabili aleatorie $X \in \{0, 1, 2, 3\}$ che conta il numero delle teste nei tre lanci e $Y \in \{0, 1\}$ che conta il numero delle teste al primo lancio. Indicando con T = 'testa' e C = 'croce', si ottiene dunque la situazione riportata nella tabella \@ref(tab:tre-monete-distr-cong-1).
+Siano $X \in \{0, 1, 2, 3\}$ = "numero di realizzazioni con il risultato testa nei tre lanci" e $Y \in \{0, 1\}$ = "numero di realizzazioni con il risultato testa nel primo lancio" due variabili casuali definite sullo spazio campionario $\Omega$. Indicando con T = 'testa' e C = 'croce', si ottiene la situazione riportata nella tabella \@ref(tab:tre-monete-distr-cong-1).
 
 Table: (\#tab:tre-monete-distr-cong-1) Spazio campionario dell'esperimento consistente nel lancio di tre monete equilibrate su cui sono state definite le variabili aleatorie $X$ e $Y$.
 
@@ -36,7 +37,7 @@ Table: (\#tab:tre-monete-distr-cong-1) Spazio campionario dell'esperimento consi
    $\omega_7$ = TCC    1     1        1/8
    $\omega_8$ = CCC    0     0        1/8
 
-Ci poniamo il problema di associare un livello di probabilità ad ogni coppia $(x, y)$ definita su $\Omega$. La coppia $(X = 0, Y = 0)$ si realizza in corrispondenza di un solo evento elementare, ovvero CCC; avrà dunque una probabilità pari a $P(X=0, Y=0) = P(CCC) = 1/8$. Nel caso della coppia $(X = 1, Y = 0)$ ci sono due eventi elementari che danno luogo al risultato considerato, ovvero, CCT e CTC; la probabilità $P(X=1, Y=0)$ sarà dunque data dall'unione delle probabilità dei due eventi elementari corrispondenti, cioé $P(X=1, Y=0) = P(CCT \:\cup\: CTC) = 1/8 + 1/8 = 1/4$. Riportiamo qui sotto i calcoli svolti per tutti i possibili valori di $X$ e $Y$.
+Ci poniamo il problema di associare un livello di probabilità ad ogni coppia $(x, y)$ definita su $\Omega$. La coppia $(X = 0, Y = 0)$ si realizza in corrispondenza di un solo evento elementare, ovvero CCC; avrà dunque una probabilità pari a $P(X=0, Y=0) = P(CCC) = 1/8$. Nel caso della coppia $(X = 1, Y = 0)$ ci sono due eventi elementari che danno luogo al risultato considerato, ovvero, CCT e CTC; la probabilità $P(X=1, Y=0)$ sarà dunque data dalla probabilità dell'unione dei due eventi elementari, cioé $P(X=1, Y=0) = P(CCT \:\cup\: CTC) = 1/8 + 1/8 = 1/4$. Sono riportati qui sotto i calcoli per tutti i possibili valori di $X$ e $Y$.
 \begin{align}
 P(X = 0, Y = 0) &= P(\omega_8 = CCC) = 1/8; \notag\\
 P(X = 1, Y = 0) &= P(\omega_5 = CCT) + P(\omega_6 = CTC) = 2/8; \notag\\
@@ -45,7 +46,7 @@ P(X = 2, Y = 0) &= P(\omega_4 = CTT) = 1/8; \notag\\
 P(X = 2, Y = 1) &= P(\omega_3 = TCT) + P(\omega_2 = TTC) = 2/8; \notag\\
 P(X = 3, Y = 1) &= P(\omega_1 = TTT) = 1/8; \notag
 \end{align}
-Le probabilità così trovate sono riportate nella tabella \@ref(tab:ditr-cong-biv-1) la quale descrive la distribuzione di probabilità congiunta delle variabili aleatorie $X$ = "numero di realizzazioni con il risultato testa nei tre lanci" e $Y$ = "numero di realizzazioni con il risultato testa nel primo lancio" per l'esperimento casuale consistente nel lancio di tre monete equilibrate.
+Le probabilità così trovate sono riportate nella tabella \@ref(tab:ditr-cong-biv-1) la quale descrive la distribuzione di probabilità congiunta delle variabili casuali $X$ = "numero di realizzazioni con il risultato testa nei tre lanci" e $Y$ = "numero di realizzazioni con il risultato testa nel primo lancio" per l'esperimento casuale consistente nel lancio di tre monete equilibrate.
 
 Table: (\#tab:ditr-cong-biv-1) Distribuzione di probabilità congiunta per i risultati dell'esperimento consistente nel lancio di tre monete equilibrate.
 
@@ -59,8 +60,7 @@ Table: (\#tab:ditr-cong-biv-1) Distribuzione di probabilità congiunta per i ris
 In generale, possiamo dire che, dato uno spazio campionario discreto $\Omega$, è possibile associare ad ogni evento elementare $\omega_i$ dello spazio campionario una coppia di numeri reali $(x, y)$, essendo $x = X(\omega)$ e $y = Y(\omega)$, il che ci conduce alla seguente definizione.
 
 ::: {.definition}
-Siano $X$ e $Y$ due variabili casuale. La funzione che associa ad ogni coppia $(x, y)$ un livello di probabilità prende il nome di funzione di probabilità congiunta:
-
+Siano $X$ e $Y$ due variabili casuali. La funzione che associa ad ogni coppia $(x, y)$ un livello di probabilità prende il nome di funzione di probabilità congiunta:
 $$
 P(x, y) = P(X = x, Y = y).
 $$
@@ -101,7 +101,7 @@ P_{XY}(X+Y \leq 1) = P_{XY}(0, 0) + P_{XY}(1, 0)= 3/8.\notag
 Regola della catena permette il calcolo di qualsiasi membro della distribuzione congiunta di un insieme di variabili casuali utilizzando solo le probabilità condizionate.
 
 ::: {.definition}
-Dati due eventi $A$ e $B$, la regola della catena (_chain rule_) afferma che
+Dati due eventi $A$ e $B$, la regola della catena afferma che
 
 $$
 P(A \cap B) = P(A)P(B \mid A).
@@ -150,14 +150,14 @@ Table: (\#tab:ditr-cong-biv) Distribuzione di probabilità congiunta $p(x,y)$ pe
 :::
 
 
-## Marginalizzazione nel caso continuo
+<!-- ## Marginalizzazione nel caso continuo -->
 
-Analogamente per variabili casuali continue, la funzione di densità di probabilità marginale $p(X=x)$ è
-\begin{equation}
-p(x)=\int_{y}p(x,y)\,\operatorname {d}\!y = \int_{y} p(x \mid y) \, p(y) \, \operatorname {d}\!y,
-\end{equation}
-\noindent
-dove $p(x,y)$ è la distribuzione congiunta di $X$ e $Y$, mentre $p(x \mid y)$ fornisce la distribuzione condizionata per $X$ dato $Y$. Di nuovo, la variabile $Y$ è stata marginalizzata.
+<!-- Analogamente per variabili casuali continue, la funzione di densità di probabilità marginale $p(X=x)$ è -->
+<!-- \begin{equation} -->
+<!-- p(x)=\int_{y}p(x,y)\,\operatorname {d}\!y = \int_{y} p(x \mid y) \, p(y) \, \operatorname {d}\!y, -->
+<!-- \end{equation} -->
+<!-- \noindent -->
+<!-- dove $p(x,y)$ è la distribuzione congiunta di $X$ e $Y$, mentre $p(x \mid y)$ fornisce la distribuzione condizionata per $X$ dato $Y$. Di nuovo, la variabile $Y$ è stata marginalizzata. -->
 
 <!-- Per fare un esempio, consideriamo l'influenza delle condizioni meteorologiche sul tono dell'umore (ovvero, probabilità di essere felici) in Italia. Questo si può scrivere come $Pr(\text{felicità} \mid \text{meteo})$, la probabilità di felicità dato il tipo di condizioni meteo. Le condizioni meteo sono diverse, in media, nel nord, centro e sud Italia. Quindi, quello che dobbiamo scrivere in realtà è $Pr(\text{felicità} \cap \text{area geografica} \mid \text{meteo})$, per semplicità, $Pr(\text{felicità}, \text{area geografica} \mid \text{meteo})$. Ovvero, dobbiamo tenere contemporaneamente in considerazione l'evento congiunto presenza/assenza di felicità e l'area geografica. Ciò corrisponde, per esempio, alla domanda: "qual è la probabilità che una persona sia felice nel centro Italia dato che c'è bel tempo?". -->
 <!-- La marginalizzazione ci dice che possiamo calcolare la quantità di interesse se sommiamo su tutte le probabilità delle tre aree geografiche: -->
@@ -188,19 +188,19 @@ dove $p(x,y)$ è la distribuzione congiunta di $X$ e $Y$, mentre $p(x \mid y)$ f
 <!-- \end{equation} -->
 
 
-### Verosimiglianza marginalizzata
+<!-- ### Verosimiglianza marginalizzata -->
 
-Nella statistica bayesiana, la marginalizzazione serve per calcolare la cosiddetta _verosimiglianza marginalizzata_. Sia $y = \{y_1, \dots, y_n\}$ un campione casuale e si assuma un modello statistico parametrizzato da $\theta$. Il teorema di Bayes è
-$$
-p(\theta \mid y) = \frac{p(y \mid \theta) \, p(\theta)}{p(y)},
-$$
-\noindent
-laddove la verosimiglianza marginalizzata $p(y)$ 
-$$
-p(y) = \int_\theta p(y \mid \theta)\, p(\theta) \,\operatorname {d}\!\theta,
-$$
-\noindent
-si ottiene integrando il numeratore bayesiano (ovvero, la distribuzione a posteriori non normalizzata) su $\theta$.
+<!-- Nella statistica bayesiana, la marginalizzazione serve per calcolare la cosiddetta _verosimiglianza marginalizzata_. Sia $y = \{y_1, \dots, y_n\}$ un campione casuale e si assuma un modello statistico parametrizzato da $\theta$. Il teorema di Bayes è -->
+<!-- $$ -->
+<!-- p(\theta \mid y) = \frac{p(y \mid \theta) \, p(\theta)}{p(y)}, -->
+<!-- $$ -->
+<!-- \noindent -->
+<!-- laddove la verosimiglianza marginalizzata $p(y)$  -->
+<!-- $$ -->
+<!-- p(y) = \int_\theta p(y \mid \theta)\, p(\theta) \,\operatorname {d}\!\theta, -->
+<!-- $$ -->
+<!-- \noindent -->
+<!-- si ottiene integrando il numeratore bayesiano (ovvero, la distribuzione a posteriori non normalizzata) su $\theta$. -->
 
 
 ## Indipendenza stocastica

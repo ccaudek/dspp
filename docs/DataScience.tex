@@ -776,183 +776,225 @@ Febbraio 2022
 
 \mainmatter
 
-\hypertarget{chapter-prob-cond}{%
-\chapter{Probabilità condizionata}\label{chapter-prob-cond}}
+\hypertarget{chapter-prob-congiunta}{%
+\chapter{Probabilità congiunta}\label{chapter-prob-congiunta}}
 
 \begin{chapterintro}
-L'attribuzione di una probabilità ad un evento è sempre condizionata dalle conoscenze che abbiamo a disposizione. Per un determinato stato di conoscenze, attribuiamo ad un dato evento una certa probabilità di verificarsi; ma se il nostro stato di conoscenze cambia, allora cambierà anche la probabilità che attribuiamo all'evento in questione.
+Per descrivere la relazione tra due variabili casuali è necessario calcolare la \emph{covarianza} e la \emph{correlazione}. Il calcolo di questi due indici richiede la conoscenza della funzione di probabilità congiunta. Obiettivo di questo Capitolo è descrivere la funzione di probabilità congiunta di due variabili casuali; esamineremo in dettaglio il caso discreto.
 
 \end{chapterintro}
 
-\hypertarget{probabilituxe0-condizionata-su-altri-eventi}{%
-\section{Probabilità condizionata su altri eventi}\label{probabilituxe0-condizionata-su-altri-eventi}}
+\hypertarget{funzione-di-probabilituxe0-congiunta}{%
+\section{Funzione di probabilità congiunta}\label{funzione-di-probabilituxe0-congiunta}}
 
-La probabilità condizionata è una componente essenziale del ragionamento scientifico dato che chiarisce come sia possibile incorporare le evidenze disponibili, in maniera logica e coerente, nella nostra conoscenza del mondo. Infatti, si può pensare che tutte le probabilità siano probabilità condizionate, anche se l'evento condizionante non è sempre esplicitamente menzionato. Consideriamo il seguente problema.
+Dopo aver trattato della distribuzione di probabilità di una variabile casuale, la quale associa ad ogni evento elementare dello spazio campionario uno ed un solo numero reale, è naturale estendere questo concetto al caso di due o più variabili casuali. Iniziamo a descrivere il caso discreto con un esempio. Consideriamo l'esperimento casuale corrispondente al lancio di tre monete equilibrate. Lo spazio campionario è
 
-\begin{example}
+\[
+\Omega = \{TTT, TTC, TCT, CTT, CCT, CTC, TCC, CCC\}.
+\]
+\noindent
+Dato che i tre lanci sono tra loro indipendenti, non c'è ragione di aspettarsi che uno degli otto risultati possibili dell'esperimento sia più probabile degli altri, dunque possiamo associare a ciascuno degli otto eventi elementari dello spazio campionario la stessa probabilità, ovvero 1/8.
 
-Supponiamo che lo screening per la diagnosi precoce del tumore mammario si avvalga di test che sono accurati al 90\%, nel senso che il 90\% delle donne con cancro e il 90\% delle donne senza cancro saranno classificate correttamente. Supponiamo che l'1\% delle donne sottoposte allo screening abbia effettivamente il cancro al seno. Ci chiediamo: qual è la probabilità che una donna scelta casualmente abbia una mammografia positiva e, se ce l'ha, qual è la probabilità che abbia davvero il cancro?
+Siano \(X \in \{0, 1, 2, 3\}\) = ``numero di realizzazioni con il risultato testa nei tre lanci'' e \(Y \in \{0, 1\}\) = ``numero di realizzazioni con il risultato testa nel primo lancio'' due variabili casuali definite sullo spazio campionario \(\Omega\). Indicando con T = `testa' e C = `croce', si ottiene la situazione riportata nella tabella \ref{tab:tre-monete-distr-cong-1}.
 
-Per risolvere questo problema, supponiamo che il test in questione venga somministrato ad un grande campione di donne, diciamo a 1000 donne. Di queste 1000 donne, 10 (ovvero, l'1\%) hanno il cancro al seno. Per queste 10 donne, il test darà un risultato positivo in 9 casi (ovvero, nel 90\% dei casi). Per le rimanenti 990 donne che non hanno il cancro al seno, il test darà un risultato positivo in 99 casi (se la probabilità di un vero positivo è del 90\%, la probabilità di un falso positivo è del 10\%). Questa situazione è rappresentata nella figura \ref{fig:mammografia}. Combinando questi due risultati, vediamo che il test dà un risultato positivo per 9 donne che hanno effettivamente il cancro al seno e per 99 donne che non ce l'hanno, per un totale di 108 risultati positivi. Dunque, la probabilità di ottenere un risultato positivo al test è \(\frac{108}{1000}\) = 11\%. Ma delle 108 donne che hanno ottenuto un risultato positivo al test, solo 9 hanno il cancro al seno. Dunque, la probabilità di avere il cancro, dato un risultato positivo al test, è pari a \(\frac{9}{108}\) = 8\%.
+\begin{longtable}[]{@{}cccc@{}}
+\caption{\label{tab:tre-monete-distr-cong-1} Spazio campionario dell'esperimento consistente nel lancio di tre monete equilibrate su cui sono state definite le variabili aleatorie \(X\) e \(Y\).}\tabularnewline
+\toprule
+\(\omega\) & \(X\) & \(Y\) & \(P(\omega)\) \\
+\midrule
+\endfirsthead
+\toprule
+\(\omega\) & \(X\) & \(Y\) & \(P(\omega)\) \\
+\midrule
+\endhead
+\(\omega_1\) = TTT & 3 & 1 & 1/8 \\
+\(\omega_2\) = TTC & 2 & 1 & 1/8 \\
+\(\omega_3\) = TCT & 2 & 1 & 1/8 \\
+\(\omega_4\) = CTT & 2 & 0 & 1/8 \\
+\(\omega_5\) = CCT & 1 & 0 & 1/8 \\
+\(\omega_6\) = CTC & 1 & 0 & 1/8 \\
+\(\omega_7\) = TCC & 1 & 1 & 1/8 \\
+\(\omega_8\) = CCC & 0 & 0 & 1/8 \\
+\bottomrule
+\end{longtable}
 
-\begin{figure}[h]
+Ci poniamo il problema di associare un livello di probabilità ad ogni coppia \((x, y)\) definita su \(\Omega\). La coppia \((X = 0, Y = 0)\) si realizza in corrispondenza di un solo evento elementare, ovvero CCC; avrà dunque una probabilità pari a \(P(X=0, Y=0) = P(CCC) = 1/8\). Nel caso della coppia \((X = 1, Y = 0)\) ci sono due eventi elementari che danno luogo al risultato considerato, ovvero, CCT e CTC; la probabilità \(P(X=1, Y=0)\) sarà dunque data dalla probabilità dell'unione dei due eventi elementari, cioé \(P(X=1, Y=0) = P(CCT \:\cup\: CTC) = 1/8 + 1/8 = 1/4\). Sono riportati qui sotto i calcoli per tutti i possibili valori di \(X\) e \(Y\).
+\begin{align}
+P(X = 0, Y = 0) &= P(\omega_8 = CCC) = 1/8; \notag\\
+P(X = 1, Y = 0) &= P(\omega_5 = CCT) + P(\omega_6 = CTC) = 2/8; \notag\\
+P(X = 1, Y = 1) &= P(\omega_7 = TCC) = 1/8; \notag\\
+P(X = 2, Y = 0) &= P(\omega_4 = CTT) = 1/8; \notag\\
+P(X = 2, Y = 1) &= P(\omega_3 = TCT) + P(\omega_2 = TTC) = 2/8; \notag\\
+P(X = 3, Y = 1) &= P(\omega_1 = TTT) = 1/8; \notag
+\end{align}
+Le probabilità così trovate sono riportate nella tabella \ref{tab:ditr-cong-biv-1} la quale descrive la distribuzione di probabilità congiunta delle variabili casuali \(X\) = ``numero di realizzazioni con il risultato testa nei tre lanci'' e \(Y\) = ``numero di realizzazioni con il risultato testa nel primo lancio'' per l'esperimento casuale consistente nel lancio di tre monete equilibrate.
 
-{\centering \includegraphics[width=0.67\linewidth]{images/mammografia} 
+\begin{longtable}[]{@{}ccc@{}}
+\caption{\label{tab:ditr-cong-biv-1} Distribuzione di probabilità congiunta per i risultati dell'esperimento consistente nel lancio di tre monete equilibrate.}\tabularnewline
+\toprule
+\(x / y\) & 0 & 1 \\
+\midrule
+\endfirsthead
+\toprule
+\(x / y\) & 0 & 1 \\
+\midrule
+\endhead
+0 & 1/8 & 0 \\
+1 & 2/8 & 1/8 \\
+2 & 1/8 & 2/8 \\
+3 & 0 & 1/8 \\
+\bottomrule
+\end{longtable}
 
-}
-
-\caption{Rappresentazione ad albero che riporta le frequenze attese dei risultati di una mammografia in un campione di 1,000 donne.}\label{fig:mammografia}
-\end{figure}
-
-\end{example}
-
-Nell'esercizio precedente, la probabilità dell'evento ``ottenere un risultato positivo al test'' è una probabilità non condizionata, mentre la probabilità dell'evento ``avere il cancro al seno, dato che il test ha dato un risultato positivo'' è una probabilità condizionata. In termini generali, la probabilità condizionata \(P(A \mid B)\) rappresenta la probabilità che si verifichi l'evento \(A\) sapendo che si è verificato l'evento \(B\) (oppure: la probabilità di \(A\) in una prova valida solo se si verifica anche \(B\)). Ciò ci conduce alla seguente definizione.
+In generale, possiamo dire che, dato uno spazio campionario discreto \(\Omega\), è possibile associare ad ogni evento elementare \(\omega_i\) dello spazio campionario una coppia di numeri reali \((x, y)\), essendo \(x = X(\omega)\) e \(y = Y(\omega)\), il che ci conduce alla seguente definizione.
 
 \begin{definition}
-\protect\hypertarget{def:prob-cond}{}{\label{def:prob-cond} }Dato un qualsiasi evento \(A\), si chiama \emph{probabilità condizionata} di
-\(A\) dato \(B\) il numero
-\begin{equation}
-P(A \mid B) = \frac{P(A \cap B)}{P(B)}, \quad \text{con}\, P(B) > 0,
-\label{eq:probcond}
-\end{equation}
-dove \(P(A\cap B)\) è la probabilità congiunta dei
-due eventi, ovvero la probabilità che si verifichino entrambi.
+Siano \(X\) e \(Y\) due variabili casuali. La funzione che associa ad ogni coppia \((x, y)\) un livello di probabilità prende il nome di funzione di probabilità congiunta:
+\[
+P(x, y) = P(X = x, Y = y).
+\]
 \end{definition}
 
-In alcuni casi può essere conveniente leggere al contrario la~\ref{def:prob-cond} e utilizzarla per calcolare la probabilità dell'intersezione di due eventi. Per esempio se conosciamo la probabilità dell'evento \(B\) e la probabilità condizionata di \(A\) su \(B\), otteniamo
-\begin{equation}
-P(A \cap B) = P(B)P(A \mid B),
-\label{eq:probcondinv}
-\end{equation}
 \noindent
-mentre se conosciamo la probabilità dell'evento \(A\) e la probabilità condizionata di \(B\) su \(A\), otteniamo
+Il termine ``congiunta'' deriva dal fatto che questa probabilità è legata al verificarsi di una coppia di valori, il primo associato alla variabile casuale \(X\) ed il secondo alla variabile casuale \(Y\). Nel caso di due sole variabili casuali si parla di distribuzione bivariata, mentre nel caso di più variabili casuali si parla di distribuzione multivariata.
+
+\hypertarget{proprietuxe0}{%
+\subsection{Proprietà}\label{proprietuxe0}}
+
+Una distribuzione di massa di probabilità congiunta bivariata deve soddisfare due proprietà:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \(0 \leq P(x_i, y_j) \leq 1\);
+\item
+  la probabilità totale deve essere uguale a \(1.0\). Tale proprietà può essere espressa nel modo seguente
+  \[
+  \sum_{i} \sum_{j} P(x_i, y_j) = 1.0.
+  \]
+\end{enumerate}
+
+\hypertarget{eventi}{%
+\subsection{Eventi}\label{eventi}}
+
+Si noti che dalla probabilità congiunta possiamo calcolare la probabilità di qualsiasi evento definito in base alle variabili aleatorie \(X\) e \(Y\). Per capire come questo possa essere fatto, consideriamo nuovamente l'esperimento casuale discusso in precedenza.
+
+\begin{example}
+Per la distribuzione di massa di probabilità congiunta riportata nella tabella~precedente si trovi la probabilità dell'evento \(X+Y \leq 1\).
+
+Per trovare la probabilità richiesta dobbiamo semplicemente sommare le probabilità associate a tutte le coppie \((x,y)\) che soddisfano la condizione \(X+Y \leq 1\), ovvero
+
+\begin{equation}
+P_{XY}(X+Y \leq 1) = P_{XY}(0, 0) + P_{XY}(1, 0)= 3/8.\notag
+\end{equation}
+\end{example}
+
+\hypertarget{regola-della-catena}{%
+\subsection{Regola della catena}\label{regola-della-catena}}
+
+Regola della catena permette il calcolo di qualsiasi membro della distribuzione congiunta di un insieme di variabili casuali utilizzando solo le probabilità condizionate.
+
+\begin{definition}
+Dati due eventi \(A\) e \(B\), la regola della catena afferma che
+
 \[
 P(A \cap B) = P(A)P(B \mid A).
 \]
+\end{definition}
 
-\begin{example}
-Da un mazzo di 52 carte (13 carte per ciascuno dei 4 semi) ne viene estratta 1 in modo casuale. Qual è la probabilità che esca una figura di cuori? Sapendo che la carta estratta ha il seme di cuori, qual è la probabilità che il valore numerico della carta sia 7, 8 o 9?
+Nel caso di 4 eventi, per esempio, la regola della catena diventa
+\[
+P(A_1, A_2, A_3, A_4) = P(A_1) P(A_2 \mid A_1) P(A_3 \mid A_1, A_2) P(A_4 \mid A_1, A_2, A_3).
+\]
 
-Ci sono 13 carte di cuori, dunque la risposta alla prima domanda è 1/4. Per rispondere alla seconda domanda consideriamo solo le 13 carte di cuori; la probabilità cercata è dunque 3/13.
-\end{example}
+\hypertarget{funzioni-di-probabilituxe0-marginali}{%
+\subsection{Funzioni di probabilità marginali}\label{funzioni-di-probabilituxe0-marginali}}
 
-\hypertarget{la-fallacia-del-pubblico-ministero}{%
-\subsection{La fallacia del pubblico ministero}\label{la-fallacia-del-pubblico-ministero}}
+La distribuzione marginale di un sottoinsieme di variabili casuali è la distribuzione di probabilità delle variabili contenute nel sottoinsieme. Come spiegato da \href{https://it.wikipedia.org/wiki/Distribuzione_marginale}{Wikipedia}:
 
-Un errore comune che si commette è quello di credere che \(P(A \mid B)\) sia uguale a \(P(B \mid A)\). Tale fallacia ha particolare risalto in ambito forense tanto che è conosciuta con il nome di ``fallacia del procuratore'' (\emph{prosecutor's fallacy}). In essa, una piccola probabilità dell'evidenza, data l'innocenza, viene erroneamente interpretata come la probabilità dell'innocenza, data l'evidenza.
+\begin{quote}
+il termine variabile marginale è usato per riferirsi a quelle variabili nel sottoinsieme delle variabili che vengono trattenute ovvero utilizzate. Questo termine, marginale, è attribuito ai valori ottenuti ad esempio sommando in una tabella di valori lungo le righe oppure lungo le colonne, trascrivendo il risultato appunto a margine rispettivamente della riga o colonna sommata.{[}1{]} La distribuzione delle variabili marginali (la distribuzione marginale) è ottenuta mediante marginalizzazione sopra le variabili da ``scartare'', e le variabili scartate sono dette fuori marginalizzate.
+\end{quote}
 
-Consideriamo il caso di un esame del DNA. Un esperto forense potrebbe affermare, ad esempio, che ``se l'imputato è innocente, c'è solo una possibilità su un miliardo che vi sia una corrispondenza tra il suo DNA e il DNA trovato sulla scena del crimine''. Ma talvolta questa probabilità è erroneamente interpretata come avesse il seguente significato: ``date le prove del DNA, c'è solo una possibilità su un miliardo che l'imputato sia innocente''.
-
-Le considerazioni precedenti risultano più chiare se facciamo nuovamente riferimento all'esercizio sul tumore mammario descritto sopra. In tale esercizio abbiamo visto come la probabilità di cancro dato un risultato positivo al test sia uguale a 0.08. Tale probabilità è molto diversa dalla probabilità di un risultato positivo al test data la presenza del cancro. Infatti, questa seconda
-probabilità è uguale a 0.90 ed è descritta nel problema come una delle
-caratteristiche del test in questione.
-
-\hypertarget{legge-della-probabilituxe0-composta}{%
-\section{Legge della probabilità composta}\label{legge-della-probabilituxe0-composta}}
-
-Il teorema della probabilità composta deriva dal concetto di probabilità condizionata per cui la probabilità che si verifichino due eventi \(A_i\) e \(A_j\) è pari alla probabilità di uno dei due eventi moltiplicato con la probabilità dell'altro evento condizionato al verificarsi del primo.
-
-L'equazione \eqref{eq:probcondinv} si estende al caso di \(n\) eventi \(A_1, \dots, A_n\) nella forma seguente:
+Nel caso di due variabili casuali discrete \(X\) e \(Y\) di cui conosciamo la cui distribuzione congiunta, la distribuzione marginale di \(X\) è calcolata sommando o integrando la distribuzione di probabilità congiunta sopra \(Y\). La funzione di massa di probabilità marginale \(P(X=x)\) è
 \begin{equation}
-\begin{split}
-P(A_1 \cap A_2 \cap \dots\cap A_n) = {}& P(A_1)P(A_2 \mid A_1)P(A_3 \mid A_1 \cap A_2) \dots\\
- & P(A_n \mid A_1 \cap A_2 \cap \dots \cap A_{n-1})
-\end{split}
-\label{eq:probcomposte}
-\end{equation}
-la quale esprime in forma generale la legge della probabilità composta.
-
-\begin{example}
-Da un'urna contenente 6 palline bianche e 4 nere si estrae una pallina
-per volta, senza reintrodurla nell'urna. Indichiamo con \(B_i\) l'evento:
-``esce una pallina bianca alla \(i\)-esima estrazione'' e con \(N_i\)
-l'estrazione di una pallina nera. L'evento: ``escono due palline bianche
-nelle prime due estrazioni'' è rappresentato dalla intersezione
-\(\{B_1 \cap B_2\}\) e la sua probabilità vale, per la~\eqref{eq:probcondinv}
-\[
-P(B_1 \cap B_2) = P(B_1)P(B_2 \mid B_1).
-\]
-\(P(B_1)\) vale 6/10, perché nella prima estrazione \(\Omega\) è costituito da 10 elementi: 6 palline bianche e 4 nere. La probabilità condizionata \(P(B_2 \mid B_1)\) vale 5/9, perché nella seconda estrazione, se è verificato l'evento \(B_1\), lo spazio campionario consiste di 5 palline bianche e 4 nere. Si ricava
-pertanto:
-\[
-  P(B_1 \cap B_2) = \frac{6}{10} \cdot \frac{5}{9} = \frac{1}{3}.
-\]
-In modo analogo si ha che
-\[
-P(N_1 \cap N_2) = P(N_1)P(N_2 \mid N_1) = \frac{4}{10} \cdot \frac{3}{9} = \frac{4}{30}.
-\]
-
-Se l'esperimento consiste nell'estrazione successiva di 3 palline, la probabilità che queste siano tutte bianche vale, per la \eqref{eq:probcomposte}:
-\[
-P(B_1 \cap B_2 \cap B_3)=P(B_1)P(B_2 \mid B_1)P(B_3 \mid B_1 \cap B_2),
-\]
-dove la probabilità \(P(B_3 \mid B_1 \cap B_2)\) si calcola supponendo che si sia verificato l'evento condizionante \(\{B_1 \cap B_2\}\). Lo spazio campionario per questa probabilità condizionata è costituito da 4 palline bianche e 4 nere, per cui \(P(B_3 \mid B_1 \cap B_2) = 1/2\) e quindi:
-\[
-P (B_1 \cap B_2 \cap B_3) = \frac{6}{10}\cdot\frac{5}{9} \cdot\frac{4}{8}  = \frac{1}{6}.
-\]
-
-La probabilità dell'estrazione di tre palline nere è invece:
-\[
-\begin{aligned}
-P(N_1 \cap N_2 \cap N_3) &= P(N_1)P(N_2 \mid N_1)P(N_3 \mid N_1 \cap N_2)\notag\\ 
-&= \frac{4}{10} \cdot \frac{3}{9} \cdot \frac{2}{8} = \frac{1}{30}.\notag
-\end{aligned}
-\]
-\end{example}
-
-\hypertarget{lindipendendenza-stocastica}{%
-\section{L'indipendendenza stocastica}\label{lindipendendenza-stocastica}}
-
-Un concetto molto importante per le applicazioni statistiche della probabilità è quello dell'indipendenza stocastica. La definizione \eqref{eq:probcond} esprime il concetto intuitivo di indipendenza di un evento da un altro, nel senso che il verificarsi di \(A\) non influisce sulla probabilità del verificarsi di \(B\), ovvero non la condiziona. Infatti, per la definizione \eqref{eq:probcond} di probabilità condizionata, si ha che, se \(A\) e \(B\) sono due eventi indipendenti, risulta:
-\[
-P(A \mid B) = \frac{P(A)P(B)}{P(B)} = P(A).\notag
-\]
-Possiamo dunque dire che due eventi \(A\) e \(B\) sono indipendenti se
-\[
-\begin{split}
-P(A \mid B) &= P(A), \\
-P(B \mid A) &= P(B).
-\end{split}
-\]
-
-\begin{example}
-Nel lancio di due dadi non truccati, si considerino gli eventi: \emph{A} = \{esce un 1 o un 2 nel primo lancio\} e \emph{B} = \{il punteggio totale è 8\}. Gli eventi \emph{A} e \emph{B} sono indipendenti?
-\end{example}
-
-Rappresentiamo qui sotto lo spazio campionario dell'esperimento casuale.
-
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.5\linewidth]{images/sampling-space-dice} 
-
-}
-
-\caption{Rappresentazione dello spazio campionario dei risultati dell'esperimento casuale corrispondente al lancio di due dadi bilanciati. Sono evidenziati gli eventi elementari che costituiscono l'evento A: esce un 1 o un 2 nel primo lancio.}\label{fig:sampling-space-dice}
-\end{figure}
-
-Gli eventi \emph{A} e \emph{B} non sono statisticamente indipendenti. Infatti, le loro probabilità valgono \emph{P}(A) = 12/36 e \emph{P}(B) = 5/36 e la probabilità della loro intersezione è
-\[
-P(A \cap B) = 1/36 = 3/108 \neq P(A)P(B) = 5/108.
-\]
-
-Si noti che il concetto di indipendenza è del tutto differente da quello di incompatibilità. Due eventi \emph{A} e \emph{B} incompatibili (per i quali si ha \(A \cap B = \emptyset\)) sono statisticamente dipendenti, poiché il verificarsi dell'uno esclude il verificarsi dell'altro: \(P(A \cap B)=0 \neq P(A)P(B)\).
-
-Si noti inoltre che, se due eventi con probabilità non nulla sono statisticamente indipendenti, la legge delle probabilità totali espressa dalla~\eqref{eq:probunione}
-\begin{equation}
-P(A \cup B) = P(A) + P(B) - P(A \cap B)
-\label{eq:probunione}
+P(X = x) = \sum_y P(X, Y = y) = \sum_y P(X \mid Y = y) P(Y = y),
 \end{equation}
 \noindent
-si modifica nella relazione seguente:
+dove \(P(X = x,Y = y)\) è la distribuzione congiunta di \(X, Y\), mentre \(P(X = x \mid Y = y)\) è la distribuzione condizionata di \(X\) dato \(Y\). In questo caso, la variabile \(Y\) è stata marginalizzata. Le probabilità bivariate marginali e congiunte per variabili casuali discrete sono spesso mostrate come tabelle di contingenza.
+
+Si noti che \(P(X = x)\) e \(P(Y = y)\) sono normalizzate:
+\[
+\sum_x P(X=x) = 1.0, \quad \sum_y P(Y=y) = 1.0.
+\]
+
+\begin{example}
+\protect\hypertarget{exm:flip3coins}{}\label{exm:flip3coins}
+
+Per l'esperimento casuale consistente nel lancio di tre monete equilibrate, si calcolino le probabilità marginali di \(X\) e \(Y\).
+
+Nell'ultima colonna a destra e nell'ultima riga in basso della tabella \ref{tab:ditr-cong-biv} sono riportate le distribuzioni di probabilità marginali di \(X\) e \(Y\). \(P_X\) si ottiene sommando su ciascuna riga fissata la colonna \(j\), \(P_X(X = j) = \sum_y p_{xy}(x = j, y)\). \(P_Y\) si trova sommando su ciascuna colonna fissata la riga \(i,\) \(P_Y (Y = i) = \sum_x p_{xy}(x, y = i)\).
+
+\begin{longtable}[]{@{}cccc@{}}
+\caption{\label{tab:ditr-cong-biv} Distribuzione di probabilità congiunta \(p(x,y)\) per i risultati dell'esperimento consistente nel lancio di tre monete equilibrate e probabilità marginali \(P(x)\) e \(P(y)\).}\tabularnewline
+\toprule
+\(x / y\) & 0 & 1 & \(P(x)\) \\
+\midrule
+\endfirsthead
+\toprule
+\(x / y\) & 0 & 1 & \(P(x)\) \\
+\midrule
+\endhead
+0 & 1/8 & 0 & 1/8 \\
+1 & 2/8 & 1/8 & 3/8 \\
+2 & 1/8 & 2/8 & 3/8 \\
+3 & 0 & 1/8 & 1/8 \\
+\(P(y)\) & 4/8 & 4/8 & 1.0 \\
+\bottomrule
+\end{longtable}
+
+\end{example}
+
+\hypertarget{indipendenza-stocastica}{%
+\section{Indipendenza stocastica}\label{indipendenza-stocastica}}
+
+Ora abbiamo tutti gli strumenti per dare una precisa definizione
+statistica al concetto di indipendenza. La definizione proposta
+sarà necessariamente coerente con la definizione di indipendenza che abbiamo usato fino ad ora. Ma, espressa in questi nuovi termini, potrà essere utilizzata in indagini probabilistiche e statistiche più complesse. Ricordiamo che gli eventi \(A\) e \(B\) si dicono indipendenti se \(P (A \cap B)\, = P(A) P(B)\). Diciamo quindi che \(X\) e \(Y\) sono indipendenti se qualsiasi evento definito da \(X\) è indipendente da qualsiasi evento definito da \(Y\). La definizione formale che garantisce che ciò accada è la seguente.
+
+\begin{definition}
+Le variabili aleatorie \(X\) e \(Y\) sono indipendenti se la loro distribuzione congiunta è il prodotto delle rispettive distribuzioni marginali:
+
 \begin{equation}
-P(A \cup B) = P(A) + P(B) - P(A)P(B).
+P(X, Y)\, = P_X(x)P_Y(y).
 \end{equation}
+\end{definition}
+
+Nel caso discreto, dunque, l'indipendenza implica che la probabilità
+riportata in ciascuna cella della tabella di probabilità congiunta deve
+essere uguale al prodotto delle probabilità marginali di riga e di
+colonna:
+\[
+P(x_i, y_i)\, = P_X(x_i) P_Y(y_i).
+\]
+
+\begin{example}
+Per la situazione rappresentata nella tabella \ref{exm:flip3coins} le variabili casuali \(X\) e \(Y\) sono indipendenti?
+
+Nella tabella le variabili casuali \(X\) e \(Y\) non sono indipendenti: le probabilità congiunte non sono ricavabili dal prodotto delle marginali. Per esempio, nessuna delle probabilità marginali è uguale a \(0\) per cui nessuno dei valori dentro la tabella (probabilità congiunte) che risulta essere uguale a \(0\) può essere il prodotto delle probabilità marginali.
+\end{example}
 
 \hypertarget{considerazioni-conclusive}{%
 \section*{Considerazioni conclusive}\label{considerazioni-conclusive}}
 \addcontentsline{toc}{section}{Considerazioni conclusive}
 
-La probabilità condizionata è importante perché ci fornisce uno strumento per precisare il concetto di indipendenza statistica. Una delle domande più importanti delle analisi statistiche è infatti quella che si chiede se due variabili sono associate tra loro oppure no. In questo Capitolo abbiamo discusso il concetto di indipendenza (come contrapposto al concetto di associazione -- si veda il Capitolo @ref(\#chapter-descript)). In seguito vedremo come sia possibile fare inferenza sull'associazione tra variabili.
+La funzione di probabilità congiunta tiene simultaneamente conto del
+comportamento di due variabili casuali \(X\) e \(Y\) e di come esse si
+influenzano reciprocamente. In particolare, si osserva che se le due
+variabili non si influenzano, cioè se sono statisticamente indipendenti,
+allora la distribuzione di massa di probabilità congiunta si ottiene
+come prodotto delle funzioni di probabilità marginali di \(X\) e \(Y\):
+\(P_{X, Y}(x, y) = P_X(x) P_Y(y)\).
 
 
 % Bibliography

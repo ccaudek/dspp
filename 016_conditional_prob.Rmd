@@ -38,13 +38,13 @@ dove $P(A\cap B)$ è la probabilità congiunta dei
 due eventi, ovvero la probabilità che si verifichino entrambi.
 ```
 
-In alcuni casi può essere conveniente leggere al contrario la \@ref(def:prob-cond) e utilizzarla per calcolare la probabilità dell'intersezione di due eventi. Per esempio se conosciamo la probabilità dell'evento $B$ e la probabilità condizionata di $A$ su $B$, otteniamo 
+Dalla definizione di probabilità condizionata è possibile esprimere la probabilità congiunta come prodotto di due probabilità, una condizionata e una marginale (regola moltiplicativa, o della catena). Per esempio se conosciamo la probabilità marginale $P(B)$ e la probabilità condizionata  $P(A \mid B)$ otteniamo 
 \begin{equation}
 P(A \cap B) = P(B)P(A \mid B),
 (\#eq:probcondinv)
 \end{equation}
 \noindent
-mentre se conosciamo la probabilità dell'evento $A$ e la probabilità condizionata di $B$ su $A$, otteniamo 
+mentre se conosciamo la probabilità marginale $P(A)$ e la probabilità condizionata  $P(B \mid A)$ otteniamo 
 $$
 P(A \cap B) = P(A)P(B \mid A).
 $$
@@ -56,15 +56,13 @@ Ci sono 13 carte di cuori, dunque la risposta alla prima domanda è 1/4. Per ris
 ::: 
 
 
-### La fallacia del pubblico ministero
+### La fallacia del condizionale trasposto
 
-Un errore comune che si commette è quello di credere che $P(A \mid B)$ sia uguale a $P(B \mid A)$. Tale fallacia ha particolare risalto in ambito forense tanto che è conosciuta con il nome di "fallacia del procuratore" (*prosecutor's fallacy*). In essa, una piccola probabilità dell'evidenza, data l'innocenza, viene erroneamente interpretata come la probabilità dell'innocenza, data l'evidenza.
+Un errore comune che si commette è quello di credere che $P(A \mid B)$ sia uguale a $P(B \mid A)$. Tale fallacia ha particolare risalto in ambito forense tanto che è conosciuta con il nome di "fallacia del procuratore". In essa, una piccola probabilità dell'evidenza, data l'innocenza, viene erroneamente interpretata come la probabilità dell'innocenza, data l'evidenza.
 
 Consideriamo il caso di un esame del DNA. Un esperto forense potrebbe affermare, ad esempio, che "se l'imputato è innocente, c'è solo una possibilità su un miliardo che vi sia una corrispondenza tra il suo DNA e il DNA trovato sulla scena del crimine". Ma talvolta questa probabilità è erroneamente interpretata come avesse il seguente significato: "date le prove del DNA, c'è solo una possibilità su un miliardo che l'imputato sia innocente".
 
-Le considerazioni precedenti risultano più chiare se facciamo nuovamente riferimento all'esercizio sul tumore mammario descritto sopra. In tale esercizio abbiamo visto come la probabilità di cancro dato un risultato positivo al test sia uguale a 0.08. Tale probabilità è molto diversa dalla probabilità di un risultato positivo al test data la presenza del cancro. Infatti, questa seconda
-probabilità è uguale a 0.90 ed è descritta nel problema come una delle
-caratteristiche del test in questione.
+Le considerazioni precedenti risultano più chiare se facciamo nuovamente riferimento all'esercizio sul tumore mammario descritto sopra. In tale esercizio abbiamo visto come la probabilità di cancro dato un risultato positivo al test sia uguale a 0.08. Tale probabilità è molto diversa dalla probabilità di un risultato positivo al test data la presenza del cancro. Infatti, questa seconda probabilità è uguale a 0.90 ed è descritta nel problema come una delle caratteristiche del test in questione.
 
 
 ## Legge della probabilità composta
