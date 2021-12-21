@@ -5,8 +5,10 @@
 
 
 ::: {.chapterintro data-latex=""}
-Pensare in termini bayesiani significa aggiornare le nostre credenze combinando le credenze iniziali con le informazioni fornite dai dati, così da ottenere una credenza "a posteriori". L'aggiornamento bayesiano richiede che le credenze siano descritte nei termini di un modello probabilistico formulato nei termini di uno o più parametri. La nostra incertezza riguarda il valore dei parametri. L'aggiornamento bayesiano ha lo scopo di ottenere le migliori stime possibili dei parametri, considerando le informazioni fornite dalle nostre credenze a priori e dai dati osservati. In questo capitolo verrà descritto il significato di tutti e tre i termini a destra del segno di uguale nella formula di Bayes: la distribuzione a priori e la funzione di verosimiglianza al numeratore, la verosimiglianza marginale al denominatore.
+Questo capitolo descrive il significato dei tre i termini a destra del segno di uguale nella formula di Bayes: la distribuzione a priori e la funzione di verosimiglianza al numeratore, e la verosimiglianza marginale al denominatore.
 :::
+
+<!-- Pensare in termini bayesiani significa aggiornare le nostre credenze combinando le credenze iniziali con le informazioni fornite dai dati, così da ottenere una credenza "a posteriori". L'aggiornamento bayesiano richiede che le credenze siano descritte nei termini di un modello probabilistico formulato nei termini di uno o più parametri. La nostra incertezza riguarda il valore dei parametri. L'aggiornamento bayesiano ha lo scopo di ottenere le migliori stime possibili dei parametri, considerando le informazioni fornite dalle nostre credenze a priori e dai dati osservati.  -->
 
 ## Inferenza bayesiana come un problema inverso
 
@@ -30,7 +32,7 @@ p(y) = \int_\theta p(y, \theta) \,\operatorname {d}\!\theta = \int_\theta p(y \m
 $$
 - la *distribuzione a posteriori* $p(\theta \mid y)$ --- la nuova credenza relativa alla credibilità di ciascun valore $\theta$ dopo avere osservato i dati $Y = y$.
 
-In questo Capitolo ci limiteremo ad introdurre le tre quantità che vengono utilizzate nella regola di Bayes: la distribuzione a priori, la verosimiglianza e la verosimiglianza marginale. Nei capitoli successivi vedremo come sia possibile, mediante queste tre distribuzione, giungere alla distribuzione a posteriori $p(\theta \mid y)$.
+<!-- In questo Capitolo ci limiteremo ad introdurre le tre quantità che vengono utilizzate nella regola di Bayes: la distribuzione a priori, la verosimiglianza e la verosimiglianza marginale. Nei capitoli successivi vedremo come sia possibile, mediante queste tre distribuzione, giungere alla distribuzione a posteriori $p(\theta \mid y)$. -->
 
 
 ## La regola di Bayes
@@ -166,7 +168,7 @@ La $\mbox{Beta}(2, 10)$ esprime la credenza che $\theta$ assume valori $< 0.5$, 
 
 Oltre alla distribuzione a priori di $\theta$, nel numeratore della regola di Bayes troviamo la funzione di verosimigliana. Iniziamo dunque con una definizione.
 
-::: {.definition}
+::: {#deflikelihood .definition}
 La *funzione di verosimiglianza* $\mathcal{L}(\theta \mid y) = f(y \mid \theta), \theta \in \Theta,$ è la funzione di massa o di densità di probabilità dei dati $y$ vista come una funzione del parametro sconosciuto (o dei parametri sconosciuti) $\theta$.
 :::
 
@@ -197,15 +199,15 @@ Si noti che non è necessario lavorare con i logaritmi, anche se è fortemente c
 :::
 
 ::: {.guidedpractice data-latex=""}
-Si trovi e si interpreti la funzione di verosimiglianza per i dati di @zetschefuture2019.
+Si trovi e si interpreti la funzione di verosimiglianza per i dati di @zetschefuture2019: 23 "successi" in 30 prove.
 :::
 
-Per i dati di @zetschefuture2019 la funzione di verosimiglianza corrisponde alla funzione binomiale di parametro $\theta \in [0, 1]$ sconosciuto. Abbiamo osservato un "successo" 23 volte in 30 "prove", dunque, $y = 23$ e $n = 30$.  Per i dati di @zetschefuture2019, la funzione di verosimiglianza diventa
+Per i dati di @zetschefuture2019 la funzione di verosimiglianza corrisponde alla funzione binomiale di parametro $\theta \in [0, 1]$ sconosciuto. Abbiamo osservato un "successo" 23 volte in 30 "prove", dunque, $y = 23$ e $n = 30$. La funzione di verosimiglianza diventa
 \begin{equation}
 \mathcal{L}(\theta \mid y) = \frac{(23 + 7)!}{23!7!} \theta^{23} + (1-\theta)^7.
 (\#eq:likebino23)
 \end{equation}
-La definizione precedente ci dice che, per costruire la funzione di verosimiglianza, dobbiamo applicare la \@ref(eq:likebino23) tante volte, cambiando ogni volta il valore $\theta$ ma *tenendo sempre costante il valore dei dati*. Per esempio, se poniamo $\theta = 0.1$ 
+Per costruire la funzione di verosimiglianza dobbiamo applicare la \@ref(eq:likebino23) tante volte, cambiando ogni volta il valore $\theta$ ma *tenendo sempre costante il valore dei dati*. Per esempio, se poniamo $\theta = 0.1$ 
 $$
 \mathcal{L}(\theta \mid y) = \frac{(23 + 7)!}{23!7!} 0.1^{23} + (1-0.1)^7
 $$ 
@@ -255,7 +257,25 @@ tibble(theta, like) %>%
 \caption{Funzione di verosimiglianza nel caso di 23 successi in 30 prove.}(\#fig:likefutexpect)
 \end{figure}
 
-Come possiamo interpretare la curva che abbiamo ottenuto? Per alcuni valori $\theta$ la funzione di verosimiglianza assume valori piccoli; per altri valori $\theta$ la funzione di verosimiglianza assume valori più grandi. Questi ultimi sono i valori di $\theta$ "più credibili" e il valore 23/30 è il valore più credibile di tutti. La funzione di verosimiglianza di $\theta$ valuta la compatibilità dei dati osservati $Y = y$ con i diversi possibili valori $\theta$. In termini più formali possiamo dire che la funzione di verosimiglianza ha la seguente interpretazione: sulla base dei dati, $\theta_1 \in \Theta$ è più credibile di $\theta_2 \in \Theta$ come indice del modello probabilistico generatore delle osservazioni se $\mathcal{L}(\theta_1) > \mathcal{L}(\theta_1)$. Alcune considerazioni sulla stima di massima verosimiglianza sono fornite nell'Appendice \@ref(appendix:max-like).
+Come possiamo interpretare la curva che abbiamo ottenuto? Per alcuni valori $\theta$ la funzione di verosimiglianza assume valori piccoli; per altri valori $\theta$ la funzione di verosimiglianza assume valori più grandi. Questi ultimi sono i valori di $\theta$ "più credibili" e il valore 23/30 è il valore più credibile di tutti. La funzione di verosimiglianza di $\theta$ valuta la compatibilità dei dati osservati $Y = y$ con i diversi possibili valori $\theta$. In termini più formali possiamo dire che la funzione di verosimiglianza ha la seguente interpretazione: sulla base dei dati, $\theta_1 \in \Theta$ è più credibile di $\theta_2 \in \Theta$ come indice del modello probabilistico generatore delle osservazioni se $\mathcal{L}(\theta_1) > \mathcal{L}(\theta_1)$. 
+
+
+### La stima di massima verosimiglinza
+
+La funzione di verosimiglianza rappresenta la "credibilità relativa" dei  valori del parametro di interesse. Ma qual è il valore più credibile? Se utilizziamo soltanto la funzione di verosimiglianza, allora la risposta è data dalla stima di massima verosimiglinza.
+
+::: {.definition}
+Un valore di $\theta$ che massimizza $\mathcal{L}(\theta \mid y)$ sullo spazio parametrico $\Theta$ è detto _stima di massima verosimiglinza_ (s.m.v.) di $\theta$ ed è indicato con $\hat{\theta}$: 
+\begin{equation}
+\hat{\theta} = \text{argmax}_{\theta \in \Theta} \mathcal{L}(\theta).
+\end{equation}
+:::
+
+Il paradigma frequentista utilizza la funzione di verosimiglianza quale unico strumento per giungere alla stima del valore più credibile del parametro sconosciuto $\theta$. Tale stima corrisponde al punto di massimo della funzione di verosimiglianza. 
+<!-- Il massimo della funzione di verosimiglianza, ovvero  $\hat{\theta}$, si può ottenere con metodi numerici o grafici. -->
+<!-- Nell'esempio presente, $\hat{\theta} = 0.6667$.  -->
+In base all'approccio bayesiano, invece, il valore più credibile del parametro sconosciuto $\theta$, anziché alla s.m.v., corrisponde invece alla moda (o media, o mediana) della distribuzione a posteriori $p(\theta \mid y)$ che si ottiene combinando la verosimiglianza $p(y \mid \theta)$ con la distribuzione a priori  $p(\theta)$.
+Per un approfondimento della stima di massima verosimiglianza si veda l'Appendice \@ref(appendix:max-like).
 
 
 <!-- La sfida del 1997 ci fornisce i dati: una vittoria su sei partite; considerate le due vittorie di Deep Blue e le tre patte, Kasparov perse dunque il match. Per formulare la funzione di verosimiglianza dobbiamo utilizzare un modello statistico che descriva il "processo generatore" dei dati che abbiamo osservato. Semolifichiamo la situazione descrivendo i dati nei termini di un successo su sei prove. Ipotizziamo inoltre che le sei partite siano indipendenti le une dalle altre e che la probabilità di vittoria di Kasparov rimanga costante nelle sei partite. Descritta la situazione in questi termini, possiamo individuare nel modello binomiale il processo statistico che potrebbe avere generato i dati che abbiamo osservato. Questo modello probabilistico è formulato nei termini di un parametro: $\theta$, ovvero la probabilità di vittoria (di Kasparov). Nel Paragrafo precedente abbiamo descritto la distribuzione di probabilità a priori del parametro $\theta$. Poniamoci ora il problema di descrivere la verosimiglianza dei valori $\theta$ alla luce dei dati osservati (ovvero, solo una vittoria su sei partite).  -->
@@ -377,7 +397,7 @@ Ci sono due metodi principali per calcolare la distribuzione a posteriori $p(\th
 - una precisa derivazione matematica formulata nei termini della distribuzione a priori coniugata alla distribuzione a posteriori (si veda il Capitolo \@ref(chapter-distr-coniugate)); tale procedura però ha un'applicabilità molto limitata;
 - un metodo approssimato, molto facile da utilizzare in pratica, che dipende da metodi Monte Carlo basati su Catena di Markov (MCMC); questo problema verrà discusso nel Capitolo ?? 
 
-Una volta calcolata la distribuzione a posteriori dobbiamo riassumerla in qualche modo. Questo problema verrà discusso nel Capitolo \@ref(chapter-sintesi-distr-post).
+<!-- Una volta calcolata la distribuzione a posteriori dobbiamo riassumerla in qualche modo. Questo problema verrà discusso nel Capitolo \@ref(chapter-sintesi-distr-post). -->
 
 
 ## Considerazioni conclusive {-}

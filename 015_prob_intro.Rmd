@@ -10,6 +10,7 @@ source("_common.R")
 Una possibile definizione di teoria delle probabilità è la seguente: la teoria delle probabilità ci fornisce gli strumenti per prendere decisioni razionali in condizioni di incertezza, ovvero per formulare le migliori congetture possibili.
 :::
 
+
 <!-- È normale fare delle congetture rispetto a ciò di cui non siamo sicuri. -->
 <!-- Ma perché facciamo questo? Molto spesso perché, anche se sappiamo che le -->
 <!-- nostre conoscenze sono incomplete, dobbiamo comunque prendere delle -->
@@ -48,13 +49,6 @@ Una possibile definizione di teoria delle probabilità è la seguente: la teoria
 <!-- per cui studiamo le proprietà statistiche dei fenomeni casuali usando -->
 <!-- il lancio di una moneta quale esempio generico. -->
 
-
-> Le probabilità sono stati della mente e non stati di natura. 
->
-> -- <cite>Leonard J. Savage</cite>
-
-
-
 ## La probabilità come la logica della scienza {#inf-stat-probl-inv}
 
 La figura \@ref(fig:cycle-of-science) fornisce una rappresentazione schematica del processo dell'indagine scientifica. Possiamo pensare al progresso scientifico come alla ripetizione di questo ciclo, laddove i fenomeni naturali (e, ovviamente psicologici) vengono esplorati e i ricercatori imparano sempre di più sul loro funzionamento. Le caselle della figura descrivono le varie fasi del processo di ingagine scientifica, mentre lungo le frecce sono riportati i compiti che conducono i ricercatori da una fase alla successiva.
@@ -83,7 +77,10 @@ Consideriamo i compiti e le fasi dell'indagine scientifica. Iniziamo in basso a 
 
 L'inferenza statistica è l'aspetto del processo dell'indagine scientifica che è l'oggetto centrale di questo insegnamento. Il risultato dell'inferenza statistica è la conoscenza di quanto siano plausibili le ipotesi e le stime dei parametri sotto le ipotesi considerate. Ma l'inferenza statistica richiede una teoria della probabilità, laddove la teoria della probabilità può essere vista come una generalizzazione della logica. A causa di questa connessione con la logica e del suo ruolo cruciale nella scienza, E. T. Jaynes afferma infatti che la probabilità è la "logica della scienza". È dunque necessario esaminare preliminarmente alcune nozioni di base della teoria della probabilità. 
 
+
 ## Che cos'è la probabilità?
+
+> *Le probabilità sono stati della mente e non stati di natura.* \begin{flushright}--- Leonard J. Savage \end{flushright}
 
 La definizione della probabilità è un problema estremamente dibattuto ed aperto. Sono state fornite due possibili soluzioni al problema di definire il concetto di probabilità. 
 

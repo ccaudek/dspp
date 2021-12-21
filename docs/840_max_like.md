@@ -111,21 +111,7 @@
 
 <!-- In conclusione, la funzione di verosimiglianza descrive in termini relativi il sostegno empirico che $\theta \in \Theta$ riceve da $y$. La figura \@ref(fig:rethinkingmodlearn), infatti, mostra come la funzione di verosimiglianza assume una forma diversa quando $y$ varia: le curve nei pannelli della figura \@ref(fig:rethinkingmodlearn) sono tutte state ottenute usando la \@ref(eq:binomwater), ma sono tra loro diverse perché i dati sono diversi: 1 successo in 1 prova (abbiamo lanciato il mappamondo una volta e abbiamo osservato "acqua"); 1 successo in 2 prove (abbiamo lanciato il mappamondo due volte e abbiamo osservato "acqua" e "terra"); 2 successi in 3 prove (abbiamo lanciato il mappamondo tre volte e abbiamo osservato "acqua", "terra" e "acqua"); eccetera. -->
 
-
-La funzione di verosimiglianza rappresenta la "credibilità relativa" dei  valori del parametro di interesse. Ma qual è il valore più credibile? Se utilizziamo soltanto la funzione di verosimiglianza, allora la risposta è data dalla stima di massima verosimiglinza.
-
-::: {.definition}
-Un valore di $\theta$ che massimizza $\mathcal{L}(\theta \mid y)$ sullo spazio parametrico $\Theta$ è detto _stima di massima verosimiglinza_ (s.m.v.) di $\theta$ ed è indicato con $\hat{\theta}$: 
-\begin{equation}
-\hat{\theta} = \text{argmax}_{\theta \in \Theta} \mathcal{L}(\theta).
-\end{equation}
-:::
-
-Il paradigma frequentista utilizza la funzione di verosimiglianza quale unico strumento per giungere alla stima del valore più credibile del parametro sconosciuto $\theta$. Tale stima corrisponde al punto di massimo della funzione di verosimiglianza. Nell'esempio presente, $\hat{\theta} = 0.6667$. Il massimo della funzione di verosimiglianza, ovvero  $\hat{\theta}$, si può ottenere con metodi numerici o grafici.
-
-In base all'approccio bayesiano, invece, il valore più credibile del parametro sconosciuto $\theta$ non corrisponde alla s.m.v.. Per l'approccio bayesiano, invece, il valore più credibile del parametro sconosciuto $\theta$ è dato dalla moda (o media, o mediana) della distribuzione a posteriori $p(\theta \mid y)$ che si ottiene combinando la verosimiglianza $p(y \mid \theta)$ con la distribuzione a priori  $p(\theta)$.
-
-## Derivazione della s.m.v. per una proporzione {#derivation-smv-prop}
+## La s.m.v. per una proporzione {#derivation-smv-prop}
 
 La s.m.v. della proporzione di successi $\theta$ in una sequenza di prove Bernoulliane è uguale data dalla proporzione di successi campionari. Questo risultato può essere dimostrato come segue. 
 
@@ -155,19 +141,19 @@ Ponendo l'equazione uguale a zero e risolvendo otteniamo la s.m.v.:
 ovvero la frequenza relativa dei successi nel campione.
 ::: 
 
-## Calcolo numerico {-}
+### Calcolo numerico {-}
 
 In maniera più semplice, il risultato descritto nel Paragrafo \@ref(derivation-smv-prop) può essere ottenuto mediante una simulazione in \R. Iniziamo a definire un insieme di valori possibili per il parametro incognito $\theta$:
 
 ```r
-theta <- seq(0, 1, length.out=1e3)
+theta <- seq(0, 1, length.out = 1e3)
 ```
 Sappiamo che la funzione di verosimiglianza è la funzione di massa di probabilità espressa in funzione del parametro sconosciuto $\theta$  assumendo come noti i dati. Questo si può esprimere in $\R$ nel modo seguente:
 
 ```r
-like <- dbinom(x = 6, size = 9, prob = theta)
+like <- dbinom(x = 23, size = 30, prob = theta)
 ```
-Si noti che, nell'istruzione precedente, abbiamo passato alla funzione `dbinom()` i dati, ovvero `x = 6` successi in `size = 9` prove. Inoltre, abbiamo passato alla funzione il vettore `prob = theta` che contiene 1000 valori possibili per il parametro $\theta \in [0, 1]$. Per ciascuno dei valori $\theta$, la funzione `dbinom()` ritorna un valore che corrisopnde all'ordinata della funzione di verosimiglianza, tenendo sempre costanti i dati (ovvero, 6 successi in 9 prove). Un grafico della funzione di verosimiglianza è dato da:
+Si noti che, nell'istruzione precedente, abbiamo passato alla funzione `dbinom()` i dati, ovvero `x = 23` successi in `size = 30` prove. Inoltre, abbiamo passato alla funzione il vettore `prob = theta` che contiene 1000 valori possibili per il parametro $\theta \in [0, 1]$. Per ciascuno dei valori $\theta$, la funzione `dbinom()` ritorna un valore che corrisopnde all'ordinata della funzione di verosimiglianza, tenendo sempre costanti i dati (ovvero, 6 successi in 9 prove). Un grafico della funzione di verosimiglianza è dato da:
 
 ```r
 tibble(theta, like) %>% 
@@ -186,23 +172,24 @@ Nella simulazione, il valore $\theta$ che massimizza la funzione di verosimiglia
 
 ```r
 theta[which.max(like)]
-#> [1] 0.667
+#> [1] 0.767
 ```
 \noindent
 Il valore così trovato è uguale al valore definito dalla \@ref(eq:mlprop).
 
 
-## La verosimiglianza del modello Normale {-}
+## La s.m.v. del modello Normale {#derivation-smv-norm}
 
 Ora che abbiamo capito come costruire la funzione verosimiglianza di una binomiale è relativamente semplice fare un passo ulteriore e considerare la verosimiglianza del caso di una funzione di densità, ovvero nel caso di una variabile casuale continua. Consideriamo qui il caso della Normale. 
 
+::: {.proof}
 La densità di una distribuzione Normale di parametri $\mu$ e $\sigma$ è
 $$
 f(y \mid \mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left\{-\frac{1}{2\sigma^2}(y-\mu)^2\right\}.
 (\#eq:gausslike)
 $$
 
-Poniamoci ora il problema di trovare la s.m.v. dei parametri sconosciuti $\mu$ e $\sigma$ nel caso in cui le $n$ osservazioni $y = (y_1, \dots, y_n)$ sono realizzazioni indipendenti ed identicamente distribuite (di seguito, i.i.d.) della medesima variabile casuale $Y \sim \mathcal{N}(\mu, \sigma)$. Per semplicità, scriveremo $\theta = \{\mu, \sigma\}.$
+Poniamoci il problema di trovare la s.m.v. dei parametri sconosciuti $\mu$ e $\sigma$ nel caso in cui le $n$ osservazioni $y = (y_1, \dots, y_n)$ sono realizzazioni indipendenti ed identicamente distribuite (di seguito, i.i.d.) della medesima variabile casuale $Y \sim \mathcal{N}(\mu, \sigma)$. Per semplicità, scriveremo $\theta = \{\mu, \sigma\}.$
 
 <!-- Sappiamo che la probabilità congiunta è la probabilità del verificarsi di un insieme di eventi.  -->
 Il campione osservato è un insieme di eventi, ciascuno dei quali corrisponde alla realizzazione di una variabile casuale --- possiamo pensare ad uno di tali eventi come all'estrazione casuale di un valore dalla "popolazione" $\mathcal{N}(\mu, \sigma)$. Se le variabili casuali sono i.i.d., la loro densità congiunta è data da: 
@@ -232,18 +219,20 @@ e per $\sigma$ abbiamo
 (\#eq:maxlikesigma)
 \end{equation}
 In altri termini, la s.m.v. del parametro $\mu$ è la media del campione e la s.m.v. del parametro $\sigma$ è la deviazione standard del campione.
+:::
 
-## Simulazione {-}
+
+## Calcolo numerico {-}
 
 Consideriamo ora un esempio che utilizza dei dati reali. I dati corrispondono ai valori BDI-II dei trenta soggetti del campione clinico di @zetschefuture2019:
 
 
 ```r
 d <- tibble(
-  y = c(26, 35, 30, 25, 44, 30, 33, 43, 22, 43, 24, 
-        19, 39, 31, 25, 28, 35, 30, 26, 31, 41, 36, 
-        26, 35, 33, 28, 27, 34, 27, 22)
-  )
+  y = c(
+    26, 35, 30, 25, 44, 30, 33, 43, 22, 43, 24, 19, 39, 31, 25, 28, 35, 30, 
+    26, 31, 41, 36, 26, 35, 33, 28, 27, 34, 27, 22)
+)
 ```
 
 Ci poniamo l'obiettivo di creare la funzione di verosimiglianza per questi dati, supponendo, in base ai risultati di ricerche precedenti, di sapere che i punteggi BDI-II si distribuiscono secondo una legge Normale. 
@@ -335,7 +324,8 @@ ggplot(aes(x = mu, y = ll)) +
 
 \begin{center}\includegraphics[width=0.8\linewidth]{840_max_like_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
-Dalla figura notiamo che, per i dati osservati, il massimo della funzione di log-verosimiglianza calcolata per via numerica, ovvero 30.93, è identico alla media dei dati campionari e corrisponde al risultato teorico della \@ref(eq:lldepression).
+Dalla figura notiamo che, per i dati osservati, il massimo della funzione di log-verosimiglianza calcolata per via numerica, ovvero 30.93, è identico alla media dei dati campionari e corrisponde al risultato teorico della \@ref(eq:maxlikemu).
+
 
 ## Considerazioni conclusive {-}
 

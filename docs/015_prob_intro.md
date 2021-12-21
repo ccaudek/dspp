@@ -8,6 +8,7 @@
 Una possibile definizione di teoria delle probabilità è la seguente: la teoria delle probabilità ci fornisce gli strumenti per prendere decisioni razionali in condizioni di incertezza, ovvero per formulare le migliori congetture possibili.
 :::
 
+
 <!-- È normale fare delle congetture rispetto a ciò di cui non siamo sicuri. -->
 <!-- Ma perché facciamo questo? Molto spesso perché, anche se sappiamo che le -->
 <!-- nostre conoscenze sono incomplete, dobbiamo comunque prendere delle -->
@@ -46,13 +47,6 @@ Una possibile definizione di teoria delle probabilità è la seguente: la teoria
 <!-- per cui studiamo le proprietà statistiche dei fenomeni casuali usando -->
 <!-- il lancio di una moneta quale esempio generico. -->
 
-
-> Le probabilità sono stati della mente e non stati di natura. 
->
-> -- <cite>Leonard J. Savage</cite>
-
-
-
 ## La probabilità come la logica della scienza {#inf-stat-probl-inv}
 
 La figura \@ref(fig:cycle-of-science) fornisce una rappresentazione schematica del processo dell'indagine scientifica. Possiamo pensare al progresso scientifico come alla ripetizione di questo ciclo, laddove i fenomeni naturali (e, ovviamente psicologici) vengono esplorati e i ricercatori imparano sempre di più sul loro funzionamento. Le caselle della figura descrivono le varie fasi del processo di ingagine scientifica, mentre lungo le frecce sono riportati i compiti che conducono i ricercatori da una fase alla successiva.
@@ -82,11 +76,14 @@ Consideriamo i compiti e le fasi dell'indagine scientifica. Iniziamo in basso a 
 
   - Poiché $B$ è stato osservato, $A$ è più plausibile. $A$ non è necessariamente vero, ma è più plausibile.
 
-- L'*inferenza statistica* è un tipo di inferenza induttiva che è specificamente formulata come un problema inverso. L'inferenza statistica è quell'insieme di procedure che hanno lo scopo di quantificare quanto più plausibile è $A$ dopo aver osservato $B$. Per svolgere l'inferenza statistica, è necessario quantificare la plausibilità. Lo strumento che ci consente di fare questo è la teoria della probabilità.
+- L'*inferenza statistica* è un tipo di inferenza induttiva che è specificamente formulata come un problema inverso. L'inferenza statistica è quell'insieme di procedure che hanno lo scopo di quantificare quanto più plausibile sia $A$ dopo aver osservato $B$. Per svolgere l'inferenza statistica è dunque necessario quantificare tale plausibilità. Lo strumento che ci consente di fare questo è la teoria della probabilità.
 
 L'inferenza statistica è l'aspetto del processo dell'indagine scientifica che è l'oggetto centrale di questo insegnamento. Il risultato dell'inferenza statistica è la conoscenza di quanto siano plausibili le ipotesi e le stime dei parametri sotto le ipotesi considerate. Ma l'inferenza statistica richiede una teoria della probabilità, laddove la teoria della probabilità può essere vista come una generalizzazione della logica. A causa di questa connessione con la logica e del suo ruolo cruciale nella scienza, E. T. Jaynes afferma infatti che la probabilità è la "logica della scienza". È dunque necessario esaminare preliminarmente alcune nozioni di base della teoria della probabilità. 
 
+
 ## Che cos'è la probabilità?
+
+> *Le probabilità sono stati della mente e non stati di natura.* \begin{flushright}--- Leonard J. Savage \end{flushright}
 
 La definizione della probabilità è un problema estremamente dibattuto ed aperto. Sono state fornite due possibili soluzioni al problema di definire il concetto di probabilità. 
 
@@ -98,9 +95,9 @@ In termini epistemici, la probabilità fornisce una misura della nostra incertez
 
 - Nell'interpretazione frequentista della probabilità, la probabilità $P(A)$ rappresenta la frequenza relativa a lungo termine nel caso di un grande numero di ripetizioni di un esperimento casuale sotto le medesime condizioni. L'evento $A$ deve essere una proposizione relativa alle variabili casuali^[Viene stressata qui l'idea che ciò di cui parliamo è qualcosa che emerge nel momento in cui è possibile ripetere l'esperimento casuale tante volte sotto le medesime condizioni. Le variabili casuali, infatti, forniscono una quantificazione dei risultati che si ottengono ripetendo tante volte l'esperimento casuale sotto le medesime condizioni.].
 
-- Nell'interpretazione bayesiana della probabilità $P(A)$ rappresenta direttamente il grado di credenza, o plausibilità, a proposito di $A$, dove $A$ può essere qualsiasi proposizione logica.
+- Nell'interpretazione bayesiana della probabilità $P(A)$ rappresenta il grado di credenza, o plausibilità, a proposito di $A$, dove $A$ può essere qualsiasi proposizione logica.
 
-In questo insegnamento utilizzeremo l'interpretazione bayesiana della probabilità. Possiamo citare De Finetti, ad esempio, il quale ha formulato la seguente definizione "soggettiva" di probabilità.
+In questo insegnamento utilizzeremo l'interpretazione bayesiana della probabilità. Possiamo citare De Finetti, ad esempio, il quale ha formulato la seguente definizione "soggettiva" di probabilità la quale risulta applicabile anche ad esperimenti casuali i cui eventi elementari non siano ritenuti ugualmente possibili e che non siano necessariamente ripetibili più volte sotto le stesse condizioni:
 
 \BeginKnitrBlock{definition}
 <span class="definition" id="def:def-prob-sogg"><strong>(\#def:def-prob-sogg) </strong></span>La probabilità di un evento $E$ è la quota $p(E)$ che un individuo reputa di dover pagare ad un banco per ricevere "1" ovvero "0" verificandosi o non verificandosi $E$. Le valutazioni di probabilità degli eventi devono rispondere ai pricipi di equità e coerenza.
@@ -116,7 +113,7 @@ Secondo @definetti1931prob
 
 > nessuna scienza ci permetterà di dire: il tale fatto accadrà, andrà così e così, perché ciò è conseguenza di tale legge, e tale legge è una verità assoluta, ma tanto meno ci condurrà a concludere scetticamente: la verità assoluta non esiste, e quindi tale fatto può accadere e può non accadere, può andare così e può andare in tutt’altro modo, nulla io ne so. Quel che si potrà dire è questo: io prevedo che il tale fatto avverrà, e avverrà nel tal modo, perché l’esperienza del passato e l’elaborazione scientifica cui il pensiero dell’uomo l’ha sottoposta mi fanno sembrare ragionevole questa previsione.
 
-In altri termini, secondo de Finetti la probabilità deve essere concepita non come una proprietà "oggettiva" dei fenomeni (basata su considerazioni teoriche derivanti, ad esempio, dal calcolo combinatorio, o su misurazioni concrete -- ovvero, frequenze), ma bensì come "grado di fiducia -- in inglese _degree of belief_ -- di un dato soggetto, in un dato istante e con un dato insieme d'informazioni, riguardo al verificarsi di un evento". Per denotare sia la probabilità (soggettiva) di un evento sia il concetto di _valore atteso_ (che descriveremo in seguito), @definetti1970teoria utilizza il termine "previsione" (e lo stesso simbolo $P$):
+In altri termini, secondo de Finetti la probabilità deve essere concepita non come una proprietà "oggettiva" dei fenomeni ("la probabilità di un fenomeno ha un valore determinato che dobbiamo solo scoprire"), ma bensì come "grado di fiducia -- in inglese _degree of belief_ -- di un dato soggetto, in un dato istante e con un dato insieme d'informazioni, riguardo al verificarsi di un evento". Per denotare sia la probabilità (soggettiva) di un evento sia il concetto di _valore atteso_ (che descriveremo in seguito), @definetti1970teoria utilizza il termine "previsione" (e lo stesso simbolo $P$):
 
 > la previsione [$\dots$] consiste nel considerare ponderatamente tutte le alternative possibili per ripartire fra di esse nel modo che parrà più appropriato le proprie aspettative, le proprie sensazioni di probabilità.
 

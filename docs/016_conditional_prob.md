@@ -2,9 +2,11 @@
 
 
 
-L'attribuzione di una probabilità ad un evento è sempre condizionata dalle conoscenze che abbiamo a disposizione. Per un determinato stato di conoscenze, attribuiamo ad un dato evento una certa probabilità di verificarsi; ma se il nostro stato di conoscenze cambia, allora cambierà
-anche la probabilità che attribuiamo all'evento in questione. Per esempio, posiamo chiederci quale sia la probabilità che Mario Rossi superi l'esame di Psicometria nel primo appello del presente anno accademico. In assenza di altre informazioni, la migliore stima di tale probabilità
-è data dalla proporzione di studenti che hanno superato l'esame di Psicometria nel corrispondente appello dei precedenti anni accademici. Ma se sappiamo che Mario Rossi è particolarmente motivato  ed ha studiato molto, allora la probabilità sarà sicuramente più alta.
+::: {.chapterintro data-latex=""}
+L'attribuzione di una probabilità ad un evento è sempre condizionata dalle conoscenze che abbiamo a disposizione. Per un determinato stato di conoscenze, attribuiamo ad un dato evento una certa probabilità di verificarsi; ma se il nostro stato di conoscenze cambia, allora cambierà anche la probabilità che attribuiamo all'evento in questione. 
+:::
+
+<!-- Possiamo chiederci, ad esempio, quale sia la probabilità che Mario Rossi superi l'esame di Psicometria nel primo appello del presente anno accademico. In assenza di altre informazioni, la migliore stima di tale probabilità è data dalla proporzione di studenti che hanno superato l'esame di Psicometria nel corrispondente appello dei precedenti anni accademici. Ma se sappiamo che Mario Rossi è particolarmente motivato  ed ha studiato molto, allora la probabilità sarà sicuramente più alta. -->
 
 
 ## Probabilità condizionata su altri eventi 
@@ -16,7 +18,7 @@ Supponiamo che lo screening per la diagnosi precoce del tumore mammario si avval
 
 Per risolvere questo problema, supponiamo che il test in questione venga somministrato ad un grande campione di donne, diciamo a 1000 donne. Di queste 1000 donne, 10 (ovvero, l'1%) hanno il cancro al seno. Per queste 10 donne, il test darà un risultato positivo in 9 casi (ovvero, nel 90% dei casi). Per le rimanenti 990 donne che non hanno il cancro al seno, il test darà un risultato positivo in 99 casi (se la probabilità di un vero positivo è del 90%, la probabilità di un falso positivo è del 10%). Questa situazione è rappresentata nella figura \@ref(fig:mammografia). Combinando questi due risultati, vediamo che il test dà un risultato positivo per 9 donne che hanno effettivamente il cancro al seno e per 99 donne che non ce l'hanno, per un totale di 108 risultati positivi. Dunque, la probabilità di ottenere un risultato positivo al test è $\frac{108}{1000}$ = 11%. Ma delle 108 donne che hanno ottenuto un risultato positivo al test, solo 9 hanno il cancro al seno. Dunque, la probabilità di avere il cancro, dato un risultato positivo al test, è pari a $\frac{9}{108}$ = 8%.
 
-\begin{figure}
+\begin{figure}[h]
 
 {\centering \includegraphics[width=0.9\linewidth]{images/mammografia} 
 
@@ -141,7 +143,7 @@ Nel lancio di due dadi non truccati, si considerino gli eventi: _A_ = {esce un 1
 
 Rappresentiamo qui sotto lo spazio campionario dell'esperimento casuale.
 
-\begin{figure}
+\begin{figure}[h]
 
 {\centering \includegraphics[width=0.5\linewidth]{images/sampling-space-dice} 
 

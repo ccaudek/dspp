@@ -2,10 +2,10 @@
 
 
 
-Il teorema di Bayes ha un ruolo centrale nella statistica Bayesiana,
-anche se viene utilizzato anche dall'approccio frequentista. Prima di
-esaminare il teorema di Bayes introdurremo una sua componente, ovvero il
-teorema della probabilità totale.
+::: {.chapterintro data-latex=""}
+Questo Capitolo presenterà il teorema di Bayes per calcolare la probabilità degli eventi riferiti a esperimenti casuali, ossia esperimenti di cui non si può prevedere il risultato finale ma di cui si conoscono tutti i possibili risultati. Prima di esaminare il teorema di Bayes verrà introdotta una sua componente, ovvero il teorema della probabilità totale. 
+:::
+
 
 ## Il teorema della probabilità totale 
 
@@ -31,9 +31,9 @@ costituito da tutti gli eventi elementari in $E \cap F_1$, $E \cap F_2$
 e $E \cap F_3$, allora la probabilità $P(E)$ è data dalla somma delle
 probabilità di questi tre eventi (figura \@ref(fig:tikz-prob-tot)).
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{017_bayes_theorem_files/figure-latex/tikz-prob-tot-1} 
+{\centering \includegraphics[width=0.8\linewidth]{017_bayes_theorem_files/figure-latex/tikz-prob-tot-1} 
 
 }
 
@@ -99,7 +99,7 @@ nella prima estrazione è 2/7.
 :::
 
 
-## La formula di Bayes
+## La regola di Bayes
 
 Il teorema di Bayes rappresenta uno dei fondamenti della teoria della
 probabilità e della statistica. Lo presentiamo qui considerando un
@@ -114,7 +114,7 @@ almeno uno degli eventi $F_1$ e $F_2$. Supponendo che si sia verificato
 l'evento $E$, ci chiediamo: qual è la probabilità che si sia verificato
 $F_1$ piuttosto che $F_2$?
 
-\begin{figure}
+\begin{figure}[h]
 
 {\centering \includegraphics[width=0.45\linewidth]{017_bayes_theorem_files/figure-latex/unnamed-chunk-1-1} 
 
@@ -161,29 +161,27 @@ P(F_j \mid E) = \frac{P(E \mid F_j)P(F_j)}{\sum_{j=1}^{k}P(F_j)P(E \mid F_j)}.
 \EndKnitrBlock{theorem}
 
 \noindent
-La \@ref(eq:bayes2) prende il nome di *Teorema di Bayes* e mostra che la conoscenza del verificarsi dell'evento $E$ modifica la probabilità
-che abbiamo attribuito all'evento $F_j$.
+La \@ref(eq:bayes2) prende il nome di *Teorema di Bayes* e mostra che la conoscenza del verificarsi dell'evento $E$ modifica la probabilità che abbiamo attribuito all'evento $F_j$. Nella \@ref(eq:bayes2) la probabilità condizionata $P(F_j \mid E)$ prende il nome di probabilità _a posteriori_ dell'evento $F_j$: il termine "a posteriori" sta a significare "dopo che è noto che si è verificato l'evento $E$".
+Nel capitolo \@ref(chapter-intro-bayes-inference) estenderemo questa discussione mostrando come la \@ref(eq:bayes2) possa essere formulata in un modo più generale, ovvero in modo tale che non faccia riferimento unicamente alla probabilità di eventi, ma bensì anche alle funzioni di densità di probabilità. 
 
 
-### Motivazioni per una probabilità bayesiana {#par:probfreq}
+<!-- ### Motivazioni per una probabilità bayesiana {#par:probfreq} -->
 
-La definizione frequentista di probabilità può essere riassunta nel noto limite 
-\begin{equation}
-p(y) = \lim_{n\rightarrow \infty}\frac{n_y}{n},
-(\#eq:def-prob-freq)
-\end{equation}
+<!-- La definizione frequentista di probabilità può essere riassunta nel noto limite  -->
+<!-- \begin{equation} -->
+<!-- p(y) = \lim_{n\rightarrow \infty}\frac{n_y}{n}, -->
+<!-- (\#eq:def-prob-freq) -->
+<!-- \end{equation} -->
 
-\noindent
-dove $n$ è il numero totale di prove e $n_y$ il numero di volte in cui è stato ottenuto il risultato $y$. Nella trattazione frequentista, la probabilità è considerata come un elemento oggettivo della realtà, indipendente dallo stato di conoscenza soggettivo dell'agente che sta effettivamente compiendone l'assegnazione. 
+<!-- \noindent -->
+<!-- dove $n$ è il numero totale di prove e $n_y$ il numero di volte in cui è stato ottenuto il risultato $y$. Nella trattazione frequentista, la probabilità è considerata come un elemento oggettivo della realtà, indipendente dallo stato di conoscenza soggettivo dell'agente che sta effettivamente compiendone l'assegnazione.  -->
 
-È chiaro che definizione di $p(y)$ fornita sopra è empirica ma, se ci pensiamo, è anche chiaro che essa risulta nel contempo mal definita, considerata l'impossibilità pratica di osservare una serie infinita di eventi. Nel paradigma frequentista è dunque necessario assumere che la probabilità $p(y)$ sia una proprietà oggettiva della realtà, ma non osservabile se non in maniera asintotica. Questo assunto viene rifiutato dall'approccio bayesiano.
+<!-- È chiaro che definizione di $p(y)$ fornita sopra è empirica ma, se ci pensiamo, è anche chiaro che essa risulta nel contempo mal definita, considerata l'impossibilità pratica di osservare una serie infinita di eventi. Nel paradigma frequentista è dunque necessario assumere che la probabilità $p(y)$ sia una proprietà oggettiva della realtà, ma non osservabile se non in maniera asintotica. Questo assunto viene rifiutato dall'approccio bayesiano. -->
 
 
 ### Le probabilità come grado di fiducia
 
-Il teorema di Bayes rende esplicito il motivo per cui la probabilità non può essere pensata come uno stato oggettivo, quanto piuttosto come un'inferenza soggettiva e condizionata. Nella \@ref(eq:bayes2) la probabilità condizionata $P(F_j \mid E)$ prende il nome di probabilità _a posteriori_ dell'evento $F_j$: il termine "a posteriori" sta a significare "dopo che è noto che si è verificato l'evento $E$". 
-
-Il denominatore del membro di destra della \@ref(eq:bayes2) è un semplice fattore di normalizzazione. Nel numeratore compaiono invece due quantità: $P(F_j$) e $P(E \mid F_j)$. La probabilità $P(F_j$) è la probabilità _probabilità a priori_ (_prior_) dell'evento $F_j$ e rappresenta l'informazione che l'agente bayesiano possiede a proposito dell'evento $F_j$. Diremo che $P(F_j)$ codifica il grado di fiducia che l'agente ripone in $F_j$, sul quale non possiamo porre vincoli di alcun tipo. La probabilità condizionata $P(E \mid F_j)$ rappresenta invece la verosimiglianza di $F_j$ e ci dice quant'è plausibile (verosimile) che si verifichi l'evento $E$ condizionatemente al fatto che si sia verificato $F_j$.  
+Il teorema di Bayes rende esplicito il motivo per cui la probabilità non può essere pensata come uno stato oggettivo, quanto piuttosto come un'inferenza soggettiva e condizionata. Il denominatore del membro di destra della \@ref(eq:bayes2) è un semplice fattore di normalizzazione. Nel numeratore compaiono invece due quantità: $P(F_j$) e $P(E \mid F_j)$. La probabilità $P(F_j$) è la probabilità _probabilità a priori_ (_prior_) dell'evento $F_j$ e rappresenta l'informazione che l'agente bayesiano possiede a proposito dell'evento $F_j$. Diremo che $P(F_j)$ codifica il grado di fiducia che l'agente ripone in $F_j$, sul quale non possiamo porre vincoli di alcun tipo. La probabilità condizionata $P(E \mid F_j)$ rappresenta invece la verosimiglianza di $F_j$ e ci dice quant'è plausibile che si verifichi l'evento $E$ condizionatemente al fatto che si sia verificato $F_j$.  
 
 
 <!-- \begin{equation} -->
@@ -192,7 +190,8 @@ Il denominatore del membro di destra della \@ref(eq:bayes2) è un semplice fatt
 <!-- \end{equation} -->
 <!-- dove $p(A)$ e $p(B)$ sono le probabilità di osservare gli eventi $A$ e $B$, e $p(A \mid B)$ e $p(B \mid A)$ sono rispettivamente le probabilità di osservare $A$ avendo osservato $B$ e viceversa,  -->
 
-Si noti che l'agente è un concetto privo di valore nel modello frequentista ma che diviene invece centrale in quello bayesiano. Nell'interpretazione bayesiana $P(F_j)$ rappresenta un giudizio personale dell'agente, e non esistono criteri esterni che possano determinare se tale giudizio sia coretto o meno. Il teorema di Bayes descrive la regola che l'agente deve seguire per aggiornare il suo grado di fiducia in $F_j$ alla luce di un ulteriore evento $E$. Per questo motivo abbiamo chiamato $P(F_j \mid E)$ probabilità a posteriori: essa rappresenta infatti la nuova probabilità che l'agente assegna ad $F_j$ affinché rimanga consistente con le nuove informazioni fornitegli da $E$. 
+<!-- Si noti che l'agente è un concetto privo di valore nel modello frequentista ma che diviene invece centrale in quello bayesiano.  -->
+Nell'interpretazione bayesiana $P(F_j)$ rappresenta un giudizio personale dell'agente e non esistono criteri esterni che possano determinare se tale giudizio sia coretto o meno. Il teorema di Bayes descrive la regola che l'agente deve seguire per aggiornare il suo grado di fiducia in $F_j$ alla luce di un ulteriore evento $E$. Per questo motivo abbiamo chiamato $P(F_j \mid E)$ probabilità a posteriori: essa rappresenta infatti la nuova probabilità che l'agente assegna ad $F_j$ affinché rimanga consistente con le nuove informazioni fornitegli da $E$. 
 
 La probabilità a posteriori dipende sia da $E$, sia dalla conoscenza a priori dell'agente $P(F_j)$. In questo senso è chiaro come non abbia senso parlare di una probabilità oggettiva: per il teorema di Bayes la probabilità è definita condizionatamente alla probabilità a priori, la quale a sua volta, per definizione, è un'assegnazione soggettiva. Ne segue pertanto che ogni probabilità debba essere una rappresentazione del grado di fiducia (soggettiva) dell'agente.
 
@@ -204,7 +203,6 @@ Se ogni assegnazione probabilistica rappresenta uno stato di conoscenza, è alt
 Il teorema di Bayes consente di modificare una credenza a priori in maniera dinamica, via via che nuove evidenze vengono raccolte, in modo tale da formulare una credenza a posteriori la quale non è mai definitiva, ma può sempre essere aggiornata in base alle nuove evidenze disponibili. Questo processo si chiama *aggiornamento bayesiano*.
 
 ::: {.example}
-
 Supponiamo che, per qualche strano errore di produzione, una fabbrica
 produca due tipi di monete. Il primo tipo di monete ha la caratteristica
 che, quando una moneta viene lanciata, la probabilità di osservare

@@ -1,7 +1,7 @@
 --- 
 title: "Psicometria"
 author: "Corrado Caudek"
-date: "2021-12-20"
+date: "2021-12-21"
 url: https://github.com/ccaudek/dspp/
 github-repo: ccaudek/dspp
 description: "This is dspp, aka Data science per psicologi."
@@ -136,7 +136,7 @@ Copyright $\copyright$ 2022.
 
  \normalsize
 
-Data della versione presente: Dicembre 20, 2021.
+Data della versione presente: Dicembre 21, 2021.
 :::
 
 
@@ -151,7 +151,7 @@ Le conoscenze/competenze che verranno sviluppate in questo insegnamento sono que
 
 ## La psicologia e la Data Science {-}
 
-> It’s worth noting, before getting started, that this material is hard. If you find yourself confused at any point, you are normal. Any sense of confusion you feel is just your brain correctly calibrating to the subject matter. Over time, confusion is replaced by comprehension [...] --- Richard McElreath
+> *It’s worth noting, before getting started, that this material is hard. If you find yourself confused at any point, you are normal. Any sense of confusion you feel is just your brain correctly calibrating to the subject matter. Over time, confusion is replaced by comprehension [...]*\begin{flushright}--- Richard McElreath\end{flushright}
 
 Sembra sensato spendere due parole su un tema che è importante per gli studenti: quello indicato dal titolo di questo Capitolo. È ovvio che agli studenti di psicologia la statistica non piace. Se piacesse, forse studierebbero Data Science e non psicologia; ma non lo fanno. Di conseguenza, gli studenti di psicologia si chiedono: ``perché dobbiamo perdere tanto tempo a studiare queste cose quando in realtà quello che ci interessa è tutt'altro?'' Questa è una bella domanda.
 
@@ -166,7 +166,7 @@ Le considerazioni precedenti cercano di chiarire il seguente punto: la _data sci
 
 ## Come studiare {-}
 
-> I know quite certainly that I myself have no special talent. Curiosity, obsession and dogged endurance, combined with self-criticism, have brought me to my ideas. --- Albert Einstein
+> *I know quite certainly that I myself have no special talent. Curiosity, obsession and dogged endurance, combined with self-criticism, have brought me to my ideas.* \begin{flushright}--- Albert Einstein\end{flushright}
 
 Il giusto metodo di studio per prepararsi all'esame di Psicometria è quello di seguire attivamente le lezioni, assimilare i concetti via via che essi vengono presentati e verificare in autonomia le procedure presentate a lezione. Incoraggio gli studenti a farmi domande per chiarire ciò che non è stato capito appieno. Incoraggio gli studenti a utilizzare i forum attivi su Moodle e, soprattutto, a svolgere gli esercizi proposti su Moodle. I problemi forniti su Moodle rappresentano il livello di difficoltà richiesto per superare l'esame e consentono allo studente di comprendere se le competenze sviluppate fino a quel punto sono sufficienti rispetto alle richieste dell'esame.
 
@@ -175,7 +175,7 @@ La prima fase dello studio, che è sicuramente individuale, è quella in cui è 
 
 ## Sviluppare un metodo di studio efficace {-}
 
-> Memorization is not learning. --- Richard Phillips Feynman
+> *Memorization is not learning.*\begin{flushright}--- Richard Phillips Feynman\end{flushright}
 
 Avendo insegnato molte volte in passato un corso introduttivo di analisi dei dati ho notato nel corso degli anni che gli studenti con l'atteggiamento mentale che descriverò qui sotto generalmente ottengono ottimi risultati. Alcuni studenti sviluppano naturalmente questo approccio allo studio, ma altri hanno bisogno di fare uno sforzo per maturarlo. Fornisco qui sotto una breve descrizione del ``metodo di studio'' che, nella mia esperienza, è il più efficace per affrontare le richieste di questo insegnamento [@burger20125].
 

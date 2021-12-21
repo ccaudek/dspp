@@ -1,6 +1,13 @@
 # Verosimiglianza marginale {#appendix:const-norm-bino23}
 
-Riportiamo di seguito la derivazione analitica per la costante di normalizzazione discussa nella Sezione \@ref(sec:const-normaliz-bino23), ovvero dell'integrale \@ref(eq:likebino23). Sia la distribuzione a priori $\theta \sim \Beta(a, b)$ e sia $y = \{y_1, \dots, y_n\} \sim \Bin(\theta, n)$. Scrivendo la _funzione beta_ come
+
+## Derivazione analitica della costante di normalizzazione
+
+Riportiamo di seguito la derivazione analitica per la costante di normalizzazione discussa nella Sezione \@ref(sec:const-normaliz-bino23), ovvero dell'integrale \@ref(eq:likebino23). 
+
+
+::: {.proof}
+Sia la distribuzione a priori $\theta \sim \Beta(a, b)$ e sia $y = \{y_1, \dots, y_n\} \sim \Bin(\theta, n)$. Scrivendo la _funzione beta_ come
 $$
 \Beta(a, b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)},
 $$
@@ -22,6 +29,7 @@ in quanto
 \end{align}
 
 In conclusione, nel caso di una verosimiglianza binomiale $y = \sim \Bin(\theta, n)$ e di una distribuzione a priori $\theta \sim \Beta(a, b)$, la verosimiglianza marginale diventa uguale alla \@ref(eq:constant-norm-beta-binom).
+:::
 
 ::: {.guidedpractice data-latex=""}
 Si verifichi la \@ref(eq:constant-norm-beta-binom) mediante di dati di @zetschefuture2019. 
