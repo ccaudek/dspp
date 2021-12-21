@@ -3,7 +3,7 @@
 
 
 ::: {.chapterintro data-latex=""}
-L'attribuzione di una probabilità ad un evento è sempre condizionata dalle conoscenze che abbiamo a disposizione. Per un determinato stato di conoscenze, attribuiamo ad un dato evento una certa probabilità di verificarsi; ma se il nostro stato di conoscenze cambia, allora cambierà anche la probabilità che attribuiamo all'evento in questione. 
+L'attribuzione di una probabilità ad un evento è sempre condizionata dalle conoscenze che abbiamo a disposizione. Per un determinato stato di conoscenze, attribuiamo ad un dato evento una certa probabilità di verificarsi; ma se il nostro stato di conoscenze cambia, allora cambierà anche la probabilità che attribuiamo all'evento in questione.
 :::
 
 <!-- Possiamo chiederci, ad esempio, quale sia la probabilità che Mario Rossi superi l'esame di Psicometria nel primo appello del presente anno accademico. In assenza di altre informazioni, la migliore stima di tale probabilità è data dalla proporzione di studenti che hanno superato l'esame di Psicometria nel corrispondente appello dei precedenti anni accademici. Ma se sappiamo che Mario Rossi è particolarmente motivato  ed ha studiato molto, allora la probabilità sarà sicuramente più alta. -->
@@ -20,13 +20,13 @@ Per risolvere questo problema, supponiamo che il test in questione venga sommini
 
 \begin{figure}[h]
 
-{\centering \includegraphics[width=0.9\linewidth]{images/mammografia} 
+{\centering \includegraphics[width=0.67\linewidth]{images/mammografia} 
 
 }
 
 \caption{Rappresentazione ad albero che riporta le frequenze attese dei risultati di una mammografia in un campione di 1,000 donne.}(\#fig:mammografia)
 \end{figure}
-::: 
+:::
 
 Nell'esercizio precedente, la probabilità dell'evento "ottenere un risultato positivo al test" è una probabilità non condizionata, mentre la probabilità dell'evento "avere il cancro al seno, dato che il test ha dato un risultato positivo" è una probabilità condizionata. In termini generali, la probabilità condizionata $P(A \mid B)$ rappresenta la probabilità che si verifichi l'evento $A$ sapendo che si è verificato l'evento $B$ (oppure: la probabilità di $A$ in una prova valida solo se si verifica anche $B$). Ciò ci conduce alla seguente definizione.
 

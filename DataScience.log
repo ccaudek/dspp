@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.7)  21 DEC 2021 07:53
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.7)  21 DEC 2021 08:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1913,13 +1913,39 @@ File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
 File: listings.cfg 2020/03/24 1.8d listings configuration
 ))
 Package: listings 2020/03/24 1.8d (Carsten Heinz)
+) (/usr/local/texlive/2020/texmf-dist/tex/latex/awesomebox/awesomebox.sty
+Package: awesomebox 2019/07/27 v0.6
+(/usr/local/texlive/2020/texmf-dist/tex/latex/fontawesome5/fontawesome5.sty
+Package: fontawesome5 2020/03/24 v5.13.0 Font Awesome 5
+
+(/usr/local/texlive/2020/texmf-dist/tex/latex/fontawesome5/fontawesome5-utex-he
+lper.sty
+Package: fontawesome5-utex-helper 2020/03/24 v5.13.0 uTeX helper for fontawesom
+e5
+LaTeX Font Info:    Trying to load font information for TU+fontawesomefree on i
+nput line 69.
+
+(/usr/local/texlive/2020/texmf-dist/tex/latex/fontawesome5/tufontawesomefree.fd
+)
+LaTeX Font Info:    Trying to load font information for TU+fontawesomebrands on
+ input line 70.
+
+(/usr/local/texlive/2020/texmf-dist/tex/latex/fontawesome5/tufontawesomebrands.
+fd)))
+\aweboxleftmargin=\skip367
+\aweboxcontentwidth=\skip368
+\aweboxvskip=\skip369
+\aweboxsignraise=\skip370
+\aweboxrulewidth=\skip371
+\aweboxlinewidthvar=\skip372
+\aweboxlinewidthref=\skip373
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/psnfss/helvet.sty
 Package: helvet 2005/04/12 PSNFSS-v9.2a (WaS) 
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/multirow/multirow.sty
 Package: multirow 2019/05/31 v2.5 Span multiple rows of a table
-\multirow@colwidth=\skip367
+\multirow@colwidth=\skip374
 \multirow@cntb=\count549
-\multirow@dima=\skip368
+\multirow@dima=\skip375
 \bigstrutjot=\dimen385
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/wrapfig/wrapfig.sty
 \wrapoverhang=\dimen386
@@ -1938,7 +1964,7 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/colortbl/colortbl.sty
 Package: colortbl 2020/01/04 v1.0e Color table columns (DPC)
 \everycr=\toks60
-\minrowclearance=\skip369
+\minrowclearance=\skip376
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/pdflscape/pdflscape.sty
 Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
 (/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/lscape.sty
@@ -1959,11 +1985,11 @@ Package: environ 2014/05/04 v0.3 A new way to define environments
 (/usr/local/texlive/2020/texmf-dist/tex/latex/trimspaces/trimspaces.sty
 Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 ))
-\TPTL@width=\skip370
+\TPTL@width=\skip377
 ) (/usr/local/texlive/2020/texmf-dist/tex/generic/ulem/ulem.sty
 \UL@box=\box98
 \UL@hyphenbox=\box99
-\UL@skip=\skip371
+\UL@skip=\skip378
 \UL@hook=\toks61
 \UL@height=\dimen388
 \UL@pe=\count552
@@ -1983,9 +2009,9 @@ Package: amsthm 2017/10/31 v2.20.4
 \thm@headfont=\toks65
 \thm@notefont=\toks66
 \thm@headpunct=\toks67
-\thm@preskip=\skip372
-\thm@postskip=\skip373
-\thm@headsep=\skip374
+\thm@preskip=\skip379
+\thm@postskip=\skip380
+\thm@headsep=\skip381
 \dth@everypar=\toks68
 )
 \c@theorem=\count554
@@ -2012,36 +2038,36 @@ LaTeX Info: Redefining \ttfamily on input line 87.
 )
 \openout1 = `DataScience.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 634.
-LaTeX Font Info:    ... okay on input line 634.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 634.
-LaTeX Font Info:    ... okay on input line 634.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 634.
-LaTeX Font Info:    ... okay on input line 634.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 634.
-LaTeX Font Info:    ... okay on input line 634.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 634.
-LaTeX Font Info:    ... okay on input line 634.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 634.
-LaTeX Font Info:    ... okay on input line 634.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 634.
-LaTeX Font Info:    ... okay on input line 634.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 634.
-LaTeX Font Info:    ... okay on input line 634.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 634.
-LaTeX Font Info:    ... okay on input line 634.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 634.
-LaTeX Font Info:    ... okay on input line 634.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 635.
+LaTeX Font Info:    ... okay on input line 635.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 635.
+LaTeX Font Info:    ... okay on input line 635.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 635.
+LaTeX Font Info:    ... okay on input line 635.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 635.
+LaTeX Font Info:    ... okay on input line 635.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 635.
+LaTeX Font Info:    ... okay on input line 635.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 635.
+LaTeX Font Info:    ... okay on input line 635.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 635.
+LaTeX Font Info:    ... okay on input line 635.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 635.
+LaTeX Font Info:    ... okay on input line 635.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 635.
+LaTeX Font Info:    ... okay on input line 635.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 635.
+LaTeX Font Info:    ... okay on input line 635.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 634.
+(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 635.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 634.
+(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 635.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 634.
+(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 635.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/lmss/m/n --> TU/phv/m/n on input line 634.
+(Font)                  OT1/lmss/m/n --> TU/phv/m/n on input line 635.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/lmss/bx/n --> TU/phv/bx/n on input line 634.
+(Font)                  OT1/lmss/bx/n --> TU/phv/bx/n on input line 635.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -2070,7 +2096,7 @@ pt=math;language=dflt;"
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(0)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 634.
+(Font)              scaled to size 10.0pt on input line 635.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -2109,18 +2135,18 @@ pt=math;language=dflt;"
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 634.
+(Font)              scaled to size 10.0pt on input line 635.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 634.
+(Font)              `operators' in the math version `normal' on input line 635.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input
- line 634.
+ line 635.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 634.
+(Font)              `operators' in the math version `bold' on input line 635.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
 (Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on inpu
-t line 634.
+t line 635.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -2207,15 +2233,15 @@ t=math;language=dflt;"
 (fontspec)             \fontdimen 21\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `normal' on input line 634.
+(Font)              `symbols' in the math version `normal' on input line 635.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
 (Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on inpu
-t line 634.
+t line 635.
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `bold' on input line 634.
+(Font)              `symbols' in the math version `bold' on input line 635.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
 (Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on inpu
-t line 634.
+t line 635.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -2285,16 +2311,16 @@ pt=math;language=dflt;"
 
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
 (Font)              `largesymbols' in the math version `normal' on input line 6
-34.
+35.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
 (Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on inpu
-t line 634.
+t line 635.
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `bold' on input line 634
+(Font)              `largesymbols' in the math version `bold' on input line 635
 .
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
 (Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on inpu
-t line 634.
+t line 635.
 
 Package unicode-math Warning: Using \overbracket and \underbracket from
 (unicode-math)                `mathtools' package.
@@ -2313,7 +2339,7 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 (unicode-math)                colon-like commands, using them will lead to
 (unicode-math)                inconsistencies.
 
-LaTeX Info: Redefining \microtypecontext on input line 634.
+LaTeX Info: Redefining \microtypecontext on input line 635.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
 Package microtype Info: No adjustment of tracking.
@@ -2347,11 +2373,11 @@ Package biblatex Info: Automatic encoding selection.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'DataScience.bbl' found.
 (./DataScience.bbl)
-Package biblatex Info: Reference section=0 on input line 634.
-Package biblatex Info: Reference segment=0 on input line 634.
+Package biblatex Info: Reference section=0 on input line 635.
+Package biblatex Info: Reference segment=0 on input line 635.
 ABD: EveryShipout initializing macros
 \AtBeginShipoutBox=\box101
-Package hyperref Info: Link coloring ON on input line 634.
+Package hyperref Info: Link coloring ON on input line 635.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
 (/usr/local/texlive/2020/texmf-dist/tex/latex/refcount/refcount.sty
@@ -2365,10 +2391,10 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 Redoing nameref's sectioning
 Redoing nameref's label
-LaTeX Info: Redefining \nameref on input line 634.
-LaTeX Info: Redefining \ref on input line 634.
-LaTeX Info: Redefining \pageref on input line 634.
-LaTeX Info: Redefining \nameref on input line 634.
+LaTeX Info: Redefining \nameref on input line 635.
+LaTeX Info: Redefining \ref on input line 635.
+LaTeX Info: Redefining \pageref on input line 635.
+LaTeX Info: Redefining \nameref on input line 635.
 (./DataScience.out) (./DataScience.out)
 \@outlinefile=\write6
 \openout6 = `DataScience.out'.
@@ -2402,26 +2428,26 @@ Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 
 TextBlockOrigin set to \stockwidth -\paperwidth -\trimedge  x \trimtop 
 
-Overfull \hbox (10.30946pt too wide) in paragraph at lines 649--649
+Overfull \hbox (10.30946pt too wide) in paragraph at lines 650--650
 [][] 
  []
 
-LaTeX Font Info:    Trying to load font information for TU+qtm on input line 64
-9.
-LaTeX Font Info:    No file TUqtm.fd. on input line 649.
+LaTeX Font Info:    Trying to load font information for TU+qtm on input line 65
+0.
+LaTeX Font Info:    No file TUqtm.fd. on input line 650.
 
 LaTeX Font Warning: Font shape `TU/qtm/m/n' undefined
-(Font)              using `TU/lmr/m/n' instead on input line 649.
+(Font)              using `TU/lmr/m/n' instead on input line 650.
 
 (/usr/local/texlive/2020/texmf-dist/tex/latex/microtype/mt-ptm.cfg
 File: mt-ptm.cfg 2006/04/20 v1.7 microtype config. file: Times (RS)
 )
 
 LaTeX Font Warning: Font shape `TU/qtm/m/sc' undefined
-(Font)              using `TU/qtm/m/n' instead on input line 649.
+(Font)              using `TU/qtm/m/n' instead on input line 650.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 649--649
+Underfull \hbox (badness 10000) in paragraph at lines 650--650
 
  []
 
@@ -2432,49 +2458,49 @@ Underfull \hbox (badness 10000) in paragraph at lines 649--649
 ]
 TextBlockOrigin set to \trimedge  x \trimtop 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.0pt on input line 649.
+(Font)              scaled to size 7.0pt on input line 650.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 649.
+(Font)              scaled to size 5.0pt on input line 650.
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 6
-49.
+50.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.00092pt on input line 649.
+(Font)              scaled to size 10.00092pt on input line 650.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.00064pt on input line 649.
+(Font)              scaled to size 7.00064pt on input line 650.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00046pt on input line 649.
+(Font)              scaled to size 5.00046pt on input line 650.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 9.99893pt on input line 649.
+(Font)              scaled to size 9.99893pt on input line 650.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 6.99925pt on input line 649.
+(Font)              scaled to size 6.99925pt on input line 650.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 649.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 649
+(Font)              scaled to size 4.99947pt on input line 650.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 650
 .
 (/usr/local/texlive/2020/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 649
+LaTeX Font Info:    Trying to load font information for U+msb on input line 650
 .
 (/usr/local/texlive/2020/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-LaTeX Font Info:    Trying to load font information for TU+phv on input line 64
-9.
-LaTeX Font Info:    No file TUphv.fd. on input line 649.
+LaTeX Font Info:    Trying to load font information for TU+phv on input line 65
+0.
+LaTeX Font Info:    No file TUphv.fd. on input line 650.
 
 LaTeX Font Warning: Font shape `TU/phv/m/n' undefined
-(Font)              using `TU/lmr/m/n' instead on input line 649.
+(Font)              using `TU/lmr/m/n' instead on input line 650.
 
 
-Underfull \hbox (badness 2027) in paragraph at lines 649--649
+Underfull \hbox (badness 2027) in paragraph at lines 650--650
 []\TU/phv/m/n/10 bookdown ([][]$[][][][] [] [] [] [][][][][][][][] [] [][][][]$
 [][]) e memoiR ([][]$[][][][][] [] [] [] [][][][][][][][][][] [] [][][][][][] [
 ] [][] []
@@ -2483,7 +2509,7 @@ Underfull \hbox (badness 2027) in paragraph at lines 649--649
 File: images/logo.pdf Graphic file (type pdf)
 <use images/logo.pdf>
 
-Underfull \hbox (badness 10000) in paragraph at lines 649--649
+Underfull \hbox (badness 10000) in paragraph at lines 650--650
 
  []
 
@@ -2548,63 +2574,46 @@ Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 
 ] [7] [8]
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 8.0pt on input line 761.
+(Font)              scaled to size 8.0pt on input line 762.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 6.0pt on input line 761.
+(Font)              scaled to size 6.0pt on input line 762.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 8.00073pt on input line 761.
+(Font)              scaled to size 8.00073pt on input line 762.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 6.00055pt on input line 761.
+(Font)              scaled to size 6.00055pt on input line 762.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 7.99915pt on input line 761.
+(Font)              scaled to size 7.99915pt on input line 762.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 5.99936pt on input line 761.
+(Font)              scaled to size 5.99936pt on input line 762.
 [9] [10]
-Package mdframed Info: mdframed works in twoside mode on input line 781.
+Package mdframed Info: mdframed works in twoside mode on input line 782.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 781.
+(mdframed)              on input line 782.
 File: images/_icons/chapterintro.png Graphic file (type bmp)
 <images/_icons/chapterintro.png>
 
-Overfull \hbox (2.22pt too wide) in paragraph at lines 781--784
+Overfull \hbox (2.22pt too wide) in paragraph at lines 782--785
 [][]  []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 781--784
+Underfull \hbox (badness 10000) in paragraph at lines 782--785
 
  []
 
-
-LaTeX Warning: Reference `eq:probcomposte' on page 1 undefined on input line 79
-0.
-
-File: 017_bayes_theorem_files/figure-latex/tikz-prob-tot-1.pdf Graphic file (ty
-pe pdf)
-<use 017_bayes_theorem_files/figure-latex/tikz-prob-tot-1.pdf>
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 817.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 9.00082pt on input line 817.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 8.99904pt on input line 817.
+File: images/mammografia.png Graphic file (type bmp)
+<images/mammografia.png>
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [1
 
 
-]
-File: 017_bayes_theorem_files/figure-latex/unnamed-chunk-1-1.pdf Graphic file (
-type pdf)
-<use 017_bayes_theorem_files/figure-latex/unnamed-chunk-1-1.pdf>
-[2]
-
-LaTeX Warning: Reference `chapter-intro-bayes-inference' on page 3 undefined on
- input line 942.
-
-[3] [4] [5] [6]
+] [2] [3]
+File: images/sampling-space-dice.png Graphic file (type bmp)
+<images/sampling-space-dice.png>
+[4]
 
 ******************************************************
 Stock height and width: 845.04684pt by 597.50787pt
@@ -2625,11 +2634,11 @@ Sidefoothsep and sidefootwidth: 7pt and 117pt
 Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 ******************************************************
 
-[7
+[5
 
 
 
-] [8
+] [6
 
 
 ]
@@ -2657,13 +2666,13 @@ Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 LaTeX Info: Redefining \rmfamily on input line 3.
 LaTeX Info: Redefining \sffamily on input line 3.
 LaTeX Info: Redefining \ttfamily on input line 3.
-LaTeX Info: Redefining \rmfamily on input line 11.
-LaTeX Info: Redefining \sffamily on input line 11.
-LaTeX Info: Redefining \ttfamily on input line 11.
 LaTeX Info: Redefining \rmfamily on input line 13.
 LaTeX Info: Redefining \sffamily on input line 13.
 LaTeX Info: Redefining \ttfamily on input line 13.
-) [9
+LaTeX Info: Redefining \rmfamily on input line 15.
+LaTeX Info: Redefining \sffamily on input line 15.
+LaTeX Info: Redefining \ttfamily on input line 15.
+) [7
 
 ]
 
@@ -2686,17 +2695,17 @@ Sidefoothsep and sidefootwidth: 7pt and 117pt
 Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 ******************************************************
 
-LaTeX Info: Redefining \rmfamily on input line 1125.
-LaTeX Info: Redefining \sffamily on input line 1125.
-LaTeX Info: Redefining \ttfamily on input line 1125.
+LaTeX Info: Redefining \rmfamily on input line 995.
+LaTeX Info: Redefining \sffamily on input line 995.
+LaTeX Info: Redefining \ttfamily on input line 995.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1129--1131
+Underfull \hbox (badness 10000) in paragraph at lines 999--1001
 
  []
 
-LaTeX Info: Redefining \rmfamily on input line 1132.
-LaTeX Info: Redefining \sffamily on input line 1132.
-LaTeX Info: Redefining \ttfamily on input line 1132.
+LaTeX Info: Redefining \rmfamily on input line 1002.
+LaTeX Info: Redefining \sffamily on input line 1002.
+LaTeX Info: Redefining \ttfamily on input line 1002.
 The property list \polyglossia@langsetup contains the pairs (without outer
 braces):
 >  {latex/script}  =>  {latin}
@@ -2747,7 +2756,7 @@ braces):
 >  {english/babelname}  =>  {american}
 >  {english/localnumeral}  =>  {polyglossia@C@localnumeral}
 >  {english/Localnumeral}  =>  {polyglossia@C@localnumeral}.
-[10
+[8
 
 
 ]
@@ -2757,44 +2766,38 @@ braces):
 \tf@lof=\write8
 \openout8 = `DataScience.lof'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1137.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1137.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1007.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1007.
 (./DataScience.aux
 LaTeX Info: Redefining \rmfamily on input line 26.
 LaTeX Info: Redefining \sffamily on input line 26.
 LaTeX Info: Redefining \ttfamily on input line 26.
-LaTeX Info: Redefining \rmfamily on input line 83.
-LaTeX Info: Redefining \sffamily on input line 83.
-LaTeX Info: Redefining \ttfamily on input line 83.
-LaTeX Info: Redefining \rmfamily on input line 87.
-LaTeX Info: Redefining \sffamily on input line 87.
-LaTeX Info: Redefining \ttfamily on input line 87.
+LaTeX Info: Redefining \rmfamily on input line 84.
+LaTeX Info: Redefining \sffamily on input line 84.
+LaTeX Info: Redefining \ttfamily on input line 84.
+LaTeX Info: Redefining \rmfamily on input line 88.
+LaTeX Info: Redefining \sffamily on input line 88.
+LaTeX Info: Redefining \ttfamily on input line 88.
 )
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1137.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1137.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1007.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1007.
 
 Package rerunfilecheck Info: File `DataScience.out' has not changed.
-(rerunfilecheck)             Checksum: 4E39D0FDBA034F6D5D9AB7F8EFC36AD8;2191.
+(rerunfilecheck)             Checksum: 0EB3FF8901BE85AAF344B818676ED321;2313.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
 Package logreq Info: Writing requests to 'DataScience.run.xml'.
 \openout1 = `DataScience.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 48061 strings out of 479418
- 922999 string characters out of 5884586
- 1880161 words of memory out of 5000000
- 64745 multiletter control sequences out of 15000+600000
- 548323 words of font info for 99 fonts, out of 8000000 for 9000
+ 49662 strings out of 479418
+ 942268 string characters out of 5884586
+ 1905749 words of memory out of 5000000
+ 66327 multiletter control sequences out of 15000+600000
+ 547378 words of font info for 95 fonts, out of 8000000 for 9000
  1350 hyphenation exceptions out of 8191
- 75i,12n,121p,2169b,5783s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 75i,15n,121p,2169b,5783s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on DataScience.pdf (20 pages).
+Output written on DataScience.pdf (18 pages).

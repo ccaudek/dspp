@@ -98,7 +98,6 @@ probabilità di questi tre eventi (figura \@ref(fig:tikz-prob-tot)).
 \end{tikzpicture}
 ```
 
-
 ::: {.example}
 
 Si considerino tre urne, ciascuna delle quali contiene 100 palline:
