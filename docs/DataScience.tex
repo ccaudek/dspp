@@ -321,7 +321,7 @@
 
 \author{Corrado Caudek}
 
-\date{2021-12-21}
+\date{2021-12-22}
 
 
 % Include headers (preamble.tex) here
@@ -339,8 +339,6 @@
 \makeatletter
 \makechapterstyle{pedersen}
 \makeatother
-
-
 
 %\makeatletter
 %\newlength\dlf@normtxtw
@@ -394,18 +392,15 @@
 \DeclareMathOperator{\lppd}{lppd} % Define lppd operator
 \DeclareMathOperator{\LOO}{LOO} % Define LOO operator
 \DeclareMathOperator{\Ber}{\mathscr{B}} % Define Bernoulli operator
-
 \DeclareMathOperator{\B}{B} % beta function
-
 % \mbox{B}(a, b) % beta function
 % \mbox{Beta}(a, b) % beta distribution
-
 \newcommand{\R}{\textsf{R}} % Define R programming language symbol
 \newcommand{\E}{\mathbb{E}} % Define expected value operator
 \newcommand{\Real}{\mathbb{R}} % Define real number operator
 \newcommand{\Prob}{\mathscr{P}}
-\DeclareMathOperator*{\argmin}{arg\,min} % thin space, limits on side in displays
-\DeclareMathOperator*{\argmax}{arg\,max} % thin space, limits on side in displays
+\DeclareMathOperator{\argmin}{arg\,min} % thin space, limits on side in displays
+\DeclareMathOperator{\argmax}{arg\,max} % no space, limits on side in displays
 
 \raggedbottom % allow variable (ragged) site heights
 \frenchspacing
@@ -691,8 +686,7 @@
   \item \LaTeX\; e la classe memoir (\url{http://www.ctan.org/pkg/memoir});
   \item $\R$ (\url{http://www.r-project.org/}) e RStudio (\url{http://www.rstudio.com/});
   \item bookdown (\url{http://bookdown.org/}) e memoiR (\url{https://ericmarcon.github.io/memoiR/}).
-\end{itemize}}{Nel blog della mia pagina personale sono forniti alcuni approfondimenti degli argomenti qui trattati.
-
+  \end{itemize}}{Nel blog della mia pagina personale sono forniti alcuni approfondimenti degli argomenti qui trattati.
 \url{https://ccaudek.github.io/caudeklab/}}
 
 
@@ -736,7 +730,7 @@ Copyright \(\copyright\) 2022.
 
 \normalsize
 
-Data della versione presente: Dicembre 21, 2021.
+Data della versione presente: Dicembre 22, 2021.
 
 \hypertarget{prefazione}{%
 \chapter{Prefazione}\label{prefazione}}
@@ -777,7 +771,7 @@ Le considerazioni precedenti cercano di chiarire il seguente punto: la \emph{dat
 
 Il giusto metodo di studio per prepararsi all'esame di Psicometria è quello di seguire attivamente le lezioni, assimilare i concetti via via che essi vengono presentati e verificare in autonomia le procedure presentate a lezione. Incoraggio gli studenti a farmi domande per chiarire ciò che non è stato capito appieno. Incoraggio gli studenti a utilizzare i forum attivi su Moodle e, soprattutto, a svolgere gli esercizi proposti su Moodle. I problemi forniti su Moodle rappresentano il livello di difficoltà richiesto per superare l'esame e consentono allo studente di comprendere se le competenze sviluppate fino a quel punto sono sufficienti rispetto alle richieste dell'esame.
 
-La prima fase dello studio, che è sicuramente individuale, è quella in cui è necessario acquisire le conoscenze teoriche relative ai problemi che saranno presentati all'esame. La seconda fase di studio, che può essere facilitata da scambi con altri e da incontri di gruppo, porta ad acquisire la capacità di applicare le conoscenze: è necessario capire come usare un software (\R) per applicare i concetti statistici alla specifica situazione del problema che si vuole risolvere. Le due fasi non sono però separate: il saper fare molto spesso ci aiuta a capire meglio.
+La prima fase dello studio, che è sicuramente individuale, è quella in cui è necessario acquisire le conoscenze teoriche relative ai problemi che saranno presentati all'esame. La seconda fase di studio, che può essere facilitata da scambi con altri e da incontri di gruppo, porta ad acquisire la capacità di applicare le conoscenze: è necessario capire come usare un software (\(\textsf{R}\)) per applicare i concetti statistici alla specifica situazione del problema che si vuole risolvere. Le due fasi non sono però separate: il saper fare molto spesso ci aiuta a capire meglio.
 
 \hypertarget{sviluppare-un-metodo-di-studio-efficace}{%
 \section*{Sviluppare un metodo di studio efficace}\label{sviluppare-un-metodo-di-studio-efficace}}
@@ -816,17 +810,13 @@ Avendo insegnato molte volte in passato un corso introduttivo di analisi dei dat
 
 Corrado Caudek
 
-\bigskip
-
-Febbraio 2022
-
 \mainmatter
 
 \hypertarget{chapter-distr-coniugate}{%
 \chapter{Distribuzioni a priori coniugate}\label{chapter-distr-coniugate}}
 
 \begin{chapterintro}
-Obiettivo di questo Capitolo è fornire un esempio di derivazione della distribuzione a posteriori scegliendo quale distribuzione a priori una distribuzione coniugata. Esamineremo qui il caso più semplice, ovvero il modello Beta-Binomiale.
+Obiettivo di questo Capitolo è fornire un esempio di derivazione della distribuzione a posteriori scegliendo quale distribuzione a priori una distribuzione coniugata. Esamineremo qui il modello Beta-Binomiale.
 
 \end{chapterintro}
 
@@ -1107,10 +1097,6 @@ Esistono molte altre combinazioni simili di verosimiglianza e distribuzione a pr
 \addcontentsline{toc}{section}{Considerazioni conclusive}
 
 Lo scopo di questa discussione è stato quello di mostrare come sia possibile combinare le nostre conoscenze a priori (espresse nei termini di una densità di probabilità) con le evidenze fornite dai dati (espresse nei termini della funzione di verosimiglianza), così da determinare, mediante il teorema di Bayes, una distribuzione a posteriori, la quale condensa l'incertezza che abbiamo sul parametro \(\theta\). Per illustrare tale problema, abbiamo considerato una situazione nella quale \(\theta\) corrisponde alla probabilità di successo in una sequenza di prove Bernoulliane. Abbiamo visto come, in queste circostanze, sia ragionevole esprimere le nostre credenze a priori mediante la densità Beta, con opportuni parametri. L'inferenza rispetto ad una proporzione rappresenta un caso particolare, ovvero un caso nel quale la distribuzione a priori è Beta e la verosimiglianza è Binomiale. In tali circostanze, la distribuzione a posteriori diventa una distribuzione Beta -- questo è il cosiddetto modello Beta-Binomiale. Dato che utilizza una distribuzione a priori coniugata, dunque, il modello Beta-Binomiale rende possibile la determinazione analitica dei parametri della distribuzione a posteriori.
-
-\hypertarget{appendix-appendix}{%
-\appendix}
-
 
 
 % Bibliography

@@ -3,7 +3,7 @@
 
 
 ::: {.chapterintro data-latex=""}
-Obiettivo di questo Capitolo è fornire un esempio di derivazione della distribuzione a posteriori scegliendo quale distribuzione a priori una distribuzione coniugata. Esamineremo qui il caso più semplice, ovvero il modello Beta-Binomiale.
+Obiettivo di questo Capitolo è fornire un esempio di derivazione della distribuzione a posteriori scegliendo quale distribuzione a priori una distribuzione coniugata. Esamineremo qui il modello Beta-Binomiale.
 :::
 
 
