@@ -2,26 +2,24 @@
 
 
 
-\begin{Summary}
-La distribuzione a posteriori può essere approssimata con il metodo
-basato su griglia. A causa della maledizione della dimensionalità,
-tuttavia, questo metodo è di utilità limitata. I metodi Monte Carlo a
-catena di Markov consentono invece di trovare sempre una soluzione a
-questo problema. Esamineremo qui l'algoritmo di Metropolis.
-\end{Summary}
+In questo Capitolo ci occuperemo di metodi numerici per l'approssimazione della distribuzione a posteriori. 
+
+## Stima della distribuzione a posteriori
 
 In generale, in un problema bayesiano i dati $y$ provengono da una densità $p(y \mid \theta)$ e al parametro $\theta$ viene assegnata una densità a priori $p(\theta)$. Dopo avere osservato un campione $Y = y$, la funzione di verosimiglianza è uguale a $\mathcal{L}(\theta) = p(y \mid \theta)$ e la densità a posteriori diventa
 \begin{equation}
 p(\theta \mid y) = \frac{p(\theta) \mathcal{L}(\theta)}{\int p(\theta) \mathcal{L}(\theta) d \theta}.
 \end{equation}
-Si noti che, quando usiamo il teorema di Bayes per calcolare la distribuzione a posteriori del parametro di un modello statistico, al denominatore troviamo un integrale. Se vogliamo trovare la distribuzione a posteriori con metodi analitici è necessario usare distribuzioni a priori coniugate per la verosimiglianza. 
-Per quanto "semplice" in termini formali, questo approccio, però, limita di molto le possibili scelte del ricercatore. Nel senso che non è sempre sensato, dal punto di vista teorico, utilizzare distribuzioni a priori coniugate per la verosimiglianza per i parametri di interesse. Però, se usiamo delle distribuzioni a priori non coniutate per la verosimiglianza, ci troviamo in una condizione nella quale, per determinare la distribuzione a posteriori, è necessario calcolare un integrale che, nella maggior parte dei casi, non si può risolvere analiticamente. In altre parole: è possibile ottenere analiticamenre la distribuzione a posteriori solo per alcune specifiche combinazioni di distribuzioni a priori e verosimiglianza, il che limita considerevolmente la flessibilità della modellizzazione. 
-
-Inoltre, i sommari della distribuzione a posteriori sono espressi come rapporto di integrali. Ad esempio, la media a posteriori di $\theta$ è data da
-\begin{equation}
-\mathbb{E}(\theta \mid y) = \frac{\int \theta p(\theta) \mathcal{L}(\theta) d \theta}{\int p(\theta) \mathcal{L}(\theta) d \theta}.
-\end{equation}
-Il calcolo del valore atteso a posteriori richiede dunque la valutazione di due integrali, ciascuno dei quali non esprimibile in forma chiusa. Per questa ragione, la strada principale che viene seguita nella modellistica bayesiana è quella che porta a determinare la distribuzione a posteriori non per via analitica, ma bensì mediante metodi numerici. La simulazione fornisce dunque la strategia generale del calcolo bayesiano. 
+Si noti che, quando usiamo il teorema di Bayes per calcolare la distribuzione a posteriori del parametro di un modello statistico, al denominatore troviamo un integrale. Se vogliamo trovare la distribuzione a posteriori con metodi analitici è necessario usare distribuzioni a priori coniugate per la verosimiglianza. Questo però non è sempre giustificato dal punto di vista teorico.
+<!-- Per quanto "semplice" in termini formali, questo approccio, però, limita di molto le possibili scelte del ricercatore.  -->
+<!-- Non è però sempre sensato, dal punto di vista teorico, utilizzare distribuzioni a priori coniugate per la verosimiglianza per i parametri di interesse.  -->
+Però, se usiamo delle distribuzioni a priori non coniutate per la verosimiglianza, ci troviamo in una condizione nella quale, per determinare la distribuzione a posteriori, è necessario calcolare un integrale che, nella maggior parte dei casi, non si può risolvere analiticamente. In altre parole: è possibile ottenere analiticamente la distribuzione a posteriori solo per alcune specifiche combinazioni di distribuzioni a priori e verosimiglianza, il che limita considerevolmente la flessibilità della modellizzazione. 
+<!-- Inoltre, i sommari della distribuzione a posteriori sono espressi come rapporto di integrali. Ad esempio, la media a posteriori di $\theta$ è data da -->
+<!-- \begin{equation} -->
+<!-- \mathbb{E}(\theta \mid y) = \frac{\int \theta p(\theta) \mathcal{L}(\theta) d \theta}{\int p(\theta) \mathcal{L}(\theta) d \theta}. -->
+<!-- \end{equation} -->
+<!-- Il calcolo del valore atteso a posteriori richiede dunque la valutazione di due integrali, ciascuno dei quali non esprimibile in forma chiusa.  -->
+Per questa ragione, la strada principale che viene seguita nella modellistica bayesiana è quella che porta a determinare la distribuzione a posteriori non per via analitica, ma bensì mediante metodi numerici. La simulazione fornisce dunque la strategia generale del calcolo bayesiano. 
 
 A questo fine vengono usati i metodi di campionamento detti Monte-Carlo Markov-Chain (MCMC). Tali metodi costituiscono una potente e praticabile alternativa per la costruzione della distribuzione a posteriori per modelli complessi e consentono di decidere quali distribuzioni a priori e quali distribuzioni di verosimiglianza usare sulla base di considerazioni teoriche soltanto, senza dovere preoccuparsi di altri vincoli. 
 
@@ -30,43 +28,51 @@ Dato che è basata su metodi computazionalmente intensivi, la stima numerica del
 In questo Capitolo vedremo come sia possibile calcolare in maniera approssimata  la distribuzione a posteriori. Presenteremo tre diverse tecniche che possono essere utilizzate a questo scopo:
 
 1. il metodo basato su griglia,
+
 2. il metodo dell'approssimazione quadratica,
+
 3. il metodo di Monte Carlo basato su Catena di Markov (MCMC).
 
 
 ## Metodo basato su griglia
 
-Il metodo basato su griglia (_grid-based_) è un metodo di approsimazione numerica basato su una griglia di punti uniformemente spaziati. Anche se la maggior parte dei parametri è continua (ovvero, in linea di principio ciascun parametro può assumere un numero infinito di valori), possiamo ottenere un'eccellente approssimazione della distribuzione a posteriori considerando solo una griglia finita di valori dei parametri. In un tale metodo, la densità di probabilità a posteriori può dunque essere approssimata tramite le densità di probabilità cacolate in ciascuna cella della griglia.
+Il metodo basato su griglia (_grid-based_) è un metodo di approsimazione numerica basato su una griglia di punti uniformemente spaziati. Anche se la maggior parte dei parametri è continua (ovvero, in linea di principio ciascun parametro può assumere un numero infinito di valori), possiamo ottenere un'eccellente approssimazione della distribuzione a posteriori considerando solo una griglia finita di valori dei parametri. In un tale metodo, la densità di probabilità a posteriori può dunque essere approssimata tramite le densità di probabilità calcolate in ciascuna cella della griglia.
 
 Il metodo basato su griglia si sviluppa in quattro fasi:
 
-- Fissare una griglia discreta di possibili valori $\theta$.^[È chiaro che, per ottenere buone approssimazioni, è necessaria una griglia molto densa.]
-- Valutare la distribuzione a priori $p(\theta)$ e la funzione di verosimiglianza $\mathcal{L}(y \mid \theta)$ in corrispondenza di ciascun valore $\theta$ della griglia.
-- Ottenere un'approssimazione discreta della densità a posteriori: (a) calcolare il prodotto $p(\theta) \mathcal{L} (y \mid \theta)$ per ciascun
-valore $\theta$ della griglia; e (b) normalizzare i prodotti così ottenuti in modo tale che la loro somma sia 1.
-- Selezionare $N$ valori casuali della griglia in modo tale da ottenere un campione casuale delle densità a posteriori normalizzate.
+- fissare una griglia discreta di possibili valori $\theta$;^[È chiaro che, per ottenere buone approssimazioni, è necessaria una griglia molto densa.]
+
+- valutare la distribuzione a priori $p(\theta)$ e la funzione di verosimiglianza $\mathcal{L}(y \mid \theta)$ in corrispondenza di ciascun valore $\theta$ della griglia;
+
+- ottenere un'approssimazione discreta della densità a posteriori: (a) calcolare il prodotto $p(\theta) \mathcal{L} (y \mid \theta)$ per ciascun
+valore $\theta$ della griglia; e (b) normalizzare i prodotti così ottenuti in modo tale che la loro somma sia 1;
+
+- selezionare $N$ valori casuali della griglia in modo tale da ottenere un campione casuale delle densità a posteriori normalizzate.
 
 
 ### Modello Beta-Binomiale
 
-Supponiamo di avere osservato 9 sucessi in 10 prove Bernoulliane indipendenti.^[La discussione del modello Beta-Binomiale segue molto da vicino la presentazione di @Johnson2022bayesrules utilizzando anche lo stesso codice \R.] Imponiamo alla distribuzione a priori su $\theta$ (proabilità di successo in una singola prova) una Beta(2, 2) per descrivere la  nostra incertezza sul parametro prima di avere osservato i dati. Dunque, il modello diventa:
+Per fare un esempio, consideriamo il modello Beta-Binomiale di cui conosciamo la soluzione esatta. Supponiamo di avere osservato 9 sucessi in 10 prove Bernoulliane indipendenti.^[La discussione del modello Beta-Binomiale segue molto da vicino la presentazione di @Johnson2022bayesrules utilizzando anche lo stesso codice \R.] Imponiamo alla distribuzione a priori su $\theta$ (proabilità di successo in una singola prova) una Beta(2, 2) per descrivere la  nostra incertezza sul parametro prima di avere osservato i dati. Dunque, il modello diventa:
 \begin{align}
 Y \mid \theta & \sim \text{Bin}(10, \pi) \notag\\
-\theta & \sim \mbox{Beta}(2, 2).
+\theta & \sim \mbox{Beta}(2, 2).\notag
 \end{align}
 In queste circostanze, l'aggiornamento bayesiano produce una distribuzione a posteriori Beta di parametri 11 ($y + \alpha$ = 9 + 2) e 3 ($n - y + \beta$ = 10 - 9 + 2):
 \begin{equation}
-\theta \mid (y = 9) \sim \mbox{Beta}(11, 3) \; .
+\theta \mid (y = 9) \sim \mbox{Beta}(11, 3).\notag
 \end{equation}
 Per approssimare la distribuzione a posteriori, fissiamo una griglia di $n = 6$ valori equispaziati: $\theta \in \{0, 0.2, 0.4, 0.6, 0.8, 1\}$ (in seguito aumenteremo $n$):
+
 
 ```r
 grid_data <- tibble(
   theta_grid = seq(from = 0, to = 1, length = 6)
 )
 ```
+
 \noindent
 In corrispondenza di ciascun valore della griglia, valutiamo la distribuzione a priori $\mbox{Beta}(2, 2)$ e la verosimiglianza $\Bin(10, \theta)$ con $y = 9$.
+
 
 ```r
 grid_data <- grid_data %>%
@@ -75,8 +81,10 @@ grid_data <- grid_data %>%
     likelihood = dbinom(9, 10, theta_grid)
   )
 ```
+
 \noindent
-In ciascuna cella della griglia, calcoliamo il prodotto della verosimiglianza e della distribuzione a priori. Troviamo così un'approssimazione discreta e non normalizzata della distribuzione a posteriori (`unnormalized`). Normalizziamo poi questa approssimazione dividendo ciascun valore del vettore `unnormalized` per la  somma di tutti i valori del vettore:
+Calcoliamo poi, in ciascuna cella della griglia, il prodotto della verosimiglianza e della distribuzione a priori. Troviamo così un'approssimazione discreta e non normalizzata della distribuzione a posteriori (`unnormalized`). Normalizziamo infine questa approssimazione dividendo ciascun valore del vettore `unnormalized` per la  somma di tutti i valori del vettore:
+
 
 ```r
 grid_data <- grid_data %>%
@@ -85,8 +93,10 @@ grid_data <- grid_data %>%
     posterior = unnormalized / sum(unnormalized)
   )
 ```
+
 \noindent
-La somma dei valori così trovati è uguale a 1:
+La somma dei valori così trovati sarà uguale a 1:
+
 
 ```r
 grid_data %>%
@@ -94,17 +104,19 @@ grid_data %>%
     sum(unnormalized),
     sum(posterior)
   )
-#> # A tibble: 1 x 2
+#> # A tibble: 1 × 2
 #>   `sum(unnormalized)` `sum(posterior)`
 #>                 <dbl>            <dbl>
 #> 1               0.318                1
 ```
+
 \noindent
 Abbiamo dunque ottenuto la seguente distribuzione a posteriori discretizzata $p(\theta \mid y)$:
 
+
 ```r
 round(grid_data, 2)
-#> # A tibble: 6 x 5
+#> # A tibble: 6 × 5
 #>   theta_grid prior likelihood unnormalized posterior
 #>        <dbl> <dbl>      <dbl>        <dbl>     <dbl>
 #> 1        0    0          0            0         0   
@@ -114,35 +126,38 @@ round(grid_data, 2)
 #> 5        0.8  0.96       0.27         0.26      0.81
 #> 6        1    0          0            0         0
 ```
+
 \noindent
 La figura \@ref(fig:grid-method-6points-posterior-plot) mostra un grafico della distribuzione a posteriori discretizzata che è stata ottenuta:
 
+
 ```r
-grid_data %>%
+grid_data %>% 
   ggplot(
     aes(x = theta_grid, y = posterior)
   ) +
   geom_point() +
   geom_segment(
     aes(
-      x = theta_grid,
-      xend = theta_grid,
-      y = 0,
-      yend = posterior
-    )
+      x = theta_grid, 
+      xend = theta_grid, 
+      y = 0, 
+      yend = posterior)
   )
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{036_posterior_sim_files/figure-latex/grid-method-6points-posterior-plot-1} 
+{\centering \includegraphics[width=0.8\linewidth]{036_posterior_sim_files/figure-latex/grid-method-6points-posterior-plot-1} 
 
 }
 
 \caption{Distribuzione a posteriori discretizzata ottenuta con il metodo grid-based per $y$ = 9 successi in 10 prove Bernoulliane, con distribuzione a priori $\mbox{Beta}(2, 2)$. È stata utilizzata una griglia di solo $n$ = 6 punti.}(\#fig:grid-method-6points-posterior-plot)
 \end{figure}
+
 \noindent
 L'ultimo passo della simulazione è il campionamento dalla distribuzione a posteriori discretizzata:
+
 
 ```r
 set.seed(84735)
@@ -153,8 +168,10 @@ post_sample <- sample_n(
   replace = TRUE
 )
 ```
+
 \noindent
 È facile intuire che i valori estratti con rimessa dalla distribuzione a posteriori discretizzata saranno quasi sempre uguali a 0.6 o 0.8. Questa intuizione è confermata dal grafico \@ref(fig:grid-method-6points-posterior-plot-sampling) a cui è stata sovrapposta la vera distribuzione a posteriori $\mbox{Beta}(11, 3)$:
+
 
 ```r
 ggplot(post_sample, aes(x = theta_grid)) +
@@ -163,19 +180,21 @@ ggplot(post_sample, aes(x = theta_grid)) +
   lims(x = c(0, 1))
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{036_posterior_sim_files/figure-latex/grid-method-6points-posterior-plot-sampling-1} 
+{\centering \includegraphics[width=0.8\linewidth]{036_posterior_sim_files/figure-latex/grid-method-6points-posterior-plot-sampling-1} 
 
 }
 
 \caption{Campionamento dalla  distribuzione a posteriori discretizzata ottenuta con il metodo grid-based per $y$ = 9 successi in 10 prove Bernoulliane, con distribuzione a priori $\mbox{Beta}(2, 2)$. È stata utilizzata una griglia di solo $n$ = 6 punti.}(\#fig:grid-method-6points-posterior-plot-sampling)
 \end{figure}
+
 \noindent
 La figura \@ref(fig:grid-method-6points-posterior-plot-sampling) mostra che, con una griglia così sparsa abbiamo ottenuto una versione estremamente approssimata della vera distribuzione a posteriori. Possiamo ottenere un risultato migliore con una griglia più densa, come indicato nella figura \@ref(fig:grid-method-100points-posterior-plot-sampling):
 
+
 ```r
-grid_data <- tibble(
+grid_data  <- tibble(
   theta_grid = seq(from = 0, to = 1, length.out = 100)
 )
 grid_data <- grid_data %>%
@@ -188,31 +207,32 @@ grid_data <- grid_data %>%
     unnormalized = likelihood * prior,
     posterior = unnormalized / sum(unnormalized)
   )
-grid_data %>%
-  ggplot(
-    aes(x = theta_grid, y = posterior)
-  ) +
+grid_data %>% 
+ggplot(
+  aes(x = theta_grid, y = posterior)
+) +
   geom_point() +
   geom_segment(
     aes(
-      x = theta_grid,
-      xend = theta_grid,
-      y = 0,
-      yend = posterior
-    )
+      x = theta_grid, 
+      xend = theta_grid, 
+      y = 0, 
+      yend = posterior)
   )
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{036_posterior_sim_files/figure-latex/grid-method-100points-posterior-plot-sampling-1} 
+{\centering \includegraphics[width=0.8\linewidth]{036_posterior_sim_files/figure-latex/grid-method-100points-posterior-plot-sampling-1} 
 
 }
 
 \caption{Distribuzione a posteriori discretizzata ottenuta con il metodo grid-based per $y$ = 9 successi in 10 prove Bernoulliane, con distribuzione a priori $\mbox{Beta}(2, 2)$. È stata utilizzata una griglia di $n$ = 100 punti.}(\#fig:grid-method-100points-posterior-plot-sampling)
 \end{figure}
+
 \noindent
 Campioniamo ora 10000 punti:
+
 
 ```r
 # Set the seed
@@ -224,28 +244,30 @@ post_sample <- sample_n(
   replace = TRUE
 )
 ```
+
 \noindent
 Con il campionamento dalla distribuzione a posteriori discretizzata costruita mediante una griglia più densa ($n = 100$) otteniamo un risultato soddisfacente (figura \@ref(fig:grid-method-100points-posterior-plot-and-correct-posterior)): la distribuzione dei valori prodotti dalla simulazione ora approssima molto bene la corretta distribuzione a posteriori $p(\theta \mid y) = \mbox{Beta}(11, 3)$.
+
 
 ```r
 post_sample %>%
   ggplot(aes(x = theta_grid)) +
   geom_histogram(
-    aes(y = ..density..),
-    color = "white",
+    aes(y = ..density..), 
+    color = "white", 
     binwidth = 0.05
   ) +
   stat_function(fun = dbeta, args = list(11, 3)) +
   lims(x = c(0, 1))
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{036_posterior_sim_files/figure-latex/grid-method-100points-posterior-plot-and-correct-posterior-1} 
+{\centering \includegraphics[width=0.8\linewidth]{036_posterior_sim_files/figure-latex/grid-method-100points-posterior-plot-and-correct-posterior-1} 
 
 }
 
-\caption{Campionamento dalla  distribuzione a posteriori discretizzata ottenuta con il metodo grid-based per $y$ = 9 successi in 10 prove Bernoulliane, con distribuzione a priori $\mbox{Beta}(2, 2)$. È stata utilizzata una griglia di $n$ = 100 punti. All'istogramma è stata sovrapposta lacorretta distribuzione a posteriori, ovvero la densità $\mbox{Beta}(11, 3)$.}(\#fig:grid-method-100points-posterior-plot-and-correct-posterior)
+\caption{Campionamento dalla  distribuzione a posteriori discretizzata ottenuta con il metodo grid-based per $y$ = 9 successi in 10 prove Bernoulliane, con distribuzione a priori $\mbox{Beta}(2, 2)$. È stata utilizzata una griglia di $n$ = 100 punti. All'istogramma è stata sovrapposta la corretta distribuzione a posteriori, ovvero la densità $\mbox{Beta}(11, 3)$.}(\#fig:grid-method-100points-posterior-plot-and-correct-posterior)
 \end{figure}
 
 Possiamo concludere dicendo che il metodo basato su griglia è molto intuitivo e non richiede particolari competenze di programmazione per essere implementato. Inoltre,  fornisce un risultato che, per tutti gli scopi pratici, può essere considerato come un campione casuale estratto da $p(\theta \mid y)$. Tuttavia, anche se tale metodo fornisce risultati accuratissimi, esso ha un uso limitato. A causa della _maledizione della dimensionalità_^[Che cos'è la _maledizione della dimensionalità_? È molto facile da capire.  Supponiamo di utilizzare una griglia di 100 punti equispaziati. Nel caso di un solo parametro, sarà necessario calcolare 100 valori. Per due parametri devono essere  calcolari $100^2$ valori. Ma già per 10 parametri avremo bisogno di calcolare $10^{10}$ valori -- è facile capire che una tale quantità di calcoli è troppo grande anche per un computer molto potente. Per modelli che richiedono la stima di un numero non piccolo di parametri è dunque necessario procedere in un altro modo.], infatti, il metodo basato su griglia può essere solo usato nel caso di semplici modelli statistici, con non più di due parametri. Nella pratica concreta tale metodo viene dunque sostituito da altre tecniche più efficienti in quanto, anche nei più comuni modelli utilizzati in psicologia, vengono solitamente stimati centinaia se non migliaia di parametri.
@@ -253,7 +275,7 @@ Possiamo concludere dicendo che il metodo basato su griglia è molto intuitivo e
 
 ## Approssimazione quadratica
 
-L'approssimazione quadratica è uno dei metodi che possono essere usati per superare il problema della "maledizione della dimensionalità". La motivazione di tale metodo è la seguente. Sappiamo che, in generale, la regione della distribuzione a posteriori che si trova in prossimità del suo massimo può essere ben approssimata dalla forma di una distribuzione Normale.^[Descrivere la distribuzione a posteriori mediante la distribuzione Normale significa utilizzare un'approssimazione che viene, appunto, chiamata "quadratica" (tale approssimazione si dice quadratica perché il logaritmo di una distribuzione gaussiana forma una parabola e la parabola è una funzione quadratica -- dunque, mediante questa approssimazione descriviamo il logaritmo della distribuzione a posteriori mediante una parabola).]
+L'approssimazione quadratica è un altro metodo che può essere usato per superare il problema della "maledizione della dimensionalità". La motivazione di tale metodo è la seguente. Sappiamo che, in generale, la regione della distribuzione a posteriori che si trova in prossimità del suo massimo può essere ben approssimata dalla forma di una distribuzione Normale.^[Descrivere la distribuzione a posteriori mediante la distribuzione Normale significa utilizzare un'approssimazione che viene, appunto, chiamata "quadratica" (tale approssimazione si dice quadratica perché il logaritmo di una distribuzione gaussiana forma una parabola e la parabola è una funzione quadratica -- dunque, mediante questa approssimazione descriviamo il logaritmo della distribuzione a posteriori mediante una parabola).]
 
 L'approssimazione quadratica si pone due obiettivi.
 
@@ -275,8 +297,8 @@ suppressPackageStartupMessages(library("rethinking"))
 
 mod <- quap(
   alist(
-    N ~ dbinom(N + P, p), # verosimiglianza binomiale
-    p ~ dbeta(2, 10) # distribuzione a priori Beta(2, 10)
+  N ~ dbinom(N + P, p), # verosimiglianza binomiale
+  p ~ dbeta(2, 10) # distribuzione a priori Beta(2, 10)
   ),
   data = list(N = 23, P = 7)
 )
@@ -287,8 +309,8 @@ Un sommario dell'approssimazione quadratica è fornito da
 
 ```r
 precis(mod, prob = 0.95)
-#>        mean        sd      2.5%     97.5%
-#> p 0.5999999 0.0774593 0.4481824 0.7518173
+#>   mean     sd  2.5% 97.5%
+#> p  0.6 0.0775 0.448 0.752
 ```
 
 Qui sotto è fornito un confronto tra la corretta distribuzione a posteriori (linea continua) e l'approssimazione quadratica (linea trateggiata).
@@ -299,10 +321,10 @@ N <- 23
 P <- 7
 a <- N + 2
 b <- P + 10
-curve(dbeta(x, a, b), from = 0, to = 1, ylab = "Densità")
+curve(dbeta(x, a, b), from=0, to=1, ylab="Densità")
 # approssimazione quadratica
 curve(
-  dnorm(x, a / (a + b), sqrt((a * b) / ((a + b)^2 * (a + b + 1)))),
+  dnorm(x, a/(a+b), sqrt((a*b)/((a+b)^2*(a+b+1)))),
   lty = 2,
   add = TRUE
 )
@@ -310,23 +332,29 @@ curve(
 
 
 
-\begin{center}\includegraphics{036_posterior_sim_files/figure-latex/unnamed-chunk-11-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{036_posterior_sim_files/figure-latex/unnamed-chunk-10-1} \end{center}
 
 Il grafico precedente mostra che l'approssimazione quadratica fornisce risultati soddisfacenti. Tali risultati sono simili (o identici) a quelli ottenuti con il metodo _grid-based_, con il vantaggio aggiuntivo di disporre di una serie di funzioni $\R$ in grado di svolgere i calcoli per noi. In realtà, però, l'approssimazione quadratica è poco usata perché, per problemi complessi, è più conveniente fare ricorso ai metodi Monte Carlo basati su Catena di Markov (MCMC) che verranno descritti nel Paragrafo successivo.
 
 
 ## Metodo Monte Carlo {#chapter-simulazioneMC}
 
-Una verosimiglianza Binomiale e una distribuzione a priori Beta producono una distribuzione a posteriori Beta (si veda il capitolo \@ref(chapter-distr-priori-coniugate)). Con una simulazione $\R$ è dunque facile  ricavare dei campioni causali dalla distribuzione a posteriori. Maggiore è il numero di campioni, migliore sarà l'approssimazione della distribuzione a posteriori. 
+Una verosimiglianza Binomiale e una distribuzione a priori Beta producono una distribuzione a posteriori Beta (si veda il capitolo \@ref(chapter-distr-coniugate)). Con una simulazione $\R$ è dunque facile  ricavare dei campioni causali dalla distribuzione a posteriori. Maggiore è il numero di campioni, migliore sarà l'approssimazione della distribuzione a posteriori. 
 
-Continuando con l'esempio precedente,
+Consideriamo nuovamente i dati di @zetschefuture2019 (23 "successi" in 30 prove Bernoulliane) e applichiamo a quei dati lo stesso modello del Capitolo \@ref(chapter-distr-coniugate):
 \begin{align}
 y \mid \theta, n &\sim \Bin(y = 23, n = 30 \mid \theta) \notag\\
 \theta_{prior} &\sim \mbox{Beta}(2, 10) \notag\\
 \theta_{post}  &\sim \mbox{Beta}(y + a = 23 + 2 = 25, n - y + b = 30 - 23 + 10 = 17), \notag
 \end{align}
+
 \noindent
-stimiamo, ad esempio, il valore della media a posteriori di $\theta$: 
+Poniamoci il problema di stimare il valore della media a posteriori di $\theta$.
+Nel caso presente, il risultato esatto è
+$$
+\bar{\theta}_{post} = \frac{\alpha}{\alpha + \beta} = \frac{25}{25 + 17} \approx 0.5952.
+$$
+Dato che la distribuzione a posteriori di $\theta$ è $\mbox{Beta}(25, 17)$, possiamo estrarre un campione casuale di osservazioni da tale distribuzione e calcolare la media: 
 
 
 ```r
@@ -336,7 +364,7 @@ print(mean(rbeta(1e2, shape1 = 25, shape2 = 17)), 6)
 ```
 
 \noindent
-L'approssimazione migliora all'aumentare del numero di campioni estratto dalla distribuzione a posteriori:
+È ovvio che l'approssimazione migliora all'aumentare del numero di osservazioni estratte dalla distribuzione a posteriori (legge dei grandi numeri):
 
 
 ```r
@@ -357,16 +385,11 @@ print(mean(rbeta(1e5, shape1 = 25, shape2 = 17)), 6)
 ```
 
 \noindent
-È lo stesso ragionamento che abbiamo fatto in riferiento alla relazione tra campione e popolazione: al crescere della numerosità campionaria il campione approssima sempre meglio le proprietà della popolazione da cui è stato estratto (legge dei grandi numeri). Nel caso presente, il risultato esatto è
-$$
-\bar{\theta}_{post} = \frac{\alpha}{\alpha + \beta} = \frac{25}{25 + 17} \approx 0.5952.
-$$
-\noindent
-Quando il numero di campioni tratti dalla distribuzione a posteriori è molto grande, quindi, la distribuzione dei campioni converge alla densità della popolazione (si veda l'Appendice \@ref(integration-mc)).^[Si noti, naturalmente, che il numero dei campioni di simulazione è controllato dal ricercatore; è totalmente diverso dalla dimensione del campione che è fissa ed è una proprietà dei dati.]
+Quando il numero di osservazioni (possiamo anche chiamarle "campioni") tratte dalla distribuzione a posteriori è molto grande, la distribuzione di tali campioni converge alla densità della popolazione (si veda l'Appendice \@ref(integration-mc)).^[Si noti, naturalmente, che il numero dei campioni di simulazione è controllato dal ricercatore; è totalmente diverso dalla dimensione del campione che è fissa ed è una proprietà dei dati.]
 
-Inoltre, le statistiche descrittive (es. media, moda, varianza, eccetera) dei campioni estratti dalla distribuzione a posteriori convergeranno ai corrispondenti valori della  distribuzione a posteriori. La figura \@ref{fig:mcmc-chains-1} mostra come, all'aumentare del numero di repliche, la media, la mediana, la deviazione standard e l'asimmetria convergono ai veri valori della distribuzione a posteriori (linee rosse tratteggiate).
+Inoltre, le statistiche descrittive (es. media, moda, varianza, eccetera) dei campioni estratti dalla distribuzione a posteriori convergeranno ai corrispondenti valori della distribuzione a posteriori. La figura \@ref{fig:mcmc-chains-1} mostra come, all'aumentare del numero di repliche, la media, la mediana, la deviazione standard e l'asimmetria convergono ai veri valori della distribuzione a posteriori (linee rosse tratteggiate).
 
-\begin{figure}
+\begin{figure}[h]
 
 {\centering \includegraphics[width=0.8\linewidth]{/Users/corrado/_repositories/dspp/images/mcmc-chains-1} 
 
@@ -380,11 +403,12 @@ Inoltre, le statistiche descrittive (es. media, moda, varianza, eccetera) dei ca
 
 Nel Paragrafo \@ref(chapter-simulazioneMC) la simulazione Monte Carlo funzionava perché 
 
-(a) sapevamo che la distribuzione a posteriori era una $\mbox{Beta}(25, 17)$,
-(b) era possibile usare le funzioni $\R$ per estrarre campioni casuali da tale distribuzione. 
+- sapevamo che la distribuzione a posteriori era una $\mbox{Beta}(25, 17)$,
+
+- era possibile usare le funzioni $\R$ per estrarre campioni casuali da tale distribuzione. 
 
 \noindent
-Tuttavia, capita raramente di usare una distribuzione a priori coniugata alla verosimiglianza, quindi in generale non valgono né la condizione (a) né la condizione (b) descritte sopra. Ad esempio, nel caso di una verosimiglianza binomiale e una distribuzione a priori Normale, la distribuzione a posteriori di $\theta$ è
+Tuttavia, capita raramente di usare una distribuzione a priori coniugata alla verosimiglianza, quindi in generale le due condizioni descritte sopra non si applicano. Ad esempio, nel caso di una verosimiglianza binomiale e una distribuzione a priori Normale, la distribuzione a posteriori di $\theta$ è
 $$
 p(\theta \mid y) = \frac{\mathrm{e}^{-(\theta - 1 / 2)^2} \theta^y (1 - \theta)^{n - y}} {\int_0^1 \mathrm{e}^{-(t - 1 / 2)^2} t^y (1 - t)^{n - y} dt}.
 $$
@@ -407,16 +431,14 @@ Questo è un esempio di una catena di Markov discreta. Una catena di Markov desc
 p <- c(0, 0, 1, 0, 0, 0)
 
 P <- matrix(
-  c(
-    .5, .5, 0, 0, 0, 0,
+  c(.5, .5, 0, 0, 0, 0,
     .25, .5, .25, 0, 0, 0,
     0, .25, .5, .25, 0, 0,
     0, 0, .25, .5, .25, 0,
     0, 0, 0, .25, .5, .25,
     0, 0, 0, 0, .5, .5
-  ),
-  nrow = 6, ncol = 6, byrow = TRUE
-)
+    ),
+  nrow = 6, ncol = 6, byrow = TRUE)
 
 kableExtra::kable(P)
 ```
@@ -445,9 +467,10 @@ La prima riga della matrice di transizione $P$ fornisce le probabilità di passa
 Si notino alcune importanti proprietà di questa particolare catena di Markov. 
 
 - È possibile passare da ogni stato a qualunque altro stato in uno o più passaggi: una catena di Markov con questa proprietà si dice *irriducibile*. 
+
 - Dato che la persona si trova in un particolare stato, se può tornare a questo stato solo a intervalli regolari, si dice che la catena di Markov è *periodica*. In questo esempio la catena è *aperiodica* poiché la passeggiata casuale non può eitornare allo stato attuale a intervalli regolari.
 
-Un'importante proprietà di una catena di Markov irriducibile e aperiodica è che il passaggio ad uno stato del sistema dipende unicamente dallo stato immediatamente precedente e non dal come si è giunti a tale stato (dalla storia). Per questo motivo si dice che un processo markoviano è senza memoria. Tale "assenza di memoria" può essere interpretata come la proprietà mediante cui è possibile ottenere un insieme di campioni casuali da una distribuzione di interesse. Nel caso dell'inferenza bayesiana, la distribuzione di interesse è la distribuzione a posteriori, $p(\theta \mid \mathcal{Y})$. Le catene di Markov consentono di stimare i valori di aspettazione di variabili rispetto alla distribuzione a posteriori.
+Un'importante proprietà di una catena di Markov irriducibile e aperiodica è che il passaggio ad uno stato del sistema dipende unicamente dallo stato immediatamente precedente e non dal come si è giunti a tale stato (dalla storia). Per questo motivo si dice che un processo markoviano è senza memoria. Tale "assenza di memoria" può essere interpretata come la proprietà mediante cui è possibile ottenere un insieme di campioni casuali da una distribuzione di interesse. Nel caso dell'inferenza bayesiana, la distribuzione di interesse è la distribuzione a posteriori, $p(\theta \mid y)$. Le catene di Markov consentono di stimare i valori di aspettazione di variabili rispetto alla distribuzione a posteriori.
 
 La matrice di transizione che si ottiene dopo un enorme numero di passi di una passeggiata casuale markoviana si chiama *distribuzione stazionaria*. Se una catena di Markov è irriducibile e aperiodica, allora ha un'unica distribuzione stazionaria $w$. La distribuzione limite di una tale catena di Markov, quando il numero di passi tende all'infinito, è uguale alla distribuzione stazionaria $w$.
 
@@ -463,50 +486,41 @@ Senza entrare nei dettagli della simulazione, la figura \@ref(fig:markovsim)  mo
 set.seed(123)
 s <- vector("numeric", 10000)
 s[1] <- 3
-for (j in 2:10000) {
-  s[j] <- sample(1:6, size = 1, prob = P[s[j - 1], ])
+for (j in 2:10000){
+  s[j] <- sample(1:6, size=1, prob=P[s[j - 1], ])
 }
-S <- data.frame(
-  Iterazione = 1:10000,
-  Location = s
-)
+S <- data.frame(Iterazione = 1:10000,
+                Location = s)
 
-S %>%
-  mutate(
-    L1 = (Location == 1),
-    L2 = (Location == 2),
-    L3 = (Location == 3),
-    L4 = (Location == 4),
-    L5 = (Location == 5),
-    L6 = (Location == 6)
-  ) %>%
-  mutate(
-    Proporzione_1 = cumsum(L1) / Iterazione,
-    Proporzione_2 = cumsum(L2) / Iterazione,
-    Proporzione_3 = cumsum(L3) / Iterazione,
-    Proporzione_4 = cumsum(L4) / Iterazione,
-    Proporzione_5 = cumsum(L5) / Iterazione,
-    Proporzione_6 = cumsum(L6) / Iterazione
-  ) %>%
-  select(
-    Iterazione, Proporzione_1, Proporzione_2, Proporzione_3,
-    Proporzione_4, Proporzione_5, Proporzione_6
-  ) -> S1
+S %>% mutate(L1 = (Location == 1),
+             L2 = (Location == 2),
+             L3 = (Location == 3),
+             L4 = (Location == 4),
+             L5 = (Location == 5),
+             L6 = (Location == 6))  %>%
+  mutate(Proporzione_1 = cumsum(L1) / Iterazione,
+         Proporzione_2 = cumsum(L2) / Iterazione,
+         Proporzione_3 = cumsum(L3) / Iterazione,
+         Proporzione_4 = cumsum(L4) / Iterazione,
+         Proporzione_5 = cumsum(L5) / Iterazione,
+         Proporzione_6 = cumsum(L6) / Iterazione) %>%
+  select(Iterazione, Proporzione_1, Proporzione_2, Proporzione_3,
+         Proporzione_4, Proporzione_5, Proporzione_6) -> S1
 
 gather(S1, Outcome, Probability, -Iterazione) -> S2
 
 ggplot(S2, aes(Iterazione, Probability)) +
   geom_line() +
-  facet_wrap(~Outcome, ncol = 3) +
+  facet_wrap(~ Outcome, ncol = 3) +
   ylim(0, .4) +
   ylab("Frequenza relativa") +
   # theme(text=element_text(size=14))  +
   scale_x_continuous(breaks = c(0, 3000, 6000, 9000))
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{036_posterior_sim_files/figure-latex/markovsim-1} 
+{\centering \includegraphics[width=0.8\linewidth]{036_posterior_sim_files/figure-latex/markovsim-1} 
 
 }
 
@@ -525,7 +539,7 @@ Per introdurre l'algoritmo di di Metropolis considereremo il campionamento da un
 
 
 ```r
-pd <- function(x) {
+pd <- function(x){
   values <- c(5, 10, 4, 4, 20, 20, 12, 5)
   ifelse(
     x %in% 1:length(values),
@@ -556,9 +570,9 @@ prob_dist %>%
   )
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{036_posterior_sim_files/figure-latex/formetropolisdistr-1} 
+{\centering \includegraphics[width=0.8\linewidth]{036_posterior_sim_files/figure-latex/formetropolisdistr-1} 
 
 }
 
@@ -584,15 +598,14 @@ La funzione `random_walk()` implementa l'algoritmo di Metropolis. Tale funzione 
 
 
 ```r
-random_walk <- function(pd, start, num_steps) {
+random_walk <- function(pd, start, num_steps){
   y <- rep(0, num_steps)
   current <- start
-  for (j in 1:num_steps) {
+  for (j in 1:num_steps){
     candidate <- current + sample(c(-1, 1), 1)
     prob <- pd(candidate) / pd(current)
-    if (runif(1) < prob) {
+    if (runif(1) < prob)
       current <- candidate
-    }
     y[j] <- current
   }
   return(y)
@@ -618,12 +631,12 @@ prob_dist2 <- rbind(
   tibble(
     x = S$out,
     prob = S$Prob
+    )
   )
-)
 prob_dist2$Type <- rep(
-  c("Prob. corrette", "Prob. simulate"),
+  c("Prob. corrette", "Prob. simulate"), 
   each = 8
-)
+  )
 ```
 
 
@@ -632,13 +645,13 @@ x <- 1:8
 prob_dist2 %>%
   ggplot(aes(x = x, y = prob, fill = Type)) +
   geom_bar(
-    stat = "identity",
-    width = 0.1,
+    stat = "identity", 
+    width = 0.1, 
     position = position_dodge(0.3)
   ) +
   scale_x_continuous(
-    "x",
-    labels = as.character(x),
+    "x", 
+    labels = as.character(x), 
     breaks = x
   ) +
   scale_fill_manual(values = c("black", "gray80")) +
@@ -649,9 +662,9 @@ prob_dist2 %>%
   )
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{036_posterior_sim_files/figure-latex/metropolishistogramsim-1} 
+{\centering \includegraphics[width=0.8\linewidth]{036_posterior_sim_files/figure-latex/metropolishistogramsim-1} 
 
 }
 
@@ -664,38 +677,26 @@ La figura \@ref(fig:metropolishistogramsim) confronta l'istogramma dei valori si
 
 ### L'algoritmo di Metropolis
 
-Vediamo ora come l'algoritmo di Metropolis possa venire usato per generare una catena di Markov irriducibile e aperiodica per la quale la distribuzione stazionaria è uguale alla distribuzione a posteriori di interesse.^[Una illustrazione visiva di come si svolge il processo di "esplorazione" dell'algoritmo di Metropolis è fornita in questo [post](https://elevanth.org/blog/2017/11/28/build-a-better-markov-chain/).]
+Vediamo ora come l'algoritmo di Metropolis possa venire usato per generare una catena di Markov irriducibile e aperiodica per la quale la distribuzione stazionaria è uguale alla distribuzione a posteriori di interesse.^[Una illustrazione visiva di come si svolge il processo di "esplorazione" dell'algoritmo di Metropolis è fornita in questo [post](https://elevanth.org/blog/2017/11/28/build-a-better-markov-chain/).] In termini generali, l'algoritmo di Metropolis include due fasi.
 
-In termini generali, l'algoritmo di Metropolis include due fasi.
+- *Fase 1.* La selezione di un valore candidato $\theta'$ del parametro mediante il campionamento da una distribuzione proposta.
 
-- *Fase 1* La selezione di un valore candidato $\theta'$ del parametro mediante il campionamento da una distribuzione proposta.
-- *Fase 2* La decisione tra la possibilità di accettare il valore candidato
-$$
-\theta^{(m+1)} = \theta'
-$$ 
-\noindent
-o di mantenere il valore corrente 
-$$
-\theta^{(m+1)} = \theta
-$$ 
-\noindent
-sulla base del seguente criterio:
-  - se $\mathcal{L}(\theta' \mid y)p(\theta') > \mathcal{L}(\theta \mid y)p(\theta)$ il valore candidato viene sempre accettato;
-  - altrimenti il valore candidato viene accettato solo in una certa proporzione di casi.
+- *Fase 2.* La decisione tra la possibilità di accettare il valore candidato $\theta^{(m+1)} = \theta'$ o di mantenere il valore corrente $\theta^{(m+1)} = \theta$ sulla base del seguente criterio:
+    - se $\mathcal{L}(\theta' \mid y)p(\theta') > \mathcal{L}(\theta \mid y)p(\theta)$ il valore candidato viene sempre accettato;
+  
+    - altrimenti il valore candidato viene accettato solo in una certa proporzione di casi.
 
 Esaminiamo ora nei dettagli il funzionamento dell'algoritmo di Metropolis.
 
 (a) Si inizia con un punto arbitrario $\theta^{(1)}$, quindi il primo valore della catena di Markov $\theta^{(1)}$ può corrispondere semplicemente ad un valore a caso tra i valori possibili del parametro. 
 
-(b) Per ogni passo successivo della catena, $m + 1$, si campiona un valore candidato $\theta'$ da una distribuzione proposta: $\theta' \sim \Pi(\theta)$. La distribuzione proposta può essere qualunque distribuzione, anche se, idealmente, è meglio che sia simile alla distribuzione a posteriori. In pratica la distribuzione a posteriori è sconosciuta e quindi il valore $\theta'$ viene campionato da una qualche distribuzione simmetrica centrata sul valore corrente $\theta^{(m)}$ del parametro. Nell'esempio che verrà discusso qui sotto, useremo la distribuzione Normale. Tale distribuzione sarà centrata sul valore corrente della catena e avrà una appropriata deviazione standard: $\theta' \sim \mathcal{N}(\theta^{(m)}, \sigma)$. In pratica, questo significa che, se $\sigma$ è piccola, il valore candidato $\theta'$ sarà simile al valore corrente $\theta^{(m)}$.
+(b) Per ogni passo successivo della catena, $m + 1$, si campiona un valore candidato $\theta'$ da una distribuzione proposta: $\theta' \sim \Pi(\theta)$. La distribuzione proposta può essere qualunque distribuzione, anche se, idealmente, è meglio che sia simile alla distribuzione a posteriori. In pratica, però, la distribuzione a posteriori è sconosciuta e quindi il valore $\theta'$ viene campionato da una qualche distribuzione simmetrica centrata sul valore corrente $\theta^{(m)}$ del parametro. Nell'esempio qui discusso, useremo la distribuzione gaussiana. Tale distribuzione sarà centrata sul valore corrente della catena e avrà una appropriata deviazione standard: $\theta' \sim \mathcal{N}(\theta^{(m)}, \sigma)$. In pratica, questo significa che, se $\sigma$ è piccola, il valore candidato $\theta'$ sarà simile al valore corrente $\theta^{(m)}$.
 
 (c) Una volta generato il valore candidato $\theta'$ si calcola il rapporto tra la densità della distribuzione a posteriori non normalizzata nel punto $\theta'$ [ovvero, il prodotto tra la verosimiglianza $\mathcal{L}(y \mid \theta')$ nel punto $\theta'$ e la distribuzione a priori nel punto $\theta'$] e la densità della distribuzione a posteriori non normalizzata nel punto $\theta^{(m)}$ [ovvero, il prodotto tra la verosimiglianza $\mathcal{L}(y \mid \theta^{(m)})$ nel punto $\theta^{(m)}$ e la distribuzione a priori nel punto $\theta^{(m)}$]:
-
 \begin{equation}
 \alpha = \frac{p(y \mid \theta') p(\theta')}{p(y \mid \theta^{(m)}) p(\theta^{(m)})}.
 (\#eq:ratio-metropolis)
 \end{equation}
-
 \noindent
 Si noti che, essendo un rapporto, la \@ref(eq:ratio-metropolis) cancella la costante di normalizzazione.
 
@@ -705,12 +706,11 @@ Si noti che, essendo un rapporto, la \@ref(eq:ratio-metropolis) cancella la cost
 
 L'algoritmo di Metropolis prende come input il numero $M$ di passi da simulare, la deviazione standard $\sigma$ della distribuzione proposta e la densità a priori, e ritorna come output la sequenza $\theta^{(1)}, \theta^{(2)}, \dots, \theta^{(M)}$. La chiave del successo dell'algoritmo di Metropolis è il numero di passi fino a che la catena approssima la stazionarietà. Tipicamente i primi da 1000 a 5000 elementi sono scartati. Dopo un certo periodo $k$ (detto di _burn-in_), la catena di Markov converge  ad una variabile casuale che è distribuita secondo la distribuzione a posteriori. In altre parole, i campioni del vettore $\left(\theta^{(k+1)}, \theta^{(k+2)}, \dots, \theta^{(M)}\right)$ diventano campioni di $p(\theta \mid y)$.
 
-
 ### Una applicazione concreta
 
-Per fare un esempio concreto, consideriamo nuovamente i 30 pazienti esaminati da @zetschefuture2019 e discussi nel Paragrafo \@ref(es-pratico-zetsche). Di essi, 23 hanno manifestato aspettative distorte negativamente sul loro stato d'animo futuro. Utilizzando l'algoritmo di Metropolis, ci poniamo il problema di ottenere la stima a posteriori di $\theta$ (probabilità di manifestare un'aspettativa distorta negativamente), dati 23 "successi" in 30 prove, imponendo su $\theta$ la stessa distribuzione a priori usata nel Paragrafo \@ref(es-depression-beta-2-10), ovvero $\mbox{Beta}(2, 10)$.
+Per fare un esempio concreto, consideriamo nuovamente i 30 pazienti esaminati da @zetschefuture2019. Di essi, 23 hanno manifestato aspettative distorte negativamente sul loro stato d'animo futuro. Utilizzando l'algoritmo di Metropolis, ci poniamo il problema di ottenere la stima a posteriori di $\theta$ (probabilità di manifestare un'aspettativa distorta negativamente), dati 23 "successi" in 30 prove, imponendo su $\theta$ la stessa distribuzione a priori usata nel Capitolo \@ref(chapter-distr-coniugate), ovvero $\mbox{Beta}(2, 10)$.
 
-Per calcolare la funzione di verosimiglianza, avendo fissato i dati di @zetschefuture2019, useremo la funzione `likelihood()`
+Per calcolare la funzione di verosimiglianza, avendo fissato i dati di @zetschefuture2019, definiamo la funzione `likelihood()`
 
 
 ```r
@@ -727,8 +727,7 @@ La distribuzione a priori $\mbox{Beta}(2, 10)$ è implementata nella funzione `p
 
 ```r
 prior <- function(param, alpha = 2, beta = 10) {
-  param_vals <- seq(0, 1, length.out = 100)
-  dbeta(param, alpha, beta) # / sum(dbeta(param_vals, alpha, beta))
+  dbeta(param, alpha, beta) 
 }
 ```
 
@@ -741,23 +740,22 @@ posterior <- function(param) {
 }
 ```
 
-L'Appendice \@ref(es-pratico-zetsche-funzioni) fornisce un'illustrazione dell'utilizzo di queste funzioni per generare un'approssimazione della distribuzione a posteriori $p(\theta \mid y)$ mediante il metodo basato su griglia. Ci poniamo ora il problema di replicare tale risultato usando l'algoritmo di Metropolis.
+L'Appendice \@ref(es-pratico-zetsche-funzioni) mostra come un'approssimazione della distribuzione a posteriori $p(\theta \mid y)$ per questi dati possa essere ottenuta mediante il metodo basato su griglia. Qui vogliamo invece usare l'algoritmo di Metropolis.
 
 <!-- Il risultato della figura precedente è stato ottenuto con il metodo basato su griglia. Vogliamo ora replicare tale risultato usando l'algoritmo di Metropolis. La figura  indica che la media a posteriori è pari a circa 0.6. Questo è il valore a posteriori più verosimile per il parametro $\theta$ alla luce dei dati osservati se assumiamo una distribuzione a priori $\mbox{Beta}(2, 10)$. Ci poniamo ora il problema di replicare tale risultato usando l'algoritmo di Metropolis. -->
 
 
 ### Implementazione
 
-Per implementare  l'algoritmo di Metropolis utilizzeremo una distribuzione proposta Normale. Il valore candidato sarà dunque un valore selezionato a caso da una Normale di parametri $\mu$ uguale al valore corrente nella catena e $\sigma = 0.9$. In questo esempio, la deviazione standard $\sigma$ è stata scelta empiricamente in modo tale da ottenere una accettanza adeguata. L'accettanza ottimale è di circa 0.20 e 0.30 --- se l'accettanza è troppo grande, l'algoritmo esplora uno spazio troppo ristretto della distribuzione a posteriori.^[L'accettanza dipende dalla distribuzione proposta: in generale, tanto più la distribuzione proposta è simile alla distribuzione target, tanto più alta diventa l'accettanza.]
+Per implementare  l'algoritmo di Metropolis utilizzeremo una distribuzione proposta gaussiana. Il valore candidato sarà dunque un valore selezionato a caso da una gaussiana di parametri $\mu$ uguale al valore corrente nella catena e $\sigma = 0.9$. In questo esempio, la deviazione standard $\sigma$ è stata scelta empiricamente in modo tale da ottenere una accettanza adeguata. L'accettanza ottimale è di circa 0.20 e 0.30 --- se l'accettanza è troppo grande, l'algoritmo esplora uno spazio troppo ristretto della distribuzione a posteriori.^[L'accettanza dipende dalla distribuzione proposta: in generale, tanto più la distribuzione proposta è simile alla distribuzione target, tanto più alta diventa l'accettanza.]
 
 
 ```r
 proposal_distribution <- function(param) {
-  while (1) {
-    res <- rnorm(1, mean = param, sd = 0.9)
-    if (res > 0 & res < 1) {
+  while(1) {
+    res = rnorm(1, mean = param, sd = 0.9)
+    if (res > 0 & res < 1)
       break
-    }
   }
   res
 }
@@ -804,7 +802,7 @@ L'accettanza è pari a
 burnIn <- niter / 2
 acceptance <- 1 - mean(duplicated(chain[-(1:burnIn)]))
 acceptance
-#> [1] 0.2511498
+#> [1] 0.251
 ```
 \noindent
 il che conferma la bontà della deviazione standard ($\sigma$ = 0.9) scelta per la distribuzione proposta.
@@ -814,7 +812,7 @@ A questo punto è facile ottenere una stima a posteriori del parametro $\theta$.
 
 ```r
 mean(chain[-(1:burnIn)])
-#> [1] 0.5921799
+#> [1] 0.592
 ```
 
 Una figura che mostra l'approssimazione di $p(\theta \mid y)$  ottenuta con l'algoritmo di Metropolis, insieme ad un _trace plot_ dei valori della catena di Markov, viene prodotta usando le seguenti istruzioni:
@@ -823,7 +821,7 @@ Una figura che mostra l'approssimazione di $p(\theta \mid y)$  ottenuta con l'al
 ```r
 p1 <- tibble(
   x = chain[-(1:burnIn)]
-) %>%
+  ) %>%
   ggplot(aes(x)) +
   geom_histogram() +
   labs(
@@ -834,11 +832,10 @@ p1 <- tibble(
   geom_vline(
     xintercept = mean(chain[-(1:burnIn)])
   )
-
 p2 <- tibble(
   x = 1:length(chain[-(1:burnIn)]),
   y = chain[-(1:burnIn)]
-) %>%
+  ) %>%
   ggplot(aes(x, y)) +
   geom_line() +
   labs(
@@ -850,13 +847,12 @@ p2 <- tibble(
     yintercept = mean(chain[-(1:burnIn)]),
     colour = "gray"
   )
-
 p1 + p2
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{036_posterior_sim_files/figure-latex/sim-markov-chain-zetsche-1} 
+{\centering \includegraphics[width=0.8\linewidth]{036_posterior_sim_files/figure-latex/sim-markov-chain-zetsche-1} 
 
 }
 
@@ -902,7 +898,7 @@ L'autocorrelazione di ordine 1 è semplicemente la correlazione tra ciascun elem
 
 ```r
 cor(rednoise[-length(rednoise)], rednoise[-1])
-#> [1] 0.3967366
+#> [1] 0.397
 ```
 
 Il Correlogramma è uno strumento grafico usato per la valutazione della tendenza di una catena di Markov nel tempo. Il correlogramma si costruisce a partire dall'autocorrelazione $\rho_k$ di una catena di Markov in funzione del ritardo (_lag_) $k$ con cui l'autocorrelazione è calcolata: nel grafico ogni barretta verticale riporta il valore dell'autocorrelazione (sull'asse delle ordinate) in funzione del ritardo (sull'asse delle ascisse). In $\R$, il correlogramma può essere prodotto con una chiamata a `acf()`:
@@ -914,7 +910,7 @@ acf(rednoise)
 
 
 
-\begin{center}\includegraphics{036_posterior_sim_files/figure-latex/unnamed-chunk-30-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{036_posterior_sim_files/figure-latex/unnamed-chunk-29-1} \end{center}
 
 Il correlogramma precedente mostra come l'autocorrelazione di ordine 1 sia circa pari a 0.4 e diminuisce per lag maggiori; per lag di 4, l'autocorrelazione diventa negativa e aumenta progressivamente fino ad un lag di 8; eccetera.
 

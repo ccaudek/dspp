@@ -5,17 +5,11 @@ source("_common.R")
 source("_stan_options.R")
 ```
 
+Obiettivo di questo Capitolo è illustrare come svolgere l'analisi bayesiana del modello lineare usando il linguaggio Stan.^[Una descrizione dell'approccio frequentista è fornita nell'Appendice \@ref(regr-lin-frequentista).] 
 
-## La specificazione del modello lineare in linguaggio Stan
+## Il modello lineare in linguaggio Stan
 
-Obiettivo di questo Capitolo è illustrare come svolgere l'analisi bayesiana del modello lineare usando il linguaggio Stan.^[Una descrizione dell'approccio frequentista è fornita nell'Appendice \@ref(regr-lin-frequentista).] Per fare un esempio concreto useremo un famoso dataset chiamato `kidiq` [@gelman2020regression] che riporta i dati di un'indagine del 2007 su un campione di donne americane adulte e sui loro bambini di età compres tra i 3 e i 4 anni. I dati sono costituiti da 434 osservazioni e 4 variabili:
-
-- `kid_score`: QI del bambino; è il punteggio totale del _Peabody Individual Achievement Test_ (PIAT) costituito dalla somma dei punteggi di tre sottoscale (Mathematics, Reading comprehension, Reading recognition);
-- `mom_hs`: variabile dicotomica (0 or 1) che indica se la madre del bambino ha completato le scuole superiori (1) oppure no (0);
-- `mom_iq`: QI della madre;
-- `mom_age`: età della madre.
-
-Leggiamo i dati in \R:
+Leggiamo in $\R$ il dataset `kidiq`:
 
 ```{r}
 library("foreign")
@@ -23,15 +17,8 @@ df <- read.dta(here("data", "kidiq.dta"))
 head(df)
 ```
 
-Calcoliamo alcune statistiche descrittive:
 
-```{r}
-summary(df)
-```
-
-Il QI medio dei bambini è di circa 87 mentre quello della madre è di 100. La gamma di età delle madri va da 17 a 29 anni con una media di circa 23 anni. Si noti infine che il 79% delle mamme ha un diploma di scuola superiore.
-
-Ci poniamo il problema di descrivere l'associazione tra il QI dei figli e il QI delle madri mediante un modello lineare. Per farci un'idea del valore dei parametri, adattiamo il modello lineare ai dati mediante la procedura di massima verosimiglianza:
+Vogliamo descrivere l'associazione tra il QI dei figli e il QI delle madri mediante un modello lineare. Per farci un'idea del valore dei parametri, adattiamo il modello lineare ai dati mediante la procedura di massima verosimiglianza:
 
 ```{r}
 coef(lm(kid_score ~ mom_iq, data = df))

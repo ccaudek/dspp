@@ -1,18 +1,12 @@
-# Regressione lineare in Stan {#reg-lin-stan}
+# Modello lineare in Stan {#reg-lin-stan}
 
 
 
+Obiettivo di questo Capitolo è illustrare come svolgere l'analisi bayesiana del modello lineare usando il linguaggio Stan.^[Una descrizione dell'approccio frequentista è fornita nell'Appendice \@ref(regr-lin-frequentista).] 
 
-## La specificazione del modello in linguaggio Stan
+## Il modello lineare in linguaggio Stan
 
-Obiettivo di questo Capitolo è illustrare come svolgere l'analisi di regressione  bayesiana usando il linguaggio Stan.^[Una descrizione dell'approccio frequentista all'analisi di regressione è fornita nell'Appendice \@ref(regr-lin-frequentista).] Per fare un esempio concreto useremo un famoso dataset chiamato `kidiq` [@gelman2020regression] che riporta i dati di un'indagine del 2007 su un campione di donne americane adulte e sui loro bambini di età compres tra i 3 e i 4 anni. I dati sono costituiti da 434 osservazioni e 4 variabili:
-
-- `kid_score`: QI del bambino; è il punteggio totale del _Peabody Individual Achievement Test_ (PIAT) costituito dalla somma dei punteggi di tre sottoscale (Mathematics, Reading comprehension, Reading recognition);
-- `mom_hs`: variabile dicotomica (0 or 1) che indica se la madre del bambino ha completato le scuole superiori (1) oppure no (0);
-- `mom_iq`: QI della madre;
-- `mom_age`: età della madre.
-
-Leggiamo i dati in \R:
+Leggiamo in $\R$ il dataset `kidiq`:
 
 
 ```r
@@ -28,23 +22,8 @@ head(df)
 #> 6        98      0  107.9        1      18
 ```
 
-Calcoliamo alcune statistiche descrittive:
 
-
-```r
-summary(df)
-#>    kid_score         mom_hs          mom_iq         mom_work      mom_age    
-#>  Min.   : 20.0   Min.   :0.000   Min.   : 71.0   Min.   :1.0   Min.   :17.0  
-#>  1st Qu.: 74.0   1st Qu.:1.000   1st Qu.: 88.7   1st Qu.:2.0   1st Qu.:21.0  
-#>  Median : 90.0   Median :1.000   Median : 97.9   Median :3.0   Median :23.0  
-#>  Mean   : 86.8   Mean   :0.786   Mean   :100.0   Mean   :2.9   Mean   :22.8  
-#>  3rd Qu.:102.0   3rd Qu.:1.000   3rd Qu.:110.3   3rd Qu.:4.0   3rd Qu.:25.0  
-#>  Max.   :144.0   Max.   :1.000   Max.   :138.9   Max.   :4.0   Max.   :29.0
-```
-
-Il QI medio dei bambini è di circa 87 mentre quello della madre è di 100. La gamma di età delle madri va da 17 a 29 anni con una media di circa 23 anni. Si noti infine che il 79% delle mamme ha un diploma di scuola superiore.
-
-Ci poniamo il problema di descrivere l'associazione tra il QI dei figli e il QI delle madri mediante un modello di regressione lineare. Per farci un'idea del valore dei parametri, adattiamo il modello di regressione ai dati mediante la procedura di massima verosimiglianza:
+Vogliamo descrivere l'associazione tra il QI dei figli e il QI delle madri mediante un modello lineare. Per farci un'idea del valore dei parametri, adattiamo il modello lineare ai dati mediante la procedura di massima verosimiglianza:
 
 
 ```r
@@ -53,7 +32,7 @@ coef(lm(kid_score ~ mom_iq, data = df))
 #>       25.80        0.61
 ```
 
-Il modello statistico bayesiano di regressione lineare è:
+La formulazione bayesiano del modello lineare è:
 $$
 \begin{aligned}
 y_i &\sim \mathcal{N}(\mu_i, \sigma) \\
@@ -67,7 +46,7 @@ La prima riga definisce la funzione di verosimiglianza e righe successive defini
 
 Poniamoci ora il problema di specificare il modello bayesiano descritto sopra in linguaggio Stan^[Nella discussione che segue ripeto pari pari ciò che è riportato nel manuale del linguaggio [Stan](https://mc-stan.org/docs/2_27/stan-users-guide/standardizing-predictors-and-outputs.html).]. Il codice Stan viene eseguito più velocemente se l'input è standardizzato così da avere una media pari a zero e una varianza unitaria.^[Si noti un punto importante. Il fatto di standardizzare i dati fa in modo che le distribuzioni a priori sui parametri andranno espresse sulla scala delle v.c. normali standardizzate.  Se centriamo sullo 0 tali distribuzioni a priori, con una deviazione standard dell'ordine di grandezza dell'unità, i discorsi sull'arbitrarietà delle distribuzioni a priori perdono di significato: nel caso di dati standardizzati le distribuzioni a priori formulate come indicato sopra sono sicuramente distribuzioni vagamente informative il cui unico scopo è quello della regolarizzazione dei dati, ovvero l'obiettivo di mantenere le inferenze in una gamma ragionevole di valori; ciò contribuisce nel contempo a limitare l'influenza eccessiva delle osservazioni estreme (valori anomali) --- certamente tali distribuzioni a priori non introducono alcuna distorsione sistematica nella stima a posteriori.] 
 <!-- Poniamoci dunque il problema di eseguire il campionamento MCMC sulle variabili standardizzate per poi riconvertire i parametri trovati sulla stessa scala di misura dei punteggi grezzi.  -->
-Ponendo $y = (y_1, \dots, y_n)$ e $x = (x_1, \dots, x_n)$, il modello di regressione può essere scritto come 
+Ponendo $y = (y_1, \dots, y_n)$ e $x = (x_1, \dots, x_n)$, il modello lineare può essere scritto come 
 $$
 y_i = \alpha + \beta x_i + \varepsilon_i,
 $$
@@ -293,12 +272,13 @@ Un sommario della distribuzione a posteriori per i parametri stimati si ottiene 
 
 ```r
 fit$summary(c("alpha", "beta", "sigma"))
-#> # A tibble: 3 x 10
-#>   variable   mean median     sd    mad     q5    q95  rhat ess_bulk ess_tail
-#>   <chr>     <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl>    <dbl>    <dbl>
-#> 1 alpha    25.8   25.9   5.98   5.97   15.8   35.7    1.00   16460.   11859.
-#> 2 beta      0.610  0.609 0.0594 0.0590  0.513  0.709  1.00   16455.   11999.
-#> 3 sigma    18.3   18.3   0.616  0.611  17.3   19.3    1.00   16786.   12022.
+#> # A tibble: 3 × 10
+#>   variable   mean median     sd    mad     q5    q95  rhat ess_bulk
+#>   <chr>     <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl>    <dbl>
+#> 1 alpha    25.8   25.9   5.98   5.97   15.8   35.7    1.00   16460.
+#> 2 beta      0.610  0.609 0.0594 0.0590  0.513  0.709  1.00   16455.
+#> 3 sigma    18.3   18.3   0.616  0.611  17.3   19.3    1.00   16786.
+#> # … with 1 more variable: ess_tail <dbl>
 ```
 \noindent
 Da questo output possiamo valutare rapidamente la convergenza del modello osservando i valori di Rhat per ciascun parametro. Quando questi sono pari o vicini a 1, le catene hanno realizzato la convergenza. Ci sono molti altri test diagnostici, ma questo test è importante per Stan.
@@ -313,7 +293,7 @@ Le statistiche diagnostiche sono fornite dal metodo `$cmdstan_diagnose()`:
 
 ```r
 fit$cmdstan_diagnose()
-#> Processing csv files: /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/RtmpyS0NAw/simpleregstd-202112040921-1-94a4db.csv, /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/RtmpyS0NAw/simpleregstd-202112040921-2-94a4db.csv, /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/RtmpyS0NAw/simpleregstd-202112040921-3-94a4db.csv, /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/RtmpyS0NAw/simpleregstd-202112040921-4-94a4db.csv
+#> Processing csv files: /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/Rtmph1vsBO/simpleregstd-202112241410-1-9474d5.csv, /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/Rtmph1vsBO/simpleregstd-202112241410-2-9474d5.csv, /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/Rtmph1vsBO/simpleregstd-202112241410-3-9474d5.csv, /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/Rtmph1vsBO/simpleregstd-202112241410-4-9474d5.csv
 #> 
 #> Checking sampler transitions treedepth.
 #> Treedepth satisfactory for all transitions.
@@ -346,7 +326,7 @@ stanfit %>%
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{053_reglin3_files/figure-latex/unnamed-chunk-17-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{053_reglin3_files/figure-latex/unnamed-chunk-16-1} \end{center}
 
 Infine, eseguendo la funzione `launch_shinystan(fit)` è possibile analizzare oggetti di classe `stanfit` mediante le funzionalità del pacchetto `ShinyStan`.
 
@@ -363,12 +343,12 @@ Assegnamo ai parametri la seguente interpretazione.
 #> [1] 41.4
 ```
 
-- Il parametro $\sigma$ fornisce una stima della dispersione delle osservazioni attorno al valore predetto dal modello di regressione, ovvero fornisce una stima della deviazione standard dei residui attorno alla retta di regressione.
+- Il parametro $\sigma$ fornisce una stima della dispersione delle osservazioni attorno al valore predetto dal modello lineare, ovvero fornisce una stima della deviazione standard dei residui attorno al valore atteso del modello lineare.
 
 
 ### Centrare i predittori
 
-Per migliorare l'interpretazione dell'intercetta possiamo "centrare" la $x$, ovvero esprimere la $x$ nei termini di scarti dalla media: $x - \bar{x}$. In tali circostanze, la pendenza della retta di regressione resterà immutata, ma l'intercetta corrisponderà a $\E(y \mid x = \bar{x})$. Per ottenere questo risultato, modifichiamo i dati da passare a Stan:
+Per migliorare l'interpretazione dell'intercetta possiamo "centrare" la $x$, ovvero esprimere la $x$ nei termini di scarti dalla media: $x - \bar{x}$. In tali circostanze, la pendenza della retta specificata dal modello lineare resterà immutata, ma l'intercetta corrisponderà a $\E(y \mid x = \bar{x})$. Per ottenere questo risultato, modifichiamo i dati da passare a Stan:
 
 
 ```r
@@ -406,12 +386,13 @@ Le stime a posteriori dei parametri si ottengono con
 
 ```r
 fit2$summary(c("alpha", "beta", "sigma"))
-#> # A tibble: 3 x 10
-#>   variable   mean median     sd    mad     q5    q95  rhat ess_bulk ess_tail
-#>   <chr>     <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl>    <dbl>    <dbl>
-#> 1 alpha    86.8   86.8   0.872  0.863  85.4   88.2    1.00   16613.   12276.
-#> 2 beta      0.610  0.609 0.0591 0.0592  0.512  0.708  1.00   17947.   12419.
-#> 3 sigma    18.3   18.3   0.616  0.616  17.3   19.3    1.00   16622.   11073.
+#> # A tibble: 3 × 10
+#>   variable   mean median     sd    mad     q5    q95  rhat ess_bulk
+#>   <chr>     <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl>    <dbl>
+#> 1 alpha    86.8   86.8   0.872  0.863  85.4   88.2    1.00   16613.
+#> 2 beta      0.610  0.609 0.0591 0.0592  0.512  0.708  1.00   17947.
+#> 3 sigma    18.3   18.3   0.616  0.616  17.3   19.3    1.00   16622.
+#> # … with 1 more variable: ess_tail <dbl>
 ```
 \noindent
 Si noti che la nuova intercetta, ovvero 86.8, corrisponde al QI medio dei bambini le cui madri hanno un QI pari alla media del campione. Centrare i dati consente dunque di assegnare un'interpretazione utile all'intercetta.

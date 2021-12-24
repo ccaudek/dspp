@@ -7,7 +7,6 @@ suppressPackageStartupMessages(library("rethinking"))
 suppressPackageStartupMessages(library("brms"))
 ```
 
-
 ## Una proporzione 
 
 Si considerino $n$ variabili casuali Bernoulliane i.i.d.: 
@@ -31,7 +30,6 @@ y &\sim \Bin(n, \theta) \notag\\
 \noindent
 dove la prima riga definisce la funzione di verosimiglianza e la seconda riga definisce la distribuzione a priori. Sulla base di ciò che è stato detto nel Capitolo \@ref(chapter-distr-coniugate), sappiamo che le equazioni \@ref(eq:beta-binom-trump) definiscono il caso Beta-Binomiale.
 
-
 ### Il presidente Trump e l'idrossiclorochina 
 
 Per fare un esempio concreto, consideriamo un set di dati reali. Cito dal *Washington Post* del 7 aprile 2020:
@@ -40,7 +38,6 @@ Per fare un esempio concreto, consideriamo un set di dati reali. Cito dal *Washi
 
 Tralasciamo qui il fatto che il presidente Trump non è un esperto in questo campo. Esaminiamo invece le evidenze iniziali a supporto dell'ipotesi che l'idrossiclorochina possa essere utile per la cura del Covid-19, ovvero le evidenze che erano disponibili nel momento in cui il presidente Trump ha fatto le affermazioni riportate sopra (in seguito, quest'idea è stata screditata). Tali evidenze sono state fornite da uno studio di @Gautret_2020.
 Il disegno sperimentale di @Gautret_2020 comprende, tra le altre cose, il confronto tra una condizione sperimentale e una condizione di controllo. Il confronto importante è tra la proporzione di paziente positivi al virus SARS-CoV-2 nel gruppo sperimentale (a cui è stata somministrata l'idrossiclorochina; 6 su 14) e la proporzione di paziente positivi nel gruppo di controllo (a cui non è stata somministrata l'idrossiclorochina; ovvero 14 su 16). Obiettivo di questo Capitolo è mostrare come si possa fare inferenza sul modello \@ref(eq:beta-binom-trump) usando il linguaggio Stan.
-
 
 ### Interfaccia `cmdstanr` {#cmdstanr-gautret}
 
@@ -171,6 +168,7 @@ Avendo assunto una distribuzione a priori per il parametro $\theta$, l'algoritmo
 Si noti che `$sample()` richiede due tipi di informazioni. Innanzitutto, dobbiamo specificare le informazioni sul modello in base a:
 
 - `mod` = la stringa di caratteri che definisce il modello (qui `oneprop1.stan`),
+
 - `data` = i dati in formato lista (`data1_list`).
 
 Dobbiamo inoltre specificare le informazioni sul campionamento MCMC utilizzando tre argomenti aggiuntivi:
@@ -181,12 +179,10 @@ Dobbiamo inoltre specificare le informazioni sul campionamento MCMC utilizzando 
 
 - L'argomento `seed` per impostare il numero casuale che genera il seme per una simulazione `cmdstanr`.
 
-
 ### Burn-in
 
 Al crescere del numero di passi della catena, la distribuzione di target viene sempre meglio approssimata. All'inizio del campionamento, però, la distribuzione può essere significativamente lontana da quella stazionaria, e ci vuole un certo tempo prima di raggiungere la distribuzione stazionaria di equilibrio, detto, appunto, periodo di *burn-in*. I campioni provenienti da tale parte iniziale della catena vanno tipicamente scartati perché possono non rappresentare accuratamente la distribuzione a posteriori
  
-
 ### Inferenza
 
 Un sommario della distribuzione a posteriori si ottiene con:
@@ -195,6 +191,7 @@ Un sommario della distribuzione a posteriori si ottiene con:
 fit1$summary(c("theta"))
 ```
 
+\noindent
 Creiamo un oggetto di classe `stanfit`
 
 ```{r}
@@ -218,7 +215,6 @@ as.matrix(stanfit1, pars = "theta") %>%
 
 \noindent
 La matrice precedente include i valori assunti dalla catena di Markov, ovvero un insieme di valori plausibili  $\theta$ estratti dalla distribuzione a posteriori. 
-
 Un tracciato della catena di Markov illustra questa esplorazione rappresentando il valore $\theta$ sulle ordinate e l'indice progressivo di in ogni iterazione sull'ascissa. Usiamo la funzione `mcmc_trace()` del pacchetto `bayesplot` (Gabry et al. 2019) per costruire il grafico che include tutte e quattro le catene di Markov:
 
 ```{r trace-plot-gautret, fig.cap= "Trace-plot per il parametro $\\theta$ nel modello Beta-Binomiale."}
@@ -255,21 +251,15 @@ rstantools::posterior_interval(as.matrix(stanfit1), prob = 0.95)
 
 Svolgendo un'analisi bayesiana simile a questa, @Gautret_2020 hanno trovato che gli intervalli di credibilità del gruppo di controllo e del gruppo sperimentale non si sovrappongono. Questo fatto viene interpretato dicendo che il parametro $\theta$ è diverso nei due gruppi. Sulla base di queste evidenza, @Gautret_2020 hanno concluso, con un grado di certezza soggettiva del 95%, che nel gruppo sperimentale vi è una probabilità più bassa di risultare positivi al SARS-CoV-2 rispetto al gruppo di controllo. In altri termini, questa analisi dei dati suggerisce che l'idrossiclorochina sia efficace come terapia per il Covid-19. 
 
-
 ### La critica di @Hulme_2020
 
-Un articolo pubblicato da @Hulme_2020 si è posto il problema di rianalizzare i dati di @Gautret_2020.^[Si veda <https://osf.io/5dgmx/>.] Tra gli autori di questo articolo figura anche Eric-Jan Wagenmakers, uno psicologo molto conosciuto per i suoi contributi metodologici. 
-<!-- @Hulme_2020 sottolineano il fatto che @Gautret_2020 si sono concentrati, nella loro analisi dei dati, soltanto su una parte del loro campione. Se però vengono considerati anche i pazienti che sono stati esclusi dall'analisi dei dati, le conclusioni a cui sono giunti @Gautret_2020 risultano fortemente indebolite. -->
-<!-- Nella ricerca di @Gautret_2020 è presente un aspetto che finora non è stato considerato.  -->
-@Hulme_2020 hanno osservato che, nelle  analisi statistiche riportate, @Gautret_2020 hanno escluso alcuni dati. Nel gruppo sperimentale, infatti, vi erano alcuni pazienti i quali, anziché migliorare, sono in realtà peggiorati. L'analisi statistica di @Gautret_2020 ha escluso i dati di questi pazienti.
-Se consideriamo tutti i pazienti --- non solo quelli selezionati da @Gautret_2020 --- la situazione diventa la seguente:
+Un articolo pubblicato da @Hulme_2020 si è posto il problema di rianalizzare i dati di @Gautret_2020.^[Si veda <https://osf.io/5dgmx/>.] Tra gli autori di questo articolo figura anche Eric-Jan Wagenmakers, uno psicologo molto conosciuto per i suoi contributi metodologici. @Hulme_2020 hanno osservato che, nelle  analisi statistiche riportate, @Gautret_2020 hanno escluso alcuni dati. Nel gruppo sperimentale, infatti, vi erano alcuni pazienti i quali, anziché migliorare, sono in realtà peggiorati. L'analisi statistica di @Gautret_2020 ha escluso i dati di questi pazienti. Se consideriamo tutti i pazienti --- non solo quelli selezionati da @Gautret_2020 --- la situazione diventa la seguente:
 
 - gruppo sperimentale: 10 positivi su 18; 
 
 - gruppo di controllo: 14 positivi su 16. 
 
 L'analisi dei dati proposta da @Hulme_2020 richiede l'uso di alcuni strumenti statistici che, in queste dispense, non verranno discussi. Ma possiamo giungere alle stesse conclusioni raggiunte da questi ricercatori anche usando le procedure statistiche descritte nel Paragrafo successivo. 
-
 
 ## Due proporzioni
 
@@ -353,11 +343,7 @@ print(
 
 L'intervallo di credibilità del 95% per l'OR include il valore di 1.0 (ovvero, il valore che indica che gli odds di positività sono uguali nei due gruppi). In base agli standard correnti, un risultato di questo tipo non viene considerato come evidenza sufficiente per potere concludere che il parametro $\theta$ assume un valore diverso nei due gruppi. In altri termini, se consideriamo tutti i dati, e non solo quelli selezionati dagli autori della ricerca originaria, non vi è evidenza alcuna che l'idrossiclorochina sia efficace come terapia per il Covid-19.
 
-
 ## Considerazioni conclusive {-}
 
 Concludiamo questa discussione dicendo che ciò che è stato presentato in questo capitolo è un esercizio didattico: la ricerca di @Gautret_2020 include tante altre informazioni che non sono state qui considerate. Tuttavia, notiamo che la semplice analisi statistica che abbiamo qui descritto è stata in grado di replicare le conclusioni a cui sono giunti (per altra via) @Hulme_2020.
-
-
-
 

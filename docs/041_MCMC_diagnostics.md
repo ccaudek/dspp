@@ -5,13 +5,14 @@
 Come discusso nel Paragrafo \@ref(cmdstanr-gautret), le catene di Markov forniscono un'approssimazione che tende a convergere alla distribuzione a posteriori. "Approssimazione" e "convergenza" sono le parole chiave qui: il punto è che il campionamento MCMC non è perfetto. Questo solleva le seguenti domande:
 
 - A cosa corrisponde, dal punto di vista grafico, una "buona" catena di Markov?
+
 - Come possiamo sapere se il campione prodotto dalla catena di Markov costituisce un'approssimazione adeguata della distribuzione a posteriori?
+
 - Quanto deve essere grande la dimensione del campione casuale prodotto dalla  catena Markov?
 
 Rispondere a queste ed altre domande di questo tipo fa parte di quell'insieme di pratiche che vano sotto il nome di _diagnostica delle catene Markoviane_. 
 
 La diagnostica delle catene Markoviane non è "una scienza esatta". Ovvero, non sono disponibili procedure valide in tutti i casi e non sempre siamo in grado di rispondere alle domande precedenti. È piuttosto l'esperienza del ricercatore che consente di riconoscere una "buona" catena di Markov e a suggerire cosa si può fare per riparare una "cattiva" catena di Markov. In questo Capitolo ci concentreremo su alcuni strumenti diagnostici grafici e numerici che possono essere utilizzati per la diagnostica delle catene markoviane. L'utilizzo di questi strumenti diagnostici deve essere eseguito in modo olistico. Nessuna singola diagnostica visiva o numerica è infatti sufficiente: un quadro completo della qualità della catena di Markov si può solo ottenere considerando tutti gli strumenti descritti di seguito.
-
 
 ## Esame dei _trace plot_
 
@@ -182,7 +183,7 @@ Vediamo ora come sia possibile estrarre i valodi di una catena dall'oggetto `sta
 # valori delle 4 catene
 S <- ggmcmc::ggs(stanfit1)
 head(S)
-#> # A tibble: 6 x 4
+#> # A tibble: 6 × 4
 #>   Iteration Chain Parameter value
 #>       <dbl> <int> <fct>     <dbl>
 #> 1         1     1 theta     0.833

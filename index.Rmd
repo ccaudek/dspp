@@ -30,7 +30,7 @@ fontsize: 10pt
 # - UprightFont=*-regular
 # - BoldFont=*-bold
 # - BoldItalicFont=*-bolditalic
-monofont: Operator Mono SSm Lig Book
+monofont: Operator Mono SSm Book
 monofontoptions: Scale=0.75
 MemoirChapStyle: daleif1
 MemoirPageStyle: Ruled

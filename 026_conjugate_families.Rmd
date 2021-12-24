@@ -123,8 +123,7 @@ Usando le funzione $\R$ `plot_beta_binomial()` e `plot_beta_binomial()` del pacc
 
 Per i dati in discussione, abbiamo:
 ```{r}
-bayesrules::plot_beta_binomial(alpha = 2, beta = 10, y = 23, n = 30) + 
-  scale_fill_okabe_ito(aesthetics = "fill")
+bayesrules::plot_beta_binomial(alpha = 2, beta = 10, y = 23, n = 30)
 ```
 
 \noindent
@@ -180,8 +179,7 @@ bayesrules:::summarize_beta_binomial(alpha = 1, beta = 10, y = 26, n = 40)
 \noindent
 Il processo di aggiornamento bayesiano è descritto dalla figura seguente:
 ```{r}
-bayesrules:::plot_beta_binomial(alpha = 1, beta = 10, y = 26, n = 40) + 
-  scale_fill_okabe_ito(aesthetics = "fill")
+bayesrules:::plot_beta_binomial(alpha = 1, beta = 10, y = 26, n = 40) 
 ```
 :::
 

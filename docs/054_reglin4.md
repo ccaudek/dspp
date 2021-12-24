@@ -1,4 +1,4 @@
-# Inferenza sul modello di regressione {#inference-reg-lin-stan}
+# Inferenza sul modello lineare {#inference-reg-lin-stan}
 
 
 
@@ -10,7 +10,7 @@ La soluzione dei minimi quadrati è una stima puntuale che rappresenta il vettor
 
 ## Rappresentazione grafica dell'incertezza della stima
 
-Un primo modo per rappresentare l'incertezza dell'inferenza in un ottica bayesiana è quella di rappresentare graficamente la retta di regressione. Continuando con l'esempio descritto nel Capitolo precedente (ovvero, i dati `kid_score` e `mom_iq` centrati), usando la funzione `extract()`, salvo le stime a posteriori dei parametri in  formato `list`:
+Un primo modo per rappresentare l'incertezza dell'inferenza in un ottica bayesiana è quella di rappresentare graficamente la retta specificata dal modello lineare Continuando con l'esempio descritto nel Capitolo precedente (ovvero, i dati `kid_score` e `mom_iq` centrati), usando la funzione `extract()`, salvo le stime a posteriori dei parametri in  formato `list`:
 
 
 
@@ -37,7 +37,7 @@ abline(mean(posterior$alpha), mean(posterior$beta), col = 6, lw = 2)
 
 \begin{center}\includegraphics[width=0.8\linewidth]{054_reglin4_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
-Un modo per visualizzare l'incertezza della stima della retta di regressione è quello di tracciare molteplici rette di regressione, ciascuna delle quali definita da una diversa stima dei parametri $\alpha$ e $\beta$ che vengono estratti a caso dalle rispettive distribuzioni a posteriori.
+Un modo per visualizzare l'incertezza della stima della retta specifiata dal modello è quello di tracciare molteplici rette, ciascuna delle quali risulta definita da una diversa stima dei parametri $\alpha$ e $\beta$ che vengono estratti a caso dalle rispettive distribuzioni a posteriori.
 
 
 ```r
@@ -139,11 +139,11 @@ sum(posterior$beta > 0) / length(posterior$beta)
 ```
 
 
-## Regressione robusta
+## Modello lineare robusto
 
 Spesso i ricercatori devono affrontare il problema degli outlier: in presenza di outlier, un modello statistico basato sulla distribuzione Normale produrrà delle stime dei parametri che non si generalizzano ad altri campioni di dati. Il metodo tradizoinale per affrontare questo problema è quello di eliminare gli outlier prima di eseguire l'analisi statistica. Il problema di questo approccio, però, è che il criterio utilizzato per eliminare gli outlier, quale esso sia, è arbitrario; dunque, usando criteri diversi per eliminare gli outlier, i ricercatori finiscono per trovare risultati diversi.
 
-Questo problema trova una semplice soluzione nell'approccio bayesiano. Nel modello di regressione che abbiamo dicusso finora è stato ipotizzato che $\varepsilon \sim \mathcal{N}(0, \sigma_{\varepsilon})$. Per un modello formulato in questi termini, la presenza di solo un valore anomalo e influente può avere un effetto drammatico sulle stime dei parametri. 
+Questo problema trova una semplice soluzione nell'approccio bayesiano. Nel modello lineare che abbiamo dicusso finora è stato ipotizzato che $\varepsilon \sim \mathcal{N}(0, \sigma_{\varepsilon})$. Per un modello formulato in questi termini, la presenza di solo un valore anomalo e influente può avere un effetto drammatico sulle stime dei parametri. 
 
 Per fare un esempio, introduciamo un singlo valore anomalo nel set dei dati dell'esempio che stiamo discutendo:
 
@@ -164,7 +164,7 @@ coef(lm(kid_score ~ mom_iq, data = df2))
 \noindent
 la stima di $\beta$ viene drammaticamente ridotta (di quasi la metà!). 
 
-Non è però necessario assumere $\varepsilon \sim \mathcal{N}(0, \sigma_{\varepsilon})$.  È altrettanto valido un modello che ipotizza una diversa distribuzione di densità per i residui come, ad esempio, la distribuzione $t$ di Student con un piccolo numero di gradi di libertà. Una caratteristica della $t$ di Student è che le code della distribuzione contengono una massa di probabilità maggiore della Normale. Ciò fornisce alla $t$ di Student la possibilità di "rendere conto" della presenza di osservazioni lontane dalla media della distribuzione. In altri termini, se in modello di regressione usiamo la $t$ di Student quale distribuzione dei residui, la presenza di outlier avrà una minore influenza sulle stime dei parametri di quanto avvenga nel modello Normale.
+Non è però necessario assumere $\varepsilon \sim \mathcal{N}(0, \sigma_{\varepsilon})$.  È altrettanto valido un modello che ipotizza una diversa distribuzione di densità per i residui come, ad esempio, la distribuzione $t$ di Student con un piccolo numero di gradi di libertà. Una caratteristica della $t$ di Student è che le code della distribuzione contengono una massa di probabilità maggiore della Normale. Ciò fornisce alla $t$ di Student la possibilità di "rendere conto" della presenza di osservazioni lontane dalla media della distribuzione. In altri termini, se in modello lineare usiamo la $t$ di Student quale distribuzione dei residui, la presenza di outlier avrà una minore influenza sulle stime dei parametri di quanto avvenga nel modello Normale.
 
 Per verificare questa affermazione, modifichiamo il codice Stan in modo tale da ipotizzare che la distribuzione della $y$ segua una $t$ di Student con un numero $\nu$ gradi di libertà stimato dal modello: `student_t(nu, mu, sigma)`.^[È equivalente scrivere
 $$
@@ -230,7 +230,7 @@ data3_list <- list(
 ```
 
 \noindent
-Adattiamo il modello di regressione robusta ai dati:
+Adattiamo il modello lineare robusto ai dati:
 
 
 ```r
@@ -255,15 +255,16 @@ Esaminando le stime dei parametri
 
 ```r
 fit4$summary(c("alpha", "beta", "sigma", "nu"))
-#> # A tibble: 4 x 10
-#>   variable   mean median     sd    mad     q5    q95  rhat ess_bulk ess_tail
-#>   <chr>     <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl>    <dbl>    <dbl>
-#> 1 alpha    87.8   87.8   0.887  0.899  86.3   89.3    1.00   13776.   11987.
-#> 2 beta      0.603  0.603 0.0585 0.0577  0.506  0.698  1.00   14185.   11067.
-#> 3 sigma    15.9   15.9   0.806  0.812  14.6   17.3    1.00   12699.   11256.
-#> 4 nu        5.58   5.44  1.15   1.11    3.94   7.65   1.00   12258.   12033.
+#> # A tibble: 4 × 10
+#>   variable   mean median     sd    mad     q5    q95  rhat ess_bulk
+#>   <chr>     <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl>    <dbl>
+#> 1 alpha    87.8   87.8   0.887  0.899  86.3   89.3    1.00   13776.
+#> 2 beta      0.603  0.603 0.0585 0.0577  0.506  0.698  1.00   14185.
+#> 3 sigma    15.9   15.9   0.806  0.812  14.6   17.3    1.00   12699.
+#> 4 nu        5.58   5.44  1.15   1.11    3.94   7.65   1.00   12258.
+#> # … with 1 more variable: ess_tail <dbl>
 ```
 
 \noindent
-notiamo che la stima di $\beta$ è rimasta praticamente immutata. La regressione "robusta" non risente dunque della presenza degli outlier.
+notiamo che la stima di $\beta$ è rimasta praticamente immutata. Il modello lineare robustao non risente dunque della presenza degli outlier.
 

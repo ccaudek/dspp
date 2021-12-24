@@ -2,12 +2,11 @@
 
 
 
-Il problema del confronto tra due gruppi indipendenti può essere formulato nei termini di un modello di regressione nel quale la variabile $x$ è dicotomica, ovvero assume solo due valori. 
+Il problema del confronto tra due gruppi indipendenti può essere formulato nei termini di un modello lineare nel quale la variabile $x$ è dicotomica, ovvero assume solo due valori. 
 
+## Modello lineare con una variabile dicotomica
 
-## Regressione lineare con una variabile dicotomica
-
-Se $x$ è una variabile dicotomica con valori 0 e 1, allora per il modello di regressione $\mu_i = \alpha + \beta x_i$ abbiamo quanto segue. Quando $x=0$, il modello diventa 
+Se $x$ è una variabile dicotomica con valori 0 e 1, allora per il modello lineare $\mu_i = \alpha + \beta x_i$ abbiamo quanto segue. Quando $x=0$, il modello diventa 
 $$
 \mu_i = \alpha
 $$
@@ -50,7 +49,7 @@ df %>%
     mean_kid_score = mean(kid_score),
     std = sqrt(var(kid_score))
   )
-#> # A tibble: 2 x 3
+#> # A tibble: 2 × 3
 #>   mom_hs mean_kid_score   std
 #>    <dbl>          <dbl> <dbl>
 #> 1      0           77.5  22.6
@@ -58,7 +57,7 @@ df %>%
 ```
 
 \noindent
-Il punteggio medio PIAT è pari a 77.5 per i bambini la cui madre non ha il diploma di scuola media superiore e pari a 89.3 per i bambini la cui madre ha completato la scuola media superiore. Questa differenza suggerisce un'associazione tra le variabili, ma tale differenza potrebbe essere soltanto la conseguenza della variabilità campionaria, senza riflettere una caratteristica generale della popolazione. Come possiamo usare il modello statistico lineare per fare inferenza sulla differenza osservata tra i due gruppi? Non dobbiamo fare nient'altro che usare lo stesso modello di regressione che abbiamo definito in precedenza.
+Il punteggio medio PIAT è pari a 77.5 per i bambini la cui madre non ha il diploma di scuola media superiore e pari a 89.3 per i bambini la cui madre ha completato la scuola media superiore. Questa differenza suggerisce un'associazione tra le variabili, ma tale differenza potrebbe essere soltanto la conseguenza della variabilità campionaria, senza riflettere una caratteristica generale della popolazione. Come possiamo usare il modello statistico lineare per fare inferenza sulla differenza osservata tra i due gruppi? Non dobbiamo fare nient'altro che usare il modello lineare che abbiamo definito in precedenza.
 
 
 ```r
@@ -163,12 +162,13 @@ Le stime a posteriori dei parametri si ottengono con:
 
 ```r
 fit$summary(c("alpha", "beta", "sigma"))
-#> # A tibble: 3 x 10
-#>   variable  mean median    sd   mad    q5   q95  rhat ess_bulk ess_tail
-#>   <chr>    <dbl>  <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>    <dbl>    <dbl>
-#> 1 alpha     77.5   77.6 2.07  2.06  74.2   81.0  1.00   17948.   11861.
-#> 2 beta      11.8   11.8 2.34  2.33   7.91  15.6  1.00   18036.   12038.
-#> 3 sigma     19.9   19.9 0.679 0.673 18.8   21.0  1.00   18897.   11950.
+#> # A tibble: 3 × 10
+#>   variable  mean median    sd   mad    q5   q95  rhat ess_bulk
+#>   <chr>    <dbl>  <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>    <dbl>
+#> 1 alpha     77.5   77.6 2.07  2.06  74.2   81.0  1.00   17948.
+#> 2 beta      11.8   11.8 2.34  2.33   7.91  15.6  1.00   18036.
+#> 3 sigma     19.9   19.9 0.679 0.673 18.8   21.0  1.00   18897.
+#> # … with 1 more variable: ess_tail <dbl>
 ```
 
 I risultati confermano ciò che ci aspettavamo: 
