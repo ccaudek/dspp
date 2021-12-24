@@ -2,10 +2,7 @@
 
 
 
-::: {.chapterintro data-latex=""}
 Obiettivo di questo Capitolo è fornire un esempio di derivazione della distribuzione a posteriori scegliendo quale distribuzione a priori una distribuzione coniugata. Esamineremo qui il modello Beta-Binomiale.
-:::
-
 
 ## Il denominatore bayesiano
 
@@ -15,9 +12,9 @@ p(\theta \mid y) = \frac{p(\theta) p(y \mid \theta)}{\int p(\theta) p(y \mid \th
 \end{equation}
 il cui calcolo non è eseguibile in modo analitico in forma chiusa. Per non incorrere in problemi nel calcolo della distribuzione a posteriori vengono usate le distribuzioni provenienti da famiglie coniugate. 
 
-\BeginKnitrBlock{definition}
-<span class="definition" id="def:def-conj-fam"><strong>(\#def:def-conj-fam) </strong></span>Una distribuzione di probabilità a priori $p(\theta)$ si dice *coniugata* al modello usato se la distribuzione a priori e la distribuzione a posteriori hanno la stessa forma funzionale. Dunque, le due distribuzioni differiscono solo per il valore dei parametri.
-\EndKnitrBlock{definition}
+::: {.definition}
+Una distribuzione di probabilità a priori $p(\theta)$ si dice *coniugata* al modello usato se la distribuzione a priori e la distribuzione a posteriori hanno la stessa forma funzionale. Dunque, le due distribuzioni differiscono solo per il valore dei parametri.
+:::
 
 È possibile ottenere la distribuzione posteriore per via analitica solo per alcune specifiche combinazioni di distribuzione a priori e verosimiglianza, ma questo limita considerevolmente la flessibilità della modellizzazione.^[Per questa ragione, la strada principale che viene seguita nella modellistica bayesiana è quella che porta a determinare la distribuzione a posteriori non per via analitica, ma bensì mediante metodi numerici. La simulazione fornisce dunque la strategia generale del calcolo bayesiano. A questo fine vengono usati i metodi di campionamento detti Monte-Carlo Markov-Chain (MCMC). Tali metodi costituiscono una potente e praticabile alternativa per la costruzione della distribuzione a posteriori per modelli complessi e consentono di decidere quali distribuzioni a priori e quali distribuzioni di verosimiglianza usare sulla base di considerazioni teoriche soltanto, senza dovere preoccuparsi di altri vincoli. Dato che è basata su metodi computazionalmente intensivi, la stima numerica della funzione a posteriori può essere svolta soltanto mediante software. In anni recenti i metodi bayesiani di analisi dei dati sono diventati sempre più popolari proprio perché la potenza di calcolo necessaria per svolgere tali calcoli è ora alla portata di tutti. Questo non era vero solo pochi decenni fa.]
 
@@ -26,7 +23,6 @@ il cui calcolo non è eseguibile in modo analitico in forma chiusa. Per non inco
 Per fare un esempio concreto, consideriamo nuovamente i dati di @zetschefuture2019: nel campione di 30 partecipanti clinici le aspettative future di 23 partecipanti risultano distorte negativamente e quelle di 7 partecipanti risultano distorte positivamente. Nel seguito, indicheremo con $\theta$ la probabilità che le aspettative di un paziente clinico siano distorte negativamente. Ci poniamo il problema di ottenere una stima a posteriori di $\theta$ avendo osservato 23 "successi" in 30 prove.
  
 I dati osservati ($y = 23$) possono essere considerati la manifestazione di una variabile casuale Bernoulliana. In tali circostanze, esiste una famiglia di distribuzioni che, qualora venga scelta per la distribuzione a priori, fa sì che la distribuzione a posteriori abbia la stessa forma funzionale della distribuzione a priori. Questo consente una soluzione analitica dell'integrale che compare a denominatore nella formula di Bayes. Nel caso presente, la famiglia di distribuzioni che ha questa proprietà è la distribuzione Beta.
-
 
 ### Parametri della distribuzione Beta
 
@@ -61,6 +57,7 @@ plot_beta(alpha = 10, beta = 10, mean = TRUE, mode = TRUE)
 \noindent
 ma ora la nostra certezza a priori sul valore del parametro è maggiore, come indicato dall'intervallo al 95%:
 
+
 ```r
 qbeta(c(0.025, 0.975), shape1 = 10, shape2 = 10)
 #> [1] 0.289 0.711
@@ -84,7 +81,6 @@ plot_beta(alpha = 2, beta = 10, mean = TRUE, mode = TRUE)
 
 \noindent
 La $\mbox{Beta}(2, 10)$ esprime la credenza che $\theta < 0.5$, con il valore più plausibile pari a cicrca 0.1. 
-
 
 ### La specificazione della distribuzione a posteriori
 
@@ -128,7 +124,7 @@ $$
 
 Possiamo concludere dicendo che siamo partiti da una verosimiglianza $\Bin(n = 30, y = 23 \mid \theta)$. Moltiplicando la verosimiglianza per la distribuzione a priori $\theta \sim \mbox{Beta}(2, 10)$, abbiamo ottenuto la distribuzione a posteriori $p(\theta \mid n, y) \sim \mbox{Beta}(25, 17)$. Questo è un esempio di analisi coniugata: la distribuzione a posteriori del parametro ha la stessa forma funzionale della distribuzione a priori. La presente combinazione di verosimiglianza e distribuzione a priori è chiamata caso coniugato _Beta-Binomiale_ ed è descritto dal seguente teorema.
 
-::: {.theorem #beta-binom}
+::: {.theorem}
 Sia data la funzione di verosimiglianza $\Bin(n, y \mid \theta)$ e sia $\mbox{Beta}(\alpha, \beta)$ una distribuzione a priori. In tali circostanze, la distribuzione a posteriori del parametro $\theta$ sarà una distribuzione $\mbox{Beta}(\alpha + y, \beta + n - y)$.
 :::
 
@@ -138,16 +134,14 @@ Sia data la funzione di verosimiglianza $\Bin(n, y \mid \theta)$ e sia $\mbox{Be
 (\#eq:ev-post-beta-bin-1)
 \end{equation}
 
-::: {.guidedpractice data-latex=""}
+::: {.exercise}
 Usando le funzione $\R$ `plot_beta_binomial()` e `plot_beta_binomial()` del pacchetto `bayesrules`, si rappresenti in maniera grafica e si descriva in forma numerica l'aggiornamento bayesiano Beta-Binomiale per i dati di @zetschefuture2019. 
-:::
 
 Per i dati in discussione, abbiamo:
 
 ```r
-bayesrules::plot_beta_binomial(
-  alpha = 2, beta = 10, y = 23, n = 30
-)
+bayesrules::plot_beta_binomial(alpha = 2, beta = 10, y = 23, n = 30) + 
+  scale_fill_okabe_ito(aesthetics = "fill")
 ```
 
 
@@ -158,18 +152,15 @@ bayesrules::plot_beta_binomial(
 Un sommario delle distribuzioni a priori e a posteriori si ottiene usando la funzione `summarize_beta_binomial()`:
 
 ```r
-bayesrules:::summarize_beta_binomial(
-  alpha = 2, beta = 10, y = 23, n = 30
-)
+bayesrules:::summarize_beta_binomial(alpha = 2, beta = 10, y = 23, n = 30)
 #>       model alpha beta  mean mode    var     sd
 #> 1     prior     2   10 0.167  0.1 0.0107 0.1034
 #> 2 posterior    25   17 0.595  0.6 0.0056 0.0749
 ```
-
-
-::: {.guidedpractice data-latex=""}
-Per i dati di @zetschefuture2019, si trovino la media, la moda, la deviazione standard della distribuzione a posteriori di $\theta$. Si trovi inoltre l'intervallo di credibilità a posteriori del 95% per il parametro $\theta$.
 :::
+
+::: {.exercise}
+Per i dati di @zetschefuture2019, si trovino la media, la moda, la deviazione standard della distribuzione a posteriori di $\theta$. Si trovi inoltre l'intervallo di credibilità a posteriori del 95% per il parametro $\theta$.
 
 Usando la \@ref(thm:beta-binom), possiamo ottenere l'intervallo di credibilità a posteriori del 95% per il parametro $\theta$ come segue:
 
@@ -198,14 +189,14 @@ La deviazione standard della distribuzione a priori è
 sqrt((25 * 17) / ((25 + 17)^2 * (25 + 17 + 1)))
 #> [1] 0.0749
 ```
-
-::: {.guidedpractice data-latex=""}
-Si trovino i parametri e le proprietà della distribuzione a posteriori del parametro $\theta$ per i dati dell'esempio relativo alla ricerca di Stanley Milgram discussa da @Johnson2022bayesrules.
 :::
+
+::: {.exercise}
+Si trovino i parametri e le proprietà della distribuzione a posteriori del parametro $\theta$ per i dati dell'esempio relativo alla ricerca di Stanley Milgram discussa da @Johnson2022bayesrules.
 
 Nel 1963, Stanley Milgram presentò una ricerca sulla propensione delle persone a obbedire agli ordini di figure di autorità, anche quando tali ordini possono danneggiare altre persone [@milgram1963behavioral]. Nell'articolo, Milgram descrive lo studio come
 
-> consist[ing] of ordering a naive subject to administer electric shock to a victim. A simulated shock generator is used, with 30 clearly marked voltage levels that range from IS to 450 volts. The instrument bears verbal designations that range from Slight Shock to Danger: Severe Shock. The responses of the victim, who is a trained confederate of the experimenter, are standardized. The orders to administer shocks are given to the naive subject in the context of a `learning experiment’ ostensibly set up to study the effects of punishment on memory. As the experiment proceeds the naive subject is commanded to administer increasingly more intense shocks to the victim, even to the point of reaching the level marked Danger: Severe Shock.
+> *consist[ing] of ordering a naive subject to administer electric shock to a victim. A simulated shock generator is used, with 30 clearly marked voltage levels that range from IS to 450 volts. The instrument bears verbal designations that range from Slight Shock to Danger: Severe Shock. The responses of the victim, who is a trained confederate of the experimenter, are standardized. The orders to administer shocks are given to the naive subject in the context of a `learning experiment’ ostensibly set up to study the effects of punishment on memory. As the experiment proceeds the naive subject is commanded to administer increasingly more intense shocks to the victim, even to the point of reaching the level marked Danger: Severe Shock.*
 
 \noindent
 All'insaputa del partecipante, gli shock elettrici erano falsi e l'attore stava solo fingendo di provare il dolore dello shock.
@@ -218,9 +209,7 @@ y \mid \theta & \sim \Bin(n = 40, \theta) \notag\\
 Usando le funzioni di `bayesrules` possiamo facilmente calcolare i parametri e le proprietà della distribuzione a posteriori:
 
 ```r
-bayesrules:::summarize_beta_binomial(
-  alpha = 1, beta = 10, y = 26, n = 40
-)
+bayesrules:::summarize_beta_binomial(alpha = 1, beta = 10, y = 26, n = 40)
 #>       model alpha beta   mean  mode     var     sd
 #> 1     prior     1   10 0.0909 0.000 0.00689 0.0830
 #> 2 posterior    27   24 0.5294 0.531 0.00479 0.0692
@@ -229,15 +218,14 @@ bayesrules:::summarize_beta_binomial(
 Il processo di aggiornamento bayesiano è descritto dalla figura seguente:
 
 ```r
-bayesrules:::plot_beta_binomial(
-  alpha = 1, beta = 10, y = 26, n = 40
-)
+bayesrules:::plot_beta_binomial(alpha = 1, beta = 10, y = 26, n = 40) + 
+  scale_fill_okabe_ito(aesthetics = "fill")
 ```
 
 
 
 \begin{center}\includegraphics[width=0.8\linewidth]{026_conjugate_families_files/figure-latex/unnamed-chunk-13-1} \end{center}
-
+:::
 
 ## Principali distribuzioni coniugate
 
@@ -251,11 +239,7 @@ Esistono molte altre combinazioni simili di verosimiglianza e distribuzione a pr
 
 - Per il modello uniforme-Pareto $\text{U}(0, \theta)$, la distribizione iniziale è $\mbox{Pa}(\alpha, \varepsilon)$ e la distribuzione finale è $\mbox{Pa}(\alpha + n, \max(y_{(n)}, \varepsilon))$.
 
-
-
 ## Considerazioni conclusive {-}
 
 Lo scopo di questa discussione è stato quello di mostrare come sia possibile combinare le nostre conoscenze a priori (espresse nei termini di una densità di probabilità) con le evidenze fornite dai dati (espresse nei termini della funzione di verosimiglianza), così da determinare, mediante il teorema di Bayes, una distribuzione a posteriori, la quale condensa l'incertezza che abbiamo sul parametro $\theta$. Per illustrare tale problema, abbiamo considerato una situazione nella quale $\theta$ corrisponde alla probabilità di successo in una sequenza di prove Bernoulliane. Abbiamo visto come, in queste circostanze, sia ragionevole esprimere le nostre credenze a priori mediante la densità Beta, con opportuni parametri. L'inferenza rispetto ad una proporzione rappresenta un caso particolare, ovvero un caso nel quale la distribuzione a priori è Beta e la verosimiglianza è Binomiale. In tali circostanze, la distribuzione a posteriori diventa una distribuzione Beta -- questo è il cosiddetto modello Beta-Binomiale. Dato che utilizza una distribuzione a priori coniugata, dunque, il modello Beta-Binomiale rende possibile la determinazione analitica dei parametri della distribuzione a posteriori.  
-
-
 

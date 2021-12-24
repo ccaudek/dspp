@@ -7,9 +7,7 @@ source("_common.R")
 library("patchwork")
 ```
 
-::: {.chapterintro data-latex=""}
 Le analisi esplorative dei dati e la statistica descrittiva costituiscono la prima fase dell'analisi dei dati psicologici. Consentono di capire come i dati sono distribuiti, ci aiutano ad individuare le osservazioni anomale e gli errori di tabulazione. Consentono di visualizzare e di studiare le relazioni tra le variabili. 
-:::
 
 ## Introduzione all'esplorazione dei dati {#chapter-descript}
 
@@ -58,7 +56,7 @@ memoria", che descrive un individuo che perde la capacità di
 dimenticare. Borges si concentra sulla relazione tra generalizzazione e
 pensiero:
 
-> Pensare è dimenticare una differenza, generalizzare, astrarre. Nel mondo troppo pieno di Funes, c'erano solo dettagli.
+> *Pensare è dimenticare una differenza, generalizzare, astrarre. Nel mondo troppo pieno di Funes, c'erano solo dettagli.*
 
 Come possiamo ben capire, la vita di Funes non è facile. Se facciamo
 riferimento alla psicologia possiamo dire che gli psicologi hanno
@@ -94,17 +92,10 @@ deviazione standard.
 
 ## I dati grezzi
 
-Per introdurre i principali strumenti della statistica descrittiva considereremo qui i dati raccolti da @zetschefuture2019. 
+Per introdurre i principali strumenti della statistica descrittiva considereremo qui i dati raccolti da @zetschefuture2019. Questi ricercatori hanno studiato le aspettative negative quale meccanismo chiave nel mantenimento e nella reiterazione della depressione. Nello studio, @zetschefuture2019 si sono chiesti se individui depressi maturino delle aspettative accurate sul loro umore futuro, oppure se tali aspettative sono distorte negativamente.^[Si veda l'Appendice \@ref(es-pratico-zetsche).]. In uno studio viene esaminato un campione costituito da 30 soggetti con almeno un episodio depressivo maggiore e da 37 controlli sani. Gli autori hanno misurato il livello depressivo con il *Beck Depression Inventory* (BDI-II). Questi sono i dati che considereremo qui.
 
-::: {.data data-latex=""}
-I dati di @zetschefuture2019 sono disponibili nella pagina Moodle dell'insegnamento.
-:::
-
-Questi augori hanno studiato le aspettative negative quale meccanismo chiave nel mantenimento e nella reiterazione della depressione. Nello studio, @zetschefuture2019 hanno valutato le aspettative di individui depressi circa il loro umore futuro ed si sono chiesti se queste aspettative fossero accurate oppure distorte negativamente.^[Si veda l'Appendice \@ref(es-pratico-zetsche).]. In uno degli studi descritti da @zetschefuture2019 viene esaminato un campione costituito da 30 soggetti con almeno un episodio depressivo maggiore e da 37 controlli sani. Gli autori hanno misurato il livello depressivo con il *Beck Depression Inventory* (BDI-II). 
-
-::: {.guidedpractice data-latex=""}
+::: {.exercise}
 Qual è la la gravità della depressione riportata dai soggetti nel campione esaminato da @zetschefuture2019?
-:::
 
 Per rispondere a questa domanda, iniziamo a leggere in $\R$ i dati, assumendo che il file `data.mood.csv` si trovi nella cartella `data` contenuta nella _working directory_.
 
@@ -131,6 +122,7 @@ Ci sono dunque `r length(unique(bysubj$esm_id))` soggetti i quali hanno ottenuto
 ```{r}
 sort(bysubj$bdi)
 ```
+:::
 
 ## Distribuzioni di frequenze
 
@@ -153,9 +145,8 @@ Proprietà: $n_1 + n_2 + \dots + n_m = n$.
 * La _frequenza cumulata relativa_ $F_i$, ovvero
 $F_i = f_1+f_2+\dots+f_m = \frac{N_i}{n} = \frac{1}{n} \sum_{i=1}^m f_i.$
 
-::: {.guidedpractice data-latex=""}
+::: {.exercise}
 Si calcoli la distribuzione di frequenza assoluta e la distribuzione di frequenza relativa per i valori del BDI-II del campione clinico di @zetschefuture2019. 
-:::
 
 Per costruire una distribuzione di frequenza è innanzitutto necessario scegliere gli intervalli delle classi. Facendo riferimento ai cut-off usati per l'interpretazione del BDI-II, definiamo i seguenti _intervalli aperti a destra_:
 
@@ -213,6 +204,7 @@ Limiti delle classi Frequenza assoluta  Frequenza relativa
 [19.5, 28.5)        12                  12/66
 [28.5, 63]          17                  17/66
 
+:::
 
 ## Istogramma
 
@@ -232,9 +224,8 @@ proporzionale alla frequenza relativa $f_i$. Si noti che l'area totale
 dell'istogramma delle frequenze relative è data della somma delle aree
 dei singoli rettangoli e quindi vale 1.0.
 
-::: {.guidedpractice data-latex=""}
+::: {.exercise}
 Si utilizzi $\R$ per costruire un istogramma per i valori BDI-II riportati da @zetschefuture2019.
-:::
 
 Con i quattro intervalli individuati dai cut-off del BDI-II otteniamo la
 rappresentazione riportata nella figura \@ref(fig:hist1zetsche). Per chiarezza, precisiamo che `ggplot()` utilizza intervalli aperti a destra. Nel caso della prima barra dell'istogramma, l'ampiezza dell'intervallo è pari a 13.5 e l'area della barra (ovvero, la frequenza relativa) è uguale a 36/66. Dunque l'altezza della barra è uguale a $(36 / 66) / 13.5 = 0.040$. Lo stesso procedimento si applica per il calcolo dell'altezza degli altri rettangoli.
@@ -266,14 +257,14 @@ bysubj %>%
     breaks = seq(0, 44.1, length.out = 7)
   ) +
   scale_x_continuous(
-    breaks = c(0.00, 7.35, 14.70, 22.05,
-               29.40, 36.75, 44.10)
+    breaks = c(0.00, 7.35, 14.70, 22.05, 29.40, 36.75, 44.10)
   ) +
   labs(
     x = "BDI-II",
     y = "Densità di frequanza"
   )
 ```
+:::
 
 ## Kernel density plot
 
@@ -283,9 +274,8 @@ Il problema precedente può essere alleviato utilizzando una rappresentazione al
 
 L'interpretazione che possiamo attribuire al kernel density plot è simile a quella che viene assegnata agli istogrammi: l'area sottesa al kernel density plot in un certo intervallo rappresenta la proporzione di casi della distribuzione che hanno valori compresi in quell'intervallo.
 
-::: {.guidedpractice data-latex=""}
+::: {.exercise}
 All'istogramma dei valori BDI-II di @zetschefuture2019 si sovrapponga un kernel density plot.
-:::
 
 ```{r zetschehist3, fig.cap="Kernel density plot e corrispondente istogramma per i valori BDI-II."}
 bysubj %>%
@@ -306,6 +296,7 @@ bysubj %>%
     y = "Densità di frequenza"
   )
 ```
+:::
 
 ## Forma di una distribuzione
 
@@ -335,10 +326,9 @@ In generale, la forma di una distribuzione descrive come i dati si distribuiscon
 \end{tikzpicture}
 ```
 
-::: {.workedexample data-latex=""}
+::: {.exercise}
 Il kernel density plot della figura \@ref(fig:zetschehist3) indica che la distribuzione dei valori del BDI-II nel campione di @zetschefuture2019 è bimodale. Ciò indica che le osservazioni della distribuzione si addensano in due cluster ben distinti: un gruppo di osservazioni tende ad avere valori BDI-II bassi, mentre l'altro gruppo tende ad avere BDI-II alti. Questi due cluster di osservazioni corrispondono al gruppo di controllo e al gruppo clinico nel campione di dati esaminato da @zetschefuture2019.
 :::
-
 
 ## Indici di posizione
 
@@ -361,15 +351,14 @@ il 75% del campione (a destra quindi il 25%). Secondo lo stesso
 criterio, si dicono *decili* i quantili di ordine $p$ multiplo di 0.10 e
 *percentili* i quantili di ordine $p$ multiplo di 0.01.
 
-Come si calcolano i quantili? Consideriamo la definizione di quantile
-*non interpolato* di ordine $p$ $(0 < p < 1)$. Si procede innanzitutto
+Come si calcolano i quantili? Consideriamo la definizione di quantile *non interpolato* di ordine $p$ $(0 < p < 1)$. Si procede innanzitutto
 ordinando i dati in ordine crescente, $\{x_1, x_2, \dots, x_n\}$. Ci
 sono poi due possibilità. Se il valore $np$ non è intero, sia $k$
 l'intero tale che $k < np < k + 1$ -- ovvero, la parte intera di $np$.
 Allora $q_p = x_{k+1}.$ Se $np = k$ con $k$ intero, allora
 $q_p = \frac{1}{2}(x_{k} + x_{k+1}).$ Se vogliamo calcolare il primo
 quartile $q_1$, ad esempio, utilizziamo $p = 0.25$. Dovendo calcolare
-gli altri quantili basta sostituire a $p$ il valore appropriato[^2].
+gli altri quantili basta sostituire a $p$ il valore appropriato.
 
 Gli indici di posizione, tra le altre cose, hanno un ruolo importante,
 ovvero vengono utilizzati per creare una rappresentazione grafica di una
@@ -378,7 +367,7 @@ alternativa ad un istogramma (in realtà vedremo poi come possa essere
 combinata con un istogramma). Tale rappresentazione va sotto il nome di
 box-plot.
 
-::: {.workedexample data-latex=""}
+::: {.exercise}
 Per fare un esempio, consideriamo i nove soggetti del campione clinico di @zetschefuture2019 che hanno riportato un unico episodio di depressione maggiore. Per tali soggetti i valori ordinati del BDI-II (per semplicità li chiameremo $x$) sono i seguenti: 19, 26, 27, 28, 28, 33, 33, 41, 43.
 Per il calcolo del secondo quartile (non interpolato), ovvero per il calcolo della mediana, dobbiamo considerare la quantità $np = 9 \cdot 0.5 = 4.5$, non intero. Quindi, $q_1 = x_{4 + 1} = 27$.
 Per il calcolo del quantile (non interpolato) di ordine $p = 2/3$ dobbiamo considerare la quantità $np = 9 \cdot 2/3 = 6$, intero. Quindi, $q_{\frac{2}{3}} = \frac{1}{2} (x_{6} + x_{7}) = \frac{1}{2} (33 + 33) = 33$.
@@ -434,9 +423,8 @@ interquartile. Il valore adiacente superiore è il valore più grande tra le oss
 \end{tikzpicture}
 ```
 
-::: {.guidedpractice data-latex=""}
+::: {.exercise}
 Per i dati di @zetschefuture2019, si utilizzi un box-plot per rappresentare graficamente la distribuzione dei punteggi BDI-II nel gruppo dei pazienti e nel gruppo di controllo.
-:::
 
 Nella figura \@ref(fig:violin-zetsche) sinistra sono rappresentati i dati grezzi.  La linea curva che circonda (simmetricamente) le osservazioni è l'_istogramma lisciato_ (kernel density plot) che abbiamo descritto in precedenza. Nella figura \@ref(fig:violin-zetsche) destra sono rappresentanti gli stessi dati: il kernel density plot è lo stesso di prima, ma al suo interno è stato collocato un box-plot. Entrambe le rappresentazioni suggeriscono che la distribuzione dei dati è all'incirca simmetrica nel gruppo clinico. Il gruppo di controllo mostra invece un'asimmetria positiva.
 
@@ -474,6 +462,7 @@ p2 <- bysubj %>%
   )
 p1 + p2
 ```
+:::
 
 ### Sina plot
 
@@ -481,9 +470,8 @@ Si noti che i box plot non sono necessariamente la rappresentazione migliore del
 
 Nella figura \@ref(fig:sina-zetsche) viene presentato un cosiddetto "sina plot". In tale rappresentazione grafica vengono mostrate le singole osservazioni divise in classi. Ai punti viene aggiunto un jitter, così da evitare sovrapposizioni. L'ampiezza del jitter lungo l'asse $x$ è determinata dalla distribuzione della densità dei dati all'interno di ciascuna classe; quindi il grafico mostra lo stesso contorno di un _violin plot_, ma trasmette informazioni sia sul numero di punti dati, sia sulla distribuzione della densità, sui valori anomali e sulla distribuzione dei dati in un formato molto semplice, comprensibile e sintetico.
 
-::: {.guidedpractice data-latex=""}
+::: {.exercise}
 Si generi un sina plot per i dati della figura \@ref(fig:violin-zetsche). Si aggiunga alla figura una rappresentazione della mediana.
-:::
 
 ```{r sina-zetsche, fig.cap = "Sina plot per i valori BDI-II di ciascuno dei due gruppi di soggetti esaminati da Zetsche et al. (2019) con l'indicazione della mediana per ciascun gruppo."}
 zetsche_summary <- bysubj %>%
@@ -512,16 +500,11 @@ bysubj %>%
   ) +
   theme(legend.position = "none")
 ```
+:::
 
 ### L'eccellenza grafica
 
-Non c'è un unico modo "corretto" per la rappresentazione grafica dei dati. Ciascuno dei grafici che abbiamo discusso in precedenza ha i suoi pregi e i suoi difetti. Un ricercatore che ha molto influenzato il modo in cui
-viene realizzata la visualizzazione dei dati scientifici è Edward Tufte,
-soprannominato dal New York Times il "Leonardo da Vinci dei dati."
-Secondo Tufte, "l'eccellenza nella grafica consiste nel comunicare idee
-complesse in modo chiaro, preciso ed efficiente". Nella visualizzazione
-delle informazioni, l'"eccellenza grafica" ha l'obiettivo di comunicare
-al lettore il maggior numero di idee nella maniera più diretta e semplice possibile. Secondo @tufte_visual_display, le rappresentazioni grafiche dovrebbero:
+Non c'è un unico modo "corretto" per la rappresentazione grafica dei dati. Ciascuno dei grafici che abbiamo discusso in precedenza ha i suoi pregi e i suoi difetti. Un ricercatore che ha molto influenzato il modo in cui viene realizzata la visualizzazione dei dati scientifici è Edward Tufte, soprannominato dal New York Times il "Leonardo da Vinci dei dati." Secondo Tufte, "l'eccellenza nella grafica consiste nel comunicare idee complesse in modo chiaro, preciso ed efficiente". Nella visualizzazione delle informazioni, l'"eccellenza grafica" ha l'obiettivo di comunicare al lettore il maggior numero di idee nella maniera più diretta e semplice possibile. Secondo @tufte_visual_display, le rappresentazioni grafiche dovrebbero:
 
 1.  mostrare i dati;
 2.  indurre l'osservatore a riflettere sulla sostanza piuttosto che
@@ -540,7 +523,6 @@ al lettore il maggior numero di idee nella maniera più diretta e semplice possi
 
 In base a questi principi, figura \@ref(fig:sina-zetsche) sembra fornire la
 rappresentazione migliore dei dati di @zetschefuture2019. Il seguente [link](https://www.biostat.wisc.edu/~kbroman/presentations/graphs2018.pdf) fornisce diverse interessanti illustrazioni dei principi elencati sopra.
-
 
 ## Indici di tendenza centrale
 
@@ -563,13 +545,9 @@ ovvero il numero reale $\bar{x}$ definito da
 \bar{x}=\frac{1}{n}\sum_{i=1}^n x_i.
 (\#eq:mean)
 \end{equation}
-Nell'eq. \@ref(eq:mean) abbiamo usato la notazione delle sommatorie
-per descrivere una somma di valori. Questa notazione è molto usata in
-statistica e viene descritta in Appendice.
+Nell'eq. \@ref(eq:mean) abbiamo usato la notazione delle sommatorie per descrivere una somma di valori. Questa notazione è molto usata in statistica e viene descritta in Appendice.
 
-La media gode della seguente importante proprietà: la somma degli scarti
-tra ciascuna modalità $x_i$ e la media aritmetica $\bar{x}$ è nulla,
-cioè
+La media gode della seguente importante proprietà: la somma degli scarti tra ciascuna modalità $x_i$ e la media aritmetica $\bar{x}$ è nulla, cioè
 $$
 \sum_{i=1}^n (x_i - \bar{x}) = 0.\notag
 \label{eq:diffmeansumzero}$$ Infatti, $$\begin{aligned}
@@ -594,9 +572,8 @@ di una distribuzione. In particolare, ciò non accade quando la
 distribuzione è asimmetrica, o in presenza di valori anomali (_outlier_)
 -- si veda il pannello di destra della figura \@ref(fig:violin-zetsche). In tali circostanze, la tendenza centrale della distribuzione è meglio rappresentata dalla mediana o dalla media spuntata.
 
-::: {.guidedpractice data-latex=""}
+::: {.exercise}
 Si calcoli la media dei valori BDI-II per i due gruppi di soggetti di @zetschefuture2019.
-:::
 
 ```{r}
 bysubj %>%
@@ -605,6 +582,7 @@ bysubj %>%
     avg_bdi = mean(bdi)
   )
 ```
+:::
 
 ### Media spuntata
 
@@ -615,9 +593,8 @@ una sequenza crescente, $x_1 \leq x_2 \leq x_3 \leq \dots \leq x_n$, per
 poi eliminare il primo 5% e l'ultimo 5% dei dati della serie così
 ordinata. La media spuntata è data dalla media aritmetica dei dati rimanenti.
 
-::: {.guidedpractice data-latex=""}
+::: {.exercise}
 Si calcoli la media spuntata dei valori BDI-II per i due gruppi di soggetti di @zetschefuture2019 escludendo il 10% dei valori più estremi in ciascun gruppo.
-:::
 
 ```{r}
 bysubj %>%
@@ -626,6 +603,7 @@ bysubj %>%
     avg_trim_bdi = mean(bdi, trim = 0.1)
   )
 ```
+:::
 
 ### Moda e mediana
 
@@ -636,9 +614,8 @@ abbia più mode; in tal caso si dice *multimodale* e questo operatore
 perde il suo significato di indice di tendenza centrale) e la *mediana*
 $\tilde{x}$.
 
-::: {.guidedpractice data-latex=""}
+::: {.exercise}
 Si calcolino i quantili di ordine 0.25, 0.5 e 0.75 dei valori BDI-II per i due gruppi di soggetti di @zetschefuture2019.
-:::
 
 ```{r}
 bysubj %>%
@@ -649,8 +626,9 @@ bysubj %>%
     q75 = quantile(bdi, probs = 0.75)
   )
 ```
+:::
 
-::: {.important data-latex=""}
+::: {.remark}
 Si noti che solitamente i software restituiscono un valore **interpolato** del $p$-esimo quantile $q_p$ $(0 < p < 1)$, il quale viene calcolato mediante specifiche procedure. Il risultato fornito dai software, dunque, non sarà identico a quello trovato utilizzando la definizione non interpolata di quantile che abbiamo presentato qui. Se, per qualche ragione, vogliamo conoscere l'algoritmo usato per la determinazione dei quantili interpolati, dobbiamo leggere la documentazione del software.
 :::
 
@@ -665,10 +643,9 @@ sintetizzare la distribuzione di una variabile statistica oltre che con
 le misure di posizione anche tramite l'utilizzo di indicatori che
 valutino la dispersione delle unità statistice.
 
-::: {.tip data-latex=""}
+::: {.remark}
 Un'introduzione "soft" al tema degli indicid di posizione è fornita nel seguente  [link](https://tinystats.github.io/teacups-giraffes-and-statistics/04_variance.html).
 :::
-
 
 ### Indici basati sull'ordinamento dei dati
 
@@ -692,9 +669,8 @@ s^2 = \frac{1}{n} \sum_{i=1}^n (x_i - \bar{x})^2
 \end{equation}
 è la media dei quadrati degli scarti $x_i - \bar{x}$ tra ogni valore e la media della distribuzione. La varianza è una misura di dispersione più complessa di quelle esaminate in precedenza. È appropriata solo nel caso di distribuzioni simmetriche e, anch'essa, è fortemente influenzata dai valori anomali. Inoltre, è espressa in un'unità di misura che è il quadrato dell'unità di misura dei dati originari e quindi ad essa non può essere assegnata un'interpretazione intuitiva.
 
-::: {.guidedpractice data-latex=""}
+::: {.exercise}
 Si calcoli la varianza dei punteggi BDI-II nei due gruppi di soggetti di @zetschefuture2019.
-:::
 
 ```{r}
 bysubj %>%
@@ -703,7 +679,7 @@ bysubj %>%
     variance = var(bdi)
   )
 ```
-
+:::
 
 ### Deviazione standard
 
@@ -711,9 +687,8 @@ Per le ragioni espresse sopra, la misura più usata della dispersione di una dis
 
 Alla deviazione standard può essere assegnata una semplice interpretazione: la deviazione standard è **simile** (ma non identica) allo scarto semplice medio campionario, ovvero alla media aritmetica dei valori assoluti degli scarti dalla media. La deviazione standard ci dice, dunque, quanto sono distanti, in media, le singole osservazioni dal centro della distribuzione. Un'interpretazione più precisa del significato della deviazione standard è fornita nel Paragrafo successivo.
 
-::: {.guidedpractice data-latex=""}
+::: {.exericise}
 Si calcoli la deviazione standard per il BDI-II dei due gruppi di soggetti di @zetschefuture2019.
-:::
 
 ```{r}
 bysubj %>%
@@ -722,6 +697,7 @@ bysubj %>%
     stdev = sd(bdi)
   )
 ```
+:::
 
 ### Deviazione mediana assoluta
 
@@ -735,9 +711,8 @@ $$
 $$
 Pertanto, solitamente i software restituiscono il valore MAD moltiplicato per una tale costante.
 
-::: {.guidedpractice data-latex=""}
+::: {.exercise}
 Si calcoli il valore MAD per il BDI-II dei soggetti di @zetschefuture2019.
-:::
 
 Applicando la formula precedente, per tutto il campione abbiamo:
 ```{r}
@@ -752,6 +727,7 @@ bysubj %>%
     MAD = mad(bdi)
   )
 ```
+:::
 
 ### Indici di variabilità relativi
 
@@ -794,14 +770,12 @@ essere tra loro _linearmente associati_. Per capire cosa si intende con
 utilizziamo una rappresentazione grafica che va sotto il nome di
 diagramma a dispersione.
 
-
 ### Diagramma a dispersione
 
 Il diagramma di dispersione è la rappresentazione grafica delle coppie di punti individuati da due variabili $X$ e $Y$.
 
-::: {.guidedpractice data-latex=""}
+::: {.exercise}
 Si costruisca il diagramma di dispersione per le variabili BDI-II e CES-D di  @zetschefuture2019.
-:::
 
 Il diagramma di dispersione per le variabili BDI-II e CES-D si ottiene ponendo, ad esempio, i valori BDI-II sull'asse delle ascisse e quelli del CES-D sull'asse delle ordinate. In tale grafico, fornito dalla figura \@ref(fig:zetsche-scatter), cascun punto corrisponde ad un individuo del quale, nel caso presente, conosciamo il livello di depressione misurato dalle due scale psicometriche.
 
@@ -841,6 +815,7 @@ bysubj %>%
   ) +
   theme(legend.position = "none")
 ```
+:::
 
 ### Covarianza
 
@@ -903,7 +878,6 @@ l'altezza viene misurata in metri e il peso in chilogrammi. Dunque, il
 valore della covarianza cambia al mutare dell'unità di misura delle
 variabili anche se l'associazione tra le variabili resta costante.
 
-
 ### Correlazione
 
 Dato che il valore assoluto della covarianza è di difficile
@@ -913,7 +887,6 @@ alle trasformazioni dell'unità di misura delle variabili. Questa
 operazione si dice *standardizzazione* e corrisponde alla divisione
 della covarianza per le deviazioni standard ($s_X$, $s_Y$) delle due
 variabili:
-
 \begin{equation}
 r_{XY} = \frac{S_{XY}}{s_X s_Y}.
 (\#eq:correlation)
@@ -941,24 +914,23 @@ Ad esso possiamo assegnare la seguente interpretazione:
 4.  $r_{XY} = 0$ $\rightarrow$ assenza di relazione lineare tra $X$ e
     $Y$.
 
-::: {.workedexample data-latex=""}
+::: {.exercise}
 Per i dati della figura \@ref(fig:zetsche-scatter), la covarianza è 207.426. Il segno positivo della covarianza ci dice che tra le due variabili c'è un'associazione lineare positiva. Per capire qual è l'intensità della relazione lineare tra le due variabili calcoliamo la correlazione.
 Essendo le deviazioni standard del BDI-II e del CES-D rispettavamente uguali a 15.37 e 14.93, la correlazione diventa uguale a $\frac{207.426}{15.38 \cdot 14.93} = 0.904.$ Tale valore è prossimo a 1.0, il che vuol dire che i punti del diagramma a dispersione non si discostano troppo da una retta con una pendenza positiva.
 :::
 
-
 ## Correlazione e causazione
 
-Facendo riferimento nuovamente alla figura \@ref(fig:zetsche-scatter), possiamo dire che, in molte applicazioni (ma non nel caso presente!) l'asse $x$ rappresenta una quantità nota come _variabile indipendente_ e l'interesse si concentra sulla sua influenza sulla _variabile dipendente_ tracciata sull'asse $y$. Ciò presuppone però che sia nota la direzione in cui l'influenza causale potrebbe risiedere. È importante tenere bene a mente che la correlazione è soltanto un indice descrittivo della relazione lineare tra due variabili e in nessun caso può essere usata per inferire alcunché sulle relazioni __causali__ che legano le variabili. È ben nota l'espressione: "correlazione non significa causazione".
+Facendo riferimento nuovamente alla figura \@ref(fig:zetsche-scatter), possiamo dire che, in molte applicazioni (ma non nel caso presente!) l'asse $x$ rappresenta una quantità nota come _variabile indipendente_ e l'interesse si concentra sulla sua influenza sulla _variabile dipendente_ tracciata sull'asse $y$. Ciò presuppone però che sia nota la direzione in cui l'influenza causale potrebbe risiedere. È importante tenere bene a mente che la correlazione è soltanto un indice descrittivo della relazione lineare tra due variabili e in nessun caso può essere usata per inferire alcunché sulle relazioni _causali_ che legano le variabili. È ben nota l'espressione: "correlazione non significa causazione".
 
 Di opinione diversa era invece Karl Pearson (1911), il quale ha affermato:
 
-> Quanto spesso, quando è stato osservato un nuovo fenomeno,
+> *Quanto spesso, quando è stato osservato un nuovo fenomeno,
 sentiamo che viene posta la domanda: 'qual è la sua causa?'. Questa è
 una domanda a cui potrebbe essere assolutamente impossibile rispondere.
 Invece, può essere più facile rispondere alla domanda: 'in che misura
 altri fenomeni sono associati con esso?'. Dalla risposta a questa
-seconda domanda possono risultare molte preziose conoscenze.
+seconda domanda possono risultare molte preziose conoscenze.*
 
 Che alla seconda domanda posta da Pearson sia facile rispondere è indubbio. Che la nostra comprensione di un fenomeno possa aumentare sulla base delle
 informazioni fornite unicamente dalle correlazioni, invece, è molto dubbio e quasi certamente falso.
@@ -979,7 +951,6 @@ psicometrici che misurano costrutti diversi dovrebbero essere poco
 associati tra loro. In altre parole, in questo secondo caso dovremmo
 aspettarci che la correlazione sia bassa.
 
-
 ### Correlazione di Spearman
 
 Una misura alternativa della relazione lineare tra due variabili è
@@ -995,14 +966,12 @@ abbiamo introdotto in questo capitolo, quali ad esempio la media e la
 varianza, ma è invece solo possibile riassumere i dati mediante una
 distribuzione di frequenze per le varie modalità della risposta.
 
-
 ### Correlazione nulla
 
 Un ultimo aspetto da mettere in evidenza a proposito della correlazione riguarda il fatto che la correlazione descrive la direzione e l'intensità della relazione lineare tra due variabili. Relazioni non lineari tra le variabili, anche se sono molto forti, non vengono catturate dalla correlazione. È importante rendersi conto che una correlazione pari a zero non significa che non c'è relazione tra le due variabili, ma solo che tra esse non c'è una relazione *lineare*.
 
-::: {.workedexample data-latex=""}
+::: {.exercise}
 La figura \@ref(fig:zerocorr) fornisce un esempio di correlazione nulla in presenza di una chiara relazione (non lineare) tra due variabili.
-:::
 
 ```{r zerocorr, echo=FALSE, fig.cap = "Due insiemi di dati (fittizi) per i quali i coefficienti di correlazione di Pearson sono entrambi 0. Ma questo non significa che non vi sia alcuna relazione tra le variabili."}
 library("datasauRus")
@@ -1040,8 +1009,7 @@ dino <- dino +
 
 slant + dino
 ```
-
-
+:::
 
 ## Considerazioni conclusive {-}
 

@@ -2,9 +2,7 @@
 
 
 
-::: {.chapterintro data-latex=""}
 L'attribuzione di una probabilità ad un evento è sempre condizionata dalle conoscenze che abbiamo a disposizione. Per un determinato stato di conoscenze, attribuiamo ad un dato evento una certa probabilità di verificarsi; ma se il nostro stato di conoscenze cambia, allora cambierà anche la probabilità che attribuiamo all'evento in questione.
-:::
 
 <!-- Possiamo chiederci, ad esempio, quale sia la probabilità che Mario Rossi superi l'esame di Psicometria nel primo appello del presente anno accademico. In assenza di altre informazioni, la migliore stima di tale probabilità è data dalla proporzione di studenti che hanno superato l'esame di Psicometria nel corrispondente appello dei precedenti anni accademici. Ma se sappiamo che Mario Rossi è particolarmente motivato  ed ha studiato molto, allora la probabilità sarà sicuramente più alta. -->
 
@@ -13,7 +11,7 @@ L'attribuzione di una probabilità ad un evento è sempre condizionata dalle con
 
 La probabilità condizionata è una componente essenziale del ragionamento scientifico dato che chiarisce come sia possibile incorporare le evidenze disponibili, in maniera logica e coerente, nella nostra conoscenza del mondo. Infatti, si può pensare che tutte le probabilità siano probabilità condizionate, anche se l'evento condizionante non è sempre esplicitamente menzionato. Consideriamo il seguente problema.
 
-::: {.example}
+::: {.exercise}
 Supponiamo che lo screening per la diagnosi precoce del tumore mammario si avvalga di test che sono accurati al 90%, nel senso che il 90% delle donne con cancro e il 90% delle donne senza cancro saranno classificate correttamente. Supponiamo che l'1% delle donne sottoposte allo screening abbia effettivamente il cancro al seno. Ci chiediamo: qual è la probabilità che una donna scelta casualmente abbia una mammografia positiva e, se ce l'ha, qual è la probabilità che abbia davvero il cancro?
 
 Per risolvere questo problema, supponiamo che il test in questione venga somministrato ad un grande campione di donne, diciamo a 1000 donne. Di queste 1000 donne, 10 (ovvero, l'1%) hanno il cancro al seno. Per queste 10 donne, il test darà un risultato positivo in 9 casi (ovvero, nel 90% dei casi). Per le rimanenti 990 donne che non hanno il cancro al seno, il test darà un risultato positivo in 99 casi (se la probabilità di un vero positivo è del 90%, la probabilità di un falso positivo è del 10%). Questa situazione è rappresentata nella figura \@ref(fig:mammografia). Combinando questi due risultati, vediamo che il test dà un risultato positivo per 9 donne che hanno effettivamente il cancro al seno e per 99 donne che non ce l'hanno, per un totale di 108 risultati positivi. Dunque, la probabilità di ottenere un risultato positivo al test è $\frac{108}{1000}$ = 11%. Ma delle 108 donne che hanno ottenuto un risultato positivo al test, solo 9 hanno il cancro al seno. Dunque, la probabilità di avere il cancro, dato un risultato positivo al test, è pari a $\frac{9}{108}$ = 8%.
@@ -30,8 +28,8 @@ Per risolvere questo problema, supponiamo che il test in questione venga sommini
 
 Nell'esercizio precedente, la probabilità dell'evento "ottenere un risultato positivo al test" è una probabilità non condizionata, mentre la probabilità dell'evento "avere il cancro al seno, dato che il test ha dato un risultato positivo" è una probabilità condizionata. In termini generali, la probabilità condizionata $P(A \mid B)$ rappresenta la probabilità che si verifichi l'evento $A$ sapendo che si è verificato l'evento $B$ (oppure: la probabilità di $A$ in una prova valida solo se si verifica anche $B$). Ciò ci conduce alla seguente definizione.
 
-\BeginKnitrBlock{definition}
-<span class="definition" id="def:prob-cond"><strong>(\#def:prob-cond) </strong></span>Dato un qualsiasi evento $A$, si chiama *probabilità condizionata* di
+::: {.definition}
+Dato un qualsiasi evento $A$, si chiama *probabilità condizionata* di
 $A$ dato $B$ il numero
 \begin{equation}
 P(A \mid B) = \frac{P(A \cap B)}{P(B)}, \quad \text{con}\, P(B) > 0,
@@ -39,35 +37,33 @@ P(A \mid B) = \frac{P(A \cap B)}{P(B)}, \quad \text{con}\, P(B) > 0,
 \end{equation}
 dove $P(A\cap B)$ è la probabilità congiunta dei
 due eventi, ovvero la probabilità che si verifichino entrambi.
-\EndKnitrBlock{definition}
+:::
 
-In alcuni casi può essere conveniente leggere al contrario la \@ref(def:prob-cond) e utilizzarla per calcolare la probabilità dell'intersezione di due eventi. Per esempio se conosciamo la probabilità dell'evento $B$ e la probabilità condizionata di $A$ su $B$, otteniamo 
+Dalla definizione di probabilità condizionata è possibile esprimere la probabilità congiunta come prodotto di due probabilità, una condizionata e una marginale (regola moltiplicativa, o della catena). Per esempio se conosciamo la probabilità marginale $P(B)$ e la probabilità condizionata  $P(A \mid B)$ otteniamo 
 \begin{equation}
 P(A \cap B) = P(B)P(A \mid B),
 (\#eq:probcondinv)
 \end{equation}
 \noindent
-mentre se conosciamo la probabilità dell'evento $A$ e la probabilità condizionata di $B$ su $A$, otteniamo 
+mentre se conosciamo la probabilità marginale $P(A)$ e la probabilità condizionata  $P(B \mid A)$ otteniamo 
 $$
 P(A \cap B) = P(A)P(B \mid A).
 $$
 
-::: {.example}
+::: {.exercise}
 Da un mazzo di 52 carte (13 carte per ciascuno dei 4 semi) ne viene estratta 1 in modo casuale. Qual è la probabilità che esca una figura di cuori? Sapendo che la carta estratta ha il seme di cuori, qual è la probabilità che il valore numerico della carta sia 7, 8 o 9?
 
 Ci sono 13 carte di cuori, dunque la risposta alla prima domanda è 1/4. Per rispondere alla seconda domanda consideriamo solo le 13 carte di cuori; la probabilità cercata è dunque 3/13.
 ::: 
 
 
-### La fallacia del pubblico ministero
+### La fallacia del condizionale trasposto
 
-Un errore comune che si commette è quello di credere che $P(A \mid B)$ sia uguale a $P(B \mid A)$. Tale fallacia ha particolare risalto in ambito forense tanto che è conosciuta con il nome di "fallacia del procuratore" (*prosecutor's fallacy*). In essa, una piccola probabilità dell'evidenza, data l'innocenza, viene erroneamente interpretata come la probabilità dell'innocenza, data l'evidenza.
+Un errore comune che si commette è quello di credere che $P(A \mid B)$ sia uguale a $P(B \mid A)$. Tale fallacia ha particolare risalto in ambito forense tanto che è conosciuta con il nome di "fallacia del procuratore". In essa, una piccola probabilità dell'evidenza, data l'innocenza, viene erroneamente interpretata come la probabilità dell'innocenza, data l'evidenza.
 
 Consideriamo il caso di un esame del DNA. Un esperto forense potrebbe affermare, ad esempio, che "se l'imputato è innocente, c'è solo una possibilità su un miliardo che vi sia una corrispondenza tra il suo DNA e il DNA trovato sulla scena del crimine". Ma talvolta questa probabilità è erroneamente interpretata come avesse il seguente significato: "date le prove del DNA, c'è solo una possibilità su un miliardo che l'imputato sia innocente".
 
-Le considerazioni precedenti risultano più chiare se facciamo nuovamente riferimento all'esercizio sul tumore mammario descritto sopra. In tale esercizio abbiamo visto come la probabilità di cancro dato un risultato positivo al test sia uguale a 0.08. Tale probabilità è molto diversa dalla probabilità di un risultato positivo al test data la presenza del cancro. Infatti, questa seconda
-probabilità è uguale a 0.90 ed è descritta nel problema come una delle
-caratteristiche del test in questione.
+Le considerazioni precedenti risultano più chiare se facciamo nuovamente riferimento all'esercizio sul tumore mammario descritto sopra. In tale esercizio abbiamo visto come la probabilità di cancro dato un risultato positivo al test sia uguale a 0.08. Tale probabilità è molto diversa dalla probabilità di un risultato positivo al test data la presenza del cancro. Infatti, questa seconda probabilità è uguale a 0.90 ed è descritta nel problema come una delle caratteristiche del test in questione.
 
 
 ## Legge della probabilità composta
@@ -84,7 +80,7 @@ P(A_1 \cap A_2 \cap \dots\cap A_n) = {}& P(A_1)P(A_2 \mid A_1)P(A_3 \mid A_1 \ca
 \end{equation}
 la quale esprime in forma generale la legge della probabilità composta.
 
-::: {.example}
+::: {.exercise}
 Da un'urna contenente 6 palline bianche e 4 nere si estrae una pallina
 per volta, senza reintrodurla nell'urna. Indichiamo con $B_i$ l'evento:
 "esce una pallina bianca alla $i$-esima estrazione" e con $N_i$
@@ -137,9 +133,8 @@ P(B \mid A) &= P(B).
 \end{split}
 $$
 
-::: {.example}
+::: {.exercise}
 Nel lancio di due dadi non truccati, si considerino gli eventi: _A_ = {esce un 1 o un 2 nel primo lancio} e _B_ = {il punteggio totale è 8}. Gli eventi _A_ e _B_ sono indipendenti?
-::: 
 
 Rappresentiamo qui sotto lo spazio campionario dell'esperimento casuale.
 
@@ -156,8 +151,9 @@ Gli eventi _A_ e _B_ non sono statisticamente indipendenti. Infatti, le loro pro
 $$
 P(A \cap B) = 1/36 = 3/108 \neq P(A)P(B) = 5/108.
 $$
+::: 
 
-::: {.rmdnote}
+::: {.remark}
 Si noti che il concetto di indipendenza è del tutto differente da quello di incompatibilità. Due eventi _A_ e _B_ incompatibili (per i quali si ha $A \cap B = \emptyset$) sono statisticamente dipendenti, poiché il verificarsi dell'uno esclude il verificarsi dell'altro: $P(A \cap B)=0  \neq P(A)P(B)$.
 ::: 
 

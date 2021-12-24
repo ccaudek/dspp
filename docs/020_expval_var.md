@@ -2,9 +2,7 @@
 
 
 
-::: {.chapterintro data-latex=""}
 Spesso risulta utile fornire una rappresentazione sintetica della distribuzione di una variabile casuale attraverso degli indicatori caratteristici piuttosto che fare riferimento ad una sua rappresentazione completa mediante la funzione di ripartizione, o la funzione di massa o di densità di probabilità. Una descrizione più sintetica di una variabile casuale, tramite pochi valori, ci consente di cogliere le caratteristiche essenziali della distribuzione, quali: la posizione, cioè il baricentro della distribuzione di probabilità; la variabilità, cioè la dispersione della distribuzione di probabilità attorno ad un centro; la forma della distribuzione di probabilità, considerando la simmetria e la curtosi (pesantezza delle code). In questo Capitolo introdurremo quegli indici sintetici che descrivono il centro di una distribuzione di probabilità e la sua variabilità.
-:::
 
 ## Valore atteso
 
@@ -32,13 +30,14 @@ per definizione il *valore atteso* di $Y$, $\E(Y)$, è
 
 A parole: il valore atteso (o speranza matematica, o aspettazione, o valor medio) di una variabile casuale è definito come la somma di tutti i valori che la variabile casuale può prendere, ciascuno pesato dalla probabilità con cui il valore è preso.
 
-::: {.workedexample data-latex=""}
+::: {.exercise}
 Calcoliamo il valore atteso della variabile casuale $Y$ corrispondente al lancio di una moneta equilibrata (testa: _Y_ = 1; croce: _Y_ = 0). 
 $$
 \E(Y) = \sum_{i=1}^{2} y_i \cdot P(y_i) = 0 \cdot \frac{1}{5} + 1 \cdot \frac{1}{5} = 0.5.
 $$
 ::: 
-::: {.workedexample data-latex=""}
+
+::: {.exercise}
 Supponiamo ora che _Y_ sia il risultato del lancio di un dado equilibrato. Il valore atteso di _Y_ diventa:
 $$
 \E(Y) = \sum_{i=1}^{6} y_i \cdot P(y_i) = 1 \cdot \frac{1}{6} + 2 \cdot \frac{1}{6} + \dots + 6 \cdot \frac{1}{6} = \frac{21}{6} = 3.5.
@@ -52,29 +51,24 @@ Che interpretazione può essere assegnata alla nozione di valore atteso? Bruno d
 ### Proprietà del valore atteso
 
 La proprietà più importante del valore atteso è la linearità: il valore atteso di una somma di variabili casuali è uguale alla somma dei lori rispettivi valori attesi:
-
 \begin{equation}
 \E(X + Y) = \E(X) + \E(Y).
 (\#eq:prop-expval-linearity)
 \end{equation}
-
 \noindent
 La \@ref(eq:prop-expval-linearity) sembra ragionevole quando $X$ e $Y$ sono indipendenti, ma è anche vera quando $X$ e $Y$ sono associati. Abbiamo anche che
-
 \begin{equation}
 \E(cY) = c \E(Y).
 (\#eq:prop-expval-const)
 \end{equation}
-
 \noindent
 La \@ref(eq:prop-expval-const) ci dice che possiamo estrarre una costante dall'operatore di valore atteso. Tale proprietà si estende a qualunque numero di variabili casuali. Infine, se due variabili casuali $X$ e $Y$ sono indipendenti, abbiamo che 
-
 \begin{equation}
 \E(X Y) = \E(X) \E(Y). 
 (\#eq:expval-prod-ind-rv)
 \end{equation}
 
-::: {.workedexample data-latex=""}
+::: {.exercise}
 Si considerino le seguenti variabili casuali: $Y$, ovvero il numero che si ottiene dal lancio di un dado equilibrato, e $Y$, il numero di teste prodotto dal lancio di una moneta equilibrata. 
 Poniamoci il problema di trovare il valore atteso di $X+Y$.
 
@@ -104,7 +98,7 @@ $$
 $$
 :::
 
-::: {.workedexample data-latex=""}
+::: {.exercise}
 Si considerino le variabili casuali $X$ e $Y$ definite nel caso del lancio di tre monete equilibrate, dove $X$ conta il numero delle teste nei tre lanci e $Y$ conta il numero delle teste al primo lancio. Si calcoli il valore atteso del prodotto delle variabili casuali $X$ e $Y$. 
 
 La distribuzione di probabilità congiunta $P(X, Y)$ è fornita nella tabella seguente. 
@@ -140,16 +134,13 @@ $$
 ### Variabili casuali continue
 
 Nel caso di una variabile casuale continua $Y$ il valore atteso diventa:
-
 \begin{equation}
 \E(Y) = \int_{-\infty}^{+\infty} y p(y) dy
 (\#eq:def-ev-rv-cont)
 \end{equation}
-
 Anche in questo caso il valore atteso è una media ponderata della $y$, nella quale ciascun possibile valore $y$ è ponderato per il corrispondente valore della densità $p(y)$. Possiamo leggere l'integrale pensando che $y$ rappresenti l'ampiezza delle barre infinitamente strette di un istogramma, con la densità $p(y)$ che corrisponde all'altezza di tali barre e la notazione $\int_{-\infty}^{\infty}$ che corrisponde ad una somma.
 
 Un'altra misura di tendenza centrale delle variabili casuali continue è la moda. La moda della $Y$ individua il valore $y$ più plausibile, ovvero il valore $y$ che massimizza la funzione di densità $p(y)$:
-
 \begin{equation}
 \Mo(Y) = \argmax_y p(y).
 (\#eq:def-mode)
@@ -170,7 +161,7 @@ Se $Y$ è una variabile casuale discreta con distribuzione $p(y)$, per definizio
 
 A parole: la varianza è la deviazione media quadratica della variabile dalla sua media.^[Data una variabile casuale $Y$ con valore atteso $\E(Y)$, le "distanze" tra i valori di $Y$ e il valore atteso $\E(Y)$ definiscono la variabile casuale $Y - \E(Y)$ chiamata _scarto_, oppure _deviazione_ oppure _variabile casuale centrata_. La variabile $Y - \E(Y)$ equivale ad una traslazione di sistema di riferimento che porta il valore atteso nell'origine degli assi. Si può dimostrare facilmente che il valore atteso della variabile scarto $Y - \E(Y)$ vale zero, dunque la media di tale variabile non può essere usata per quantificare la "dispersione" dei valori di $Y$ relativamente al suo valore medio. Occorre rendere sempre positivi i valori di $Y - \E(Y)$ e tale risultato viene ottenuto considerando la variabile casuale $\left(Y - \E(Y)\right)^2$.] Se denotiamo $\E(Y) = \mu$, la varianza $\Var(Y)$ diventa il valore atteso di $(Y - \mu)^2$.  
 
-::: {.workedexample data-latex=""}
+::: {.exercise}
 Posta $S$ uguale alla somma dei punti ottenuti nel lancio di due dadi equilibrati, poniamoci il problema di calcolare la varianza di $S$.
 
 La variabile casuale $S$ ha la seguente distribuzione di probabilità:
@@ -178,7 +169,7 @@ La variabile casuale $S$ ha la seguente distribuzione di probabilità:
    $s$            2                   3             4               5                   6               7                8                9                10             11              12 
 -------------- ---------------- ---------------- ---------------- ---------------- ---------------- ---------------- ---------------- ---------------- ---------------- ---------------- ----------------
  $P(S = s)$     $\frac{1}{36}$   $\frac{2}{36}$   $\frac{3}{36}$   $\frac{4}{36}$   $\frac{5}{36}$   $\frac{6}{36}$   $\frac{5}{36}$   $\frac{4}{36}$   $\frac{3}{36}$   $\frac{2}{36}$   $\frac{1}{36}$
-
+ 
 \noindent
 Essendo $\E(S) = 7$, la varianza diventa
 \begin{align}
@@ -202,7 +193,7 @@ dato che $\E(Y)$ è una costante; pertanto
 \end{equation}
 A parole: la varianza è la media dei quadrati meno il quadrato della media.
 
-::: {.workedexample data-latex=""}
+::: {.exercise}
 Consideriamo la variabile casuale $Y$ che corrisponde al numero di teste che si osservano nel lancio di una moneta truccata con probabilità di testa uguale a 0.8.
 Il valore atteso di $Y$ è
 $$
@@ -225,7 +216,6 @@ $$
 ### Variabili casuali continue
 
 Nel caso di una variabile casuale continua $Y$, la varianza diventa:
-
 \begin{equation}
 \Var(Y) = \int_{-\infty}^{+\infty} [y - \E(Y)]^2 p(y) dy
 (\#eq:def-var-rv-cont)
@@ -246,7 +236,7 @@ Si definisce scarto quadratico medio (o deviazione standard o scarto tipo) la ra
 
 Interpretiamo la deviazione standard di una variabile casuale come nella statistica descrittiva: misura approssimativamente la distanza tipica o prevista dei possibili valori $y$ dalla loro media.
 
-::: {.workedexample data-latex=""}
+::: {.exercise}
 Per i dadi equilibrati dell'esempio precedente, la deviazione standard della variabile casuale $S$ è uguale a $\sqrt{5.8333} = 2.4152$. 
 :::
 
@@ -254,7 +244,6 @@ Per i dadi equilibrati dell'esempio precedente, la deviazione standard della var
 
 :::{.definition}
 Data una variabile casuale $Y$, si dice variabile standardizzata di $Y$ l'espressione
-
 \begin{equation}
 Z = \frac{Y - \E(Y)}{\sigma_Y}.
 (\#eq:standardization)
@@ -299,7 +288,7 @@ $$
 \lim_{x \to -\infty} F_x(X) = F_X(-\infty) = 0, \quad \lim_{x \to +\infty} F_X(X) = F_X(+\infty) = 1.
 $$
 
-::: {.workedexample data-latex=""}
+::: {.exercise}
 Consideriamo l'esperimento casuale corrispondente al lancio di due monete. Sia $X$ il numero di volte in cui esce testa. La distribuzione di probabilità di $X$ è:
 $$
 P(X) = 

@@ -2,19 +2,17 @@
 
 # Concetti chiave 
 
-::: {.chapterintro data-latex=""}
-La _data science_ si pone all'intersezione tra statistica e informatica. La statistica è un insieme di metodi per estrarre informazioni dai dati; l'informatica implementa tali procedure in un software. In questo Capitolo vengono introdotti i  concetti fondamentali.
-:::
+La _data science_ si pone all'intersezione tra statistica e informatica. La statistica è un insieme di metodi ugilizzati per estrarre informazioni dai dati; l'informatica implementa tali procedure in un software. In questo Capitolo vengono introdotti i  concetti fondamentali.
 
 ## Popolazioni e campioni
 
-**Popolazione.** L'analisi dei dati inizia con l'individuazione delle unità portatrici di informazioni circa il fenomeno di interesse. Si dice popolazione (o universo) l'insieme $\Omega$ delle entità capaci di fornire informazioni sul fenomeno oggetto dell'indagine statistica. Possiamo scrivere $\Omega = \{\omega_i\}_{i=1, \dots, n}= \{\omega_1, \omega_2, \dots, \omega_n\}$, oppure $\Omega =  \{\omega_1, \omega_2, \dots \}$ nel caso di popolazioni finite o infinite, rispettivamente. 
+*Popolazione.* L'analisi dei dati inizia con l'individuazione delle unità portatrici di informazioni circa il fenomeno di interesse. Si dice popolazione (o universo) l'insieme $\Omega$ delle entità capaci di fornire informazioni sul fenomeno oggetto dell'indagine statistica. Possiamo scrivere $\Omega = \{\omega_i\}_{i=1, \dots, n}= \{\omega_1, \omega_2, \dots, \omega_n\}$, oppure $\Omega =  \{\omega_1, \omega_2, \dots \}$ nel caso di popolazioni finite o infinite, rispettivamente. 
 
 L'obiettivo principale della ricerca psicologica è conoscere gli esiti psicologici e i loro fattori trainanti nella popolazione. Questo è l'obiettivo delle sperimentazioni psicologiche e della maggior parte degli studi osservazionali in psicologia. È quindi necessario essere molto chiari sulla popolazione a cui si applicano i risultati della ricerca. La popolazione può essere ben definita, ad esempio, tutte le persone che si trovavano nella città di Hiroshima al momento dei bombardamenti atomici e sono sopravvissute al primo anno, o può essere ipotetica, ad esempio, tutte le persone depresse che hanno subito o saranno sottoporsi ad un intervento di psicoterapia. Il ricercatore deve sempre essere in grado di determinare se un soggetto appartiene alla popolazione oggetto di interesse. 
 
 Una _sottopopolazione_ è una popolazione in sé e per sé che soddisfa proprietà ben definite. Negli esempi precedenti, potremmo essere interessati alla sottopopolazione di uomini di età inferiore ai 20 anni o di pazienti depressi sottoposti ad uno specifico intervento psicologico. Molte questioni scientifiche riguardano le differenze tra sottopopolazioni; ad esempio, confrontando i gruppi con o senza psicoterapia per determinare se il trattamento è vantaggioso. I modelli di regressione, introdotti nel Capitolo \@ref(regr-models-intro) riguardano le sottopopolazioni, in quanto stimano il risultato medio per diversi gruppi (sottopopolazioni) definiti dalle covariate.
 
-**Campione.** Gli elementi $\omega_i$ dell'insieme $\Omega$ sono detti *unità statistiche*. Un sottoinsieme della popolazione, ovvero un insieme di elementi $\omega_i$, viene chiamato *campione*. Ciascuna unità statistica $\omega_i$ (abbreviata con u.s.) è portatrice dell'informazione che verrà rilevata mediante un'operazione di misurazione.
+*Campione.* Gli elementi $\omega_i$ dell'insieme $\Omega$ sono detti *unità statistiche*. Un sottoinsieme della popolazione, ovvero un insieme di elementi $\omega_i$, viene chiamato *campione*. Ciascuna unità statistica $\omega_i$ (abbreviata con u.s.) è portatrice dell'informazione che verrà rilevata mediante un'operazione di misurazione.
 
 Un campione è dunque un sottoinsieme della popolazione utilizzato per conoscere tale popolazione. A differenza di una sottopopolazione definita in base a chiari criteri, un campione viene generalmente selezionato tramite un procedura casuale. Il _campionamento casuale_ consente allo scienziato di trarre conclusioni sulla popolazione e, soprattutto, di quantificare l'incertezza sui risultati. I campioni di un sondaggio sono esempi di campioni casuali, ma molti studi osservazionali non sono campionati casualmente. Possono essere _campioni di convenienza_, come coorti di studenti in un unico istituto, che consistono di tutti gli studenti sottoposti ad un certo intervento psicologico in quell'istituto. Indipendentemente da come vengono ottenuti i campioni, il loro uso al fine di conoscere una popolazione target significa che i problemi di rappresentatività sono inevitabili e devono essere affrontati.
 
@@ -36,15 +34,15 @@ Tabella [1.1](#tab:term_st_desc){reference-type="ref"
 reference="tab:term_st_desc"}).
 
 
-::: {.workedexample data-latex=""}
+::: {.example}
 Supponiamo che il fenomeno studiato sia l'intelligenza. In uno studio, la popolazione potrebbe corrispondere all'insieme di tutti gli italiani adulti. La variabile considerata potrebbe essere il punteggio del test standardizzato WAIS-IV. Le modalità di tale variabile potrebbero essere $112, 92, 121, \dots$. Tale variabile è di tipo quantitativo discreto.
 ::: 
 
-::: {.workedexample data-latex=""}
+::: {.example}
 Supponiamo che il fenomeno studiato sia il compito Stroop. La popolazione potrebbe corrispondere all'insieme dei bambini dai 6 agli 8 anni. La variabile considerata potrebbe essere il reciproco dei tempi di reazione in secondi. Le modalità di tale variabile potrebbero essere $1 / 2.35, 1/ 1.49, 1/2.93, \dots$. La variabile è di tipo quantitativo continuo. 
 ::: 
 
-::: {.workedexample data-latex=""}
+::: {.example}
 Supponiamo che il fenomeno studiato sia il disturbo di personalità. La popolazione potrebbe corrispondere all'insieme dei detenuti nelle carceri italiane. La variabile considerata potrebbe essere l'assessment del disturbo di personalità tramite interviste cliniche strutturate. Le modalità di tale variabile potrebbero essere i Cluster A, Cluster B, Cluster C descritti dal DSM-V. Tale variabile è di tipo qualitativo. 
 ::: 
 
@@ -60,7 +58,7 @@ Un primo compito fondamentale in qualsiasi analisi dei dati è l'identificazione
 
 Se una variabile è una variabile indipendente o dipendente dipende dalla domanda di ricerca. A volte può essere difficile decidere quale variabile è dipendente e quale è indipendente, in particolare quando siamo specificamente interessati ai rapporti di causa/effetto. Ad esempio, supponiamo di indagare l'associazione tra esercizio fisico e insonnia. Vi sono evidenze che l'esercizio fisico (fatto al momento giusto della giornata) può ridurre l'insonnia. Ma l'insonnia può anche ridurre la capacità di una persona di fare esercizio fisico. In questo caso, dunque, non è facile capire quale sia la causa e quale l'effetto, quale sia la variabile dipendente e quale la variabile indipendente. La possibilità di identificare il ruolo delle variabili (dipendente/indipendente) dipende dalla nostra comprensione del fenomeno in esame. 
 
-::: {.workedexample data-latex=""}
+::: {.example}
 Uno psicologo convoca 120 studenti universitari per un test di memoria.
 Prima di iniziare l'esperimento, a metà dei soggetti viene detto che si
 tratta di un compito particolarmente difficile; agli altri soggetti non

@@ -4,7 +4,7 @@ Un insieme (o collezione, classe, gruppo, ...) è un concetto primitivo,
 ovvero è un concetto che già possediamo. Georg Cantor l'ha definito nel
 modo seguente:
 
-> un insieme è una collezione di oggetti, determinati e distinti, della nostra percezione o del nostro pensiero, concepiti come un tutto unico; tali oggetti si dicono elementi dell'insieme.
+> *un insieme è una collezione di oggetti, determinati e distinti, della nostra percezione o del nostro pensiero, concepiti come un tutto unico; tali oggetti si dicono elementi dell'insieme.*
 
 Mentre non è rilevante la natura degli oggetti che costituiscono
 l'insieme, ciò che importa è distinguere se un dato oggetto appartenga o
@@ -58,25 +58,25 @@ $$
 
 ## Operazioni tra insiemi 
 
-Si definisce __intersezione__ di $A$ e $B$ l'insieme $A \cap B$ di tutti
+Si definisce _intersezione_ di $A$ e $B$ l'insieme $A \cap B$ di tutti
 gli elementi $x$ che appartengono ad $A$ e contemporaneamente a $B$:
 $$A \cap B = \{x ~\vert~ x \in A \land x \in B\}.$$
 
-Si definisce __unione__ di $A$ e $B$ l'insieme $A \cup B$ di tutti gli
+Si definisce _unione_ di $A$ e $B$ l'insieme $A \cup B$ di tutti gli
 elementi $x$ che appartengono ad $A$ o a $B$, cioè
 $$
 A \cup B = \{x ~\vert~ x \in A \lor x \in B\}.
 $$
 
-__Differenza__. Si indica con $A \setminus B$ l'insieme degli elementi di
+_Differenza_. Si indica con $A \setminus B$ l'insieme degli elementi di
 $A$ che non appartengono a $B$:
 $$A \setminus B = \{x ~\vert~ x \in A \land x \notin B\}.$$
 
-__Insieme complementare__. Nel caso che sia $B \subseteq A$, l'insieme
+_Insieme complementare_. Nel caso che sia $B \subseteq A$, l'insieme
 differenza $A \setminus B$ è detto insieme complementare di $B$ in $A$ e
 si indica con $B^C$.
 
-Dato un insieme $S$, una __partizione__ di $S$ è una collezione di
+Dato un insieme $S$, una _partizione_ di $S$ è una collezione di
 sottoinsiemi di $S$, $S_1, \dots, S_k$, tali che
 $$S = S_1 \cup S_2 \cup \dots S_k$$ e
 $$S_i \cap S_j, \quad \text{con~} i \neq j.$$
@@ -118,7 +118,7 @@ $$\{1, 2\} \times \{a, b, c\} = \{(1, a), (1, b), (1, c), (2, a), (2, b), (2, c)
 
 ## Cardinalità
 
-Si definisce __cardinalità__ (o potenza) di un insieme finito il numero
+Si definisce _cardinalità_ (o potenza) di un insieme finito il numero
 degli elementi dell'insieme. Viene indicata con $\vert A\vert, \#(A)$ o
 $\text{c}(A)$.
 

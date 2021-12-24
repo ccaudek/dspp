@@ -16,19 +16,15 @@ Sia $\pi \in [0, 1]$ una variabile casuale che indica la proporzione sconosciuta
 Abbiamo visto in precedenza come sia possibile usare la distribuzione Beta per rappresentare le credenze a priori. Ponendo la gran parte della massa della probabilità a priori su valori $\pi < 0.5$, la distribuzione a priori $\text{Beta}(5, 11)$ riflette il punto di vista femminista secondo il quale la maggioranza dei film non supera il test di Bechdel. Al contrario, la $\text{Beta}(14,1)$ pone la gran parte della massa della distribuzione a priori su valori $\pi$ prossimi a 1, e corrisponde quindi alle credenze a priori dell'amica ottimista. Infine, una $\text{Beta}(1 ,1)$ o $Unif(0, 1)$, assegna lo stesso livello di plausibilità a tutti i valori $\pi \in [0, 1]$, e corrisponde all'incertezza a priori dell'ignara.
 
 Nell'esempio di @Johnson2022bayesrules, le tre amiche decidano di rivedere un campione di $n$ film e di registrare $y$, il numero di film che supera il test di Bechdel. Se $y$ corrisponde al numero di "successi" in un numero fisso di $n$ prove Bernoulliane i.i.d., allora la dipendenza di $y$ da $\pi$ viene specificata nei termini di un modello binomiale. Quindi, per ciascuna delle tre amiche è possibile scrivere un modello Beta-Binomiale 
-
 \begin{align}
 Y \mid \pi & \sim \text{Bin}(n, \pi)  \notag\\
 \pi & \sim \text{Beta}(\alpha, \beta) \notag
 \end{align} 
-
 \noindent
 che utilizza parametri $\alpha$ e $\beta$ diversi per la distribuzione a priori, il che conduce a tre diverse distribuzioni a posteriori per il parametro sconosciuto $\pi$:
-
 \begin{equation}
 \pi \mid (Y = y) \sim \text{Beta}(\alpha + y, \beta + n - y).
 \end{equation}
-
 @Johnson2022bayesrules si chiedono come le credenze a priori delle tre amiche influenzano le conclusioni a posteriori a cui esse giungono, dopo avere osservato i dati. Si chiedono inoltre in che modo la dimensione del campione moduli l'influenza della distribuzione a priori sulla distribuzione a posteriori. Per rispondere a queste domande, @Johnson2022bayesrules consideriamo tre diversi scenari: 
 
 - gli stessi dati osservati, ma distribuzioni a priori diverse;
@@ -74,9 +70,8 @@ Esaminiamo ora le tre distribuzioni a posteriori. Per la femminista abbiamo:
 
 
 ```r
-bayesrules:::plot_beta_binomial(
-  alpha = 5, beta = 11, y = 9, n = 20
-)
+bayesrules:::plot_beta_binomial(alpha = 5, beta = 11, y = 9, n = 20) +
+  scale_fill_okabe_ito(aesthetics = "fill")
 ```
 
 
@@ -85,9 +80,7 @@ bayesrules:::plot_beta_binomial(
 
 
 ```r
-bayesrules:::summarize_beta_binomial(
-  alpha = 5, beta = 11, y = 9, n = 20
-)
+bayesrules:::summarize_beta_binomial(alpha = 5, beta = 11, y = 9, n = 20)
 #>       model alpha beta  mean  mode     var     sd
 #> 1     prior     5   11 0.312 0.286 0.01264 0.1124
 #> 2 posterior    14   22 0.389 0.382 0.00642 0.0801
@@ -98,9 +91,8 @@ Per l'ottimista abbiamo:
 
 
 ```r
-bayesrules:::plot_beta_binomial(
-  alpha = 14, beta = 1, y = 9, n = 20
-)
+bayesrules:::plot_beta_binomial(alpha = 14, beta = 1, y = 9, n = 20) +
+  scale_fill_okabe_ito(aesthetics = "fill")
 ```
 
 
@@ -109,9 +101,7 @@ bayesrules:::plot_beta_binomial(
 
 
 ```r
-bayesrules:::summarize_beta_binomial(
-  alpha = 14, beta = 1, y = 9, n = 20
-)
+bayesrules:::summarize_beta_binomial(alpha = 14, beta = 1, y = 9, n = 20)
 #>       model alpha beta  mean  mode     var     sd
 #> 1     prior    14    1 0.933 1.000 0.00389 0.0624
 #> 2 posterior    23   12 0.657 0.667 0.00626 0.0791
@@ -122,9 +112,8 @@ Infine, per l'ignara troviamo
 
 
 ```r
-bayesrules:::plot_beta_binomial(
-  alpha = 1, beta = 1, y = 9, n = 20
-)
+bayesrules:::plot_beta_binomial(alpha = 1, beta = 1, y = 9, n = 20) +
+  scale_fill_okabe_ito(aesthetics = "fill")
 ```
 
 
@@ -133,9 +122,7 @@ bayesrules:::plot_beta_binomial(
 
 
 ```r
-bayesrules:::summarize_beta_binomial(
-  alpha = 1, beta = 1, y = 9, n = 20
-)
+bayesrules:::summarize_beta_binomial(alpha = 1, beta = 1, y = 9, n = 20)
 #>       model alpha beta  mean mode    var    sd
 #> 1     prior     1    1 0.500  NaN 0.0833 0.289
 #> 2 posterior    10   12 0.455 0.45 0.0108 0.104
@@ -154,7 +141,6 @@ L'aggiornamento bayesiano indica che le tre amiche ottengono valori per la media
 
 Questo non dovrebbe sorprenderci.  L'amica ottimista aveva opinioni molto forti sul valore di $\pi$ e i *pochi* nuovi dati che le sono stati forniti non sono riusciti a convincerla a cambiare idea: crede ancora che i valori $\pi > 0.5$ siano i più plausibili. Lo stesso si può dire, all'estremo opposto, dell'amica femminista: anche lei continua a credere che i valori $\pi < =.5$ siano i più plausibili. Infine, l'ignara non aveva nessuna opinione a priori su $\pi$ e, anche dopo avere visto 20 film, continua a credere che il valore $\pi$ più plausibile sia quello intermedio,  nell'intorno di 0.5.
 
-
 ## Dati diversi ma la stessa distribuzione a priori
 
 Supponiamo ora che l'amica ottimista abbia tre amiche, Maria, Anna e Sara, tutte ottimiste come lei. L'ottimista chiede a Maria, Anna e Sara di fare loro stesse l'esperimento descritto in precedenza. Maria guarda 13 film; di questi 6 passano il test di Bechdel. Anna guarda 63 film; di questi 29 passano il test di Bechdel. Sara guarda 99 film; di questi 46 passano il test di Bechdel. 
@@ -163,17 +149,17 @@ Supponiamo che Maria, Anna e Sara condividano la stessa credenza a priori su $\p
 
 
 ```r
-p1 <- bayesrules:::plot_beta_binomial(
-  alpha = 14, beta = 1, y = 6, n = 13
-) + theme(legend.position = "none") 
+p1 <- bayesrules:::plot_beta_binomial(alpha = 14, beta = 1, y = 6, n = 13) + 
+  scale_fill_okabe_ito(aesthetics = "fill") + 
+  theme(legend.position = "none") 
 
-p2 <- bayesrules:::plot_beta_binomial(
-  alpha = 14, beta = 1, y = 29, n = 63
-) + theme(legend.position = "none") 
+p2 <- bayesrules:::plot_beta_binomial(alpha = 14, beta = 1, y = 29, n = 63) + 
+  scale_fill_okabe_ito(aesthetics = "fill") + 
+  theme(legend.position = "none") 
 
-p3 <- bayesrules:::plot_beta_binomial(
-  alpha = 14, beta = 1, y = 46, n = 99
-) + theme(legend.position = "none") 
+p3 <- bayesrules:::plot_beta_binomial(alpha = 14, beta = 1, y = 46, n = 99) +
+  scale_fill_okabe_ito(aesthetics = "fill") + 
+  theme(legend.position = "none") 
 
 p1 + p2 + p3
 ```
@@ -186,6 +172,7 @@ p1 + p2 + p3
 
 \caption{Aggiornamento bayesiano per Maria, Anna e Sara.}(\#fig:unnamed-chunk-9)
 \end{figure}
+
 Notiamo due cose. All'aumentare delle informazioni disponibili (ovvero, all'aumentare dell'ampiezza del campione), la distribuzione a posteriori si allontana sempre di più dalla distribuzione a priori, e si avvicina sempre di più alla verosimiglianza. In secondo luogo, all'aumentare dell'ampiezza del campione la varianza della  distribuzione a posteriori diminuisce sempre di più --- ovvero, diminuisce l'incertezza su quelli che sono i valori $\pi$ più plausibili.
 
 
@@ -195,41 +182,41 @@ Nella figura successiva esaminiamo le distribuzioni a posteriori che si ottengon
 
 
 ```r
-p1 <- bayesrules:::plot_beta_binomial(
-  alpha = 14, beta = 1, y = 6, n = 13
-) + theme(legend.position = "none") 
+p1 <- bayesrules:::plot_beta_binomial(alpha = 14, beta = 1, y = 6, n = 13) +
+  scale_fill_okabe_ito(aesthetics = "fill") + 
+  theme(legend.position = "none") 
 
-p2 <- bayesrules:::plot_beta_binomial(
-  alpha = 14, beta = 1, y = 29, n = 63
-) + theme(legend.position = "none") 
+p2 <- bayesrules:::plot_beta_binomial(alpha = 14, beta = 1, y = 29, n = 63) +
+  scale_fill_okabe_ito(aesthetics = "fill") + 
+  theme(legend.position = "none") 
 
-p3 <- bayesrules:::plot_beta_binomial(
-  alpha = 14, beta = 1, y = 46, n = 99
-) + theme(legend.position = "none") 
+p3 <- bayesrules:::plot_beta_binomial(alpha = 14, beta = 1, y = 46, n = 99) +
+  scale_fill_okabe_ito(aesthetics = "fill") + 
+  theme(legend.position = "none") 
 
-p4 <- bayesrules:::plot_beta_binomial(
-  alpha = 5, beta = 11, y = 6, n = 13
-) + theme(legend.position = "none") 
+p4 <- bayesrules:::plot_beta_binomial(alpha = 5, beta = 11, y = 6, n = 13) +
+  scale_fill_okabe_ito(aesthetics = "fill") + 
+  theme(legend.position = "none") 
 
-p5 <- bayesrules:::plot_beta_binomial(
-  alpha = 5, beta = 11, y = 29, n = 63
-) + theme(legend.position = "none") 
+p5 <- bayesrules:::plot_beta_binomial(alpha = 5, beta = 11, y = 29, n = 63) +
+  scale_fill_okabe_ito(aesthetics = "fill") + 
+  theme(legend.position = "none") 
 
-p6 <- bayesrules:::plot_beta_binomial(
-  alpha = 5, beta = 11, y = 46, n = 99
-) + theme(legend.position = "none") 
+p6 <- bayesrules:::plot_beta_binomial(alpha = 5, beta = 11, y = 46, n = 99) +
+  scale_fill_okabe_ito(aesthetics = "fill") + 
+  theme(legend.position = "none") 
 
-p7 <- bayesrules:::plot_beta_binomial(
-  alpha = 1, beta = 1, y = 6, n = 13
-) + theme(legend.position = "none") 
+p7 <- bayesrules:::plot_beta_binomial(alpha = 1, beta = 1, y = 6, n = 13) +
+  scale_fill_okabe_ito(aesthetics = "fill") + 
+  theme(legend.position = "none") 
 
-p8 <- bayesrules:::plot_beta_binomial(
-  alpha = 1, beta = 1, y = 29, n = 63
-) + theme(legend.position = "none") 
+p8 <- bayesrules:::plot_beta_binomial(alpha = 1, beta = 1, y = 29, n = 63) +
+  scale_fill_okabe_ito(aesthetics = "fill") + 
+  theme(legend.position = "none") 
 
-p9 <- bayesrules:::plot_beta_binomial(
-  alpha = 1, beta = 1, y = 46, n = 99
-) + theme(legend.position = "none") 
+p9 <- bayesrules:::plot_beta_binomial(alpha = 1, beta = 1, y = 46, n = 99) +
+  scale_fill_okabe_ito(aesthetics = "fill") + 
+  theme(legend.position = "none") 
 
 (p1 + p2 + p3) / (p4 + p5 + p6) / (p7 + p8 + p9)
 ```

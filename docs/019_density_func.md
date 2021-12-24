@@ -21,7 +21,6 @@ Consideriamo il seguente esperimento casuale. Facciamo ruotare ad alta velocita�
 \end{figure}
 
 Cosa implica per $\Theta$ dire che lo spinner è simmetrico? Possiamo dire che, in ciascuna prova, la rotazione dello spinner produce un angolo qualunque da 0 a 360 gradi. In altri termini, un valore $\Theta$ compreso tra 0 e 36 gradi ha la stessa probabilità di essere osservato di un valore $\Theta$ compreso tra 200 e 236 gradi. Inoltre, poiché 36 gradi è un decimo del percorso intorno al cerchio, la probabilità di ottenere un qualsiasi intervallo di 36 gradi sarà sempre uguale al 10%. Ovvero
-
 $$
 \mbox{P}[0 \leq \Theta \leq 36]
 \ = \
@@ -29,7 +28,6 @@ $$
 $$
 \noindent 
 e
-
 $$
 \mbox{P}[200 \leq \Theta \leq 236]
 \ = \
@@ -37,7 +35,6 @@ $$
 $$
 
 È importante notare che le considerazioni precedenti non si riferiscono al fatto che $\Theta$ può assumere uno specifico valore, ma piuttosto alla probabilità di osservare $\Theta$ in un particolare intervallo di valori. In generale, la probabilità che la pendenza $\Theta$ dello spinner cada in intervallo è la frazione del cerchio rappresentata dall'intervallo, cioè,
-
 $$
 \mbox{P}[\theta_1 \leq \Theta \leq \theta_2] = \frac{\theta_2 - \theta_1}{360}, \qquad 0 \leq \theta_1 \leq \theta_2 \leq 360.
 $$
@@ -48,11 +45,9 @@ La ragione di questo è che le variabili casuali continue non hanno una massa di
 ### Il paradosso delle variabili casuali continue
 
 Nel nostro esempio, la pendenza dello spinner è esattamente 36 gradi; ma avrebbe potuto anche essere 36.0376531 gradi o qualunque altro valore in quell'intorno. Qual è la probabilità che la pendenza dello spinner sia esattamente 36? Paradossalmente, la risposta è zero:
-
 $$
 \mbox{P}[\Theta = 36] = 0.
 $$
-
 Infatti, se la probabilità di un qualunque valore fosse maggiore di zero, ogni altro possibile valore dovrebbe avere la stessa probabilità, dato che abbiamo assumiamo che tutti i valori $\Theta$ sono egualmente probabili. Ma se poi andiamo a sommare tutte queste probabilità il totale diventerà maggiore di uno, il che non è possibile.
 
 Nel caso delle variabili casuali continue dobbiamo dunque rinunciare a qualcosa, e quel qualcosa è l'idea che, in una distribuzione continua, ciascun valore puntuale della variabile casuale possa avere una massa di probabilità maggiore di zero. Il paradosso sorge perché una realizzazione della variabile casuale conrtinua produce sempre un qualche numero, ma ciscuno di tali numeri ha probabilità nulla.
@@ -61,14 +56,11 @@ Nel caso delle variabili casuali continue dobbiamo dunque rinunciare a qualcosa,
 ## La funzione di ripartizione per una variabile casuale continua
 
 Supponiamo che $\Theta \sim \mbox{uniform}(0, 360)$ sia la pendenza dello spinner. La funzione di ripartizione (ovvero, la distribuzione cumulativa) è definita esattamente come nel caso delle variabili casuali discrete:
-
 $$
 F_{\Theta}(\theta) = \mbox{P}[\Theta \leq \theta].
 $$
-
 \noindent
 Cioè, è la probabilità che la variabile casuale $\Theta$ assuma un valore minore di o uguale a $\theta$. In questo caso, poiché si presume che lo spinner sia simmetrico, la funzione di distribuzione cumulativa è
-
 $$
 F_{\Theta}(\theta) = \frac{\theta}{360}.
 $$
@@ -120,19 +112,16 @@ unif_cdf_plot
 Anche con _M_ = 1000, tale grafico è praticamente indistinguibile da quello prodotto per via analitica. 
 
 Come nel caso delle variabili casuali discrete, la funzione di ripartizione può essere utilizzata per calcolare le probabilità che la variabile casuale assuma valori in un intervallo. Ad esempio
-
 \begin{align}
 \mbox{P}[180 < \Theta \leq 270] &= \mbox{P}[\Theta \leq 270] \ - \ \mbox{P}[\Theta \leq 180] \notag\\
 &= F_{\Theta}(270) - F_{\Theta}(180)\notag\\
 &= \frac{3}{4} - \frac{1}{2} \notag\\
-&= \frac{1}{4}.
+&= \frac{1}{4}.\noindent
 \end{align}
-
 
 ## La distribuzione uniforme
 
 Dopo avere visto come generare numeri casuali uniformi da 0 a 360, ora consideriamo una variabile casuale che assume valori nell'intervallo da 0 a 1. Chiamiamo sempre $\Theta$ tale variabile casuale, ma assumiamo ora che abbia una distribuzione continua uniforme sull'intervallo [0, 1]:
-
 $$
 \Theta \sim Uniform(0, 1).
 $$
@@ -216,21 +205,16 @@ uniform_pdf_plot
 
 \noindent
 Dal grafico vediamo che l'area sottesa alla funzione di densità è $(b - a)\times c$. Dato che tale area deve essere unitaria, ovvero, $(b - a) \times c = 1$, possiamo trovare $c$ dividendo entrambi i termini per $b - a$,
-
 $$
 c  = \frac{\displaystyle{1}}{\displaystyle b - a}.
 $$
-
 \noindent
 Ovvero, se $\Theta \sim \mbox{Uniform}(a, b)$, allora
-
 $$
 p_{\Theta}(\theta) = \mbox{Uniform}(\theta \mid a, b),
 $$
-
 \noindent
 laddove
-
 $$
 \mbox{Uniform}(\theta \mid a, b) = \frac{1}{b - a}.
 $$
@@ -243,21 +227,17 @@ In conclusione, la densità di una variabile casuale uniforme continua non dipen
 Supponiamo che $\Theta$ sia una variabile casuale con una distribuzione continua uniforme sull'intervallo [0, 1], cioè $\Theta \sim Uniform(0, 1)$. Vedremo ora come, partendo dalla distribuzione uniforme, sia possibile generare una nuova variable casuale la cui funzione di densità si chiama distribuzione logistica. 
 
 Data una variabile casuale uniforme continua $\Theta \in (0, 1)$, possiamo definire i suoi log odds come
-
 \begin{equation}
 \mbox{logit}(\theta) = \log \frac{\theta}{1 - \theta},
 (\#eq:def-logit)
 \end{equation}
-
 \noindent
 ovvero come il logaritmo naturale degli odds, $\frac{\theta}{1 -\theta}$. 
 
 Chiameremo
-
 $$
 \Phi = \mbox{logit}(\Theta)
 $$
-
 \noindent
 la variabile casuale le cui realizzazoni sono i logit (log odds) di $\Theta$.
 
@@ -293,7 +273,6 @@ log_odds_plot
 \end{figure}
 
 Lo zero sulla scala dei logit corrisponde a 0.5 sulla scala delle probabilità, cioè
-
 $$
 0 = \mbox{logit}(0.5),
 $$
@@ -303,20 +282,17 @@ $$
 \mbox{logit}^{-1}(0) = 0.5.
 $$
 L'inverso della funzione logit è dato dalla *funzione logistica*
-
 \begin{equation}
 \mbox{logit}^{-1}(u) = \frac{1}{1 + \exp(-u)}.
 (\#eq:def-logistic-fun)
 \end{equation}
 \noindent
 Questo non è sorprendente dato che
-
 $$
 \mbox{logit}^{-1}(-6) = 0.0025
 $$
 \noindent
 e
-
 $$
 \mbox{logit}^{-1}(6) = 0.9975
 $$
@@ -363,12 +339,10 @@ logistic_cdf_plot
 
 \noindent
 Il risultato è una funzione a forma sigmoidale i cui valori sono compresi tra 0 e 1, con asintoti a uno quando $\theta$ tende a $+\infty$ e a zero quando $\theta$ tende a $-\infty$. In corrispondenza di $\Phi$ = 0 troviamo il valore  0.5. La curva prodotta dalla simulazione è una curva molto nota chiamata *funzione logistica*. In termini analitici, la funzione logistica viene espressa come segue:
-
 \begin{equation}
 F_{\Theta}(\theta) = \mathrm{logit}^{-1}(\theta) = \frac{1}{1 + \exp(-\theta)},
 (\#eq:def-logistic-analitic)
 \end{equation}
-
 \noindent
 con $\theta \in [0, 1].$
 
@@ -476,9 +450,11 @@ Nella statistica descrittiva abbiamo già incontrato una rappresentazione che ha
 Sia $y$ una variabile casuale continua con funzione di densità di probabilità $p(y)$. Allora $p(y)$ ha le seguenti proprietà:
 
 - $p(y) \geq 0$, ovvero, l'ordinata della funzione di densità è 0 o positiva;
+
 - $\int_y p(y) dy = 1$, ovvero, l'area sottesa dalla $p(y)$ è unitaria^[Per quel che riguarda la notazione dell'integrale, ovvero $\int_x dx$, rimando alla discussione di S.P. Thompson: https://calculusmadeeasy.org/1.html];
+
 - $P(a < y < b) = \int_a^b p(y) dy$, se $a \leq b$, ovvero, l'area sottesa dalla $p(y)$ tra due punti $a$ e $b$ corrisponde alla probabilità che la v.c. $y$ assuma un valore compresto tra questi due estremi.
 
-**Interpretazione.** È possibile che $p(y) > 1$, quindi una densità di probabilità non può essere interpretata come una probabilità. Piuttosto, la densità $p(y)$ può essere utilizzata per confrontare la plausibilità relativa di diversi valori $Y$. Considerata una variabile casuale $Y$ di cui è disponibile un insieme di realizzazioni, tanto maggiore è $p(y_k)$ rispetto a $p(y_l)$, tanto più grande sarà la nostra certezza che valori nell'intorno di $y_k$ verranno osservati con maggiore frequenza di valori nell'intorno di $y_l$.
+*Interpretazione.* È possibile che $p(y) > 1$, quindi una densità di probabilità non può essere interpretata come una probabilità. Piuttosto, la densità $p(y)$ può essere utilizzata per confrontare la plausibilità relativa di diversi valori $Y$. Considerata una variabile casuale $Y$ di cui è disponibile un insieme di realizzazioni, tanto maggiore è $p(y_k)$ rispetto a $p(y_l)$, tanto più grande sarà la nostra certezza che valori nell'intorno di $y_k$ verranno osservati con maggiore frequenza di valori nell'intorno di $y_l$.
 
 

@@ -164,7 +164,6 @@ p3 <-
 Questa simulazione mostra che qualunque processo nel quale viene sommato un certo numero di valori casuali, tutti provenienti dalla medesima distribuzione, converge ad una distribuzione Normale. Non importa quale sia la forma della distribuzione di partenza: essa può essere uniforme, come nell'esempio presente, o di qualunque altro tipo. La forma della distribuzione da cui viene realizzato il campionamento determina la velocità della convergenza alla Normale. In alcuni casi la convergenza è lenta; in altri casi la convergenza è molto rapida (come nell'esempio presente).
 
 Da un punto di vista formale, diciamo che una variabile casuale continua $Y$ ha una distribuzione Normale se la sua densità è
-
 \begin{equation}
 f(y; \mu, \sigma) = {1 \over {\sigma\sqrt{2\pi} }} \exp \left\{-\frac{(y -  \mu)^2}{2 \sigma^2} \right\},
 (\#eq:normal-formula)
@@ -175,12 +174,10 @@ dove $\mu \in \mathbb{R}$ e $\sigma > 0$ sono i parametri della distribuzione.
 La densità normale è unimodale e simmetrica con una caratteristica forma a campana e con il punto di massima densità in corrispondenza di $\mu$. 
 
 Il significato dei parametri $\mu$ e $\sigma$ che appaiono nella \@ref(eq:normal-formula) viene chiarito dalla dimostrazione che
-
 \begin{equation}
 \E(X) = \mu, \qquad \Var(X) = \sigma^2.
 \end{equation}
 
-::: {.example}
 La rappresentazione grafica di quattro densità Normali tutte con media 0 e con deviazioni standard 0.25, 0.5, 1 e 2 è fornita nella figura \@ref(fig:gaussian-plot-demo).
 
 \begin{figure}[h]
@@ -191,7 +188,6 @@ La rappresentazione grafica di quattro densità Normali tutte con media 0 e con 
 
 \caption{Alcune distribuzioni Normali.}(\#fig:gaussian-plot-demo)
 \end{figure}
-::: 
 
 
 ### Concentrazione 
@@ -215,15 +211,13 @@ $\mathcal{N}(\mu, \sigma)$.
 ### Funzione di ripartizione 
 
 Il valore della funzione di ripartizione di $Y$ nel punto $y$ è l'area sottesa alla curva di densità $f(y)$ nella semiretta $(-\infty, y]$. Non esiste alcuna funzione elementare per la funzione di ripartizione
-
 \begin{equation}
 F(y) = \int_{-\infty}^y {1 \over {\sigma\sqrt{2\pi} }} \exp \left\{-\frac{(y - \mu)^2}{2\sigma^2} \right\} dy, 
 \end{equation}
-
 \noindent
 pertanto le probabilità $P(Y < y)$ vengono calcolate mediante integrazione numerica approssimata. I valori della funzione di ripartizione di una variabile casuale Normale sono dunque forniti da un software.
 
-::: {.example}
+::: {.exercise}
 Usiamo \R per calcolare la funzione di ripartizione della Normale. La funzione `pnorm(q, mean, sd)` restituisce la funzione di ripartizione della Normale con media `mean` e deviazione standard `sd`, ovvero l'area sottesa alla funzione di densità di una Normale con media `mean` e deviazione standard `sd` nell'intervallo $[-\infty, q]$.
 
 Per esempio, in precedenza abbiamo detto che il 68% circa dell'area sottesa ad una Normale è compresa nell'intervallo $\mu \pm \sigma$. Verifichiamo per la distribuzione del QI $\sim \mathcal{N}(\mu = 100, \sigma = 15)$:
@@ -255,21 +249,14 @@ pnorm(100 + 3 * 15, 100, 15) - pnorm(100 - 3 * 15, 100, 15)
 ### Distribuzione Normale standard
 
 La distribuzione Normale di parametri $\mu = 0$ e $\sigma = 1$ viene detta *distribuzione Normale standard*. La famiglia Normale è l'insieme avente come elementi tutte le distribuzioni Normali con parametri $\mu$ e $\sigma$ diversi. Tutte le distribuzioni Normali si ottengono dalla Normale standard mediante una trasformazione lineare: se $Y \sim \mathcal{N}(\mu_Y, \sigma_Y)$ allora 
-
 \begin{equation}
 X = a + b Y \sim \mathcal{N}(\mu_X = a+b \mu_Y, \sigma_X = \left|b\right|\sigma_Y).
 \end{equation}
-
-<!-- La *standardizzazione* riconduce una variabile casuale distribuita secondo una media $\mu$ e varianza $\sigma^2$, ad una variabile casuale con distribuzione "standard", ovvero di media zero e varianza pari a $1$: -->
-<!-- $$ -->
-<!-- Z = \frac{Y - \mu}{\sigma}. -->
-<!-- $$ -->
-
 L'area sottesa alla curva di densità di $\mathcal{N}(\mu, \sigma)$ nella semiretta $(-\infty, y]$ è uguale all'area sottesa alla densità Normale standard nella semiretta $(-\infty, z]$, in cui $z = (y -\mu_Y )/\sigma_Y$ è il punteggio standard di $Y$. Per la simmetria della distribuzione, l'area sottesa nella semiretta $[1, \infty)$ è uguale all'area sottesa nella semiretta $(-\infty, 1]$ e quest'ultima coincide con $F(-1)$. Analogamente, l'area sottesa nell'intervallo $[y_a, y_b]$, con $y_a < y_b$, è pari a $F(z_b) - F(z_a)$, dove $z_a$ e $z_b$ sono i punteggi standard di $y_a$ e $y_b$.
 
 Si ha anche il problema inverso rispetto a quello del calcolo delle aree: dato un numero $0 \leq p \leq 1$, il problema è quello di determinare un numero $z \in \mathbb{R}$ tale che $P(Z < z) = p$. Il valore $z$ cercato è detto *quantile* di ordine $p$ della Normale standard e può essere trovato mediante un software.
 
-::: {.example}
+::: {.exercise}
 Supponiamo che l'altezza degli individui adulti segua la distribuzione Normale di media $\mu = 1.7$ m e deviazione standard $\sigma = 0.1$ m. Vogliamo sapere la proporzione di individui adulti con un'altezza compresa tra $1.7$ e $1.8$ m.
 
 Il problema ci chiede di trovare l'area sottesa alla distribuzione $\mathcal{N}(\mu = 1.7, \sigma = 0.1)$ nell'intervallo $[1.7, 1.8]$:
@@ -307,11 +294,9 @@ pnorm(1.8, 1.7, 0.1) - pnorm(1.7, 1.7, 0.1)
 otteniamo il $31.43\%$.
 
 In maniera equivalente, possiamo standardizzare i valori che delimitano l'intervallo considerato e utilizzare la funzione di ripartizione della normale standardizzata. I limiti inferiore e superiore dell'intervallo sono
-
 $$
 z_{\text{inf}} = \frac{1.7 - 1.7}{0.1} = 0, \quad z_{\text{sup}} = \frac{1.8 - 1.7}{0.1} = 1.0,
 $$
-
 \noindent 
 quindi otteniamo
 
@@ -324,7 +309,7 @@ pnorm(1.0, 0, 1) - pnorm(0, 0, 1)
 Il modo più semplice per risolvere questo problema resta comunque quello di rendersi conto che la probabilità richiesta non è altro che la metà dell'area sottesa dalle distribuzioni Normali nell'intervallo $[\mu - \sigma, \mu + \sigma]$, ovvero $0.683/2$.
 ::: 
 
-#### Funzione di ripartizione della variabile casuale normale standard e funzione logistica
+#### Funzione di ripartizione della normale standard e funzione logistica
 
 Si noti che la funzione logistica (in blu), pur essendo del tutto diversa dalla Normale dal punto di vista formale, assomiglia molto alla Normale standard quando le due cdf hanno la stessa varianza.
 
@@ -349,16 +334,13 @@ tibble(x = c(-3, 3)) %>%
 
 Laplace dimostrò il teorema del limite centrale (TLC) nel 1812. Il TLC ci dice che se prendiamo una sequenza di variabili casuali indipendenti e le sommiamo, tale somma tende a distribuirisi come una Normale. Il TLC specifica inoltre, sulla base dei valori attesi e delle varianze delle v.c. che vengono sommate, quali saranno i parametri della distribuzione Normale così ottenuta.
 
-
 ::: {.theorem}
 Si supponga che $Y = Y_1, Y_2, \ldots, Y_N$ sia una sequenza di v.a. i.i.d. con $\E(Y_n) = \mu$ e $\SD(Y_n) = \sigma$. Si definisca una nuova v.c. come la media di $Y$:
-
 $$
 Z = \frac{1}{N} \sum_{n=1}^N Y_n.
 $$
 \noindent
 Con $N \rightarrow \infty$, $Z$ tenderà ad una Normale con lo stesso valore atteso di $Y_n$ e una deviazione standard che sarà più piccola della deviazione standard originaria di un fattore pari a $\sqrt{\frac{1}{\sqrt{N}}}$:
-
 \begin{equation}
 p_Z(z) \rightarrow \mathcal{N}\left(z \ \Bigg| \ \mu, \, \frac{1}{\sqrt{N}} \cdot \sigma \right).
 \end{equation}
@@ -372,30 +354,41 @@ Molti fenomeni naturali, come l'altezza dell'uomo adulto di entrambi i sessi, so
 ## Distribuzione Chi-quadrato
 
 Dalla Normale deriva la distribuzione $\chi^2$. La distribuzione  $\chi^2_{~k}$ con $k$ gradi di libertà descrive la variabile casuale
-
 $$
 Z_1^2 + Z_2^2 + \dots + Z_k^2,
 $$
 \noindent
 dove $Z_1, Z_2, \dots, Z_k$ sono variabili casuali i.i.d. con distribuzione Normale standard $\mathcal{N}(0, 1)$. La variabile casuale chi-quadrato dipende dal parametro intero positivo $\nu = k$ che ne identifica il numero di gradi di libertà. La densità di probabilità di $\chi^2_{~\nu}$ è
-
 $$
 f(x) = C_{\nu} x^{\nu/2-1} \exp (-x/2), \qquad \text{se } x > 0,
 $$
 \noindent
 dove $C_{\nu}$ è una costante positiva.
 
+La figura \@ref(fig:alcune-chi-quadrato) mostra alcune distribuzioni Chi-quadrato variando il parametro $\nu$.
+
+\begin{figure}[h]
+
+{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/alcune-chi-quadrato-1} 
+
+}
+
+\caption{Alcune distribuzioni Chi-quadrato.}(\#fig:alcune-chi-quadrato)
+\end{figure}
 
 ### Proprietà
 
 - La distribuzione di densità $\chi^2_{~\nu}$ è asimmetrica.
+
 - Il valore atteso di una variabile $\chi^2_{~\nu}$ è uguale a $\nu$.
+
 - La varianza di una variabile $\chi^2_{~\nu}$ è uguale a $2\nu$.
+
 - Per $k \rightarrow \infty$, la $\chi^2_{~\nu} \rightarrow \mathcal{N}$.
+
 - Se $X$ e $Y$ sono due variabili casuali chi-quadrato indipendenti con $\nu_1$ e $\nu_2$ gradi di libertà, ne segue che $X + Y \sim \chi^2_m$, con $m = \nu_1 + \nu_2$. Tale principio si estende a qualunque numero finito di variabili casuali chi-quadrato indipendenti.
 
-
-::: {.example}
+::: {.exercise}
 Usiamo $\R$ per disegnare la densità chi-quadrato con 3 gradi di libertà dividendo l'area sottesa alla curva di densità in due parti uguali.
 
 
@@ -417,31 +410,25 @@ ggplot(df, aes(x, y)) +
 \begin{center}\includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-10-1} \end{center}
 ::: 
 
-::: {.example}
-La figura \@ref(fig:alcune-chi-quadrato) mostra alcune distribuzioni Chi-quadrato variando il parametro $\nu$.
-
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/alcune-chi-quadrato-1} 
-
-}
-
-\caption{Alcune distribuzioni Chi-quadrato.}(\#fig:alcune-chi-quadrato)
-\end{figure}
-
-::: 
-
-
 ## Distribuzione $t$ di Student
 
 Dalle distribuzioni Normale e Chi quadrato deriva un'altra distribuzione molto nota, la $t$ di Student. Se $Z \sim \mathcal{N}$ e $W \sim \chi^2_{~\nu}$ sono due variabili casuali indipendenti, allora il rapporto
-
 \begin{equation}
 T = \frac{Z}{\Big( \frac{W}{\nu}\Big)^{\frac{1}{2}}}
 \end{equation}
 \noindent
 definisce la distribuzione $t$ di Student con $\nu$ gradi di libertà. Si usa scrivere $T \sim t_{\nu}$. L'andamento della distribuzione $t$ di Student è simile a quello della distribuzione Normale, ma ha una maggiore dispersione (ha le code più pesanti di una Normale, ovvero ha una varianza maggiore di 1).
 
+La figura \@ref(fig:alcune-t-student) mostra alcune distribuzioni $t$ di Student variando il parametro $\nu$.
+
+\begin{figure}[h]
+
+{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/alcune-t-student-1} 
+
+}
+
+\caption{Alcune distribuzioni $t$ di Student.}(\#fig:alcune-t-student)
+\end{figure}
 
 ### Proprietà
 
@@ -457,21 +444,6 @@ La variabile casuale $t$ di Student soddisfa le seguenti proprietà:
     pertanto è sempre maggiore di 1 e tende a 1 per
     $\nu \rightarrow \infty$.
 
-::: {.example}
-
-La figura \@ref(fig:alcune-t-student) mostra alcune distribuzioni $t$ di Student variando il parametro $\nu$.
-
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/alcune-t-student-1} 
-
-}
-
-\caption{Alcune distribuzioni $t$ di Student.}(\#fig:alcune-t-student)
-\end{figure}
-::: 
-
-
 ## Funzione beta di Eulero
 
 La funzione beta di Eulero è una funzione matematica, *non* una densità di probabilità. La menzioniamo qui perché viene utilizzata nella distribuzione Beta. La funzione beta si può scrivere in molti modi; per i nostri scopi, può essere scritta nel modo seguente:
@@ -483,7 +455,6 @@ dove $\Gamma(x)$ è la funzione Gamma, ovvero il fattoriale discendente, cioè
 \begin{equation}
 x(x-1)(x-2)\ldots (x-n+1)\notag\,.
 \end{equation}
-
 
 ## Distribuzione Beta
 
@@ -525,13 +496,16 @@ Il valore atteso, la moda e la varianza di una distribuzione Beta sono dati dall
 (\#eq:beta-var)
 \end{equation}
 
-*Attenzione alle parole.* In questo contesto, il termine "beta" viene utilizzato con tre significati diversi:
+::: {.remark}
+Attenzione alle parole: in questo contesto, il termine "beta" viene utilizzato con tre significati diversi:
 
 - la distribuzione di densità Beta,
-- la funzione matematica beta,
-- il parametro $\beta$.
 
-::: {.example}
+- la funzione matematica beta,
+
+- il parametro $\beta$.
+:::
+
 Al variare di $\alpha$ e $\beta$ si ottengono molte distribuzioni di forma diversa;  per $\alpha = \beta = 1$ si ha la densità uniforme. Vari esempi di distribuzioni Beta sono mostrati nella figura \@ref(fig:some-beta-distr).
 
 \begin{figure}[h]
@@ -542,9 +516,6 @@ Al variare di $\alpha$ e $\beta$ si ottengono molte distribuzioni di forma diver
 
 \caption{Alcune distribuzioni Beta.}(\#fig:some-beta-distr)
 \end{figure}
-:::
-
-
 
 
 <!-- ::: {.rmdnote} -->
@@ -587,7 +558,7 @@ Al variare di $\alpha$ e $\beta$ si ottengono molte distribuzioni di forma diver
 <!-- Per esempio, una frequenza totale $\alpha + \beta = 8$ e una media di $\alpha / (\alpha + \beta) = 0.85$ corrispondono ad una distribuzione Beta di parametri $\alpha = 8 \times 0.85 = 6.8$ and $\beta = 8 \times (1 - 0.85) = 1.2$. La figura mostra che, quando la media è 0.5 e la frequenza totale è 2 (ovvero, $\alpha = \beta = 1$), il risultato è una distribuzione uniforme. -->
 <!-- ::: -->
 
-::: {.example #beta-tuning}
+::: {.exercise}
 Nel disturbo depressivo la recidiva è definita come la comparsa di un nuovo episodio depressivo che si manifesta dopo un prolungato periodo di recupero (6-12 mesi) con stato di eutimia (umore relativamente normale). Supponiamo che una serie di studi mostri una comparsa di recidiva in una proporzione che va dal 20% al 60% dei casi, con una media del 40% [per una recente discussione, si veda @nuggerud2020analysis]. Sulla base di queste ipotetiche informazioni, è possibile usare la distribuzione Beta per rappresentare le nostre credenze a priori relativamente alla probabilità di recidiva. Per fare questo dobbiamo trovare i parametri della distribuzione Beta tali per cui la massa della densità sia compresa tra 0.2 e 0.6, con la media in corrispondenza di 0.4. Procedendo per tentativi ed errori, ed usando la funzione `bayesrules::plot_beta()`, un risultato possibile è $\Beta(16, 24)$.
 
 
@@ -635,7 +606,6 @@ uguale a circa 8 punti percentuali. Questo significa che le nostre credenze a pr
 ## Distribuzione di Cauchy
 
 La distribuzione di Cauchy è un caso speciale della distribuzione di $t$ di Student con 1 grado di libertà. È definita da una densità di probabilità che corrisponde alla funzione, dipendente da due parametri $\theta$ e $d$ (con la condizione $d > 0$),
-
 \begin{equation}
 f(x; \theta, d) = \frac{1}{\pi d} \frac{1}{1 + \left(\frac{x - \theta}{d} \right)^2},
 \end{equation}
@@ -667,46 +637,16 @@ Il valore atteso e la varianza di una distribuzione log-normale sono dati dalle 
 Si può dimostrare che il prodotto di variabili casuali log-normali ed indipendenti segue una distribuzione log-normale.
 
 
-
 ## Distribuzione di Pareto
 
 La distribuzione paretiana (o distribuzione di Pareto) è una distribuzione di probabilità continua e così chiamata in onore di Vilfredo Pareto. La distribuzione di Pareto è una distribuzione di probabilità con legge di potenza utilizzata nella descrizione di fenomeni sociali e molti altri tipi di fenomeni osservabili. Originariamente applicata per descrivere la distribuzione del reddito in una società, adattandosi alla tendenza che una grande porzione di ricchezza è detenuta da una piccola frazione della popolazione, la distribuzione di Pareto è diventata colloquialmente nota e indicata come il principio di Pareto, o "regola 80-20”. Questa regola afferma che, ad esempio, l'80% della ricchezza di una società è detenuto dal 20% della sua popolazione. Viene spesso applicata nello studio della distribuzione del reddito, della dimensione dell'impresa, della dimensione di una popolazione e nelle fluttuazioni del prezzo delle azioni.
 
-La densità di una distribuzione di Pareto é
-
+La densità di una distribuzione di Pareto è
 $$
 f(x)=(x_m/x)^\alpha,
 $$
 \noindent
 dove $x_m$ (parametro di scala) è il minimo (necessariamente positivo) valore possibile di $X$ e $\alpha$ è un parametro di forma.
-
-
-```r
-x  <- seq(1, 5, 0.05)
-a3 <-  3/x^(4)
-a2 <-  2/x^(3)
-a1 <-  1/x^(2)
-df <-  bind_rows(
-  tibble(x = x, p=a3, alpha='3'), 
-  tibble(x = x, p=a2, alpha='2'), 
-  tibble(x = x, p=a1, alpha='1')
-)
-gg <- df %>%
-  ggplot(aes(x = x, y = p, group = alpha)) +
-  geom_line(aes(color = alpha)) +
-  xlim(1, 5) +
-  ggtitle('Densità di Pareto per alcuni valori del parametro di forma') +
-  ylab('P(X = x)') +
-  scale_colour_viridis(
-    discrete = TRUE, labels = parse_format()
-  ) +
-  labs(
-    x = '\ny',
-    y = 'f(y)\n'
-  )
-print(gg)
-```
-
 
 
 \begin{center}\includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-15-1} \end{center}

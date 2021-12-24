@@ -9,7 +9,7 @@ dove $x_i$ è un numero che è stato definito altrove. La notazione precedente, 
   \sum_{i=1}^n x_i\notag
 \end{equation}
 \noindent
-e si legge ``sommatoria per $i$ che va da $1$ a $n$ di $x_i$.'' Il simbolo $\sum$ (lettera sigma maiuscola dell'alfabeto greco) indica l'operazione di somma,  il simbolo $x_i$ indica il generico addendo della sommatoria, le lettere $1$ ed $n$ indicano i cosiddetti *estremi della sommatoria*, ovvero l'intervallo (da $1$ fino a $n$ estremi inclusi) in cui deve variare  l'indice $i$ allorché si sommano gli addendi $x_i$.
+e si legge "sommatoria per $i$ che va da $1$ a $n$ di $x_i$". Il simbolo $\sum$ (lettera sigma maiuscola dell'alfabeto greco) indica l'operazione di somma,  il simbolo $x_i$ indica il generico addendo della sommatoria, le lettere $1$ ed $n$ indicano i cosiddetti *estremi della sommatoria*, ovvero l'intervallo (da $1$ fino a $n$ estremi inclusi) in cui deve variare  l'indice $i$ allorché si sommano gli addendi $x_i$.
 Solitamente l'estremo inferiore è $1$ ma potrebbe essere qualsiasi altri numero $m < n$. Quindi 
 \[
   \sum_{i=1}^n x_i = x_1 + x_{2} + \dots + x_{n}.
@@ -31,14 +31,12 @@ dove $P(i)$ è qualsiasi proposizione riguardante $i$ che può essere vera o fal
 
 È conveniente utilizzare le seguenti regole per semplificare i calcoli che coinvolgono l'operatore della sommatoria.
 
-
 ### Proprietà 1
 
 La sommatoria di $n$ valori tutti pari alla stessa costante $a$ è pari a $n$ volte la costante stessa:
   \[
   \sum_{i=1}^{n} a =  \underbrace{a + a + \dots + a}_{n~\text{volte}} = n a.
   \]
-
 
 ### Proprietà 2 (proprietà distributiva)
 
@@ -50,7 +48,6 @@ Nel caso in cui l'argomento contenga una costante, è possibile riscrivere la so
   \[
   \sum_{i=1}^{n} a x_i =  a  \sum_{i=1}^{n} x_i.
   \]
-
 
 ### Proprietà 3 (proprietà associativa)
 
@@ -67,14 +64,12 @@ si ha che
   \sum_{i=1}^{n} (x_i + y_i) =  \sum_{i=1}^{n} x_i + \sum_{i=1}^{n} y_i.
   \]
   
-
 ### Proprietà 4
 
 Se deve essere eseguita un'operazione algebrica (innalzamento a potenza, logaritmo, ecc.) sull'argomento della sommatoria, allora tale operazione algebrica deve essere eseguita prima della somma. Per esempio, 
 \[
 \sum_{i=1}^{n} x_i^2 = x_1^2 + x_2^2 + \dots + x_n^2 \neq \left(\sum_{i=1}^{n} x_i \right)^2.
 \]
-
 
 ### Proprietà 5
 
@@ -83,7 +78,6 @@ Nel caso si voglia calcolare $\sum_{i=1}^{n} x_i y_i$, il prodotto tra i puntegg
 \sum_{i=1}^{n} x_i y_i = x_1 y_1 + x_2 y_2 + \dots + x_n y_n,
 \]
 infatti, $a_1 b_1 + a_2 b_2 \neq (a_1 + a_2)(b_1 + b_2)$.
-
 
 ## Doppia sommatoria
 
@@ -110,7 +104,7 @@ Allo stesso modo si può osservare che nell'argomento della sommatoria esterna l
 \]
 
 
-::: {.example}
+::: {.exercise}
 Si verifichi quanto detto sopra nel caso particolare di $x = \{2, 3, 1\}$ e $y = \{1, 4, 9\}$, svolgendo prima la doppia sommatoria per poi verificare che quanto così ottenuto sia uguale al prodotto delle due sommatorie.
 
 \begin{align}
@@ -123,7 +117,6 @@ ovvero
 \[
 (2 + 3 + 1) \times (1+4+9) = 84.
 \]
-
 ::: 
 
 

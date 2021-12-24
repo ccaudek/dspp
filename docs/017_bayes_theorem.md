@@ -2,9 +2,7 @@
 
 
 
-::: {.chapterintro data-latex=""}
 Questo Capitolo presenterà il teorema di Bayes per calcolare la probabilità degli eventi riferiti a esperimenti casuali, ossia esperimenti di cui non si può prevedere il risultato finale ma di cui si conoscono tutti i possibili risultati. Prima di esaminare il teorema di Bayes verrà introdotta una sua componente, ovvero il teorema della probabilità totale. 
-:::
 
 
 ## Il teorema della probabilità totale 
@@ -12,8 +10,8 @@ Questo Capitolo presenterà il teorema di Bayes per calcolare la probabilità de
 Il teorema della probabilità totale fa uso della legge della probabilità
 composta \@ref(eq:probcomposte). Lo discuteremo qui considerando il caso di una partizione dello spazio campionario in tre sottoinsiemi, ma è facile estendere tale discussione al caso di una partizione in un qualunque numero di sottoinsiemi.
 
-\BeginKnitrBlock{theorem}
-<span class="theorem" id="thm:theo-prob-tot"><strong>(\#thm:theo-prob-tot) </strong></span>Sia $\{F_1, F_2, F_3\}$ una partizione dello spazio campionario
+::: {.theorem}
+Sia $\{F_1, F_2, F_3\}$ una partizione dello spazio campionario
 $\Omega$. Se $E$ è un qualunque altro evento, allora:
 \begin{equation}
 P(E) = P(E \cap F_1) + P(E \cap F_2) + P(E \cap F_3) \notag
@@ -24,7 +22,7 @@ ovvero
 P(E) = P(E \mid F_1) P(F_1) + P (E \mid F_2) P(F_2) + P(E \mid F_3) P(F_3).
 (\#eq:prob-total-1b)
 \end{equation}
-\EndKnitrBlock{theorem}
+:::
 
 Il teorema della probabilità totale afferma che, se l'evento $E$ è
 costituito da tutti gli eventi elementari in $E \cap F_1$, $E \cap F_2$
@@ -40,9 +38,7 @@ probabilità di questi tre eventi (figura \@ref(fig:tikz-prob-tot)).
 \caption{Partizione dello spazio campionario $\Omega$.}(\#fig:tikz-prob-tot)
 \end{figure}
 
-
-::: {.example}
-
+::: {.exercise}
 Si considerino tre urne, ciascuna delle quali contiene 100 palline:
 
 -   Urna 1: 75 palline rosse e 25 palline blu,
@@ -70,7 +66,7 @@ P(R) &= P(R \mid U_1)P(U_1)+P(R \mid U_2)P(U_2)+P(R \mid U_3)P(U_3)\notag\\
 \end{align}
 :::
 
-::: {.example}
+::: {.exercise}
 Consideriamo un'urna che contiene 5 palline rosse e 2 palline verdi. Due
 palline vengono estratte, una dopo l'altra. Vogliamo sapere la
 probabilità dell'evento "la seconda pallina estratta è rossa".
@@ -98,7 +94,6 @@ una pallina rossa è uguale a 5/6. La probabilità di una pallina verde
 nella prima estrazione è 2/7.
 :::
 
-
 ## La regola di Bayes
 
 Il teorema di Bayes rappresenta uno dei fondamenti della teoria della
@@ -123,27 +118,21 @@ $F_1$ piuttosto che $F_2$?
 \end{figure}
 
 Per rispondere alla domanda precedente scriviamo: 
-
 \begin{align}
 P(F_1 \mid E) &= \frac{P(E \cap F_1)}{P(E)}\notag\\ 
               &= \frac{P(E \mid F_1)P(F_1)}{P(E)}.\notag
 \end{align}
-
 Sapendo che $E = (E \cap F_1) \cup (E \cap F_2)$ e che $F_1$ e $F_2$ sono eventi disgiunti, ovvero $F_1 \cap F_2 = \emptyset$, ne segue che possiamo calcolare $P(E)$ utilizzando il teorema della probabilità totale:
-
 \begin{align}
 P(E) &= P(E \cap F_1) + P(E \cap F_2)\notag\\ 
      &= P(E \mid F_1)P(F_1) + P(E \mid F_2)P(F_2).\notag
 \end{align}
-
 \noindent
 Sostituendo il risultato precedente nella formula della probabilità condizionata $P(F_1 \mid E)$ otteniamo:
-
 \begin{equation}
 P(F_1 \mid E) = \frac{P(E \mid F_1)P(F_1)}{P(E \mid F_1)P(F_1) + P(E \mid F_2)P(F_2)}.
 (\#eq:bayes1)
 \end{equation}
-
 \noindent
 La \@ref(eq:bayes1) si generalizza facilmente al caso di più di due eventi disgiunti, come indicato di seguito.
 
@@ -151,18 +140,17 @@ La \@ref(eq:bayes1) si generalizza facilmente al caso di più di due eventi dis
 <!-- tali che $\bigcup_{i=1}^{n} F_i = \Omega$. Per l'evento -->
 <!-- $E \subset \Omega$ con $P(E) > 0$, abbiamo -->
 
-\BeginKnitrBlock{theorem}
-<span class="theorem" id="thm:theobayes"><strong>(\#thm:theobayes) </strong></span>Sia $E$ un evento contenuto in $F_1 \cup \dots \cup F_k$, dove gli eventi $F_j, j=1, \dots, k$ sono a due a due incompatibili e necessari. Allora per ognuno dei suddetti eventi $F_j$ vale la seguente formula:
+::: {.theorem}
+Sia $E$ un evento contenuto in $F_1 \cup \dots \cup F_k$, dove gli eventi $F_j, j=1, \dots, k$ sono a due a due incompatibili e necessari. Allora per ognuno dei suddetti eventi $F_j$ vale la seguente formula:
   
 \begin{equation}
 P(F_j \mid E) = \frac{P(E \mid F_j)P(F_j)}{\sum_{j=1}^{k}P(F_j)P(E \mid F_j)}.
 (\#eq:bayes2)
 \end{equation}
-\EndKnitrBlock{theorem}
+:::
 
 \noindent
-La \@ref(eq:bayes2) prende il nome di *Teorema di Bayes* e mostra che la conoscenza del verificarsi dell'evento $E$ modifica la probabilità che abbiamo attribuito all'evento $F_j$. Nella \@ref(eq:bayes2) la probabilità condizionata $P(F_j \mid E)$ prende il nome di probabilità _a posteriori_ dell'evento $F_j$: il termine "a posteriori" sta a significare "dopo che è noto che si è verificato l'evento $E$".
-Nel capitolo \@ref(chapter-intro-bayes-inference) estenderemo questa discussione mostrando come la \@ref(eq:bayes2) possa essere formulata in un modo più generale, ovvero in modo tale che non faccia riferimento unicamente alla probabilità di eventi, ma bensì anche alle funzioni di densità di probabilità. 
+La \@ref(eq:bayes2) prende il nome di *Teorema di Bayes* e mostra che la conoscenza del verificarsi dell'evento $E$ modifica la probabilità che abbiamo attribuito all'evento $F_j$. Nella \@ref(eq:bayes2) la probabilità condizionata $P(F_j \mid E)$ prende il nome di probabilità _a posteriori_ dell'evento $F_j$: il termine "a posteriori" sta a significare "dopo che è noto che si è verificato l'evento $E$". Nel capitolo \@ref(chapter-intro-bayes-inference) estenderemo questa discussione mostrando come la \@ref(eq:bayes2) possa essere formulata in un modo più generale, ovvero in modo tale che non faccia riferimento unicamente alla probabilità di eventi, ma bensì anche alle funzioni di densità di probabilità. 
 
 
 <!-- ### Motivazioni per una probabilità bayesiana {#par:probfreq} -->
@@ -202,7 +190,7 @@ Se ogni assegnazione probabilistica rappresenta uno stato di conoscenza, è alt
 
 Il teorema di Bayes consente di modificare una credenza a priori in maniera dinamica, via via che nuove evidenze vengono raccolte, in modo tale da formulare una credenza a posteriori la quale non è mai definitiva, ma può sempre essere aggiornata in base alle nuove evidenze disponibili. Questo processo si chiama *aggiornamento bayesiano*.
 
-::: {.example}
+::: {.exercise}
 Supponiamo che, per qualche strano errore di produzione, una fabbrica
 produca due tipi di monete. Il primo tipo di monete ha la caratteristica
 che, quando una moneta viene lanciata, la probabilità di osservare
@@ -259,7 +247,6 @@ $$
 P(y) &= P(y \mid H_1) P(H_1) + P(y \mid H_2) P(H_2) = 0.24 \cdot 0.75 + 0.24 \cdot 0.25 = 0.24.\notag
 \end{aligned}
 $$
-
 Le probabilità a posteriori diventano: 
 $$
 \begin{aligned}
@@ -273,9 +260,7 @@ P(H_2 \mid y) &= \frac{P(y \mid H_2) P(H_2)}{P(y)} = \frac{0.24 \cdot 0.25}{0.24
 $$
 Possiamo dunque concludere dicendo che, sulla base dei dati osservati, l'ipotesi $H_1$ ha una probabilità 3 volte maggiore di essere vera dell'ipotesi $H_2$.
 
-È tuttavia possibile raccogliere più evidenze e, sulla base di esse, le probabilità a posteriori cambieranno. 
-Supponiamo di lanciare la moneta una terza volta e di osservare croce. 
-I nostri dati dunque sono $\{T, C, C\}$. 
+È tuttavia possibile raccogliere più evidenze e, sulla base di esse, le probabilità a posteriori cambieranno.  Supponiamo di lanciare la moneta una terza volta e di osservare croce. I nostri dati dunque sono $\{T, C, C\}$. 
 
 Di conseguenza, $P(y \mid H_1) = 0.6 \cdot 0.4 \cdot 0.4 = 0.096$ e $P(y \mid H_2) = 0.4 \cdot 0.6 \cdot 0.6 = 0.144$. 
 Ne segue che le probabilità a posteriori diventano: 
@@ -294,7 +279,6 @@ dati diventano: $\{T, C, C, C\}$.
 Ripetendo il ragionamento fatto sopra,
 $P(y \mid H_1) = 0.6 \cdot 0.4 \cdot 0.4 \cdot 0.4 = 0.0384$ e
 $P(y \mid H_2) = 0.4 \cdot 0.6 \cdot 0.6 \cdot 0.6 = 0.0864$. 
-
 Dunque
 $$
 \begin{aligned}
@@ -313,7 +297,6 @@ diventerebbe più probabile dell'ipotesi $H_1$.
 In conclusione, questo esercizio ci fa capire come sia possibile aggiornare le nostre credenze sulla base delle evidenze disponibili, ovvero come sia possibile passare da un grado di conoscenza del mondo a priori a una conoscenza a posteriori. 
 Se prima di lanciare la moneta ritenevamo che l'ipotesi $H_1$ fosse tre volte più plausibile dell'ipotesi $H_2$, dopo avere osservato uno specifico campione di dati siamo giunti alla conclusione opposta. 
 Il processo di aggiornamento bayesiano, dunque, ci fornisce un metodo per modificare il livello di fiducia in una data ipotesi, alla luce di nuove informazioni.
-
 :::
 
 ## Considerazioni conclusive {-}

@@ -31,7 +31,7 @@ dove la prima riga definisce la funzione di verosimiglianza e la seconda riga de
 
 Per fare un esempio concreto, consideriamo un set di dati reali. Cito dal *Washington Post* del 7 aprile 2020:
     
-> One of the most bizarre and disturbing aspects of President Trump's nightly press briefings on the coronavirus pandemic is when he turns into a drug salesman. Like a cable TV pitchman hawking 'male enhancement' pills, Trump regularly extols the virtues of taking hydroxychloroquine, a drug used to treat malaria and lupus, as a potential 'game changer' that just might cure Covid-19.
+> *One of the most bizarre and disturbing aspects of President Trump's nightly press briefings on the coronavirus pandemic is when he turns into a drug salesman. Like a cable TV pitchman hawking 'male enhancement' pills, Trump regularly extols the virtues of taking hydroxychloroquine, a drug used to treat malaria and lupus, as a potential 'game changer' that just might cure Covid-19.*
 
 Tralasciamo qui il fatto che il presidente Trump non è un esperto in questo campo. Esaminiamo invece le evidenze iniziali a supporto dell'ipotesi che l'idrossiclorochina possa essere utile per la cura del Covid-19, ovvero le evidenze che erano disponibili nel momento in cui il presidente Trump ha fatto le affermazioni riportate sopra (in seguito, quest'idea è stata screditata). Tali evidenze sono state fornite da uno studio di @Gautret_2020.
 Il disegno sperimentale di @Gautret_2020 comprende, tra le altre cose, il confronto tra una condizione sperimentale e una condizione di controllo. Il confronto importante è tra la proporzione di paziente positivi al virus SARS-CoV-2 nel gruppo sperimentale (a cui è stata somministrata l'idrossiclorochina; 6 su 14) e la proporzione di paziente positivi nel gruppo di controllo (a cui non è stata somministrata l'idrossiclorochina; ovvero 14 su 16). Obiettivo di questo Capitolo è mostrare come si possa fare inferenza sul modello \@ref(eq:beta-binom-trump) usando il linguaggio Stan.
@@ -55,6 +55,7 @@ SEED <- 374237 # set random seed for reproducibility
 Ci sono due passaggi essenziali per le analisi svolte mediante `cmdstanr`: 
 
 1. definire la struttura del modello bayesiano nella notazione Stan; 
+
 2. eseguire il campionamento della distribuzione a posteriori. 
 
 Esaminiamo questi due passaggi nel contesto del modello Beta-Binomiale definito dalla \@ref(eq:beta-binom-trump). 
@@ -196,10 +197,11 @@ Un sommario della distribuzione a posteriori si ottiene con:
 
 ```r
 fit1$summary(c("theta"))
-#> # A tibble: 1 x 10
-#>   variable  mean median     sd    mad    q5   q95  rhat ess_bulk ess_tail
-#>   <chr>    <dbl>  <dbl>  <dbl>  <dbl> <dbl> <dbl> <dbl>    <dbl>    <dbl>
-#> 1 theta    0.802  0.813 0.0868 0.0867 0.644 0.928  1.00    5116.    5887.
+#> # A tibble: 1 × 10
+#>   variable  mean median     sd    mad    q5   q95  rhat ess_bulk
+#>   <chr>    <dbl>  <dbl>  <dbl>  <dbl> <dbl> <dbl> <dbl>    <dbl>
+#> 1 theta    0.802  0.813 0.0868 0.0867 0.644 0.928  1.00    5116.
+#> # … with 1 more variable: ess_tail <dbl>
 ```
 
 Creiamo un oggetto di classe `stanfit`
@@ -354,6 +356,7 @@ Un articolo pubblicato da @Hulme_2020 si è posto il problema di rianalizzare i 
 Se consideriamo tutti i pazienti --- non solo quelli selezionati da @Gautret_2020 --- la situazione diventa la seguente:
 
 - gruppo sperimentale: 10 positivi su 18; 
+
 - gruppo di controllo: 14 positivi su 16. 
 
 L'analisi dei dati proposta da @Hulme_2020 richiede l'uso di alcuni strumenti statistici che, in queste dispense, non verranno discussi. Ma possiamo giungere alle stesse conclusioni raggiunte da questi ricercatori anche usando le procedure statistiche descritte nel Paragrafo successivo. 
@@ -444,16 +447,20 @@ print(
   pars = c("theta1", "theta2", "oddsratio"),
   digits_summary = 3L
 )
-#> Inference for Stan model: twoprop1-202111281509-1-6054a7.
+#> Inference for Stan model: twoprop1-202112241247-1-603246.
 #> 4 chains, each with iter=6000; warmup=2000; thin=1; 
 #> post-warmup draws per chain=4000, total post-warmup draws=16000.
 #> 
-#>            mean se_mean    sd  2.5%   25%   50%   75%  97.5% n_eff Rhat
-#> theta1    0.546   0.001 0.104 0.337 0.475 0.547 0.619  0.743 11214    1
-#> theta2    0.801   0.001 0.087 0.605 0.747 0.812 0.865  0.939 12359    1
-#> oddsratio 4.859   0.049 4.740 0.914 2.221 3.599 5.933 16.251  9207    1
+#>            mean se_mean    sd  2.5%   25%   50%   75%  97.5% n_eff
+#> theta1    0.546   0.001 0.104 0.337 0.475 0.547 0.619  0.743 11214
+#> theta2    0.801   0.001 0.087 0.605 0.747 0.812 0.865  0.939 12359
+#> oddsratio 4.859   0.049 4.740 0.914 2.221 3.599 5.933 16.251  9207
+#>           Rhat
+#> theta1       1
+#> theta2       1
+#> oddsratio    1
 #> 
-#> Samples were drawn using NUTS(diag_e) at Dom Nov 28 15:09:38 2021.
+#> Samples were drawn using NUTS(diag_e) at Ven Dic 24 12:47:56 2021.
 #> For each parameter, n_eff is a crude measure of effective sample size,
 #> and Rhat is the potential scale reduction factor on split chains (at 
 #> convergence, Rhat=1).

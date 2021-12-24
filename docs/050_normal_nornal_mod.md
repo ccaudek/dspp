@@ -77,8 +77,8 @@ Per esaminare un esempio pratico, consideriamo i 30 valori BDI-II dei soggetti c
 ```r
 df <- data.frame(
   y = c(
-    26.0, 35.0, 30, 25, 44, 30, 33, 43, 22, 43,
-    24, 19, 39, 31, 25, 28, 35, 30, 26, 31, 41,
+    26.0, 35.0, 30, 25, 44, 30, 33, 43, 22, 43, 
+    24, 19, 39, 31, 25, 28, 35, 30, 26, 31, 41, 
     36, 26, 35, 33, 28, 27, 34, 27, 22
   )
 )
@@ -89,13 +89,13 @@ Calcoliamo le statistiche descrittive del campione di dati:
 
 
 ```r
-df %>%
+df %>% 
   summarise(
     sample_mean = mean(y),
     sample_sd = sd(y)
   )
 #>   sample_mean sample_sd
-#> 1    30.93333  6.606858
+#> 1        30.9      6.61
 ```
 
 Nella discussione seguente assumeremo che $\mu$ e $\sigma$ siano indipendenti. Assegneremo a $\mu$ una distribuzione a priori $\mathcal{N}(25, 2)$ e a $\sigma$ una distribuzione a priori $Cauchy(0, 3)$.
@@ -112,11 +112,11 @@ In base al modello definito, la variabile casuale $Y$ segue la distribuzione Nor
 
 
 ```r
-data.frame(x = c(0, 20)) %>%
+data.frame(x = c(0, 20)) %>% 
   ggplot(aes(x)) +
   stat_function(
-    fun = dcauchy,
-    n = 1e3,
+    fun = dcauchy, 
+    n = 1e3, 
     args = list(location = 0, scale = 3)
   ) +
   ylab("P(x)") +
@@ -125,7 +125,7 @@ data.frame(x = c(0, 20)) %>%
 
 
 
-\begin{center}\includegraphics{050_normal_nornal_mod_files/figure-latex/unnamed-chunk-4-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{050_normal_nornal_mod_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 Dato che il modello è Normale-Normale, è possibile una soluzione analitica, come descritto in precedenza per il caso in cui $\sigma$ è noto. In tali condizioni, la distribuzione a posteriori per $\mu$ può essere trovata con la funzione `bayesrules:::summarize_normal_normal()`:
 
@@ -134,9 +134,9 @@ Dato che il modello è Normale-Normale, è possibile una soluzione analitica, co
 bayesrules:::summarize_normal_normal(
   mean = 25, sd = 2, sigma = sd(df$y), y_bar = mean(df$y), n = 30
 )
-#>       model     mean     mode      var       sd
-#> 1     prior 25.00000 25.00000 4.000000 2.000000
-#> 2 posterior 29.35073 29.35073 1.066921 1.032919
+#>       model mean mode  var   sd
+#> 1     prior 25.0 25.0 4.00 2.00
+#> 2 posterior 29.4 29.4 1.07 1.03
 ```
 
 La rappresentazione grafica della funzione a priori, della verosimiglianza e della distribuzione a posteriori per $\mu$ è fornita da:
@@ -150,7 +150,7 @@ bayesrules:::plot_normal_normal(
 
 
 
-\begin{center}\includegraphics{050_normal_nornal_mod_files/figure-latex/unnamed-chunk-6-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{050_normal_nornal_mod_files/figure-latex/unnamed-chunk-6-1} \end{center}
 
 La procedura MCMC utilizzata da Stan è basata su un campionamento Monte Carlo Hamiltoniano che non richiede l'uso di distribuzioni a priori coniugate. Pertanto per i parametri è possibile scegliere una qualunque distribuzione a priori arbitraria.
 
@@ -158,7 +158,7 @@ Per continuare con l'esempio, poniamoci il problema di trovare le distribuzioni 
 
 
 ```r
-modelString <- "
+modelString = "
 data {
   int<lower=0> N;
   vector[N] y;
@@ -221,12 +221,12 @@ Le stime a posteriori dei parametri si ottengono con:
 
 ```r
 fit$summary(c("mu", "sigma"))
-#> # A tibble: 2 x 10
-#>   variable  mean median    sd   mad    q5   q95  rhat
-#>   <chr>    <dbl>  <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
-#> 1 mu       29.3   29.3  1.10  1.09  27.4  31.0   1.00
-#> 2 sigma     6.88   6.78 0.956 0.907  5.50  8.58  1.00
-#> # ... with 2 more variables: ess_bulk <dbl>, ess_tail <dbl>
+#> # A tibble: 2 × 10
+#>   variable  mean median    sd   mad    q5   q95  rhat ess_bulk
+#>   <chr>    <dbl>  <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>    <dbl>
+#> 1 mu       29.3   29.3  1.10  1.09  27.4  31.0   1.00    9057.
+#> 2 sigma     6.88   6.78 0.956 0.907  5.50  8.58  1.00    9154.
+#> # … with 1 more variable: ess_tail <dbl>
 ```
 
 \noindent
@@ -242,10 +242,10 @@ con
 ```r
 out <- rstantools::posterior_interval(as.matrix(stanfit), prob = 0.95)
 out
-#>            2.5%      97.5%
-#> mu     27.03928  31.305245
-#> sigma   5.31728   9.039887
-#> lp__  -77.93218 -74.273895
+#>         2.5%  97.5%
+#> mu     27.04  31.31
+#> sigma   5.32   9.04
+#> lp__  -77.93 -74.27
 ```
 
 Possiamo dunque concludere, con un grado di certezza soggettiva del 95%, che siamo sicuri che la media della popolazione da cui abbiamo tratto i dati è compresa nell'intervallo [27.04, 31.31]. 
@@ -258,7 +258,7 @@ Ripetiamo l'analisi precedente usando le funzioni del pacchetto `rethinking` per
 
 ```r
 flist <- alist(
-  y ~ dnorm(mu, sigma),
+  y ~ dnorm(mu, sigma), 
   mu ~ dnorm(25, 2),
   sigma ~ dcauchy(0, 3)
 )
@@ -271,9 +271,9 @@ Usiamo la funzione `quap()` per ottenere l'approssimazione quadratica delle dist
 
 ```r
 set.seed(123)
-m <- quap(
+m <- quap( 
   flist,
-  data = df
+  data = df 
 )
 ```
 
@@ -283,9 +283,9 @@ L'intervallo di credibilità al 95% è dato dalla funzione `precis()`:
 ```r
 out <- precis(m, prob = 0.95)
 out
-#>            mean        sd      2.5%     97.5%
-#> mu    29.387976 1.0632785 27.303989 31.471964
-#> sigma  6.500837 0.8473294  4.840102  8.161572
+#>       mean    sd  2.5% 97.5%
+#> mu    29.4 1.063 27.30 31.47
+#> sigma  6.5 0.847  4.84  8.16
 ```
 
 I risultati sono simili a quelli trovati in precedenza.
@@ -300,15 +300,15 @@ Stimiamo ora la distribuzione a posteriori di $\mu$ usando la funzione `brms::br
 
 ```r
 fit3 <- brm(
-  data = df,
+  data = df, 
   family = gaussian(),
   y ~ 1,
   prior = c(
     prior(normal(25, 2), class = Intercept),
     prior(cauchy(0, 3), class = sigma)
   ),
-  iter = 4000,
-  refresh = 0,
+  iter = 4000, 
+  refresh = 0, 
   chains = 4
 )
 ```
@@ -323,7 +323,7 @@ plot(fit3)
 
 
 
-\begin{center}\includegraphics{050_normal_nornal_mod_files/figure-latex/unnamed-chunk-19-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{050_normal_nornal_mod_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
 \noindent
 Le stime della distribuzione a posteriori si ottengono con la funzione `summary()`:
@@ -339,16 +339,14 @@ summary(fit3)
 #>          total post-warmup draws = 8000
 #> 
 #> Population-Level Effects: 
-#>           Estimate Est.Error l-95% CI u-95% CI Rhat
-#> Intercept    29.26      1.13    26.97    31.39 1.00
-#>           Bulk_ESS Tail_ESS
-#> Intercept     4660     3929
+#>           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
+#> Intercept    29.27      1.10    27.03    31.37 1.00     4233
+#>           Tail_ESS
+#> Intercept     4933
 #> 
 #> Family Specific Parameters: 
-#>       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
-#> sigma     6.88      0.95     5.28     9.05 1.00     4666
-#>       Tail_ESS
-#> sigma     5272
+#>       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+#> sigma     6.89      0.94     5.35     9.00 1.00     4522     5131
 #> 
 #> Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 #> and Tail_ESS are effective sample size measures, and Rhat is the potential

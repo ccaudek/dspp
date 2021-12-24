@@ -18,16 +18,12 @@ Fissiamo una griglia di $n = 50$ valori equispaziati nell'intervallo [0, 1] per 
 n_points <- 50
 p_grid <- seq(from = 0, to = 1, length.out = n_points)
 p_grid
-#>  [1] 0.00000000 0.02040816 0.04081633 0.06122449 0.08163265
-#>  [6] 0.10204082 0.12244898 0.14285714 0.16326531 0.18367347
-#> [11] 0.20408163 0.22448980 0.24489796 0.26530612 0.28571429
-#> [16] 0.30612245 0.32653061 0.34693878 0.36734694 0.38775510
-#> [21] 0.40816327 0.42857143 0.44897959 0.46938776 0.48979592
-#> [26] 0.51020408 0.53061224 0.55102041 0.57142857 0.59183673
-#> [31] 0.61224490 0.63265306 0.65306122 0.67346939 0.69387755
-#> [36] 0.71428571 0.73469388 0.75510204 0.77551020 0.79591837
-#> [41] 0.81632653 0.83673469 0.85714286 0.87755102 0.89795918
-#> [46] 0.91836735 0.93877551 0.95918367 0.97959184 1.00000000
+#>  [1] 0.0000 0.0204 0.0408 0.0612 0.0816 0.1020 0.1224 0.1429 0.1633
+#> [10] 0.1837 0.2041 0.2245 0.2449 0.2653 0.2857 0.3061 0.3265 0.3469
+#> [19] 0.3673 0.3878 0.4082 0.4286 0.4490 0.4694 0.4898 0.5102 0.5306
+#> [28] 0.5510 0.5714 0.5918 0.6122 0.6327 0.6531 0.6735 0.6939 0.7143
+#> [37] 0.7347 0.7551 0.7755 0.7959 0.8163 0.8367 0.8571 0.8776 0.8980
+#> [46] 0.9184 0.9388 0.9592 0.9796 1.0000
 ```
 
 
@@ -39,11 +35,11 @@ Supponiamo di avere scarse credenze a priori sulla tendenza di un individuo clin
 ```r
 prior1 <- dbeta(p_grid, 1, 1) / sum(dbeta(p_grid, 1, 1))
 prior1
-#>  [1] 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02
-#> [12] 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02
-#> [23] 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02
-#> [34] 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02
-#> [45] 0.02 0.02 0.02 0.02 0.02 0.02
+#>  [1] 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02
+#> [13] 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02
+#> [25] 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02
+#> [37] 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02
+#> [49] 0.02 0.02
 ```
 
 \noindent
@@ -61,7 +57,7 @@ La distribuzione a priori così costruita è rappresentata nella figura \@ref(fi
 
 ```r
 p1 <- data.frame(p_grid, prior1) %>%
-  ggplot(aes(x = p_grid, xend = p_grid, y = 0, yend = prior1)) +
+  ggplot(aes(x=p_grid, xend=p_grid, y=0, yend=prior1)) +
   geom_line() +
   geom_segment() +
   ylim(0, 0.17) +
@@ -73,9 +69,9 @@ p1 <- data.frame(p_grid, prior1) %>%
 p1
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{910_grid_method_example_files/figure-latex/gridappr1-1} 
+{\centering \includegraphics[width=0.8\linewidth]{910_grid_method_example_files/figure-latex/gridappr1-1} 
 
 }
 
@@ -105,19 +101,14 @@ Dobbiamo svolgere questo calcolo per tutti gli elementi della griglia. Usando $\
 ```r
 likelihood <- dbinom(x = 23, size = 30, prob = p_grid)
 likelihood
-#>  [1] 0.000000e+00 2.352564e-33 1.703051e-26 1.644169e-22
-#>  [5] 1.053708e-19 1.525217e-17 8.602222e-16 2.528440e-14
-#>  [9] 4.606907e-13 5.819027e-12 5.499269e-11 4.105534e-10
-#> [13] 2.520191e-09 1.311195e-08 5.919348e-08 2.362132e-07
-#> [17] 8.456875e-07 2.749336e-06 8.196948e-06 2.259614e-05
-#> [21] 5.798673e-05 1.393165e-04 3.148623e-04 6.720574e-04
-#> [25] 1.359225e-03 2.611870e-03 4.778973e-03 8.340230e-03
-#> [29] 1.390025e-02 2.214199e-02 3.372227e-02 4.909974e-02
-#> [33] 6.830377e-02 9.068035e-02 1.146850e-01 1.378206e-01
-#> [37] 1.568244e-01 1.681749e-01 1.688979e-01 1.575211e-01
-#> [41] 1.348746e-01 1.043545e-01 7.133007e-02 4.165680e-02
-#> [45] 1.972669e-02 6.936821e-03 1.535082e-03 1.473375e-04
-#> [49] 1.868105e-06 0.000000e+00
+#>  [1] 0.00e+00 2.35e-33 1.70e-26 1.64e-22 1.05e-19 1.53e-17 8.60e-16
+#>  [8] 2.53e-14 4.61e-13 5.82e-12 5.50e-11 4.11e-10 2.52e-09 1.31e-08
+#> [15] 5.92e-08 2.36e-07 8.46e-07 2.75e-06 8.20e-06 2.26e-05 5.80e-05
+#> [22] 1.39e-04 3.15e-04 6.72e-04 1.36e-03 2.61e-03 4.78e-03 8.34e-03
+#> [29] 1.39e-02 2.21e-02 3.37e-02 4.91e-02 6.83e-02 9.07e-02 1.15e-01
+#> [36] 1.38e-01 1.57e-01 1.68e-01 1.69e-01 1.58e-01 1.35e-01 1.04e-01
+#> [43] 7.13e-02 4.17e-02 1.97e-02 6.94e-03 1.54e-03 1.47e-04 1.87e-06
+#> [50] 0.00e+00
 ```
 
 \noindent
@@ -128,7 +119,7 @@ La chiamata a `dbinom()` produce dunque un vettore i cui valori corrispondono al
 
 ```r
 p2 <- data.frame(p_grid, likelihood) %>%
-  ggplot(aes(x = p_grid, xend = p_grid, y = 0, yend = likelihood)) +
+  ggplot(aes(x=p_grid, xend=p_grid, y=0, yend=likelihood)) +
   geom_segment() +
   ylim(0, 0.17) +
   labs(
@@ -138,9 +129,9 @@ p2 <- data.frame(p_grid, likelihood) %>%
 p2
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{910_grid_method_example_files/figure-latex/gridappr2-1} 
+{\centering \includegraphics[width=0.8\linewidth]{910_grid_method_example_files/figure-latex/gridappr2-1} 
 
 }
 
@@ -158,19 +149,14 @@ Nel caso di una distribuzione a priori non informativa (ovvero una distribuzione
 ```r
 unstd_posterior <- likelihood * prior1
 unstd_posterior
-#>  [1] 0.000000e+00 4.705127e-35 3.406102e-28 3.288337e-24
-#>  [5] 2.107415e-21 3.050433e-19 1.720444e-17 5.056880e-16
-#>  [9] 9.213813e-15 1.163805e-13 1.099854e-12 8.211068e-12
-#> [13] 5.040382e-11 2.622390e-10 1.183870e-09 4.724263e-09
-#> [17] 1.691375e-08 5.498671e-08 1.639390e-07 4.519229e-07
-#> [21] 1.159735e-06 2.786331e-06 6.297247e-06 1.344115e-05
-#> [25] 2.718450e-05 5.223741e-05 9.557946e-05 1.668046e-04
-#> [29] 2.780049e-04 4.428398e-04 6.744454e-04 9.819948e-04
-#> [33] 1.366075e-03 1.813607e-03 2.293700e-03 2.756411e-03
-#> [37] 3.136488e-03 3.363497e-03 3.377958e-03 3.150422e-03
-#> [41] 2.697491e-03 2.087091e-03 1.426601e-03 8.331361e-04
-#> [45] 3.945339e-04 1.387364e-04 3.070164e-05 2.946751e-06
-#> [49] 3.736209e-08 0.000000e+00
+#>  [1] 0.00e+00 4.71e-35 3.41e-28 3.29e-24 2.11e-21 3.05e-19 1.72e-17
+#>  [8] 5.06e-16 9.21e-15 1.16e-13 1.10e-12 8.21e-12 5.04e-11 2.62e-10
+#> [15] 1.18e-09 4.72e-09 1.69e-08 5.50e-08 1.64e-07 4.52e-07 1.16e-06
+#> [22] 2.79e-06 6.30e-06 1.34e-05 2.72e-05 5.22e-05 9.56e-05 1.67e-04
+#> [29] 2.78e-04 4.43e-04 6.74e-04 9.82e-04 1.37e-03 1.81e-03 2.29e-03
+#> [36] 2.76e-03 3.14e-03 3.36e-03 3.38e-03 3.15e-03 2.70e-03 2.09e-03
+#> [43] 1.43e-03 8.33e-04 3.95e-04 1.39e-04 3.07e-05 2.95e-06 3.74e-08
+#> [50] 0.00e+00
 ```
 
 Avendo calcolato i valori della funzione a posteriori non standardizzata è poi necessario dividere per una costante di normalizzazione. Nel caso discreto, trovare il denominatore del teorema di Bayes è facile: esso è uguale alla somma di tutti i valori della distribuzione a posteriori non normalizzata. Per i dati presenti, tale costante di normalizzazione è uguale a 0.032:
@@ -178,7 +164,7 @@ Avendo calcolato i valori della funzione a posteriori non standardizzata è poi 
 
 ```r
 sum(unstd_posterior)
-#> [1] 0.0316129
+#> [1] 0.0316
 ```
 
 La standardizzazione dei due valori usati come esempio è data da: $0.135 \cdot 0.02 / 0.032$ e da $0.104 \cdot 0.02 / 0.032$. Usiamo $\R$ per svolgere questo calcolo su tutti i 50 valori di `unstd_posterior` così che la somma dei 50 i valori di `posterior` sia uguale a 1.0:
@@ -187,19 +173,14 @@ La standardizzazione dei due valori usati come esempio è data da: $0.135 \cdot 
 ```r
 posterior <- unstd_posterior / sum(unstd_posterior)
 posterior
-#>  [1] 0.000000e+00 1.488357e-33 1.077440e-26 1.040188e-22
-#>  [5] 6.666313e-20 9.649330e-18 5.442222e-16 1.599625e-14
-#>  [9] 2.914574e-13 3.681425e-12 3.479129e-11 2.597379e-10
-#> [13] 1.594406e-09 8.295316e-09 3.744893e-08 1.494410e-07
-#> [17] 5.350268e-07 1.739376e-06 5.185824e-06 1.429552e-05
-#> [21] 3.668548e-05 8.813904e-05 1.991986e-04 4.251792e-04
-#> [25] 8.599178e-04 1.652408e-03 3.023432e-03 5.276472e-03
-#> [29] 8.794033e-03 1.400820e-02 2.133450e-02 3.106310e-02
-#> [33] 4.321259e-02 5.736920e-02 7.255582e-02 8.719259e-02
-#> [37] 9.921545e-02 1.063963e-01 1.068538e-01 9.965619e-02
-#> [41] 8.532881e-02 6.602021e-02 4.512719e-02 2.635430e-02
-#> [45] 1.248015e-02 4.388601e-03 9.711744e-04 9.321354e-05
-#> [49] 1.181862e-06 0.000000e+00
+#>  [1] 0.00e+00 1.49e-33 1.08e-26 1.04e-22 6.67e-20 9.65e-18 5.44e-16
+#>  [8] 1.60e-14 2.91e-13 3.68e-12 3.48e-11 2.60e-10 1.59e-09 8.30e-09
+#> [15] 3.74e-08 1.49e-07 5.35e-07 1.74e-06 5.19e-06 1.43e-05 3.67e-05
+#> [22] 8.81e-05 1.99e-04 4.25e-04 8.60e-04 1.65e-03 3.02e-03 5.28e-03
+#> [29] 8.79e-03 1.40e-02 2.13e-02 3.11e-02 4.32e-02 5.74e-02 7.26e-02
+#> [36] 8.72e-02 9.92e-02 1.06e-01 1.07e-01 9.97e-02 8.53e-02 6.60e-02
+#> [43] 4.51e-02 2.64e-02 1.25e-02 4.39e-03 9.71e-04 9.32e-05 1.18e-06
+#> [50] 0.00e+00
 ```
 
 \noindent 
@@ -216,7 +197,7 @@ La distribuzione a posteriori così trovata non è altro che la versione normali
 
 ```r
 p3 <- data.frame(p_grid, posterior) %>%
-  ggplot(aes(x = p_grid, xend = p_grid, y = 0, yend = posterior)) +
+  ggplot(aes(x=p_grid, xend=p_grid, y=0, yend=posterior)) +
   geom_segment() +
   ylim(0, 0.17) +
   labs(
@@ -226,9 +207,9 @@ p3 <- data.frame(p_grid, posterior) %>%
 p3
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{910_grid_method_example_files/figure-latex/gridappr3-1} 
+{\centering \includegraphics[width=0.8\linewidth]{910_grid_method_example_files/figure-latex/gridappr3-1} 
 
 }
 
@@ -271,7 +252,7 @@ Tale distribuzione a priori è rappresentata nella figura \@ref(fig:gridappr4):
 ```r
 plot_df <- data.frame(p_grid, prior2)
 p4 <- plot_df %>%
-  ggplot(aes(x = p_grid, xend = p_grid, y = 0, yend = prior2)) +
+  ggplot(aes(x=p_grid, xend=p_grid, y=0, yend=prior2)) +
   geom_segment() +
   ylim(0, 0.17) +
   labs(
@@ -281,9 +262,9 @@ p4 <- plot_df %>%
 p4
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{910_grid_method_example_files/figure-latex/gridappr4-1} 
+{\centering \includegraphics[width=0.8\linewidth]{910_grid_method_example_files/figure-latex/gridappr4-1} 
 
 }
 
@@ -340,9 +321,9 @@ p5 <- plot_df %>%
 p5
 ```
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics{910_grid_method_example_files/figure-latex/gridappr5-1} 
+{\centering \includegraphics[width=0.8\linewidth]{910_grid_method_example_files/figure-latex/gridappr5-1} 
 
 }
 
@@ -365,10 +346,10 @@ df <- data.frame(
 # Step 4: sample from the discretized posterior
 post_samples <- df %>%
   slice_sample(
-    n = 1e5,
-    weight_by = posterior2,
-    replace = TRUE
-  )
+  n = 1e5,
+  weight_by = posterior2,
+  replace = TRUE
+)
 ```
 
 \noindent
@@ -379,8 +360,8 @@ Una rappresentazione grafica del campione casuale estratto dalla distribuzione a
 post_samples %>%
   ggplot(aes(x = p_grid)) +
   geom_histogram(
-    aes(y = ..density..),
-    color = "white",
+    aes(y = ..density..), 
+    color = "white", 
     binwidth = 0.05
   ) +
   stat_function(fun = dbeta, args = list(25, 17)) +
@@ -389,7 +370,7 @@ post_samples %>%
 
 
 
-\begin{center}\includegraphics{910_grid_method_example_files/figure-latex/unnamed-chunk-16-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{910_grid_method_example_files/figure-latex/unnamed-chunk-16-1} \end{center}
 
 \noindent
 All'istogramma è stata sovrapposta la corretta distribuzione a posteriori, ovvero una Beta di parametri 25 ($y + \alpha$ = 23 + 2) e 17 ($n - y + \beta$ = 30 - 23 + 10).
@@ -399,7 +380,7 @@ La stima della moda a posteriori si ottiene con
 
 ```r
 df$p_grid[which.max(df$posterior2)]
-#> [1] 0.5959596
+#> [1] 0.596
 ```
 
 \noindent e corrisponde a
@@ -413,7 +394,7 @@ La stima della media a posteriori si ottiene con
 
 ```r
 mean(post_samples$p_grid)
-#> [1] 0.5953337
+#> [1] 0.593
 ```
 
 \noindent e corrisponde a
@@ -427,7 +408,7 @@ La stima della mediana a posteriori si ottiene con
 
 ```r
 median(post_samples$p_grid)
-#> [1] 0.5959596
+#> [1] 0.591
 ```
 
 \noindent e corrisponde a
@@ -454,7 +435,7 @@ likelihood <- function(param, x = 23, N = 30) {
 }
 
 tibble(
-  x = param,
+  x = param, 
   y = likelihood(param)
 ) %>%
   ggplot(aes(x, y)) +
@@ -467,7 +448,7 @@ tibble(
 
 
 
-\begin{center}\includegraphics{910_grid_method_example_files/figure-latex/unnamed-chunk-20-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{910_grid_method_example_files/figure-latex/unnamed-chunk-20-1} \end{center}
 
 \noindent
 La funzione `likelihood()` ritorna l'ordinata della verosimiglianza binomiale per ciascun valore del vettore `param` in input.
@@ -482,7 +463,7 @@ prior <- function(param, alpha = 2, beta = 10) {
 }
 
 tibble(
-  x = param,
+  x = param, 
   y = prior(param)
 ) %>%
   ggplot(aes(x, y)) +
@@ -495,7 +476,7 @@ tibble(
 
 
 
-\begin{center}\includegraphics{910_grid_method_example_files/figure-latex/unnamed-chunk-21-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{910_grid_method_example_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 La funzione `posterior()` ritorna il prodotto della densità a priori e della verosimiglianza:
 
@@ -506,7 +487,7 @@ posterior <- function(param) {
 }
 
 tibble(
-  x = param,
+  x = param, 
   y = posterior(param)
 ) %>%
   ggplot(aes(x, y)) +
@@ -519,7 +500,7 @@ tibble(
 
 
 
-\begin{center}\includegraphics{910_grid_method_example_files/figure-latex/unnamed-chunk-22-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{910_grid_method_example_files/figure-latex/unnamed-chunk-22-1} \end{center}
 
 \noindent
 La distribuzione a posteriori non normalizzata mostrata nella figura replica il risultato ottenuto con il codice utilizzato nella prima parte di questo Capitolo. Per l'implementazione dell'algoritmo di Metropolis non è necessaria la normalizzazione della distribuzione a posteriori.

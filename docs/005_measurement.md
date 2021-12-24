@@ -246,9 +246,9 @@ Le differenze tra le due tipologie di errori, sistematici e casuali,
 introducono i concetti di accuratezza e di precisione della misura. Una
 misura viene definita:
 
-*   __accurata__, quando vi è un accordo tra la misura effettuata ed il
+*   _accurata_, quando vi è un accordo tra la misura effettuata ed il
     valore reale;
-*   __precisa__ quando, ripetendo più volte la misura, i risultati
+*   _precisa_ quando, ripetendo più volte la misura, i risultati
     ottenuti sono concordanti, cioè differiscono in maniera irrilevante
     tra loro.
 
@@ -266,19 +266,19 @@ La metafora del tiro a bersaglio illustra la relazione tra precisione e accurate
 Per tenere sotto controllo l'incidenza degli errori, sono stati
 introdotti in psicologia i concetti di attendibilità e validità.
 
-Uno strumento si dice __attendibile__ quando valuta in modo coerente e
+Uno strumento si dice _attendibile_ quando valuta in modo coerente e
 stabile la stessa variabile: i risultati ottenuti si mantengono costanti
 dopo ripetute somministrazione ed in assenza di variazioni psicologiche
 e fisiche dei soggetti sottoposti al test o cambiamenti dell'ambiente in
 cui ha luogo la somministrazione.
 
 L'attendibilità di uno strumento, però, non è sufficiente: in primo luogo uno
-strumento di misura deve essere __valido__, laddove la validità rappresenta
+strumento di misura deve essere _valido_, laddove la validità rappresenta
 il grado in cui uno strumento misura effettivamente ciò che dovrebbe
 misurare. In genere, si fa riferimento ad almeno quattro tipi di
 validità.
 
-*   La __validità di costrutto__ riguarda il grado in cui un test misura
+*   La _validità di costrutto_ riguarda il grado in cui un test misura
     ciò per cui è stato costruito. Essa si suddivide in: validità
     convergente e validità divergente. La validità convergente fa
     riferimento alla concordanza tra uno strumento e un altro che misura
@@ -286,13 +286,13 @@ validità.
     grado di discriminazione tra strumenti che misurano costrutti
     differenti. Senza validità di costrutto le altre forme di validità
     non hanno senso.
-*   In base alla __validità di contenuto__, un test fornisce una misura
+*   In base alla _validità di contenuto_, un test fornisce una misura
     valida di un attributo psicologico se il dominio dell'attributo è
 rappresentato in maniera adeguata dagli item del test. Un requisito
 di base della validità di contenuto è la rilevanza e la
 rappresentatività del contenuto degli item in riferimento
 all'attributo che il test intende misurare.
-*   La __validità di criterio__ valuta il grado di concordanza tra i
+*   La _validità di criterio_ valuta il grado di concordanza tra i
     risultati dello strumento considerato e i risultati ottenuti da
     altri strumenti che misurano lo stesso costrutto, o tra i risultati
     dello strumento considerato e un criterio esterno. Nella validità
@@ -301,7 +301,7 @@ all'attributo che il test intende misurare.
     costrutto viene misurato prima e il criterio in un momento
     successivo, consentendo la valutazione della capacità dello
     strumento di predire un evento futuro.
-*   Infine, la __validità di facciata__ fa riferimento al grado in cui il
+*   Infine, la _validità di facciata_ fa riferimento al grado in cui il
     test appare valido ai soggetti a cui esso è diretto. La validità di
     facciata è importante in ambiti particolari, quali ad esempio la
     selezione del personale per una determinata occupazione. In questo
