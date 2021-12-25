@@ -2,10 +2,6 @@
 
 # Il calcolo delle probabilità {#intro-prob-1}
 
-```{r setup, include = FALSE}
-source("_common.R")
-```
-
 Una possibile definizione di teoria delle probabilità è la seguente: la teoria delle probabilità ci fornisce gli strumenti per prendere decisioni razionali in condizioni di incertezza, ovvero per formulare le migliori congetture possibili.
 
 
@@ -71,9 +67,9 @@ Consideriamo i compiti e le fasi dell'indagine scientifica. Iniziamo in basso a 
 
   - Poiché $B$ è stato osservato, $A$ è più plausibile. $A$ non è necessariamente vero, ma è più plausibile.
 
-- L'*inferenza statistica* è un tipo di inferenza induttiva che è specificamente formulata come un problema inverso. L'inferenza statistica è quell'insieme di procedure che hanno lo scopo di quantificare quanto più plausibile sia $A$ dopo aver osservato $B$. Per svolgere l'inferenza statistica è dunque necessario quantificare tale plausibilità. Lo strumento che ci consente di fare questo è la teoria della probabilità.
+- L'*inferenza statistica* è un tipo di inferenza induttiva che è specificamente formulata come un problema inverso. L'inferenza statistica è quell'insieme di procedure che hanno lo scopo di quantificare quanto più plausibile sia $A$ dopo aver osservato $B$. Per svolgere l'inferenza statistica è dunque necessario quantificare tale plausibilità. Lo strumento che ci consente di fare questo è la teoria delle probabilità.
 
-L'inferenza statistica è l'aspetto del processo dell'indagine scientifica che è l'oggetto centrale di questo insegnamento. Il risultato dell'inferenza statistica è la conoscenza di quanto siano plausibili le ipotesi e le stime dei parametri sotto le ipotesi considerate. Ma l'inferenza statistica richiede una teoria della probabilità, laddove la teoria della probabilità può essere vista come una generalizzazione della logica. A causa di questa connessione con la logica e del suo ruolo cruciale nella scienza, E. T. Jaynes afferma infatti che la probabilità è la "logica della scienza". È dunque necessario esaminare preliminarmente alcune nozioni di base della teoria della probabilità. 
+L'inferenza statistica è l'aspetto del processo dell'indagine scientifica che è l'oggetto centrale di questo insegnamento. Il risultato dell'inferenza statistica è la conoscenza di quanto siano plausibili le ipotesi e le stime dei parametri sotto le ipotesi considerate. Ma l'inferenza statistica richiede una teoria delle probabilità, laddove la teoria delle probabilità può essere vista come una generalizzazione della logica. A causa di questa connessione con la logica e del suo ruolo cruciale nella scienza, E. T. Jaynes afferma infatti che la probabilità è la "logica della scienza". È dunque necessario esaminare preliminarmente alcune nozioni di base della teoria delle probabilità. 
 
 
 ## Che cos'è la probabilità?
@@ -114,7 +110,7 @@ In altri termini, secondo de Finetti la probabilità deve essere concepita non c
 
 ## Variabili casuali e probabilità di un evento
 
-Esaminiamo qui di seguito alcuni concetti di base della teoria della probabilità.
+Esaminiamo qui di seguito alcuni concetti di base della teoria delle probabilità.
 
 ### Variabili casuali
 
@@ -124,7 +120,7 @@ Per facilitare la trattazione, le variabili casuali assumono solo valori numeric
 
 ### Eventi e probabilità
 
-Nella teoria della probabilità il risultato "testa" nel lancio di una moneta è chiamato _evento_.^[Per un ripasso delle nozioni di base della teoria degli insiemi, si veda l'Appendice \@ref(insiemistica).] Ad esempio, $Y$ = 1 denota l'evento in cui il lancio di una moneta produce come risultato testa. 
+Nella teoria delle probabilità il risultato "testa" nel lancio di una moneta è chiamato _evento_.^[Per un ripasso delle nozioni di base della teoria degli insiemi, si veda l'Appendice \@ref(insiemistica).] Ad esempio, $Y$ = 1 denota l'evento in cui il lancio di una moneta produce come risultato testa. 
 
 Il funzionale $Pr[·]$ definisce la probabilità di un evento. Ad esempio, per il lancio di una moneta equilibrata, la probabilità dell'evento "il risultato del lancio della moneta è testa" è scritta come
 $$
@@ -144,7 +140,7 @@ Il connettivo logico "o" specifica eventi _disgiunti_, ovvero eventi che non pos
 
 ## Spazio campionario e risultati possibili
 
-Anche se il lancio di una moneta produce sempre uno specifico risultato  nel mondo reale, noi possiamo anche immaginare i possibili risultati alternativi che si sarebbero potuti osservare. Quindi, anche se in uno specifico lancio la moneta dà testa ($Y$ = 1), possiamo immaginare la possibilità che il lancio possa avere prodotto croce ($Y$ = 0). Tale ragionamento controfattuale è la chiave per comprendere la teoria della probabilità e l'inferenza statistica.
+Anche se il lancio di una moneta produce sempre uno specifico risultato  nel mondo reale, noi possiamo anche immaginare i possibili risultati alternativi che si sarebbero potuti osservare. Quindi, anche se in uno specifico lancio la moneta dà testa ($Y$ = 1), possiamo immaginare la possibilità che il lancio possa avere prodotto croce ($Y$ = 0). Tale ragionamento controfattuale è la chiave per comprendere la teoria delle probabilità e l'inferenza statistica.
 
 I risultati possibili che si possono osservare come conseguenza del lancio di una moneta determinano i valori possibili che la variabile casuale può assumere. L'insieme di tutti i risultati possibili è chiamato _spazio campionario_. Lo spazio campionario può essere concettualizzato come un'urna contenente una pallina per ogni possibile risultato del lancio della moneta. Su ogni pallina è scritto il valore della variabile casuale. Uno specifico lancio di una moneta -- ovvero, l'osservazione di uno specifico valore di una variabile casuale -- è chiamato _esperimento casuale_.
 
@@ -228,7 +224,7 @@ Ora le stime ottenute sono molto vicine alla vera probabilità che vogliamo stim
 
 ## La legge dei grandi numeri
 
-La visualizzazione mediante grafici contribuisce alla comprensione dei concetti della statistica e della teoria della probabilità. Un modo per descrivere ciò che accade all'aumentare del numero $M$ di ripetizioni del lancio della moneta consiste nel registrare la stima della probabilità dell'evento $Pr[Y = 1]$ in funzione del numero di ripetizioni dell'esperimento casuale per ogni $m \in 1 : M.$ Un grafico dell'andamento della stima di $Pr[Y = 1]$ in funzione di $m$ si ottiene nel modo seguente. 
+La visualizzazione mediante grafici contribuisce alla comprensione dei concetti della statistica e della teoria delle probabilità. Un modo per descrivere ciò che accade all'aumentare del numero $M$ di ripetizioni del lancio della moneta consiste nel registrare la stima della probabilità dell'evento $Pr[Y = 1]$ in funzione del numero di ripetizioni dell'esperimento casuale per ogni $m \in 1 : M.$ Un grafico dell'andamento della stima di $Pr[Y = 1]$ in funzione di $m$ si ottiene nel modo seguente. 
 
 ```{r legge-grandi-n-1, cache=TRUE, fig.cap="Stima della probabilità di successo in funzione del numero di lanci di una moneta."}
 nrep <- 1e4

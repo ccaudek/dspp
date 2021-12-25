@@ -800,543 +800,315 @@ Corrado Caudek
 
 \mainmatter
 
-\hypertarget{part-nozioni-di-base}{%
-\part*{Nozioni di base}\label{part-nozioni-di-base}}
-\addcontentsline{toc}{part}{Nozioni di base}
+\hypertarget{distr-rv-discr}{%
+\chapter{Distribuzioni di v.c. discrete}\label{distr-rv-discr}}
 
-\hypertarget{intro-prob-1}{%
-\chapter{Il calcolo delle probabilità}\label{intro-prob-1}}
+In questo Capitolo verranno esaminate le principali distribuzioni di probabilità delle variabili casuali discrete. Un esperimento casuale che può dare luogo a solo due possibili esiti (successo, insuccesso) è modellabile con una variabile casuale di Bernoulli. Una sequenza di prove di Bernoulli costituisce un processo Bernoulliano. Il numero di successi dopo \(n\) prove di Bernoulli corrisponde ad una variabile casuale che segue la legge binomiale. La distribuzione binomiale risulta da un insieme di prove di Bernoulli solo se il numero totale \(n\) è fisso per disegno. Se il numero di prove è esso stesso una variabile casuale, allora il numero di successi nella corrispondente sequenza di prove bernoulliane segue al distribuzione di Poisson.
 
-Una possibile definizione di teoria delle probabilità è la seguente: la teoria delle probabilità ci fornisce gli strumenti per prendere decisioni razionali in condizioni di incertezza, ovvero per formulare le migliori congetture possibili.
+\hypertarget{una-prova-bernoulliana}{%
+\section{Una prova Bernoulliana}\label{una-prova-bernoulliana}}
 
-\hypertarget{inf-stat-probl-inv}{%
-\section{La probabilità come la logica della scienza}\label{inf-stat-probl-inv}}
+Se un esperimento casuale ha solo due esiti possibili, allora le
+repliche indipendenti di questo esperimento sono chiamate ``prove
+Bernoulliane'' (il lancio di una moneta è il tipico esempio).
 
-La figura \ref{fig:cycle-of-science} fornisce una rappresentazione schematica del processo dell'indagine scientifica. Possiamo pensare al progresso scientifico come alla ripetizione di questo ciclo, laddove i fenomeni naturali (e, ovviamente psicologici) vengono esplorati e i ricercatori imparano sempre di più sul loro funzionamento. Le caselle della figura descrivono le varie fasi del processo di ingagine scientifica, mentre lungo le frecce sono riportati i compiti che conducono i ricercatori da una fase alla successiva.
+\begin{definition}
+Viene detta variabile di Bernoulli una variabile casuale discreta \(Y = \{0, 1\}\) con la seguente distribuzione di probabilità:
+\[
+P(Y \mid \theta) =
+  \begin{cases}
+    \theta     & \text{se $Y = 1$}, \\
+    1 - \theta & \text{se $Y = 0$},
+  \end{cases}
+\]
+\noindent
+con \(0 \leq \theta \leq 1\). Convenzionalmente l'evento \(\{Y = 1\}\) con probabilità \(\theta\) viene chiamato ``successo'' mentre l'evento \(\{Y = 0\}\) con probabilità \(1-\theta\) viene chiamato ``insuccesso''.
+\end{definition}
+
+Applicando l'operatore di valore atteso e di varianza, otteniamo
+\begin{align}
+\E(Y) &= 0 \cdot Pr(Y=0) + 1 \cdot Pr(Y=1) = \theta, \\
+\Var(Y) &= (0 - \theta)^2 \cdot Pr(Y=0) + (1 - \theta)^2 \cdot rP(Y=1) = \theta(1-\theta).
+\label{eq:ev-var-bern}
+\end{align}
+Scriviamo \(Y \sim \mathcal{B}(\theta)\) per indicare che la variabile
+casuale \(Y\) ha una distribuzione Bernoulliana di parametro \(\theta\).
+
+\begin{exercise}
+Nel caso del lancio di una moneta equilibrata la variabile casuale di Bernoulli assume i valori \(0\) e \(1\). La distribuzione di massa di probabilità è pari a \(\frac{1}{2}\) in corrispondenza di entrambi iv valori. La funzione di distribuzione vale \(\frac{1}{2}\) per \(Y = 0\) e \(1\) per \(Y = 1\).
+\end{exercise}
+
+\hypertarget{una-sequenza-di-prove-bernoulliane}{%
+\section{Una sequenza di prove Bernoulliane}\label{una-sequenza-di-prove-bernoulliane}}
+
+La distribuzione binomiale è rappresentata dall'elenco di tutti i
+possibili numeri di successi \(Y = \{0, 1, 2, \dots n\}\) che possono
+essere osservati in \(n\) prove Bernoulliane indipendenti di probabilità
+\(\theta\), a ciascuno dei quali è associata la relativa probabilità. Esempi di una distribuzione binomiale sono i risultati di una serie di lanci di
+una stessa moneta o di una serie di estrazioni da un'urna (con
+reintroduzione). La distribuzione binomiale di parametri \(n\) e \(\theta\) è in realtà una famiglia di distribuzioni: al variare dei parametri \(\theta\) e \(n\) variano le probabilità.
+
+\begin{definition}
+La probabilità di ottenere \(y\) successi e \(n-y\) insuccessi in \(n\) prove
+Bernoulliane è data dalla distribuzione binomiale:
+\begin{align}
+P(Y=y) &= \binom{n}{y} \theta^{y} (1-\theta)^{n-y} \notag \\
+&= \frac{n!}{y!(n-y)!} \theta^{y} (1-\theta)^{n-y}, 
+\label{eq:binomialdistribution}
+\end{align}
+dove \(n\) = numero di prove Bernoulliane, \(\theta\) = probabilità di successo in ciascuna prova e \(y\) = numero di successi.
+\end{definition}
+
+\begin{proof}
+La \eqref{eq:binomialdistribution} può essere derivata nel modo seguente. Indichiamo con \(S\) il successo e con \(I\) l'insuccesso di ciascuna prova. Una sequenza di \(n\) prove Bernoulliane darà come esito una sequenza di \(n\) elementi \(S\) e \(I\). Ad esempio, una sequenza che contiene \(y\) successi è la seguente:
+\[
+\overbrace{SS\dots S}^\text{$y$ volte} \overbrace{II\dots I}^\text{$n-y$ volte}
+\]
+Essendo \(\theta\) la probabilità di \(S\) e \(1-\theta\) la probabilità di \(I\), la probabilità di ottenere la specifica sequenza riportata sopra è
+\begin{equation}
+\overbrace{\theta \theta\dots \theta}^\text{$y$ volte} \overbrace{(1-\theta)(1-\theta)\dots (1-\theta)}^\text{$n-y$ volte} = \theta^y \cdot (1-\theta)^{n-y}.
+\label{eq:demo-bino-kernel}
+\end{equation}
+Non siamo però interessati alla probabilità di una \emph{specifica} sequenza di \(S\) e \(I\) ma, bensì, alla probabilità di osservare una \emph{qualsiasi} sequenza di \(y\) successi in \(n\) prove. In altre parole, vogliamo la probabilità dell'unione di tutti gli eventi corrispondenti a \(y\) successi in \(n\) prove.
+
+È immediato notare che una qualsiasi altra sequenza contenente esattamente \(y\) successi avrà sempre come probabilità \(\theta^y \cdot (1-\theta)^{n-y}\): il prodotto infatti resta costante anche se cambia l'ordine dei fattori.\footnote{Viene detta \emph{scambiabilità} la proprietà per cui l'ordine con cui compiamo le osservazioni è irrilevante per l'assegnazione delle probabilità.} Per trovare il risultato cercato dobbiamo moltiplicare la \eqref{eq:demo-bino-kernel} per il numero di sequenze possibili di \(y\) successi in \(n\) prove.
+
+Il numero di sequenze che contengono esattamente \(y\) successi in \(n\) prove. La risposta è fornita dal coefficiente binomiale\footnote{La derivazione della formula del coefficiente binomiale è fornita nell'Appendice \ref{derivazione-coef-binom}.}:
+\begin{equation}
+\binom{n}{y} = \frac{n!}{y!(n-y)!},
+\label{eq:binomial-coefficient}
+\end{equation}
+dove il simbolo \(n!\) si legge \(n\) fattoriale ed è uguale al prodotto di \(n\) numeri interi decrescenti a partire da \(n\). Per definizione \(0! = 1\).
+
+Essendo la probabilità dell'unione di \(K\) elementi incompatibili uguale alla somma delle loro rispettive probabilità, e dato che le sequenze di \(y\) successi in \(n\) prove hanno tutte la stessa probabilità, per trovare la formula della distributione binomiale \eqref{eq:binomialdistribution} è sufficiente moltiplicare la \eqref{eq:demo-bino-kernel} per la \eqref{eq:binomial-coefficient}.
+\end{proof}
+
+La distribuzione di probabilità di alcune distribuzioni binomiali, per due valori di \(n\) e \(\theta\), è fornita nella figura \ref{fig:example-binomial-distr}.
 
 \begin{figure}[h]
 
-{\centering \includegraphics[width=0.8\linewidth]{images/cycle_of_science} 
+{\centering \includegraphics{022_discr_rv_distr_files/figure-latex/example-binomial-distr-1} 
 
 }
 
-\caption{Rappresentazione schematica del processo scientifico (figura adattata dalla Fig. 1.1 di P. Gregory, Bayesian Logical Data Analysis for the Physical Sciences, Cambridge, 2005).}\label{fig:cycle-of-science}
+\caption{Alcune distribuzioni binomiali. Nella figura, il parametro $\theta$ è indicato con $p$.}\label{fig:example-binomial-distr}
 \end{figure}
 
-Consideriamo i compiti e le fasi dell'indagine scientifica. Iniziamo in basso a sinistra.
+\begin{exercise}
 
-\begin{itemize}
-\item
-  \emph{Invenzione e perfezionamento delle ipotesi.} In questa fase del processo scientifico, i ricercatori pensano ai fenomeni naturali, a ciò che è presente nella letteratura scientifica, ai risultati dei loro esperimenti, e formulano ipotesi o teorie che possono essere valutare mediante esperimenti empirici. Questo passaggio richiede innovazione e creatività.
-\item
-  L'\emph{inferenza deduttiva} procede in maniera deterministica dai fatti alle conclusioni. Ad esempio, se dico che tutti gli uomini sono mortali e che Socrate è un uomo, allora posso concludere deduttivamente che Socrate è mortale. Quando i ricercatori progettano gli esperimenti in base alle teorie, usano la logica deduttiva per dire: ``Se A è vero, allora B deve essere vero'', dove \(A\) è l'ipotesi teorica e \(B\) è l'osservazione sperimentale.
-\item
-  \emph{Esecuzione degli esperimenti.} Questa fase richiede molte risorse (tempo e denaro). Richiede anche innovazione e creatività. Nello specifico, i ricercatori devono pensare attentamente a come costruire l'esperimento necessario per verificare la teoria di interesse. Quale risultato dell'esperimento si ottengono i dati.
-\item
-  L'\emph{inferenza induttiva} procede dalle osservazioni ai fatti. Se pensiamo ai fatti come a ciò che governa o genera le osservazioni, allora l'induzione è una sorta di inferenza inversa. Supponiamo di avere osservato \(B\). Questo rende \(A\) vero? Non necessariamente. Ma può rendere \(A\) più plausibile. Questo è un sillogismo debole. Ad esempio, si consideri la seguente coppia ipotesi/osservazioni.
+Usando la \eqref{eq:binomialdistribution}, si trovi la probabilità di \(y = 2\) successi in \(n = 4\) prove Bernoulliane indipendenti con \(\theta = 0.2\)
 
-  \begin{itemize}
-  \item
-    \(A\) = L'iniezione di acque reflue dopo la fratturazione idraulica, nota come fracking, può portare a una maggiore frequenza di terremoti.
-  \item
-    \(B\) = La frequenza dei terremoti in Oklahoma è aumentata di 100 volte dal 2010, quando il fracking è diventato una pratica comune.
-  \item
-    Poiché \(B\) è stato osservato, \(A\) è più plausibile. \(A\) non è necessariamente vero, ma è più plausibile.
-  \end{itemize}
-\item
-  L'\emph{inferenza statistica} è un tipo di inferenza induttiva che è specificamente formulata come un problema inverso. L'inferenza statistica è quell'insieme di procedure che hanno lo scopo di quantificare quanto più plausibile sia \(A\) dopo aver osservato \(B\). Per svolgere l'inferenza statistica è dunque necessario quantificare tale plausibilità. Lo strumento che ci consente di fare questo è la teoria della probabilità.
-\end{itemize}
+\[
+\begin{aligned}
+P(Y=2) &= \frac{4!}{2!(4-2)!} 0.2^{2} (1-0.2)^{4-2} \notag  \\
+ &= \frac{4 \cdot 3 \cdot 2 \cdot 1}{(2 \cdot 1)(2 \cdot 1)}
+0.2^{2} 0.8^{2} = 0.1536. \notag
+\end{aligned}
+\]
 
-L'inferenza statistica è l'aspetto del processo dell'indagine scientifica che è l'oggetto centrale di questo insegnamento. Il risultato dell'inferenza statistica è la conoscenza di quanto siano plausibili le ipotesi e le stime dei parametri sotto le ipotesi considerate. Ma l'inferenza statistica richiede una teoria della probabilità, laddove la teoria della probabilità può essere vista come una generalizzazione della logica. A causa di questa connessione con la logica e del suo ruolo cruciale nella scienza, E. T. Jaynes afferma infatti che la probabilità è la ``logica della scienza''. È dunque necessario esaminare preliminarmente alcune nozioni di base della teoria della probabilità.
+Ripetendo i calcoli per i valori \(y = 0, \dots, 4\) troviamo la distribuzione binomiale di parametri \(n = 4\) e \(\theta = 0.2\):
 
-\hypertarget{che-cosuxe8-la-probabilituxe0}{%
-\section{Che cos'è la probabilità?}\label{che-cosuxe8-la-probabilituxe0}}
+\begin{longtable}[]{@{}cc@{}}
+\toprule
+y & P(Y = y) \\
+\midrule
+\endhead
+0 & 0.4096 \\
+1 & 0.4096 \\
+2 & 0.1536 \\
+3 & 0.0256 \\
+4 & 0.0016 \\
+sum & 1.0 \\
+\bottomrule
+\end{longtable}
 
-\begin{quote}
-\emph{Le probabilità sono stati della mente e non stati di natura.}
+Lo stesso risultato si ottiene usando la sequente istruzione \R:
 
-\begin{flushright}--- Leonard J. Savage \end{flushright}
-\end{quote}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dbinom}\NormalTok{(}\DecValTok{0}\SpecialCharTok{:}\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{, }\FloatTok{0.2}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 0.4096 0.4096 0.1536 0.0256 0.0016}
+\end{Highlighting}
+\end{Shaded}
 
-La definizione della probabilità è un problema estremamente dibattuto ed aperto. Sono state fornite due possibili soluzioni al problema di definire il concetto di probabilità.
+\end{exercise}
+
+\begin{exercise}
+
+Lanciando \(5\) volte una moneta onesta, qual è la probabilità che esca testa almeno tre volte?
+
+In \R, la soluzione si trova con
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dbinom}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{, }\FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{dbinom}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{dbinom}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\FloatTok{0.5}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 0.5}
+\end{Highlighting}
+\end{Shaded}
+
+Alternativamente, possiamo trovare la probabilità dell'evento complementare a quello definito dalla funzione di ripartizione calcolata mediante \texttt{pbinom()}, ovvero
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{pbinom}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{, }\FloatTok{0.5}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 0.5}
+\end{Highlighting}
+\end{Shaded}
+
+\end{exercise}
+
+\hypertarget{valore-atteso-e-deviazione-standard}{%
+\subsection{Valore atteso e deviazione standard}\label{valore-atteso-e-deviazione-standard}}
+
+La media (numero atteso di successi in \(n\) prove) e la deviazione
+standard di una distribuzione binomiale sono molto semplici:
+\begin{align}
+\mu    &= n\theta,  \notag \\
+\sigma &= \sqrt{n\theta(1-\theta)}.
+ \end{align}
+
+\begin{proof}
+Essendo \(Y\) la somma di \(n\) prove Bernoulliane indipendenti \(Y_i\), è facile vedere che
+\begin{align}
+\E(Y) &= \E \left( \sum_{i=1}^n Y_i \right) = \sum_{i=1}^n \E(Y_i) = n\theta, \\
+\Var(Y) &= \Var \left( \sum_{i=1}^n Y_i \right) = \sum_{i=1}^n \Var(Y_i) = n \theta (1-\theta).
+\end{align}
+\end{proof}
+
+\begin{exercise}
+Si trovino il valore atteso e la varianza del lancio di quattro monete con probabilità di successo pari a \(\theta = 0.2\).
+
+Il valore atteso è \(\mu = n\theta = 4 \cdot 0.2 = 0.8.\) Ciò significa che, se l'esperimento casuale venisse ripetuto infinite volte, l'esito testa verrebbe osservato un numero medio di volte pari a 0.8. La varianza è \(n \theta (1-\theta) = 4 \cdot(1 - 0.2) = 0.8\).\footnote{L'eguaglianza di \(\mu\) e \(\sigma\) è solo una peculiarità di questo esempio.}
+\end{exercise}
+
+\hypertarget{distribuzione-di-poisson}{%
+\section{Distribuzione di Poisson}\label{distribuzione-di-poisson}}
+
+La distribuzione di Poisson è una distribuzione di probabilità discreta che esprime le probabilità per il numero di eventi che si verificano successivamente ed indipendentemente in un dato intervallo di tempo, sapendo che mediamente se ne verifica un numero \(\lambda\). La distribuzione di Poisson serve dunque per contare il numero di volte in cui un evento ha luogo in un determinato intervallo di tempo. La stessa distribuzione può essere estesa anche per contare gli eventi che hanno luogo in una determinata porzione di spazio.
+
+\begin{definition}
+La distribuzione di Poisson può essere intesa come limite della distribuzione binomiale, dove la probabilità di successo \(\theta\) è pari a \(\frac{\lambda}{n}\) con \(n\) che tende a \(\infty\):
+\begin{equation}
+\lim_{y \rightarrow \infty} \binom{n}{y} \theta^y (1-\theta)^{n-y} = \frac{\lambda^y}{y!}e^{-\lambda}.
+\end{equation}
+\end{definition}
+
+Alcune distribuzioni di Poisson sono riportate nella figura \ref{fig:examples-poisson-distrib}.
+
+\begin{figure}[h]
+
+{\centering \includegraphics{022_discr_rv_distr_files/figure-latex/examples-poisson-distrib-1} 
+
+}
+
+\caption{Alcune distribuzioni di Poisson.}\label{fig:examples-poisson-distrib}
+\end{figure}
+
+\begin{exercise}
+
+Supponiamo che un evento accada 300 volte all'ora e si vuole determinare la probabilità che in un minuto accadano esattamente 3 eventi.
+
+Il numero medio di eventi in un minuto è pari a
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lambda }\OtherTok{\textless{}{-}} \DecValTok{300} \SpecialCharTok{/} \DecValTok{60}
+\NormalTok{lambda}
+\CommentTok{\#\textgreater{} [1] 5}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Quindi la probabilità che in un minuto si abbiano 3 eventi è pari a
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{3}
+\NormalTok{(lambda}\SpecialCharTok{\^{}}\NormalTok{y }\SpecialCharTok{/} \FunctionTok{factorial}\NormalTok{(y)) }\SpecialCharTok{*} \FunctionTok{exp}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{lambda)}
+\CommentTok{\#\textgreater{} [1] 0.14}
+\end{Highlighting}
+\end{Shaded}
+
+\end{exercise}
+
+\begin{exercise}
+
+Per i dati dell'esempio precedente, si trovi la probabilità che un evento accada almeno 8 volte in un minuto.
+
+La probabilità cercata è
+\[
+p(y \geq 8) = 1 - p (y \leq 7) = 1- \sum_{i = 0}^7 \frac{\lambda^7}{7!}e^{-\lambda},
+\]
+\noindent
+con \(\lambda = 5\).
+
+Svolgendo i calcoli in \R otteniamo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{ppois}\NormalTok{(}\AttributeTok{q =} \DecValTok{7}\NormalTok{, }\AttributeTok{lambda =} \DecValTok{5}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 0.133}
+\FunctionTok{ppois}\NormalTok{(}\AttributeTok{q =} \DecValTok{7}\NormalTok{, }\AttributeTok{lambda =} \DecValTok{5}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 0.133}
+\end{Highlighting}
+\end{Shaded}
+
+\end{exercise}
+
+\begin{exercise}
+
+Sapendo che un evento avviene in media 6 volte al minuto, si calcoli (a) la probabilità di osservare un numero di eventi uguale o inferiore a 3 in un minuto, e (b) la probabilità di osservare esattamente 2 eventi in 30 secondi.
 
 \begin{enumerate}
 \def\labelenumi{(\alph{enumi})}
+\tightlist
 \item
-  La natura della probabilità è ``ontologica'' (ovvero, basata sulla metafisica): la probabilità è una proprietà della della realtà, del mondo, di come sono le cose, indipendentemente dalla nostra esperienza. È una visione che qualcuno chiama ``oggettiva''.
-\item
-  La natura della probabilità è ``epistemica'' (ovvero, basata sulla conoscenza): la probabilità si riferisce alla conoscenza che abbiamo del mondo, non al mondo in sé. Di conseguenza è detta, in contrapposizione alla precedente definizione, ``soggettiva''.
+  In questo caso \(\lambda = 6\) e la probabilità richiesta è
 \end{enumerate}
 
-In termini epistemici, la probabilità fornisce una misura della nostra incertezza sul verificarsi di un fenomeno, alla luce delle informazioni disponibili. Potremmo dire che c'è una ``scala'' naturale che ha per estremi il vero (1: evento certo) da una parte ed il falso (0: evento impossibile) dall'altra. La probabilità è la quantificazione di questa scala: quantifica lo stato della nostra incertezza rispetto al contenuto di verità di una proposizione (ovvero, quantifica la plausibilità di una proposizione).
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ppois}\NormalTok{(}\AttributeTok{q =} \DecValTok{3}\NormalTok{, }\AttributeTok{lambda =} \DecValTok{6}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{TRUE}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 0.151}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  In questo caso \(\lambda = 6 / 2\) e la probabilità richiesta è
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dpois}\NormalTok{(}\AttributeTok{x =} \DecValTok{2}\NormalTok{, }\AttributeTok{lambda =} \DecValTok{3}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 0.224}
+\end{Highlighting}
+\end{Shaded}
+
+\end{exercise}
+
+\hypertarget{alcune-proprietuxe0-della-variabile-di-poisson}{%
+\section{Alcune proprietà della variabile di Poisson}\label{alcune-proprietuxe0-della-variabile-di-poisson}}
 
 \begin{itemize}
 \item
-  Nell'interpretazione frequentista della probabilità, la probabilità \(P(A)\) rappresenta la frequenza relativa a lungo termine nel caso di un grande numero di ripetizioni di un esperimento casuale sotto le medesime condizioni. L'evento \(A\) deve essere una proposizione relativa alle variabili casuali\footnote{Viene stressata qui l'idea che ciò di cui parliamo è qualcosa che emerge nel momento in cui è possibile ripetere l'esperimento casuale tante volte sotto le medesime condizioni. Le variabili casuali, infatti, forniscono una quantificazione dei risultati che si ottengono ripetendo tante volte l'esperimento casuale sotto le medesime condizioni.}.
+  Il valore atteso, la moda e la varianza della variabile di Poisson sono uguali a \(\lambda\).
 \item
-  Nell'interpretazione bayesiana della probabilità \(P(A)\) rappresenta il grado di credenza, o plausibilità, a proposito di \(A\), dove \(A\) può essere qualsiasi proposizione logica.
+  La somma \(Y_1 + \dots + Y_n\) di \(n\) variabili casuali indipendenti con distribuzioni di Poisson di parametri \(\lambda_{1},\dots,\lambda_{n}\) segue una distribuzione di Poisson di parametro \(\lambda = \lambda_{1}+\dots+\lambda_{n}\).
+\item
+  La differenze di due variabili di Poisson non è una variabile di Poisson. Basti infatti pensare che può assumere valori negativi.
 \end{itemize}
-
-In questo insegnamento utilizzeremo l'interpretazione bayesiana della probabilità. Possiamo citare De Finetti, ad esempio, il quale ha formulato la seguente definizione ``soggettiva'' di probabilità la quale risulta applicabile anche ad esperimenti casuali i cui eventi elementari non siano ritenuti ugualmente possibili e che non siano necessariamente ripetibili più volte sotto le stesse condizioni:
-
-\begin{definition}
-La probabilità di un evento \(E\) è la quota \(p(E)\) che un individuo reputa di dover pagare ad un banco per ricevere ``1'' ovvero ``0'' verificandosi o non verificandosi \(E\). Le valutazioni di probabilità degli eventi devono rispondere ai pricipi di equità e coerenza.
-\end{definition}
-
-I principi di equità e coerenza sono definiti come segue.
-
-\begin{definition}
-Una scommessa risponde ai pricipi di \emph{equità} se il ruolo di banco e giocatore sono scambiabili in ogni momento del gioco e sempre alle stesse condizioni; \emph{coerenza} se non vi sono combinazioni di scommesse che consentano (sia al banco che al giocatore) di realizzare perdite o vincite certe.
-\end{definition}
-
-Secondo \textcite{definetti1931prob}
-
-\begin{quote}
-\emph{nessuna scienza ci permetterà di dire: il tale fatto accadrà, andrà così e così, perché ciò è conseguenza di tale legge, e tale legge è una verità assoluta, ma tanto meno ci condurrà a concludere scetticamente: la verità assoluta non esiste, e quindi tale fatto può accadere e può non accadere, può andare così e può andare in tutt'altro modo, nulla io ne so. Quel che si potrà dire è questo: io prevedo che il tale fatto avverrà, e avverrà nel tal modo, perché l'esperienza del passato e l'elaborazione scientifica cui il pensiero dell'uomo l'ha sottoposta mi fanno sembrare ragionevole questa previsione.}
-\end{quote}
-
-In altri termini, secondo de Finetti la probabilità deve essere concepita non come una proprietà ``oggettiva'' dei fenomeni (``la probabilità di un fenomeno ha un valore determinato che dobbiamo solo scoprire''), ma bensì come ``grado di fiducia -- in inglese \emph{degree of belief} -- di un dato soggetto, in un dato istante e con un dato insieme d'informazioni, riguardo al verificarsi di un evento''. Per denotare sia la probabilità (soggettiva) di un evento sia il concetto di \emph{valore atteso} (che descriveremo in seguito), \textcite{definetti1970teoria} utilizza il termine ``previsione'' (e lo stesso simbolo \(P\)):
-
-\begin{quote}
-\emph{la previsione {[}\(\dots\){]} consiste nel considerare ponderatamente tutte le alternative possibili per ripartire fra di esse nel modo che parrà più appropriato le proprie aspettative, le proprie sensazioni di probabilità.}
-\end{quote}
-
-\hypertarget{variabili-casuali-e-probabilituxe0-di-un-evento}{%
-\section{Variabili casuali e probabilità di un evento}\label{variabili-casuali-e-probabilituxe0-di-un-evento}}
-
-Esaminiamo qui di seguito alcuni concetti di base della teoria della probabilità.
-
-\hypertarget{variabili-casuali}{%
-\subsection{Variabili casuali}\label{variabili-casuali}}
-
-Sia \(Y\) il risultato del lancio di moneta equilibrata, non di un generico lancio di una moneta, ma un'istanza specifica del lancio di una specifica moneta in un dato momento. Definita in questo modo, \(Y\) è una \emph{variabile casuale}, ovvero una variabile che assume valori diversi con probabilità diverse. Se la moneta è equilibrata, c'è una probabilità del 50\% che il lancio della moneta dia come risultato ``testa'' e una probabilità del 50\% che dia come risultato ``croce''.
-
-Per facilitare la trattazione, le variabili casuali assumono solo valori numerici. Per lo specifico lancio della moneta in questione, diciamo, ad esempio, che la variabile casuale \(Y\) assume il valore 1 se esce testa e il valore 0 se esce croce.
-
-\hypertarget{eventi-e-probabilituxe0}{%
-\subsection{Eventi e probabilità}\label{eventi-e-probabilituxe0}}
-
-Nella teoria della probabilità il risultato ``testa'' nel lancio di una moneta è chiamato \emph{evento}.\footnote{Per un ripasso delle nozioni di base della teoria degli insiemi, si veda l'Appendice \ref{insiemistica}.} Ad esempio, \(Y\) = 1 denota l'evento in cui il lancio di una moneta produce come risultato testa.
-
-Il funzionale \(Pr[·]\) definisce la probabilità di un evento. Ad esempio, per il lancio di una moneta equilibrata, la probabilità dell'evento ``il risultato del lancio della moneta è testa'' è scritta come
-\[
-Pr[Y = 1] = 0.5.
-\]
-Se la moneta è equilibrata dobbiamo anche avere \(Pr[Y = 0] = 0.5\). I due eventi \emph{Y} = 1 e \(Y\) = 0 sono \emph{mutuamente esclusivi} nel senso che non possono entrambi verificarsi contemporaneamente. Nella notazione probabilistica,
-\[
-Pr[Y = 1\; e \; Y = 0] = 0.
-\]
-Gli eventi \(Y\) = 1 e \(Y\) = 0 di dicono \emph{esaustivi}, nel senso che almeno uno di essi deve verificarsi e nessun altro tipo di evento è possibile. Nella notazione probabilistica,
-\[
-Pr[Y = 1\; o \; Y = 0] = 1.
-\]
-Il connettivo logico ``e'' specifica eventi \emph{congiunti}, ovvero eventi che possono verificarsi contemporaneamente (eventi \emph{compatibili}) e per i quali, perciò, la probabilità della loro congiunzione è \(Pr(A \; e \; B) > 0\).
-Il connettivo logico ``o'' specifica eventi \emph{disgiunti}, ovvero eventi che non possono verificarsi contemporaneamente (eventi \emph{incompatibili}) e per i quali, perciò, la probabilità della loro congiunzione è \(P(A \; e \; B) = 0\).
-
-\hypertarget{spazio-campionario-e-risultati-possibili}{%
-\section{Spazio campionario e risultati possibili}\label{spazio-campionario-e-risultati-possibili}}
-
-Anche se il lancio di una moneta produce sempre uno specifico risultato nel mondo reale, noi possiamo anche immaginare i possibili risultati alternativi che si sarebbero potuti osservare. Quindi, anche se in uno specifico lancio la moneta dà testa (\(Y\) = 1), possiamo immaginare la possibilità che il lancio possa avere prodotto croce (\(Y\) = 0). Tale ragionamento controfattuale è la chiave per comprendere la teoria della probabilità e l'inferenza statistica.
-
-I risultati possibili che si possono osservare come conseguenza del lancio di una moneta determinano i valori possibili che la variabile casuale può assumere. L'insieme di tutti i risultati possibili è chiamato \emph{spazio campionario}. Lo spazio campionario può essere concettualizzato come un'urna contenente una pallina per ogni possibile risultato del lancio della moneta. Su ogni pallina è scritto il valore della variabile casuale. Uno specifico lancio di una moneta -- ovvero, l'osservazione di uno specifico valore di una variabile casuale -- è chiamato \emph{esperimento casuale}.
-
-Il lancio di un dado ci fornisce l'esempio di un altro esperimento casuale. Supponiamo di essere interessati all'evento ``il lancio del dado produce un numero dispari''. Un \emph{evento} seleziona un sottoinsieme dello spazio campionario: in questo caso, l'insieme dei risultati \(\{1, 3, 5\}\). Se esce 3, per esempio, diciamo che si è verificato l'evento ``dispari'' (ma l'evento ``dispari'' si sarebbe anche verificato anche se fosse uscito 1 o 5).
-
-\hypertarget{usare-la-simulazione-per-stimare-le-probabilituxe0}{%
-\section{Usare la simulazione per stimare le probabilità}\label{usare-la-simulazione-per-stimare-le-probabilituxe0}}
-
-I metodi basati sulla simulazione ci consentono di stimare le probabilità degli eventi in un modo diretto se siamo in grado di generare realizzazioni molteplici e casuali delle variabili casuali coinvolte nelle definizioni degli eventi. Per simulare il lancio di una moneta equilibrata in R iniziamo a definire un vettore che contiene i possibili risultati del lancio della moneta (ovvero i possibili valori della variabile casuale \(Y\)):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{coin }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-L'estrazione casuale di uno di questi due possibili valori (ovvero, la simulazione di uno specifico lancio di una moneta) si realizza con la funzione \texttt{sample()}:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{sample}\NormalTok{(coin, }\AttributeTok{size =} \DecValTok{1}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-In maniera equivalente, lo stesso risultato si ottiene mediante l'istruzione
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{rbinom}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{0.5}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 1}
-\end{Highlighting}
-\end{Shaded}
-
-Supponiamo di ripetere questo esperimento casuale 100 volte e di registrare i risultati così ottenuti. La stima della probabilità dell'evento \(Pr[Y = 1]\) è data dalla frequenza relativa del numero di volte in cui abbiamo osservato l'evento di interesse (\(Y = 1\)):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{M }\OtherTok{\textless{}{-}} \DecValTok{10}
-\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, M)}
-\ControlFlowTok{for}\NormalTok{ (m }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{M) \{}
-\NormalTok{  y[m] }\OtherTok{=} \FunctionTok{rbinom}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{0.5}\NormalTok{)}
-\NormalTok{\}}
-\NormalTok{estimate }\OtherTok{=} \FunctionTok{sum}\NormalTok{(y) }\SpecialCharTok{/}\NormalTok{ M}
-
-\FunctionTok{cat}\NormalTok{(}\StringTok{"estimated Pr[Y = 1] ="}\NormalTok{, estimate)}
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.7}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Ripetiamo questa procedura 10 volte.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{flip\_coin }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(M) \{}
-\NormalTok{  y }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, M)}
-  \ControlFlowTok{for}\NormalTok{ (m }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{M) \{}
-\NormalTok{    y[m] }\OtherTok{=} \FunctionTok{rbinom}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{0.5}\NormalTok{)}
-\NormalTok{  \}}
-\NormalTok{  estimate }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(y) }\SpecialCharTok{/}\NormalTok{ M}
-  \FunctionTok{cat}\NormalTok{(}\StringTok{"estimated Pr[Y = 1] ="}\NormalTok{, estimate, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{) \{}
-  \FunctionTok{flip\_coin}\NormalTok{(}\DecValTok{10}\NormalTok{)}
-\NormalTok{\}}
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.5 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.7 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.4 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.6 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.6 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.5 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.3 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.4 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.7 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.7}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Dato che la moneta è equilibrata, la stima delle probabilità dell'evento \(Pr[Y = 1]\) è simile a al valore che ci aspettiamo (\(Pr[Y = 1]\) = 0.5), ma il risultato ottenuto nelle varie simulazioni non è sempre esatto. Proviamo ad aumentare il numero di lanci in ciascuna simulazione:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{) \{}
-  \FunctionTok{flip\_coin}\NormalTok{(}\DecValTok{100}\NormalTok{)}
-\NormalTok{\}}
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.54 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.35 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.48 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.41 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.48 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.5 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.49 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.45 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.47 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.48}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-In questo secondo caso, gli errori tendono ad essere più piccoli della simulazione precedente. Cosa succede se in ciascuna simulazione esaminiamo i risultati di 10,000 lanci della moneta?
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{) \{}
-  \FunctionTok{flip\_coin}\NormalTok{(}\FloatTok{1e4}\NormalTok{)}
-\NormalTok{\}}
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.504 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.5 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.496 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.499 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.509 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.503 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.503 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.501 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.497 }
-\CommentTok{\#\textgreater{} estimated Pr[Y = 1] = 0.502}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Ora le stime ottenute sono molto vicine alla vera probabilità che vogliamo stimare (cioè 0.5, perché la moneta è equilibrata). I risultati delle simulazioni precedenti pongono dunque il problema di determinare quale sia il numero di lanci di cui abbiamo bisogno per assicurarci che le stime siano accurate (ovvero, vicine al valore corretto della probabilità)
-
-\hypertarget{la-legge-dei-grandi-numeri}{%
-\section{La legge dei grandi numeri}\label{la-legge-dei-grandi-numeri}}
-
-La visualizzazione mediante grafici contribuisce alla comprensione dei concetti della statistica e della teoria della probabilità. Un modo per descrivere ciò che accade all'aumentare del numero \(M\) di ripetizioni del lancio della moneta consiste nel registrare la stima della probabilità dell'evento \(Pr[Y = 1]\) in funzione del numero di ripetizioni dell'esperimento casuale per ogni \(m \in 1 : M.\) Un grafico dell'andamento della stima di \(Pr[Y = 1]\) in funzione di \(m\) si ottiene nel modo seguente.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{nrep }\OtherTok{\textless{}{-}} \FloatTok{1e4}
-\NormalTok{estimate }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, nrep)}
-\NormalTok{flip\_coin }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(m) \{}
-\NormalTok{  y }\OtherTok{\textless{}{-}} \FunctionTok{rbinom}\NormalTok{(m, }\DecValTok{1}\NormalTok{, }\FloatTok{0.5}\NormalTok{)}
-\NormalTok{  phat }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(y) }\SpecialCharTok{/}\NormalTok{ m}
-\NormalTok{  phat}
-\NormalTok{\}}
-\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{nrep) \{}
-\NormalTok{  estimate[i] }\OtherTok{\textless{}{-}} \FunctionTok{flip\_coin}\NormalTok{(i)}
-\NormalTok{\}}
-\NormalTok{d }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
-  \AttributeTok{n =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{nrep, }
-\NormalTok{  estimate}
-\NormalTok{)}
-\NormalTok{d }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}
-    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ n, }\AttributeTok{y =}\NormalTok{ estimate)}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}
-    \AttributeTok{x =} \StringTok{"Numero di lanci della moneta"}\NormalTok{, }
-    \AttributeTok{y =} \StringTok{"Stima Pr[Y = 1]"}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{015_prob_intro_files/figure-latex/legge-grandi-n-1-1} 
-
-}
-
-\caption{Stima della probabilità di successo in funzione del numero di lanci di una moneta.}\label{fig:legge-grandi-n-1}
-\end{figure}
-
-Dato che il grafico \ref{fig:legge-grandi-n-1} su una scala lineare non rivela chiaramente l'andamento della simulazione, utilizzeremo invece un grafico in cui sull'asse \(x\) è stata imposta una scala logaritmica. Con l'asse \(x\) su scala logaritmica, i valori tra 1 e 10 vengono tracciati all'incirca con la stessa ampiezza come nel caso dei valori tra 50 e 700, eccetera.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{d }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}
-    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ n, }\AttributeTok{y =}\NormalTok{ estimate)}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{scale\_x\_log10}\NormalTok{(}
-    \AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DecValTok{200}\NormalTok{, }
-               \DecValTok{700}\NormalTok{, }\DecValTok{2500}\NormalTok{, }\DecValTok{10000}\NormalTok{)}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}
-    \AttributeTok{x =} \StringTok{"Numero di lanci della moneta"}\NormalTok{, }
-    \AttributeTok{y =} \StringTok{"Stima Pr[Y = 1]"}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{015_prob_intro_files/figure-latex/legge-grandi-n-2-1} 
-
-}
-
-\caption{Stima della probabilità di successo in funzione del numero di lanci di una moneta -- scala logaritmica.}\label{fig:legge-grandi-n-2}
-\end{figure}
-
-La \emph{legge dei grandi numeri} ci dice che all'aumentare del numero di ripetizioni dell'esperimento casuale la media dei risultati ottenuti tenderà ad avvicinarsi al valore atteso man mano che verranno eseguite più prove. Nel caso presente, la figura \ref{fig:legge-grandi-n-2} mostra appunto che, all'aumentare del numero \emph{M} di lanci della moneta, la stima di \(Pr[Y = 1]\) tende a convergere al vero valore di 0.5.
-
-\hypertarget{variabili-casuali-multiple}{%
-\section{Variabili casuali multiple}\label{variabili-casuali-multiple}}
-
-Le variabili casuali non esistono isolatamente. Abbiamo iniziato con una singola variabile casuale \emph{Y} che rappresenta il risultato di un singolo, specifico lancio di una moneta equlibrata. Ma supponiamo ora di lanciare la moneta tre volte. Ciò suggerisce che possiamo avere le variabili casuali \(Y_1 , Y_2 , Y_3\) che rappresentano i risultati di ciascuno dei lanci. Possiamo assumere che ogni lancio sia indipendente, ovvero che non dipenda dal risultato degli altri lanci. Ognuna di queste variabili \(Y_n\) per \(n \in 1:3\) ha \(Pr[Y_n =1]=0.5\) e \(Pr[Y_n =0]=0.5\). Possiamo combinare più variabili casuali usando le operazioni aritmetiche. Se \(Y_1 , Y_2, Y_3\) sono variabili casuali che rappresentano tre lanci di una moneta equilibrata (o un lancio di tre monete equilibrate), possiamo definire la somma di tali variabili casuali come
-\[
-Z = Y_1 + Y_2 + Y_3.
-\]
-\noindent
-Possiamo simulare i valori assunti dalla variabile casuale \emph{Z} simulando i valori di \(Y_1, Y_2, Y_3\) per poi sommarli.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{y1 }\OtherTok{\textless{}{-}} \FunctionTok{rbinom}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{0.5}\NormalTok{)}
-\NormalTok{y2 }\OtherTok{\textless{}{-}} \FunctionTok{rbinom}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{0.5}\NormalTok{)}
-\NormalTok{y3 }\OtherTok{\textless{}{-}} \FunctionTok{rbinom}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{0.5}\NormalTok{)}
-\FunctionTok{c}\NormalTok{(y1, y2, y3)}
-\CommentTok{\#\textgreater{} [1] 0 0 0}
-\NormalTok{z }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(}\FunctionTok{c}\NormalTok{(y1, y2, y3))}
-\FunctionTok{cat}\NormalTok{(}\StringTok{"z ="}\NormalTok{, z, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\CommentTok{\#\textgreater{} z = 0}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-ovvero,
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, }\DecValTok{3}\NormalTok{)}
-\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{) \{}
-\NormalTok{  y[i] }\OtherTok{\textless{}{-}} \FunctionTok{rbinom}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{0.5}\NormalTok{)}
-\NormalTok{\}}
-\NormalTok{y}
-\CommentTok{\#\textgreater{} [1] 1 1 0}
-\NormalTok{z }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(y)}
-\FunctionTok{cat}\NormalTok{(}\StringTok{"z ="}\NormalTok{, z, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\CommentTok{\#\textgreater{} z = 2}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-oppure, ancora più semplicemente:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{rbinom}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{0.5}\NormalTok{)}
-\NormalTok{y}
-\CommentTok{\#\textgreater{} [1] 1 0 1}
-\NormalTok{z }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(y)}
-\FunctionTok{cat}\NormalTok{(}\StringTok{"z ="}\NormalTok{, z, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\CommentTok{\#\textgreater{} z = 2}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Possiamo ripetere questa simulazione \(M = 1e5\) volte:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{M }\OtherTok{\textless{}{-}} \FloatTok{1e5}
-\NormalTok{z }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, M)}
-\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{M) \{}
-\NormalTok{  y }\OtherTok{\textless{}{-}} \FunctionTok{rbinom}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{0.5}\NormalTok{)}
-\NormalTok{  z[i] }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(y)}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-e calcolare una stima della probabilità che la variabile casuale \(Z\) assuma i valori 0, 1, 2, 3:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{table}\NormalTok{(z) }\SpecialCharTok{/}\NormalTok{ M}
-\CommentTok{\#\textgreater{} z}
-\CommentTok{\#\textgreater{}     0     1     2     3 }
-\CommentTok{\#\textgreater{} 0.126 0.372 0.377 0.125}
-\end{Highlighting}
-\end{Shaded}
-
-Nel caso di 4 monete equilibrate, avremo:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{M }\OtherTok{\textless{}{-}} \FloatTok{1e5}
-\NormalTok{z }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, M)}
-\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{M) \{}
-\NormalTok{  y }\OtherTok{\textless{}{-}} \FunctionTok{rbinom}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{0.5}\NormalTok{)}
-\NormalTok{  z[i] }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(y)}
-\NormalTok{\}}
-\FunctionTok{table}\NormalTok{(z) }\SpecialCharTok{/}\NormalTok{ M}
-\CommentTok{\#\textgreater{} z}
-\CommentTok{\#\textgreater{}      0      1      2      3      4 }
-\CommentTok{\#\textgreater{} 0.0630 0.2498 0.3731 0.2509 0.0631}
-\end{Highlighting}
-\end{Shaded}
-
-Viene detta \emph{variabile casuale discreta} una variabile casuale le cui modalità possono essere costituite solo da numeri interi:
-\[
-\mathbb{Z} = \dots, -2, -1, 0, 1, 2, \dots
-\]
-
-\hypertarget{sec:fun-mass-prob}{%
-\section{Funzione di massa di probabilità}\label{sec:fun-mass-prob}}
-
-È conveniente avere una funzione che associa ogni possibile valore di una variabile casuale alla sua probabilità. In generale, ciò è possibile se e solo se la variabile casuale è discreta, così com'è stata definita nel Paragrafo precedente.
-
-Ad esempio, se consideriamo \(Z = Y_1 + \dots + Y_4\) come il numero di risultati ``testa'' in 4 lanci della moneta, allora possiamo definire la seguente funzione:
-\[
-\begin{array}{rclll}
-p_Z(0) & = & 1/16 & & \mathrm{TTTT}
-\\
-p_Z(1) & = & 4/16 & & \mathrm{HTTT, THTT, TTHT, TTTH}
-\\
-p_Z(2) & = & 6/16 & & \mathrm{HHTT, HTHT, HTTH, THHT, THTH, TTTH}
-\\
-p_Z(3) & = & 4/16 & & \mathrm{HHHT, HHTH, HTHH, THHH}
-\\
-p_Z(4) & = & 1/16 & & \mathrm{HHHH}
-\end{array}
-\]
-Il lancio di quattro monete può produrre sedici possibili risultati. Dato che i lanci sono indipendenti e le monete sono equilibrate, ogni possibile risultato è ugualmente probabile. Nella tabella in alto, le sequenze dei risultati possibili del lancio delle 4 monete sono riportate nella colonna più a destra. Le probabilità si ottengono dividendo il numero di sequenze che producono lo stesso numero di eventi testa per il numero dei risultati possibili.
-
-La funzione \(p_Z\) è stata costruita per mappare un valore \(u\) per \(Z\) alla probabilità dell'evento \(Z = u\). Convenzionalmente, queste probabilità sono scritte come
-\[
-p_Z(z) = \mbox{Pr}[Z = z].
-\]
-La parte a destra dell'uguale si può leggere come: ``la probabilità che la variabile casuale \(Z\) assuma il valore \(z\)''.
-
-Una funzione definita come sopra è detta \emph{funzione di massa di probabilità} della variabile casuale \(Z\). Ad ogni variabile casuale discreta è associata un'unica funzione di massa di probabilità.
-
-Una rappresentazione grafica della stima della funzione di massa di probabilità per l'esperimento casuale del lancio di quattro monete equilibrate è fornita nella figura \ref{fig:barplot-mdf-4coins}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
-\NormalTok{M }\OtherTok{\textless{}{-}} \FloatTok{1e5}
-\NormalTok{nflips }\OtherTok{\textless{}{-}} \DecValTok{4}
-\NormalTok{u }\OtherTok{\textless{}{-}} \FunctionTok{rbinom}\NormalTok{(M, nflips, }\FloatTok{0.5}\NormalTok{)}
-\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{0}\SpecialCharTok{:}\NormalTok{nflips}
-\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, nflips}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}
-\ControlFlowTok{for}\NormalTok{ (n }\ControlFlowTok{in} \DecValTok{0}\SpecialCharTok{:}\NormalTok{nflips)}
-\NormalTok{  y[n }\SpecialCharTok{+} \DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(u }\SpecialCharTok{==}\NormalTok{ n) }\SpecialCharTok{/}\NormalTok{ M}
-\NormalTok{bar\_plot }\OtherTok{\textless{}{-}}
-  \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{Z =}\NormalTok{ x, }\AttributeTok{count =}\NormalTok{ y) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}
-    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Z, }\AttributeTok{y =}\NormalTok{ count)}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{scale\_x\_continuous}\NormalTok{(}
-    \AttributeTok{breaks =} \DecValTok{0}\SpecialCharTok{:}\DecValTok{4}\NormalTok{,}
-    \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{)}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}
-    \AttributeTok{y =} \StringTok{"Probabilità stimata Pr[Z = z]"}
-\NormalTok{)}
-\NormalTok{bar\_plot}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{015_prob_intro_files/figure-latex/barplot-mdf-4coins-1} 
-
-}
-
-\caption{Grafico di $M = 100\,000$ simulazioni della funzione di massa di probabilità di una variabile casuale definita come il numero di teste in quattro lanci di una moneta equilibrata.}\label{fig:barplot-mdf-4coins}
-\end{figure}
-
-Se \(A\) è un sottoinsieme della variabile casuale \(Z\), allora denotiamo
-con \(P_{z}(A)\) la probabilità assegnata ad \(A\) dalla distribuzione
-\(P_{z}\). Mediante una distribuzione di probabilità \(P_{z}\) è dunque
-possibile determinare la probabilità di ciascun sottoinsieme
-\(A \subset Z\) come
-\[
-P_{z}(A) = \sum_{z \in A} P_{z}(Z).
-\]
-
-\begin{example}
-Nel caso dell'esempio discusso nella Sezione \ref{sec:fun-mass-prob}, la probabilità che \(Z\) sia un numero dispari è
-\[
-Pr(\text{Z è un numero dispari}) = P_{z}(Z = 1) + P_{z}(Z = 3) = \frac{4}{16} + \frac{4}{16} = \frac{1}{2}.
-\]
-\end{example}
 
 \hypertarget{considerazioni-conclusive}{%
 \section*{Considerazioni conclusive}\label{considerazioni-conclusive}}
 \addcontentsline{toc}{section}{Considerazioni conclusive}
 
-In questo capitolo abbiamo visto come si costruisce lo spazio
-campionario di un esperimento casuale, quali sono le proprietà di base
-della probabilità e come si assegnano le probabilità agli eventi
-definiti sopra uno spazio campionario discreto. Abbiamo anche introdotto
-le nozioni di ``variabile casuale'', ovvero di una variabile che prende i suoi valori casualmente. E abbiamo descritto il modo di specificare la probabilità con cui sono presi i differenti valori, ovvero la funzione di distribuzione probabilistica \(F(X) = Pr(X < x)\), e la funzione di massa di probabilità. Le procedure di analisi dei dati psicologici che discuteremo in seguito faranno un grande uso di questi concetti e della notazione qui introdotta.
+La distribuzione binomiale è una distribuzione di probabilità discreta che descrive il numero di successi in un processo di Bernoulli, ovvero la variabile aleatoria \(Y = Y_1 + \dots + Y_n\) che somma \(n\) variabili casuali indipendenti di uguale distribuzione di Bernoulli \(\mathcal{B}(\theta)\), ognuna delle quali può fornire due soli risultati: il successo con probabilità \(\theta\) e il fallimento con probabilità \(1 - \theta\).
+
+La distribuzione binomiale è molto importante per le sue molte applicazioni. Nelle presenti dispense, dedicate all'analisi bayesiana, è soprattutto importante perché costituisce il fondamento del caso più semplice del cosiddetto ``aggiornamento bayesiano'', ovvero il caso Beta-Binomiale. Il modello Beta-Binomiale ci fornirà infatti un esempio paradigmatico dell'approccio bayesiano all'inferenza e sarà trattato in maniera analitica. È dunque importante che le proprietà della distribuzione binomiale risultino ben chiare.
 
 
 % Bibliography

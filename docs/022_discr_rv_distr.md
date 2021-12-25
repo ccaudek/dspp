@@ -1,7 +1,5 @@
 # Distribuzioni di v.c. discrete {#distr-rv-discr}
 
-
-
 In questo Capitolo verranno esaminate le principali distribuzioni di probabilità delle variabili casuali discrete. Un esperimento casuale che può dare luogo a solo due possibili esiti (successo, insuccesso) è modellabile con una variabile casuale di Bernoulli. Una sequenza di prove di Bernoulli costituisce un processo Bernoulliano. Il numero di successi dopo $n$ prove di Bernoulli corrisponde ad una variabile casuale che segue la legge binomiale. La distribuzione binomiale risulta da un insieme di prove di Bernoulli solo se il numero totale $n$ è fisso per disegno. Se il numero di prove è esso stesso una variabile casuale, allora il numero di successi nella corrispondente sequenza di prove bernoulliane segue al distribuzione di Poisson.
 
 
@@ -85,7 +83,7 @@ La distribuzione di probabilità di alcune distribuzioni binomiali, per due valo
 
 \begin{figure}[h]
 
-{\centering \includegraphics[width=0.8\linewidth]{022_discr_rv_distr_files/figure-latex/example-binomial-distr-1} 
+{\centering \includegraphics{022_discr_rv_distr_files/figure-latex/example-binomial-distr-1} 
 
 }
 
@@ -183,7 +181,7 @@ Alcune distribuzioni di Poisson sono riportate nella figura \@ref(fig:examples-p
 
 \begin{figure}[h]
 
-{\centering \includegraphics[width=0.8\linewidth]{022_discr_rv_distr_files/figure-latex/examples-poisson-distrib-1} 
+{\centering \includegraphics{022_discr_rv_distr_files/figure-latex/examples-poisson-distrib-1} 
 
 }
 

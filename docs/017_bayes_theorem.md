@@ -1,9 +1,6 @@
 # Il teorema di Bayes {#chapter-teo-bayes}
 
-
-
 Questo Capitolo presenterà il teorema di Bayes per calcolare la probabilità degli eventi riferiti a esperimenti casuali, ossia esperimenti di cui non si può prevedere il risultato finale ma di cui si conoscono tutti i possibili risultati. Prima di esaminare il teorema di Bayes verrà introdotta una sua componente, ovvero il teorema della probabilità totale. 
-
 
 ## Il teorema della probabilità totale 
 
@@ -31,7 +28,7 @@ probabilità di questi tre eventi (figura \@ref(fig:tikz-prob-tot)).
 
 \begin{figure}[h]
 
-{\centering \includegraphics[width=0.8\linewidth]{017_bayes_theorem_files/figure-latex/tikz-prob-tot-1} 
+{\centering \includegraphics{017_bayes_theorem_files/figure-latex/tikz-prob-tot-1} 
 
 }
 
@@ -166,6 +163,9 @@ La \@ref(eq:bayes2) prende il nome di *Teorema di Bayes* e mostra che la conosc
 
 <!-- È chiaro che definizione di $p(y)$ fornita sopra è empirica ma, se ci pensiamo, è anche chiaro che essa risulta nel contempo mal definita, considerata l'impossibilità pratica di osservare una serie infinita di eventi. Nel paradigma frequentista è dunque necessario assumere che la probabilità $p(y)$ sia una proprietà oggettiva della realtà, ma non osservabile se non in maniera asintotica. Questo assunto viene rifiutato dall'approccio bayesiano. -->
 
+::: {.remark}
+Qual è la pronuncia di "Bayesian"? Per saperlo possiamo seguire [questo link](https://bayes-rules.github.io/posts/fun/).
+:::
 
 ### Le probabilità come grado di fiducia
 

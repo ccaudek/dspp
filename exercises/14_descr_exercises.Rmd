@@ -9,19 +9,11 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, error = TRUE)
 ```
 
-<!-- <style type="text/css"> -->
-<!--   body{ -->
-<!--   font-size: 13pt; -->
-<!-- } -->
-<!-- </style> -->
-
-
 Modifica i seguenti blocchi di codice e poi esegui (`knit`) ciascun blocco di codice singolarmente, uno dopo l'altro.
 
 ```{r}
 library("tidyverse")
 ```
-
 
 ## Usare R come un calcolatore
 

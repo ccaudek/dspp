@@ -2,6 +2,7 @@ book_filename: "DataScience"
 output_dir: "docs"
 delete_merged_file: true
 new_session: true
+before_chapter_script: "_common.R"
 language:
   label:
     fig: 'Figura '
@@ -26,13 +27,13 @@ rmd_files:
     # - "001_key_notions.Rmd"
     # - "005_measurement.Rmd"
     # - "013_eda.Rmd"
-    - "015_prob_intro.Rmd"
+    # - "015_prob_intro.Rmd"
     # - "016_conditional_prob.Rmd"
     # - "017_bayes_theorem.Rmd"
     # - "018_joint_prob.Rmd"
     # - "019_density_func.Rmd"
     # - "020_expval_var.Rmd"
-    # - "022_discr_rv_distr.Rmd"
+    - "022_discr_rv_distr.Rmd"
     # - "023_cont_rv_distr.Rmd"
     # - "025_intro_bayes.Rmd"
     # - "026_conjugate_families.Rmd"

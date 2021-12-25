@@ -1,13 +1,5 @@
 # Probabilità congiunta {#chapter-prob-congiunta}
 
-```{r setup, include = FALSE}
-source("_common.R")
-```
-
-<!-- Finora abbiamo considerato unicamente le leggi di singole variabile -->
-<!-- aleatorie.  -->
-<!-- In psicologia e nella vita quotidiana siamo spesso interessati a studiare problemi di probabilità legati al valore congiunto di due o più variabili casuali. Ad esempio, potremmo misurare il QI dei bambini e il loro peso alla nascita, o l'altezza e il peso delle giraffe, o il livello di inquinamento atmosferico e il tasso di malattie respiratorie nelle città, o il numero di amici di Facebook e l'età. Ci potremmo chiedere che relazione esiste tra le coppie di variabili elencate in precedenza. -->
-
 Per descrivere la relazione tra due variabili casuali è necessario calcolare la *covarianza* e la *correlazione*. Il calcolo di questi due indici richiede la conoscenza della funzione di probabilità congiunta. Obiettivo di questo Capitolo è descrivere la funzione di probabilità congiunta di due variabili casuali; esamineremo in dettaglio il caso discreto.
 
 

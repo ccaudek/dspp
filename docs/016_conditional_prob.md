@@ -1,11 +1,6 @@
 # Probabilità condizionata {#chapter-prob-cond}
 
-
-
-L'attribuzione di una probabilità ad un evento è sempre condizionata dalle conoscenze che abbiamo a disposizione. Per un determinato stato di conoscenze, attribuiamo ad un dato evento una certa probabilità di verificarsi; ma se il nostro stato di conoscenze cambia, allora cambierà anche la probabilità che attribuiamo all'evento in questione.
-
-<!-- Possiamo chiederci, ad esempio, quale sia la probabilità che Mario Rossi superi l'esame di Psicometria nel primo appello del presente anno accademico. In assenza di altre informazioni, la migliore stima di tale probabilità è data dalla proporzione di studenti che hanno superato l'esame di Psicometria nel corrispondente appello dei precedenti anni accademici. Ma se sappiamo che Mario Rossi è particolarmente motivato  ed ha studiato molto, allora la probabilità sarà sicuramente più alta. -->
-
+L'attribuzione di una probabilità ad un evento è sempre condizionata dalle conoscenze che abbiamo a disposizione. Per un determinato stato di conoscenze, attribuiamo ad un dato evento una certa probabilità di verificarsi; ma se il nostro stato di conoscenze cambia, allora cambierà anche la probabilità che attribuiremo all'evento in questione.
 
 ## Probabilità condizionata su altri eventi 
 
@@ -171,5 +166,5 @@ P(A \cup B) = P(A) + P(B) - P(A)P(B).
 
 ## Considerazioni conclusive {-}
 
-La probabilità condizionata è importante perché ci fornisce uno strumento per precisare il concetto di indipendenza statistica. Una delle domande più importanti delle analisi statistiche è infatti quella che si chiede se due variabili sono associate tra loro oppure no. In questo Capitolo abbiamo discusso il concetto di indipendenza (come contrapposto al concetto di associazione -- si veda il Capitolo \@ref(#chapter-descript)). In seguito vedremo come sia possibile fare inferenza sull'associazione tra variabili.
+La probabilità condizionata è importante perché ci fornisce uno strumento per precisare il concetto di indipendenza statistica. Una delle domande più importanti delle analisi statistiche è infatti quella che si chiede se due variabili sono associate tra loro oppure no. In questo Capitolo abbiamo discusso il concetto di indipendenza (come contrapposto al concetto di associazione -- si veda il Capitolo \@ref(chapter-descript)). In seguito vedremo come sia possibile fare inferenza sull'associazione tra variabili.
 

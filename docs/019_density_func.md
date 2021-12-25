@@ -1,7 +1,5 @@
 # Funzione di densità di probabilità {#chapter-intro-density-function}
 
-
-
 Finora abbiamo considerato solo variabili casuali discrete, cioè variabili che assumono solo valori interi. Ma cosa succede se vogliamo usare variabili casuali per rappresentare lunghezze o volumi o distanze una qualsiasi delle altre proprietà continue nel mondo fisico (o psicologico)? È necessario generalizzare l'approccio usato finora.
 
 Le variabili casuali continue assumono valori reali. L'insieme dei numeri reali è *non numerabile* perché è più grande dell'insieme degli interi.^[Georg Cantor dimostrò che era impossibile mappare uno a uno i reali negli interi, dimostrando così che l'insieme dei reali è non numerabile.] Le leggi della probabilità sono le stessa per le variabili casuali discrete e quelle continue. La nozione di funzione di massa di probabilità, invece, deve essere sostituita dal suo equivalente continuo, ovvero dalla funzione di densità di probabilità. Lo scopo di questo Capitolo è quello di chiarire il significato di questa nozione, usando un approccio basato sulle simulazioni.
@@ -69,7 +67,7 @@ Questa è una funzione lineare di $\theta$, cioè $\frac{1}{360} \times \theta$,
 
 \begin{figure}[h]
 
-{\centering \includegraphics[width=0.8\linewidth]{019_density_func_files/figure-latex/spinner-cdf-1} 
+{\centering \includegraphics{019_density_func_files/figure-latex/spinner-cdf-1} 
 
 }
 
@@ -101,7 +99,7 @@ unif_cdf_plot
 
 \begin{figure}[h]
 
-{\centering \includegraphics[width=0.8\linewidth]{019_density_func_files/figure-latex/unnamed-chunk-2-1} 
+{\centering \includegraphics{019_density_func_files/figure-latex/unnamed-chunk-2-1} 
 
 }
 
@@ -168,7 +166,7 @@ unif_prob_plot
 
 \begin{figure}[h]
 
-{\centering \includegraphics[width=0.8\linewidth]{019_density_func_files/figure-latex/unnamed-chunk-4-1} 
+{\centering \includegraphics{019_density_func_files/figure-latex/unnamed-chunk-4-1} 
 
 }
 
@@ -201,7 +199,7 @@ uniform_pdf_plot
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{019_density_func_files/figure-latex/unnamed-chunk-5-1} \end{center}
+\begin{center}\includegraphics{019_density_func_files/figure-latex/unnamed-chunk-5-1} \end{center}
 
 \noindent
 Dal grafico vediamo che l'area sottesa alla funzione di densità è $(b - a)\times c$. Dato che tale area deve essere unitaria, ovvero, $(b - a) \times c = 1$, possiamo trovare $c$ dividendo entrambi i termini per $b - a$,
@@ -265,7 +263,7 @@ log_odds_plot
 
 \begin{figure}[h]
 
-{\centering \includegraphics[width=0.8\linewidth]{019_density_func_files/figure-latex/unnamed-chunk-6-1} 
+{\centering \includegraphics{019_density_func_files/figure-latex/unnamed-chunk-6-1} 
 
 }
 
@@ -330,7 +328,7 @@ logistic_cdf_plot
 
 \begin{figure}[h]
 
-{\centering \includegraphics[width=0.8\linewidth]{019_density_func_files/figure-latex/logistic-cdf-1} 
+{\centering \includegraphics{019_density_func_files/figure-latex/logistic-cdf-1} 
 
 }
 

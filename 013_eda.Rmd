@@ -2,11 +2,6 @@
 
 # Statistica descrittiva {#descriptive-stats}
 
-```{r, include = FALSE}
-source("_common.R")
-library("patchwork")
-```
-
 Le analisi esplorative dei dati e la statistica descrittiva costituiscono la prima fase dell'analisi dei dati psicologici. Consentono di capire come i dati sono distribuiti, ci aiutano ad individuare le osservazioni anomale e gli errori di tabulazione. Consentono di visualizzare e di studiare le relazioni tra le variabili. 
 
 ## Introduzione all'esplorazione dei dati {#chapter-descript}
@@ -126,7 +121,7 @@ sort(bysubj$bdi)
 
 ## Distribuzioni di frequenze
 
-È chiaro che i dati grezzi sono di difficile lettura. Poniamoci dunque il problema di creare una rappresentazione sintetica e comprensibile di questo insieme di valori. Uno dei modi che ci consentono di effettuare una sintesi dei dati è quello di generare una *distribuzione di frequenze*. 
+È chiaro che i dati grezzi sono di difficile lettura. Poniamoci dunque il problema di creare una rappresentazione sintetica e comprensibile di questo insieme di valori. Uno dei modi che ci consentono di effettuare una sintesi dei dati è quello di generare una *distribuzione di frequenze*.
 
 ::: {.definition}
 Una distribuzione di frequenze è un riepilogo del conteggio della frequenza con cui le modalità osservate in un insieme di dati si verificano in un intervallo di valori.
@@ -146,7 +141,7 @@ Proprietà: $n_1 + n_2 + \dots + n_m = n$.
 $F_i = f_1+f_2+\dots+f_m = \frac{N_i}{n} = \frac{1}{n} \sum_{i=1}^m f_i.$
 
 ::: {.exercise}
-Si calcoli la distribuzione di frequenza assoluta e la distribuzione di frequenza relativa per i valori del BDI-II del campione clinico di @zetschefuture2019. 
+Si calcoli la distribuzione di frequenza assoluta e la distribuzione di frequenza relativa per i valori del BDI-II del campione clinico di @zetschefuture2019.
 
 Per costruire una distribuzione di frequenza è innanzitutto necessario scegliere gli intervalli delle classi. Facendo riferimento ai cut-off usati per l'interpretazione del BDI-II, definiamo i seguenti _intervalli aperti a destra_:
 
@@ -548,20 +543,27 @@ ovvero il numero reale $\bar{x}$ definito da
 Nell'eq. \@ref(eq:mean) abbiamo usato la notazione delle sommatorie per descrivere una somma di valori. Questa notazione è molto usata in statistica e viene descritta in Appendice.
 
 La media gode della seguente importante proprietà: la somma degli scarti tra ciascuna modalità $x_i$ e la media aritmetica $\bar{x}$ è nulla, cioè
-$$
+\begin{equation}
 \sum_{i=1}^n (x_i - \bar{x}) = 0.\notag
-\label{eq:diffmeansumzero}$$ Infatti, $$\begin{aligned}
+\label{eq:diffmeansumzero}
+\end{equation}
+Infatti, 
+$$
+\begin{aligned}
 \sum_{i=1}^n (x_i - \bar{x}) &= \sum_i x_i - \sum_i \bar{x}\notag\\
 &= \sum_i x_i - n \bar{x}\notag\\
-&= \sum_i x_i - \sum_i x_i = 0.\notag\end{aligned}
+&= \sum_i x_i - \sum_i x_i = 0.\notag
+\end{aligned}
 $$
 Ciò ci consente di pensare alla media come al baricentro della distribuzione.
 
-Un'altra proprietà della media è la seguente. La somma dei quadrati
-degli scarti tra ciascuna modalità $x_i$ e una costante arbitraria
-$a \in \Re$, cioè $$\varphi(a) = \sum_{i=1}^n (x_i - a)^2,\notag$$ è
-minima per $a = \bar{x}$.
+Un'altra proprietà della media è la seguente. La somma dei quadrati degli scarti tra ciascuna modalità $x_i$ e una costante arbitraria $a$, cioè 
+\begin{equation}
+\varphi(a) = \sum_{i=1}^n (x_i - a)^2,\notag
+\end{equation} 
+è minima per $a = \bar{x}$.
 
+::: {.remark}
 Il concetto statistico di media ha suscitato molte battute. Per esempio,
 il fatto che, in media, ciascuno di noi ha un numero di gambe circa pari
 a 1.9999999. Oppure, il fatto che, in media, ciascuno di noi ha un
@@ -571,18 +573,19 @@ media non è sempre l'indice che meglio rappresenta la tendenza centrale
 di una distribuzione. In particolare, ciò non accade quando la
 distribuzione è asimmetrica, o in presenza di valori anomali (_outlier_)
 -- si veda il pannello di destra della figura \@ref(fig:violin-zetsche). In tali circostanze, la tendenza centrale della distribuzione è meglio rappresentata dalla mediana o dalla media spuntata.
-
-::: {.exercise}
-Si calcoli la media dei valori BDI-II per i due gruppi di soggetti di @zetschefuture2019.
-
-```{r}
-bysubj %>%
-  group_by(group) %>%
-  summarise(
-    avg_bdi = mean(bdi)
-  )
-```
 :::
+
+<!-- ::: {.exercise} -->
+<!-- Si calcoli la media dei valori BDI-II per i due gruppi di soggetti di @zetschefuture2019. -->
+
+<!-- ```{r} -->
+<!-- bysubj %>%  -->
+<!--   group_by(group) %>%  -->
+<!--   summarise( -->
+<!--     avg_bdi = mean(bdi) -->
+<!--   ) -->
+<!-- ``` -->
+<!-- ::: -->
 
 ### Media spuntata
 
@@ -593,17 +596,17 @@ una sequenza crescente, $x_1 \leq x_2 \leq x_3 \leq \dots \leq x_n$, per
 poi eliminare il primo 5% e l'ultimo 5% dei dati della serie così
 ordinata. La media spuntata è data dalla media aritmetica dei dati rimanenti.
 
-::: {.exercise}
-Si calcoli la media spuntata dei valori BDI-II per i due gruppi di soggetti di @zetschefuture2019 escludendo il 10% dei valori più estremi in ciascun gruppo.
+<!-- ::: {.exercise} -->
+<!-- Si calcoli la media spuntata dei valori BDI-II per i due gruppi di soggetti di @zetschefuture2019 escludendo il 10% dei valori più estremi in ciascun gruppo. -->
 
-```{r}
-bysubj %>%
-  group_by(group) %>%
-  summarise(
-    avg_trim_bdi = mean(bdi, trim = 0.1)
-  )
-```
-:::
+<!-- ```{r} -->
+<!-- bysubj %>% -->
+<!--   group_by(group) %>% -->
+<!--   summarise( -->
+<!--     avg_trim_bdi = mean(bdi, trim = 0.1) -->
+<!--   ) -->
+<!-- ``` -->
+<!-- ::: -->
 
 ### Moda e mediana
 
@@ -614,22 +617,22 @@ abbia più mode; in tal caso si dice *multimodale* e questo operatore
 perde il suo significato di indice di tendenza centrale) e la *mediana*
 $\tilde{x}$.
 
-::: {.exercise}
-Si calcolino i quantili di ordine 0.25, 0.5 e 0.75 dei valori BDI-II per i due gruppi di soggetti di @zetschefuture2019.
+<!-- ::: {.exercise} -->
+<!-- Si calcolino i quantili di ordine 0.25, 0.5 e 0.75 dei valori BDI-II per i due gruppi di soggetti di @zetschefuture2019. -->
 
-```{r}
-bysubj %>%
-  group_by(group) %>%
-  summarise(
-    q25 = quantile(bdi, probs = 0.25),
-    q50 = quantile(bdi, probs = 0.50),
-    q75 = quantile(bdi, probs = 0.75)
-  )
-```
-:::
+<!-- ```{r} -->
+<!-- bysubj %>% -->
+<!--   group_by(group) %>% -->
+<!--   summarise( -->
+<!--     q25 = quantile(bdi, probs = 0.25), -->
+<!--     q50 = quantile(bdi, probs = 0.50), -->
+<!--     q75 = quantile(bdi, probs = 0.75) -->
+<!--   ) -->
+<!-- ``` -->
+<!-- ::: -->
 
 ::: {.remark}
-Si noti che solitamente i software restituiscono un valore **interpolato** del $p$-esimo quantile $q_p$ $(0 < p < 1)$, il quale viene calcolato mediante specifiche procedure. Il risultato fornito dai software, dunque, non sarà identico a quello trovato utilizzando la definizione non interpolata di quantile che abbiamo presentato qui. Se, per qualche ragione, vogliamo conoscere l'algoritmo usato per la determinazione dei quantili interpolati, dobbiamo leggere la documentazione del software.
+Si noti che solitamente i software restituiscono un valore *interpolato* del $p$-esimo quantile $q_p$ $(0 < p < 1)$, il quale viene calcolato mediante specifiche procedure. Il risultato fornito dai software, dunque, non sarà identico a quello trovato utilizzando la definizione non interpolata di quantile che abbiamo presentato qui. Se, per qualche ragione, vogliamo conoscere l'algoritmo usato per la determinazione dei quantili interpolati, dobbiamo leggere la documentazione del software.
 :::
 
 ## Indici di dispersione
@@ -644,7 +647,7 @@ le misure di posizione anche tramite l'utilizzo di indicatori che
 valutino la dispersione delle unità statistice.
 
 ::: {.remark}
-Un'introduzione "soft" al tema degli indicid di posizione è fornita nel seguente  [link](https://tinystats.github.io/teacups-giraffes-and-statistics/04_variance.html).
+Un'introduzione "soft" al tema degli indici di posizione è fornita nel seguente  [link](https://tinystats.github.io/teacups-giraffes-and-statistics/04_variance.html).
 :::
 
 ### Indici basati sull'ordinamento dei dati
@@ -670,34 +673,31 @@ s^2 = \frac{1}{n} \sum_{i=1}^n (x_i - \bar{x})^2
 è la media dei quadrati degli scarti $x_i - \bar{x}$ tra ogni valore e la media della distribuzione. La varianza è una misura di dispersione più complessa di quelle esaminate in precedenza. È appropriata solo nel caso di distribuzioni simmetriche e, anch'essa, è fortemente influenzata dai valori anomali. Inoltre, è espressa in un'unità di misura che è il quadrato dell'unità di misura dei dati originari e quindi ad essa non può essere assegnata un'interpretazione intuitiva.
 
 ::: {.exercise}
-Si calcoli la varianza dei punteggi BDI-II nei due gruppi di soggetti di @zetschefuture2019.
+Si calcoli la varianza dei valori BDI-II per i dati di @zetschefuture2019.
+
+Applicando la formula precedente, per tutto il campione abbiamo
 
 ```{r}
-bysubj %>%
-  group_by(group) %>%
-  summarise(
-    variance = var(bdi)
-  )
+var(bysubj$bdi)
 ```
 :::
 
 ### Deviazione standard
 
-Per le ragioni espresse sopra, la misura più usata della dispersione di una distribuzione di dati è la _deviazione standard_, ovvero la radice quadrata della varianza. A differenza della varianza, dunque, la deviazione standard è espressa nella stessa unità di misura dei dati. Come nel caso della varianza, anche la deviazione standard $s$ dovrebbe essere usata soltanto quando la media è adeguata per misurare il centro della distribuzione, ovvero, nel caso di distribuzioni simmetriche. Come nel caso della media $\bar{x}$, anche la deviazione standard è fortemente influenzata dai dati anomali (*outlier*), ovvero dalla presenza di uno o di pochi dati che sono molto più distanti dalla media rispetto agli altri valori della distribuzione. Quando tutte le osservazioni sono uguali, $s=0$, altrimenti $s > 0$.
+Per le ragioni espresse sopra, la misura più usata della dispersione di una distribuzione di dati è la _deviazione standard_, ovvero la radice quadrata della varianza. A differenza della varianza, dunque, la deviazione standard è espressa nella stessa unità di misura dei dati. Come nel caso della varianza, anche la deviazione standard $s$ dovrebbe essere usata soltanto quando la media è adeguata per misurare il centro della distribuzione, ovvero, nel caso di distribuzioni simmetriche. Come nel caso della media $\bar{x}$, anche la deviazione standard è fortemente influenzata dai dati anomali (*outlier*), ovvero dalla presenza di uno o di pochi dati che sono molto più distanti dalla media rispetto agli altri valori della distribuzione. Quando tutte le osservazioni sono uguali, $s = 0$, altrimenti $s > 0$.
 
-Alla deviazione standard può essere assegnata una semplice interpretazione: la deviazione standard è **simile** (ma non identica) allo scarto semplice medio campionario, ovvero alla media aritmetica dei valori assoluti degli scarti dalla media. La deviazione standard ci dice, dunque, quanto sono distanti, in media, le singole osservazioni dal centro della distribuzione. Un'interpretazione più precisa del significato della deviazione standard è fornita nel Paragrafo successivo.
+Alla deviazione standard può essere assegnata una semplice interpretazione: la deviazione standard è *simile* (ma non identica) allo scarto semplice medio campionario, ovvero alla media aritmetica dei valori assoluti degli scarti dalla media. La deviazione standard ci dice, dunque, quanto sono distanti, in media, le singole osservazioni dal centro della distribuzione. Un'interpretazione più precisa del significato della deviazione standard è fornita nel Paragrafo successivo.
 
-::: {.exericise}
-Si calcoli la deviazione standard per il BDI-II dei due gruppi di soggetti di @zetschefuture2019.
+::: {.exercise}
+Si calcoli la deviazione standard per i valori BDI-II di dati di @zetschefuture2019.
+
+Applicando la formula precedente, per tutto il campione abbiamo
 
 ```{r}
-bysubj %>%
-  group_by(group) %>%
-  summarise(
-    stdev = sd(bdi)
-  )
+sd(bysubj$bdi)
 ```
 :::
+
 
 ### Deviazione mediana assoluta
 
@@ -712,29 +712,24 @@ $$
 Pertanto, solitamente i software restituiscono il valore MAD moltiplicato per una tale costante.
 
 ::: {.exercise}
-Si calcoli il valore MAD per il BDI-II dei soggetti di @zetschefuture2019.
+Si calcoli il valore MAS per il BDI-II dei dati di @zetschefuture2019.
 
-Applicando la formula precedente, per tutto il campione abbiamo:
+Applicando la formula precedente, per tutto il campione abbiamo
+
 ```{r}
 1.4826 * median(abs(bysubj$bdi - median(bysubj$bdi)))
-```
-
-Distinguendo i due gruppi, otteniamo invece:
-```{r}
-bysubj %>%
-  group_by(group) %>%
-  summarise(
-    MAD = mad(bdi)
-  )
 ```
 :::
 
 ### Indici di variabilità relativi
 
 A volte può essere interessante effettuare un confronto fra due misure di variabilità di grandezze incommensurabili, ovvero di caratteri rilevati mediante differenti unità di misura. In questi casi, le misure di variabilità precedentemente descritte si rivelano inadeguate in quanto dipendono dall'unità di misura adottata. Diventa dunque necessario ricorrere a particolari numeri adimensionali detti indici relativi di variabilità. Il più importante di tali indici è il coefficiente di variazione, ovvero il numero puro
-$$C_v = \frac{\sigma}{\bar{x}}$$
+$$
+C_v = \frac{\sigma}{\bar{x}}
+$$
 ottenuto dal rapporto tra la deviazione standard e la media dei dati. Un altro indice relativo di variabilità è la differenza interquartile rapportata al primo quartile oppure al terzo quartile oppure alla mediana, cioè:
-$$\frac{x_{0.75} - x_{0.25}}{x_{0.25}}, \qquad \frac{x_{0.75} - x_{0.25}}{x_{0.75}}, \qquad \frac{x_{0.75} - x_{0.25}}{x_{0.50}}.\notag
+$$
+\frac{x_{0.75} - x_{0.25}}{x_{0.25}}, \qquad \frac{x_{0.75} - x_{0.25}}{x_{0.75}}, \qquad \frac{x_{0.75} - x_{0.25}}{x_{0.50}}.
 $$
 
 ## Le relazioni tra variabili
@@ -1013,42 +1008,10 @@ slant + dino
 
 ## Considerazioni conclusive {-}
 
-La prima fase dell'analisi dei dati ci porta a riassumere i dati mediante gli strumenti della statistica descrittiva.
-Le tipiche domande che vengono affrontate in questa fase sono: qual è la
-distribuzione delle variabili di interesse? Quali relazioni a coppie si
-possono osservare nel campione? Ci sono delle osservazioni 'anomale',
-ovvero estremamente discrepanti rispetto alle altre, sia quando si
-esaminano le statistiche descrittive univariate (ovvero, quelle che
-riguardano le caratteristiche di una variabile presa singolarmente), sia
-quando vengono esaminate le statistiche bivariate (ovvero, le
+La prima fase dell'analisi dei dati ci porta a riassumere i dati mediante gli strumenti della statistica descrittiva. Le tipiche domande che vengono affrontate in questa fase sono: qual è la distribuzione delle variabili di interesse? Quali relazioni a coppie si possono osservare nel campione? Ci sono delle osservazioni 'anomale', ovvero estremamente discrepanti rispetto alle altre, sia quando si esaminano le statistiche descrittive univariate (ovvero, quelle che riguardano le caratteristiche di una variabile presa singolarmente), sia quando vengono esaminate le statistiche bivariate (ovvero, le
 statistiche che descrivono l'associazione tra le variabili)? È
 importante avere ben chiare le idee su questi punti prima di procedere
 con qualsiasi procedura statistica di tipo inferenziale. Per rispondere
 alle domande che abbiamo elencato sopra, ed ad altre simili, è molto
 utile procedere con delle rappresentazioni grafiche dei dati. È chiaro che, quando disponiamo di grandi moli di dati (come è sempre il caso in psicologia), le operazioni descritte sopra devono essere svolte mediante un software statistico.
-
-
-<!-- ## Esercizi  -->
-
-<!-- Scarica gli esercizi:  -->
-
-<!-- ```{r echo = FALSE}  -->
-<!-- xfun::embed_file( -->
-<!--   here::here("exercises", "14_descr_exercises.Rmd"), -->
-<!--   "14_descr_exercises.Rmd",  -->
-<!--   text = paste("Download", "14_descr_exercises.Rmd") -->
-<!-- ) -->
-<!-- ``` -->
-
-<!-- Guarda le risposte solo dopo avere provato a rispondere a tutte le domande:  -->
-
-<!-- ```{r echo = FALSE}  -->
-<!-- xfun::embed_file( -->
-<!--   here::here("exercises", "14_descr_answers.Rmd"), -->
-<!--   "14_descr_answers.Rmd",  -->
-<!--   text = paste("Download", "14_descr_answers.Rmd") -->
-<!-- ) -->
-<!-- ``` -->
-
-
 

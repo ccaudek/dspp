@@ -2,8 +2,6 @@
 
 # Il problema inverso {#chapter-intro-bayes-inference}
 
-
-
 Questo capitolo descrive il significato dei tre i termini a destra del segno di uguale nella formula di Bayes: la distribuzione a priori e la funzione di verosimiglianza al numeratore, e la verosimiglianza marginale al denominatore.
 
 
@@ -28,8 +26,6 @@ $$
 p(y) = \int_\theta p(y, \theta) \,\operatorname {d}\!\theta = \int_\theta p(y \mid \theta) p(\theta) \,\operatorname {d}\!\theta.
 $$
 - la *distribuzione a posteriori* $p(\theta \mid y)$ --- la nuova credenza relativa alla credibilità di ciascun valore $\theta$ dopo avere osservato i dati $Y = y$.
-
-<!-- In questo Capitolo ci limiteremo ad introdurre le tre quantità che vengono utilizzate nella regola di Bayes: la distribuzione a priori, la verosimiglianza e la verosimiglianza marginale. Nei capitoli successivi vedremo come sia possibile, mediante queste tre distribuzione, giungere alla distribuzione a posteriori $p(\theta \mid y)$. -->
 
 
 ## La regola di Bayes
@@ -121,7 +117,7 @@ La figura seguente mostra esempi di distribuzioni a priori non informative, debo
 
 \begin{figure}[h]
 
-{\centering \includegraphics[width=0.8\linewidth]{025_intro_bayes_files/figure-latex/ch-03-02-models-types-of-priors-1} 
+{\centering \includegraphics{025_intro_bayes_files/figure-latex/ch-03-02-models-types-of-priors-1} 
 
 }
 
@@ -148,7 +144,7 @@ bayesrules::plot_beta(alpha = 2, beta = 10, mean = TRUE, mode = TRUE)
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{025_intro_bayes_files/figure-latex/unnamed-chunk-1-1} \end{center}
+\begin{center}\includegraphics{025_intro_bayes_files/figure-latex/unnamed-chunk-1-1} \end{center}
 
 \noindent
 La $\mbox{Beta}(2, 10)$ esprime la credenza che $\theta$ assume valori $< 0.5$, con il valore più plausibile pari a circa 0.1. Questo è assolutamente implausibile, nel caso dell'esempio in discussione. Adotteremo una tale distribuzione a priori solo per scopi didattici, per esplorare le conseguenze di tale scelta (molto più sensato sarebbe stato usare $\mbox{Beta}(2, 2)$).
@@ -247,7 +243,7 @@ tibble(theta, like) %>%
 
 \begin{figure}[h]
 
-{\centering \includegraphics[width=0.8\linewidth]{025_intro_bayes_files/figure-latex/likefutexpect-1} 
+{\centering \includegraphics{025_intro_bayes_files/figure-latex/likefutexpect-1} 
 
 }
 

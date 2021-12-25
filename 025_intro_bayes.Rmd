@@ -2,10 +2,6 @@
 
 # Il problema inverso {#chapter-intro-bayes-inference}
 
-```{r setup, include = FALSE}
-source("_common.R")
-```
-
 Questo capitolo descrive il significato dei tre i termini a destra del segno di uguale nella formula di Bayes: la distribuzione a priori e la funzione di verosimiglianza al numeratore, e la verosimiglianza marginale al denominatore.
 
 
@@ -30,8 +26,6 @@ $$
 p(y) = \int_\theta p(y, \theta) \,\operatorname {d}\!\theta = \int_\theta p(y \mid \theta) p(\theta) \,\operatorname {d}\!\theta.
 $$
 - la *distribuzione a posteriori* $p(\theta \mid y)$ --- la nuova credenza relativa alla credibilità di ciascun valore $\theta$ dopo avere osservato i dati $Y = y$.
-
-<!-- In questo Capitolo ci limiteremo ad introdurre le tre quantità che vengono utilizzate nella regola di Bayes: la distribuzione a priori, la verosimiglianza e la verosimiglianza marginale. Nei capitoli successivi vedremo come sia possibile, mediante queste tre distribuzione, giungere alla distribuzione a posteriori $p(\theta \mid y)$. -->
 
 
 ## La regola di Bayes
