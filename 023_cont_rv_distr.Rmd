@@ -535,7 +535,7 @@ La variabile casuale $t$ di Student soddisfa le seguenti proprietà:
 
 ## Funzione beta di Eulero
 
-La funzione beta di Eulero è una funzione matematica, *non* una densità di probabilità. La menzioniamo qui perché viene utilizzata nella distribuzione Beta. La funzione beta si può scrivere in molti modi; per i nostri scopi, può essere scritta nel modo seguente:
+La funzione beta di Eulero è una funzione matematica, *non* una densità di probabilità. La menzioniamo qui perché viene utilizzata nella distribuzione Beta. La funzione beta si può scrivere in molti modi diversi; per i nostri scopi la scriveremo così:
 \begin{equation}
 B(\alpha, \beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}\,,
 \end{equation}
@@ -559,7 +559,7 @@ Sia $\pi$ una variabile casuale che può assumere qualsiasi valore compreso tra 
 laddove $B(\alpha, \beta)$ è la funzione beta. 
 :::
 
-I termini $\alpha$ e $\beta$ sono i parametri della distribuzione Beta e devono essere entrambi positivi. Tali parametri possono essere interpretati come l'espressione delle nostre credenze a priori relativamente alla probabilità di successo. Il parametro $\alpha$ rappresenta il numero di "successi" e il parametro $\beta$ il numero di "insuccessi":
+I termini $\alpha$ e $\beta$ sono i parametri della distribuzione Beta e devono essere entrambi positivi. Tali parametri possono essere interpretati come l'espressione delle nostre credenze a priori relative ad una sequenza di prove Bernoulliane Il parametro $\alpha$ rappresenta il numero di "successi" e il parametro $\beta$ il numero di "insuccessi":
 \begin{equation}
 \frac{\text{Numero di successi}}{\text{Numero di successi} + \text{Numero di insuccessi}} = \frac{\alpha}{\alpha + \beta}\notag\,.
 \end{equation}
@@ -659,6 +659,18 @@ beta_plot <- function(){
 beta_plot()
 ```
 
+Si può ottenere una rappresentazione grafica della distribuzione $\mbox{Beta}(\pi \mid \alpha, \beta)$ con la funzione `plot_beta()` del pacchetto `bayesrules`. Per esempio:
+
+```{r}
+bayesrules::plot_beta(alpha = 2, beta = 12)
+```
+
+La funzione `bayesrules::summarize_beta()` ci restituisce la media, moda e varianza della distribuzione Beta. Per esempio:
+
+```{r}
+bayesrules::summarize_beta(alpha = 2, beta = 12)
+```
+
 
 <!-- ::: {.rmdnote} -->
 
@@ -729,7 +741,13 @@ Inoltre, la deviazione standard della distribuzione a priori diventa
 sqrt((16 * 24) / ((16 + 24)^2 * (16 + 24 + 1)))
 ```
 \noindent
-uguale a circa 8 punti percentuali. Questo significa che le nostre credenze a priori rispetto la possibilità di recidiva tendono a deviare di circa 8 punti percentuali rispetto alla media della distribuzione a priori del 40%.
+uguale a circa 8 punti percentuali. Verifichiamo:
+
+```{r}
+bayesrules::summarize_beta(alpha = 16, beta = 24)
+```
+
+Questo significa che le nostre credenze a priori rispetto la possibilità di recidiva tendono a deviare di circa 8 punti percentuali rispetto alla media della distribuzione a priori che corrisponde circa a 0.40.
 :::
 
 

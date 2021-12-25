@@ -153,7 +153,6 @@ I risultati possibili che si possono osservare come conseguenza del lancio di un
 
 Il lancio di un dado ci fornisce l'esempio di un altro esperimento casuale. Supponiamo di essere interessati all'evento "il lancio del dado produce un numero dispari". Un _evento_ seleziona un sottoinsieme dello spazio campionario: in questo caso, l'insieme dei risultati $\{1, 3, 5\}$. Se esce 3, per esempio, diciamo che si è verificato l'evento "dispari" (ma l'evento "dispari" si sarebbe anche verificato anche se fosse uscito 1 o 5).
 
-
 ## Usare la simulazione per stimare le probabilità
 
 I metodi basati sulla simulazione ci consentono di stimare le probabilità degli eventi in un modo diretto se siamo in grado di generare realizzazioni molteplici e casuali delle variabili casuali coinvolte nelle definizioni degli eventi. Per simulare il lancio di una moneta equilibrata in R iniziamo a definire un vettore che contiene i possibili risultati del lancio della moneta (ovvero i possibili valori della variabile casuale $Y$):
@@ -271,7 +270,6 @@ for(i in 1:10) {
 \noindent
 Ora le stime ottenute sono molto vicine alla vera probabilità che vogliamo stimare (cioè 0.5, perché la moneta è equilibrata). I risultati delle simulazioni precedenti pongono dunque il problema di determinare quale sia il numero di lanci di cui abbiamo bisogno per assicurarci che le stime siano accurate (ovvero, vicine al valore corretto della probabilità)
 
-
 ## La legge dei grandi numeri
 
 La visualizzazione mediante grafici contribuisce alla comprensione dei concetti della statistica e della teoria della probabilità. Un modo per descrivere ciò che accade all'aumentare del numero $M$ di ripetizioni del lancio della moneta consiste nel registrare la stima della probabilità dell'evento $Pr[Y = 1]$ in funzione del numero di ripetizioni dell'esperimento casuale per ogni $m \in 1 : M.$ Un grafico dell'andamento della stima di $Pr[Y = 1]$ in funzione di $m$ si ottiene nel modo seguente. 
@@ -344,15 +342,12 @@ d %>%
 
 La _legge dei grandi numeri_ ci dice che all'aumentare del numero di ripetizioni dell'esperimento casuale la media dei risultati ottenuti tenderà ad avvicinarsi al valore atteso man mano che verranno eseguite più prove. Nel caso presente, la figura \@ref(fig:legge-grandi-n-2) mostra appunto che, all'aumentare del numero _M_ di lanci della moneta, la stima di $Pr[Y = 1]$ tende a convergere al vero valore di 0.5.
 
-
 ## Variabili casuali multiple
 
-Le variabili casuali non esistono isolatamente. Abbiamo iniziato con una singola variabile casuale _Y_ che rappresenta il risultato di un singolo, specifico lancio di una moneta equlibrata. Ma supponiamo ora di lanciare la moneta tre volte. Ciò suggerisce che possiamo avere le variabili casuali $Y_1 , Y_2 , Y_3$ che rappresentano i risultati di ciascuno dei lanci. Possiamo assumere che ogni lancio sia indipendente, ovvero che non dipenda dal risultato degli altri lanci. Ognuna di queste variabili $Y_n$ per $n \in 1:3$ ha $Pr[Y_n =1]=0.5$ e $Pr[Y_n =0]=0.5$.
-Possiamo combinare più variabili casuali usando le operazioni aritmetiche. Se $Y_1 , Y_2, Y_3$ sono variabili casuali che rappresentano tre lanci di una moneta equilibrata (o un lancio di tre monete equilibrate), possiamo definire la somma di tali variabili casuali come
+Le variabili casuali non esistono isolatamente. Abbiamo iniziato con una singola variabile casuale _Y_ che rappresenta il risultato di un singolo, specifico lancio di una moneta equlibrata. Ma supponiamo ora di lanciare la moneta tre volte. Ciò suggerisce che possiamo avere le variabili casuali $Y_1 , Y_2 , Y_3$ che rappresentano i risultati di ciascuno dei lanci. Possiamo assumere che ogni lancio sia indipendente, ovvero che non dipenda dal risultato degli altri lanci. Ognuna di queste variabili $Y_n$ per $n \in 1:3$ ha $Pr[Y_n =1]=0.5$ e $Pr[Y_n =0]=0.5$. Possiamo combinare più variabili casuali usando le operazioni aritmetiche. Se $Y_1 , Y_2, Y_3$ sono variabili casuali che rappresentano tre lanci di una moneta equilibrata (o un lancio di tre monete equilibrate), possiamo definire la somma di tali variabili casuali come
 $$
 Z = Y_1 + Y_2 + Y_3.
 $$
-
 \noindent
 Possiamo simulare i valori assunti dalla variabile casuale _Z_ simulando i valori di $Y_1, Y_2, Y_3$ per poi sommarli.
 
@@ -397,6 +392,7 @@ cat("z =", z, "\n")
 #> z = 2
 ```
 
+\noindent
 Possiamo ripetere questa simulazione $M = 1e5$ volte:
 
 
@@ -441,7 +437,7 @@ $$
 \mathbb{Z} = \dots, -2, -1, 0, 1, 2, \dots
 $$
 
-## Funzione di massa di probabilità
+## Funzione di massa di probabilità {#sec:fun-mass-prob}
 
 È conveniente avere una funzione che associa ogni possibile valore di una variabile casuale alla sua probabilità. In generale, ciò è possibile se e solo se la variabile casuale è discreta, così com'è stata definita nel Paragrafo precedente.
 
@@ -515,8 +511,8 @@ $$
 P_{z}(A) = \sum_{z \in A} P_{z}(Z).
 $$
 
-::: {.exercise}
-Per esempio, la probabilità che $Z$ sia un numero dispari è
+::: {.example}
+Nel caso dell'esempio discusso nella Sezione \@ref(sec:fun-mass-prob), la probabilità che $Z$ sia un numero dispari è
 $$
 Pr(\text{Z è un numero dispari}) = P_{z}(Z = 1) + P_{z}(Z = 3) = \frac{4}{16} + \frac{4}{16} = \frac{1}{2}.
 $$

@@ -446,7 +446,7 @@ La variabile casuale $t$ di Student soddisfa le seguenti proprietà:
 
 ## Funzione beta di Eulero
 
-La funzione beta di Eulero è una funzione matematica, *non* una densità di probabilità. La menzioniamo qui perché viene utilizzata nella distribuzione Beta. La funzione beta si può scrivere in molti modi; per i nostri scopi, può essere scritta nel modo seguente:
+La funzione beta di Eulero è una funzione matematica, *non* una densità di probabilità. La menzioniamo qui perché viene utilizzata nella distribuzione Beta. La funzione beta si può scrivere in molti modi diversi; per i nostri scopi la scriveremo così:
 \begin{equation}
 B(\alpha, \beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}\,,
 \end{equation}
@@ -470,7 +470,7 @@ Sia $\pi$ una variabile casuale che può assumere qualsiasi valore compreso tra 
 laddove $B(\alpha, \beta)$ è la funzione beta. 
 :::
 
-I termini $\alpha$ e $\beta$ sono i parametri della distribuzione Beta e devono essere entrambi positivi. Tali parametri possono essere interpretati come l'espressione delle nostre credenze a priori relativamente alla probabilità di successo. Il parametro $\alpha$ rappresenta il numero di "successi" e il parametro $\beta$ il numero di "insuccessi":
+I termini $\alpha$ e $\beta$ sono i parametri della distribuzione Beta e devono essere entrambi positivi. Tali parametri possono essere interpretati come l'espressione delle nostre credenze a priori relative ad una sequenza di prove Bernoulliane Il parametro $\alpha$ rappresenta il numero di "successi" e il parametro $\beta$ il numero di "insuccessi":
 \begin{equation}
 \frac{\text{Numero di successi}}{\text{Numero di successi} + \text{Numero di insuccessi}} = \frac{\alpha}{\alpha + \beta}\notag\,.
 \end{equation}
@@ -516,6 +516,26 @@ Al variare di $\alpha$ e $\beta$ si ottengono molte distribuzioni di forma diver
 
 \caption{Alcune distribuzioni Beta.}(\#fig:some-beta-distr)
 \end{figure}
+
+Si può ottenere una rappresentazione grafica della distribuzione $\mbox{Beta}(\pi \mid \alpha, \beta)$ con la funzione `plot_beta()` del pacchetto `bayesrules`. Per esempio:
+
+
+```r
+bayesrules::plot_beta(alpha = 2, beta = 12)
+```
+
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-11-1} \end{center}
+
+La funzione `bayesrules::summarize_beta()` ci restituisce la media, moda e varianza della distribuzione Beta. Per esempio:
+
+
+```r
+bayesrules::summarize_beta(alpha = 2, beta = 12)
+#>    mean   mode     var     sd
+#> 1 0.143 0.0833 0.00816 0.0904
+```
 
 
 <!-- ::: {.rmdnote} -->
@@ -577,7 +597,7 @@ bayesrules::plot_beta(pars[1], pars[2])
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-11-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-13-1} \end{center}
 La media della distribuzione a priori diventa:
 
 ```r
@@ -599,7 +619,16 @@ sqrt((16 * 24) / ((16 + 24)^2 * (16 + 24 + 1)))
 #> [1] 0.0765
 ```
 \noindent
-uguale a circa 8 punti percentuali. Questo significa che le nostre credenze a priori rispetto la possibilità di recidiva tendono a deviare di circa 8 punti percentuali rispetto alla media della distribuzione a priori del 40%.
+uguale a circa 8 punti percentuali. Verifichiamo:
+
+
+```r
+bayesrules::summarize_beta(alpha = 16, beta = 24)
+#>   mean  mode     var     sd
+#> 1  0.4 0.395 0.00585 0.0765
+```
+
+Questo significa che le nostre credenze a priori rispetto la possibilità di recidiva tendono a deviare di circa 8 punti percentuali rispetto alla media della distribuzione a priori che corrisponde circa a 0.40.
 :::
 
 
@@ -649,7 +678,7 @@ $$
 dove $x_m$ (parametro di scala) è il minimo (necessariamente positivo) valore possibile di $X$ e $\alpha$ è un parametro di forma.
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-15-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{023_cont_rv_distr_files/figure-latex/unnamed-chunk-18-1} \end{center}
 
 \noindent
 La distribuzione di Pareto ha una asimmetria positiva. Il supporto della distribuzione di Pareto è la retta reale positiva. Tutti i valori devono essere maggiori del parametro di scala $x_m$, che è in realtà un parametro di soglia.
