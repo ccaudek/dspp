@@ -2,9 +2,7 @@
 
 ```{r setup, include = FALSE}
 source("_common.R")
-library("patchwork")
 library("scales")
-library("viridis")
 library("gghighlight")
 ```
 
@@ -185,9 +183,9 @@ distribution_plot <- function(dset, dfun, darg, name){
                                    args=iarg,
                                    geom='point')
     }
-    gg <- gg+scale_okabe_ito(name='Parameters',
-                                  aesthetics = "colour",
-                                  labels=parse_format())
+    gg <- gg+scale_fill_viridis(option = "E",
+                                name='Parameters',
+                                labels=parse_format())
     gg <- gg+labs(x='\ny', y='f(y)\n')
     print(gg)
 }
@@ -401,9 +399,9 @@ distribution_plot <- function(dset, dfun, darg, name){
                                    args=iarg,
                                    geom='point')
     }
-    gg <- gg+scale_colour_okabe_ito(name='Parameters',
-                                  aesthetics = "colour",
-                                  labels=parse_format())
+    gg <- gg+scale_fill_viridis(option = "E",
+                                name='Parameters',
+                                labels=parse_format())
     gg <- gg +
       labs(x='\ny', y='f(y)\n') +
       ylim(0, .5)
@@ -501,9 +499,9 @@ distribution_plot <- function(dset, dfun, darg, name){
                                    args=iarg,
                                    geom='point')
     }
-    gg <- gg+scale_colour_okabe_ito(name='Parameters',
-                                  aesthetics = "colour",
-                                  labels=parse_format())
+    gg <- gg+scale_fill_viridis(option = "E",
+                                name='Parameters',
+                                labels=parse_format())
     gg <- gg+labs(x='\ny', y='f(y)\n')
     print(gg)
 }
@@ -637,9 +635,8 @@ distribution_plot <- function(dset, dfun, darg, name){
                                    args=iarg,
                                    geom='point')
     }
-    gg <- gg + scale_okabe_ito(name='Parameters',
-                               #discrete=TRUE,
-                               aesthetics = "colour",
+    gg <- gg+scale_fill_viridis(option = "E",
+                                name='Parameters',
                                 labels=parse_format())
     gg <- gg + labs(
       x = expression(pi),
@@ -812,8 +809,9 @@ gg <- df %>%
   xlim(1, 5) +
   ggtitle('Densità di Pareto per alcuni valori del parametro di forma') +
   ylab('P(X = x)') +
-  scale_okabe_ito(
-    aesthetics = "colour", labels = parse_format()
+  scale_fill_viridis(
+    option = "E",
+    labels=parse_format()
   ) +
   labs(
     x = '\ny',

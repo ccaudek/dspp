@@ -321,7 +321,7 @@
 
 \author{Corrado Caudek}
 
-\date{2021-12-25}
+\date{2021-12-27}
 
 
 % Include headers (preamble.tex) here
@@ -723,7 +723,7 @@ Copyright \(\copyright\) 2022.
 
 \normalsize
 
-Data della versione presente: Dicembre 25, 2021.
+Data della versione presente: Dicembre 27, 2021.
 
 \hypertarget{prefazione}{%
 \chapter{Prefazione}\label{prefazione}}
@@ -800,315 +800,309 @@ Corrado Caudek
 
 \mainmatter
 
-\hypertarget{distr-rv-discr}{%
-\chapter{Distribuzioni di v.c. discrete}\label{distr-rv-discr}}
+\hypertarget{chapter-distr-coniugate}{%
+\chapter{Distribuzioni a priori coniugate}\label{chapter-distr-coniugate}}
 
-In questo Capitolo verranno esaminate le principali distribuzioni di probabilità delle variabili casuali discrete. Un esperimento casuale che può dare luogo a solo due possibili esiti (successo, insuccesso) è modellabile con una variabile casuale di Bernoulli. Una sequenza di prove di Bernoulli costituisce un processo Bernoulliano. Il numero di successi dopo \(n\) prove di Bernoulli corrisponde ad una variabile casuale che segue la legge binomiale. La distribuzione binomiale risulta da un insieme di prove di Bernoulli solo se il numero totale \(n\) è fisso per disegno. Se il numero di prove è esso stesso una variabile casuale, allora il numero di successi nella corrispondente sequenza di prove bernoulliane segue al distribuzione di Poisson.
+Obiettivo di questo Capitolo è fornire un esempio di derivazione della distribuzione a posteriori scegliendo quale distribuzione a priori una distribuzione coniugata. Esamineremo qui il modello Beta-Binomiale.
 
-\hypertarget{una-prova-bernoulliana}{%
-\section{Una prova Bernoulliana}\label{una-prova-bernoulliana}}
+\hypertarget{pensare-a-una-proporzione-in-termini-soggettivi}{%
+\section{Pensare a una proporzione ``in termini soggettivi''}\label{pensare-a-una-proporzione-in-termini-soggettivi}}
 
-Se un esperimento casuale ha solo due esiti possibili, allora le
-repliche indipendenti di questo esperimento sono chiamate ``prove
-Bernoulliane'' (il lancio di una moneta è il tipico esempio).
+Nei problemi tradizionali di teoria delle probabilità ci sono molti esempi che riguardano l'estrazizone di palline colorate da un'urna. In questi esempi, ci viene fornito il numero di palline di vari colori nell'urna e ci viene chiesto di calcolare le probabilità di vari eventi. Ad esempio, in una scatola ci sono 40 palline bianche e 20 rosse. Se estrai due palline a caso, qual è la probabilità che entrambe siano bianche?
 
-\begin{definition}
-Viene detta variabile di Bernoulli una variabile casuale discreta \(Y = \{0, 1\}\) con la seguente distribuzione di probabilità:
-\[
-P(Y \mid \theta) =
-  \begin{cases}
-    \theta     & \text{se $Y = 1$}, \\
-    1 - \theta & \text{se $Y = 0$},
-  \end{cases}
-\]
-\noindent
-con \(0 \leq \theta \leq 1\). Convenzionalmente l'evento \(\{Y = 1\}\) con probabilità \(\theta\) viene chiamato ``successo'' mentre l'evento \(\{Y = 0\}\) con probabilità \(1-\theta\) viene chiamato ``insuccesso''.
-\end{definition}
+Consideriamo ora uno scenario diverso: quello in cui non conosciamo le proporzioni delle palline colorate nell'urna. Cioè, nell'esempio precedente, sappiamo solo che ci sono due tipi di palline colorate nell'urna, ma non sappiamo che 40 palline su 60 sono bianche (proporzione di bianco = \(2/3\)) e 20 delle 60 palline sono rosse (proporzione di rosso = \(1/3\)). Come è possibile imparare qualcosa sulle proporzioni di palline bianche e rosse? Poiché contare 60 palline può essere noioso, è possibile invece inferire le proporzioni cercate estraendo un campione di palline dall'urna e osservando i colori delle palline nel campione? Espresso in questo modo, questo diventa un problema di inferenza statistica, perché stiamo cercando di inferire la proporzione \(\pi\) della popolazione, sulla base di un campione della popolazione.
 
-Applicando l'operatore di valore atteso e di varianza, otteniamo
-\begin{align}
-\E(Y) &= 0 \cdot Pr(Y=0) + 1 \cdot Pr(Y=1) = \theta, \\
-\Var(Y) &= (0 - \theta)^2 \cdot Pr(Y=0) + (1 - \theta)^2 \cdot rP(Y=1) = \theta(1-\theta).
-\label{eq:ev-var-bern}
-\end{align}
-Scriviamo \(Y \sim \mathcal{B}(\theta)\) per indicare che la variabile
-casuale \(Y\) ha una distribuzione Bernoulliana di parametro \(\theta\).
+Per continuare con l'esempio precedente: come è possibile inferire \(\pi\) (ad esempio, la proporzione di palline rosse nella popolazione -- cioè le 60 palline), in base al numero di palline rosse e bianche che osserviamo nel campione (per esempio, 10 palline)?
 
-\begin{exercise}
-Nel caso del lancio di una moneta equilibrata la variabile casuale di Bernoulli assume i valori \(0\) e \(1\). La distribuzione di massa di probabilità è pari a \(\frac{1}{2}\) in corrispondenza di entrambi iv valori. La funzione di distribuzione vale \(\frac{1}{2}\) per \(Y = 0\) e \(1\) per \(Y = 1\).
-\end{exercise}
-
-\hypertarget{una-sequenza-di-prove-bernoulliane}{%
-\section{Una sequenza di prove Bernoulliane}\label{una-sequenza-di-prove-bernoulliane}}
-
-La distribuzione binomiale è rappresentata dall'elenco di tutti i
-possibili numeri di successi \(Y = \{0, 1, 2, \dots n\}\) che possono
-essere osservati in \(n\) prove Bernoulliane indipendenti di probabilità
-\(\theta\), a ciascuno dei quali è associata la relativa probabilità. Esempi di una distribuzione binomiale sono i risultati di una serie di lanci di
-una stessa moneta o di una serie di estrazioni da un'urna (con
-reintroduzione). La distribuzione binomiale di parametri \(n\) e \(\theta\) è in realtà una famiglia di distribuzioni: al variare dei parametri \(\theta\) e \(n\) variano le probabilità.
-
-\begin{definition}
-La probabilità di ottenere \(y\) successi e \(n-y\) insuccessi in \(n\) prove
-Bernoulliane è data dalla distribuzione binomiale:
-\begin{align}
-P(Y=y) &= \binom{n}{y} \theta^{y} (1-\theta)^{n-y} \notag \\
-&= \frac{n!}{y!(n-y)!} \theta^{y} (1-\theta)^{n-y}, 
-\label{eq:binomialdistribution}
-\end{align}
-dove \(n\) = numero di prove Bernoulliane, \(\theta\) = probabilità di successo in ciascuna prova e \(y\) = numero di successi.
-\end{definition}
-
-\begin{proof}
-La \eqref{eq:binomialdistribution} può essere derivata nel modo seguente. Indichiamo con \(S\) il successo e con \(I\) l'insuccesso di ciascuna prova. Una sequenza di \(n\) prove Bernoulliane darà come esito una sequenza di \(n\) elementi \(S\) e \(I\). Ad esempio, una sequenza che contiene \(y\) successi è la seguente:
-\[
-\overbrace{SS\dots S}^\text{$y$ volte} \overbrace{II\dots I}^\text{$n-y$ volte}
-\]
-Essendo \(\theta\) la probabilità di \(S\) e \(1-\theta\) la probabilità di \(I\), la probabilità di ottenere la specifica sequenza riportata sopra è
-\begin{equation}
-\overbrace{\theta \theta\dots \theta}^\text{$y$ volte} \overbrace{(1-\theta)(1-\theta)\dots (1-\theta)}^\text{$n-y$ volte} = \theta^y \cdot (1-\theta)^{n-y}.
-\label{eq:demo-bino-kernel}
-\end{equation}
-Non siamo però interessati alla probabilità di una \emph{specifica} sequenza di \(S\) e \(I\) ma, bensì, alla probabilità di osservare una \emph{qualsiasi} sequenza di \(y\) successi in \(n\) prove. In altre parole, vogliamo la probabilità dell'unione di tutti gli eventi corrispondenti a \(y\) successi in \(n\) prove.
-
-È immediato notare che una qualsiasi altra sequenza contenente esattamente \(y\) successi avrà sempre come probabilità \(\theta^y \cdot (1-\theta)^{n-y}\): il prodotto infatti resta costante anche se cambia l'ordine dei fattori.\footnote{Viene detta \emph{scambiabilità} la proprietà per cui l'ordine con cui compiamo le osservazioni è irrilevante per l'assegnazione delle probabilità.} Per trovare il risultato cercato dobbiamo moltiplicare la \eqref{eq:demo-bino-kernel} per il numero di sequenze possibili di \(y\) successi in \(n\) prove.
-
-Il numero di sequenze che contengono esattamente \(y\) successi in \(n\) prove. La risposta è fornita dal coefficiente binomiale\footnote{La derivazione della formula del coefficiente binomiale è fornita nell'Appendice \ref{derivazione-coef-binom}.}:
-\begin{equation}
-\binom{n}{y} = \frac{n!}{y!(n-y)!},
-\label{eq:binomial-coefficient}
-\end{equation}
-dove il simbolo \(n!\) si legge \(n\) fattoriale ed è uguale al prodotto di \(n\) numeri interi decrescenti a partire da \(n\). Per definizione \(0! = 1\).
-
-Essendo la probabilità dell'unione di \(K\) elementi incompatibili uguale alla somma delle loro rispettive probabilità, e dato che le sequenze di \(y\) successi in \(n\) prove hanno tutte la stessa probabilità, per trovare la formula della distributione binomiale \eqref{eq:binomialdistribution} è sufficiente moltiplicare la \eqref{eq:demo-bino-kernel} per la \eqref{eq:binomial-coefficient}.
-\end{proof}
-
-La distribuzione di probabilità di alcune distribuzioni binomiali, per due valori di \(n\) e \(\theta\), è fornita nella figura \ref{fig:example-binomial-distr}.
-
-\begin{figure}[h]
-
-{\centering \includegraphics{022_discr_rv_distr_files/figure-latex/example-binomial-distr-1} 
-
-}
-
-\caption{Alcune distribuzioni binomiali. Nella figura, il parametro $\theta$ è indicato con $p$.}\label{fig:example-binomial-distr}
-\end{figure}
-
-\begin{exercise}
-
-Usando la \eqref{eq:binomialdistribution}, si trovi la probabilità di \(y = 2\) successi in \(n = 4\) prove Bernoulliane indipendenti con \(\theta = 0.2\)
-
-\[
-\begin{aligned}
-P(Y=2) &= \frac{4!}{2!(4-2)!} 0.2^{2} (1-0.2)^{4-2} \notag  \\
- &= \frac{4 \cdot 3 \cdot 2 \cdot 1}{(2 \cdot 1)(2 \cdot 1)}
-0.2^{2} 0.8^{2} = 0.1536. \notag
-\end{aligned}
-\]
-
-Ripetendo i calcoli per i valori \(y = 0, \dots, 4\) troviamo la distribuzione binomiale di parametri \(n = 4\) e \(\theta = 0.2\):
-
-\begin{longtable}[]{@{}cc@{}}
-\toprule
-y & P(Y = y) \\
-\midrule
-\endhead
-0 & 0.4096 \\
-1 & 0.4096 \\
-2 & 0.1536 \\
-3 & 0.0256 \\
-4 & 0.0016 \\
-sum & 1.0 \\
-\bottomrule
-\end{longtable}
-
-Lo stesso risultato si ottiene usando la sequente istruzione \R:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{dbinom}\NormalTok{(}\DecValTok{0}\SpecialCharTok{:}\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{, }\FloatTok{0.2}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.4096 0.4096 0.1536 0.0256 0.0016}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
-\begin{exercise}
-
-Lanciando \(5\) volte una moneta onesta, qual è la probabilità che esca testa almeno tre volte?
-
-In \R, la soluzione si trova con
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{dbinom}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{, }\FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{dbinom}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{dbinom}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\FloatTok{0.5}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.5}
-\end{Highlighting}
-\end{Shaded}
-
-Alternativamente, possiamo trovare la probabilità dell'evento complementare a quello definito dalla funzione di ripartizione calcolata mediante \texttt{pbinom()}, ovvero
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{pbinom}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{, }\FloatTok{0.5}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.5}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
-\hypertarget{valore-atteso-e-deviazione-standard}{%
-\subsection{Valore atteso e deviazione standard}\label{valore-atteso-e-deviazione-standard}}
-
-La media (numero atteso di successi in \(n\) prove) e la deviazione
-standard di una distribuzione binomiale sono molto semplici:
-\begin{align}
-\mu    &= n\theta,  \notag \\
-\sigma &= \sqrt{n\theta(1-\theta)}.
- \end{align}
-
-\begin{proof}
-Essendo \(Y\) la somma di \(n\) prove Bernoulliane indipendenti \(Y_i\), è facile vedere che
-\begin{align}
-\E(Y) &= \E \left( \sum_{i=1}^n Y_i \right) = \sum_{i=1}^n \E(Y_i) = n\theta, \\
-\Var(Y) &= \Var \left( \sum_{i=1}^n Y_i \right) = \sum_{i=1}^n \Var(Y_i) = n \theta (1-\theta).
-\end{align}
-\end{proof}
-
-\begin{exercise}
-Si trovino il valore atteso e la varianza del lancio di quattro monete con probabilità di successo pari a \(\theta = 0.2\).
-
-Il valore atteso è \(\mu = n\theta = 4 \cdot 0.2 = 0.8.\) Ciò significa che, se l'esperimento casuale venisse ripetuto infinite volte, l'esito testa verrebbe osservato un numero medio di volte pari a 0.8. La varianza è \(n \theta (1-\theta) = 4 \cdot(1 - 0.2) = 0.8\).\footnote{L'eguaglianza di \(\mu\) e \(\sigma\) è solo una peculiarità di questo esempio.}
-\end{exercise}
-
-\hypertarget{distribuzione-di-poisson}{%
-\section{Distribuzione di Poisson}\label{distribuzione-di-poisson}}
-
-La distribuzione di Poisson è una distribuzione di probabilità discreta che esprime le probabilità per il numero di eventi che si verificano successivamente ed indipendentemente in un dato intervallo di tempo, sapendo che mediamente se ne verifica un numero \(\lambda\). La distribuzione di Poisson serve dunque per contare il numero di volte in cui un evento ha luogo in un determinato intervallo di tempo. La stessa distribuzione può essere estesa anche per contare gli eventi che hanno luogo in una determinata porzione di spazio.
-
-\begin{definition}
-La distribuzione di Poisson può essere intesa come limite della distribuzione binomiale, dove la probabilità di successo \(\theta\) è pari a \(\frac{\lambda}{n}\) con \(n\) che tende a \(\infty\):
-\begin{equation}
-\lim_{y \rightarrow \infty} \binom{n}{y} \theta^y (1-\theta)^{n-y} = \frac{\lambda^y}{y!}e^{-\lambda}.
-\end{equation}
-\end{definition}
-
-Alcune distribuzioni di Poisson sono riportate nella figura \ref{fig:examples-poisson-distrib}.
-
-\begin{figure}[h]
-
-{\centering \includegraphics{022_discr_rv_distr_files/figure-latex/examples-poisson-distrib-1} 
-
-}
-
-\caption{Alcune distribuzioni di Poisson.}\label{fig:examples-poisson-distrib}
-\end{figure}
-
-\begin{exercise}
-
-Supponiamo che un evento accada 300 volte all'ora e si vuole determinare la probabilità che in un minuto accadano esattamente 3 eventi.
-
-Il numero medio di eventi in un minuto è pari a
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{lambda }\OtherTok{\textless{}{-}} \DecValTok{300} \SpecialCharTok{/} \DecValTok{60}
-\NormalTok{lambda}
-\CommentTok{\#\textgreater{} [1] 5}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Quindi la probabilità che in un minuto si abbiano 3 eventi è pari a
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{3}
-\NormalTok{(lambda}\SpecialCharTok{\^{}}\NormalTok{y }\SpecialCharTok{/} \FunctionTok{factorial}\NormalTok{(y)) }\SpecialCharTok{*} \FunctionTok{exp}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{lambda)}
-\CommentTok{\#\textgreater{} [1] 0.14}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
-\begin{exercise}
-
-Per i dati dell'esempio precedente, si trovi la probabilità che un evento accada almeno 8 volte in un minuto.
-
-La probabilità cercata è
-\[
-p(y \geq 8) = 1 - p (y \leq 7) = 1- \sum_{i = 0}^7 \frac{\lambda^7}{7!}e^{-\lambda},
-\]
-\noindent
-con \(\lambda = 5\).
-
-Svolgendo i calcoli in \R otteniamo:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{ppois}\NormalTok{(}\AttributeTok{q =} \DecValTok{7}\NormalTok{, }\AttributeTok{lambda =} \DecValTok{5}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.133}
-\FunctionTok{ppois}\NormalTok{(}\AttributeTok{q =} \DecValTok{7}\NormalTok{, }\AttributeTok{lambda =} \DecValTok{5}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.133}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
-\begin{exercise}
-
-Sapendo che un evento avviene in media 6 volte al minuto, si calcoli (a) la probabilità di osservare un numero di eventi uguale o inferiore a 3 in un minuto, e (b) la probabilità di osservare esattamente 2 eventi in 30 secondi.
-
-\begin{enumerate}
-\def\labelenumi{(\alph{enumi})}
-\tightlist
-\item
-  In questo caso \(\lambda = 6\) e la probabilità richiesta è
-\end{enumerate}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{ppois}\NormalTok{(}\AttributeTok{q =} \DecValTok{3}\NormalTok{, }\AttributeTok{lambda =} \DecValTok{6}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{TRUE}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.151}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{enumerate}
-\def\labelenumi{(\alph{enumi})}
-\setcounter{enumi}{1}
-\tightlist
-\item
-  In questo caso \(\lambda = 6 / 2\) e la probabilità richiesta è
-\end{enumerate}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{dpois}\NormalTok{(}\AttributeTok{x =} \DecValTok{2}\NormalTok{, }\AttributeTok{lambda =} \DecValTok{3}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 0.224}
-\end{Highlighting}
-\end{Shaded}
-
-\end{exercise}
-
-\hypertarget{alcune-proprietuxe0-della-variabile-di-poisson}{%
-\section{Alcune proprietà della variabile di Poisson}\label{alcune-proprietuxe0-della-variabile-di-poisson}}
+Le proporzioni assomigliano alle probabilità. Ricordiamo che sono state proposte tre diverse interpretazioni del concetto di una probabilità.
 
 \begin{itemize}
 \item
-  Il valore atteso, la moda e la varianza della variabile di Poisson sono uguali a \(\lambda\).
+  Il punto di vista classico: è necessario enumerare tutti gli eventi elementari dello spazio campionario in cui ogni risultato è ugualmente probabile.
 \item
-  La somma \(Y_1 + \dots + Y_n\) di \(n\) variabili casuali indipendenti con distribuzioni di Poisson di parametri \(\lambda_{1},\dots,\lambda_{n}\) segue una distribuzione di Poisson di parametro \(\lambda = \lambda_{1}+\dots+\lambda_{n}\).
+  Il punto di vista frequentista: è necessario ripetere l'esperimento esperimento casuale (cioè l'estrazione del campione) molte volte in condizioni identiche.
 \item
-  La differenze di due variabili di Poisson non è una variabile di Poisson. Basti infatti pensare che può assumere valori negativi.
+  La visione soggettiva: è necessario esprimere la propria opinione sulla probabilità di un evento unico e irripetibile.
+\end{itemize}
+
+La visione classica non sembra potere funzionare qui, perché sappiamo solo che ci sono due tipi di palline colorate e il numero totale di palline è 60. Anche se estraiamo un campione di 10 palline, possiamo solo osservare la proporzione di palline rosse palline nel campione. Non c'è modo per stabilire quali sono le proprietà dello spazio campionario in cui ogni risultato è ugualmente probabile.
+
+La visione frequentista potrebbe funzionare nel caso presente. Possiamo considerare il processo del campionamento (cioè l'estrazione di un campione casuale di 10 palline dall'urna) come un esperimento casuale che produce una proporzione campionaria \(p\). Potremmo quindi pensare di ripetere l'esperimento molte volte nelle stesse condizioni, ottenere molte proporzioni campionarie \(p\) e riassumere poi in qualche modo questa distribuzione di statistiche campionarie. Ripetendo l'esperimento casuale tante volte è possibile ottenere una stima abbastanza accurata della proporzione \(\pi\) di palline rosse nell'urna. Questo processo è fattibile, ma è però noioso, dispendioso in termini di tempo e soggetto a errori.
+
+La visione soggettiva concepisce invece la probabilità sconosciuta \(\pi\) come un'opinione soggettiva di cui possiamo essere più o meno sicuri. Abbiamo visto in precedenza come questa opinione soggettiva dipende da due fonti di evidenza: le nostre credenze iniziali e le nuove informazioni fornite dai dati che abbiamo osservato Vedremo in questo capitolo come sia possibile combinare le credenze iniziali rispetto al possibile valore \(\pi\) con le evidenza fornite dai dati per giungere ad una credenza a posteriori su \(\pi\). Se le nostre credenze a priori sono espresse nei termini di una distribuzione Beta, allora è possibile derivare le proprietà della distribuzione a priori per via analitica. Questo capitolo ha lo scopo di mostrare come questo possa essere fatto.
+
+\hypertarget{il-denominatore-bayesiano}{%
+\section{Il denominatore bayesiano}\label{il-denominatore-bayesiano}}
+
+In termini generali possiamo dire che, in un problema bayesiano, i dati \(y\) provengono da una distribuzione \(p(y \mid \theta)\) e al parametro \(\theta\) viene assegnata una distribuzione a priori \(p(\theta)\). La scelta della distribuzione a priori ha importanti conseguenze di tipo computazionale. Infatti, a meno di non utilizzare particolari forme analitiche, risulta impossibile ottenere espressioni esplicite per la distribuzione a posteriori. Ciò dipende dall'espressione a denominatore della formula di Bayes
+\begin{equation}
+p(\theta \mid y) = \frac{p(\theta) p(y \mid \theta)}{\int p(\theta) p(y \mid \theta) \,\operatorname {d}\! \theta} \notag
+\end{equation}
+il cui calcolo non è eseguibile in modo analitico in forma chiusa. Una soluzione analitica dell'integrale al denominatore della regola di Bayes è possibile solo se vengono usate distribuzioni provenienti da famiglie coniugate.
+
+\begin{definition}
+Una distribuzione di probabilità a priori \(p(\theta)\) si dice \emph{coniugata} al modello usato se la distribuzione a priori e la distribuzione a posteriori hanno la stessa forma funzionale. Dunque, le due distribuzioni differiscono solo per il valore dei parametri.
+\end{definition}
+
+In altre parole, è possibile ottenere la distribuzione posteriore per via analitica solo per alcune specifiche combinazioni di distribuzione a priori e verosimiglianza. Tuttavia, l'uso di distribuzioni coniugate limita considerevolmente la flessibilità della modellizzazione. Per questa ragione, la strada principale che viene seguita nella modellistica bayesiana è quella che porta a determinare la distribuzione a posteriori non per via analitica, ma bensì mediante metodi numerici. La simulazione fornisce dunque la strategia generale del calcolo bayesiano. A questo fine vengono usati i metodi di campionamento detti Monte-Carlo Markov-Chain (MCMC). Tali metodi costituiscono una potente e praticabile alternativa per la costruzione della distribuzione a posteriori per modelli complessi e consentono di decidere quali distribuzioni a priori e quali distribuzioni di verosimiglianza usare sulla base di considerazioni teoriche soltanto, senza dovere preoccuparsi di altri vincoli.\footnote{Dato che è basata su metodi computazionalmente intensivi, la stima numerica della funzione a posteriori può essere svolta soltanto mediante software. In anni recenti i metodi bayesiani di analisi dei dati sono diventati sempre più popolari proprio perché la potenza di calcolo necessaria per svolgere tali calcoli è ora alla portata di tutti. Questo non era vero solo pochi decenni fa.} Prima di esaminare i metodi di stima della distribuzione a posteriori basati su simulazione numerica, esamineremo qui il caso più semplice, ovvero quello nel quale è possibile fare inferenza su una proporzione senza dovere ricorrere ai metodi MCMC: se la distribuzione a priori su \(\pi\) è descritta da una distribuzione Beta allora, alla luce dei dati del campione, le proprietà della distribuzione a posteriori sisultano univocamente determinate -- e sono facilmente descrivibili. Questa situazione definisce quello che viene chiamato il caso Beta-Binomiale.
+
+\hypertarget{chapter-distr-priori-coniugate}{%
+\section{Il modello Beta-Binomiale}\label{chapter-distr-priori-coniugate}}
+
+Per fare un esempio concreto, consideriamo nuovamente i dati di \textcite{zetschefuture2019}: nel campione di 30 partecipanti clinici le aspettative future di 23 partecipanti risultano distorte negativamente e quelle di 7 partecipanti risultano distorte positivamente. Nel seguito, indicheremo con \(\theta\) la probabilità che le aspettative di un paziente clinico siano distorte negativamente. Ci poniamo il problema di ottenere una stima a posteriori di \(\theta\) avendo osservato 23 ``successi'' in 30 prove.
+
+I dati osservati (\(y = 23\)) possono essere considerati la manifestazione di una variabile casuale Bernoulliana. In tali circostanze, esiste una famiglia di distribuzioni che, qualora venga scelta per la distribuzione a priori, fa sì che la distribuzione a posteriori abbia la stessa forma funzionale della distribuzione a priori. Questo consente una soluzione analitica dell'integrale che compare a denominatore nella formula di Bayes. Nel caso presente, la famiglia di distribuzioni che ha questa proprietà è la distribuzione Beta.
+
+\hypertarget{parametri-della-distribuzione-beta}{%
+\subsection{Parametri della distribuzione Beta}\label{parametri-della-distribuzione-beta}}
+
+È possibile esprimere diverse credenze iniziali rispetto a \(\theta\) mediante la distribuzione Beta. Ad esempio, la scelta di una \(\mbox{Beta}(\alpha = 4, \beta = 4)\) quale distribuzione a priori per il parametro \(\theta\) corrisponde alla credenza a priori che associa all'evento ``presenza di una aspettativa futura distorta negativamente'' una grande incertezza: il valore 0.5 è il valore di \(\theta\) più plausibile, ma anche gli altri valori del parametro (tranne gli estremi) sono ritenuti piuttosto plausibili. Questa distribuzione a priori esprime la credenza che sia egualmente probabile per un'aspettativa futura essere distorta negativamente o positivamente.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(}\StringTok{"bayesrules"}\NormalTok{)}
+\FunctionTok{plot\_beta}\NormalTok{(}\AttributeTok{alpha =} \DecValTok{4}\NormalTok{, }\AttributeTok{beta =} \DecValTok{4}\NormalTok{, }\AttributeTok{mean =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{mode =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{026_conjugate_families_files/figure-latex/unnamed-chunk-1-1} \end{center}
+
+Possiamo quantificare la nostra incertezza calcolando, con un grado di fiducia del 95\%, la regione nella quale, in base a tale credenza a priori, si trova il valore del parametro. Per ottenere tale intervallo di credibilità a priori, usiamo la funzione \texttt{qbeta()} di \(\R\). In \texttt{qbeta()} i parametri \(\alpha\) e \(\beta\) sono chiamati \texttt{shape1} e \texttt{shape2}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qbeta}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FloatTok{0.025}\NormalTok{, }\FloatTok{0.975}\NormalTok{), }\AttributeTok{shape1 =} \DecValTok{4}\NormalTok{, }\AttributeTok{shape2 =} \DecValTok{4}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 0.184 0.816}
+\end{Highlighting}
+\end{Shaded}
+
+Se poniamo \(\alpha=10\) e \(\beta=10\), questo corrisponde ad una credenza a priori che sia egualmente probabile per un'aspettativa futura essere distorta negativamente o positivamente,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot\_beta}\NormalTok{(}\AttributeTok{alpha =} \DecValTok{10}\NormalTok{, }\AttributeTok{beta =} \DecValTok{10}\NormalTok{, }\AttributeTok{mean =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{mode =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{026_conjugate_families_files/figure-latex/unnamed-chunk-3-1} \end{center}
+
+\noindent
+ma ora la nostra certezza a priori sul valore del parametro è maggiore, come indicato dall'intervallo al 95\%:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qbeta}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FloatTok{0.025}\NormalTok{, }\FloatTok{0.975}\NormalTok{), }\AttributeTok{shape1 =} \DecValTok{10}\NormalTok{, }\AttributeTok{shape2 =} \DecValTok{10}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 0.289 0.711}
+\end{Highlighting}
+\end{Shaded}
+
+Quale distribuzione a priori dobbiamo scegliere? In un problema concreto di analisi dei dati, la scelta della distribuzione a priori dipende dalle credenze a priori che vogliamo includere nell'analisi dei dati. Se non abbiamo alcuna informazione a priori, potremmo usare \(\alpha=1\) e \(\beta=1\), che produce una distribuzione a priori uniforme. Ma l'uso di distribuzioni a priori uniformi è sconsigliato per vari motivi, inclusa l'instabilità numerica della stima dei parametri. È meglio invece usare una distribuzione a priori poco informativa, come \(\mbox{Beta}(2, 2)\).
+
+Nella discussione successiva, solo per fare un esempio, useremo quale distribuzione a priori una \(\mbox{Beta}(2, 10)\), ovvero:
+\[
+p(\theta) = \frac{\Gamma(12)}{\Gamma(2)\Gamma(10)}\theta^{2-1} (1-\theta)^{10-1}.
+\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot\_beta}\NormalTok{(}\AttributeTok{alpha =} \DecValTok{2}\NormalTok{, }\AttributeTok{beta =} \DecValTok{10}\NormalTok{, }\AttributeTok{mean =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{mode =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{026_conjugate_families_files/figure-latex/unnamed-chunk-5-1} \end{center}
+
+\noindent
+La \(\mbox{Beta}(2, 10)\) esprime la credenza che \(\theta < 0.5\), con il valore più plausibile pari a cicrca 0.1.
+
+\hypertarget{la-specificazione-della-distribuzione-a-posteriori}{%
+\subsection{La specificazione della distribuzione a posteriori}\label{la-specificazione-della-distribuzione-a-posteriori}}
+
+Una volta scelta una distribuzione a priori di tipo Beta, i cui parametri rispecchiano le nostre credenze iniziali su \(\theta\), la distribuzione a posteriori viene specificata dalla formula di Bayes:
+\[
+\text{distribuzione a posteriori} = \frac{\text{verosimiglianza}\cdot\text{distribuzione a priori}}{\text{verosimiglianza marginale}}.
+\]
+Nel caso presente abbiamo
+\[
+p(\theta \mid n=30, y=23) = \frac{\Big[\binom{30}{23}\theta^{23}(1-\theta)^{30-23}\Big]\Big[\frac{\Gamma(12)}{\Gamma(2)\Gamma(10)}\theta^{2-1} (1-\theta)^{10-1}\Big]}{p(y = 23)},
+\]
+laddove \(p(y = 23)\), ovvero la verosimiglianza marginale, è una costante di normalizzazione che fa sì che l'area sottesa alla densità a posteriori sia unitaria.
+
+Riscriviamo ora l'equazione precedente in termini generali
+\[
+p(\theta \mid n, y) = \frac{\Big[\binom{n}{y}\theta^{y}(1-\theta)^{n-y}\Big]\Big[\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\theta^{a-1} (1-\theta)^{b-1}\Big]}{p(y)}
+\]
+\noindent
+e raccogliendo tutte le costanti otteniamo:
+\[
+p(\theta \mid n, y) =\left[\frac{\binom{n}{y}\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}}{p(y)}\right] \theta^{y}(1-\theta)^{n-y}\theta^{a-1} (1-\theta)^{b-1}.
+\]
+\noindent
+Se ignoriamo il termine costante all'interno della parentesi quadra
+\begin{align}
+p(\theta \mid n, y) &\propto \theta^{y}(1-\theta)^{n-y}\theta^{a-1} (1-\theta)^{b-1},\notag\\
+&\propto \theta^{a+y-1}(1-\theta)^{b+n-y-1},\notag
+\end{align}
+\noindent
+il termine di destra dell'equazione precedente identifica il \emph{kernel} della distribuzione a posteriori e corrisponde ad una Beta \emph{non normalizzata} di parametri \(a + y\) e \(b + n - y\).
+
+Per ottenere una distribuzione di densità, dobbiamo aggiungere una costante di normalizzazione al kernel della distribuzione a posteriori. In base alla definizione della distribuzione Beta, ed essendo \(a' = a+y\) e \(b' = b+n-y\), tale costante di normalizzazione sarà uguale a
+\[
+\frac{\Gamma(a'+b')}{\Gamma(a')\Gamma(b')} = \frac{\Gamma(a+b+n)}{\Gamma(a+y)\Gamma(b+n-y)}.
+\]
+\noindent
+In altri termini, la distribuzione a posteriori diventa una \(\mbox{Beta}(a+y, b+n-y)\):
+\[
+\mbox{Beta}(a+y, b+n-y) = \frac{\Gamma(a+b+n)}{\Gamma(a+y)\Gamma(b+n-y)} \theta^{a+y-1}(1-\theta)^{b+n-y-1}.
+\]
+
+Possiamo concludere dicendo che siamo partiti da una verosimiglianza \(\Bin(n = 30, y = 23 \mid \theta)\). Moltiplicando la verosimiglianza per la distribuzione a priori \(\theta \sim \mbox{Beta}(2, 10)\), abbiamo ottenuto la distribuzione a posteriori \(p(\theta \mid n, y) \sim \mbox{Beta}(25, 17)\). Questo è un esempio di analisi coniugata: la distribuzione a posteriori del parametro ha la stessa forma funzionale della distribuzione a priori. La presente combinazione di verosimiglianza e distribuzione a priori è chiamata caso coniugato \emph{Beta-Binomiale} ed è descritto dal seguente teorema.
+
+\begin{theorem}
+Sia data la funzione di verosimiglianza \(\Bin(n, y \mid \theta)\) e sia \(\mbox{Beta}(\alpha, \beta)\) una distribuzione a priori. In tali circostanze, la distribuzione a posteriori del parametro \(\theta\) sarà una distribuzione \(\mbox{Beta}(\alpha + y, \beta + n - y)\).
+\end{theorem}
+
+È facile calcolare il valore atteso a posteriori di \(\theta\). Essendo \(\E[\mbox{Beta}(\alpha, \beta)] = \frac{\alpha}{\alpha + \beta}\), il risultato cercato diventa
+\begin{equation}
+\E_{\text{post}} [\mathrm{Beta}(\alpha + y, \beta + n - y)] = \frac{\alpha + y}{\alpha + \beta +n}.
+\label{eq:ev-post-beta-bin-1}
+\end{equation}
+
+\begin{exercise}
+
+Usando le funzione \(\R\) \texttt{plot\_beta\_binomial()} e \texttt{plot\_beta\_binomial()} del pacchetto \texttt{bayesrules}, si rappresenti in maniera grafica e si descriva in forma numerica l'aggiornamento bayesiano Beta-Binomiale per i dati di \textcite{zetschefuture2019}.
+
+Per i dati in discussione, abbiamo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bayesrules}\SpecialCharTok{::}\FunctionTok{plot\_beta\_binomial}\NormalTok{(}\AttributeTok{alpha =} \DecValTok{2}\NormalTok{, }\AttributeTok{beta =} \DecValTok{10}\NormalTok{, }\AttributeTok{y =} \DecValTok{23}\NormalTok{, }\AttributeTok{n =} \DecValTok{30}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{026_conjugate_families_files/figure-latex/unnamed-chunk-6-1} \end{center}
+
+\noindent
+Un sommario delle distribuzioni a priori e a posteriori si ottiene usando la funzione \texttt{summarize\_beta\_binomial()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bayesrules}\SpecialCharTok{:::}\FunctionTok{summarize\_beta\_binomial}\NormalTok{(}\AttributeTok{alpha =} \DecValTok{2}\NormalTok{, }\AttributeTok{beta =} \DecValTok{10}\NormalTok{, }\AttributeTok{y =} \DecValTok{23}\NormalTok{, }\AttributeTok{n =} \DecValTok{30}\NormalTok{)}
+\CommentTok{\#\textgreater{}       model alpha beta  mean mode    var     sd}
+\CommentTok{\#\textgreater{} 1     prior     2   10 0.167  0.1 0.0107 0.1034}
+\CommentTok{\#\textgreater{} 2 posterior    25   17 0.595  0.6 0.0056 0.0749}
+\end{Highlighting}
+\end{Shaded}
+
+\end{exercise}
+
+\begin{exercise}
+
+Per i dati di \textcite{zetschefuture2019}, si trovino la media, la moda, la deviazione standard della distribuzione a posteriori di \(\theta\). Si trovi inoltre l'intervallo di credibilità a posteriori del 95\% per il parametro \(\theta\).
+
+Usando la \ref{thm:beta-binom}, possiamo ottenere l'intervallo di credibilità a posteriori del 95\% per il parametro \(\theta\) come segue:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qbeta}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FloatTok{0.025}\NormalTok{, }\FloatTok{0.975}\NormalTok{), }\AttributeTok{shape1 =} \DecValTok{25}\NormalTok{, }\AttributeTok{shape2 =} \DecValTok{17}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 0.445 0.737}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+La media della distribuzione a posteriori è
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{25} \SpecialCharTok{/}\NormalTok{ (}\DecValTok{25} \SpecialCharTok{+} \DecValTok{17}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 0.595}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+La moda della distribuzione a posteriori è
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\DecValTok{25} \SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{25} \SpecialCharTok{+} \DecValTok{17} \SpecialCharTok{{-}} \DecValTok{2}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 0.6}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+La deviazione standard della distribuzione a priori è
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sqrt}\NormalTok{((}\DecValTok{25} \SpecialCharTok{*} \DecValTok{17}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ ((}\DecValTok{25} \SpecialCharTok{+} \DecValTok{17}\NormalTok{)}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ (}\DecValTok{25} \SpecialCharTok{+} \DecValTok{17} \SpecialCharTok{+} \DecValTok{1}\NormalTok{)))}
+\CommentTok{\#\textgreater{} [1] 0.0749}
+\end{Highlighting}
+\end{Shaded}
+
+\end{exercise}
+
+\begin{exercise}
+
+Si trovino i parametri e le proprietà della distribuzione a posteriori del parametro \(\theta\) per i dati dell'esempio relativo alla ricerca di Stanley Milgram discussa da \textcite{Johnson2022bayesrules}.
+
+Nel 1963, Stanley Milgram presentò una ricerca sulla propensione delle persone a obbedire agli ordini di figure di autorità, anche quando tali ordini possono danneggiare altre persone \autocite{milgram1963behavioral}. Nell'articolo, Milgram descrive lo studio come
+
+\begin{quote}
+\emph{consist{[}ing{]} of ordering a naive subject to administer electric shock to a victim. A simulated shock generator is used, with 30 clearly marked voltage levels that range from IS to 450 volts. The instrument bears verbal designations that range from Slight Shock to Danger: Severe Shock. The responses of the victim, who is a trained confederate of the experimenter, are standardized. The orders to administer shocks are given to the naive subject in the context of a `learning experiment' ostensibly set up to study the effects of punishment on memory. As the experiment proceeds the naive subject is commanded to administer increasingly more intense shocks to the victim, even to the point of reaching the level marked Danger: Severe Shock.}
+\end{quote}
+
+\noindent
+All'insaputa del partecipante, gli shock elettrici erano falsi e l'attore stava solo fingendo di provare il dolore dello shock.
+
+\textcite{Johnson2022bayesrules} fanno inferenza sui risultati dello studio di Milgram mediante il modello Beta-Binomiale. Il parametro di interesse è \(\theta\), la probabiltà che una persona obbedisca all'autorità (in questo caso, somministrando lo shock più severo), anche se ciò significa recare danno ad altri. \textcite{Johnson2022bayesrules} ipotizzano che, prima di raccogliere dati, le credenze di Milgram relative a \(\theta\) possano essere rappresentate mediante una \(\mbox{Beta}(1, 10)\). Sia \(y = 26\) il numero di soggetti che, sui 40 partecipanti allo studio, aveva accettato di infliggere lo shock più severo. Assumendo che ogni partecipante si comporti indipendentemente dagli altri, possiamo modellare la dipendenza di \(y\) da \(\theta\) usando la distribuzione binomiale. Giungiamo dunque al seguente modello bayesiano Beta-Binomiale:
+\begin{align}
+y \mid \theta & \sim \Bin(n = 40, \theta) \notag\\
+\theta & \sim \text{Beta}(1, 10) \; . \notag
+\end{align}
+Usando le funzioni di \texttt{bayesrules} possiamo facilmente calcolare i parametri e le proprietà della distribuzione a posteriori:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bayesrules}\SpecialCharTok{:::}\FunctionTok{summarize\_beta\_binomial}\NormalTok{(}\AttributeTok{alpha =} \DecValTok{1}\NormalTok{, }\AttributeTok{beta =} \DecValTok{10}\NormalTok{, }\AttributeTok{y =} \DecValTok{26}\NormalTok{, }\AttributeTok{n =} \DecValTok{40}\NormalTok{)}
+\CommentTok{\#\textgreater{}       model alpha beta   mean  mode     var     sd}
+\CommentTok{\#\textgreater{} 1     prior     1   10 0.0909 0.000 0.00689 0.0830}
+\CommentTok{\#\textgreater{} 2 posterior    27   24 0.5294 0.531 0.00479 0.0692}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Il processo di aggiornamento bayesiano è descritto dalla figura seguente:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bayesrules}\SpecialCharTok{:::}\FunctionTok{plot\_beta\_binomial}\NormalTok{(}\AttributeTok{alpha =} \DecValTok{1}\NormalTok{, }\AttributeTok{beta =} \DecValTok{10}\NormalTok{, }\AttributeTok{y =} \DecValTok{26}\NormalTok{, }\AttributeTok{n =} \DecValTok{40}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{026_conjugate_families_files/figure-latex/unnamed-chunk-13-1} \end{center}
+
+\end{exercise}
+
+\hypertarget{principali-distribuzioni-coniugate}{%
+\section{Principali distribuzioni coniugate}\label{principali-distribuzioni-coniugate}}
+
+Esistono molte altre combinazioni simili di verosimiglianza e distribuzione a priori le quali producono una distribuzione a posteriori che ha la stessa densità della distribuzione a priori. Sono elencate qui sotto le più note coniugazioni tra modelli statistici e distribuzioni a priori.
+
+\begin{itemize}
+\item
+  Per il modello Normale-Normale \(\mathcal{N}(\mu, \sigma^2_0)\), la distribizione iniziale è \(\mathcal{N}(\mu_0, \tau^2)\) e la distribuzione finale è \(\mathcal{N}\left(\frac{\mu_0\sigma^2 + \bar{y}n\tau^2}{\sigma^2 + n\tau^2}, \frac{\sigma^2\tau^2}{\sigma^2 + n\tau^2} \right)\).
+\item
+  Per il modello Poisson-gamma \(\text{Po}(\theta)\), la distribizione iniziale è \(\Gamma(\lambda, \delta)\) e la distribuzione finale è \(\Gamma(\lambda + n \bar{y}, \delta +n)\).
+\item
+  Per il modello esponenziale \(\text{Exp}(\theta)\), la distribizione iniziale è \(\Gamma(\lambda, \delta)\) e la distribuzione finale è \(\Gamma(\lambda + n, \delta +n\bar{y})\).
+\item
+  Per il modello uniforme-Pareto \(\text{U}(0, \theta)\), la distribizione iniziale è \(\mbox{Pa}(\alpha, \varepsilon)\) e la distribuzione finale è \(\mbox{Pa}(\alpha + n, \max(y_{(n)}, \varepsilon))\).
 \end{itemize}
 
 \hypertarget{considerazioni-conclusive}{%
 \section*{Considerazioni conclusive}\label{considerazioni-conclusive}}
 \addcontentsline{toc}{section}{Considerazioni conclusive}
 
-La distribuzione binomiale è una distribuzione di probabilità discreta che descrive il numero di successi in un processo di Bernoulli, ovvero la variabile aleatoria \(Y = Y_1 + \dots + Y_n\) che somma \(n\) variabili casuali indipendenti di uguale distribuzione di Bernoulli \(\mathcal{B}(\theta)\), ognuna delle quali può fornire due soli risultati: il successo con probabilità \(\theta\) e il fallimento con probabilità \(1 - \theta\).
-
-La distribuzione binomiale è molto importante per le sue molte applicazioni. Nelle presenti dispense, dedicate all'analisi bayesiana, è soprattutto importante perché costituisce il fondamento del caso più semplice del cosiddetto ``aggiornamento bayesiano'', ovvero il caso Beta-Binomiale. Il modello Beta-Binomiale ci fornirà infatti un esempio paradigmatico dell'approccio bayesiano all'inferenza e sarà trattato in maniera analitica. È dunque importante che le proprietà della distribuzione binomiale risultino ben chiare.
+Lo scopo di questa discussione è stato quello di mostrare come sia possibile combinare le nostre conoscenze a priori (espresse nei termini di una densità di probabilità) con le evidenze fornite dai dati (espresse nei termini della funzione di verosimiglianza), così da determinare, mediante il teorema di Bayes, una distribuzione a posteriori, la quale condensa l'incertezza che abbiamo sul parametro \(\theta\). Per illustrare tale problema, abbiamo considerato una situazione nella quale \(\theta\) corrisponde alla probabilità di successo in una sequenza di prove Bernoulliane. Abbiamo visto come, in queste circostanze, sia ragionevole esprimere le nostre credenze a priori mediante la densità Beta, con opportuni parametri. L'inferenza rispetto ad una proporzione rappresenta un caso particolare, ovvero un caso nel quale la distribuzione a priori è Beta e la verosimiglianza è Binomiale. In tali circostanze, la distribuzione a posteriori diventa una distribuzione Beta -- questo è il cosiddetto modello Beta-Binomiale. Dato che utilizza una distribuzione a priori coniugata, dunque, il modello Beta-Binomiale rende possibile la determinazione analitica dei parametri della distribuzione a posteriori.
 
 
 % Bibliography

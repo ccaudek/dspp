@@ -1,7 +1,8 @@
 # Distribuzioni di v.c. discrete {#distr-rv-discr}
 
-In questo Capitolo verranno esaminate le principali distribuzioni di probabilità delle variabili casuali discrete. Un esperimento casuale che può dare luogo a solo due possibili esiti (successo, insuccesso) è modellabile con una variabile casuale di Bernoulli. Una sequenza di prove di Bernoulli costituisce un processo Bernoulliano. Il numero di successi dopo $n$ prove di Bernoulli corrisponde ad una variabile casuale che segue la legge binomiale. La distribuzione binomiale risulta da un insieme di prove di Bernoulli solo se il numero totale $n$ è fisso per disegno. Se il numero di prove è esso stesso una variabile casuale, allora il numero di successi nella corrispondente sequenza di prove bernoulliane segue al distribuzione di Poisson.
 
+
+In questo Capitolo verranno esaminate le principali distribuzioni di probabilità delle variabili casuali discrete. Un esperimento casuale che può dare luogo a solo due possibili esiti (successo, insuccesso) è modellabile con una variabile casuale di Bernoulli. Una sequenza di prove di Bernoulli costituisce un processo Bernoulliano. Il numero di successi dopo $n$ prove di Bernoulli corrisponde ad una variabile casuale che segue la legge binomiale. La distribuzione binomiale risulta da un insieme di prove di Bernoulli solo se il numero totale $n$ è fisso per disegno. Se il numero di prove è esso stesso una variabile casuale, allora il numero di successi nella corrispondente sequenza di prove bernoulliane segue al distribuzione di Poisson.
 
 ## Una prova Bernoulliana
 
@@ -83,7 +84,7 @@ La distribuzione di probabilità di alcune distribuzioni binomiali, per due valo
 
 \begin{figure}[h]
 
-{\centering \includegraphics{022_discr_rv_distr_files/figure-latex/example-binomial-distr-1} 
+{\centering \includegraphics[width=0.8\linewidth]{022_discr_rv_distr_files/figure-latex/example-binomial-distr-1} 
 
 }
 
@@ -181,7 +182,7 @@ Alcune distribuzioni di Poisson sono riportate nella figura \@ref(fig:examples-p
 
 \begin{figure}[h]
 
-{\centering \includegraphics{022_discr_rv_distr_files/figure-latex/examples-poisson-distrib-1} 
+{\centering \includegraphics[width=0.8\linewidth]{022_discr_rv_distr_files/figure-latex/examples-poisson-distrib-1} 
 
 }
 
@@ -266,6 +267,5 @@ La distribuzione binomiale è una distribuzione di probabilità discreta che des
 
 La distribuzione binomiale è molto importante per le sue molte applicazioni. Nelle presenti dispense, dedicate all'analisi bayesiana, è soprattutto importante perché costituisce il fondamento del caso più semplice del cosiddetto "aggiornamento bayesiano", ovvero il caso Beta-Binomiale. Il modello Beta-Binomiale ci fornirà infatti un esempio paradigmatico dell'approccio bayesiano all'inferenza e sarà trattato in maniera analitica.  È dunque importante che le proprietà della distribuzione binomiale risultino ben chiare.  
 
-<!-- Una variabile casuale bernoulliana è la più semplice delle variabili casuali. Di conseguenza, la distribuzione binomiale è la distribuzione di massa di probabilità più semplice. Per questa ragione la distribuzione binomiale viene discussa prima di presentare i casi più complessi. L'aspetto matematico, tuttavia, è secondario per i nostri scopi. In tutti i casi, è più semplice usare un software per svolgere i calcoli, piuttosto che fare una lunga serie di somme utilizzando le Tavole delle funzioni di ripartizione di varie distribuzioni di probabilità. Ciò che è cruciale è capire il significato dei concetti e come si può utilizzare un software per eseguire i calcoli. Nel caso presente, i calcoli sono molto semplici e si possono anche eseguire a mano. In seguito vedremo che l'uso di un software sarà sempre richiesto. -->
 
 

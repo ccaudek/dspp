@@ -193,11 +193,11 @@ Un sommario della distribuzione a posteriori si ottiene con:
 
 ```r
 fit1$summary(c("theta"))
-#> # A tibble: 1 × 10
+#> [90m# A tibble: 1 × 10[39m
 #>   variable  mean median     sd    mad    q5   q95  rhat ess_bulk
-#>   <chr>    <dbl>  <dbl>  <dbl>  <dbl> <dbl> <dbl> <dbl>    <dbl>
-#> 1 theta    0.802  0.813 0.0868 0.0867 0.644 0.928  1.00    5116.
-#> # … with 1 more variable: ess_tail <dbl>
+#>   [3m[90m<chr>[39m[23m    [3m[90m<dbl>[39m[23m  [3m[90m<dbl>[39m[23m  [3m[90m<dbl>[39m[23m  [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m
+#> [90m1[39m theta    0.802  0.813 0.086[4m8[24m 0.086[4m7[24m 0.644 0.928  1.00    [4m5[24m116.
+#> [90m# … with 1 more variable: ess_tail <dbl>[39m
 ```
 
 \noindent
@@ -248,14 +248,10 @@ stanfit1 %>%
   mcmc_trace(pars = c("theta"), size = 0.1)
 ```
 
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{040_beta_binomial_mod_files/figure-latex/trace-plot-gautret-1} 
-
-}
-
-\caption{Trace-plot per il parametro $\theta$ nel modello Beta-Binomiale.}(\#fig:trace-plot-gautret)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="040_beta_binomial_mod_files/figure-html/trace-plot-gautret-1.png" alt="Trace-plot per il parametro $\theta$ nel modello Beta-Binomiale." width="672" />
+<p class="caption">(\#fig:trace-plot-gautret)Trace-plot per il parametro $\theta$ nel modello Beta-Binomiale.</p>
+</div>
 
 \noindent
 La figura \@ref(fig:trace-plot-gautret) mostra che le catene esplorano uno spazio compreso approssimativamenre tra 0.7 e 0.9; tale figura descrive il comportamento _longitudinale_ delle catene di Markov.
@@ -269,14 +265,10 @@ mcmc_hist(stanfit1, pars = "theta") +
   ylab("count")
 ```
 
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{040_beta_binomial_mod_files/figure-latex/hist-post-gautret-1} 
-
-}
-
-\caption{Istogramma che illustra l'approssimazione della distribuzione a posteriori per il parametro $\theta$ nel modello Beta-Binomiale.}(\#fig:hist-post-gautret)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="040_beta_binomial_mod_files/figure-html/hist-post-gautret-1.png" alt="Istogramma che illustra l'approssimazione della distribuzione a posteriori per il parametro $\theta$ nel modello Beta-Binomiale." width="672" />
+<p class="caption">(\#fig:hist-post-gautret)Istogramma che illustra l'approssimazione della distribuzione a posteriori per il parametro $\theta$ nel modello Beta-Binomiale.</p>
+</div>
 
 Nel modello Beta-Binomiale in cui la verosimiglianza è binomiale con 14 successi su 16 prove e in cui assumiamo una distribuzione a priori di tipo $\mbox{Beta}(2, 2)$ sul parametro $\theta$, la distribuzione a posteriori è ancora una distribuzione Beta di parametri $\alpha$ = 2 + 14 e $\beta$ = 2 + 16 - 14. La figura \@ref(fig:hist-post-gautret-plus-correct) riporta un kernel density plot per i valori delle quattro catene di Markov con sovrapposta in nero la densità $\mbox{Beta}(16, 4)$. Il punto importante è che la distribuzione dei valori delle catene di Markov produce un'eccellente approssimazione alla distribuzione bersaglio.^[Nel caso presente, il risultato è poco utile dato che è disponibile una soluzione analitica. Tuttavia, questo esercizio mette in evidenza il fatto cruciale che, nei casi in cui possiamo verificarne la soluzione, il campionamento Monte Carlo a catena di Markov è in grado di trovare la risposta corretta. Di conseguenza, possiamo anche essere sicuri che fornirà un'approssimazione alla distribuzione a posteriori anche in quei casi in cui una soluzione analitica non è disponibile.]
 
@@ -288,14 +280,10 @@ mcmc_dens(stanfit1, pars = "theta") +
   stat_function(fun = dbeta, args = list(shape1 = 16, shape2=4))
 ```
 
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{040_beta_binomial_mod_files/figure-latex/hist-post-gautret-plus-correct-1} 
-
-}
-
-\caption{Istogramma che illustra l'approssimazione della distribuzione a posteriori per il parametro $\theta$ nel modello Beta-Binomiale. La curva nera rappresenta la corretta distribuzione a posteriori Beta(16, 4).}(\#fig:hist-post-gautret-plus-correct)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="040_beta_binomial_mod_files/figure-html/hist-post-gautret-plus-correct-1.png" alt="Istogramma che illustra l'approssimazione della distribuzione a posteriori per il parametro $\theta$ nel modello Beta-Binomiale. La curva nera rappresenta la corretta distribuzione a posteriori Beta(16, 4)." width="672" />
+<p class="caption">(\#fig:hist-post-gautret-plus-correct)Istogramma che illustra l'approssimazione della distribuzione a posteriori per il parametro $\theta$ nel modello Beta-Binomiale. La curva nera rappresenta la corretta distribuzione a posteriori Beta(16, 4).</p>
+</div>
 
 Un intervallo di credibilità al 95% per $\theta$ si ottiene con la seguente chiamata:
 
@@ -437,7 +425,7 @@ print(
   pars = c("theta1", "theta2", "oddsratio"),
   digits_summary = 3L
 )
-#> Inference for Stan model: twoprop1-202112241300-1-60357c.
+#> Inference for Stan model: twoprop1-202112252350-1-60ee3c.
 #> 4 chains, each with iter=6000; warmup=2000; thin=1; 
 #> post-warmup draws per chain=4000, total post-warmup draws=16000.
 #> 
@@ -450,7 +438,7 @@ print(
 #> theta2       1
 #> oddsratio    1
 #> 
-#> Samples were drawn using NUTS(diag_e) at Ven Dic 24 13:00:24 2021.
+#> Samples were drawn using NUTS(diag_e) at Sab Dic 25 23:50:24 2021.
 #> For each parameter, n_eff is a crude measure of effective sample size,
 #> and Rhat is the potential scale reduction factor on split chains (at 
 #> convergence, Rhat=1).

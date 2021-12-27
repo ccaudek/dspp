@@ -1,5 +1,9 @@
 # Funzione di densità di probabilità {#chapter-intro-density-function}
 
+```{r, include = FALSE}
+source("_common.R")
+```
+
 Finora abbiamo considerato solo variabili casuali discrete, cioè variabili che assumono solo valori interi. Ma cosa succede se vogliamo usare variabili casuali per rappresentare lunghezze o volumi o distanze una qualsiasi delle altre proprietà continue nel mondo fisico (o psicologico)? È necessario generalizzare l'approccio usato finora.
 
 Le variabili casuali continue assumono valori reali. L'insieme dei numeri reali è *non numerabile* perché è più grande dell'insieme degli interi.^[Georg Cantor dimostrò che era impossibile mappare uno a uno i reali negli interi, dimostrando così che l'insieme dei reali è non numerabile.] Le leggi della probabilità sono le stessa per le variabili casuali discrete e quelle continue. La nozione di funzione di massa di probabilità, invece, deve essere sostituita dal suo equivalente continuo, ovvero dalla funzione di densità di probabilità. Lo scopo di questo Capitolo è quello di chiarire il significato di questa nozione, usando un approccio basato sulle simulazioni.
@@ -138,7 +142,7 @@ Come nel caso delle variabili casuali discrete, la funzione di ripartizione può
 
 ## La distribuzione uniforme
 
-Dopo avere visto come generare numeri casuali uniformi da 0 a 360, ora consideriamo una variabile casuale che assume valori nell'intervallo da 0 a 1. Chiamiamo sempre $\Theta$ tale variabile casuale, ma assumiamo ora che abbia una distribuzione continua uniforme sull'intervallo [0, 1]:
+Dopo avere visto come generare numeri casuali uniformi da 0 a 360, consideriamo ora una variabile casuale che assume valori nell'intervallo da 0 a 1. Chiamiamo  tale variabile casuale $\Theta$ e assumiamo che abbia una distribuzione continua uniforme sull'intervallo [0, 1]:
 $$
 \Theta \sim Uniform(0, 1).
 $$
@@ -211,6 +215,12 @@ $$
 $$
 
 In conclusione, la densità di una variabile casuale uniforme continua non dipende da $\theta$ --- è costante e identica per ogni possibile valore $\theta$.^[Per comodità, possiamo assumere che i valori impossibili di $\theta$ abbiano una densità uguale a zero.] Vedremo nel prossimo Paragrafo che,  eseguendo una trasformazione su questa variabile casuale uniforme, possiamo creare altre variabili casuali di interesse.
+
+::: {.exercise}
+Si consideri una variabile casuale uniforme $X$ definita sull'intervallo [0, 100]. Si trovi la probabilità $P(20 < X < 60)$.
+
+Per trovare la soluzione è sufficiente calcolare l'area di un rettangolo di base $60 - 20 = 40$ e di altezza 1/100. La probabilità cercata è dunque $P(20 < X < 60) = 40 \cdot 0.01 = 0.4$.
+:::
 
 
 ## La trasformazione logit
@@ -396,16 +406,16 @@ density_limit_plot
 Nella statistica descrittiva abbiamo già incontrato una rappresentazione che ha lo stesso significato della funzione di densità, ovvero il kernel density plot. La stima della densità del kernel (KDE), infatti, è un modo non parametrico per stimare la funzione di densità di probabilità di una variabile casuale.
 
 
-## Considerazioni conclusive {-}
+## Funzione di densità di probabilità
 
-Sia $y$ una variabile casuale continua con funzione di densità di probabilità $p(y)$. Allora $p(y)$ ha le seguenti proprietà:
+Per descrivere le probabilità che possono essere associate ad una variabile casuale continua $X$ è necessario definire una funzione $p(X)$ che deve soddisfare le seguenti due proprietà:
 
-- $p(y) \geq 0$, ovvero, l'ordinata della funzione di densità è 0 o positiva;
+- $p(x) \geq 0, \forall x$, ovvero, l'ordinata della funzione di densità è 0 o positiva;
 
-- $\int_y p(y) dy = 1$, ovvero, l'area sottesa dalla $p(y)$ è unitaria^[Per quel che riguarda la notazione dell'integrale, ovvero $\int_x dx$, rimando alla discussione di S.P. Thompson: https://calculusmadeeasy.org/1.html];
+- $\int_{-\infty}^{\infty} p(x) \,\operatorname {d}\!x = 1$, ovvero, l'area sottesa dalla $p(x)$ è unitaria^[Per quel che riguarda la notazione dell'integrale, ovvero $\int_x \,\operatorname {d}\!x$, rimando alla discussione di S.P. Thompson: https://calculusmadeeasy.org/1.html];
 
-- $P(a < y < b) = \int_a^b p(y) dy$, se $a \leq b$, ovvero, l'area sottesa dalla $p(y)$ tra due punti $a$ e $b$ corrisponde alla probabilità che la v.c. $y$ assuma un valore compresto tra questi due estremi.
+- $p(a < x < b) = \int_a^b p(x) \,\operatorname {d}\!x$, se $a \leq b$, ovvero, l'area sottesa dalla $p(y)$ tra due punti $a$ e $b$ corrisponde alla probabilità che la v.c. $x$ assuma un valore compresto tra questi due estremi.
 
-*Interpretazione.* È possibile che $p(y) > 1$, quindi una densità di probabilità non può essere interpretata come una probabilità. Piuttosto, la densità $p(y)$ può essere utilizzata per confrontare la plausibilità relativa di diversi valori $Y$. Considerata una variabile casuale $Y$ di cui è disponibile un insieme di realizzazioni, tanto maggiore è $p(y_k)$ rispetto a $p(y_l)$, tanto più grande sarà la nostra certezza che valori nell'intorno di $y_k$ verranno osservati con maggiore frequenza di valori nell'intorno di $y_l$.
+*Interpretazione.* È possibile che $p(x) > 1$, quindi una densità di probabilità non può essere interpretata come una probabilità. Piuttosto, la densità $p(x)$ può essere utilizzata per confrontare la plausibilità relativa di diversi valori $X$. Considerata una variabile casuale $X$ di cui è disponibile un insieme di realizzazioni, tanto maggiore è $p(x_k)$ rispetto a $p(x_l)$, tanto più grande sarà la nostra certezza che valori nell'intorno di $x_k$ verranno osservati con maggiore frequenza di valori nell'intorno di $x_l$.
 
 

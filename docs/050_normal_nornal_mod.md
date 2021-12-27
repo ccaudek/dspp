@@ -2,17 +2,15 @@
 
 
 
-
 ## Distribuzione Normale-Normale con varianza nota
 
-Per $\sigma^2$ nota, la v.c. Normale è distribuzione a priori coniugata della v.c. Normale. Siano $Y_1, \dots, Y_n$ $n$ variabili casuali i.i.d. che seguono la distribuzione Normale:
-
+Per $\sigma^2$ nota, la v.c. gaussiana è distribuzione a priori coniugata della v.c. gaussiana. Siano $Y_1, \dots, Y_n$ $n$ variabili casuali i.i.d. che seguono la distribuzione gaussiana:
 $$
 Y_1, \dots, Y_n  \stackrel{iid}{\sim} \mathcal{N}(\mu, \sigma).
 $$
 Si vuole stimare $\mu$ sulla base di $n$ osservazioni $y_1, \dots, y_n$. Considereremo qui solamente il caso in cui $\sigma^2$ sia supposta perfettamente nota.
 
-Ricordiamo che la densità di una Normale è
+Ricordiamo che la densità di una gaussiana è
 $$
 p(y_i \mid \mu, \sigma) = \frac{1}{{\sigma \sqrt {2\pi}}}\exp\left\{{-\frac{(y_i - \mu)^2}{2\sigma^2}}\right\}.
 $$
@@ -32,13 +30,13 @@ Una volta osservati i dati $y$, la verosimiglianza diventa
  & \frac{1}{{\sigma \sqrt {2\pi}}}\exp\left\{{-\frac{(y_n - \mu)^2}{2\sigma^2}}\right\}.
 \end{align}
 
-Se viene scelta una densità a priori Normale, ciò fa sì che anche la densità a posteriori sia Normale. Supponiamo che
+Se viene scelta una densità a priori gaussiana, ciò fa sì che anche la densità a posteriori sia gaussiana. Supponiamo che
 \begin{equation}
 p(\mu) = \frac{1}{{\tau_0 \sqrt {2\pi}}}\exp\left\{{-\frac{(\mu - \mu_0)^2}{2\tau_0^2}}\right\},
 (\#eq:prior-mu-norm-norm)
 \end{equation}
 \noindent
-ovvero che la distribuzione a priori di $\mu$ sia Normale con media $\mu_0$ e varianza $\tau_0^2$. Possiamo dire che $\mu_0$ rappresenta il valore ritenuto più probabile per $\mu$ e $\tau_0^2$ il grado di incertezza che abbiamo rispetto a tale valore. 
+ovvero che la distribuzione a priori di $\mu$ sia gaussiana con media $\mu_0$ e varianza $\tau_0^2$. Possiamo dire che $\mu_0$ rappresenta il valore ritenuto più probabile per $\mu$ e $\tau_0^2$ il grado di incertezza che abbiamo rispetto a tale valore. 
 
 Svolgendo una serie di passaggi algebrici, si arriva a
 \begin{equation}
@@ -61,13 +59,12 @@ e
 \end{equation}
 
 \noindent
-In altri termini, se la distribuzione a priori per $\mu$ è Normale, la distribuzione a posteriori è anch'essa Normale con valore atteso (a posteriori) $\mu_p$ e varianza (a posteriori) $\tau_p^2$ date dalle espressioni precedenti.
+In altri termini, se la distribuzione a priori per $\mu$ è gaussiana, la distribuzione a posteriori è anch'essa gaussiana con valore atteso (a posteriori) $\mu_p$ e varianza (a posteriori) $\tau_p^2$ date dalle espressioni precedenti.
 
 In conclusione, il risultato trovato indica che:
 
 - il valore atteso a posteriori è una media pesata fra il valore atteso a priori $\mu_0$ e la media campionaria $\bar{y}$; il peso della media campionaria è tanto maggiore tanto più è grande $n$ (il numero di osservazioni) e $\tau_0^2$ (l'incertezza iniziale); 
 - l'incertezza (varianza) a posteriori $\tau_p^2$ è sempre più piccola dell'incertezza a priori $\tau_0^2$ e diminuisce al crescere di $n$.
-
 
 ## Il modello Normale con Stan
 
@@ -204,6 +201,7 @@ mod <- cmdstan_model(file)
 \noindent
 ed eseguiamo il campionamento MCMC:
 
+
 ```r
 fit <- mod$sample(
   data = data_list,
@@ -219,6 +217,7 @@ fit <- mod$sample(
 
 Le stime a posteriori dei parametri si ottengono con:
 
+
 ```r
 fit$summary(c("mu", "sigma"))
 #> # A tibble: 2 × 10
@@ -232,12 +231,14 @@ fit$summary(c("mu", "sigma"))
 \noindent
 oppure, dopo avere trasformato l'oggetto `fit` nel formato `stanfit`, 
 
+
 ```r
 stanfit <- rstan::read_stan_csv(fit$output_files())
 ```
 
 \noindent
 con 
+
 
 ```r
 out <- rstantools::posterior_interval(as.matrix(stanfit), prob = 0.95)
@@ -293,9 +294,9 @@ I risultati sono simili a quelli trovati in precedenza.
 <!-- Possiamo dunque dire che, con un grado di certezza soggettiva del 95%, siamo sicuri che la media della popolazione da cui abbiamo tratto i dati è compresa nell'intervallo [27.3, 31.47].  -->
 
 
-## Il modello normale con `brm()`
+## Il modello normale con `brms::brm()`
 
-Stimiamo ora la distribuzione a posteriori di $\mu$ usando la funzione `brms::brm()`.  In questo caso non è necessario scrivere il modello in forma esplicita, come abbiamo fatto usando linguaggio Stan. La sintassi specifiata di seguito viene comunque trasformata in linguaggio Stan prima di adattare il modello ai dati:
+Stimiamo ora la distribuzione a posteriori di $\mu$ usando la funzione `brms::brm()`. In questo caso non è necessario scrivere il modello in forma esplicita, come abbiamo fatto usando linguaggio Stan. La sintassi specifiata di seguito viene trasformata in maniera automatica nel linguaggio Stan prima di adattare il modello ai dati:
 
 
 ```r
@@ -309,8 +310,19 @@ fit3 <- brm(
   ),
   iter = 4000, 
   refresh = 0, 
-  chains = 4
+  chains = 4,
+  backend = "cmdstanr"
 )
+#> Running MCMC with 4 chains, at most 8 in parallel...
+#> 
+#> Chain 1 finished in 0.1 seconds.
+#> Chain 2 finished in 0.1 seconds.
+#> Chain 3 finished in 0.1 seconds.
+#> Chain 4 finished in 0.1 seconds.
+#> 
+#> All 4 chains finished successfully.
+#> Mean chain execution time: 0.1 seconds.
+#> Total execution time: 0.2 seconds.
 ```
 
 \noindent
@@ -335,20 +347,20 @@ summary(fit3)
 #>   Links: mu = identity; sigma = identity 
 #> Formula: y ~ 1 
 #>    Data: df (Number of observations: 30) 
-#>   Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
+#>   Draws: 4 chains, each with iter = 2000; warmup = 0; thin = 1;
 #>          total post-warmup draws = 8000
 #> 
 #> Population-Level Effects: 
 #>           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
-#> Intercept    29.27      1.10    27.03    31.37 1.00     4233
+#> Intercept    29.26      1.09    27.08    31.34 1.00     4559
 #>           Tail_ESS
-#> Intercept     4933
+#> Intercept     4987
 #> 
 #> Family Specific Parameters: 
 #>       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-#> sigma     6.89      0.94     5.35     9.00 1.00     4522     5131
+#> sigma     6.88      0.94     5.27     9.01 1.00     4366     4638
 #> 
-#> Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+#> Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 #> and Tail_ESS are effective sample size measures, and Rhat is the potential
 #> scale reduction factor on split chains (at convergence, Rhat = 1).
 ```

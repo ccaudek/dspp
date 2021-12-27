@@ -6,6 +6,7 @@ suppressPackageStartupMessages({
   library("bayesplot")
   library("ggExtra")
   library("ggpubr")
+  library("viridis")
   library("ggokabeito")
 })  
   

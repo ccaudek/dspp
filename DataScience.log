@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.12.22)  25 DEC 2021 23:09
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.12.22)  27 DEC 2021 15:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1855,12 +1855,12 @@ Package csquotes Info: ... found 'polyglossia' package.
 LaTeX Info: Redefining \rmfamily on input line 26.
 LaTeX Info: Redefining \sffamily on input line 26.
 LaTeX Info: Redefining \ttfamily on input line 26.
-LaTeX Info: Redefining \rmfamily on input line 86.
-LaTeX Info: Redefining \sffamily on input line 86.
-LaTeX Info: Redefining \ttfamily on input line 86.
-LaTeX Info: Redefining \rmfamily on input line 90.
-LaTeX Info: Redefining \sffamily on input line 90.
-LaTeX Info: Redefining \ttfamily on input line 90.
+LaTeX Info: Redefining \rmfamily on input line 129.
+LaTeX Info: Redefining \sffamily on input line 129.
+LaTeX Info: Redefining \ttfamily on input line 129.
+LaTeX Info: Redefining \rmfamily on input line 133.
+LaTeX Info: Redefining \sffamily on input line 133.
+LaTeX Info: Redefining \ttfamily on input line 133.
 )
 \openout1 = `DataScience.aux'.
 
@@ -2364,12 +2364,12 @@ Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 LaTeX Info: Redefining \rmfamily on input line 3.
 LaTeX Info: Redefining \sffamily on input line 3.
 LaTeX Info: Redefining \ttfamily on input line 3.
-LaTeX Info: Redefining \rmfamily on input line 33.
-LaTeX Info: Redefining \sffamily on input line 33.
-LaTeX Info: Redefining \ttfamily on input line 33.
 LaTeX Info: Redefining \rmfamily on input line 35.
 LaTeX Info: Redefining \sffamily on input line 35.
 LaTeX Info: Redefining \ttfamily on input line 35.
+LaTeX Info: Redefining \rmfamily on input line 37.
+LaTeX Info: Redefining \sffamily on input line 37.
+LaTeX Info: Redefining \ttfamily on input line 37.
 )
 
 ******************************************************
@@ -2414,33 +2414,31 @@ LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 [9] [10] [1
 
 
-]
-
-LaTeX Warning: Reference `derivazione-coef-binom' on page 2 undefined on input line 876.
-
-File: 022_discr_rv_distr_files/figure-latex/example-binomial-distr-1.pdf Graphic file (type pdf)
-<use 022_discr_rv_distr_files/figure-latex/example-binomial-distr-1.pdf>
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 894.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 9.00082pt on input line 894.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 8.99904pt on input line 894.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[2]
+] [2]
 LaTeX Font Info:    Font shape `TU/OperatorMonoSSmBook(0)/m/n' will be
-(Font)              scaled to size 7.5pt on input line 928.
-LaTeX Font Info:    Font shape `TU/OperatorMonoSSmBook(0)/m/it' will be
-(Font)              scaled to size 7.5pt on input line 930.
+(Font)              scaled to size 7.5pt on input line 862.
+File: 026_conjugate_families_files/figure-latex/unnamed-chunk-1-1.pdf Graphic file (type pdf)
+<use 026_conjugate_families_files/figure-latex/unnamed-chunk-1-1.pdf>
 [3]
-File: 022_discr_rv_distr_files/figure-latex/examples-poisson-distrib-1.pdf Graphic file (type pdf)
-<use 022_discr_rv_distr_files/figure-latex/examples-poisson-distrib-1.pdf>
+LaTeX Font Info:    Font shape `TU/OperatorMonoSSmBook(0)/m/it' will be
+(Font)              scaled to size 7.5pt on input line 875.
+File: 026_conjugate_families_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
+<use 026_conjugate_families_files/figure-latex/unnamed-chunk-3-1.pdf>
+File: 026_conjugate_families_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (type pdf)
+<use 026_conjugate_families_files/figure-latex/unnamed-chunk-5-1.pdf>
+[4] [5]
+File: 026_conjugate_families_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (type pdf)
+<use 026_conjugate_families_files/figure-latex/unnamed-chunk-6-1.pdf>
+[6]
 
-LaTeX Warning: `h' float specifier changed to `ht'.
+LaTeX Warning: Reference `thm:beta-binom' on page 7 undefined on input line 1002.
 
-[4] [5] [6]
+[7]
+File: 026_conjugate_families_files/figure-latex/unnamed-chunk-13-1.pdf Graphic file (type pdf)
+<use 026_conjugate_families_files/figure-latex/unnamed-chunk-13-1.pdf>
+[8] [9] [10
+
+]
 
 ******************************************************
 Stock height and width: 845.04684pt by 597.50787pt
@@ -2461,11 +2459,10 @@ Sidefoothsep and sidefootwidth: 7pt and 117pt
 Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 ******************************************************
 
-[7
+[11
 
 
-
-] [8
+] [12
 
 
 ]
@@ -2493,13 +2490,13 @@ Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 LaTeX Info: Redefining \rmfamily on input line 3.
 LaTeX Info: Redefining \sffamily on input line 3.
 LaTeX Info: Redefining \ttfamily on input line 3.
-LaTeX Info: Redefining \rmfamily on input line 13.
-LaTeX Info: Redefining \sffamily on input line 13.
-LaTeX Info: Redefining \ttfamily on input line 13.
-LaTeX Info: Redefining \rmfamily on input line 15.
-LaTeX Info: Redefining \sffamily on input line 15.
-LaTeX Info: Redefining \ttfamily on input line 15.
-) [9
+LaTeX Info: Redefining \rmfamily on input line 9.
+LaTeX Info: Redefining \sffamily on input line 9.
+LaTeX Info: Redefining \ttfamily on input line 9.
+LaTeX Info: Redefining \rmfamily on input line 11.
+LaTeX Info: Redefining \sffamily on input line 11.
+LaTeX Info: Redefining \ttfamily on input line 11.
+) [13
 
 ]
 
@@ -2522,17 +2519,17 @@ Sidefoothsep and sidefootwidth: 7pt and 117pt
 Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 ******************************************************
 
-LaTeX Info: Redefining \rmfamily on input line 1151.
-LaTeX Info: Redefining \sffamily on input line 1151.
-LaTeX Info: Redefining \ttfamily on input line 1151.
+LaTeX Info: Redefining \rmfamily on input line 1145.
+LaTeX Info: Redefining \sffamily on input line 1145.
+LaTeX Info: Redefining \ttfamily on input line 1145.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1155--1157
+Underfull \hbox (badness 10000) in paragraph at lines 1149--1151
 
  []
 
-LaTeX Info: Redefining \rmfamily on input line 1158.
-LaTeX Info: Redefining \sffamily on input line 1158.
-LaTeX Info: Redefining \ttfamily on input line 1158.
+LaTeX Info: Redefining \rmfamily on input line 1152.
+LaTeX Info: Redefining \sffamily on input line 1152.
+LaTeX Info: Redefining \ttfamily on input line 1152.
 The property list \polyglossia@langsetup contains the pairs (without outer
 braces):
 >  {latex/script}  =>  {latin}
@@ -2583,7 +2580,7 @@ braces):
 >  {english/babelname}  =>  {american}
 >  {english/localnumeral}  =>  {polyglossia@C@localnumeral}
 >  {english/Localnumeral}  =>  {polyglossia@C@localnumeral}.
-[10
+[14
 
 
 ]
@@ -2597,12 +2594,12 @@ braces):
 LaTeX Info: Redefining \rmfamily on input line 26.
 LaTeX Info: Redefining \sffamily on input line 26.
 LaTeX Info: Redefining \ttfamily on input line 26.
-LaTeX Info: Redefining \rmfamily on input line 87.
-LaTeX Info: Redefining \sffamily on input line 87.
-LaTeX Info: Redefining \ttfamily on input line 87.
-LaTeX Info: Redefining \rmfamily on input line 91.
-LaTeX Info: Redefining \sffamily on input line 91.
-LaTeX Info: Redefining \ttfamily on input line 91.
+LaTeX Info: Redefining \rmfamily on input line 130.
+LaTeX Info: Redefining \sffamily on input line 130.
+LaTeX Info: Redefining \ttfamily on input line 130.
+LaTeX Info: Redefining \rmfamily on input line 134.
+LaTeX Info: Redefining \sffamily on input line 134.
+LaTeX Info: Redefining \ttfamily on input line 134.
 )
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
@@ -2611,18 +2608,18 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `DataScience.out' has not changed.
-(rerunfilecheck)             Checksum: DC7E69A3D7A804B41628850912818C10;2533.
+(rerunfilecheck)             Checksum: D2EE151BC2AAF36B00D41382A631A512;2909.
 Package logreq Info: Writing requests to 'DataScience.run.xml'.
 \openout1 = `DataScience.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 48383 strings out of 478241
- 965529 string characters out of 5854291
- 1968380 words of memory out of 5000000
- 68084 multiletter control sequences out of 15000+600000
- 419471 words of font info for 109 fonts, out of 8000000 for 9000
+ 48390 strings out of 478241
+ 967088 string characters out of 5854291
+ 1965357 words of memory out of 5000000
+ 68102 multiletter control sequences out of 15000+600000
+ 418470 words of font info for 98 fonts, out of 8000000 for 9000
  16 hyphenation exceptions out of 8191
- 99i,14n,123p,2169b,5903s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 99i,12n,123p,2169b,5903s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on DataScience.pdf (20 pages).
+Output written on DataScience.pdf (24 pages).

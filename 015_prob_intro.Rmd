@@ -2,6 +2,10 @@
 
 # Il calcolo delle probabilità {#intro-prob-1}
 
+```{r, include = FALSE}
+source("_common.R")
+```
+
 Una possibile definizione di teoria delle probabilità è la seguente: la teoria delle probabilità ci fornisce gli strumenti per prendere decisioni razionali in condizioni di incertezza, ovvero per formulare le migliori congetture possibili.
 
 

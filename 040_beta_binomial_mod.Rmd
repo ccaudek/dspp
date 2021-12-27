@@ -1,7 +1,6 @@
 # Modello Beta-Binomiale {#mod-binom}
 
 ```{r setup, include = FALSE}
-source("_common.R")
 source("_stan_options.R")
 suppressPackageStartupMessages(library("rethinking")) 
 suppressPackageStartupMessages(library("brms"))

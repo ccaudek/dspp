@@ -1,5 +1,9 @@
 # Il teorema di Bayes {#chapter-teo-bayes}
 
+```{r, include = FALSE}
+source("_common.R")
+```
+
 Questo Capitolo presenterà il teorema di Bayes per calcolare la probabilità degli eventi riferiti a esperimenti casuali, ossia esperimenti di cui non si può prevedere il risultato finale ma di cui si conoscono tutti i possibili risultati. Prima di esaminare il teorema di Bayes verrà introdotta una sua componente, ovvero il teorema della probabilità totale. 
 
 ## Il teorema della probabilità totale 

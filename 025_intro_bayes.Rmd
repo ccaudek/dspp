@@ -2,6 +2,10 @@
 
 # Il problema inverso {#chapter-intro-bayes-inference}
 
+```{r setup, include = FALSE}
+source("_common.R")
+```
+
 Questo capitolo descrive il significato dei tre i termini a destra del segno di uguale nella formula di Bayes: la distribuzione a priori e la funzione di verosimiglianza al numeratore, e la verosimiglianza marginale al denominatore.
 
 
