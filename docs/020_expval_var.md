@@ -135,10 +135,10 @@ $$
 
 Nel caso di una variabile casuale continua $Y$ il valore atteso diventa:
 \begin{equation}
-\E(Y) = \int_{-\infty}^{+\infty} y p(y) dy
+\E(Y) = \int_{-\infty}^{+\infty} y p(y) \,\operatorname {d}\!y
 (\#eq:def-ev-rv-cont)
 \end{equation}
-Anche in questo caso il valore atteso è una media ponderata della $y$, nella quale ciascun possibile valore $y$ è ponderato per il corrispondente valore della densità $p(y)$. Possiamo leggere l'integrale pensando che $y$ rappresenti l'ampiezza delle barre infinitamente strette di un istogramma, con la densità $p(y)$ che corrisponde all'altezza di tali barre e la notazione $\int_{-\infty}^{\infty}$ che corrisponde ad una somma.
+Anche in questo caso il valore atteso è una media ponderata della $y$, nella quale ciascun possibile valore $y$ è ponderato per il corrispondente valore della densità $p(y)$. Possiamo leggere l'integrale pensando che $y$ rappresenti l'ampiezza delle barre infinitamente strette di un istogramma, con la densità $p(y)$ che corrisponde all'altezza di tali barre e la notazione $\int_{-\infty}^{+\infty}$ che corrisponde ad una somma.
 
 Un'altra misura di tendenza centrale delle variabili casuali continue è la moda. La moda della $Y$ individua il valore $y$ più plausibile, ovvero il valore $y$ che massimizza la funzione di densità $p(y)$:
 \begin{equation}
@@ -217,7 +217,7 @@ $$
 
 Nel caso di una variabile casuale continua $Y$, la varianza diventa:
 \begin{equation}
-\Var(Y) = \int_{-\infty}^{+\infty} [y - \E(Y)]^2 p(y) dy
+\Var(Y) = \int_{-\infty}^{+\infty} \large[y - \E(Y)\large]^2 p(y) \,\operatorname {d}\!y
 (\#eq:def-var-rv-cont)
 \end{equation}
 Come nel caso discreto, la varianza di una v.c. continua $y$ misura approssimativamente la distanza al quadrato tipica o prevista dei possibili valori $y$ dalla loro media.
@@ -237,7 +237,7 @@ Si definisce scarto quadratico medio (o deviazione standard o scarto tipo) la ra
 Interpretiamo la deviazione standard di una variabile casuale come nella statistica descrittiva: misura approssimativamente la distanza tipica o prevista dei possibili valori $y$ dalla loro media.
 
 ::: {.exercise}
-Per i dadi equilibrati dell'esempio precedente, la deviazione standard della variabile casuale $S$ è uguale a $\sqrt{5.8333} = 2.4152$. 
+Per i dadi equilibrati dell'esempio precedente, la deviazione standard della variabile casuale $S$ è uguale a $\sqrt{5.833} = 2.415$. 
 :::
 
 ## Standardizzazione

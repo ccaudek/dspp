@@ -293,7 +293,7 @@ Le statistiche diagnostiche sono fornite dal metodo `$cmdstan_diagnose()`:
 
 ```r
 fit$cmdstan_diagnose()
-#> Processing csv files: /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/Rtmph1vsBO/simpleregstd-202112241410-1-9474d5.csv, /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/Rtmph1vsBO/simpleregstd-202112241410-2-9474d5.csv, /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/Rtmph1vsBO/simpleregstd-202112241410-3-9474d5.csv, /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/Rtmph1vsBO/simpleregstd-202112241410-4-9474d5.csv
+#> Processing csv files: /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/RtmpH8Bd2t/simpleregstd-202112280835-1-946068.csv, /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/RtmpH8Bd2t/simpleregstd-202112280835-2-946068.csv, /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/RtmpH8Bd2t/simpleregstd-202112280835-3-946068.csv, /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/RtmpH8Bd2t/simpleregstd-202112280835-4-946068.csv
 #> 
 #> Checking sampler transitions treedepth.
 #> Treedepth satisfactory for all transitions.

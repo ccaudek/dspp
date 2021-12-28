@@ -2,7 +2,7 @@
 
 
 
-In questa sezione della dispensa saranno presentate le caratteristiche di base e la filosofia dell'ambiente `R`, passando poi a illustrare le strutture dati e le principali strutture di controllo. Verranno introdotte alcune funzioni utili per la gestione dei dati e verranno forniti i rudimenti per realizzare semplici funzioni. Verranno introdotti i tipi di file editabili in RStudio (script, markdown, ...). Nello specifico, dopo aver accennato alcune caratteristiche del sistema `tidyverse`, verranno illustrate le principali funzionalità dell'IDE RStudio e dei pacchetti `dplyr` e `ggplot2`. Sul web sono presenti tantissime introduzioni all'uso di R, per esempio [questa](https://bookdown.org/hneth/ds4psy/).
+In questa sezione della dispensa saranno presentate le caratteristiche di base e la filosofia dell'ambiente `R`, passando poi a illustrare le strutture dati e le principali strutture di controllo. Verranno introdotte alcune funzioni utili per la gestione dei dati e verranno forniti i rudimenti per realizzare semplici funzioni. Verranno introdotti i tipi di file editabili in RStudio (script, markdown, ...). Nello specifico, dopo aver accennato alcune caratteristiche del sistema `tidyverse`, verranno illustrate le principali funzionalità dell'IDE RStudio e dei pacchetti `dplyr` e `ggplot2`. Sul web sono disponibili tantissime introduzioni all'uso di `R` come, ad esempio, [R for Data Science](https://r4ds.had.co.nz), [Data Science for Psychologists](https://bookdown.org/hneth/ds4psy/), e [Introduction to Data Science](https://bookdown.org/hneth/i2ds/).
 
 
 ## Prerequisiti 
@@ -15,7 +15,6 @@ nell'ordine dato:
 3.  Installare R-Packages (se necessario).
 
 Di seguito viene descritto come installare `R` e RStudio.
-
 
 ### Installare R e RStudio
 
@@ -40,7 +39,6 @@ Insieme al software si possono scaricare dal sito principale sia manuali d'uso c
 Dopo avere installato `R` è opportuno installare anche RStudio. RStudio si
 può scaricare da <https://www.rstudio.com/>. Anche RStudio è disponibile
 per tutti i più diffusi sistemi operativi.
-
 
 ### Utilizzare RStudio per semplificare il lavoro
 

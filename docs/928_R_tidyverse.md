@@ -78,12 +78,13 @@ Estraiamo da `msleep` la variabile `sleep_total` usando il verbo `pull()`:
 ```r
 msleep %>% 
   pull(sleep_total)
-#>  [1] 12.1 17.0 14.4 14.9  4.0 14.4  8.7  7.0 10.1  3.0  5.3  9.4 10.0 12.5 10.3
-#> [16]  8.3  9.1 17.4  5.3 18.0  3.9 19.7  2.9  3.1 10.1 10.9 14.9 12.5  9.8  1.9
-#> [31]  2.7  6.2  6.3  8.0  9.5  3.3 19.4 10.1 14.2 14.3 12.8 12.5 19.9 14.6 11.0
-#> [46]  7.7 14.5  8.4  3.8  9.7 15.8 10.4 13.5  9.4 10.3 11.0 11.5 13.7  3.5  5.6
-#> [61] 11.1 18.1  5.4 13.0  8.7  9.6  8.4 11.3 10.6 16.6 13.8 15.9 12.8  9.1  8.6
-#> [76] 15.8  4.4 15.6  8.9  5.2  6.3 12.5  9.8
+#>  [1] 12.1 17.0 14.4 14.9  4.0 14.4  8.7  7.0 10.1  3.0  5.3  9.4
+#> [13] 10.0 12.5 10.3  8.3  9.1 17.4  5.3 18.0  3.9 19.7  2.9  3.1
+#> [25] 10.1 10.9 14.9 12.5  9.8  1.9  2.7  6.2  6.3  8.0  9.5  3.3
+#> [37] 19.4 10.1 14.2 14.3 12.8 12.5 19.9 14.6 11.0  7.7 14.5  8.4
+#> [49]  3.8  9.7 15.8 10.4 13.5  9.4 10.3 11.0 11.5 13.7  3.5  5.6
+#> [61] 11.1 18.1  5.4 13.0  8.7  9.6  8.4 11.3 10.6 16.6 13.8 15.9
+#> [73] 12.8  9.1  8.6 15.8  4.4 15.6  8.9  5.2  6.3 12.5  9.8
 ```
 
 #### Selezionare più colonne con `select()`
@@ -95,7 +96,7 @@ Se vogliamo selezionare da `msleep` un insieme di variabili, ad esempio `name`, 
 dt <- msleep %>%
   dplyr::select(name, vore, sleep_total)
 dt
-#> # A tibble: 83 x 3
+#> # A tibble: 83 × 3
 #>   name                       vore  sleep_total
 #>   <chr>                      <chr>       <dbl>
 #> 1 Cheetah                    carni        12.1
@@ -104,7 +105,7 @@ dt
 #> 4 Greater short-tailed shrew omni         14.9
 #> 5 Cow                        herbi         4  
 #> 6 Three-toed sloth           herbi        14.4
-#> # ... with 77 more rows
+#> # … with 77 more rows
 ```
 
 \noindent
@@ -118,7 +119,7 @@ Il verbo `filter()` consente di selezionare da un `tibble` un sottoinsieme di ri
 ```r
 dt %>%
   dplyr::filter(vore == "carni")
-#> # A tibble: 19 x 3
+#> # A tibble: 19 × 3
 #>   name                 vore  sleep_total
 #>   <chr>                <chr>       <dbl>
 #> 1 Cheetah              carni        12.1
@@ -127,7 +128,7 @@ dt %>%
 #> 4 Long-nosed armadillo carni        17.4
 #> 5 Domestic cat         carni        12.5
 #> 6 Pilot whale          carni         2.7
-#> # ... with 13 more rows
+#> # … with 13 more rows
 ```
 
 Per utilizzare il verbo `filter()` in modo efficace è neccessario usare gli operatori relazionali (Tabella \@ref(tab:oprelazionali)) e gli operatori logici  (Tabella \@ref(tab:oplogici)) di `R`. Per un approfondimento, si veda il Capitolo [Comparisons](https://r4ds.had.co.nz/transform.html) di _R for Data Science_.
@@ -174,7 +175,7 @@ dt %>%
     sleep_minutes = sleep_total * 60
   ) %>%
   dplyr::select(sleep_total, sleep_minutes)
-#> # A tibble: 83 x 2
+#> # A tibble: 83 × 2
 #>   sleep_total sleep_minutes
 #>         <dbl>         <dbl>
 #> 1        12.1           726
@@ -183,7 +184,7 @@ dt %>%
 #> 4        14.9           894
 #> 5         4             240
 #> 6        14.4           864
-#> # ... with 77 more rows
+#> # … with 77 more rows
 ```
 
 #### Ordinare i dati con `arrange()`
@@ -196,7 +197,7 @@ dt %>%
   arrange(
     desc(sleep_total)
   )
-#> # A tibble: 83 x 3
+#> # A tibble: 83 × 3
 #>   name                   vore    sleep_total
 #>   <chr>                  <chr>         <dbl>
 #> 1 Little brown bat       insecti        19.9
@@ -205,12 +206,14 @@ dt %>%
 #> 4 Giant armadillo        insecti        18.1
 #> 5 North American Opossum omni           18  
 #> 6 Long-nosed armadillo   carni          17.4
-#> # ... with 77 more rows
+#> # … with 77 more rows
 ```
 
 #### Raggruppare i dati con `group_by()`
 
-Il verbo `group_by()` raggruppa insieme i valori in base a una o più variabili. Lo vedremo in uso in seguito insieme a `summarise()`.
+Il verbo `group_by()` raggruppa insieme i valori in base a una o più variabili. Lo vedremo in uso in seguito insieme a `summarise()`. 
+
+Nota: con `dplyr()`, le operazioni raggruppate vengono iniziate con la funzione `group_by()`. È una buona norma utilizzare `ungroup()` alla fine di una serie di operazioni raggruppate, altrimenti i raggruppamenti verranno mantenuti nelle analisi successiva, il che non è sempre auspicabile. 
 
 #### Sommario dei dati con `summarise()`
 
@@ -222,7 +225,7 @@ dt %>%
   summarise(
     m_sleep = mean(sleep_total, na.rm = TRUE)
   ) 
-#> # A tibble: 1 x 1
+#> # A tibble: 1 × 1
 #>   m_sleep
 #>     <dbl>
 #> 1    10.4
@@ -240,7 +243,7 @@ dt %>%
     m_sleep = mean(sleep_total, na.rm = TRUE), 
     n = n()
   )
-#> # A tibble: 5 x 3
+#> # A tibble: 5 × 3
 #>   vore    m_sleep     n
 #>   <chr>     <dbl> <int>
 #> 1 carni     10.4     19
@@ -284,7 +287,7 @@ Per i dati presenti, ad esempio, possiamo avere:
 msleep %>%
   group_by(vore) %>%
   summarise(across(starts_with("sleep"), ~ mean(.x, na.rm = TRUE)))
-#> # A tibble: 5 x 4
+#> # A tibble: 5 × 4
 #>   vore    sleep_total sleep_rem sleep_cycle
 #>   <chr>         <dbl>     <dbl>       <dbl>
 #> 1 carni         10.4       2.29       0.373
@@ -313,7 +316,7 @@ f_1 <- factor(f_1)
 y <- 1:5
 df <- tibble(f_1, y)
 df
-#> # A tibble: 5 x 2
+#> # A tibble: 5 × 2
 #>   f_1       y
 #>   <fct> <int>
 #> 1 old_3     1
@@ -339,7 +342,7 @@ df <- df %>%
       )
    )
 df
-#> # A tibble: 5 x 2
+#> # A tibble: 5 × 2
 #>   f_1             y
 #>   <fct>       <int>
 #> 1 new_tanto       1

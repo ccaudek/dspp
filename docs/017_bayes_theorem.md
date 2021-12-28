@@ -1,5 +1,7 @@
 # Il teorema di Bayes {#chapter-teo-bayes}
 
+
+
 Questo Capitolo presenterà il teorema di Bayes per calcolare la probabilità degli eventi riferiti a esperimenti casuali, ossia esperimenti di cui non si può prevedere il risultato finale ma di cui si conoscono tutti i possibili risultati. Prima di esaminare il teorema di Bayes verrà introdotta una sua componente, ovvero il teorema della probabilità totale. 
 
 ## Il teorema della probabilità totale 
@@ -28,7 +30,7 @@ probabilità di questi tre eventi (figura \@ref(fig:tikz-prob-tot)).
 
 \begin{figure}[h]
 
-{\centering \includegraphics{017_bayes_theorem_files/figure-latex/tikz-prob-tot-1} 
+{\centering \includegraphics[width=0.8\linewidth]{017_bayes_theorem_files/figure-latex/tikz-prob-tot-1} 
 
 }
 
@@ -108,7 +110,7 @@ $F_1$ piuttosto che $F_2$?
 
 \begin{figure}[h]
 
-{\centering \includegraphics[width=0.45\linewidth]{017_bayes_theorem_files/figure-latex/unnamed-chunk-1-1} 
+{\centering \includegraphics[width=0.45\linewidth]{017_bayes_theorem_files/figure-latex/unnamed-chunk-2-1} 
 
 }
 

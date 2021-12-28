@@ -82,7 +82,7 @@ Per fare un esempio pratico, consideriamo nuovamente i valori del BDI-II dei 30 
 ```r
 suppressPackageStartupMessages(library("bayesrules")) 
 
-df <- data.frame(
+df <- tibble(
   y = c(26, 35, 30, 25, 44, 30, 33, 43, 22, 43, 
         24, 19, 39, 31, 25, 28, 35, 30, 26, 31, 
         41, 36, 26, 35, 33, 28, 27, 34, 27, 22)

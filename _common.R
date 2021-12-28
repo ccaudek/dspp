@@ -22,10 +22,8 @@ knitr::opts_chunk$set(width = 68)
 set.seed(42)
 SEED <- 374237 # set random seed for reproducibility
 
-# theme_set(bayesplot::theme_default(base_family = "sans"))
 theme_set(bayesplot::theme_default(base_size = 12))
 bayesplot::color_scheme_set("brightblue") #  mix-blue-green
-# theme_update(plot.title = element_text(hjust = 0.5))
 
 # LaTeX options ----------------------------------------------------------------
 

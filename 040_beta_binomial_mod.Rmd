@@ -1,6 +1,7 @@
 # Modello Beta-Binomiale {#mod-binom}
 
 ```{r setup, include = FALSE}
+source("_common.R")
 source("_stan_options.R")
 suppressPackageStartupMessages(library("rethinking")) 
 suppressPackageStartupMessages(library("brms"))
@@ -44,7 +45,6 @@ Nella seguente discussione verrà ottenuta una stima bayesiana del parametro $\t
 
 ```{r, message=FALSE, warning=FALSE, error=FALSE, eval=FALSE}
 library("cmdstanr")
-set_cmdstan_path("/Users/corrado/.cmdstan/cmdstan-2.28.0")
 library("posterior")
 rstan_options(auto_write = TRUE) # avoid recompilation of models
 options(mc.cores = parallel::detectCores()) # parallelize across all CPUs

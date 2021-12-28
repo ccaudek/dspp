@@ -686,14 +686,33 @@ var(bysubj$bdi)
 ```
 :::
 
-### Deviazione standard
+### Precisione
 
-Per le ragioni espresse sopra, la misura più usata della dispersione di una distribuzione di dati è la _deviazione standard_, ovvero la radice quadrata della varianza. A differenza della varianza, dunque, la deviazione standard è espressa nella stessa unità di misura dei dati. Come nel caso della varianza, anche la deviazione standard $s$ dovrebbe essere usata soltanto quando la media è adeguata per misurare il centro della distribuzione, ovvero, nel caso di distribuzioni simmetriche. Come nel caso della media $\bar{x}$, anche la deviazione standard è fortemente influenzata dai dati anomali (*outlier*), ovvero dalla presenza di uno o di pochi dati che sono molto più distanti dalla media rispetto agli altri valori della distribuzione. Quando tutte le osservazioni sono uguali, $s = 0$, altrimenti $s > 0$.
+Si definisce _precisione_ l'inverso della varianza:
+\begin{equation}
+\tau = \frac{1}{\sigma^2}.
+(\#eq:precision)
+\end{equation}
 
-Alla deviazione standard può essere assegnata una semplice interpretazione: la deviazione standard è *simile* (ma non identica) allo scarto semplice medio campionario, ovvero alla media aritmetica dei valori assoluti degli scarti dalla media. La deviazione standard ci dice, dunque, quanto sono distanti, in media, le singole osservazioni dal centro della distribuzione. Un'interpretazione più precisa del significato della deviazione standard è fornita nel Paragrafo successivo.
+Alcuni ritengono che la precisione sia più "intuitiva" della varianza perché dice quanto sono concentrati i valori attorno alla media piuttosto che quanto sono dispersi. In altri termini, si potrebbe argomentare che siamo più interessati a quanto sia precisa una misurazione piuttosto che a quanto sia imprecisa. Più sono dispersi i valori attorno alla media (alta varianza), meno  sono precisi (poca precisione); minore è la varianza, maggiore è la precisione.
+
+La precisione è uno dei due parametri naturali della distribuzione gaussiana. Nei termini della \@ref(eq:precision), la distribuzione gaussiana (si veda il Capitolo \@ref(distr-rv-cont)) può essere espressa nel modo seguente
+$$
+{\displaystyle f(y)=\sqrt{\frac{\tau}{2\pi}} e^{-{\frac {1}{2}}\tau\left({y-\mu }\right)^{2}}},
+$$
+anziché come
+$$
+{\displaystyle f(y)={\frac {1}{\sigma {\sqrt {2\pi }}}}e^{-{\frac {1}{2}}\left({\frac {y-\mu }{\sigma }}\right)^{2}}}.
+$$
+
+### Scarto tipo
+
+Per le ragioni espresse sopra, la misura più usata della dispersione di una distribuzione di dati è lo _scarto quadratico medio_ (o _scarto tipo_, o _deviazione standard_), ovvero la radice quadrata della varianza^[Il termine _standard deviation_ è stato introdotto in statistica da Pearson nel 1894 assieme alla lettera greca $\sigma$ che lo rappresenta. Il termine italiano "deviazione standard" ne è la traduzione più utilizzata nel linguaggio comune; il termine dell'[Ente Nazionale Italiano di Unificazione](https://it.wikipedia.org/wiki/Ente_nazionale_italiano_di_unificazione) è tuttavia "scarto tipo", definito come la radice quadrata positiva della varianza.]. A differenza della varianza, dunque, lo scarto tipo è espresso nella stessa unità di misura dei dati. Come nel caso della varianza, anche lo scarto tipo $s$ dovrebbe essere usato soltanto quando la media è adeguata per misurare il centro della distribuzione, ovvero, nel caso di distribuzioni simmetriche. Come nel caso della media $\bar{x}$, anche lo scarto tipo è fortemente influenzato dai dati anomali (*outlier*), ovvero dalla presenza di uno o di pochi dati che sono molto più distanti dalla media rispetto agli altri valori della distribuzione. Quando tutte le osservazioni sono uguali, $s = 0$, altrimenti $s > 0$.
+
+Allo scarto tipo può essere assegnata una semplice interpretazione: lo scarto tipo è *simile* (ma non identico) allo scarto semplice medio campionario, ovvero alla media aritmetica dei valori assoluti degli scarti dalla media. Lo scarto tipo ci dice, dunque, quanto sono distanti, in media, le singole osservazioni dal centro della distribuzione. Un'interpretazione più precisa del significato dello scarto tipo è fornita nel Paragrafo successivo.
 
 ::: {.exercise}
-Si calcoli la deviazione standard per i valori BDI-II di dati di @zetschefuture2019.
+Si calcoli lo scarto tipo per i valori BDI-II di dati di @zetschefuture2019.
 
 Applicando la formula precedente, per tutto il campione abbiamo
 
@@ -702,10 +721,9 @@ sd(bysubj$bdi)
 ```
 :::
 
-
 ### Deviazione mediana assoluta
 
-Una misura robusta della dispersione statistica di un campione è la deviazione mediana assoluta (Median Absolute Deviation, MAD) definita come la mediana del valore assoluto delle deviazioni dei dati dalla mediana, ovvero:
+Una misura robusta della dispersione statistica di un campione è la deviazione mediana assoluta (_Median Absolute Deviation_, MAD) definita come la mediana del valore assoluto delle deviazioni dei dati dalla mediana, ovvero:
 $$
 {\displaystyle \operatorname {MAD} =\operatorname {median} \left(\ \left|X_{i}-\operatorname {median} (X)\right|\ \right)}
 $$
@@ -716,7 +734,7 @@ $$
 Pertanto, solitamente i software restituiscono il valore MAD moltiplicato per una tale costante.
 
 ::: {.exercise}
-Si calcoli il valore MAS per il BDI-II dei dati di @zetschefuture2019.
+Si calcoli il valore MAD per i valori BDI-II riportati da @zetschefuture2019.
 
 Applicando la formula precedente, per tutto il campione abbiamo
 

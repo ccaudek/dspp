@@ -2,6 +2,8 @@
 
 # Il calcolo delle probabilità {#intro-prob-1}
 
+
+
 Una possibile definizione di teoria delle probabilità è la seguente: la teoria delle probabilità ci fornisce gli strumenti per prendere decisioni razionali in condizioni di incertezza, ovvero per formulare le migliori congetture possibili.
 
 
@@ -49,7 +51,7 @@ La figura \@ref(fig:cycle-of-science) fornisce una rappresentazione schematica d
 
 \begin{figure}[h]
 
-{\centering \includegraphics{images/cycle_of_science} 
+{\centering \includegraphics[width=0.8\linewidth]{images/cycle_of_science} 
 
 }
 
@@ -302,7 +304,7 @@ d %>%
 
 \begin{figure}[h]
 
-{\centering \includegraphics{015_prob_intro_files/figure-latex/legge-grandi-n-1-1} 
+{\centering \includegraphics[width=0.8\linewidth]{015_prob_intro_files/figure-latex/legge-grandi-n-1-1} 
 
 }
 
@@ -331,7 +333,7 @@ d %>%
 
 \begin{figure}[h]
 
-{\centering \includegraphics{015_prob_intro_files/figure-latex/legge-grandi-n-2-1} 
+{\centering \includegraphics[width=0.8\linewidth]{015_prob_intro_files/figure-latex/legge-grandi-n-2-1} 
 
 }
 
@@ -493,7 +495,7 @@ bar_plot
 
 \begin{figure}[h]
 
-{\centering \includegraphics{015_prob_intro_files/figure-latex/barplot-mdf-4coins-1} 
+{\centering \includegraphics[width=0.8\linewidth]{015_prob_intro_files/figure-latex/barplot-mdf-4coins-1} 
 
 }
 

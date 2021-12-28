@@ -47,6 +47,7 @@ lot: no
 lof: yes
 bibliography: 
   - refs.bib
+  - packages.bib
 biblatexoptions:
 - backend=biber
 - style=authoryear-ibid
@@ -154,10 +155,6 @@ knitr::opts_chunk$set(dev.args=list(bg="transparent"))
 set.seed(973)
 ```
 
-```{r, include = FALSE}
-source("_common.R")
-```
-
 ::: {.welcome}
 ```{asis, echo = knitr::is_html_output()}
 # Benvenuti a DSPP {.unnumbered}
@@ -169,10 +166,6 @@ source("_common.R")
 
 ```{asis, echo = knitr::is_html_output()}
 Copyright &#169; 2022.
-```
-
-```{asis, echo = knitr::is_latex_output()}
-Copyright $\copyright$ 2022.
 ```
 
 Data della versione presente: `r format(Sys.Date(), "%B %d, %Y")`.

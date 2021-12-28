@@ -6,9 +6,7 @@ In questo Capitolo verranno esaminate le principali distribuzioni di probabilit�
 
 ## Una prova Bernoulliana
 
-Se un esperimento casuale ha solo due esiti possibili, allora le
-repliche indipendenti di questo esperimento sono chiamate "prove
-Bernoulliane" (il lancio di una moneta è il tipico esempio). 
+Se un esperimento casuale ha solo due esiti possibili, allora le repliche indipendenti di questo esperimento sono chiamate "prove Bernoulliane" (il lancio di una moneta è il tipico esempio). 
 
 ::: {.definition}
 Viene detta variabile di Bernoulli una variabile casuale discreta $Y = \{0, 1\}$ con la seguente distribuzione di probabilità: 

@@ -22,7 +22,7 @@ La convergenza e il "mixing" possono essere controllate mediante il _trace plot_
 
 \begin{figure}[h]
 
-{\centering \includegraphics[width=0.8\linewidth]{041_MCMC_diagnostics_files/figure-latex/trace-plot-gautret-2-1} 
+{\centering \includegraphics[width=0.8\linewidth]{041_mcmc_diagnostics_files/figure-latex/trace-plot-gautret-2-1} 
 
 }
 
@@ -66,7 +66,7 @@ mcmc_dens_overlay(stanfit1, pars = "theta") +
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{041_MCMC_diagnostics_files/figure-latex/unnamed-chunk-2-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{041_mcmc_diagnostics_files/figure-latex/unnamed-chunk-2-1} \end{center}
 
 Per fare un confronto, consideriamo la simulazione di una catena di Markov più corta per lo stesso modello. La chiamata seguente richiede  quattro catene parallele per sole 100 iterazioni ciascuna:
 
@@ -105,7 +105,7 @@ mcmc_trace(stanfit_bb_short, pars = "theta")
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{041_MCMC_diagnostics_files/figure-latex/unnamed-chunk-4-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{041_mcmc_diagnostics_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 
 ```r
@@ -114,7 +114,7 @@ mcmc_dens_overlay(stanfit_bb_short, pars = "theta")
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{041_MCMC_diagnostics_files/figure-latex/unnamed-chunk-5-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{041_mcmc_diagnostics_files/figure-latex/unnamed-chunk-5-1} \end{center}
 
 Anche se i _trace plot_ sembrano tutti mostrare un andamento casuale, gli istogrammi lisciati sono piuttosto diversi tra loro e producono approssimazioni diverse della distribuzione a posteriori. Di fronte a tale instabilità è chiaro che sarebbe un errore interrompere la simulazione dopo solo 100 iterazioni.
 
@@ -155,7 +155,7 @@ bayesplot::mcmc_acf(stanfit1, pars = "theta")
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{041_MCMC_diagnostics_files/figure-latex/unnamed-chunk-8-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{041_mcmc_diagnostics_files/figure-latex/unnamed-chunk-8-1} \end{center}
 
 Il correlogramma mostra l'autocorrelazione in funzione di ritardi da 0 a 20. L'autocorrelazione di lag 0 è naturalmente 1 -- misura la correlazione tra un valore della catena di Markov e se stesso. L'autocorrelazione di lag 1 è di circa 0.5, indicando una correlazione moderata tra i valori della catena che distano di solo 1 passo l'uno dall'altro. Successivamente, l'autocorrelazione diminuisce rapidamente ed è effettivamente pari a 0 per un lag di 5. Questo risultato fornisce una conferma del fatto che la catena di Markov costituisce una buona approssimazione di un campione casuale di $p(\theta \mid y)$.
 
@@ -215,7 +215,7 @@ ggmcmc::ggs_running(S1)
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{041_MCMC_diagnostics_files/figure-latex/unnamed-chunk-11-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{041_mcmc_diagnostics_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
 \noindent
 Il grafico precedente mostra che, per il modello bayesiano che stiamo discutendo, una condizione di equilibrio della catena di Markov richiederebbe un numero maggiore di iterazioni di quelle che sono state effettivamente simulate.
@@ -257,7 +257,7 @@ ggmcmc::ggs_Rhat(S) + xlab("R_hat") + xlim(0.95, 1.05)
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{041_MCMC_diagnostics_files/figure-latex/unnamed-chunk-14-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{041_mcmc_diagnostics_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 
 ## Diagnostica di convergenza di Geweke

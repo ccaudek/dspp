@@ -12,5 +12,6 @@ patchwork
 bayesplot
 ggExtra
 ggpubr
-khroma
+viridisLite
+viridis
 ggokabeito

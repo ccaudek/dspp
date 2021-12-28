@@ -33,14 +33,14 @@ Per esempio, consideriamo il seguente data.frame:
 
 ```r
 d <- tibble(
-  w = c(1, 2, NA, 3, NA),
-  x = 1:5,
-  y = 1,
-  z = x^2 + y,
+  w = c(1, 2, NA, 3, NA), 
+  x = 1:5, 
+  y = 1, 
+  z = x ^ 2 + y,
   q = c(3, NA, 5, 1, 4)
 )
 d
-#> # A tibble: 5 x 5
+#> # A tibble: 5 × 5
 #>       w     x     y     z     q
 #>   <dbl> <int> <dbl> <dbl> <dbl>
 #> 1     1     1     1     2     3
@@ -63,7 +63,7 @@ Per creare un nuovo Dataframe senza valori mancanti:
 ```r
 d_clean <- d[complete.cases(d), ]
 d_clean
-#> # A tibble: 2 x 5
+#> # A tibble: 2 × 5
 #>       w     x     y     z     q
 #>   <dbl> <int> <dbl> <dbl> <dbl>
 #> 1     1     1     1     2     3
@@ -76,7 +76,7 @@ Oppure, se vogliamo eliminare le righe con NA solo in una variabile:
 ```r
 d1 <- d[!is.na(d$q), ]
 d1
-#> # A tibble: 4 x 5
+#> # A tibble: 4 × 5
 #>       w     x     y     z     q
 #>   <dbl> <int> <dbl> <dbl> <dbl>
 #> 1     1     1     1     2     3
@@ -92,7 +92,7 @@ Se vogliamo esaminare le righe con i dati mancanti in qualunque colonna:
 ```r
 d_na <- d[!complete.cases(d), ]
 d_na
-#> # A tibble: 3 x 5
+#> # A tibble: 3 × 5
 #>       w     x     y     z     q
 #>   <dbl> <int> <dbl> <dbl> <dbl>
 #> 1     2     2     1     5    NA

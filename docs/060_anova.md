@@ -54,7 +54,7 @@ dd %>%
     avg_sot = mean(SwitchOff_Time, na.rm = TRUE),
     sd_sot = sd(SwitchOff_Time, na.rm = TRUE)
   )
-#> # A tibble: 4 x 3
+#> # A tibble: 4 × 3
 #>   cond  avg_sot sd_sot
 #>   <fct>   <dbl>  <dbl>
 #> 1 SO       6.19   4.61
@@ -114,7 +114,7 @@ dd %>%
   summarise(
     avg_y = median(y)
   )
-#> # A tibble: 4 x 2
+#> # A tibble: 4 × 2
 #>   cond  avg_y
 #>   <fct> <dbl>
 #> 1 SO     1.61
@@ -214,16 +214,17 @@ Esaminando i risultati
 
 ```r
 fit$summary()
-#> # A tibble: 7 x 10
-#>   variable    mean  median     sd    mad      q5     q95  rhat ess_bulk ess_tail
-#>   <chr>      <dbl>   <dbl>  <dbl>  <dbl>   <dbl>   <dbl> <dbl>    <dbl>    <dbl>
-#> 1 lp__     -41.1   -40.8   1.84   1.68   -44.6   -38.8    1.00    7131.    9908.
-#> 2 mu[1]      1.69    1.68  0.173  0.171    1.41    1.98   1.00   21997.   10950.
-#> 3 mu[2]      2.05    2.04  0.192  0.190    1.74    2.37   1.00   21206.   12287.
-#> 4 mu[3]      1.52    1.52  0.119  0.119    1.32    1.72   1.00   23360.   11247.
-#> 5 mu[4]      1.28    1.28  0.127  0.123    1.07    1.49   1.00   20076.   10902.
-#> 6 sigma      0.476   0.472 0.0744 0.0726   0.361   0.605  1.00   13820.   11330.
-#> # ... with 1 more row
+#> # A tibble: 7 × 10
+#>   variable    mean  median     sd    mad      q5     q95  rhat
+#>   <chr>      <dbl>   <dbl>  <dbl>  <dbl>   <dbl>   <dbl> <dbl>
+#> 1 lp__     -41.1   -40.8   1.84   1.68   -44.6   -38.8    1.00
+#> 2 mu[1]      1.69    1.68  0.173  0.171    1.41    1.98   1.00
+#> 3 mu[2]      2.05    2.04  0.192  0.190    1.74    2.37   1.00
+#> 4 mu[3]      1.52    1.52  0.119  0.119    1.32    1.72   1.00
+#> 5 mu[4]      1.28    1.28  0.127  0.123    1.07    1.49   1.00
+#> 6 sigma      0.476   0.472 0.0744 0.0726   0.361   0.605  1.00
+#> # … with 1 more row, and 2 more variables: ess_bulk <dbl>,
+#> #   ess_tail <dbl>
 ```
 \noindent
 ci rendiamo conto che cìè una buona corrispondenza tra le medie a posteriori e le medie campionarie.
@@ -476,15 +477,16 @@ I risultati sono equivalenti a quelli trovati in precedenza:
 
 ```r
 fit2$summary(c("mu", "sigma", "nu"))
-#> # A tibble: 6 x 10
-#>   variable  mean median     sd    mad    q5   q95  rhat ess_bulk ess_tail
-#>   <chr>    <dbl>  <dbl>  <dbl>  <dbl> <dbl> <dbl> <dbl>    <dbl>    <dbl>
-#> 1 mu[1]    1.70   1.69  0.174  0.169  1.43  1.99   1.00   22741.   11872.
-#> 2 mu[2]    2.07   2.06  0.196  0.192  1.75  2.39   1.00   20489.   11561.
-#> 3 mu[3]    1.52   1.52  0.122  0.121  1.33  1.72   1.00   22019.   11683.
-#> 4 mu[4]    1.29   1.28  0.127  0.122  1.08  1.50   1.00   20968.   11550.
-#> 5 sigma    0.480  0.475 0.0763 0.0754 0.364 0.611  1.00   15408.   11838.
-#> 6 nu       2.57   2.43  0.824  0.716  1.52  4.12   1.00   15730.    9798.
+#> # A tibble: 6 × 10
+#>   variable  mean median     sd    mad    q5   q95  rhat ess_bulk
+#>   <chr>    <dbl>  <dbl>  <dbl>  <dbl> <dbl> <dbl> <dbl>    <dbl>
+#> 1 mu[1]    1.70   1.69  0.174  0.169  1.43  1.99   1.00   22741.
+#> 2 mu[2]    2.07   2.06  0.196  0.192  1.75  2.39   1.00   20489.
+#> 3 mu[3]    1.52   1.52  0.122  0.121  1.33  1.72   1.00   22019.
+#> 4 mu[4]    1.29   1.28  0.127  0.122  1.08  1.50   1.00   20968.
+#> 5 sigma    0.480  0.475 0.0763 0.0754 0.364 0.611  1.00   15408.
+#> 6 nu       2.57   2.43  0.824  0.716  1.52  4.12   1.00   15730.
+#> # … with 1 more variable: ess_tail <dbl>
 ```
 
 
