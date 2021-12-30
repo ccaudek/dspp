@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.12.22)  28 DEC 2021 08:46
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.12.22)  30 DEC 2021 07:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -646,19 +646,14 @@ Package: fancyvrb 2021/12/21 4.1b verbatim text (tvz,hv)
 \c@FancyVerbLine=\count340
 \FV@StepNumber=\count341
 \FV@OutFile=\write4
-) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/framed/framed.sty
-Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
-\OuterFrameSep=\skip194
-\fb@frw=\dimen196
-\fb@frh=\dimen197
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
 Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
-\LTleft=\skip195
-\LTright=\skip196
-\LTpre=\skip197
-\LTpost=\skip198
+\LTleft=\skip194
+\LTright=\skip195
+\LTpre=\skip196
+\LTpost=\skip197
 \LTchunksize=\count342
-\LTcapwidth=\dimen198
+\LTcapwidth=\dimen196
 \LT@head=\box60
 \LT@firsthead=\box61
 \LT@foot=\box62
@@ -675,8 +670,8 @@ Package: tabu 2019/01/11 v2.9 - flexible LaTeX tabulars (FC+tabu-fixed)
 Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
 \@vwid@box=\box65
 \sift@deathcycles=\count347
-\@vwid@loff=\dimen199
-\@vwid@roff=\dimen256
+\@vwid@loff=\dimen197
+\@vwid@roff=\dimen198
 )
 \c@taburow=\count348
 \tabu@nbcols=\count349
@@ -684,26 +679,26 @@ Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
 \tabu@Xcol=\count351
 \tabu@alloc=\count352
 \tabu@nested=\count353
-\tabu@target=\dimen257
-\tabu@spreadtarget=\dimen258
-\tabu@naturalX=\dimen259
-\tabucolX=\dimen260
-\tabu@Xsum=\dimen261
-\extrarowdepth=\dimen262
-\abovetabulinesep=\dimen263
-\belowtabulinesep=\dimen264
-\tabustrutrule=\dimen265
+\tabu@target=\dimen199
+\tabu@spreadtarget=\dimen256
+\tabu@naturalX=\dimen257
+\tabucolX=\dimen258
+\tabu@Xsum=\dimen259
+\extrarowdepth=\dimen260
+\abovetabulinesep=\dimen261
+\belowtabulinesep=\dimen262
+\tabustrutrule=\dimen263
 \tabu@thebody=\toks33
 \tabu@footnotes=\toks34
 \tabu@box=\box66
 \tabu@arstrutbox=\box67
 \tabu@hleads=\box68
 \tabu@vleads=\box69
-\tabu@cellskip=\skip199
+\tabu@cellskip=\skip198
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/mdwtools/footnote.sty
 Package: footnote 1997/01/28 1.13 Save footnotes around boxes
 \fn@notes=\box70
-\fn@width=\dimen266
+\fn@width=\dimen264
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphics.sty
@@ -715,15 +710,15 @@ File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: xetex.def on input line 107.
 )
-\Gin@req@height=\dimen267
-\Gin@req@width=\dimen268
+\Gin@req@height=\dimen265
+\Gin@req@width=\dimen266
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/grffile/grffile.sty
 Package: grffile 2019/11/11 v2.1 Extended file name support for graphics (legacy)
 Package grffile Info: This package is an empty stub for compatibility on input line 40.
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/enumitem/enumitem.sty
 Package: enumitem 2019/06/20 v3.9 Customized lists
-\labelindent=\skip256
-\enit@outerparindent=\dimen269
+\labelindent=\skip199
+\enit@outerparindent=\dimen267
 \enit@toks=\toks35
 \enit@inbox=\box71
 \enit@count@id=\count354
@@ -1002,13 +997,13 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 \blx@sectionciteorder@0=\count397
 \blx@entrysetcounter=\count398
 \blx@biblioinstance=\count399
-\labelnumberwidth=\skip257
-\labelalphawidth=\skip258
-\biblabelsep=\skip259
-\bibnamesep=\skip260
-\bibinitsep=\skip261
-\bibparsep=\skip262
-\bibhang=\skip263
+\labelnumberwidth=\skip256
+\labelalphawidth=\skip257
+\biblabelsep=\skip258
+\bibnamesep=\skip259
+\bibinitsep=\skip260
+\bibparsep=\skip261
+\bibhang=\skip262
 \blx@bcfin=\read4
 \blx@bcfout=\write5
 \blx@langwohyphens=\language4
@@ -1105,20 +1100,20 @@ Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
 \c@savedcitation=\count478
 \c@pageref=\count479
 \c@savedpageref=\count480
-\shorthandwidth=\skip264
-\shortjournalwidth=\skip265
-\shortserieswidth=\skip266
-\shorttitlewidth=\skip267
-\shortauthorwidth=\skip268
-\shorteditorwidth=\skip269
-\locallabelnumberwidth=\skip270
-\locallabelalphawidth=\skip271
-\localshorthandwidth=\skip272
-\localshortjournalwidth=\skip273
-\localshortserieswidth=\skip274
-\localshorttitlewidth=\skip275
-\localshortauthorwidth=\skip276
-\localshorteditorwidth=\skip277
+\shorthandwidth=\skip263
+\shortjournalwidth=\skip264
+\shortserieswidth=\skip265
+\shorttitlewidth=\skip266
+\shortauthorwidth=\skip267
+\shorteditorwidth=\skip268
+\locallabelnumberwidth=\skip269
+\locallabelalphawidth=\skip270
+\localshorthandwidth=\skip271
+\localshortjournalwidth=\skip272
+\localshortserieswidth=\skip273
+\localshorttitlewidth=\skip274
+\localshortauthorwidth=\skip275
+\localshorteditorwidth=\skip276
 Package biblatex Info: Trying to load enhanced support for Unicode engines...
 Package biblatex Info: ... file 'blx-unicode.def' found.
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/biblatex/blx-unicode.def)
@@ -1195,14 +1190,14 @@ Package biblatex Info: ... file 'biblatex.cfg' found.
 File: biblatex.cfg 
 )) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/bclogo/bclogo.sty
 Package: bclogo 2016/01/10 v3.1
-\bc@invboxh=\skip278
-\bc@invboxd=\skip279
-\bc@titleLength=\skip280
-\logowidth=\skip281
+\bc@invboxh=\skip277
+\bc@invboxd=\skip278
+\bc@titleLength=\skip279
+\logowidth=\skip280
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
 \pgfutil@everybye=\toks38
-\pgfutil@tempdima=\dimen270
-\pgfutil@tempdimb=\dimen271
+\pgfutil@tempdima=\dimen268
+\pgfutil@tempdimb=\dimen269
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfutil-common-lists.tex)) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
 \pgfutil@abb=\box72
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/pgf.revision.tex)
@@ -1217,16 +1212,16 @@ Package: pgfsys 2021/05/15 v3.1.9a (3.1.9a)
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfkeysfiltered.code.tex
 \pgfkeys@tmptoks=\toks41
 ))
-\pgf@x=\dimen272
-\pgf@y=\dimen273
-\pgf@xa=\dimen274
-\pgf@ya=\dimen275
-\pgf@xb=\dimen276
-\pgf@yb=\dimen277
-\pgf@xc=\dimen278
-\pgf@yc=\dimen279
-\pgf@xd=\dimen280
-\pgf@yd=\dimen281
+\pgf@x=\dimen270
+\pgf@y=\dimen271
+\pgf@xa=\dimen272
+\pgf@ya=\dimen273
+\pgf@xb=\dimen274
+\pgf@yb=\dimen275
+\pgf@xc=\dimen276
+\pgf@yc=\dimen277
+\pgf@xd=\dimen278
+\pgf@yd=\dimen279
 \w@pgf@writea=\write6
 \r@pgf@reada=\read5
 \c@pgf@counta=\count492
@@ -1258,7 +1253,7 @@ File: pgfsysprotocol.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 )) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
 Package: pgfcore 2021/05/15 v3.1.9a (3.1.9a)
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
-\pgfmath@dimen=\dimen282
+\pgfmath@dimen=\dimen280
 \pgfmath@count=\count500
 \pgfmath@box=\box73
 \pgfmath@toks=\toks45
@@ -1268,28 +1263,28 @@ Package: pgfcore 2021/05/15 v3.1.9a (3.1.9a)
 \c@pgfmathroundto@lastzeros=\count501
 )) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfint.code.tex) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.tex
 File: pgfcorepoints.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgf@picminx=\dimen283
-\pgf@picmaxx=\dimen284
-\pgf@picminy=\dimen285
-\pgf@picmaxy=\dimen286
-\pgf@pathminx=\dimen287
-\pgf@pathmaxx=\dimen288
-\pgf@pathminy=\dimen289
-\pgf@pathmaxy=\dimen290
-\pgf@xx=\dimen291
-\pgf@xy=\dimen292
-\pgf@yx=\dimen293
-\pgf@yy=\dimen294
-\pgf@zx=\dimen295
-\pgf@zy=\dimen296
+\pgf@picminx=\dimen281
+\pgf@picmaxx=\dimen282
+\pgf@picminy=\dimen283
+\pgf@picmaxy=\dimen284
+\pgf@pathminx=\dimen285
+\pgf@pathmaxx=\dimen286
+\pgf@pathminy=\dimen287
+\pgf@pathmaxy=\dimen288
+\pgf@xx=\dimen289
+\pgf@xy=\dimen290
+\pgf@yx=\dimen291
+\pgf@yy=\dimen292
+\pgf@zx=\dimen293
+\pgf@zy=\dimen294
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstruct.code.tex
 File: pgfcorepathconstruct.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgf@path@lastx=\dimen297
-\pgf@path@lasty=\dimen298
+\pgf@path@lastx=\dimen295
+\pgf@path@lasty=\dimen296
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.code.tex
 File: pgfcorepathusage.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgf@shorten@end@additional=\dimen299
-\pgf@shorten@start@additional=\dimen300
+\pgf@shorten@end@additional=\dimen297
+\pgf@shorten@start@additional=\dimen298
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.tex
 File: pgfcorescopes.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 \pgfpic=\box74
@@ -1298,12 +1293,12 @@ File: pgfcorescopes.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 \pgf@picture@serial@count=\count502
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.code.tex
 File: pgfcoregraphicstate.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgflinewidth=\dimen301
+\pgflinewidth=\dimen299
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformations.code.tex
 File: pgfcoretransformations.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgf@pt@x=\dimen302
-\pgf@pt@y=\dimen303
-\pgf@pt@temp=\dimen304
+\pgf@pt@x=\dimen300
+\pgf@pt@y=\dimen301
+\pgf@pt@temp=\dimen302
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.tex
 File: pgfcorequick.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobjects.code.tex
@@ -1312,10 +1307,10 @@ File: pgfcoreobjects.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 File: pgfcorepathprocessing.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.tex
 File: pgfcorearrows.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgfarrowsep=\dimen305
+\pgfarrowsep=\dimen303
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
 File: pgfcoreshade.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgf@max=\dimen306
+\pgf@max=\dimen304
 \pgf@sys@shading@range@num=\count503
 \pgf@shadingcount=\count504
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
@@ -1338,15 +1333,15 @@ File: pgfmoduleshapes.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 File: pgfmoduleplot.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65.sty
 Package: pgfcomp-version-0-65 2021/05/15 v3.1.9a (3.1.9a)
-\pgf@nodesepstart=\dimen307
-\pgf@nodesepend=\dimen308
+\pgf@nodesepstart=\dimen305
+\pgf@nodesepend=\dimen306
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18.sty
 Package: pgfcomp-version-1-18 2021/05/15 v3.1.9a (3.1.9a)
 )) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/pgf/utilities/pgffor.sty (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex)) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/pgf/math/pgfmath.sty (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex
 Package: pgffor 2021/05/15 v3.1.9a (3.1.9a)
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)
-\pgffor@iter=\dimen309
-\pgffor@skip=\dimen310
+\pgffor@iter=\dimen307
+\pgffor@skip=\dimen308
 \pgffor@stack=\toks48
 \pgffor@toks=\toks49
 )) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
@@ -1354,16 +1349,16 @@ Package: tikz 2021/05/15 v3.1.9a (3.1.9a)
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.code.tex
 File: pgflibraryplothandlers.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 \pgf@plot@mark@count=\count505
-\pgfplotmarksize=\dimen311
+\pgfplotmarksize=\dimen309
 )
-\tikz@lastx=\dimen312
-\tikz@lasty=\dimen313
-\tikz@lastxsaved=\dimen314
-\tikz@lastysaved=\dimen315
-\tikz@lastmovetox=\dimen316
-\tikz@lastmovetoy=\dimen317
-\tikzleveldistance=\dimen318
-\tikzsiblingdistance=\dimen319
+\tikz@lastx=\dimen310
+\tikz@lasty=\dimen311
+\tikz@lastxsaved=\dimen312
+\tikz@lastysaved=\dimen313
+\tikz@lastmovetox=\dimen314
+\tikz@lastmovetoy=\dimen315
+\tikzleveldistance=\dimen316
+\tikzsiblingdistance=\dimen317
 \tikz@figbox=\box79
 \tikz@figbox@bg=\box80
 \tikz@tempbox=\box81
@@ -1404,47 +1399,47 @@ package with kernel methods
 \c@abspage=\count514
 Package zref Info: New property: abspage on input line 66.
 )
-\mdf@templength=\skip282
+\mdf@templength=\skip281
 \c@mdf@globalstyle@cnt=\count515
-\mdf@skipabove@length=\skip283
-\mdf@skipbelow@length=\skip284
-\mdf@leftmargin@length=\skip285
-\mdf@rightmargin@length=\skip286
-\mdf@innerleftmargin@length=\skip287
-\mdf@innerrightmargin@length=\skip288
-\mdf@innertopmargin@length=\skip289
-\mdf@innerbottommargin@length=\skip290
-\mdf@splittopskip@length=\skip291
-\mdf@splitbottomskip@length=\skip292
-\mdf@outermargin@length=\skip293
-\mdf@innermargin@length=\skip294
-\mdf@linewidth@length=\skip295
-\mdf@innerlinewidth@length=\skip296
-\mdf@middlelinewidth@length=\skip297
-\mdf@outerlinewidth@length=\skip298
-\mdf@roundcorner@length=\skip299
-\mdf@footenotedistance@length=\skip300
-\mdf@userdefinedwidth@length=\skip301
-\mdf@needspace@length=\skip302
-\mdf@frametitleaboveskip@length=\skip303
-\mdf@frametitlebelowskip@length=\skip304
-\mdf@frametitlerulewidth@length=\skip305
-\mdf@frametitleleftmargin@length=\skip306
-\mdf@frametitlerightmargin@length=\skip307
-\mdf@shadowsize@length=\skip308
-\mdf@extratopheight@length=\skip309
-\mdf@subtitleabovelinewidth@length=\skip310
-\mdf@subtitlebelowlinewidth@length=\skip311
-\mdf@subtitleaboveskip@length=\skip312
-\mdf@subtitlebelowskip@length=\skip313
-\mdf@subtitleinneraboveskip@length=\skip314
-\mdf@subtitleinnerbelowskip@length=\skip315
-\mdf@subsubtitleabovelinewidth@length=\skip316
-\mdf@subsubtitlebelowlinewidth@length=\skip317
-\mdf@subsubtitleaboveskip@length=\skip318
-\mdf@subsubtitlebelowskip@length=\skip319
-\mdf@subsubtitleinneraboveskip@length=\skip320
-\mdf@subsubtitleinnerbelowskip@length=\skip321
+\mdf@skipabove@length=\skip282
+\mdf@skipbelow@length=\skip283
+\mdf@leftmargin@length=\skip284
+\mdf@rightmargin@length=\skip285
+\mdf@innerleftmargin@length=\skip286
+\mdf@innerrightmargin@length=\skip287
+\mdf@innertopmargin@length=\skip288
+\mdf@innerbottommargin@length=\skip289
+\mdf@splittopskip@length=\skip290
+\mdf@splitbottomskip@length=\skip291
+\mdf@outermargin@length=\skip292
+\mdf@innermargin@length=\skip293
+\mdf@linewidth@length=\skip294
+\mdf@innerlinewidth@length=\skip295
+\mdf@middlelinewidth@length=\skip296
+\mdf@outerlinewidth@length=\skip297
+\mdf@roundcorner@length=\skip298
+\mdf@footenotedistance@length=\skip299
+\mdf@userdefinedwidth@length=\skip300
+\mdf@needspace@length=\skip301
+\mdf@frametitleaboveskip@length=\skip302
+\mdf@frametitlebelowskip@length=\skip303
+\mdf@frametitlerulewidth@length=\skip304
+\mdf@frametitleleftmargin@length=\skip305
+\mdf@frametitlerightmargin@length=\skip306
+\mdf@shadowsize@length=\skip307
+\mdf@extratopheight@length=\skip308
+\mdf@subtitleabovelinewidth@length=\skip309
+\mdf@subtitlebelowlinewidth@length=\skip310
+\mdf@subtitleaboveskip@length=\skip311
+\mdf@subtitlebelowskip@length=\skip312
+\mdf@subtitleinneraboveskip@length=\skip313
+\mdf@subtitleinnerbelowskip@length=\skip314
+\mdf@subsubtitleabovelinewidth@length=\skip315
+\mdf@subsubtitlebelowlinewidth@length=\skip316
+\mdf@subsubtitleaboveskip@length=\skip317
+\mdf@subsubtitlebelowskip@length=\skip318
+\mdf@subsubtitleinneraboveskip@length=\skip319
+\mdf@subsubtitleinnerbelowskip@length=\skip320
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/mdframed/md-frame-1.mdf
 File: md-frame-1.mdf 2013/07/01\ 1.9b: md-frame-1
 )
@@ -1453,33 +1448,33 @@ File: md-frame-1.mdf 2013/07/01\ 1.9b: md-frame-1
 \mdf@splitbox@one=\box85
 \mdf@splitbox@two=\box86
 \mdf@splitbox@save=\box87
-\mdfsplitboxwidth=\skip322
-\mdfsplitboxtotalwidth=\skip323
-\mdfsplitboxheight=\skip324
-\mdfsplitboxdepth=\skip325
-\mdfsplitboxtotalheight=\skip326
-\mdfframetitleboxwidth=\skip327
-\mdfframetitleboxtotalwidth=\skip328
-\mdfframetitleboxheight=\skip329
-\mdfframetitleboxdepth=\skip330
-\mdfframetitleboxtotalheight=\skip331
-\mdffootnoteboxwidth=\skip332
-\mdffootnoteboxtotalwidth=\skip333
-\mdffootnoteboxheight=\skip334
-\mdffootnoteboxdepth=\skip335
-\mdffootnoteboxtotalheight=\skip336
-\mdftotallinewidth=\skip337
-\mdfboundingboxwidth=\skip338
-\mdfboundingboxtotalwidth=\skip339
-\mdfboundingboxheight=\skip340
-\mdfboundingboxdepth=\skip341
-\mdfboundingboxtotalheight=\skip342
-\mdf@freevspace@length=\skip343
-\mdf@horizontalwidthofbox@length=\skip344
-\mdf@verticalmarginwhole@length=\skip345
-\mdf@horizontalspaceofbox=\skip346
-\mdfsubtitleheight=\skip347
-\mdfsubsubtitleheight=\skip348
+\mdfsplitboxwidth=\skip321
+\mdfsplitboxtotalwidth=\skip322
+\mdfsplitboxheight=\skip323
+\mdfsplitboxdepth=\skip324
+\mdfsplitboxtotalheight=\skip325
+\mdfframetitleboxwidth=\skip326
+\mdfframetitleboxtotalwidth=\skip327
+\mdfframetitleboxheight=\skip328
+\mdfframetitleboxdepth=\skip329
+\mdfframetitleboxtotalheight=\skip330
+\mdffootnoteboxwidth=\skip331
+\mdffootnoteboxtotalwidth=\skip332
+\mdffootnoteboxheight=\skip333
+\mdffootnoteboxdepth=\skip334
+\mdffootnoteboxtotalheight=\skip335
+\mdftotallinewidth=\skip336
+\mdfboundingboxwidth=\skip337
+\mdfboundingboxtotalwidth=\skip338
+\mdfboundingboxheight=\skip339
+\mdfboundingboxdepth=\skip340
+\mdfboundingboxtotalheight=\skip341
+\mdf@freevspace@length=\skip342
+\mdf@horizontalwidthofbox@length=\skip343
+\mdf@verticalmarginwhole@length=\skip344
+\mdf@horizontalspaceofbox=\skip345
+\mdfsubtitleheight=\skip346
+\mdfsubsubtitleheight=\skip347
 \c@mdfcountframes=\count516
 
 ****** mdframed patching \endmdf@trivlist
@@ -1498,14 +1493,14 @@ File: tikzlibraryfadings.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/libraries/pgflibraryfadings.code.tex
 File: pgflibraryfadings.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 ))) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarydecorations.pathmorphing.code.tex (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarydecorations.code.tex (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfmoduledecorations.code.tex
-\pgfdecoratedcompleteddistance=\dimen320
-\pgfdecoratedremainingdistance=\dimen321
-\pgfdecoratedinputsegmentcompleteddistance=\dimen322
-\pgfdecoratedinputsegmentremainingdistance=\dimen323
-\pgf@decorate@distancetomove=\dimen324
+\pgfdecoratedcompleteddistance=\dimen318
+\pgfdecoratedremainingdistance=\dimen319
+\pgfdecoratedinputsegmentcompleteddistance=\dimen320
+\pgfdecoratedinputsegmentremainingdistance=\dimen321
+\pgf@decorate@distancetomove=\dimen322
 \pgf@decorate@repeatstate=\count521
-\pgfdecorationsegmentamplitude=\dimen325
-\pgfdecorationsegmentlength=\dimen326
+\pgfdecorationsegmentamplitude=\dimen323
+\pgfdecorationsegmentlength=\dimen324
 )
 \tikz@lib@dec@box=\box88
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/pgf/libraries/decorations/pgflibrarydecorations.pathmorphing.code.tex)) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/iftex/ifpdf.sty
@@ -1515,15 +1510,15 @@ Invalid UTF-8 byte or sequence at line 164 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 164 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 201 replaced by U+FFFD.
 \c@bclogocompteur=\count522
-\bcval@epBarre=\skip349
-\bcval@framesep=\skip350
-\bcval@tailleOndu=\skip351
-\bcval@borderWidth=\skip352
+\bcval@epBarre=\skip348
+\bcval@framesep=\skip349
+\bcval@tailleOndu=\skip350
+\bcval@borderWidth=\skip351
 Invalid UTF-8 byte or sequence at line 216 replaced by U+FFFD.
-\bcval@margeG=\skip353
+\bcval@margeG=\skip352
 Invalid UTF-8 byte or sequence at line 217 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 217 replaced by U+FFFD.
-\bcval@margeD=\skip354
+\bcval@margeD=\skip353
 \bc@envbox=\box89
 Invalid UTF-8 byte or sequence at line 334 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 454 replaced by U+FFFD.
@@ -1533,45 +1528,45 @@ Invalid UTF-8 byte or sequence at line 454 replaced by U+FFFD.
 Package: marginfix 2020/05/06 v1.2 Fix Margin Paragraphs
 \Mfx@inject@insert=\insert247
 \Mfx@marginbox=\box90
-\Mfx@marginpos@min=\dimen327
-\Mfx@marginpos@max=\dimen328
-\Mfx@marginspace=\dimen329
-\Mfx@marginheight=\dimen330
+\Mfx@marginpos@min=\dimen325
+\Mfx@marginpos@max=\dimen326
+\Mfx@marginspace=\dimen327
+\Mfx@marginheight=\dimen328
 \Mfx@piece@content=\box91
 \Mfx@piece@count=\count523
-\Mfx@mparshift=\dimen331
-\marginheightadjustment=\dimen332
-\marginposadjustment=\dimen333
-\Mfx@strutheight=\dimen334
+\Mfx@mparshift=\dimen329
+\marginheightadjustment=\dimen330
+\marginposadjustment=\dimen331
+\Mfx@strutheight=\dimen332
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
 \calc@Acount=\count524
 \calc@Bcount=\count525
-\calc@Adimen=\dimen335
-\calc@Bdimen=\dimen336
-\calc@Askip=\skip355
-\calc@Bskip=\skip356
+\calc@Adimen=\dimen333
+\calc@Bdimen=\dimen334
+\calc@Askip=\skip354
+\calc@Bskip=\skip355
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
 \calc@Ccount=\count526
-\calc@Cskip=\skip357
+\calc@Cskip=\skip356
 )
-\widthw=\skip358
-\rf=\skip359
+\widthw=\skip357
+\rf=\skip358
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/textpos/textpos.sty
 Package: textpos 2020/09/26 v1.10
 Package: textpos 2020/09/26 1.10, absolute positioning of text on the page
 Package textpos Info: choosing support for LaTeX3 on input line 61.
 \TP@textbox=\box92
 \TP@holdbox=\box93
-\TPHorizModule=\dimen337
-\TPVertModule=\dimen338
-\TP@margin=\dimen339
-\TP@absmargin=\dimen340
+\TPHorizModule=\dimen335
+\TPVertModule=\dimen336
+\TP@margin=\dimen337
+\TP@absmargin=\dimen338
 Grid set 16 x 16 = 37.34424pt x 52.81541pt
-\TPboxrulesize=\dimen341
-\TP@ox=\dimen342
-\TP@oy=\dimen343
+\TPboxrulesize=\dimen339
+\TP@ox=\dimen340
+\TP@oy=\dimen341
 \TP@tbargs=\toks50
 TextBlockOrigin set to 0pt x 0pt
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/csquotes/csquotes.sty
@@ -1602,7 +1597,7 @@ Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty
 Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
 )
-\@linkdim=\dimen344
+\@linkdim=\dimen342
 \Hy@linkcounter=\count533
 \Hy@pagecounter=\count534
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
@@ -1626,15 +1621,15 @@ Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4445.
 \c@Hy@tempcnt=\count536
 LaTeX Info: Redefining \url on input line 4804.
-\XeTeXLinkMargin=\dimen345
+\XeTeXLinkMargin=\dimen343
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
 ))
 \Fld@menulength=\count537
-\Field@Width=\dimen346
-\Fld@charsize=\dimen347
+\Field@Width=\dimen344
+\Fld@charsize=\dimen345
 Package hyperref Info: Hyper figures OFF on input line 6076.
 Package hyperref Info: Link nesting OFF on input line 6081.
 Package hyperref Info: Hyper index ON on input line 6084.
@@ -1681,10 +1676,10 @@ Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 286.
 )
-\Hy@SectionHShift=\skip360
+\Hy@SectionHShift=\skip359
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 312.
-Package hyperref Info: Option `breaklinks' set `true' on input line 312.
+Package hyperref Info: Option `colorlinks' set `true' on input line 310.
+Package hyperref Info: Option `breaklinks' set `true' on input line 310.
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/soul/soul.sty
 Package: soul 2003/11/17 v2.4 letterspacing/underlining (mf)
 \SOUL@word=\toks52
@@ -1692,21 +1687,21 @@ Package: soul 2003/11/17 v2.4 letterspacing/underlining (mf)
 \SOUL@cmds=\toks54
 \SOUL@buffer=\toks55
 \SOUL@token=\toks56
-\SOUL@spaceskip=\skip361
-\SOUL@ttwidth=\dimen348
-\SOUL@uldp=\dimen349
-\SOUL@ulht=\dimen350
+\SOUL@spaceskip=\skip360
+\SOUL@ttwidth=\dimen346
+\SOUL@uldp=\dimen347
+\SOUL@ulht=\dimen348
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/caption/caption.sty
 Package: caption 2020/10/26 v3.5g Customizing captions (AR)
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/caption/caption3.sty
 Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
-\captionmargin=\dimen351
-\captionmargin@=\dimen352
-\captionwidth=\dimen353
-\caption@tempdima=\dimen354
-\caption@indent=\dimen355
-\caption@parindent=\dimen356
-\caption@hangindent=\dimen357
+\captionmargin=\dimen349
+\captionmargin@=\dimen350
+\captionwidth=\dimen351
+\caption@tempdima=\dimen352
+\caption@indent=\dimen353
+\caption@parindent=\dimen354
+\caption@hangindent=\dimen355
 Package caption Info: memoir document class detected.
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/caption/caption-memoir.sto
 File: caption-memoir.sto 2020/10/10 v2.1 Adaption of the caption package to the memoir document class (AR)
@@ -1714,8 +1709,8 @@ File: caption-memoir.sto 2020/10/10 v2.1 Adaption of the caption package to the 
 \c@caption@flags=\count547
 \c@continuedfloat=\count548
 Package caption Info: changepage package is loaded.
-\caption@adjustwidth@hsize=\dimen358
-\caption@adjustwidth@linewidth=\dimen359
+\caption@adjustwidth@hsize=\dimen356
+\caption@adjustwidth@linewidth=\dimen357
 Package caption Info: hyperref package is loaded.
 Package caption Info: longtable package is loaded.
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/caption/ltcaption.sty
@@ -1731,48 +1726,48 @@ LaTeX Info: Thecontrolsequence`\)'isalreadyrobust on input line 130.
 LaTeX Info: Thecontrolsequence`\['isalreadyrobust on input line 130.
 LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 130.
 \g_MT_multlinerow_int=\count549
-\l_MT_multwidth_dim=\dimen360
-\origjot=\skip362
-\l_MT_shortvdotswithinadjustabove_dim=\dimen361
-\l_MT_shortvdotswithinadjustbelow_dim=\dimen362
-\l_MT_above_intertext_sep=\dimen363
-\l_MT_below_intertext_sep=\dimen364
-\l_MT_above_shortintertext_sep=\dimen365
-\l_MT_below_shortintertext_sep=\dimen366
+\l_MT_multwidth_dim=\dimen358
+\origjot=\skip361
+\l_MT_shortvdotswithinadjustabove_dim=\dimen359
+\l_MT_shortvdotswithinadjustbelow_dim=\dimen360
+\l_MT_above_intertext_sep=\dimen361
+\l_MT_below_intertext_sep=\dimen362
+\l_MT_above_shortintertext_sep=\dimen363
+\l_MT_below_shortintertext_sep=\dimen364
 \xmathstrut@box=\box95
-\xmathstrut@dim=\dimen367
+\xmathstrut@dim=\dimen365
 )
 \l_EQ_equationtype_int=\count550
 \l_EQ_alignmentmode_int=\count551
-\l_EQ_totalwidth_dim=\dimen368
-\l_EQ_displaywidth_dim=\dimen369
-\l_EQ_temp_linewidth_dim=\dimen370
-\l_EQ_linewidth_dim=\dimen371
-\EmphEqdelimitershortfall=\dimen372
+\l_EQ_totalwidth_dim=\dimen366
+\l_EQ_displaywidth_dim=\dimen367
+\l_EQ_temp_linewidth_dim=\dimen368
+\l_EQ_linewidth_dim=\dimen369
+\EmphEqdelimitershortfall=\dimen370
 \EmphEqdelimiterfactor=\count552
-\g_EQ_toptag_height_dim=\dimen373
-\g_EQ_bottomtag_depth_dim=\dimen374
-\g_EQ_toprow_height_dim=\dimen375
-\g_EQ_bottomrow_depth_dim=\dimen376
-\g_EQ_widesttag_dim=\dimen377
+\g_EQ_toptag_height_dim=\dimen371
+\g_EQ_bottomtag_depth_dim=\dimen372
+\g_EQ_toprow_height_dim=\dimen373
+\g_EQ_bottomrow_depth_dim=\dimen374
+\g_EQ_widesttag_dim=\dimen375
 \EQ_mathdisplay_box=\box96
 \EQ_tag_box=\box97
 \g_EQ_temprow_int=\count553
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/l3packages/xfrac/xfrac.sty (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/l3packages/xtemplate/xtemplate.sty
 Package: xtemplate 2021-11-12 L3 Experimental prototype document functions
-\l__xtemplate_tmp_dim=\dimen378
+\l__xtemplate_tmp_dim=\dimen376
 \l__xtemplate_tmp_int=\count554
 \l__xtemplate_tmp_muskip=\muskip23
-\l__xtemplate_tmp_skip=\skip363
+\l__xtemplate_tmp_skip=\skip362
 )
 Package: xfrac 2021-11-12 L3 Experimental split-level fractions
 \l__xfrac_slash_box=\box98
 \l__xfrac_tmp_box=\box99
-\l__xfrac_denominator_bot_sep_dim=\dimen379
-\l__xfrac_numerator_bot_sep_dim=\dimen380
-\l__xfrac_numerator_top_sep_dim=\dimen381
-\l__xfrac_slash_left_sep_dim=\dimen382
-\l__xfrac_slash_right_sep_dim=\dimen383
+\l__xfrac_denominator_bot_sep_dim=\dimen377
+\l__xfrac_numerator_bot_sep_dim=\dimen378
+\l__xfrac_numerator_top_sep_dim=\dimen379
+\l__xfrac_slash_left_sep_dim=\dimen380
+\l__xfrac_slash_right_sep_dim=\dimen381
 \l__xfrac_slash_left_muskip=\muskip24
 \l__xfrac_slash_right_muskip=\muskip25
 
@@ -1781,13 +1776,13 @@ Package xtemplate Info: Declaring object type 'xfrac' taking 3 argument(s) on
 
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/multirow/multirow.sty
 Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
-\multirow@colwidth=\skip364
+\multirow@colwidth=\skip363
 \multirow@cntb=\count555
-\multirow@dima=\skip365
-\bigstrutjot=\dimen384
+\multirow@dima=\skip364
+\bigstrutjot=\dimen382
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/wrapfig/wrapfig.sty
-\wrapoverhang=\dimen385
-\WF@size=\dimen386
+\wrapoverhang=\dimen383
+\WF@size=\dimen384
 \c@WF@wrappedlines=\count556
 \WF@box=\box100
 \WF@everypar=\toks57
@@ -1802,7 +1797,7 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/colortbl/colortbl.sty
 Package: colortbl 2020/01/04 v1.0e Color table columns (DPC)
 \everycr=\toks60
-\minrowclearance=\skip366
+\minrowclearance=\skip365
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/pdflscape/pdflscape.sty
 Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/graphics/lscape.sty
@@ -1819,95 +1814,69 @@ Package: environ 2014/05/04 v0.3 A new way to define environments
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/trimspaces/trimspaces.sty
 Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 ))
-\TPTL@width=\skip367
+\TPTL@width=\skip366
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/ulem/ulem.sty
 \UL@box=\box104
 \UL@hyphenbox=\box105
-\UL@skip=\skip368
+\UL@skip=\skip367
 \UL@hook=\toks61
-\UL@height=\dimen387
+\UL@height=\dimen385
 \UL@pe=\count558
-\UL@pixel=\dimen388
+\UL@pixel=\dimen386
 \ULC@box=\box106
 Package: ulem 2019/11/18
-\ULdepth=\dimen389
+\ULdepth=\dimen387
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/makecell/makecell.sty
 Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
-\rotheadsize=\dimen390
+\rotheadsize=\dimen388
 \c@nlinenum=\count559
 \TeXr@lab=\toks62
-) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/amscls/amsthm.sty
-Package: amsthm 2020/05/29 v2.20.6
-\thm@style=\toks63
-\thm@bodyfont=\toks64
-\thm@headfont=\toks65
-\thm@notefont=\toks66
-\thm@headpunct=\toks67
-\thm@preskip=\skip369
-\thm@postskip=\skip370
-\thm@headsep=\skip371
-\dth@everypar=\toks68
 )
-\c@theorem=\count560
-\c@lemma=\count561
-\c@corollary=\count562
-\c@proposition=\count563
-\c@conjecture=\count564
-\c@definition=\count565
-\c@example=\count566
-\c@exercise=\count567
-\c@hypothesis=\count568
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'polyglossia' package.
 (./DataScience.aux
 LaTeX Info: Redefining \rmfamily on input line 26.
 LaTeX Info: Redefining \sffamily on input line 26.
 LaTeX Info: Redefining \ttfamily on input line 26.
-
-LaTeX Warning: Label `fig:unnamed-chunk-8' multiply defined.
-
-
-LaTeX Warning: Label `fig:unnamed-chunk-2' multiply defined.
-
-LaTeX Info: Redefining \rmfamily on input line 2442.
-LaTeX Info: Redefining \sffamily on input line 2442.
-LaTeX Info: Redefining \ttfamily on input line 2442.
-LaTeX Info: Redefining \rmfamily on input line 2446.
-LaTeX Info: Redefining \sffamily on input line 2446.
-LaTeX Info: Redefining \ttfamily on input line 2446.
+LaTeX Info: Redefining \rmfamily on input line 208.
+LaTeX Info: Redefining \sffamily on input line 208.
+LaTeX Info: Redefining \ttfamily on input line 208.
+LaTeX Info: Redefining \rmfamily on input line 212.
+LaTeX Info: Redefining \sffamily on input line 212.
+LaTeX Info: Redefining \ttfamily on input line 212.
 )
 \openout1 = `DataScience.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 672.
-LaTeX Font Info:    ... okay on input line 672.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 672.
-LaTeX Font Info:    ... okay on input line 672.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 672.
-LaTeX Font Info:    ... okay on input line 672.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 672.
-LaTeX Font Info:    ... okay on input line 672.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 672.
-LaTeX Font Info:    ... okay on input line 672.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 672.
-LaTeX Font Info:    ... okay on input line 672.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 672.
-LaTeX Font Info:    ... okay on input line 672.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 672.
-LaTeX Font Info:    ... okay on input line 672.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 672.
-LaTeX Font Info:    ... okay on input line 672.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 672.
-LaTeX Font Info:    ... okay on input line 672.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 653.
+LaTeX Font Info:    ... okay on input line 653.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 653.
+LaTeX Font Info:    ... okay on input line 653.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 653.
+LaTeX Font Info:    ... okay on input line 653.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 653.
+LaTeX Font Info:    ... okay on input line 653.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 653.
+LaTeX Font Info:    ... okay on input line 653.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 653.
+LaTeX Font Info:    ... okay on input line 653.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 653.
+LaTeX Font Info:    ... okay on input line 653.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 653.
+LaTeX Font Info:    ... okay on input line 653.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 653.
+LaTeX Font Info:    ... okay on input line 653.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 653.
+LaTeX Font Info:    ... okay on input line 653.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 672.
+(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 653.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 672.
+(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 653.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 672.
+(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 653.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 672.
+(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 653.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 672.
+(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 653.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -1933,7 +1902,7 @@ Package fontspec Info: Font family 'latinmodern-math.otf(0)' created for font
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(0)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 672.
+(Font)              scaled to size 10.0pt on input line 653.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -1965,15 +1934,15 @@ Package fontspec Info: Font family 'latinmodern-math.otf(1)' created for font
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 672.
+(Font)              scaled to size 10.0pt on input line 653.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 672.
+(Font)              `operators' in the math version `normal' on input line 653.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input line 672.
+(Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input line 653.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 672.
+(Font)              `operators' in the math version `bold' on input line 653.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on input line 672.
+(Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on input line 653.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -2052,13 +2021,13 @@ Package fontspec Info: Font family 'latinmodern-math.otf(2)' created for font
 (fontspec)             \fontdimen 21\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `normal' on input line 672.
+(Font)              `symbols' in the math version `normal' on input line 653.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
-(Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on input line 672.
+(Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on input line 653.
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `bold' on input line 672.
+(Font)              `symbols' in the math version `bold' on input line 653.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
-(Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on input line 672.
+(Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on input line 653.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -2119,13 +2088,13 @@ Package fontspec Info: Font family 'latinmodern-math.otf(3)' created for font
 (fontspec)             =6.0pt\relax \fontdimen 13\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `normal' on input line 672.
+(Font)              `largesymbols' in the math version `normal' on input line 653.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
-(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on input line 672.
+(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on input line 653.
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `bold' on input line 672.
+(Font)              `largesymbols' in the math version `bold' on input line 653.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
-(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on input line 672.
+(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on input line 653.
 
 Package unicode-math Warning: Using \overbracket and \underbracket from
 (unicode-math)                `mathtools' package.
@@ -2144,11 +2113,11 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 (unicode-math)                colon-like commands, using them will lead to
 (unicode-math)                inconsistencies.
 
-LaTeX Info: Redefining \microtypecontext on input line 672.
-Package microtype Info: Applying patch `item' on input line 672.
-Package microtype Info: Applying patch `toc' on input line 672.
-Package microtype Info: Applying patch `eqnum' on input line 672.
-Package microtype Info: Applying patch `footnote' on input line 672.
+LaTeX Info: Redefining \microtypecontext on input line 653.
+Package microtype Info: Applying patch `item' on input line 653.
+Package microtype Info: Applying patch `toc' on input line 653.
+Package microtype Info: Applying patch `eqnum' on input line 653.
+Package microtype Info: Applying patch `footnote' on input line 653.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
 Package microtype Info: No adjustment of tracking.
@@ -2222,9 +2191,9 @@ Package: blx-case-expl3 2020/12/31 v3.16 expl3 case changing code for biblatex
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'DataScience.bbl' found.
 (./DataScience.bbl)
-Package biblatex Info: Reference section=0 on input line 672.
-Package biblatex Info: Reference segment=0 on input line 672.
-Package hyperref Info: Link coloring ON on input line 672.
+Package biblatex Info: Reference section=0 on input line 653.
+Package biblatex Info: Reference segment=0 on input line 653.
+Package hyperref Info: Link coloring ON on input line 653.
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty
@@ -2232,14 +2201,14 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count569
+\c@section@level=\count560
 )
 Redoing nameref's sectioning
 Redoing nameref's label
-LaTeX Info: Redefining \nameref on input line 672.
-LaTeX Info: Redefining \ref on input line 672.
-LaTeX Info: Redefining \pageref on input line 672.
-LaTeX Info: Redefining \nameref on input line 672.
+LaTeX Info: Redefining \nameref on input line 653.
+LaTeX Info: Redefining \ref on input line 653.
+LaTeX Info: Redefining \pageref on input line 653.
+LaTeX Info: Redefining \nameref on input line 653.
 (./DataScience.out) (./DataScience.out)
 \@outlinefile=\write7
 \openout7 = `DataScience.out'.
@@ -2249,12 +2218,12 @@ Package caption Info: float package is loaded.
 Package caption Info: threeparttable package is loaded.
 Package caption Info: wrapfig package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Info: Redefining \rmfamily on input line 672.
-LaTeX Info: Redefining \sffamily on input line 672.
-LaTeX Info: Redefining \ttfamily on input line 672.
-LaTeX Info: Redefining \rmfamily on input line 672.
-LaTeX Info: Redefining \sffamily on input line 672.
-LaTeX Info: Redefining \ttfamily on input line 672.
+LaTeX Info: Redefining \rmfamily on input line 653.
+LaTeX Info: Redefining \sffamily on input line 653.
+LaTeX Info: Redefining \ttfamily on input line 653.
+LaTeX Info: Redefining \rmfamily on input line 653.
+LaTeX Info: Redefining \sffamily on input line 653.
+LaTeX Info: Redefining \ttfamily on input line 653.
 
 ******************************************************
 Stock height and width: 845.04684pt by 597.50787pt
@@ -2277,25 +2246,25 @@ Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 
 TextBlockOrigin set to \stockwidth -\paperwidth -\trimedge  x \trimtop 
 
-Overfull \hbox (10.30946pt too wide) in paragraph at lines 686--686
+Overfull \hbox (10.30946pt too wide) in paragraph at lines 667--667
 [][] 
  []
 
-LaTeX Font Info:    Trying to load font information for TU+qtm on input line 686.
-LaTeX Font Info:    No file TUqtm.fd. on input line 686.
+LaTeX Font Info:    Trying to load font information for TU+qtm on input line 667.
+LaTeX Font Info:    No file TUqtm.fd. on input line 667.
 
 LaTeX Font Warning: Font shape `TU/qtm/m/n' undefined
-(Font)              using `TU/lmr/m/n' instead on input line 686.
+(Font)              using `TU/lmr/m/n' instead on input line 667.
 
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/microtype/mt-ptm.cfg
 File: mt-ptm.cfg 2006/04/20 v1.7 microtype config. file: Times (RS)
 )
 
 LaTeX Font Warning: Font shape `TU/qtm/m/sc' undefined
-(Font)              using `TU/qtm/m/n' instead on input line 686.
+(Font)              using `TU/qtm/m/n' instead on input line 667.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 686--686
+Underfull \hbox (badness 10000) in paragraph at lines 667--667
 
  []
 
@@ -2306,32 +2275,32 @@ Underfull \hbox (badness 10000) in paragraph at lines 686--686
 ]
 TextBlockOrigin set to \trimedge  x \trimtop 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.0pt on input line 686.
+(Font)              scaled to size 7.0pt on input line 667.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 686.
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 686.
+(Font)              scaled to size 5.0pt on input line 667.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 667.
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.00092pt on input line 686.
+(Font)              scaled to size 10.00092pt on input line 667.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.00064pt on input line 686.
+(Font)              scaled to size 7.00064pt on input line 667.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00046pt on input line 686.
+(Font)              scaled to size 5.00046pt on input line 667.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 9.99893pt on input line 686.
+(Font)              scaled to size 9.99893pt on input line 667.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 6.99925pt on input line 686.
+(Font)              scaled to size 6.99925pt on input line 667.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 686.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 686.
+(Font)              scaled to size 4.99947pt on input line 667.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 667.
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 686.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 667.
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/microtype/mt-msb.cfg
@@ -2342,14 +2311,14 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
-Underfull \hbox (badness 2197) in paragraph at lines 686--686
+Underfull \hbox (badness 2197) in paragraph at lines 667--667
 []\TU/lmr/m/n/10 bookdown ([][]$[][][][] [] [] [] [][][][][][][][] [] [][][][]$[][]) e memoiR ([][]$[][][][][] [] [] [] [][][][][][][][][][] [] [][][][][][] [] [][] []
  []
 
 File: images//logo.pdf Graphic file (type pdf)
 <use images//logo.pdf>
 
-Underfull \hbox (badness 10000) in paragraph at lines 686--686
+Underfull \hbox (badness 10000) in paragraph at lines 667--667
 
  []
 
@@ -2378,204 +2347,14 @@ Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 LaTeX Info: Redefining \rmfamily on input line 3.
 LaTeX Info: Redefining \sffamily on input line 3.
 LaTeX Info: Redefining \ttfamily on input line 3.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 10.95pt on input line 15.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 8.0pt on input line 15.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 6.0pt on input line 15.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.95099pt on input line 15.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 8.00073pt on input line 15.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 6.00055pt on input line 15.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 10.94882pt on input line 15.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 7.99915pt on input line 15.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 5.99936pt on input line 15.
-[3
-
-] [4] [5]
-Overfull \hbox (1.74997pt too wide) detected at line 287
- \TU/lmr/bx/n/10 111
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 321
- \TU/lmr/bx/n/10 121
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 337
- \TU/lmr/bx/n/10 131
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 347
- \TU/lmr/bx/n/10 139
- []
-
-[6]
-Overfull \hbox (1.74997pt too wide) detected at line 385
- \TU/lmr/bx/n/10 163
- []
-
 LaTeX Font Info:    Font shape `TU/OperatorMonoSSmBook(0)/m/n' will be
-(Font)              scaled to size 7.5pt on input line 391.
-
-Overfull \hbox (1.74997pt too wide) detected at line 407
- \TU/lmr/bx/n/10 173
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 421
- \TU/lmr/bx/n/10 183
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 443
- \TU/lmr/bx/n/10 191
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 453
- \TU/lmr/bx/n/10 205
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 465
- \TU/lmr/bx/n/10 213
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 479
- \TU/lmr/bx/n/10 219
- []
-
-[7]
-Overfull \hbox (1.74997pt too wide) detected at line 491
- \TU/lmr/bx/n/10 229
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 499
- \TU/lmr/bx/n/10 237
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 511
- \TU/lmr/bx/n/10 245
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 519
- \TU/lmr/bx/n/10 251
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 531
- \TU/lmr/bx/n/10 263
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 539
- \TU/lmr/bx/n/10 271
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 585
- \TU/lmr/bx/n/10 301
- []
-
-[8]
-Overfull \hbox (1.74997pt too wide) detected at line 587
- \TU/lmr/bx/n/10 303
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 601
- \TU/lmr/bx/n/10 305
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 611
- \TU/lmr/bx/n/10 309
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 629
- \TU/lmr/bx/n/10 313
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 637
- \TU/lmr/bx/n/10 315
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 651
- \TU/lmr/bx/n/10 321
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 653
- \TU/lmr/bx/n/10 323
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 665
- \TU/lmr/bx/n/10 329
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 669
- \TU/lmr/bx/n/10 331
- []
-
-[9]
-Overfull \hbox (1.74997pt too wide) detected at line 683
- \TU/lmr/bx/n/10 343
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 685
- \TU/lmr/bx/n/10 345
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 705
- \TU/lmr/bx/n/10 351
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 707
- \TU/lmr/bx/n/10 355
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 711
- \TU/lmr/bx/n/10 357
- []
-
-[10] [11]
-Overfull \hbox (1.74997pt too wide) detected at line 901
- \TU/lmr/bx/n/10 399
- []
-
-
-Overfull \hbox (1.74997pt too wide) detected at line 903
- \TU/lmr/bx/n/10 403
- []
-
-LaTeX Info: Redefining \rmfamily on input line 905.
-LaTeX Info: Redefining \sffamily on input line 905.
-LaTeX Info: Redefining \ttfamily on input line 905.
-LaTeX Info: Redefining \rmfamily on input line 907.
-LaTeX Info: Redefining \sffamily on input line 907.
-LaTeX Info: Redefining \ttfamily on input line 907.
+(Font)              scaled to size 7.5pt on input line 21.
+LaTeX Info: Redefining \rmfamily on input line 41.
+LaTeX Info: Redefining \sffamily on input line 41.
+LaTeX Info: Redefining \ttfamily on input line 41.
+LaTeX Info: Redefining \rmfamily on input line 43.
+LaTeX Info: Redefining \sffamily on input line 43.
+LaTeX Info: Redefining \ttfamily on input line 43.
 )
 
 ******************************************************
@@ -2597,881 +2376,63 @@ Sidefoothsep and sidefootwidth: 7pt and 117pt
 Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 ******************************************************
 
-[12] [13
+[3
+
+] [4
 
 
-] [14
+] [5] [6
 
-] [15] [16] [17] [18] [1
-
-
-] [2] [3
-
-] [4] [5] [6] [7] [8
-
-] [9]
-File: images/misurazione_2.png Graphic file (type bmp)
-<images/misurazione_2.png>
-[10] [11] [12]
-File: images/misurazione_1.png Graphic file (type bmp)
-<images/misurazione_1.png>
-File: images/misurazione_3.png Graphic file (type bmp)
-<images/misurazione_3.png>
-[13]
-File: images/misurazione_4.png Graphic file (type bmp)
-<images/misurazione_4.png>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[14] [15] [16] [17
-
-] [18] [19
-
-] [20]
-LaTeX Font Info:    Font shape `TU/OperatorMonoSSmBook(0)/m/it' will be
-(Font)              scaled to size 7.5pt on input line 1446.
-[21] [22] [23]
-File: 013_eda_files/figure-latex/hist1zetsche-1.pdf Graphic file (type pdf)
-<use 013_eda_files/figure-latex/hist1zetsche-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[24]
-File: 013_eda_files/figure-latex/hist2zetsche-1.pdf Graphic file (type pdf)
-<use 013_eda_files/figure-latex/hist2zetsche-1.pdf>
-[25]
-File: 013_eda_files/figure-latex/zetschehist3-1.pdf Graphic file (type pdf)
-<use 013_eda_files/figure-latex/zetschehist3-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-File: 013_eda_files/figure-latex/distrib-shapes-1.pdf Graphic file (type pdf)
-<use 013_eda_files/figure-latex/distrib-shapes-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[26] [27]
-File: 013_eda_files/figure-latex/unnamed-chunk-8-1.pdf Graphic file (type pdf)
-<use 013_eda_files/figure-latex/unnamed-chunk-8-1.pdf>
+] [7] [8]
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 1794.
+(Font)              scaled to size 8.0pt on input line 768.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 6.0pt on input line 768.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 9.00082pt on input line 1794.
+(Font)              scaled to size 8.00073pt on input line 768.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 6.00055pt on input line 768.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 8.99904pt on input line 1794.
-[28]
-File: 013_eda_files/figure-latex/violin-zetsche-1.pdf Graphic file (type pdf)
-<use 013_eda_files/figure-latex/violin-zetsche-1.pdf>
+(Font)              scaled to size 7.99915pt on input line 768.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 5.99936pt on input line 768.
+[9] [10]
 
-LaTeX Warning: `h' float specifier changed to `ht'.
+LaTeX Warning: Reference `chapter-distr-coniugate' on page 1 undefined on input line 806.
 
-[29]
-File: 013_eda_files/figure-latex/sina-zetsche-1.pdf Graphic file (type pdf)
-<use 013_eda_files/figure-latex/sina-zetsche-1.pdf>
+[1
 
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[30] [31] [32] [33] [34] [35]
-File: 013_eda_files/figure-latex/zetsche-scatter-1.pdf Graphic file (type pdf)
-<use 013_eda_files/figure-latex/zetsche-scatter-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[36] [37] [38]
-File: 013_eda_files/figure-latex/zerocorr-1.pdf Graphic file (type pdf)
-<use 013_eda_files/figure-latex/zerocorr-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[39] [40] [41
-
-] [42]
-File: images/cycle_of_science.pdf Graphic file (type pdf)
-<use images/cycle_of_science.pdf>
-[43
-
-] [44] [45] [46]
-LaTeX Font Info:    Font shape `TU/OperatorMonoSSmBook(0)/b/n' will be
-(Font)              scaled to size 7.5pt on input line 2627.
-[47] [48]
-File: 015_prob_intro_files/figure-latex/legge-grandi-n-1-1.pdf Graphic file (type pdf)
-<use 015_prob_intro_files/figure-latex/legge-grandi-n-1-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[49]
-File: 015_prob_intro_files/figure-latex/legge-grandi-n-2-1.pdf Graphic file (type pdf)
-<use 015_prob_intro_files/figure-latex/legge-grandi-n-2-1.pdf>
-[50] [51] [52]
-File: 015_prob_intro_files/figure-latex/barplot-mdf-4coins-1.pdf Graphic file (type pdf)
-<use 015_prob_intro_files/figure-latex/barplot-mdf-4coins-1.pdf>
-[53] [54]
-File: images/mammografia.png Graphic file (type bmp)
-<images/mammografia.png>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[55
-
-] [56] [57]
-File: images/sampling-space-dice.png Graphic file (type bmp)
-<images/sampling-space-dice.png>
-[58]
-File: 017_bayes_theorem_files/figure-latex/tikz-prob-tot-1.pdf Graphic file (type pdf)
-<use 017_bayes_theorem_files/figure-latex/tikz-prob-tot-1.pdf>
-[59
 
 ]
-File: 017_bayes_theorem_files/figure-latex/unnamed-chunk-2-1.pdf Graphic file (type pdf)
-<use 017_bayes_theorem_files/figure-latex/unnamed-chunk-2-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[60] [61] [62] [63] [64] [65
-
-] [66] [67] [68]
-File: 019_density_func_files/figure-latex/unnamed-chunk-2-1.pdf Graphic file (type pdf)
-<use 019_density_func_files/figure-latex/unnamed-chunk-2-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[69
-
-] [70]
-File: 019_density_func_files/figure-latex/spinner-cdf-1.pdf Graphic file (type pdf)
-<use 019_density_func_files/figure-latex/spinner-cdf-1.pdf>
-File: 019_density_func_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
-<use 019_density_func_files/figure-latex/unnamed-chunk-3-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[71] [72]
-File: 019_density_func_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (type pdf)
-<use 019_density_func_files/figure-latex/unnamed-chunk-5-1.pdf>
-[73]
-File: 019_density_func_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (type pdf)
-<use 019_density_func_files/figure-latex/unnamed-chunk-6-1.pdf>
-[74]
-File: 019_density_func_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type pdf)
-<use 019_density_func_files/figure-latex/unnamed-chunk-7-1.pdf>
-[75]
-File: 019_density_func_files/figure-latex/logistic-cdf-1.pdf Graphic file (type pdf)
-<use 019_density_func_files/figure-latex/logistic-cdf-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[76] [77]
-File: 019_density_func_files/figure-latex/unnamed-chunk-8-1.pdf Graphic file (type pdf)
-<use 019_density_func_files/figure-latex/unnamed-chunk-8-1.pdf>
-[78]
-File: 019_density_func_files/figure-latex/hist-dens-example-1.pdf Graphic file (type pdf)
-<use 019_density_func_files/figure-latex/hist-dens-example-1.pdf>
-[79] [80]
-Underfull \hbox (badness 10000) in paragraph at lines 4171--4173
-
- []
-
-[81
-
-] [82]
-
-LaTeX Warning: Reference `thm:prodindrv' on page 83 undefined on input line 4284.
-
-[83]
-Underfull \hbox (badness 10000) in paragraph at lines 4320--4321
-
- []
-
-[84]
-
-LaTeX Font Warning: Command \large invalid in math mode on input line 4392.
-
-
-LaTeX Font Warning: Command \large invalid in math mode on input line 4392.
-
-LaTeX Font Info:    Calculating math sizes for size <> on input line 4394.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 1.0pt on input line 4394.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 0.7pt on input line 4394.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 0.5pt on input line 4394.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 1.00009pt on input line 4394.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 0.70006pt on input line 4394.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 0.50005pt on input line 4394.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 0.9999pt on input line 4394.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 0.69992pt on input line 4394.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 0.49994pt on input line 4394.
-[85] [86] [87
-
-]
-File: 022_discr_rv_distr_files/figure-latex/example-binomial-distr-1.pdf Graphic file (type pdf)
-<use 022_discr_rv_distr_files/figure-latex/example-binomial-distr-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[88] [89]
-File: 022_discr_rv_distr_files/figure-latex/examples-poisson-distrib-1.pdf Graphic file (type pdf)
-<use 022_discr_rv_distr_files/figure-latex/examples-poisson-distrib-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[90] [91] [92]
-File: 023_cont_rv_distr_files/figure-latex/unnamed-chunk-1-1.pdf Graphic file (type pdf)
-<use 023_cont_rv_distr_files/figure-latex/unnamed-chunk-1-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[93
-
-]
-File: 023_cont_rv_distr_files/figure-latex/unnamed-chunk-2-1.pdf Graphic file (type pdf)
-<use 023_cont_rv_distr_files/figure-latex/unnamed-chunk-2-1.pdf>
-[94]
-File: 023_cont_rv_distr_files/figure-latex/rw-normal-4816-1.pdf Graphic file (type pdf)
-<use 023_cont_rv_distr_files/figure-latex/rw-normal-4816-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[95]
-File: 023_cont_rv_distr_files/figure-latex/rw-normal-3panels-1.pdf Graphic file (type pdf)
-<use 023_cont_rv_distr_files/figure-latex/rw-normal-3panels-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-Package amsmath Warning: Foreign command \over;
-(amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 4971.
-
-[96]
-File: 023_cont_rv_distr_files/figure-latex/gaussian-plot-demo-1.pdf Graphic file (type pdf)
-<use 023_cont_rv_distr_files/figure-latex/gaussian-plot-demo-1.pdf>
-[97] [98]
-File: 023_cont_rv_distr_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (type pdf)
-<use 023_cont_rv_distr_files/figure-latex/unnamed-chunk-6-1.pdf>
-[99]
-File: 023_cont_rv_distr_files/figure-latex/unnamed-chunk-9-1.pdf Graphic file (type pdf)
-<use 023_cont_rv_distr_files/figure-latex/unnamed-chunk-9-1.pdf>
-[100]
-File: 023_cont_rv_distr_files/figure-latex/alcune-chi-quadrato-1.pdf Graphic file (type pdf)
-<use 023_cont_rv_distr_files/figure-latex/alcune-chi-quadrato-1.pdf>
-[101]
-File: 023_cont_rv_distr_files/figure-latex/unnamed-chunk-10-1.pdf Graphic file (type pdf)
-<use 023_cont_rv_distr_files/figure-latex/unnamed-chunk-10-1.pdf>
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 12.0pt on input line 5231.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 12.0011pt on input line 5231.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 11.99872pt on input line 5231.
-File: 023_cont_rv_distr_files/figure-latex/alcune-t-student-1.pdf Graphic file (type pdf)
-<use 023_cont_rv_distr_files/figure-latex/alcune-t-student-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[102] [103]
-File: 023_cont_rv_distr_files/figure-latex/some-beta-distr-1.pdf Graphic file (type pdf)
-<use 023_cont_rv_distr_files/figure-latex/some-beta-distr-1.pdf>
-[104]
-File: 023_cont_rv_distr_files/figure-latex/unnamed-chunk-11-1.pdf Graphic file (type pdf)
-<use 023_cont_rv_distr_files/figure-latex/unnamed-chunk-11-1.pdf>
-File: 023_cont_rv_distr_files/figure-latex/unnamed-chunk-13-1.pdf Graphic file (type pdf)
-<use 023_cont_rv_distr_files/figure-latex/unnamed-chunk-13-1.pdf>
-[105] [106]
-File: 023_cont_rv_distr_files/figure-latex/unnamed-chunk-18-1.pdf Graphic file (type pdf)
-<use 023_cont_rv_distr_files/figure-latex/unnamed-chunk-18-1.pdf>
-[107] [108] [109
-
-] [110] [111
-
-] [112] [113] [114]
-File: 025_intro_bayes_files/figure-latex/ch-03-02-models-types-of-priors-1.pdf Graphic file (type pdf)
-<use 025_intro_bayes_files/figure-latex/ch-03-02-models-types-of-priors-1.pdf>
-[115]
-File: 025_intro_bayes_files/figure-latex/unnamed-chunk-1-1.pdf Graphic file (type pdf)
-<use 025_intro_bayes_files/figure-latex/unnamed-chunk-1-1.pdf>
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 10.0pt on input line 5663.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 7.0pt on input line 5663.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 5.0pt on input line 5663.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 10.00092pt on input line 5663.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 7.00064pt on input line 5663.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 5.00046pt on input line 5663.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 9.99893pt on input line 5663.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 6.99925pt on input line 5663.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 4.99947pt on input line 5663.
-[116] [117]
-File: 025_intro_bayes_files/figure-latex/likefutexpect-1.pdf Graphic file (type pdf)
-<use 025_intro_bayes_files/figure-latex/likefutexpect-1.pdf>
-[118] [119] [120] [121
-
-] [122]
-File: 026_conjugate_families_files/figure-latex/unnamed-chunk-1-1.pdf Graphic file (type pdf)
-<use 026_conjugate_families_files/figure-latex/unnamed-chunk-1-1.pdf>
-[123]
-File: 026_conjugate_families_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
-<use 026_conjugate_families_files/figure-latex/unnamed-chunk-3-1.pdf>
-File: 026_conjugate_families_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (type pdf)
-<use 026_conjugate_families_files/figure-latex/unnamed-chunk-5-1.pdf>
-[124] [125]
-File: 026_conjugate_families_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (type pdf)
-<use 026_conjugate_families_files/figure-latex/unnamed-chunk-6-1.pdf>
-[126]
-
-LaTeX Warning: Reference `thm:beta-binom' on page 127 undefined on input line 6024.
-
-[127]
-File: 026_conjugate_families_files/figure-latex/unnamed-chunk-13-1.pdf Graphic file (type pdf)
-<use 026_conjugate_families_files/figure-latex/unnamed-chunk-13-1.pdf>
-[128] [129] [130
-
-] [131]
-File: 027_balance_prior_post_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
-<use 027_balance_prior_post_files/figure-latex/unnamed-chunk-3-1.pdf>
-[132]
-File: 027_balance_prior_post_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (type pdf)
-<use 027_balance_prior_post_files/figure-latex/unnamed-chunk-5-1.pdf>
-File: 027_balance_prior_post_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type pdf)
-<use 027_balance_prior_post_files/figure-latex/unnamed-chunk-7-1.pdf>
-[133] [134]
-File: 027_balance_prior_post_files/figure-latex/unnamed-chunk-9-1.pdf Graphic file (type pdf)
-<use 027_balance_prior_post_files/figure-latex/unnamed-chunk-9-1.pdf>
-[135]
-File: 027_balance_prior_post_files/figure-latex/unnamed-chunk-10-1.pdf Graphic file (type pdf)
-<use 027_balance_prior_post_files/figure-latex/unnamed-chunk-10-1.pdf>
-[136] [137] [138
-
-] [139] [140] [141]
-File: 036_posterior_sim_files/figure-latex/grid-method-6points-posterior-plot-1.pdf Graphic file (type pdf)
-<use 036_posterior_sim_files/figure-latex/grid-method-6points-posterior-plot-1.pdf>
-File: 036_posterior_sim_files/figure-latex/grid-method-6points-posterior-plot-sampling-1.pdf Graphic file (type pdf)
-<use 036_posterior_sim_files/figure-latex/grid-method-6points-posterior-plot-sampling-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[142]
-File: 036_posterior_sim_files/figure-latex/grid-method-100points-posterior-plot-sampling-1.pdf Graphic file (type pdf)
-<use 036_posterior_sim_files/figure-latex/grid-method-100points-posterior-plot-sampling-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[143]
-File: 036_posterior_sim_files/figure-latex/grid-method-100points-posterior-plot-and-correct-posterior-1.pdf Graphic file (type pdf)
-<use 036_posterior_sim_files/figure-latex/grid-method-100points-posterior-plot-and-correct-posterior-1.pdf>
-[144]
-LaTeX Font Info:    Font shape `TU/OperatorMonoSSmBook(0)/m/n' will be
-(Font)              scaled to size 6.0pt on input line 6703.
-[145]
-File: 036_posterior_sim_files/figure-latex/unnamed-chunk-10-1.pdf Graphic file (type pdf)
-<use 036_posterior_sim_files/figure-latex/unnamed-chunk-10-1.pdf>
-[146]
-File: /Users/corrado/_repositories/dspp/images/mcmc-chains-1.png Graphic file (type bmp)
-</Users/corrado/_repositories/dspp/images/mcmc-chains-1.png>
-[147] [148]
-Underfull \hbox (badness 10000) in paragraph at lines 6882--6883
-
- []
-
-[149]
-File: 036_posterior_sim_files/figure-latex/markovsim-1.pdf Graphic file (type pdf)
-<use 036_posterior_sim_files/figure-latex/markovsim-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[150]
-File: 036_posterior_sim_files/figure-latex/formetropolisdistr-1.pdf Graphic file (type pdf)
-<use 036_posterior_sim_files/figure-latex/formetropolisdistr-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[151] [152]
-File: 036_posterior_sim_files/figure-latex/metropolishistogramsim-1.pdf Graphic file (type pdf)
-<use 036_posterior_sim_files/figure-latex/metropolishistogramsim-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[153] [154] [155] [156] [157]
-File: 036_posterior_sim_files/figure-latex/sim-markov-chain-zetsche-1.pdf Graphic file (type pdf)
-<use 036_posterior_sim_files/figure-latex/sim-markov-chain-zetsche-1.pdf>
-[158]
-File: 036_posterior_sim_files/figure-latex/unnamed-chunk-29-1.pdf Graphic file (type pdf)
-<use 036_posterior_sim_files/figure-latex/unnamed-chunk-29-1.pdf>
-[159] [160] [161] [162
-
-] [163]
 LaTeX Font Info:    Font shape `TU/OperatorMonoSSmBook(0)/bx/n' in size <10.95> not available
-(Font)              Font shape `TU/OperatorMonoSSmBook(0)/b/n' tried instead on input line 7428.
+(Font)              Font shape `TU/OperatorMonoSSmBook(0)/b/n' tried instead on input line 821.
 LaTeX Font Info:    Font shape `TU/OperatorMonoSSmBook(0)/b/n' will be
-(Font)              scaled to size 8.2125pt on input line 7428.
-[164] [165] [166]
+(Font)              scaled to size 8.2125pt on input line 821.
+LaTeX Font Info:    Font shape `TU/OperatorMonoSSmBook(0)/m/it' will be
+(Font)              scaled to size 7.5pt on input line 829.
+LaTeX Font Info:    Font shape `TU/OperatorMonoSSmBook(0)/b/n' will be
+(Font)              scaled to size 7.5pt on input line 869.
+
+LaTeX Warning: Reference `intro-stan' on page 2 undefined on input line 884.
+
+[2] [3] [4]
 File: 040_beta_binomial_mod_files/figure-latex/trace-plot-gautret-1.pdf Graphic file (type pdf)
 <use 040_beta_binomial_mod_files/figure-latex/trace-plot-gautret-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 9.0pt on input line 1069.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 9.00082pt on input line 1069.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 8.99904pt on input line 1069.
+[5]
 File: 040_beta_binomial_mod_files/figure-latex/hist-post-gautret-1.pdf Graphic file (type pdf)
 <use 040_beta_binomial_mod_files/figure-latex/hist-post-gautret-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[167]
 File: 040_beta_binomial_mod_files/figure-latex/hist-post-gautret-plus-correct-1.pdf Graphic file (type pdf)
 <use 040_beta_binomial_mod_files/figure-latex/hist-post-gautret-plus-correct-1.pdf>
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[168]
-Underfull \vbox (badness 10000) detected at line 7760
- []
-
-
-Underfull \vbox (badness 10000) detected at line 7760
- []
-
-[169] [170] [171] [172]
-File: 041_mcmc_diagnostics_files/figure-latex/trace-plot-gautret-2-1.pdf Graphic file (type pdf)
-<use 041_mcmc_diagnostics_files/figure-latex/trace-plot-gautret-2-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-File: images/bad-trace-bayesrules.png Graphic file (type bmp)
-<images/bad-trace-bayesrules.png>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[173
-
-] [174]
-File: 041_mcmc_diagnostics_files/figure-latex/unnamed-chunk-2-1.pdf Graphic file (type pdf)
-<use 041_mcmc_diagnostics_files/figure-latex/unnamed-chunk-2-1.pdf>
-[175]
-File: 041_mcmc_diagnostics_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pdf)
-<use 041_mcmc_diagnostics_files/figure-latex/unnamed-chunk-4-1.pdf>
-File: 041_mcmc_diagnostics_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (type pdf)
-<use 041_mcmc_diagnostics_files/figure-latex/unnamed-chunk-5-1.pdf>
-[176] [177]
-File: 041_mcmc_diagnostics_files/figure-latex/unnamed-chunk-8-1.pdf Graphic file (type pdf)
-<use 041_mcmc_diagnostics_files/figure-latex/unnamed-chunk-8-1.pdf>
-File: images/ch6-acf-2-1.png Graphic file (type bmp)
-<images/ch6-acf-2-1.png>
-[178]
-File: 041_mcmc_diagnostics_files/figure-latex/unnamed-chunk-11-1.pdf Graphic file (type pdf)
-<use 041_mcmc_diagnostics_files/figure-latex/unnamed-chunk-11-1.pdf>
-[179]
-File: 041_mcmc_diagnostics_files/figure-latex/unnamed-chunk-14-1.pdf Graphic file (type pdf)
-<use 041_mcmc_diagnostics_files/figure-latex/unnamed-chunk-14-1.pdf>
-[180] [181] [182] [183
-
-] [184]
-File: 045_summarize_posterior_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pdf)
-<use 045_summarize_posterior_files/figure-latex/unnamed-chunk-4-1.pdf>
-[185]
-Overfull \hbox (21.64752pt too wide) in paragraph at lines 8372--8374
-\TU/lmr/m/n/10 Gli stessi risultati si ottiengono usando la chiamata a \TU/OperatorMonoSSmBook(0)/m/n/10 bayesrules::summarize_beta_binomial()\TU/lmr/m/n/10 : 
- []
-
-[186]
-File: 045_summarize_posterior_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type pdf)
-<use 045_summarize_posterior_files/figure-latex/unnamed-chunk-7-1.pdf>
-[187]
-Missing character: There is no 𝛣 (U+1D6E3) in font [lmroman10-regular]:mapping=tex-text;!
-[188] [189] [190] [191
-
-] [192] [193]
-File: 046_ppc_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pdf)
-<use 046_ppc_files/figure-latex/unnamed-chunk-4-1.pdf>
-[194]
-File: 046_ppc_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (type pdf)
-<use 046_ppc_files/figure-latex/unnamed-chunk-5-1.pdf>
-
-LaTeX Warning: Reference `schema-beta-bin-distr-pred-post' on page 195 undefined on input line 8800.
-
-[195] [196] [197]
-File: 046_ppc_files/figure-latex/unnamed-chunk-13-1.pdf Graphic file (type pdf)
-<use 046_ppc_files/figure-latex/unnamed-chunk-13-1.pdf>
-File: 046_ppc_files/figure-latex/unnamed-chunk-14-1.pdf Graphic file (type pdf)
-<use 046_ppc_files/figure-latex/unnamed-chunk-14-1.pdf>
-[198] [199]
-File: 046_ppc_files/figure-latex/unnamed-chunk-20-1.pdf Graphic file (type pdf)
-<use 046_ppc_files/figure-latex/unnamed-chunk-20-1.pdf>
-[200]
-File: 046_ppc_files/figure-latex/unnamed-chunk-23-1.pdf Graphic file (type pdf)
-<use 046_ppc_files/figure-latex/unnamed-chunk-23-1.pdf>
-File: 046_ppc_files/figure-latex/unnamed-chunk-24-1.pdf Graphic file (type pdf)
-<use 046_ppc_files/figure-latex/unnamed-chunk-24-1.pdf>
-File: 046_ppc_files/figure-latex/unnamed-chunk-25-1.pdf Graphic file (type pdf)
-<use 046_ppc_files/figure-latex/unnamed-chunk-25-1.pdf>
-[201] [202]
-File: 046_ppc_files/figure-latex/unnamed-chunk-28-1.pdf Graphic file (type pdf)
-<use 046_ppc_files/figure-latex/unnamed-chunk-28-1.pdf>
-File: 046_ppc_files/figure-latex/unnamed-chunk-29-1.pdf Graphic file (type pdf)
-<use 046_ppc_files/figure-latex/unnamed-chunk-29-1.pdf>
-[203] [204] [205
-
-] [206]
-File: 050_normal_normal_mod_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pdf)
-<use 050_normal_normal_mod_files/figure-latex/unnamed-chunk-4-1.pdf>
-File: 050_normal_normal_mod_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (type pdf)
-<use 050_normal_normal_mod_files/figure-latex/unnamed-chunk-6-1.pdf>
-[207] [208]
-LaTeX Font Info:    Font shape `TU/OperatorMonoSSmBook(0)/bx/n' in size <12> not available
-(Font)              Font shape `TU/OperatorMonoSSmBook(0)/b/n' tried instead on input line 9498.
-LaTeX Font Info:    Font shape `TU/OperatorMonoSSmBook(0)/b/n' will be
-(Font)              scaled to size 9.0pt on input line 9498.
-[209] [210]
-File: 050_normal_normal_mod_files/figure-latex/unnamed-chunk-19-1.pdf Graphic file (type pdf)
-<use 050_normal_normal_mod_files/figure-latex/unnamed-chunk-19-1.pdf>
-[211] [212
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 9647--9648
-
- []
-
-[213]
-File: images/linear_function.png Graphic file (type bmp)
-<images/linear_function.png>
-[214] [215]
-File: 051_reglin1_files/figure-latex/unnamed-chunk-2-1.pdf Graphic file (type pdf)
-<use 051_reglin1_files/figure-latex/unnamed-chunk-2-1.pdf>
-[216] [217] [218
-
-] [219] [220]
-File: 052_reglin2_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type pdf)
-<use 052_reglin2_files/figure-latex/unnamed-chunk-7-1.pdf>
-[221]
-File: 052_reglin2_files/figure-latex/unnamed-chunk-8-1.pdf Graphic file (type pdf)
-<use 052_reglin2_files/figure-latex/unnamed-chunk-8-1.pdf>
-[222]
-File: 052_reglin2_files/figure-latex/unnamed-chunk-11-1.pdf Graphic file (type pdf)
-<use 052_reglin2_files/figure-latex/unnamed-chunk-11-1.pdf>
-[223]
-File: 052_reglin2_files/figure-latex/unnamed-chunk-14-1.pdf Graphic file (type pdf)
-<use 052_reglin2_files/figure-latex/unnamed-chunk-14-1.pdf>
-[224] [225]
-File: 052_reglin2_files/figure-latex/unnamed-chunk-16-1.pdf Graphic file (type pdf)
-<use 052_reglin2_files/figure-latex/unnamed-chunk-16-1.pdf>
-[226] [227] [228
-
-]
-
-LaTeX Warning: Reference `regr-lin-frequentista' on page 229 undefined on input line 10170.
-
-[229] [230] [231] [232] [233]
-File: 053_reglin3_files/figure-latex/unnamed-chunk-16-1.pdf Graphic file (type pdf)
-<use 053_reglin3_files/figure-latex/unnamed-chunk-16-1.pdf>
-[234] [235] [236]
-File: 054_reglin4_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pdf)
-<use 054_reglin4_files/figure-latex/unnamed-chunk-4-1.pdf>
-[237
-
-]
-File: 054_reglin4_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (type pdf)
-<use 054_reglin4_files/figure-latex/unnamed-chunk-5-1.pdf>
-[238]
-File: 054_reglin4_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type pdf)
-<use 054_reglin4_files/figure-latex/unnamed-chunk-7-1.pdf>
-File: 054_reglin4_files/figure-latex/unnamed-chunk-8-1.pdf Graphic file (type pdf)
-<use 054_reglin4_files/figure-latex/unnamed-chunk-8-1.pdf>
-[239]
-File: 054_reglin4_files/figure-latex/unnamed-chunk-9-1.pdf Graphic file (type pdf)
-<use 054_reglin4_files/figure-latex/unnamed-chunk-9-1.pdf>
-[240] [241] [242] [243] [244
-
-] [245] [246]
-File: 055_reglin5_files/figure-latex/unnamed-chunk-9-1.pdf Graphic file (type pdf)
-<use 055_reglin5_files/figure-latex/unnamed-chunk-9-1.pdf>
-[247] [248] [249] [250
-
-]
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 20.74pt on input line 11114.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 14.4pt on input line 11114.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 20.7419pt on input line 11114.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 14.4013pt on input line 11114.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 20.73778pt on input line 11114.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 14.39845pt on input line 11114.
-[251]
-File: 060_anova_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (type pdf)
-<use 060_anova_files/figure-latex/unnamed-chunk-6-1.pdf>
-[252]
-File: 060_anova_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type pdf)
-<use 060_anova_files/figure-latex/unnamed-chunk-7-1.pdf>
-[253] [254] [255]
-File: 060_anova_files/figure-latex/unnamed-chunk-18-1.pdf Graphic file (type pdf)
-<use 060_anova_files/figure-latex/unnamed-chunk-18-1.pdf>
-File: images/anova1.pdf Graphic file (type pdf)
-<use images/anova1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-File: images/anova2.pdf Graphic file (type pdf)
-<use images/anova2.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-File: images/anova3.pdf Graphic file (type pdf)
-<use images/anova3.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[256] [257]
-Underfull \hbox (badness 1430) in paragraph at lines 11486--11487
-\TU/lmr/m/n/10 a posteriori dell’effetto di \TU/lmr/m/it/10 Objection \TU/lmr/m/n/10 nella condizione \TU/lmr/m/it/10 Social Interaction\TU/lmr/m/n/10 . Invece,
- []
-
-[258] [259] [260] [261] [262
-
-]
-Missing character: There is no 抓 (U+6293) in font Operator Mono SSm Book Italic/OT:script=latn;language=dflt;!
-Missing character: There is no 住 (U+4F4F) in font Operator Mono SSm Book Italic/OT:script=latn;language=dflt;!
-Missing character: There is no 男 (U+7537) in font Operator Mono SSm Book Italic/OT:script=latn;language=dflt;!
-Missing character: There is no 孩 (U+5B69) in font Operator Mono SSm Book Italic/OT:script=latn;language=dflt;!
-Missing character: There is no 撞 (U+649E) in font Operator Mono SSm Book Italic/OT:script=latn;language=dflt;!
-Missing character: There is no 監 (U+76E3) in font Operator Mono SSm Book Italic/OT:script=latn;language=dflt;!
-Missing character: There is no 視 (U+8996) in font Operator Mono SSm Book Italic/OT:script=latn;language=dflt;!
-Missing character: There is no 機 (U+6A5F) in font Operator Mono SSm Book Italic/OT:script=latn;language=dflt;!
-Missing character: There is no 師 (U+5E2B) in font Operator Mono SSm Book Italic/OT:script=latn;language=dflt;!
-Missing character: There is no 男 (U+7537) in font Operator Mono SSm Book Italic/OT:script=latn;language=dflt;!
-Missing character: There is no 孩 (U+5B69) in font Operator Mono SSm Book Italic/OT:script=latn;language=dflt;!
-[263] [264] [265] [266] [267] [268] [269] [270]
-Package hyperref Info: bookmark level for unknown bclogo defaults to 0 on input line 12068.
-File: bc-trombone.mps Graphic file (type mps)
-<bc-trombone.mps>
-Package mdframed Info: mdframed works in twoside mode on input line 12068.
-Package mdframed Info: mdframed detected package amsthm 
- changed the theorem header of amsthm
-(mdframed)              on input line 12068.
-[271
-
-] [272] [273] [274]
-File: 092_loo_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (type pdf)
-<use 092_loo_files/figure-latex/unnamed-chunk-6-1.pdf>
-[275] [276]
-File: 092_loo_files/figure-latex/unnamed-chunk-11-1.pdf Graphic file (type pdf)
-<use 092_loo_files/figure-latex/unnamed-chunk-11-1.pdf>
-[277] [278] [279] [280] [281] [282] [283] [284] [285] [286] [287] [288] [289] [290]
-File: 092_loo_files/figure-latex/unnamed-chunk-52-1.pdf Graphic file (type pdf)
-<use 092_loo_files/figure-latex/unnamed-chunk-52-1.pdf>
-[291]
-File: 092_loo_files/figure-latex/unnamed-chunk-57-1.pdf Graphic file (type pdf)
-<use 092_loo_files/figure-latex/unnamed-chunk-57-1.pdf>
-[292]
-File: 092_loo_files/figure-latex/unnamed-chunk-58-1.pdf Graphic file (type pdf)
-<use 092_loo_files/figure-latex/unnamed-chunk-58-1.pdf>
-[293]
-File: 092_loo_files/figure-latex/unnamed-chunk-61-1.pdf Graphic file (type pdf)
-<use 092_loo_files/figure-latex/unnamed-chunk-61-1.pdf>
-[294] [295] [296]
-File: 092_loo_files/figure-latex/unnamed-chunk-69-1.pdf Graphic file (type pdf)
-<use 092_loo_files/figure-latex/unnamed-chunk-69-1.pdf>
-[297] [298] [299] [300
-
-] [301] [302
-
-] [303] [304] [305
-
-]
-Missing character: There is no ⧵ (U+29F5) in font [latinmodern-math.otf]/OT:script=math;language=dflt;!
-Missing character: There is no ⧵ (U+29F5) in font [latinmodern-math.otf]/OT:script=math;language=dflt;!
-Missing character: There is no ⧵ (U+29F5) in font [latinmodern-math.otf]/OT:script=math;language=dflt;!
-File: images/sets-venn-diagrams.pdf Graphic file (type pdf)
-<use images/sets-venn-diagrams.pdf>
-File: images/demorgan.pdf Graphic file (type pdf)
-<use images/demorgan.pdf>
-[306] [307] [308
-
-] [309] [310] [311] [312] [313
-
-] [314]
-File: 806_log_rules_files/figure-latex/unnamed-chunk-1-1.pdf Graphic file (type pdf)
-<use 806_log_rules_files/figure-latex/unnamed-chunk-1-1.pdf>
-[315
-
-]
-File: 806_log_rules_files/figure-latex/unnamed-chunk-2-1.pdf Graphic file (type pdf)
-<use 806_log_rules_files/figure-latex/unnamed-chunk-2-1.pdf>
-File: 806_log_rules_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
-<use 806_log_rules_files/figure-latex/unnamed-chunk-3-1.pdf>
-[316]
-File: 806_log_rules_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pdf)
-<use 806_log_rules_files/figure-latex/unnamed-chunk-4-1.pdf>
-[317] [318]
-File: 806_log_rules_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (type pdf)
-<use 806_log_rules_files/figure-latex/unnamed-chunk-5-1.pdf>
-[319] [320
-
-] [321] [322] [323
-
-]
-File: 840_max_like_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
-<use 840_max_like_files/figure-latex/unnamed-chunk-3-1.pdf>
-[324] [325] [326]
-File: 840_max_like_files/figure-latex/unnamed-chunk-9-1.pdf Graphic file (type pdf)
-<use 840_max_like_files/figure-latex/unnamed-chunk-9-1.pdf>
-[327] [328] [329
-
-] [330] [331
-
-]
-File: 910_grid_method_files/figure-latex/gridappr1-1.pdf Graphic file (type pdf)
-<use 910_grid_method_files/figure-latex/gridappr1-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[332]
-File: 910_grid_method_files/figure-latex/gridappr2-1.pdf Graphic file (type pdf)
-<use 910_grid_method_files/figure-latex/gridappr2-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[333] [334]
-File: 910_grid_method_files/figure-latex/gridappr3-1.pdf Graphic file (type pdf)
-<use 910_grid_method_files/figure-latex/gridappr3-1.pdf>
-[335]
-File: 910_grid_method_files/figure-latex/gridappr4-1.pdf Graphic file (type pdf)
-<use 910_grid_method_files/figure-latex/gridappr4-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[336]
-File: 910_grid_method_files/figure-latex/gridappr5-1.pdf Graphic file (type pdf)
-<use 910_grid_method_files/figure-latex/gridappr5-1.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[337]
-File: 910_grid_method_files/figure-latex/unnamed-chunk-16-1.pdf Graphic file (type pdf)
-<use 910_grid_method_files/figure-latex/unnamed-chunk-16-1.pdf>
-[338] [339]
-File: 910_grid_method_files/figure-latex/unnamed-chunk-20-1.pdf Graphic file (type pdf)
-<use 910_grid_method_files/figure-latex/unnamed-chunk-20-1.pdf>
-[340]
-File: 910_grid_method_files/figure-latex/unnamed-chunk-21-1.pdf Graphic file (type pdf)
-<use 910_grid_method_files/figure-latex/unnamed-chunk-21-1.pdf>
-File: 910_grid_method_files/figure-latex/unnamed-chunk-22-1.pdf Graphic file (type pdf)
-<use 910_grid_method_files/figure-latex/unnamed-chunk-22-1.pdf>
-[341] [342] [343
-
-] [344]
-Underfull \hbox (badness 10000) in paragraph at lines 15283--15285
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 15285--15287
-
- []
-
-[345
-
-]
-Underfull \hbox (badness 1527) in paragraph at lines 15356--15357
-[]\TU/lmr/m/n/10 Un programma Stan contiene tre “blocchi” obbligatori: blocco \TU/OperatorMonoSSmBook(0)/m/n/10 data\TU/lmr/m/n/10 , blocco
- []
-
-[346] [347] [348] [349] [350
-
-]
-File: 915_distr_pred_post_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (type pdf)
-<use 915_distr_pred_post_files/figure-latex/unnamed-chunk-5-1.pdf>
-[351]
-File: 915_distr_pred_post_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (type pdf)
-<use 915_distr_pred_post_files/figure-latex/unnamed-chunk-6-1.pdf>
-[352] [353] [354
-
-] [355]
-
-Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 15710.
-
-[356]
-Missing character: There is no   (U+2006) in font [lmroman10-regular]:mapping=tex-text;!
-Missing character: There is no   (U+2006) in font [lmroman10-regular]:mapping=tex-text;!
-[357
-
-]
-File: images/Rlogo.png Graphic file (type bmp)
-<images/Rlogo.png>
-File: images/RStudio-Logo-Blue-Gradient.png Graphic file (type bmp)
-<images/RStudio-Logo-Blue-Gradient.png>
-File: images/rstudio_pics.png Graphic file (type bmp)
-<images/rstudio_pics.png>
-[358] [359] [360] [361] [362] [363] [364] [365] [366] [367] [368] [369] [370] [371] [372] [373] [374]
-Underfull \vbox (badness 1616) detected at line 17083
- []
-
-[375] [376]
-LaTeX Font Info:    Font shape `TU/OperatorMonoSSmBook(0)/bx/n' in size <10> not available
-(Font)              Font shape `TU/OperatorMonoSSmBook(0)/b/n' tried instead on input line 17209.
-LaTeX Font Info:    Font shape `TU/OperatorMonoSSmBook(0)/b/n' will be
-(Font)              scaled to size 7.5pt on input line 17209.
-[377] [378] [379] [380] [381]
-Missing character: There is no ├ (U+251C) in font Operator Mono SSm Book/OT:script=latn;language=dflt;!
-Missing character: There is no ─ (U+2500) in font Operator Mono SSm Book/OT:script=latn;language=dflt;!
-Missing character: There is no ─ (U+2500) in font Operator Mono SSm Book/OT:script=latn;language=dflt;!
-Missing character: There is no ├ (U+251C) in font Operator Mono SSm Book/OT:script=latn;language=dflt;!
-Missing character: There is no ─ (U+2500) in font Operator Mono SSm Book/OT:script=latn;language=dflt;!
-Missing character: There is no ─ (U+2500) in font Operator Mono SSm Book/OT:script=latn;language=dflt;!
-[382]
-Overfull \hbox (19.33112pt too wide) in paragraph at lines 17593--17594
-[]\TU/lmr/m/n/10 In altre parole, così facendo specifichiamo il percorso relativo del file \TU/OperatorMonoSSmBook(0)/m/n/10 dati_depressione.txt
- []
-
-[383] [384]
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[385] [386] [387] [388] [389]
-File: 928_R_tidyverse_files/figure-latex/unnamed-chunk-20-1.pdf Graphic file (type pdf)
-<use 928_R_tidyverse_files/figure-latex/unnamed-chunk-20-1.pdf>
-[390]
-File: 928_R_tidyverse_files/figure-latex/unnamed-chunk-21-1.pdf Graphic file (type pdf)
-<use 928_R_tidyverse_files/figure-latex/unnamed-chunk-21-1.pdf>
-File: 928_R_tidyverse_files/figure-latex/unnamed-chunk-22-1.pdf Graphic file (type pdf)
-<use 928_R_tidyverse_files/figure-latex/unnamed-chunk-22-1.pdf>
-[391]
-File: 928_R_tidyverse_files/figure-latex/unnamed-chunk-23-1.pdf Graphic file (type pdf)
-<use 928_R_tidyverse_files/figure-latex/unnamed-chunk-23-1.pdf>
-[392]
-File: 928_R_tidyverse_files/figure-latex/unnamed-chunk-24-1.pdf Graphic file (type pdf)
-<use 928_R_tidyverse_files/figure-latex/unnamed-chunk-24-1.pdf>
-[393] [394]
-Underfull \hbox (badness 10000) in paragraph at lines 18254--18256
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 18256--18257
-
- []
-
-File: images/hex-rmarkdown.png Graphic file (type bmp)
-<images/hex-rmarkdown.png>
-[395] [396] [397] [398]
+[6] [7] [8] [9] [10]
 
 ******************************************************
 Stock height and width: 845.04684pt by 597.50787pt
@@ -3492,16 +2453,11 @@ Sidefoothsep and sidefootwidth: 7pt and 117pt
 Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 ******************************************************
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 18442--18442
-\TU/lmr/m/it/10 com/article/research-confirms-a-link-between-intelligence-and-life-expectancy
- []
-
-[399
+[11
 
 
 
-] [400] [401] [402
+] [12
 
 
 ]
@@ -3529,21 +2485,13 @@ Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 LaTeX Info: Redefining \rmfamily on input line 3.
 LaTeX Info: Redefining \sffamily on input line 3.
 LaTeX Info: Redefining \ttfamily on input line 3.
-[403
-
-] [404] [405]
-LaTeX Info: Redefining \rmfamily on input line 227.
-LaTeX Info: Redefining \sffamily on input line 227.
-LaTeX Info: Redefining \ttfamily on input line 227.
-LaTeX Info: Redefining \rmfamily on input line 229.
-LaTeX Info: Redefining \sffamily on input line 229.
-LaTeX Info: Redefining \ttfamily on input line 229.
-) [406]
-Underfull \hbox (badness 10000) in paragraph at lines 18464--18464
-
- []
-
-[407
+LaTeX Info: Redefining \rmfamily on input line 15.
+LaTeX Info: Redefining \sffamily on input line 15.
+LaTeX Info: Redefining \ttfamily on input line 15.
+LaTeX Info: Redefining \rmfamily on input line 17.
+LaTeX Info: Redefining \sffamily on input line 17.
+LaTeX Info: Redefining \ttfamily on input line 17.
+) [13
 
 ]
 
@@ -3566,17 +2514,17 @@ Sidefoothsep and sidefootwidth: 7pt and 117pt
 Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 ******************************************************
 
-LaTeX Info: Redefining \rmfamily on input line 18472.
-LaTeX Info: Redefining \sffamily on input line 18472.
-LaTeX Info: Redefining \ttfamily on input line 18472.
+LaTeX Info: Redefining \rmfamily on input line 1333.
+LaTeX Info: Redefining \sffamily on input line 1333.
+LaTeX Info: Redefining \ttfamily on input line 1333.
 
-Underfull \hbox (badness 10000) in paragraph at lines 18476--18478
+Underfull \hbox (badness 10000) in paragraph at lines 1337--1339
 
  []
 
-LaTeX Info: Redefining \rmfamily on input line 18479.
-LaTeX Info: Redefining \sffamily on input line 18479.
-LaTeX Info: Redefining \ttfamily on input line 18479.
+LaTeX Info: Redefining \rmfamily on input line 1340.
+LaTeX Info: Redefining \sffamily on input line 1340.
+LaTeX Info: Redefining \ttfamily on input line 1340.
 The property list \polyglossia@langsetup contains the pairs (without outer
 braces):
 >  {latex/script}  =>  {latin}
@@ -3627,7 +2575,8 @@ braces):
 >  {english/babelname}  =>  {american}
 >  {english/localnumeral}  =>  {polyglossia@C@localnumeral}
 >  {english/Localnumeral}  =>  {polyglossia@C@localnumeral}.
-[408
+[14
+
 
 ]
 \tf@toc=\write8
@@ -3640,12 +2589,12 @@ braces):
 LaTeX Info: Redefining \rmfamily on input line 26.
 LaTeX Info: Redefining \sffamily on input line 26.
 LaTeX Info: Redefining \ttfamily on input line 26.
-LaTeX Info: Redefining \rmfamily on input line 2442.
-LaTeX Info: Redefining \sffamily on input line 2442.
-LaTeX Info: Redefining \ttfamily on input line 2442.
-LaTeX Info: Redefining \rmfamily on input line 2446.
-LaTeX Info: Redefining \sffamily on input line 2446.
-LaTeX Info: Redefining \ttfamily on input line 2446.
+LaTeX Info: Redefining \rmfamily on input line 209.
+LaTeX Info: Redefining \sffamily on input line 209.
+LaTeX Info: Redefining \ttfamily on input line 209.
+LaTeX Info: Redefining \rmfamily on input line 213.
+LaTeX Info: Redefining \sffamily on input line 213.
+LaTeX Info: Redefining \ttfamily on input line 213.
 )
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
@@ -3653,22 +2602,19 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: There were multiply-defined labels.
-
 Package rerunfilecheck Info: File `DataScience.out' has not changed.
-(rerunfilecheck)             Checksum: 3F8216F3928567CE9B8765E6A61E0FBD;85188.
+(rerunfilecheck)             Checksum: 488AADD7A6AEC3AF11FA9F5B0AA0D520;2632.
 Package logreq Info: Writing requests to 'DataScience.run.xml'.
 \openout1 = `DataScience.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 51772 strings out of 478241
- 1108738 string characters out of 5854291
- 2061005 words of memory out of 5000000
- 71234 multiletter control sequences out of 15000+600000
- 427766 words of font info for 172 fonts, out of 8000000 for 9000
+ 48260 strings out of 478241
+ 964602 string characters out of 5854291
+ 1960871 words of memory out of 5000000
+ 67961 multiletter control sequences out of 15000+600000
+ 419479 words of font info for 110 fonts, out of 8000000 for 9000
  16 hyphenation exceptions out of 8191
- 99i,16n,123p,3028b,6651s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 99i,12n,123p,2169b,6649s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on DataScience.pdf (426 pages).
+Output written on DataScience.pdf (24 pages).

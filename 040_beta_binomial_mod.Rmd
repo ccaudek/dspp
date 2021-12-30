@@ -7,6 +7,8 @@ suppressPackageStartupMessages(library("rethinking"))
 suppressPackageStartupMessages(library("brms"))
 ```
 
+In questo Capitolo vedremo come si possa fare inferenza su una proporzione impiegando nell'analisi il linguaggio Stan.
+
 ## Una proporzione 
 
 Si considerino $n$ variabili casuali Bernoulliane i.i.d.: 
@@ -19,12 +21,10 @@ Vogliamo stimare $\theta$ avendo osservato $y$. Essendo i.i.d., i dati possono e
 p(y \mid \theta) = \Bin(y \mid n, \theta) = \binom{n}{y}\theta^y (1 -\theta)^{n-y},
 \end{equation}
 \noindent
-dove nel termine di sinistra dell'equazione abbiamo ignorato $n$ in quanto viene considerato fisso per disegno.
-
-L'inferenza sul modello binomiale richiede di assegnare una distribuzione a priori su $\theta$ che dipende dall'informazione disponibile a priori. Se sceglamo, ad esempio, una $\Beta(2, 2)$ quale distribuzione a priori, il modello diventa:
+dove nel termine di sinistra dell'equazione abbiamo ignorato $n$ in quanto viene considerato fisso per disegno. L'inferenza sul modello binomiale richiede di assegnare una distribuzione a priori su $\theta$ che dipende dall'informazione disponibile a priori. Se sceglamo, ad esempio, una $\mbox{Beta}(2, 2)$ quale distribuzione a priori, il modello diventa:
 \begin{align}
 y &\sim \Bin(n, \theta) \notag\\
-\theta &\sim \Beta(2, 2),
+\theta &\sim \mbox{Beta}(2, 2),
 (\#eq:beta-binom-trump)
 \end{align}
 \noindent
@@ -55,7 +55,6 @@ SEED <- 374237 # set random seed for reproducibility
 Ci sono due passaggi essenziali per le analisi svolte mediante `cmdstanr`: 
 
 1. definire la struttura del modello bayesiano nella notazione Stan; 
-
 2. eseguire il campionamento della distribuzione a posteriori. 
 
 Esaminiamo questi due passaggi nel contesto del modello Beta-Binomiale definito dalla \@ref(eq:beta-binom-trump). 
@@ -167,15 +166,12 @@ Avendo assunto una distribuzione a priori per il parametro $\theta$, l'algoritmo
 Si noti che `$sample()` richiede due tipi di informazioni. Innanzitutto, dobbiamo specificare le informazioni sul modello in base a:
 
 - `mod` = la stringa di caratteri che definisce il modello (qui `oneprop1.stan`),
-
 - `data` = i dati in formato lista (`data1_list`).
 
 Dobbiamo inoltre specificare le informazioni sul campionamento MCMC utilizzando tre argomenti aggiuntivi:
 
 - L'argomento `chains` specifica quante catene di Markov parallele eseguire. Eseguiamo qui quattro catene, quindi otteniamo quattro campioni distinti di valori $\pi$. 
-
 - L'argomento `iter` specifica il numero desiderato di iterazioni o la lunghezza di ciascuna catena di Markov. Per impostazione predefinita, la prima metà di queste iterazioni è costituita da campioni "burn-in" o "warm-up" che verranno ignorati. La seconda metà è conservata e costituisce un campione della distribuzione a posteriori.
-
 - L'argomento `seed` per impostare il numero casuale che genera il seme per una simulazione `cmdstanr`.
 
 ### Burn-in
@@ -255,7 +251,6 @@ Svolgendo un'analisi bayesiana simile a questa, @Gautret_2020 hanno trovato che 
 Un articolo pubblicato da @Hulme_2020 si è posto il problema di rianalizzare i dati di @Gautret_2020.^[Si veda <https://osf.io/5dgmx/>.] Tra gli autori di questo articolo figura anche Eric-Jan Wagenmakers, uno psicologo molto conosciuto per i suoi contributi metodologici. @Hulme_2020 hanno osservato che, nelle  analisi statistiche riportate, @Gautret_2020 hanno escluso alcuni dati. Nel gruppo sperimentale, infatti, vi erano alcuni pazienti i quali, anziché migliorare, sono in realtà peggiorati. L'analisi statistica di @Gautret_2020 ha escluso i dati di questi pazienti. Se consideriamo tutti i pazienti --- non solo quelli selezionati da @Gautret_2020 --- la situazione diventa la seguente:
 
 - gruppo sperimentale: 10 positivi su 18; 
-
 - gruppo di controllo: 14 positivi su 16. 
 
 L'analisi dei dati proposta da @Hulme_2020 richiede l'uso di alcuni strumenti statistici che, in queste dispense, non verranno discussi. Ma possiamo giungere alle stesse conclusioni raggiunte da questi ricercatori anche usando le procedure statistiche descritte nel Paragrafo successivo. 

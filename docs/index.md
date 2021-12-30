@@ -1,8 +1,10 @@
 --- 
 title: "Psicometria"
 author: "Corrado Caudek"
-date: "2021-12-28"
-output: bookdown::pdf_document
+date: "2021-12-30"
+output:
+  bookdown::pdf_book:
+    highlight: pygments
 github-repo: ccaudek/dspp
 description: This is dspp, aka Data science per psicologi.
 maintitlepage:
@@ -106,7 +108,7 @@ url: https://github.com/ccaudek/dspp/
 
  \normalsize
 
-Data della versione presente: Dicembre 28, 2021.
+Data della versione presente: Dicembre 30, 2021.
 :::
 
 
