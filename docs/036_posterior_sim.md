@@ -6,14 +6,16 @@ In questo Capitolo ci occuperemo di metodi numerici per l'approssimazione della 
 
 ## Stima della distribuzione a posteriori
 
-In generale, in un problema bayesiano i dati $y$ provengono da una densità $p(y \mid \theta)$ e al parametro $\theta$ viene assegnata una densità a priori $p(\theta)$. Dopo avere osservato un campione $Y = y$, la funzione di verosimiglianza è uguale a $\mathcal{L}(\theta) = p(y \mid \theta)$ e la densità a posteriori diventa
+In un problema bayesiano i dati $y$ provengono da una densità $p(y \mid \theta)$ e al parametro $\theta$ viene assegnata una densità a priori $p(\theta)$. Dopo avere osservato un campione $Y = y$, la funzione di verosimiglianza è uguale a $\mathcal{L}(\theta) = p(y \mid \theta)$ e la densità a posteriori diventa
 \begin{equation}
 p(\theta \mid y) = \frac{p(\theta) \mathcal{L}(\theta)}{\int p(\theta) \mathcal{L}(\theta) d \theta}.
 \end{equation}
-Si noti che, quando usiamo il teorema di Bayes per calcolare la distribuzione a posteriori del parametro di un modello statistico, al denominatore troviamo un integrale. Se vogliamo trovare la distribuzione a posteriori con metodi analitici è necessario usare distribuzioni a priori coniugate per la verosimiglianza. Questo però non è sempre giustificato dal punto di vista teorico.
+Si noti che, quando usiamo il teorema di Bayes per calcolare la distribuzione a posteriori del parametro di un modello statistico, al denominatore troviamo un integrale 
+<!-- Se vogliamo trovare la distribuzione a posteriori con metodi analitici è necessario usare distribuzioni a priori coniugate per la verosimiglianza. Questo però non è sempre giustificato dal punto di vista teorico. -->
 <!-- Per quanto "semplice" in termini formali, questo approccio, però, limita di molto le possibili scelte del ricercatore.  -->
 <!-- Non è però sempre sensato, dal punto di vista teorico, utilizzare distribuzioni a priori coniugate per la verosimiglianza per i parametri di interesse.  -->
-Però, se usiamo delle distribuzioni a priori non coniutate per la verosimiglianza, ci troviamo in una condizione nella quale, per determinare la distribuzione a posteriori, è necessario calcolare un integrale che, nella maggior parte dei casi, non si può risolvere analiticamente. In altre parole: è possibile ottenere analiticamente la distribuzione a posteriori solo per alcune specifiche combinazioni di distribuzioni a priori e verosimiglianza, il che limita considerevolmente la flessibilità della modellizzazione. 
+<!-- Però, se usiamo delle distribuzioni a priori non coniutate per la verosimiglianza, ci troviamo in una condizione nella quale, per determinare la distribuzione a posteriori, è necessario calcolare un integrale  -->
+che, nella maggior parte dei casi, non si può risolvere analiticamente. In altre parole: è possibile ottenere analiticamente la distribuzione a posteriori solo per alcune specifiche combinazioni di distribuzioni a priori e verosimiglianza, il che limita considerevolmente la flessibilità della modellizzazione. 
 <!-- Inoltre, i sommari della distribuzione a posteriori sono espressi come rapporto di integrali. Ad esempio, la media a posteriori di $\theta$ è data da -->
 <!-- \begin{equation} -->
 <!-- \mathbb{E}(\theta \mid y) = \frac{\int \theta p(\theta) \mathcal{L}(\theta) d \theta}{\int p(\theta) \mathcal{L}(\theta) d \theta}. -->
@@ -21,18 +23,13 @@ Però, se usiamo delle distribuzioni a priori non coniutate per la verosimiglian
 <!-- Il calcolo del valore atteso a posteriori richiede dunque la valutazione di due integrali, ciascuno dei quali non esprimibile in forma chiusa.  -->
 Per questa ragione, la strada principale che viene seguita nella modellistica bayesiana è quella che porta a determinare la distribuzione a posteriori non per via analitica, ma bensì mediante metodi numerici. La simulazione fornisce dunque la strategia generale del calcolo bayesiano. 
 
-A questo fine vengono usati i metodi di campionamento detti Monte-Carlo Markov-Chain (MCMC). Tali metodi costituiscono una potente e praticabile alternativa per la costruzione della distribuzione a posteriori per modelli complessi e consentono di decidere quali distribuzioni a priori e quali distribuzioni di verosimiglianza usare sulla base di considerazioni teoriche soltanto, senza dovere preoccuparsi di altri vincoli. 
+Ci sono molte librerie $\R$ o Python che consentono di stimare la distribuzione a posteriori con metodi numerici, quindi in generale è molto improbabile che un ricercatore abbia bisogno di codificare un proprio algoritmo per risolvere questo problema. Ad oggi ci sono solo due buoni motivi per scrivere il codice che ha lo scopo di approssimare la distribuzione a posteriori per via numerica: o si sta progettando un nuovo metodo che sia in grado di migliorare quelli già esistenti (questo è un tipico problema da informatici o ingegneri) o si sta imparando come funzionano i metodi attuali. Dato che il nostro obiettivo è, appunto, quello di imparare, in questo capitolo vedremo come questo problema possa essere affrontato. Nel resto della dispensa useremo invece i metodi già disponibili nelle librerie $\R$. 
 
-Dato che è basata su metodi computazionalmente intensivi, la stima numerica della funzione a posteriori può essere svolta soltanto mediante software. In anni recenti i metodi Bayesiani di analisi dei dati sono diventati sempre più popolari proprio perché la potenza di calcolo necessaria per svolgere tali calcoli è ora alla portata di tutti. Questo non era vero solo pochi decenni fa. 
-
-In questo Capitolo vedremo come sia possibile calcolare in maniera approssimata  la distribuzione a posteriori. Presenteremo tre diverse tecniche che possono essere utilizzate a questo scopo:
+In questo Capitolo esaminando tre diverse tecniche che possono essere utilizzate per calcolare per via numerica la distribuzione a posteriori:
 
 1. il metodo basato su griglia,
-
 2. il metodo dell'approssimazione quadratica,
-
 3. il metodo di Monte Carlo basato su Catena di Markov (MCMC).
-
 
 ## Metodo basato su griglia
 
@@ -41,14 +38,10 @@ Il metodo basato su griglia (_grid-based_) è un metodo di approsimazione numeri
 Il metodo basato su griglia si sviluppa in quattro fasi:
 
 - fissare una griglia discreta di possibili valori $\theta$;^[È chiaro che, per ottenere buone approssimazioni, è necessaria una griglia molto densa.]
-
 - valutare la distribuzione a priori $p(\theta)$ e la funzione di verosimiglianza $\mathcal{L}(y \mid \theta)$ in corrispondenza di ciascun valore $\theta$ della griglia;
-
 - ottenere un'approssimazione discreta della densità a posteriori: (a) calcolare il prodotto $p(\theta) \mathcal{L} (y \mid \theta)$ per ciascun
 valore $\theta$ della griglia; e (b) normalizzare i prodotti così ottenuti in modo tale che la loro somma sia 1;
-
 - selezionare $N$ valori casuali della griglia in modo tale da ottenere un campione casuale delle densità a posteriori normalizzate.
-
 
 ### Modello Beta-Binomiale
 
@@ -272,7 +265,6 @@ post_sample %>%
 
 Possiamo concludere dicendo che il metodo basato su griglia è molto intuitivo e non richiede particolari competenze di programmazione per essere implementato. Inoltre,  fornisce un risultato che, per tutti gli scopi pratici, può essere considerato come un campione casuale estratto da $p(\theta \mid y)$. Tuttavia, anche se tale metodo fornisce risultati accuratissimi, esso ha un uso limitato. A causa della _maledizione della dimensionalità_^[Che cos'è la _maledizione della dimensionalità_? È molto facile da capire.  Supponiamo di utilizzare una griglia di 100 punti equispaziati. Nel caso di un solo parametro, sarà necessario calcolare 100 valori. Per due parametri devono essere  calcolari $100^2$ valori. Ma già per 10 parametri avremo bisogno di calcolare $10^{10}$ valori -- è facile capire che una tale quantità di calcoli è troppo grande anche per un computer molto potente. Per modelli che richiedono la stima di un numero non piccolo di parametri è dunque necessario procedere in un altro modo.], infatti, il metodo basato su griglia può essere solo usato nel caso di semplici modelli statistici, con non più di due parametri. Nella pratica concreta tale metodo viene dunque sostituito da altre tecniche più efficienti in quanto, anche nei più comuni modelli utilizzati in psicologia, vengono solitamente stimati centinaia se non migliaia di parametri.
 
-
 ## Approssimazione quadratica
 
 L'approssimazione quadratica è un altro metodo che può essere usato per superare il problema della "maledizione della dimensionalità". La motivazione di tale metodo è la seguente. Sappiamo che, in generale, la regione della distribuzione a posteriori che si trova in prossimità del suo massimo può essere ben approssimata dalla forma di una distribuzione Normale.^[Descrivere la distribuzione a posteriori mediante la distribuzione Normale significa utilizzare un'approssimazione che viene, appunto, chiamata "quadratica" (tale approssimazione si dice quadratica perché il logaritmo di una distribuzione gaussiana forma una parabola e la parabola è una funzione quadratica -- dunque, mediante questa approssimazione descriviamo il logaritmo della distribuzione a posteriori mediante una parabola).]
@@ -282,7 +274,6 @@ L'approssimazione quadratica si pone due obiettivi.
 1.  Trovare la moda della distribuzione a posteriori. Ci sono varie
     procedure di ottimizzazione, implementate in $\R$, in
     grado di trovare il massimo di una distribuzione.
-
 2.  Stimare la curvatura della distribuzione in prossimità della moda.
     Una stima della curvatura è sufficiente per trovare
     un'approssimazione quadratica dell'intera distribuzione. In alcuni
@@ -339,7 +330,9 @@ Il grafico precedente mostra che l'approssimazione quadratica fornisce risultati
 
 ## Metodo Monte Carlo {#chapter-simulazioneMC}
 
-Una verosimiglianza Binomiale e una distribuzione a priori Beta producono una distribuzione a posteriori Beta (si veda il capitolo \@ref(chapter-distr-coniugate)). Con una simulazione $\R$ è dunque facile  ricavare dei campioni causali dalla distribuzione a posteriori. Maggiore è il numero di campioni, migliore sarà l'approssimazione della distribuzione a posteriori. 
+I metodi più ampiamente adottati nell'analisi bayesiana per la costruzione della distribuzione a posteriori per modelli complessi sono i metodi di campionamento detti metodi Monte Carlo basati su catena di Markov (_Markov Chain Monte Carlo_, MCMC). Tali metodi consentono di decidere quali distribuzioni a priori e quali distribuzioni di verosimiglianza usare sulla base di considerazioni teoriche soltanto, senza dovere preoccuparsi di altri vincoli. Dato che è basata su metodi computazionalmente intensivi, la stima numerica MCMC della funzione a posteriori può essere svolta soltanto mediante software. In anni recenti i metodi Bayesiani di analisi dei dati sono diventati sempre più popolari proprio perché la potenza di calcolo necessaria per svolgere tali calcoli è ora alla portata di tutti. Questo non era vero solo pochi decenni fa. 
+
+Per introdurre i metodi MCMC consideriamo il caso di una verosimiglianza Binomiale e di una distribuzione a priori Beta. Sappiamo che, in tali circostanze, viene prodotta una distribuzione a posteriori Beta (si veda il capitolo \@ref(chapter-distr-coniugate)). Con una simulazione $\R$ è dunque facile  ricavare dei campioni causali dalla distribuzione a posteriori. Maggiore è il numero di campioni, migliore sarà l'approssimazione della distribuzione a posteriori. 
 
 Consideriamo nuovamente i dati di @zetschefuture2019 (23 "successi" in 30 prove Bernoulliane) e applichiamo a quei dati lo stesso modello del Capitolo \@ref(chapter-distr-coniugate):
 \begin{align}
@@ -387,7 +380,7 @@ print(mean(rbeta(1e5, shape1 = 25, shape2 = 17)), 6)
 \noindent
 Quando il numero di osservazioni (possiamo anche chiamarle "campioni") tratte dalla distribuzione a posteriori è molto grande, la distribuzione di tali campioni converge alla densità della popolazione (si veda l'Appendice \@ref(integration-mc)).^[Si noti, naturalmente, che il numero dei campioni di simulazione è controllato dal ricercatore; è totalmente diverso dalla dimensione del campione che è fissa ed è una proprietà dei dati.]
 
-Inoltre, le statistiche descrittive (es. media, moda, varianza, eccetera) dei campioni estratti dalla distribuzione a posteriori convergeranno ai corrispondenti valori della distribuzione a posteriori. La figura \@ref{fig:mcmc-chains-1} mostra come, all'aumentare del numero di repliche, la media, la mediana, la deviazione standard e l'asimmetria convergono ai veri valori della distribuzione a posteriori (linee rosse tratteggiate).
+Inoltre, le statistiche descrittive (es. media, moda, varianza, eccetera) dei campioni estratti dalla distribuzione a posteriori convergeranno ai corrispondenti valori della distribuzione a posteriori. La figura \@ref(fig:mcmc-chains-1) mostra come, all'aumentare del numero di repliche, la media, la mediana, la deviazione standard e l'asimmetria convergono ai veri valori della distribuzione a posteriori (linee rosse tratteggiate).
 
 \begin{figure}[h]
 
@@ -404,7 +397,6 @@ Inoltre, le statistiche descrittive (es. media, moda, varianza, eccetera) dei ca
 Nel Paragrafo \@ref(chapter-simulazioneMC) la simulazione Monte Carlo funzionava perché 
 
 - sapevamo che la distribuzione a posteriori era una $\mbox{Beta}(25, 17)$,
-
 - era possibile usare le funzioni $\R$ per estrarre campioni casuali da tale distribuzione. 
 
 \noindent
@@ -415,123 +407,11 @@ $$
 \noindent
 Una tale distribuzione non è implementata in $\R$ e dunque non possiamo campionare da $p(\theta \mid y)$. 
 
-Per fortuna, esiste un algoritmo chiamato Monte Carlo basato su catena di Markov (_Markov Chain Monte Carlo_, MCMC) che consente il campionamento da una distribuzione a posteriori senza che sia necessario conoscere la rappresentazione analitica di una tale distribuzione. I metodi Monte Carlo basati su catena di Markov consentono di costruire sequenze di punti (le "catene") nello spazio dei parametri le cui densità sono proporzionali alla distribuzione a posteriori --- in altre parole, dopo aver simulato un grande numero di passi della catena si possono usare i valori così generati come se fossero un campione casuale della distribuzione a posteriori. Le tecniche MCMC sono attualmente il metodo computazionale maggiormente utilizzato per risolvere i problemi di inferenza bayesiana.
-
-
-### Catene di Markov
-
-Per introdurre il concetto di catena di Markov, supponiamo che una persona esegua una passeggiata casuale sulla retta dei numeri naturali considerando solo i valori 1, 2, 3, 4, 5, 6.^[Seguiamo qui la presentazione fornita da [Bob Carpenter](https://github.com/bob-carpenter/prob-stats).] Se la persona è collocata su un valore interno dei valori possibili (ovvero, 2, 3, 4 o 5), nel passo successivo è altrettanto probabile che rimanga su quel numero o si sposti su un numero adiacente. Se si muove, è ugualmente probabile che si muova a sinistra o a destra. Se la persona si trova su uno dei valori estremi (ovvero, 1 o 6), nel passo successivo è altrettanto probabile che rimanga rimanga su quel numero o si sposti nella posizione adiacente.
-
-Questo è un esempio di una catena di Markov discreta. Una catena di Markov descrive il movimento probabilistico tra un numero di stati. Nell'esempio ci sono sei possibili stati, da 1 a 6, i quali corrispondono alle possibili posizioni della passeggiata casuale. Data la sua posizione corrente, la persona si sposterà nelle altre posizioni possibili con delle specifiche probabilità. La probabilità che si sposti in un'altra posizione dipende solo dalla sua posizione attuale e non dalle posizioni visitate in precedenza.
-
-È possibile descrivere il movimento tra gli stati nei termini delle cosiddette  _probabilità di transizione_, ovvero le probabilità di movimento tra tutti i possibili stati in un unico passaggio di una catena di Markov. Le probabilità di transizione sono riassunte in una _matrice di transizione_ $P$:
-
-
-```r
-p <- c(0, 0, 1, 0, 0, 0)
-
-P <- matrix(
-  c(.5, .5, 0, 0, 0, 0,
-    .25, .5, .25, 0, 0, 0,
-    0, .25, .5, .25, 0, 0,
-    0, 0, .25, .5, .25, 0,
-    0, 0, 0, .25, .5, .25,
-    0, 0, 0, 0, .5, .5
-    ),
-  nrow = 6, ncol = 6, byrow = TRUE)
-
-kableExtra::kable(P)
-```
-
-
-\begin{tabular}{r|r|r|r|r|r}
-\hline
-0.50 & 0.50 & 0.00 & 0.00 & 0.00 & 0.00\\
-\hline
-0.25 & 0.50 & 0.25 & 0.00 & 0.00 & 0.00\\
-\hline
-0.00 & 0.25 & 0.50 & 0.25 & 0.00 & 0.00\\
-\hline
-0.00 & 0.00 & 0.25 & 0.50 & 0.25 & 0.00\\
-\hline
-0.00 & 0.00 & 0.00 & 0.25 & 0.50 & 0.25\\
-\hline
-0.00 & 0.00 & 0.00 & 0.00 & 0.50 & 0.50\\
-\hline
-\end{tabular}
-
-\
-
-La prima riga della matrice di transizione $P$ fornisce le probabilità di passare a ciascuno degli stati da 1 a 6 in un unico passaggio a partire dalla posizione 1; la seconda riga fornisce le probabilità di transizione in un unico passaggio dalla posizione 2 e così via. Per esempio, il valore $P[1, 1]$ ci dice che, se la persona è nello stato 1, avrà una probabilità di 0.5 di rimanere in quello stato; $P[1, 2]$ ci dice che c'è una probabilità di 0.5 di passare dallo stato 1 allo stato 2. Gli altri elementi della prima riga sono 0 perché, in un unico passaggio, non è possibile passare dallo stato 1 agli stati 3, 4, 5 e 6. Il valore $P[2, 1]$ ci dice che, se la persona è nello stato 1 (seconda riga), avrà una probabilità di 0.25 di passare allo stato 1; avra una probabilità di 0.5 di rimanere in quello stato, $P[2, 2]$; e avrà una probabilità di 0.25 di passare allo stato 3, $P[2, 3]$; eccetera.
-
-Si notino alcune importanti proprietà di questa particolare catena di Markov. 
-
-- È possibile passare da ogni stato a qualunque altro stato in uno o più passaggi: una catena di Markov con questa proprietà si dice *irriducibile*. 
-
-- Dato che la persona si trova in un particolare stato, se può tornare a questo stato solo a intervalli regolari, si dice che la catena di Markov è *periodica*. In questo esempio la catena è *aperiodica* poiché la passeggiata casuale non può eitornare allo stato attuale a intervalli regolari.
-
-Un'importante proprietà di una catena di Markov irriducibile e aperiodica è che il passaggio ad uno stato del sistema dipende unicamente dallo stato immediatamente precedente e non dal come si è giunti a tale stato (dalla storia). Per questo motivo si dice che un processo markoviano è senza memoria. Tale "assenza di memoria" può essere interpretata come la proprietà mediante cui è possibile ottenere un insieme di campioni casuali da una distribuzione di interesse. Nel caso dell'inferenza bayesiana, la distribuzione di interesse è la distribuzione a posteriori, $p(\theta \mid y)$. Le catene di Markov consentono di stimare i valori di aspettazione di variabili rispetto alla distribuzione a posteriori.
-
-La matrice di transizione che si ottiene dopo un enorme numero di passi di una passeggiata casuale markoviana si chiama *distribuzione stazionaria*. Se una catena di Markov è irriducibile e aperiodica, allora ha un'unica distribuzione stazionaria $w$. La distribuzione limite di una tale catena di Markov, quando il numero di passi tende all'infinito, è uguale alla distribuzione stazionaria $w$.
-
-
-### Simulare una catena di Markov
-
-Un metodo per dimostrare l'esistenza della distribuzione stazionaria di una catena di Markov è quello di eseguire un esperimento di simulazione. Iniziamo una passeggiata casuale partendo da un particolare stato, diciamo la posizione 3, e quindi simuliamo molti passaggi della catena di Markov usando la matrice di transizione $P$. Al crescere del numero di passi della catena, le frequenze relative che descrivono il passaggio a ciascuno dei sei possibili nodi della catena approssimano sempre meglio la distribuzione stazionaria $w$. 
-
-Senza entrare nei dettagli della simulazione, la figura \@ref(fig:markovsim)  mostra i risultati ottenuti in 10,000 passi di una passeggiata casuale markoviana. Si noti che, all'aumentare del numero di iterazioni, le frequenze relative approssimano sempre meglio le probabilità nella distribuzione stazionaria $w = (0.1, 0.2, 0.2, 0.2, 0.2, 0.1)$.
-
-
-```r
-set.seed(123)
-s <- vector("numeric", 10000)
-s[1] <- 3
-for (j in 2:10000){
-  s[j] <- sample(1:6, size=1, prob=P[s[j - 1], ])
-}
-S <- data.frame(Iterazione = 1:10000,
-                Location = s)
-
-S %>% mutate(L1 = (Location == 1),
-             L2 = (Location == 2),
-             L3 = (Location == 3),
-             L4 = (Location == 4),
-             L5 = (Location == 5),
-             L6 = (Location == 6))  %>%
-  mutate(Proporzione_1 = cumsum(L1) / Iterazione,
-         Proporzione_2 = cumsum(L2) / Iterazione,
-         Proporzione_3 = cumsum(L3) / Iterazione,
-         Proporzione_4 = cumsum(L4) / Iterazione,
-         Proporzione_5 = cumsum(L5) / Iterazione,
-         Proporzione_6 = cumsum(L6) / Iterazione) %>%
-  select(Iterazione, Proporzione_1, Proporzione_2, Proporzione_3,
-         Proporzione_4, Proporzione_5, Proporzione_6) -> S1
-
-gather(S1, Outcome, Probability, -Iterazione) -> S2
-
-ggplot(S2, aes(Iterazione, Probability)) +
-  geom_line() +
-  facet_wrap(~ Outcome, ncol = 3) +
-  ylim(0, .4) +
-  ylab("Frequenza relativa") +
-  # theme(text=element_text(size=14))  +
-  scale_x_continuous(breaks = c(0, 3000, 6000, 9000))
-```
-
-\begin{figure}[h]
-
-{\centering \includegraphics[width=0.8\linewidth]{036_posterior_sim_files/figure-latex/markovsim-1} 
-
-}
-
-\caption{Frequenze relative degli stati da 1 a 6 in funzione del numero di iterazioni per la simulazione di una catena di Markov.}(\#fig:markovsim)
-\end{figure}
-
+Per fortuna, gli algoritmi MCMC consentono il campionamento da una distribuzione a posteriori _senza che sia necessario conoscere la rappresentazione analitica di una tale distribuzione_. I metodi Monte Carlo basati su catena di Markov consentono di costruire sequenze di punti (detti catene di Markov) nello spazio dei parametri le cui densità sono proporzionali alla distribuzione a posteriori --- in altre parole, dopo aver simulato un grande numero di passi della catena si possono usare i valori così generati come se fossero un campione casuale della distribuzione a posteriori. Le tecniche MCMC sono attualmente il metodo computazionale maggiormente utilizzato per risolvere i problemi di inferenza bayesiana. Un'introduzione alle catene di Markov è fornita nell'Appendice \@ref(markov-chains).
 
 ### Campionamento mediante algoritmi MCMC
 
-Il metodo di campionamento utilizzato dagli algoritmi Monte Carlo a catena di Markov (MCMC) crea una catena di Markov irriducibile e aperiodica, la cui distribuzione stazionaria equivale alla distribuzione a posteriori $p(\theta \mid y)$. Un modo generale per ottenere una tale catena di Markov è quello di usare l'algoritmo di Metropolis. L'algoritmo di Metropolis è il primo algoritmo MCMC che è stato proposto, ed è applicabile ad una grande varietà di problemi inferenziali di tipo bayesiano. Tale algoritmo è stato in seguito sviluppato allo scopo di renderlo via via più efficiente. Lo presentiamo qui in una forma intuitiva.
-
+Un modo generale per ottenere una catena di Markov la cui distribuzione equivale alla distribuzione a posteriori $p(\theta \mid y)$ è quello di usare l'algoritmo di Metropolis. L'algoritmo di Metropolis è il primo algoritmo MCMC che è stato proposto, ed è applicabile ad una grande varietà di problemi inferenziali di tipo bayesiano. Tale algoritmo è stato in seguito sviluppato allo scopo di renderlo via via più efficiente. Lo presentiamo qui in una forma intuitiva.
 
 ### Una passeggiata casuale sui numeri naturali
 
@@ -583,9 +463,7 @@ prob_dist %>%
 L'algoritmo di Metropolis corrisponde alla seguente passeggiata casuale.
 
 1. L'algoritmo inizia con un valore iniziale qualsiasi da 1 a $K=8$ della variabile casuale.
-
 2. Per simulare il valore successivo della sequenza, lanciamo una moneta equilibrata. Se esce testa, consideriamo come valore candidato il valore immediatamente precedente al valore corrente nella sequenza $1, \dots, 8$; se esce croce, il valore candidato sarà il valore immediatamente successivo al valore corrente nella sequenza.
-
 3. Calcoliamo il rapporto tra la probabilità del valore candidato e la probabilità del valore corrente:
 $$
 R = \frac{pd(\text{valore candidato})}{pd(\text{valore corrente})}.
@@ -680,10 +558,8 @@ La figura \@ref(fig:metropolishistogramsim) confronta l'istogramma dei valori si
 Vediamo ora come l'algoritmo di Metropolis possa venire usato per generare una catena di Markov irriducibile e aperiodica per la quale la distribuzione stazionaria è uguale alla distribuzione a posteriori di interesse.^[Una illustrazione visiva di come si svolge il processo di "esplorazione" dell'algoritmo di Metropolis è fornita in questo [post](https://elevanth.org/blog/2017/11/28/build-a-better-markov-chain/).] In termini generali, l'algoritmo di Metropolis include due fasi.
 
 - *Fase 1.* La selezione di un valore candidato $\theta'$ del parametro mediante il campionamento da una distribuzione proposta.
-
 - *Fase 2.* La decisione tra la possibilità di accettare il valore candidato $\theta^{(m+1)} = \theta'$ o di mantenere il valore corrente $\theta^{(m+1)} = \theta$ sulla base del seguente criterio:
     - se $\mathcal{L}(\theta' \mid y)p(\theta') > \mathcal{L}(\theta \mid y)p(\theta)$ il valore candidato viene sempre accettato;
-  
     - altrimenti il valore candidato viene accettato solo in una certa proporzione di casi.
 
 Esaminiamo ora nei dettagli il funzionamento dell'algoritmo di Metropolis.
@@ -740,7 +616,7 @@ posterior <- function(param) {
 }
 ```
 
-L'Appendice \@ref(es-pratico-zetsche-funzioni) mostra come un'approssimazione della distribuzione a posteriori $p(\theta \mid y)$ per questi dati possa essere ottenuta mediante il metodo basato su griglia. Qui vogliamo invece usare l'algoritmo di Metropolis.
+L'Appendice \@ref(es-pratico-zetsche-funzioni) mostra come un'approssimazione della distribuzione a posteriori $p(\theta \mid y)$ per questi dati possa essere ottenuta mediante il metodo basato su griglia. 
 
 <!-- Il risultato della figura precedente è stato ottenuto con il metodo basato su griglia. Vogliamo ora replicare tale risultato usando l'algoritmo di Metropolis. La figura  indica che la media a posteriori è pari a circa 0.6. Questo è il valore a posteriori più verosimile per il parametro $\theta$ alla luce dei dati osservati se assumiamo una distribuzione a priori $\mbox{Beta}(2, 10)$. Ci poniamo ora il problema di replicare tale risultato usando l'algoritmo di Metropolis. -->
 
@@ -908,7 +784,7 @@ acf(rednoise)
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{036_posterior_sim_files/figure-latex/unnamed-chunk-29-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{036_posterior_sim_files/figure-latex/unnamed-chunk-28-1} \end{center}
 
 Il correlogramma precedente mostra come l'autocorrelazione di ordine 1 sia circa pari a 0.4 e diminuisce per lag maggiori; per lag di 4, l'autocorrelazione diventa negativa e aumenta progressivamente fino ad un lag di 8; eccetera.
 
