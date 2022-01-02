@@ -1,7 +1,7 @@
 --- 
 title: "Psicometria"
 author: "Corrado Caudek"
-date: "2021-12-31"
+date: "2022-01-02"
 output:
   bookdown::pdf_book:
     highlight: tango
@@ -22,9 +22,9 @@ lang: it
 otherlangs: en-US
 documentclass: memoir
 classoption:
-- extrafontsizes
-- onecolumn
-- openright
+  - extrafontsizes
+  - onecolumn
+  - openright
 papersize: A4
 fontsize: 10pt
 # mainfontoptions:
@@ -51,17 +51,17 @@ bibliography:
   - refs.bib
   - packages.bib
 biblatexoptions:
-- backend=biber
-- style=authoryear-ibid
-- isbn=false
-- backref=true
-- giveninits=true
-- uniquename=init
-- maxcitenames=2
-- maxbibnames=150
-- sorting=nyt
-- sortcites=false
-- style=apa
+  - backend=biber
+  - style=authoryear-ibid
+  - isbn=false
+  - backref=true
+  - giveninits=true
+  - uniquename=init
+  - maxcitenames=2
+  - maxbibnames=150
+  - sorting=nyt
+  - sortcites=false
+  - style=apa
 chaptersummary: In breve
 backcover:
 - language: italian
@@ -75,9 +75,9 @@ backcover:
 backcoverfontsize: normalsize
 fig_crop: yes
 site: bookdown::bookdown_site
-always_allow_html: yes
-graphics: yes
-link-citations: yes
+always_allow_html: true
+graphics: true
+link-citations: true
 colorlinks: yes
 url: https://github.com/ccaudek/dspp/
 ---
@@ -108,15 +108,13 @@ url: https://github.com/ccaudek/dspp/
 
  \normalsize
 
-Data della versione presente: Dicembre 31, 2021.
+Data della versione presente: Gennaio 02, 2022.
 :::
 
 
 # Prefazione
 
-_Data Science per psicologi_ contiene il materiale delle lezioni dell'insegnamento di _Psicometria B000286_ (A.A. 2021/2022) rivolto agli studenti del primo anno del Corso di Laurea in Scienze e Tecniche Psicologiche dell'Università degli Studi di Firenze. _Psicometria_ si propone di fornire agli studenti un'introduzione all'analisi dei dati in psicologia.
-<!-- Voglio subito chiarire che questo insegnamento non sarà basato sull'abilità di ricordare le cose, ma sul saper risolvere problemi. In altre parole, per superare l'esame sarà necessario avere sviluppato la capacità di "sapere fare", ovvero la capacità di risolvere i problemi di analisi dei dati che verranno discussi a lezione e che sono presentati nelle dispense.  -->
-Le conoscenze/competenze che verranno sviluppate in questo insegnamento sono quelle della Data science, ovvero un insieme di  conoscenze/competenze che si pongono all'intersezione tra statistica (ovvero, richiedono la capacità di comprendere teoremi statistici) e informatica (ovvero, richiedono la capacità di sapere utilizzare un software).
+_Data Science per psicologi_ contiene il materiale delle lezioni dell'insegnamento di _Psicometria B000286_ (A.A. 2021/2022) rivolto agli studenti del primo anno del Corso di Laurea in Scienze e Tecniche Psicologiche dell'Università degli Studi di Firenze. _Psicometria_ si propone di fornire agli studenti un'introduzione all'analisi dei dati in psicologia. Le conoscenze/competenze che verranno sviluppate in questo insegnamento sono quelle della Data science, ovvero un insieme di  conoscenze/competenze che si pongono all'intersezione tra statistica (ovvero, richiedono la capacità di comprendere teoremi statistici) e informatica (ovvero, richiedono la capacità di sapere utilizzare un software).
 
 
 ## La psicologia e la Data science    
