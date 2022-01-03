@@ -2,9 +2,7 @@
 
 # I modelli bayesiani {#chapter-intro-bayes-inference}
 
-```{r setup, include = FALSE}
-source("_common.R")
-```
+
 
 I modelli bayesiani, computazionali o meno, hanno due caratteristiche distintive:
 
@@ -142,31 +140,14 @@ La figura seguente mostra esempi di distribuzioni a priori non informative, debo
 - *fortemente informativa* : $\theta_c \sim \mbox{Beta}(50,20)$;
 - *valore puntuale* : $\theta_c \sim \mbox{Beta}(\alpha, \beta)$ con $\alpha, \beta \rightarrow \infty$ e $\frac{\alpha}{\beta} = \frac{5}{2}$.
 
-```{r ch-03-02-models-types-of-priors, echo = F, fig.cap = "Esempi di distribuzioni a priori per il parametro $\\theta_c$ nel Modello Binomiale."}
-tibble(
-  theta = seq(0, 1, length.out = 401),
-  `non informativa` = dbeta(theta, 1, 1),
-  `debolmente informativa` = dbeta(theta, 5, 2),
-  `informativa` = dbeta(theta, 50, 20),
-  `puntuale` = dbeta(theta, 50000, 20000)
-) %>%
-  pivot_longer(
-    cols = -1,
-    names_to = "prior_type",
-    values_to = "prior"
-  ) %>%
-  mutate(
-    prior_type = factor(prior_type, levels = c('non informativa', 'debolmente informativa', 'informativa', 'puntuale'))
-  ) %>%
-  ggplot(aes(x = theta, y = prior)) +
-  geom_line() +
-  facet_wrap(~ prior_type, ncol = 2, scales = "free") +
-  labs(
-    x = latex2exp::TeX("Probabilità di successo $\\theta_c$"),
-    y = latex2exp::TeX("Probabilità a priori $P(\\theta_c)$")
-    # title = latex2exp::TeX("Distribuzione a priori per $\\theta$ (Modello Binomiale).")
-  )
-```
+\begin{figure}[h]
+
+{\centering \includegraphics[width=0.8\linewidth]{025_intro_bayes_files/figure-latex/ch-03-02-models-types-of-priors-1} 
+
+}
+
+\caption{Esempi di distribuzioni a priori per il parametro $\theta_c$ nel Modello Binomiale.}(\#fig:ch-03-02-models-types-of-priors)
+\end{figure}
 
 ### Selezione della distribuzione a priori
 
@@ -181,9 +162,14 @@ $$
 p(\theta) = \frac{\Gamma(12)}{\Gamma(2)\Gamma(10)}\theta^{2-1} (1-\theta)^{10-1}.
 $$
 
-```{r}
+
+```r
 bayesrules::plot_beta(alpha = 2, beta = 10, mean = TRUE, mode = TRUE)
 ```
+
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{025_intro_bayes_files/figure-latex/unnamed-chunk-1-1} \end{center}
 
 \noindent
 La $\mbox{Beta}(2, 10)$ esprime la credenza che $\theta$ assume valori $< 0.5$, con il valore più plausibile pari a circa 0.1. Questo è assolutamente implausibile, nel caso dell'esempio in discussione. Adotteremo una tale distribuzione a priori solo per scopi didattici, per esplorare le conseguenze di tale scelta (molto più sensato sarebbe stato usare $\mbox{Beta}(2, 2)$).
@@ -245,8 +231,10 @@ $$
 $$ 
 \noindent
 otteniamo
-```{r}
+
+```r
 dbinom(23, 30, 0.1)
+#> [1] 9.74e-18
 ```
 \noindent
 Se poniamo $\theta = 0.2$
@@ -255,13 +243,16 @@ $$
 $$ 
 \noindent
 otteniamo
-```{r}
+
+```r
 dbinom(23, 30, 0.2)
+#> [1] 3.58e-11
 ```
 \noindent
 e così via. La figura \@ref(fig:likefutexpect) --- costruita utilizzando 100 valori equispaziati $\theta \in [0, 1]$ --- fornisce una rappresentazione grafica della funzione di verosimiglianza.
 
-```{r likefutexpect, fig.cap="Funzione di verosimiglianza nel caso di 23 successi in 30 prove."}
+
+```r
 n <- 30
 y <- 23
 theta <- seq(0, 1, length.out = 100)
@@ -274,6 +265,15 @@ tibble(theta, like) %>%
     x = expression('Valori possibili di' ~ theta)
   )
 ```
+
+\begin{figure}[h]
+
+{\centering \includegraphics[width=0.8\linewidth]{025_intro_bayes_files/figure-latex/likefutexpect-1} 
+
+}
+
+\caption{Funzione di verosimiglianza nel caso di 23 successi in 30 prove.}(\#fig:likefutexpect)
+\end{figure}
 
 Come possiamo interpretare la curva che abbiamo ottenuto? Per alcuni valori $\theta$ la funzione di verosimiglianza assume valori piccoli; per altri valori $\theta$ la funzione di verosimiglianza assume valori più grandi. Questi ultimi sono i valori di $\theta$ "più credibili" e il valore 23/30 è il valore più credibile di tutti. La funzione di verosimiglianza di $\theta$ valuta la compatibilità dei dati osservati $Y = y$ con i diversi possibili valori $\theta$. In termini più formali possiamo dire che la funzione di verosimiglianza ha la seguente interpretazione: sulla base dei dati, $\theta_1 \in \Theta$ è più credibile di $\theta_2 \in \Theta$ come indice del modello probabilistico generatore delle osservazioni se $\mathcal{L}(\theta_1) > \mathcal{L}(\theta_1)$.
 
@@ -312,11 +312,13 @@ p(y = 23, n = 30) = \int_0^1 \binom{30}{23} \theta^{23} (1-\theta)^{7} \,\operat
 \noindent
 Una soluzione numerica si trova facilmente usando $\R$:
 
-```{r}
+
+```r
 like_bin <- function(theta) {
   choose(30, 23) * theta^23 * (1 - theta)^7
 }
 integrate(like_bin, lower = 0, upper = 1)$value
+#> [1] 0.0323
 ```
 
 \noindent
