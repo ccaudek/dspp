@@ -23,7 +23,7 @@ language:
     appendix_name: 'Appendice '
 rmd_files:
     - "index.Rmd"
-    # - "001_key_notions.Rmd"
+    - "001_key_notions.Rmd"
     # - "005_measurement.Rmd"
     # - "013_eda.Rmd"
     # - "015_prob_intro.Rmd"
@@ -34,7 +34,7 @@ rmd_files:
     # - "020_expval_var.Rmd"
     # - "022_discr_rv_distr.Rmd"
     # - "023_cont_rv_distr.Rmd"
-    - "025_intro_bayes.Rmd"
+    # - "025_intro_bayes.Rmd"
     # - "026_conjugate_families.Rmd"
     # - "027_balance_prior_post.Rmd"
     # - "036_posterior_sim.Rmd"
@@ -72,6 +72,6 @@ rmd_files:
     # - "925_R_classes.Rmd"
     # - "926_R_control.Rmd"
     # - "927_R_input_output.Rmd"
-    # - "928_R_tidyverse.Rmd"
+    - "928_R_tidyverse.Rmd"
     # - "929_R_markdown.Rmd"
     # - "930_R_missing_data.Rmd"

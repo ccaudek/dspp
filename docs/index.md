@@ -1,7 +1,7 @@
 --- 
 title: "Psicometria"
 author: "Corrado Caudek"
-date: "2022-01-03"
+date: "2022-01-04"
 output:
   bookdown::pdf_book:
     highlight: tango
@@ -108,7 +108,7 @@ url: https://github.com/ccaudek/dspp/
 
  \normalsize
 
-Data della versione presente: Gennaio 03, 2022.
+Data della versione presente: Gennaio 04, 2022.
 :::
 
 
