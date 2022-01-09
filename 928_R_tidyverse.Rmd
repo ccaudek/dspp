@@ -309,7 +309,7 @@ La prima volta che si usa il pacchetto `ggplot2` è necessario installarlo. Per 
 Consideriamo nuovamenti i dati contenuti nel `tibble` `msleep` e poniamoci il problema di rappresentare graficamente la relazione tra il numero medio di ore di sonno giornaliero (`sleep_total`) e il peso dell'animale (`bodywt`). Usando le impostazioni di default di `ggplot2`, con le istruzioni seguenti, otteniamo il grafico fornito dalla figura seguente.
 
 ```{r}
-data(msleep)
+data("msleep")
 p <- msleep %>% 
   ggplot(
     aes(x = bodywt, y = sleep_total)
@@ -340,24 +340,29 @@ p <- msleep %>%
 print(p)
 ```
 
-Infine, aggiustiamo il "tema" del grafico (si noti l'utilizzo di una tavolozza di colori adatta ai daltonici), aggiungiamo le etichette sugli assi e il titolo.
+Infine, aggiustiamo il "tema" del grafico (si noti l'utilizzo di una tavolozza di colori adatta ai daltonici mediante il pacchetto `viridis`), aggiungiamo le etichette sugli assi e il titolo.
 
 ```{r}
+library("viridis")
 msleep %>%
   ggplot(
     aes(x = log(bodywt), y = sleep_total, col = vore)
   ) +
-  geom_point(size = 3) +
-  scale_color_okabe_ito(name = "vore", alpha = .9) +
-  theme(legend.title = element_blank()) +
+  geom_point(size = 3, alpha = .8) +
+  # theme(legend.title = element_blank()) +
   labs(
     x = "Peso corporeo (log)",
     y = "Ore di sonno",
+    col = "Specie", 
     title = "Il sonno in 83 specie di mammiferi",
-    subtitle = "Savage e West (2007)"
-  )
+    subtitle = "Un esempio di visualizzazione con ggplot()",
+    caption = "Fonte: Savage e West (2007)"
+  ) +
+  theme_minimal() +
+  scale_fill_viridis(discrete = TRUE, option = "viridis")
 ```
 
+La visualizzazione può essere migliorata cambiando le etichette usate nella legenda del grafico. Per fare questo è necessario intervenire sui dati prima di usare `ggplot()` -- per esempio, usando le funzionalità di `forcats`.
 
 #### Istogramma
 
@@ -382,16 +387,16 @@ Uno stile di programmazione è un insieme di regole per la gestione dell'indenta
 
 ## Ottenere informazioni sulle funzioni $\R$
 
-Oltre a `?help <funzione>`, è possibile ricorrere all'ottima risorsa fornita dal pacchetto `introverse`:
+Oltre a `?help <funzione>`, è possibile ricorrere al pacchetto `introverse`:
 
 ```{r}
 remotes::install_github("spielmanlab/introverse")
 ```
 
 \noindent
-Il pacchetto `introverse` fornisce documentazione alternativa per funzioni e concetti comunemente usati in Base $\R$ e nel `tidyverse`. Istruzioni sull'uso delle funzioni di `introverse` vengono fornite quando si carica il pacchetto:
+Il pacchetto `introverse` fornisce documentazione alternativa per funzioni e concetti comunemente usati in Base $\R$ e nel `tidyverse`. Istruzioni relative all'uso delle funzioni disponibili vengono fornite quando si carica il pacchetto:
 
-```{r}
+```{r, eval=FALSE}
 library("introverse")
 ```
 

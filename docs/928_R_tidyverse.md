@@ -412,7 +412,7 @@ Consideriamo nuovamenti i dati contenuti nel `tibble` `msleep` e poniamoci il pr
 
 
 ```r
-data(msleep)
+data("msleep")
 p <- msleep %>% 
   ggplot(
     aes(x = bodywt, y = sleep_total)
@@ -457,29 +457,34 @@ print(p)
 
 \begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-22-1} \end{center}
 
-Infine, aggiustiamo il "tema" del grafico (si noti l'utilizzo di una tavolozza di colori adatta ai daltonici), aggiungiamo le etichette sugli assi e il titolo.
+Infine, aggiustiamo il "tema" del grafico (si noti l'utilizzo di una tavolozza di colori adatta ai daltonici mediante il pacchetto `viridis`), aggiungiamo le etichette sugli assi e il titolo.
 
 
 ```r
+library("viridis")
 msleep %>%
   ggplot(
     aes(x = log(bodywt), y = sleep_total, col = vore)
   ) +
-  geom_point(size = 3) +
-  scale_color_okabe_ito(name = "vore", alpha = .9) +
-  theme(legend.title = element_blank()) +
+  geom_point(size = 3, alpha = .8) +
+  # theme(legend.title = element_blank()) +
   labs(
     x = "Peso corporeo (log)",
     y = "Ore di sonno",
+    col = "Specie", 
     title = "Il sonno in 83 specie di mammiferi",
-    subtitle = "Savage e West (2007)"
-  )
+    subtitle = "Un esempio di visualizzazione con ggplot()",
+    caption = "Fonte: Savage e West (2007)"
+  ) +
+  theme_minimal() +
+  scale_fill_viridis(discrete = TRUE, option = "viridis")
 ```
 
 
 
 \begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-23-1} \end{center}
 
+La visualizzazione può essere migliorata cambiando le etichette usate nella legenda del grafico. Per fare questo è necessario intervenire sui dati prima di usare `ggplot()`. Per esempio, usando le funzionalità di `forcats`.
 
 #### Istogramma
 
@@ -503,13 +508,13 @@ msleep %>%
 
 \begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-24-1} \end{center}
 
-### Scrivere il codice in `R` con stile 
+### Scrivere il codice `R` con stile 
 
 Uno stile di programmazione è un insieme di regole per la gestione dell'indentazione dei blocchi di codice, per la creazione dei nomi dei file e delle variabili e per le convenzioni tipografiche che vengono usate. Scrivere il codice in `R` con stile consente di creare listati più leggibili e semplici da modificare, minimizza la possibilità di errore, e consente correzioni e modifiche più rapide. Vi sono molteplici stili di programmazione che possono essere utilizzati dall'utente, anche se è bene attenersi a quelle che sono le convenzioni maggiormente diffuse, allo scopo di favorire la comunicazione. In ogni caso, l'importante è di essere coerenti, ovvero di adottare le stesse convenzioni in tutte le parti del codice che si scrive. Ad esempio, se si sceglie di usare lo stile `snake_case` per il nome composto di una variabile (es., `personality_trait`), non è appropriato usare lo stile *lower Camel case* per un'altra variabile (es., `socialStatus`). Dato che questo argomento è stato trattato ampiamente in varie sedi, mi limito qui a rimandare ad uno [stile di programmazione](http://style.tidyverse.org/) molto popolare, quello proposto da Hadley Wickham, il creatore di `tidyverse`. La soluzione più semplice è quella installare `stiler`, che è uno RStudio Addin, e formattare il codice in maniera automatica utilizzando lo stile proposto da Hadley Wickham.  Si possono ottenere informazioni su `stiler` seguendo questo [link](https://github.com/r-lib/styler). 
 
 ## Ottenere informazioni sulle funzioni $\R$
 
-Oltre a `?help <funzione>`, è possibile ricorrere all'ottima risorsa fornita dal pacchetto `introverse`:
+Oltre a `?help <funzione>`, è possibile ricorrere al pacchetto `introverse`:
 
 
 ```r
@@ -517,7 +522,7 @@ remotes::install_github("spielmanlab/introverse")
 ```
 
 \noindent
-Il pacchetto `introverse` fornisce documentazione alternativa per funzioni e concetti comunemente usati in Base $\R$ e nel `tidyverse`. Istruzioni sull'uso delle funzioni di `introverse` vengono fornite quando si carica il pacchetto:
+Il pacchetto `introverse` fornisce documentazione alternativa per funzioni e concetti comunemente usati in Base $\R$ e nel `tidyverse`. Istruzioni relative all'uso delle funzioni disponibili vengono fornite quando si carica il pacchetto:
 
 
 ```r
