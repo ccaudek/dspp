@@ -680,12 +680,20 @@ Prima di presentare le funzionalità di \texttt{dplyr}, introduciamo l'operatore
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{leave\_house}\NormalTok{(}\FunctionTok{get\_dressed}\NormalTok{(}\FunctionTok{get\_out\_of\_bed}\NormalTok{(}\FunctionTok{wake\_up}\NormalTok{(me, }\AttributeTok{time =} \StringTok{"8:00"}\NormalTok{), }\AttributeTok{side =} \StringTok{"correct"}\NormalTok{), }
-\AttributeTok{pants =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{shirt =} \ConstantTok{TRUE}\NormalTok{), }\AttributeTok{car =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{bike =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{leave\_house}\NormalTok{(}
+  \FunctionTok{get\_dressed}\NormalTok{(}
+    \FunctionTok{get\_out\_of\_bed}\NormalTok{(}
+      \FunctionTok{wake\_up}\NormalTok{(me, }\AttributeTok{time =} \StringTok{"8:00"}\NormalTok{), }
+      \AttributeTok{side =} \StringTok{"correct"}\NormalTok{), }
+    \AttributeTok{pants =} \ConstantTok{TRUE}\NormalTok{, }
+    \AttributeTok{shirt =} \ConstantTok{TRUE}\NormalTok{), }
+  \AttributeTok{car =} \ConstantTok{TRUE}\NormalTok{, }
+  \AttributeTok{bike =} \ConstantTok{FALSE}
+\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-Il listato precedente descrive una serie di (pseudo) funzioni concatenate, le quali costituiscono gli argomenti di altre funzioni. Scritto così, il codice è molto difficile da capire. Possiamo però ottenere lo stesso risultato utilizzando l'operatore pipe che facilita la leggibilità del codice:
+Il listato precedente descrive una serie di (pseudo) funzioni concatenate, le quali costituiscono gli argomenti di altre funzioni. Scritto così, il codice è molto difficile da capire. Possiamo però ottenere lo stesso risultato utilizzando l'operatore pipe che facilita enormememnte la leggibilità del codice:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -699,7 +707,7 @@ Il listato precedente descrive una serie di (pseudo) funzioni concatenate, le qu
 
 In questa seconda versione del (pseudo) codice \texttt{R} si capisce molto meglio ciò che vogliamo fare. Il \texttt{tibble} \texttt{me} viene passato alla funzione \texttt{wake\_up()}. La funzione \texttt{wake\_up()} ha come argomento l'ora del giorno: \texttt{time\ =\ "8:00"}. Una volta ``svegliati'' (wake up) dobbiamo scendere dal letto. Quindi l'output di \texttt{wake\_up()} viene passato alla funzione \texttt{get\_out\_of\_bed()} la quale ha come argomento \texttt{side\ =\ "correct"} perché vogliamo scendere dal letto dalla parte giusta. E così via.
 
-Questo pseudo-codice chiarisce il significato dell'operatore pipe. L'operatore \texttt{\%\textgreater{}\%} viene utilizzato quando abbiamo una serie di funzioni concatenate. Per concatenazione di funzioni si intende una serie di funzioni nelle quali l'output di una funzione costituisce l'input della funzione successiva. L'operatore pipe è ``syntactic sugar'' per una serie di chiamate di funzioni concatenate, ovvero, detto in altre parole, consente di definire la concatenazione tra una serie di funzioni nelle quali il risultato (output) di una funzione viene utilizzato come l'input di una funzione successiva.
+Questo pseudo-codice chiarisce il significato dell'operatore pipe. L'operatore \texttt{\%\textgreater{}\%} è ``syntactic sugar'' per una serie di chiamate di funzioni concatenate, ovvero, detto in altre parole, consente di definire la relazione tra una serie di funzioni nelle quali il risultato (output) di una funzione viene utilizzato come l'input di una funzione successiva.
 
 \hypertarget{estrarre-una-singola-colonna-con-pull}{%
 \subsubsection{\texorpdfstring{Estrarre una singola colonna con \texttt{pull()}}{Estrarre una singola colonna con pull()}}\label{estrarre-una-singola-colonna-con-pull}}
@@ -1140,23 +1148,22 @@ Infine, aggiustiamo il ``tema'' del grafico (si noti l'utilizzo di una tavolozza
     \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{log}\NormalTok{(bodywt), }\AttributeTok{y =}\NormalTok{ sleep\_total, }\AttributeTok{col =}\NormalTok{ vore)}
 \NormalTok{  ) }\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{3}\NormalTok{, }\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \CommentTok{\# theme(legend.title = element\_blank()) +}
   \FunctionTok{labs}\NormalTok{(}
     \AttributeTok{x =} \StringTok{"Peso corporeo (log)"}\NormalTok{,}
     \AttributeTok{y =} \StringTok{"Ore di sonno"}\NormalTok{,}
-    \AttributeTok{col =} \StringTok{"Specie"}\NormalTok{, }
     \AttributeTok{title =} \StringTok{"Il sonno in 83 specie di mammiferi"}\NormalTok{,}
     \AttributeTok{subtitle =} \StringTok{"Un esempio di visualizzazione con ggplot()"}\NormalTok{,}
     \AttributeTok{caption =} \StringTok{"Fonte: Savage e West (2007)"}
 \NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_viridis}\NormalTok{(}\AttributeTok{discrete =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{option =} \StringTok{"viridis"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{scale\_fill\_viridis}\NormalTok{(}\AttributeTok{discrete =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{option =} \StringTok{"viridis"}\NormalTok{)}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{()) }
 \end{Highlighting}
 \end{Shaded}
 
 \begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-23-1} \end{center}
 
-La visualizzazione può essere migliorata cambiando le etichette usate nella legenda del grafico. Per fare questo è necessario intervenire sui dati prima di usare \texttt{ggplot()}. Per esempio, usando le funzionalità di \texttt{forcats}.
+La visualizzazione può essere migliorata cambiando le etichette della legenda del grafico. Per fare questo è necessario intervenire sui dati prima di usare \texttt{ggplot()} -- per esempio, come abbiamo fatto in precedenza con la funzione \texttt{forcats::fct\_recode()}.
 
 \hypertarget{istogramma}{%
 \subsubsection{Istogramma}\label{istogramma}}

@@ -43,11 +43,19 @@ Prima di presentare le funzionalità di `dplyr`, introduciamo l'operatore pipe `
 
 
 ```r
-leave_house(get_dressed(get_out_of_bed(wake_up(me, time = "8:00"), side = "correct"), 
-pants = TRUE, shirt = TRUE), car = TRUE, bike = FALSE)
+leave_house(
+  get_dressed(
+    get_out_of_bed(
+      wake_up(me, time = "8:00"), 
+      side = "correct"), 
+    pants = TRUE, 
+    shirt = TRUE), 
+  car = TRUE, 
+  bike = FALSE
+)
 ```
 
-Il listato precedente descrive una serie di (pseudo) funzioni concatenate, le quali costituiscono gli argomenti di altre funzioni. Scritto così, il codice è molto difficile da capire. Possiamo però ottenere lo stesso risultato utilizzando l'operatore pipe che facilita la leggibilità del codice:
+Il listato precedente descrive una serie di (pseudo) funzioni concatenate, le quali costituiscono gli argomenti di altre funzioni. Scritto così, il codice è molto difficile da capire. Possiamo però ottenere lo stesso risultato utilizzando l'operatore pipe che facilita enormememnte la leggibilità del codice:
 
 
 ```r
@@ -60,7 +68,7 @@ me %>%
 
 In questa seconda versione del (pseudo) codice `R` si capisce molto meglio ciò che vogliamo fare. Il `tibble` `me` viene passato alla funzione `wake_up()`. La funzione `wake_up()` ha come argomento l'ora del giorno: `time = "8:00"`. Una volta "svegliati" (wake up) dobbiamo scendere dal letto. Quindi l'output di `wake_up()` viene passato alla funzione `get_out_of_bed()` la quale ha come argomento `side = "correct"` perché vogliamo scendere dal letto dalla parte giusta. E così via. 
 
-Questo pseudo-codice chiarisce il significato dell'operatore pipe. L'operatore `%>%` viene utilizzato quando abbiamo una serie di funzioni concatenate. Per concatenazione di funzioni si intende una serie di funzioni nelle quali l'output di una funzione costituisce l'input della funzione successiva. L'operatore pipe è "syntactic sugar" per una serie di chiamate di funzioni concatenate, ovvero, detto in altre parole, consente di definire la concatenazione tra una serie di funzioni nelle quali il risultato (output) di una funzione viene utilizzato come l'input di una funzione successiva.
+Questo pseudo-codice chiarisce il significato dell'operatore pipe. L'operatore `%>%` è "syntactic sugar" per una serie di chiamate di funzioni concatenate, ovvero, detto in altre parole, consente di definire la relazione tra una serie di funzioni nelle quali il risultato (output) di una funzione viene utilizzato come l'input di una funzione successiva.
 
 #### Estrarre una singola colonna con `pull()`
 
@@ -467,24 +475,23 @@ msleep %>%
     aes(x = log(bodywt), y = sleep_total, col = vore)
   ) +
   geom_point(size = 3, alpha = .8) +
-  # theme(legend.title = element_blank()) +
   labs(
     x = "Peso corporeo (log)",
     y = "Ore di sonno",
-    col = "Specie", 
     title = "Il sonno in 83 specie di mammiferi",
     subtitle = "Un esempio di visualizzazione con ggplot()",
     caption = "Fonte: Savage e West (2007)"
   ) +
+  scale_fill_viridis(discrete = TRUE, option = "viridis") +
   theme_minimal() +
-  scale_fill_viridis(discrete = TRUE, option = "viridis")
+  theme(legend.title = element_blank()) 
 ```
 
 
 
 \begin{center}\includegraphics[width=0.8\linewidth]{928_R_tidyverse_files/figure-latex/unnamed-chunk-23-1} \end{center}
 
-La visualizzazione può essere migliorata cambiando le etichette usate nella legenda del grafico. Per fare questo è necessario intervenire sui dati prima di usare `ggplot()`. Per esempio, usando le funzionalità di `forcats`.
+La visualizzazione può essere migliorata cambiando le etichette della legenda del grafico. Per fare questo è necessario intervenire sui dati prima di usare `ggplot()` -- per esempio, come abbiamo fatto in precedenza con la funzione `forcats::fct_recode()`.
 
 #### Istogramma
 

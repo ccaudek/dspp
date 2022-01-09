@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.1.1)  9 JAN 2022 08:39
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.1.1)  9 JAN 2022 09:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2432,9 +2432,9 @@ LaTeX Font Info:    Font shape `TU/OperatorMonoSSmBook(0)/m/it' will be
 (Font)              scaled to size 7.5pt on input line 672.
 [2]
 LaTeX Font Info:    Font shape `TU/OperatorMonoSSmBook(0)/bx/n' in size <10> not available
-(Font)              Font shape `TU/OperatorMonoSSmBook(0)/b/n' tried instead on input line 705.
+(Font)              Font shape `TU/OperatorMonoSSmBook(0)/b/n' tried instead on input line 713.
 LaTeX Font Info:    Font shape `TU/OperatorMonoSSmBook(0)/b/n' will be
-(Font)              scaled to size 7.5pt on input line 705.
+(Font)              scaled to size 7.5pt on input line 713.
 [3]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -2458,11 +2458,11 @@ File: 928_R_tidyverse_files/figure-latex/unnamed-chunk-24-1.pdf Graphic file (ty
 <use 928_R_tidyverse_files/figure-latex/unnamed-chunk-24-1.pdf>
 [12]
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 12.0pt on input line 1189.
+(Font)              scaled to size 12.0pt on input line 1196.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 12.0011pt on input line 1189.
+(Font)              scaled to size 12.0011pt on input line 1196.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 11.99872pt on input line 1189.
+(Font)              scaled to size 11.99872pt on input line 1196.
 [13] [14
 
 ]
@@ -2546,17 +2546,17 @@ Sidefoothsep and sidefootwidth: 7pt and 117pt
 Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 ******************************************************
 
-LaTeX Info: Redefining \rmfamily on input line 1271.
-LaTeX Info: Redefining \sffamily on input line 1271.
-LaTeX Info: Redefining \ttfamily on input line 1271.
-
-Underfull \hbox (badness 10000) in paragraph at lines 1275--1277
-
- []
-
 LaTeX Info: Redefining \rmfamily on input line 1278.
 LaTeX Info: Redefining \sffamily on input line 1278.
 LaTeX Info: Redefining \ttfamily on input line 1278.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1282--1284
+
+ []
+
+LaTeX Info: Redefining \rmfamily on input line 1285.
+LaTeX Info: Redefining \sffamily on input line 1285.
+LaTeX Info: Redefining \ttfamily on input line 1285.
 The property list \polyglossia@langsetup contains the pairs (without outer
 braces):
 >  {latex/script}  =>  {latin}
