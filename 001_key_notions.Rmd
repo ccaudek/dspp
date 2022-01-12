@@ -6,6 +6,11 @@
 source("_common.R")
 ```
 
+> *You don't have to know everything. You simply need to know where to find it when necessary.*
+>
+> `r tufte::quote_footer('--- John Brunner')`
+
+
 La _data science_ si pone all'intersezione tra statistica e informatica. La statistica è un insieme di metodi ugilizzati per estrarre informazioni dai dati; l'informatica implementa tali procedure in un software. In questo Capitolo vengono introdotti i  concetti fondamentali.
 
 ## Popolazioni e campioni
