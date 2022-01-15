@@ -281,5 +281,5 @@ hist(stanfit@sim$samples[[1]][, 1])
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{914_stan_lang_files/figure-latex/unnamed-chunk-20-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{914_stan_lang_files/figure-latex/unnamed-chunk-19-1} \end{center}
 

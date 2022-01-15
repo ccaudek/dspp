@@ -196,7 +196,7 @@ Se usiamo `cmdstanr`, dobbiamo prima scrivere il codice con il modello statistic
 
 Scriviamo ora il nostro programma Stan "Hello, world" per generare campioni da una distribuzione Normale standard (con media zero e varianza unitaria).
 
-```{r}
+```{r stan}
 modelString = "
 parameters {
   real x;
@@ -226,12 +226,10 @@ ed eseguiamo il campionamento MCMC:
 
 ```{r, message = FALSE, warning=FALSE, results='hide'}
 fit <- mod$sample(
-  # data = data_list,
   iter_sampling = 4000L,
   iter_warmup = 2000L,
   seed = SEED,
   chains = 4L,
-  # parallel_chains = 2L,
   refresh = 0,
   thin = 1
 )
