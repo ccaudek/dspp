@@ -239,28 +239,17 @@ H(p, q) = H(p) + \mathbb{KL} (p \mid\mid q),
 \end{equation}
 il che mostra come la divergenza KL può essere interpretata come l'incremento di entropia rispetto a $H(p)$, quando si usa $q$ per rappresentare $p$.
 
-
-<!-- fino a qui  -->
-<!-- fino a qui  -->
-<!-- fino a qui  -->
-<!-- fino a qui  -->
-<!-- fino a qui  -->
-<!-- fino a qui  -->
-
-
 <!-- Anche se il valore assoluto dell'entropia è difficile da interpretare, l'entropia può essere usata per confrontare l'accuratezza predittiva di due modelli statistici. Nello specifico, l'entropia ci consente di quantificare l'informazione che viene perduta quando utilizziamo la distribuzione di probabilità ipotizzata da un modello, chiamiamola $p_{\mathcal{M}}$, per approssimare la distribuzione di probabilità del vero modello generatore dei dati, $p_t$. L'informazione che viene perduta quando $p_{\mathcal{M}}$ viene usata al posto di $p_t$ viene chiamata _entropia relativa_ o _divergenza di Kullback-Leibler_. La divergenza di Kullback-Leibler, denotata con $D_{KL}(p_t \mid\mid p_{\mathcal{M}})$, misura l'incremento della nostra incertezza quando una distribuzione "approssimata" viene usata in luogo della "vera" distribuzione di probabilità. -->
 
-:::{.definition}
-Per due distribuzioni discrete $p_t$ e $p_{\mathcal{M}}$, la divergenza KL di $p_{\mathcal{M}}$ da $p_t$ è definita come:
-\begin{equation}
-D_{KL}(p_t \mid\mid p_{\mathcal{M}}) = \sum_{i=1}^n p_t(y_i) \cdot \left[\log p_t(y_i) - \log p_{\mathcal{M}}(y_i)\right].
-(\#eq:kldivergence)
-\end{equation}
-:::
+<!-- :::{.definition} -->
+<!-- Per due distribuzioni discrete $p_t$ e $p_{\mathcal{M}}$, la divergenza KL di $p_{\mathcal{M}}$ da $p_t$ è definita come: -->
+<!-- \begin{equation} -->
+<!-- D_{KL}(p_t \mid\mid p_{\mathcal{M}}) = \sum_{i=1}^n p_t(y_i) \cdot \left[\log p_t(y_i) - \log p_{\mathcal{M}}(y_i)\right]. -->
+<!-- (\#eq:kldivergence) -->
+<!-- \end{equation} -->
+<!-- ::: -->
 
-
-
-La $D_{KL}$ introduce un piccolo cambiamento alla \@ref(eq:entropy): anziché considerare una sola distribuzione di probabilità, $p_t$, consideriaamo anche un'approssimazione a tale distribuzione, ovvero $p_{\mathcal{M}}$. Calcolando la differenza dei logaritmi dei valori delle due distribuzioni giungiamo alla \@ref(eq:kldivergence).
+<!-- La $D_{KL}$ introduce un piccolo cambiamento alla \@ref(eq:entropy): anziché considerare una sola distribuzione di probabilità, $p_t$, consideriaamo anche un'approssimazione a tale distribuzione, ovvero $p_{\mathcal{M}}$. Calcolando la differenza dei logaritmi dei valori delle due distribuzioni giungiamo alla \@ref(eq:kldivergence). -->
 
 <!-- La $D_{KL}$ misura dunque la quantità di informazione che viene perduta quando una distribuzione approssimata viene usata per descrivere le proprietà della distribuzione di riferimento. -->
 <!-- Infatti, ciò che viene calcolato nella divergenza KL è il valore atteso della differenza tra il logaritmo delle probabilità dei dati nella distribuzione $p_t$ e il logaritmo delle probabilità dei dati nella distribuzione approssimata $p_{\mathcal{M}}$: -->
@@ -268,18 +257,17 @@ La $D_{KL}$ introduce un piccolo cambiamento alla \@ref(eq:entropy): anziché co
 <!-- D_{KL}(p_t \mid\mid p_{\mathcal{M}})  = \E \left[\log p_t(y) - \log p_{\mathcal{M}}(y) \right]. -->
 <!-- (\#eq:kldivergenceev) -->
 <!-- \end{equation} -->
-Se c'è una perfetta corrispondenza tra le due distribuzioni, $p(\cdot) = q(\cdot)$, allora
-\begin{equation}
-D_{KL}(p \mid\mid q) = \E (\log p - \log q).
-\end{equation}
-Quindi, 
+<!-- Se c'è una perfetta corrispondenza tra le due distribuzioni, $p(\cdot) = q(\cdot)$, allora -->
+<!-- \begin{equation} -->
+<!-- D_{KL}(p \mid\mid q) = \E (\log p - \log q). -->
+<!-- \end{equation} -->
+<!-- Quindi,  -->
 
+<!-- \begin{equation} -->
+<!-- D_{KL}(p \mid\mid q) \sum_{i=1}^n p_t(y_i) \cdot \left[\log p_t(y_i) - \log p_t(y_i)\right] = 0, -->
+<!-- \end{equation} -->
 
-\begin{equation}
-D_{KL}(p \mid\mid q) \sum_{i=1}^n p_t(y_i) \cdot \left[\log p_t(y_i) - \log p_t(y_i)\right] = 0,
-\end{equation}
-
-ovvvero: nessuna incertezza aggiuntiva viene introdotta se una distribuzione viene usata per rappresentare se stessa. Altrimenti, cioè se $p_t \neq p_{\mathcal{M}}$, la $D_{KL}$ assume valori nell'intervallo $[0, \infty]$: all'aumentare della differenza tra $p_{\mathcal{M}}$ e $p_t$ aumenta il valore $D_{KL}(p_t \mid\mid p_{\mathcal{M}})$. Il modello con la misura $D_{KL}$ più bassa è ritenuto il migliore, nel senso che l'informazione persa quando si approssima la distribuzione del meccanismo generatore dei dati con la distribuzione prevista dal modello è la più bassa.
+<!-- ovvvero: nessuna incertezza aggiuntiva viene introdotta se una distribuzione viene usata per rappresentare se stessa. Altrimenti, cioè se $p_t \neq p_{\mathcal{M}}$, la $D_{KL}$ assume valori nell'intervallo $[0, \infty]$: all'aumentare della differenza tra $p_{\mathcal{M}}$ e $p_t$ aumenta il valore $D_{KL}(p_t \mid\mid p_{\mathcal{M}})$. Il modello con la misura $D_{KL}$ più bassa è ritenuto il migliore, nel senso che l'informazione persa quando si approssima la distribuzione del meccanismo generatore dei dati con la distribuzione prevista dal modello è la più bassa. -->
 
 ::: {.example}
 [da @McElreath_rethinking] Sia la distribuzione target $p = \{0.3, 0.7\}$. Supponiamo  che la distribuzione approssimata $q$ possa assumere valori da $q = \{0.01, 0.99\}$ a $q = \{0.99, 0.01\}$. Calcoliamo la divergenza KL.
@@ -304,7 +292,7 @@ head(t)
 ```
 
 \noindent
-Nella figura seguente sull'asse delle ascisse sono rappresentati i valori $q$ e sull'asse delle ordinante sono riportati i corrispondenti valori $D_{KL}$.
+Nella figura seguente sull'asse delle ascisse sono rappresentati i valori $q$ e sull'asse delle ordinante sono riportati i corrispondenti valori $\mathbb{KL}$.
 
 ```{r}
 t %>%
@@ -366,7 +354,7 @@ sum(true_py * log(true_py / q2))
 
 ### La divergenza dipende dalla direzione
 
-La divergenza KL non è una vera e propria metrica: per esempio, non è simmetrica. In generale, $D_{KL}(p_t \mid\mid p_{\mathcal{M}}) \neq D_{KL}(p_{\mathcal{M}} \mid\mid p_t)$, ovvero la $D_{KL}$ da $p_t$ a $p_{\mathcal{M}}$ è diversa dalla $D_{KL}$ da $p_{\mathcal{M}}$ a $p_t$.
+La divergenza KL non è una vera e propria metrica: per esempio, non è simmetrica. In generale, $\mathbb{KL}(p \mid\mid q) \neq \mathbb{KL}(q \mid\mid p)$, ovvero la $\mathbb{KL}$ da $p$ a $q$ è diversa dalla $\mathbb{KL}$ da $q$ a $p$.
 
 ::: {.example}
 Usando le seguenti istruzioni $\R$ otteniamo:
@@ -381,25 +369,56 @@ tibble(direction = c("Da q a p", "Da p a q"),
 ```
 :::
 
-## Expected log predictive density
+### Confronto tra modelli
 
-Nel caso continuo, la divergenza KL diventa:
+La divergenza KL viene utilizzata nel confronto tra modelli, ovvero ci consente di quantificare l'informazione che viene perduta quando utilizziamo la distribuzione di probabilità ipotizzata da un modello, chiamiamola $p_{\mathcal{M}}$, per approssimare la distribuzione di probabilità del vero modello generatore dei dati, $p_t$. La divergenza di Kullback-Leibler $\mathbb{KL}(p_t \mid\mid p_{\mathcal{M}})$ misura l'incremento della nostra incertezza quando la distribuzione "approssimata" ipotizzata dal modello $\mathcal{M}$ viene usata in luogo della distribuzione di probabilità $p_t$ del vero modello generatore dei dati $\mathcal{M}_0$.
+
+Supponiamo di avere $k$ modelli della distribuzione a posteriori, $\{q_{\mathcal{M}_1}, q_{\mathcal{M}_2}, \dots, q_{\mathcal{M}_k}\}$, e supponiamo inoltre di conoscere il vero modello generatore dei dati $\mathcal{M}_0$. Possiamo dunque scrivere
+\begin{align}
+\mathbb{KL} (p_{\mathcal{M}_0} \mid\mid q_{\mathcal{M}_1}) &= \E (\log p_{\mathcal{M}_0}) - \E (\log q_{\mathcal{M}_1})\notag\\
+\mathbb{KL} (p_{\mathcal{M}_0} \mid\mid q_{\mathcal{M}_2}) &= \E (\log p_{\mathcal{M}_0}) - \E (\log q_{\mathcal{M}_2})\notag\\
+&\cdots\notag\\
+\mathbb{KL} (p_{\mathcal{M}_0} \mid\mid q_{\mathcal{M}_k}) &= \E (\log p_{\mathcal{M}_0}) - \E (\log q_{\mathcal{M}_k}).
+(\#eq:kl-mod-comp)
+\end{align}
+La \@ref(eq:kl-mod-comp) può sembrare un esercizio futile poiché nella vita reale non conosciamo il vero modello generatore dei dati $\mathcal{M}_0$. È però facile rendersi conto che, poiché $p_{\mathcal{M}_0}$ è lo stesso per tutti i confronti, diventa possibile costruire un ordinamento dei modelli basato unicamente sul secondo termine della \@ref(eq:kl-mod-comp), ovvero senza nessun riferimento al vero modello generatore dei dati. Per il modello $\mathcal{M}_1$, il secondo termine della \@ref(eq:kl-mod-comp), ovvero 
 \begin{equation}
-D_{KL}(p_t \mid\mid p_{\mathcal{M}}) = \int_{-\infty}^{+\infty} p_{t}(y) \,\log p_{t}(y) \,\operatorname {d}\!y - \int_{-\infty}^{+\infty}p_{t}(y)\log p_{\mathcal{M}}(y) \,\operatorname {d}\!y.
-(\#eq:kl-div-cont)
-\end{equation}
-Se vengono confrontati due modelli, il primo termine della \@ref(eq:kl-div-cont) resta costante e il confronto si riduce al secondo termine della \@ref(eq:kl-div-cont), ovvero
-\begin{equation}
-\int_{-\infty}^{+\infty}p_{t}(y)\log p_{\mathcal{M}}(y) \,\operatorname {d}\!y.
+\E \log p_{\mathcal{M}_1}(y) = \int_{-\infty}^{+\infty}p_{t}(y)\log p_{\mathcal{M}_1}(y) \,\operatorname {d}\!y.,
 (\#eq:kl-div-cont-t2)
 \end{equation}
-\noindent
-Riscriviamo ora la \@ref(eq:kl-div-cont-t2) facendo riferimento alla distribuzione predittiva a posteriori, $p(\tilde{y} \mid y)$, perché ciò a cui siamo interessati è la divergenza di $p(\tilde{y} \mid y)$ da $p_{t}(y)$:
+ va sotto il nome di _expected log predictive density_ ($\elpd$)
+
+
+## Expected log predictive density
+
+<!-- Poniamoci ora il problema di capire come si possa stimare il secondo termine della \@ref(eq:kl-mod-comp), ovvero $\E (\log q_{\mathcal{M}})$. Per fare questo, iniziamo a scrivere la divergenza KL nel caso continuo: -->
+<!-- \begin{equation} -->
+<!-- \mathbb{KL}(p_t \mid\mid p_{\mathcal{M}}) = \int_{-\infty}^{+\infty} p_{t}(y) \,\log p_{t}(y) \,\operatorname {d}\!y - \int_{-\infty}^{+\infty}p_{t}(y)\log p_{\mathcal{M}}(y) \,\operatorname {d}\!y. -->
+<!-- (\#eq:kl-div-cont) -->
+<!-- \end{equation} -->
+<!-- Se vengono confrontati due modelli -->
+<!-- \begin{equation} -->
+<!-- \mathbb{KL}(p_t \mid\mid p_{\mathcal{M_1}}) = \int_{-\infty}^{+\infty} p_{t}(y) \,\log p_{t}(y) \,\operatorname {d}\!y - \int_{-\infty}^{+\infty}p_{t}(y)\log p_{\mathcal{M_1}}(y) \,\operatorname {d}\!y\notag -->
+<!-- \end{equation} -->
+<!-- \begin{equation} -->
+<!-- \mathbb{KL}(p_t \mid\mid p_{\mathcal{M_2}}) = \int_{-\infty}^{+\infty} p_{t}(y) \,\log p_{t}(y) \,\operatorname {d}\!y - \int_{-\infty}^{+\infty}p_{t}(y)\log p_{\mathcal{M_2}}(y) \,\operatorname {d}\!y\notag -->
+<!-- \end{equation} -->
+<!-- il primo termine della \@ref(eq:kl-div-cont) resta costante e il confronto si riduce al secondo termine dell'equazione, ovvero -->
+<!-- \begin{equation} -->
+<!-- \int_{-\infty}^{+\infty}p_{t}(y)\log p_{\mathcal{M}}(y) \,\operatorname {d}\!y. -->
+<!-- (\#eq:kl-div-cont-t2) -->
+<!-- \end{equation} -->
+Anche nella \@ref(eq:kl-div-cont-t2), però, abbiamo una quantità sconosciuta, ovvero $p_t(y)$. Quindi, in questa forma, la \@ref(eq:kl-div-cont-t2) non può essere usata. Riscriviamo dunque la \@ref(eq:kl-div-cont-t2) facendo riferimento alla distribuzione predittiva a posteriori, $p(\tilde{y} \mid y)$, perché ciò a cui siamo interessati è la divergenza di $p(\tilde{y} \mid y)$ da $p_{t}(y)$:
 \begin{equation}
 \elpd = \int_{\tilde{y}} p_{t}(\tilde{y}) \log p(\tilde{y} \mid y) \,\operatorname {d}\!\tilde{y}.
 (\#eq:elpd)
 \end{equation}
-La \@ref(eq:elpd) è chiamata _expected log predictive density_ ($\elpd$) e fornisce la risposta al problema che ci eravamo posti all'inizio di questo Capitolo, ovvero il problema di definire un criterio per valutare la capacità predittiva di un modello. Possiamo pensare alla \@ref(eq:elpd) dicendo che essa descrive la distribuzione predittiva a posteriori del modello ponderando la verosimiglianza dei possibili dati futuri con la vera distribuzione $p_t$. Di conseguenza, valori $\elpd$ più grandi corrispondono ad una maggiore capacità predittiva del modello.
+La \@ref(eq:elpd) è chiamata _expected log predictive density_ ($\elpd$) e fornisce la risposta al problema che ci eravamo posti all'inizio di questo Capitolo, ovvero il problema di definire un criterio per valutare (in maniera relativa) la capacità predittiva di un modello. Possiamo pensare alla \@ref(eq:elpd) dicendo che essa descrive la distribuzione predittiva a posteriori del modello ponderando la verosimiglianza dei possibili (sconosciuti) dati futuri ($\tilde{y}$) con la vera distribuzione $p_t$. Di conseguenza, valori $\elpd$ più grandi corrispondono ad una maggiore capacità predittiva del modello.
+
+
+
+
+
 
 Non dobbiamo preoccuparci di trovare una formulazione analitica della distribuzione predittiva a posteriori $p(\tilde{y} \mid y)$ perché, come abbiamo visto nel Capitolo \@ref(chapter-ppc), è possibile approssimare tale distribuzione mediante simulazione. Notiamo però che la \@ref(eq:elpd) è formulata nei termini del vero modello generatore dei dati, $p_t$, il quale, ovviamente, è ignoto.^[Se il modello sottostante i dati fosse noto non avremmo bisogno di cercare il modello migliore, perché $p_t$ è il modello migliore.] Di conseguenza, la quantità $\elpd$ non può mai essere calcolata in maniera esatta, ma può essere solo stimata. Il secondo problema di questo Capitolo è capire come la \@ref(eq:elpd) possa essere stimata utilizzando un campione di osservazioni.
 
@@ -1122,7 +1141,7 @@ library("latex2exp")
 
 m1_fit_r2 <- loo_R2(m1, summary = FALSE)
 foo <- tibble(R2 = as.numeric(m1_fit_r2))
-h1 <- foo %>% 
+h1 <- foo %>%
   ggplot(aes(x = R2)) +
   geom_density(alpha = 0.5) +
   xlab(TeX("$R^2$")) +
@@ -1131,7 +1150,7 @@ h1 <- foo %>%
 
 m2_fit_r2 <- loo_R2(m2, summary = FALSE)
 foo2 <- tibble(R2 = as.numeric(m2_fit_r2))
-h2 <- foo2 %>% 
+h2 <- foo2 %>%
   ggplot(aes(x = R2)) +
   geom_density(alpha = 0.5) +
   xlab(TeX("$R^2$")) +
@@ -1146,9 +1165,9 @@ Considerato l'intervallo a posteriori del 95%, anche in questo caso non abbiamo 
 
 ## Considerazioni conclusive {-}
 
-Dati due modelli computazionali che forniscono resoconti diversi di un set di dati, come possiamo decidere quale modello è maggiormente supportato dai dati? Nel presente Capitolo abbiamo visto come il problema del confronto di modelli possa essere formulato nei termini di un problema di inferenza statistica. 
+Dati due modelli computazionali che forniscono resoconti diversi di un set di dati, come possiamo decidere quale modello è maggiormente supportato dai dati? Nel presente Capitolo abbiamo visto come il problema del confronto di modelli possa essere formulato nei termini di un problema di inferenza statistica.
 
-Abbiamo visto come la divergenza KL possa essere usata per confrontare una "vera" distribuzione di probabilità con una sua approssimazione. Abbiamo anche visto come che, da un punto di vista Bayesiano, il problema del confronto tra modelli viene presentato nei termini della capacità predittiva di un modello per nuove osservazioni future. 
+Abbiamo visto come la divergenza KL possa essere usata per confrontare una "vera" distribuzione di probabilità con una sua approssimazione. Abbiamo anche visto come che, da un punto di vista Bayesiano, il problema del confronto tra modelli viene presentato nei termini della capacità predittiva di un modello per nuove osservazioni future.
 
 > The central question is then how one should decide among a set of competing models. A short answer is that a model should be selected based on its generalizability, which is defined as a model's ability to fit current data but also to predict future data. [@myung2003tutorial]
 
@@ -1156,7 +1175,7 @@ Se un modello non si generalizza bene a nuovi dati, si può sostenere che il mod
 $$
 \overline{\text{ELPD}} = \int \log p_{\mathcal{M}} (\tilde{y} \mid y) p_t(\tilde{y}) d \tilde{y}.
 $$
-L'ELPD per il modello $\mathcal{M}$ può essere interpretata come la media pesata della densità predittiva logaritmica $\log p_{\mathcal{M}} (\tilde{y}_i \mid y)$ per una nuova osservazione per il modello $\mathcal{M}$, dove i pesi derivano dal vero processo di generazione dei dati $p_t(\tilde{y})$. Grandi valori di $\overline{\text{ELPD}}(\mathcal{M})$ indicano che il modello prevede bene nuove osservazioni $\tilde{y}$, mentre piccoli valori $\overline{\text{ELPD}}(\mathcal{M})$ mostrano che il modello non si generalizza bene a nuovi dati. In pratica, però, la vera densità $p_t(\tilde{y})$ è incognita. Una _stima_ di $\overline{\text{ELPD}}(\mathcal{M})$ può essere ottenuta con il metodo di validazione incrociata leave-one-out (LOO) in cui il modello tante volte ($n$) quante sono le singole osservazioni (_leave-one-out cross-validation_, LOO-CV). La strategia LOO-CV è computazionalmente troppo onerosa per qualunque scopo pratico e viene quindi approssimata mediante un metodo chiamato _Pareto-smoothed importance sampling cross-validation_ [PSIS; @vehtari2017practical] -- che non richiede di adattare il modello $n$ volte. Tale stima della densità predittiva logaritmica viene chiamata ELPD-LOO. Maggiore è il punteggio ELPD-LOO di un modello, migliore è l'accuratezza predittiva out-of-sample del modello. L'errore standard di ELPD-LOO fornisce una descrizione dell'incertezza sulle prestazioni predittive per dati futuri sconosciuti. Nel confronto dei modelli, quando la differenza in ELPD-LOO è maggiore di 4, il numero di osservazioni è maggiore di 100, e in assenza di un errore di specificazione del modello, la differenza dei valori ELPD-LOO di due modelli segue la distribuzione normale. Nel confronto di modelli, un valore $|\text{elpd}_{\text{diff}} / SE_{\text{diff}}|$ maggiore di 2 può dunque essere considerato degno di menzione ("noteworthy") [@gelman2020regression]. 
+L'ELPD per il modello $\mathcal{M}$ può essere interpretata come la media pesata della densità predittiva logaritmica $\log p_{\mathcal{M}} (\tilde{y}_i \mid y)$ per una nuova osservazione per il modello $\mathcal{M}$, dove i pesi derivano dal vero processo di generazione dei dati $p_t(\tilde{y})$. Grandi valori di $\overline{\text{ELPD}}(\mathcal{M})$ indicano che il modello prevede bene nuove osservazioni $\tilde{y}$, mentre piccoli valori $\overline{\text{ELPD}}(\mathcal{M})$ mostrano che il modello non si generalizza bene a nuovi dati. In pratica, però, la vera densità $p_t(\tilde{y})$ è incognita. Una _stima_ di $\overline{\text{ELPD}}(\mathcal{M})$ può essere ottenuta con il metodo di validazione incrociata leave-one-out (LOO) in cui il modello tante volte ($n$) quante sono le singole osservazioni (_leave-one-out cross-validation_, LOO-CV). La strategia LOO-CV è computazionalmente troppo onerosa per qualunque scopo pratico e viene quindi approssimata mediante un metodo chiamato _Pareto-smoothed importance sampling cross-validation_ [PSIS; @vehtari2017practical] -- che non richiede di adattare il modello $n$ volte. Tale stima della densità predittiva logaritmica viene chiamata ELPD-LOO. Maggiore è il punteggio ELPD-LOO di un modello, migliore è l'accuratezza predittiva out-of-sample del modello. L'errore standard di ELPD-LOO fornisce una descrizione dell'incertezza sulle prestazioni predittive per dati futuri sconosciuti. Nel confronto dei modelli, quando la differenza in ELPD-LOO è maggiore di 4, il numero di osservazioni è maggiore di 100, e in assenza di un errore di specificazione del modello, la differenza dei valori ELPD-LOO di due modelli segue la distribuzione normale. Nel confronto di modelli, un valore $|\text{elpd}_{\text{diff}} / SE_{\text{diff}}|$ maggiore di 2 può dunque essere considerato degno di menzione ("noteworthy") [@gelman2020regression].
 
 Anche se la procedura descritta sopra viene correntemente usata dai ricercatori, è però necessaria una nota di cautela. @navarro2019between ci fa notare che il problema statistico del confronto di modelli non risolve il problema scientifico della selezione di teorie. A questo proposito usa una citazione di George Box:
 
