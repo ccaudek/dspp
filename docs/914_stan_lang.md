@@ -2,12 +2,7 @@
 
 <!-- http://avehtari.github.io/BDA_R_demos/demos_rstan/rstan_demo.html -->
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
-source("_common.R")
-source("_stan_options.R")
-suppressPackageStartupMessages(library("rethinking")) 
-suppressPackageStartupMessages(library("brms")) 
-```
+
 
 
 ## Che cos'è Stan?
@@ -40,19 +35,23 @@ Negli esempi di questa dispensa verrà usata l'interfaccia `cmdstanr`. Il pacche
 Si noti che `cmdstanr` richiede un'installazione funzionante di `CmdStan`, l'interfaccia shell per Stan. Se `CmdStan` non è installato, `cmdstanr` lo installerà automaticamente se il computer dispone di una _Toolchain_ adatta. Stan richiede infatti che sul computer su cui viene installato siano presenti alcuni strumenti necessari per gestire i file C++. Tra le altre ragioni, questo è dovuto al fatto che il codice Stan viene tradotto in codice C++ e compilato. Il modo migliore per ottenere il software necessario per un computer Windows o Mac è quello di installare `RTools`. Per un computer Linux, è necessario installare `build-essential` e una versione recente dei compilatori g++ o clang++. I requisiti sono descritti nella [Guida di CmdStan](https://mc-stan.org/docs/cmdstan-guide/cmdstan-installation.html).
 
 Per verificare che la Toolchain sia configurata correttamente è possibile utilizzare la funzione `check_cmdstan_toolchain()`:
-```{r}
+
+```r
 check_cmdstan_toolchain()
 ```
 \noindent
 Se la toolchain è configurata correttamente, `CmdStan` può essere installato mediante la funzione `install_cmdstan()`:
-```{r}
+
+```r
 # do not run!
 # install_cmdstan(cores = 2)
 ```
 \noindent
 La versione installata di `CmdStan` si ottiene con:
-```{r}
+
+```r
 cmdstan_version()
+#> [1] "2.28.2"
 ```
 
 ## Codice Stan 
@@ -63,7 +62,8 @@ Qualunque sia l'interfaccia che viene usata, i modelli sottostanti sono sempre s
 
 Quando si studia un nuovo linguaggio di programmazione si utilizza spesso un programma "Hello, world". Questo è un modo semplice, spesso minimo, per dimostrare alcune delle sintassi di base del linguaggio. In  Python, il programme "Hello, world" program è:
 
-```{python, eval=FALSE}
+
+```python
 print("Hello, world.")
 ```
 
@@ -86,13 +86,15 @@ Qui vengono dichiarate le variabili che saranno passate a Stan. Devono essere el
 Devono anche essere dichiarate le dimensioni delle variabili e le eventuali restrizioni sulle variabili (es. `upper = 1` `lower = 0`, che fungono da controlli per Stan). Tutti i nomi delle variabili assegnate qui saranno anche usati negli altri blocchi del programma. 
 
 Per esempio, l'istruzione seguente dichiaria la variabile `Y` -- la quale rappresenta, ad esempio, l'altezza di 10 persone -- come una variabile di tipo `real[10]`. Ciò significa che specifichiamo un array di lunghezza 10, i cui elementi sono variabili continue definite sull'intervallo dei numeri reali $[-\infty, +\infty]$. 
-```{r, eval = FALSE}
+
+```r
 data {
   real Y[10]; // heights for 10 people
 }
 ```
 Invece, con l'istruzione  
-```{r, eval = FALSE}
+
+```r
 data {
   int Y[10]; // qi for 10 people
 }
@@ -101,7 +103,8 @@ data {
 dichiariamo la variabile `Y` -- la quale rappresenta, ad esempio, il QI di 10 persone -- come una variabile di tipo `int[10]`, ovvero un array di lunghezza 10, i cui elementi sono numeri naturali, cioè numeri interi non negativi $\{0, +1, +2, +3, +4, \dots\}$. 
 
 Un altro esempio è
-```{r, eval = FALSE}
+
+```r
 data {
   real<lower=0, upper=1> Y[10]; // 10 proportions
 }
@@ -115,7 +118,8 @@ Si noti che i tipi `vector` e `matrix` contengono solo elementi di tipo `real`, 
 ### Blocco `parameters`
 
 I parametri che vengono stimati sono dichiarati nel blocco `parameters`. Per esempio, l'istruzione
-```{r, eval = FALSE}
+
+```r
 parameters {
   real mu; // mean height in population
   real<lower=0> sigma; // sd of height distribution
@@ -130,7 +134,8 @@ Per una regressione lineare semplice, ad esempio, devono essere dichiarate le va
 ### Blocco `model`
 
 Nel blocco `model` vengono elencate le dichiarazioni relative alla verosimiglianza dei dati e alle distribuzioni a priori dei parametri, come ad esempio, nelle istruzioni seguenti.
-```{r, eval = FALSE}
+
+```r
 model {
   for(i in 1:10) {
     Y[i] ~ normal(mu, sigma);
@@ -147,7 +152,8 @@ Le due righe che seguno il ciclo `for` specificano le distribuzioni a priori dei
 Se non viene definita alcuna distribuzione a priori, Stan utilizzerà la distribuzione a priori predefinita $Unif(-\infty, +\infty)$.  Raccomandazioni sulle distribuzioni a priori sono fornite in questo [link](https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations).
 
 La precedente notazione di campionamento può anche essere espressa usando la seguente notazione alternativa:
-```{r, eval = FALSE}
+
+```r
   for(i in 1:10) {
     target += normal_lpdf(Y[i] | mu, sigma);
   }
@@ -160,7 +166,8 @@ $$
 Per ogni passo MCMC, viene ottenuto un nuovo valore di $\mu$ e $\sigma$ eviene valutata la log densità a posteriori non normalizzata. Ad ogni passo MCMC, Stan calcola un nuovo valore della densità a posteriori su scala logaritmica partendo da un valore di 0 e incrementandola ogni volta che incontra un'istruzione `~`. Quindi, le istruzioni precedenti aumentano la log-densità di una quantità pari a $\log (p(Y[i])) \propto -\frac{1}{2} \log(\sigma^2) - (Y[i]-\mu)^2 / 2\sigma^2$ per le altezze si ciascuno degli $i=1 \dots, 10$ individui -- laddove la formula esprime, in termini logaritmici, la densità Normale da cui sono stati esclusi i termini costanti.
 
 Oppure, in termini vettorializzati, il modello descritto sopra può essere espresso come
-```{r, eval = FALSE}
+
+```r
 model {
   Y ~ normal(mu, sigma);
 }
@@ -196,7 +203,8 @@ Se usiamo `cmdstanr`, dobbiamo prima scrivere il codice con il modello statistic
 
 Scriviamo ora il nostro programma Stan "Hello, world" per generare campioni da una distribuzione Normale standard (con media zero e varianza unitaria).
 
-```{r}
+
+```r
 modelString = "
 parameters {
   real x;
@@ -211,20 +219,23 @@ writeLines(modelString, con = "code/hello_world.stan")
 Si noti che ci sono solo due blocchi in questo particolare codice Stan, il blocco parametri e il blocco modello. Questi sono due dei sette blocchi possibili in un codice Stan. Nel blocco parametri, abbiamo i nomi e i tipi di parametri per i quali vogliamo ottenere i campioni. In questo caso, vogliamo ottenere campioni di numeri reale che chiamiamo `x`. Nel blocco modello, abbiamo il nostro modello statistico.  Specifichiamo che x, il parametro di cui vogliamo ottenere i campioni, è normalmente distribuito con media zero e deviazione standard unitaria. Ora che abbiamo il nostro codice (che è stato memorizzato in un file chiamato `hello_world.stan`), possiamo usare CmdStan per compilarlo e ottenere `mod`, che è un oggetto $\R$ che fornisce l'accesso all'eseguibile Stan compilato.
 
 Leggiamo il file in cui abbiamo salvato il codice Stan
-```{r}
+
+```r
 file <- file.path("code", "hello_world.stan")
 ```
 
 \noindent
 compiliamo il modello
-```{r}
+
+```r
 mod <- cmdstan_model(file)
 ```
 
 \noindent
 ed eseguiamo il campionamento MCMC:
 
-```{r, message = FALSE, warning=FALSE, results='hide'}
+
+```r
 fit <- mod$sample(
   # data = data_list,
   iter_sampling = 4000L,
@@ -239,27 +250,36 @@ fit <- mod$sample(
 
 Tasformiamo l'oggetto `fit` nel formato `stanfit` per manipolarlo più facilmente:
 
-```{r}
+
+```r
 stanfit <- rstan::read_stan_csv(fit$output_files())
 ```
 
 \noindent
 Lo esaminiamo 
 
-```{r}
+
+```r
 length(stanfit@sim$samples)
+#> [1] 4
 ```
 
 \noindent
 Quello che abbiamo ottenuto sono 4 catene di 4000 osservazioni ciascuna, le quali contengono valori casuali estratti dalla gaussiana standardizzata:
 
-```{r, eval=FALSE}
+
+```r
 head(stanfit@sim$samples[[1]])
 ```
 \noindent
 Verifichiamo
 
-```{r}
+
+```r
 hist(stanfit@sim$samples[[1]][, 1])
 ```
+
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{914_stan_lang_files/figure-latex/unnamed-chunk-20-1} \end{center}
 
