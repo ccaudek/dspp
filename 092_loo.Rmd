@@ -371,7 +371,16 @@ tibble(direction = c("Da q a p", "Da p a q"),
 
 ### Confronto tra modelli
 
-La divergenza KL viene utilizzata nel confronto tra modelli, ovvero ci consente di quantificare l'informazione che viene perduta quando utilizziamo la distribuzione di probabilità ipotizzata da un modello, chiamiamola $p_{\mathcal{M}}$, per approssimare la distribuzione di probabilità del vero modello generatore dei dati, $p_t$. La divergenza di Kullback-Leibler $\mathbb{KL}(p_t \mid\mid p_{\mathcal{M}})$ misura l'incremento della nostra incertezza quando la distribuzione "approssimata" ipotizzata dal modello $\mathcal{M}$ viene usata in luogo della distribuzione di probabilità $p_t$ del vero modello generatore dei dati $\mathcal{M}_0$.
+La divergenza KL viene utilizzata nel confronto tra modelli, ovvero ci consente di quantificare l'informazione che viene perduta quando utilizziamo la distribuzione di probabilità ipotizzata da un modello, chiamiamola $p_{\mathcal{M}}$, per approssimare la distribuzione di probabilità del vero modello generatore dei dati, $p_t$. 
+
+Nel Capitolo \@ref(ch:intro-bayes-inference) abbiamo introdotto il concetto di distribuzione predittiva a posteriori:
+$$
+p(\tilde{y} \mid y) = \int_\Theta p(\tilde{y} \mid \theta) p(\theta \mid y) \,\operatorname {d}\!\theta .
+$$
+La distribuzione predittiva a posteriori descrive il tipo di dati che ci aspettiamo che il modello generativo $\mathcal{M}$ produca dopo aver costruito la distribuzione a posteriori dei parametri alla luce delle nostre credenze iniziali, $p(\theta)$, e dei dati osservati $y$. Il nostro scopo nella valutazione di un modello è capire in che misura $p_{\mathcal{M}}(\tilde{y} \mid y)$ approssima $p_t(\tilde{y})$. Cioè, ci chiediamo in che misura i dati prodotti nostro modello generativo $p_{\mathcal{M}}(\cdot)$ siano simili ai dati prodotti dal vero processo generatore dei dati $p_t(\cdot)$.
+
+Una misura della "somiglianza" tra la distribuzione dei dati $q_{\mathcal{M}}$ ipotizzata dal modello $\mathcal{M}$ e la distribuzione dei dati $p_t$del vero modello generatore dei dati è fornita dalla divergenza di Kullback-Leibler $\mathbb{KL}(p_t \mid\mid q_{\mathcal{M}})$. 
+<!-- La divergenza di Kullback-Leibler $\mathbb{KL}(p_t \mid\mid p_{\mathcal{M}})$ misura l'incremento della nostra incertezza quando la distribuzione "approssimata" ipotizzata dal modello $\mathcal{M}$ viene usata in luogo della distribuzione di probabilità $p_t$ del vero modello generatore dei dati $\mathcal{M}_0$. -->
 
 Supponiamo di avere $k$ modelli della distribuzione a posteriori, $\{q_{\mathcal{M}_1}, q_{\mathcal{M}_2}, \dots, q_{\mathcal{M}_k}\}$, e supponiamo inoltre di conoscere il vero modello generatore dei dati $\mathcal{M}_0$. Possiamo dunque scrivere
 \begin{align}
@@ -381,9 +390,9 @@ Supponiamo di avere $k$ modelli della distribuzione a posteriori, $\{q_{\mathcal
 \mathbb{KL} (p_{\mathcal{M}_0} \mid\mid q_{\mathcal{M}_k}) &= \E (\log p_{\mathcal{M}_0}) - \E (\log q_{\mathcal{M}_k}).
 (\#eq:kl-mod-comp)
 \end{align}
-La \@ref(eq:kl-mod-comp) può sembrare un esercizio futile poiché nella vita reale non conosciamo il vero modello generatore dei dati $\mathcal{M}_0$. È però facile rendersi conto che, poiché $p_{\mathcal{M}_0}$ è lo stesso per tutti i confronti, diventa possibile costruire un ordinamento dei modelli basato unicamente sul secondo termine della \@ref(eq:kl-mod-comp), ovvero senza nessun riferimento al vero modello generatore dei dati. Per il modello $\mathcal{M}_1$, il secondo termine della \@ref(eq:kl-mod-comp), ovvero 
+La \@ref(eq:kl-mod-comp) può sembrare un esercizio futile poiché nella vita reale non conosciamo il vero modello generatore dei dati $\mathcal{M}_0$. È però facile rendersi conto che, poiché $p_{\mathcal{M}_0}$ è lo stesso per tutti i confronti, diventa possibile costruire un ordinamento dei modelli basato unicamente sul secondo termine della \@ref(eq:kl-mod-comp), ovvero senza nessun riferimento al vero modello generatore dei dati. Per il modello $\mathcal{M}$, il secondo termine della \@ref(eq:kl-mod-comp), ovvero 
 \begin{equation}
-\E \log p_{\mathcal{M}_1}(y) = \int_{-\infty}^{+\infty}p_{t}(y)\log p_{\mathcal{M}_1}(y) \,\operatorname {d}\!y.,
+\E \log p_{\mathcal{M}}(y) = \int_{-\infty}^{+\infty}p_{t}(y)\log p_{\mathcal{M}}(y) \,\operatorname {d}\!y,
 (\#eq:kl-div-cont-t2)
 \end{equation}
  va sotto il nome di _expected log predictive density_ ($\elpd$)
@@ -408,26 +417,23 @@ La \@ref(eq:kl-mod-comp) può sembrare un esercizio futile poiché nella vita re
 <!-- \int_{-\infty}^{+\infty}p_{t}(y)\log p_{\mathcal{M}}(y) \,\operatorname {d}\!y. -->
 <!-- (\#eq:kl-div-cont-t2) -->
 <!-- \end{equation} -->
-Anche nella \@ref(eq:kl-div-cont-t2), però, abbiamo una quantità sconosciuta, ovvero $p_t(y)$. Quindi, in questa forma, la \@ref(eq:kl-div-cont-t2) non può essere usata. Riscriviamo dunque la \@ref(eq:kl-div-cont-t2) facendo riferimento alla distribuzione predittiva a posteriori, $p(\tilde{y} \mid y)$, perché ciò a cui siamo interessati è la divergenza di $p(\tilde{y} \mid y)$ da $p_{t}(y)$:
+
+Le previsioni del modello $\mathcal{M}$ sui nuovi dati futuri sono date dalla distribuzione predittiva a posteriori. Possiamo dunque riscrivere la \@ref(eq:kl-div-cont-t2) come
+<!-- Anche nella \@ref(eq:kl-div-cont-t2), però, abbiamo una quantità sconosciuta, ovvero $p_t(y)$. Quindi, in questa forma, la \@ref(eq:kl-div-cont-t2) non può essere usata. Riscriviamo dunque la \@ref(eq:kl-div-cont-t2) facendo riferimento alla distribuzione predittiva a posteriori, $p(\tilde{y} \mid y)$, perché ciò a cui siamo interessati è la divergenza di $p(\tilde{y} \mid y)$ da $p_{t}(y)$: -->
 \begin{equation}
 \elpd = \int_{\tilde{y}} p_{t}(\tilde{y}) \log p(\tilde{y} \mid y) \,\operatorname {d}\!\tilde{y}.
 (\#eq:elpd)
 \end{equation}
-La \@ref(eq:elpd) è chiamata _expected log predictive density_ ($\elpd$) e fornisce la risposta al problema che ci eravamo posti all'inizio di questo Capitolo, ovvero il problema di definire un criterio per valutare (in maniera relativa) la capacità predittiva di un modello. Possiamo pensare alla \@ref(eq:elpd) dicendo che essa descrive la distribuzione predittiva a posteriori del modello ponderando la verosimiglianza dei possibili (sconosciuti) dati futuri ($\tilde{y}$) con la vera distribuzione $p_t$. Di conseguenza, valori $\elpd$ più grandi corrispondono ad una maggiore capacità predittiva del modello.
+La \@ref(eq:elpd) è chiamata _expected log predictive density_ ($\elpd$) e fornisce la risposta al problema che ci eravamo posti, ovvero il problema del confronto tra modelli (in maniera tale da poter scegliere, tra più modelli, quello più simile al vero meccanismo generatore dei dati). Possiamo pensare alla \@ref(eq:elpd) dicendo che  descrive la distribuzione predittiva a posteriori del modello ponderando la verosimiglianza dei possibili (sconosciuti) dati futuri ($\tilde{y}$) con la vera distribuzione $p_t$. Di conseguenza, valori $\elpd$ più grandi identificano il modello che risulta più simile al vero meccanismo generatore dei dati.
 
-
-
-
-
-
-Non dobbiamo preoccuparci di trovare una formulazione analitica della distribuzione predittiva a posteriori $p(\tilde{y} \mid y)$ perché, come abbiamo visto nel Capitolo \@ref(chapter-ppc), è possibile approssimare tale distribuzione mediante simulazione. Notiamo però che la \@ref(eq:elpd) è formulata nei termini del vero modello generatore dei dati, $p_t$, il quale, ovviamente, è ignoto.^[Se il modello sottostante i dati fosse noto non avremmo bisogno di cercare il modello migliore, perché $p_t$ è il modello migliore.] Di conseguenza, la quantità $\elpd$ non può mai essere calcolata in maniera esatta, ma può essere solo stimata. Il secondo problema di questo Capitolo è capire come la \@ref(eq:elpd) possa essere stimata utilizzando un campione di osservazioni.
+Non dobbiamo preoccuparci di trovare una formulazione analitica della distribuzione predittiva a posteriori $p(\tilde{y} \mid y)$ perché, come abbiamo visto nel Capitolo \@ref(chapter-ppc), è possibile approssimare tale distribuzione mediante simulazione. Notiamo però che la \@ref(eq:elpd) include un termine, $p_t(\tilde{y})$, il quale descrive la distribuzione dei dati futuri $\tilde{y}$ secondo il vero modello generatore dei dati. Il termine $p_t$, ovviamente, è ignoto.^[Se il modello sottostante i dati fosse noto non avremmo bisogno di cercare il modello migliore, perché $p_t$ è il modello migliore.] Di conseguenza, la quantità $\elpd$ non può mai essere calcolata in maniera esatta, ma può essere solo stimata. Il secondo problema di questo Capitolo è capire come la \@ref(eq:elpd) possa essere stimata utilizzando un campione di osservazioni.
 
 ### Log pointwise predictive density{}
 
 Ingenuamente, potremmo pensare di stimare la \@ref(eq:elpd) ipotizzando che la distribuzione del campione coincida con $p_t$. Usare la distribuzione del campione come proxy del vero modello generatore dei dati (ovvero, ipotizzare che la distribuzione del campione rappresenti fedelmente $p_t$) comporta due conseguenze:
 
-- dato che il campione è finito, anziché eseguire un'operazione di integrazione, possiamo semplicemente sommare la densità predittiva a posteriori delle osservazioni;
-- non è necessario ponderare per $p_t$, in quanto assumiamo che la distribuzione empirica del campione corrisponde a $p_t$ (ciò significa assumere che i valori più comunemente osservati nel campione siano anche quelli più verosimili nella vera distribuzione $p_t$).
+- non è necessario ponderare per $p_t$, in quanto assumiamo che la distribuzione empirica del campione corrisponda a $p_t$ (ciò significa assumere che i valori più comunemente osservati nel campione siano anche quelli più verosimili nella vera distribuzione $p_t$);
+- dato che il campione è finito, anziché eseguire un'operazione di integrazione possiamo semplicemente sommare la densità predittiva a posteriori delle osservazioni.
 
 Questo conduce alla seguente equazione:^[In riferimento alla notazione, ricordiamo che @gelman2014understanding distinguono tra $y^{rep}$ e $\tilde{y}$. I valori $y^{rep}$ corrispondono ad un'altra possibile realizzazione del medesimo modello statistico che ha prodotto $y$ mediante determinati valori dei parametri $\theta$ (repliche sotto lo stesso modello statistico). I valori $\tilde{y}$ corrispondono invece ad un campione empirico di dati osservato in qualche futura occasione.]
 \begin{equation}
@@ -495,29 +501,26 @@ $$
 \frac{1}{n} \sum_{i=1}^n \log p(y_i \mid y).
 $$
 \noindent
-Così facendo, e svolgendo i calcoli in $\R$, otteniamo
-
+Così facendo, e svolgendo i calcoli in $\R$, otteniamo un valore diverso da quello trovato in precedenza:
 ```{r}
 1/n * sum(log(p(y_data)))
 ```
-\noindent
-un valore diverso da quello trovato in precedenza.
 :::
 
 ## Criterio di informazione e convalida incrociata K-fold
 
-Nel Paragrafo precedente abbiamo visto che la \@ref(eq:lppd) fornisce una sovrastima della $\elpd$. Il modo migliore per stimare $\elpd$ è raccogliere un nuovo campione indipendente di dati, che si ritiene condivida lo stesso processo di generazione dei dati del campione corrente, e stimare $\elpd$ sul nuovo campione. Questa procedura è chiamata _out-of-sample validation_. Il problema, ovviamente, è che di solito non abbiamo le risorse per raccogliere un nuovo campione. Di conseguenza, gli statistici hanno messo a punto vari metodi per evitare la sovrastima della $\elpd$ che deriva dal solo utizzo del campione corrente. Ci sono due approcci generali:
+Nel Paragrafo precedente abbiamo visto che la \@ref(eq:lppd) fornisce una sovrastima della $\elpd$. Il modo migliore per stimare $\elpd$ è raccogliere un nuovo campione indipendente di dati, che si ritiene condivida lo stesso processo di generazione dei dati del campione corrente, e stimare $\elpd$ sul nuovo campione. Questa procedura è chiamata _out-of-sample validation_. Il problema, però, è che solitamente non abbiamo le risorse per raccogliere un nuovo campione di osservazioni. Di conseguenza, gli statistici hanno messo a punto vari metodi per evitare la sovrastima della $\elpd$ che deriva dal solo utizzo del campione corrente. Ci sono due approcci generali:
 
 - l'introduzione di un fattore di correzione;
 - la convalida incrociata cosiddetta K-fold.
 
 ### AIC, DIC e WAIC
 
-Allo scopo di evitare la sovrastima della \@ref(eq:lppd), le statistiche _Akaike Information Criterion_ (AIC), _Deviance Information Criterion_ (DIC) e _Widely Applicable Information Criterion_ (WAIC) introducono un fattore di correzione. Le statistiche DIC e WAIC sono più complesse di AIC, ma producono un'approssimazione migliore. Tuttavia, i valori AIC, DIC e WAIC sono spesso molto simili tra loro. Per convenienza, dunque, qui ci accontenteremo di esaminare da vicino la statistica più semplice, ovvero AIC.
+Allo scopo di evitare la sovrastima della \@ref(eq:lppd), le statistiche _Akaike Information Criterion_ (AIC), _Deviance Information Criterion_ (DIC) e _Widely Applicable Information Criterion_ (WAIC) introducono un fattore di correzione. Le statistiche DIC e WAIC sono più complesse di AIC, ma producono un'approssimazione migliore. Tuttavia, i valori AIC, DIC e WAIC sono spesso molto simili tra loro. Per convenienza, dunque, qui ci accontenteremo di esaminare in dettaglio la statistica più semplice, ovvero AIC.
 
 #### Criterio d'informazione di Akaike
 
-Il criterio d'informazione di Akaike (in inglese _Akaike information criterion_, indicato come AIC) fornisce un metodo molto semplice per stimare la devianza media _out-of-sample_.
+Il criterio d'informazione di Akaike (in inglese _Akaike information criterion_, indicato come AIC) fornisce un metodo molto semplice per approssimare $\elpd$.
 
 ::: {.definition}
 Il criterio d'informazione di Akaike è definito come
@@ -545,7 +548,24 @@ AIC è di interesse principalmente storico e produce una approssimazione attendi
 3. la dimensione $n$ del campione è molto maggiore del numero $k$ dei parametri.
 
 ::: {.example}
-Per meglio comprendere la statistica $\widehat{\elpd}_{AIC}$, esaminiamo un esempio discusso da @gelman2014understanding. Sia $y_1, \dots, y_n \sim \mathcal{N}(\theta, 1)$ un campione di osservazioni. Nel caso di una distribuzione a priori non-informativa $p(\theta) \propto 1$, la stima di massima verosimiglianza è $\bar{y}$. La log-verosimiglianza è
+Per meglio comprendere la statistica $\widehat{\elpd}_{AIC}$, esaminiamo un esempio discusso da @gelman2014understanding. Sia $y_1, \dots, y_n \sim \mathcal{N}(\mu, 1)$ un campione di osservazioni. Nel caso di una distribuzione a priori non-informativa $p(\theta) \propto 1$, la stima di massima verosimiglianza è $\bar{y}$. La verosimiglianza è
+$$
+f(Y \mid \mu, \sigma) = \prod_{i=1}^n f(y \mid \mu, \sigma)
+$$
+e la log-verosimiglianza diventa
+$$
+\ell(Y \mid \mu, \sigma) = \sum_{i=1}^n \log (f(y \mid \mu, \sigma)).
+$$
+Ovvero,
+\begin{align}
+\ell(Y \mid \mu, \sigma) &= \sum_{i=1}^n \log \left( \frac {1}{{\sqrt {2\pi\sigma^2 }}}\exp \left(-{\frac {1}{2}}{\frac {(y_i-\mu )^{2}}{\sigma^{2}}}\right) \right)\notag\\
+&= \sum_{i=1}^n \log \left( \frac {1}{{\sqrt {2\pi \sigma^2}}} \right) - \sum_{i=1}^n{\frac {1}{2}}{\frac {(y_i-\mu )^{2}}{\sigma ^{2}}} \notag\\
+&= \sum_{i=1}^n \log \left( \frac {1}{{\sqrt {2\pi \sigma^2}}} \right) - \frac{1}{2\sigma^2}\sum_{i=1}^n (y_i-\mu )^{2} \notag \\
+&= \sum_{i=1}^n \log (1) - \sum_{i=1}^n\log \sqrt{2\pi \sigma^2} - \frac{1}{2\sigma^2}\sum_{i=1}^n (y_i-\mu )^{2} \notag\\
+&= - \sum_{i=1}^n\frac{1}{2}  \log (2\pi\sigma^2) - \frac{1}{2\sigma^2}\sum_{i=1}^n (y_i-\mu )^{2} \notag\\
+&= - \frac{n}{2}  \log (2\pi\sigma^2) - \frac{1}{2\sigma^2}\sum_{i=1}^n (y_i-\mu )^{2}. \notag
+\end{align}
+Se $y \sim \mathcal{N}(\mu, 1)$, usando lo stimatore di massima verosimiglianza per $\mu$, la log-verosimiglianza diventa
 \begin{align}
 \log p(y \mid \hat{\theta}_{MLE}) &= -\frac{n}{2} \log (2\pi) - \frac{1}{2}\sum_{i=1}^n (y_i - \bar{y})^2 \notag\\
 &= -\frac{n}{2} \log (2\pi) - \frac{1}{2} (n-1)s_y^2,
@@ -553,7 +573,7 @@ Per meglio comprendere la statistica $\widehat{\elpd}_{AIC}$, esaminiamo un esem
 \noindent
 dove $s_y^2$ è la varianza campionaria.
 
-Nel caso di un modello Normale con con varianza nota e una distribuzione a priori uniforme viene stimato un solo parametro, per cui
+Nel caso di un modello gaussiano con con varianza nota e una distribuzione a priori uniforme viene stimato un solo parametro, per cui
 \begin{align}
 \widehat{\elpd}_{AIC} &= \log p(y \mid \hat{\theta}_{MLE}) - k \notag \\
 &= -\frac{n}{2} \log (2\pi) - \frac{1}{2} (n-1)s_y^2 - 1.

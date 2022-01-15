@@ -273,8 +273,10 @@ I PPC mostrano che il modo più semplice per verificare l'adattamento del modell
 library("MASS")
 data("newcomb")
 ```
+
 \noindent
-Generiamo un istogramma per visualizzare i dati:
+Visualizziamo la distribuzione dei dati con un istogramma:
+
 ```{r}
 tibble(newcomb) %>%
   ggplot(aes(x = newcomb, after_stat(density))) +
