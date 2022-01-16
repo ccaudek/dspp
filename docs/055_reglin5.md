@@ -1,10 +1,6 @@
 # Confronto tra due gruppi indipendenti {#comparison-two-means-stan}
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
-source("_common.R")
-source("_stan_options.R")
-library("scales")
-```
+
 
 Il problema del confronto tra due gruppi indipendenti può essere formulato nei termini di un modello lineare nel quale la variabile $x$ è dicotomica, ovvero assume solo due valori. 
 
@@ -35,7 +31,8 @@ Codifichiamo il livello di istruzione della madre ($x$) con una _variabile indic
 \noindent
 Supponiamo che i dati siano contenuti nel data.frame `df`. 
 
-```{r}
+
+```r
 library("rio")
 df <- rio::import(here("data", "kidiq.dta"))
 ```
@@ -43,19 +40,26 @@ df <- rio::import(here("data", "kidiq.dta"))
 \noindent
 Calcoliamo le statistiche descrittive per i due gruppi:
 
-```{r}
+
+```r
 df %>% 
   group_by(mom_hs) %>% 
   summarise(
     mean_kid_score = mean(kid_score),
     std = sqrt(var(kid_score))
   )
+#> # A tibble: 2 × 3
+#>   mom_hs mean_kid_score   std
+#>    <dbl>          <dbl> <dbl>
+#> 1      0           77.5  22.6
+#> 2      1           89.3  19.0
 ```
 
 \noindent
 Il punteggio medio PIAT è pari a 77.5 per i bambini la cui madre non ha il diploma di scuola media superiore e pari a 89.3 per i bambini la cui madre ha completato la scuola media superiore. Questa differenza suggerisce un'associazione tra le variabili, ma tale differenza potrebbe essere soltanto la conseguenza della variabilità campionaria, senza riflettere una caratteristica generale della popolazione. Come possiamo usare il modello statistico lineare per fare inferenza sulla differenza osservata tra i due gruppi? Non dobbiamo fare nient'altro che usare il modello lineare che abbiamo definito in precedenza.
 
-```{r}
+
+```r
 modelString = "
 data {
   int<lower=0> N;
@@ -95,7 +99,8 @@ writeLines(modelString, con = "code/simpleregstd.stan")
 \noindent
 Come in precedenza, salviamo i dati in un oggetto di classe `list`:
 
-```{r}
+
+```r
 data_list <- list(
   N = length(df$kid_score),
   y = df$kid_score,
@@ -106,7 +111,8 @@ data_list <- list(
 \noindent
 Compiliamo il modello:
 
-```{r}
+
+```r
 file <- file.path("code", "simpleregstd.stan")
 mod <- cmdstan_model(file)
 ```
@@ -114,7 +120,8 @@ mod <- cmdstan_model(file)
 \noindent
 Adattiamo il modello ai dati:
 
-```{r, results='hide', results='hide'}
+
+```r
 fit <- mod$sample(
   data = data_list,
   iter_sampling = 4000L,
@@ -130,12 +137,14 @@ fit <- mod$sample(
 \noindent
 Creiamo un grafico con i valori predetti dal modello lineare:
 
-```{r}
+
+```r
 stanfit <- rstan::read_stan_csv(fit$output_files())
 posterior <- extract(stanfit)
 ```
 
-```{r}
+
+```r
 tibble(
   kid_score = df$kid_score,
   mom_hs = df$mom_hs
@@ -150,10 +159,22 @@ tibble(
   scale_x_continuous(breaks=c(0, 1))
 ```
 
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-9-1} \end{center}
+
 Le stime a posteriori dei parametri si ottengono con:
 
-```{r}
+
+```r
 fit$summary(c("alpha", "beta", "sigma"))
+#> # A tibble: 3 × 10
+#>   variable  mean median    sd   mad    q5   q95  rhat ess_bulk
+#>   <chr>    <dbl>  <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>    <dbl>
+#> 1 alpha     77.5   77.6 2.07  2.06  74.2   81.0  1.00   17948.
+#> 2 beta      11.8   11.8 2.34  2.33   7.91  15.6  1.00   18036.
+#> 3 sigma     19.9   19.9 0.679 0.673 18.8   21.0  1.00   18897.
+#> # … with 1 more variable: ess_tail <dbl>
 ```
 
 I risultati confermano ciò che ci aspettavamo: 
@@ -162,8 +183,17 @@ I risultati confermano ciò che ci aspettavamo:
 - il coefficiente $\texttt{beta} = 11.76$ corrisponde alla differenza tra le medie dei due gruppi, ovvero 89.32 - 77.55 = 11.77 (con piccoli errori di approssimazione). 
 
 La seguente chiamata ritorna l'intervallo di credibilità al 95% per tutti i parametri del modello:
-```{r}
+
+```r
 rstantools::posterior_interval(as.matrix(stanfit), prob = 0.95)
+#>                2.5%     97.5%
+#> alpha_std   -0.0904    0.0916
+#> beta_std     0.1447    0.3289
+#> sigma_std    0.9120    1.0437
+#> alpha       73.4854   81.6092
+#> beta         7.1877   16.3437
+#> sigma       18.6155   21.3025
+#> lp__      -209.0430 -204.3220
 ```
 
 Possiamo dunque concludere che i bambini la cui madre ha completato la scuola superiore ottengono in media circa 12 punti in più rispetto ai bambini la cui madre non ha completato la scuola superiore. L'intervallo di credibilità al 95% ci dice che possiamo essere sicuri al 95% che tale differenza sia di almeno 7 punti e possa arrivare fino a ben 16 punti. Per riassumere, possiamo concludere, con un grado di certezza soggettiva del 95%, che c'è un'associazione positiva tra il livello di scolarità della madre e l'intelligenza del bambino: le madri che hanno livello di istruzione più alto della media tendo ad avere bambini il cui QI è anch'esso più alto della media.
@@ -175,27 +205,37 @@ Avendo a disposizione le informazioni sulle distribuzioni a posteriori dei param
 
 Iniziamo semplicemente utilizzando le medie e le deviazioni standard delle due distribuzioni:
 
-```{r}
+
+```r
 library("effectsize")
 (d <- cohens_d(kid_score ~ mom_hs, data = df))
+#> Cohen's d |         95% CI
+#> --------------------------
+#> -0.59     | [-0.83, -0.36]
+#> 
+#> - Estimated using pooled SD.
 ```
 
 Lo stesso risultato si ottiene utilizzando la distribuzione a posteriori dei parametri:
 
-```{r}
+
+```r
 11.75398 / 19.90159	
+#> [1] 0.591
 ```
 \noindent
 Il $d$ di Cohen di entità "media" [$d$ > 0.5; @sawilowsky2009new] conferma l'importanza dell'influenza della scolarità delle madri sul QI dei bambini. 
 
 Possiamo confermare il risultato ottenuto usando le funzioni del pacchetto $\R$ `bayestest`.
 
-```{r}
+
+```r
 library ("MCMCpack")
 library("bayest")
 ```
 
-```{r}
+
+```r
 kid_iq0 <- df %>%
   dplyr::filter(mom_hs == 0) %>%
   pull(kid_score)
@@ -214,5 +254,9 @@ bayes.t.test(
   q = 0.1
 )
 ```
+
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-1} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-2} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-3} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-4} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-5} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-6} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-7} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-8} \end{center}
 
 Con le funzioni di `bayestest` otteniamo una stima della dimensione dell'effetto pari a 0.558 (se usiamo la media a posteriori) -- molto simile a quella ottenuta in precedenza -- con un intervallo di credibilità del 95% pari a [0.02, 1.10].

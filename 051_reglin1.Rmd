@@ -161,7 +161,7 @@ sia $x$ un predittore o un insieme di predittori. È possibile costruire un mode
 - Valutare quali valori che ciascuno di questi parametri potrebbe assumere. Di conseguenza, identificare le distribuzioni a priori appropriate per questi parametri.
 ::: 
 
-Nel caso di una variabile $Y$ continua che segue la legge Normale e un solo predittore, ad esempio, il modello diventa:
+Nel caso di una variabile $Y$ continua che segue la legge gaussiana e un solo predittore, ad esempio, il modello diventa:
 \begin{align} 
 Y_i \mid \beta_0, \beta_1, \sigma  &\stackrel{ind}{\sim} \mathcal{N}\left(\mu_i, \sigma^2\right) \;\; \text{ con } \;\; \mu_i = \beta_0 + \beta_1 x_i \notag\\
 \beta_0  &\sim \mathcal{N}\left(\mu_0, \sigma_0^2 \right)  \notag\\

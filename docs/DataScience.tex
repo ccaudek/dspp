@@ -322,7 +322,7 @@
 
 \author{Corrado Caudek}
 
-\date{2022-01-15}
+\date{2022-01-16}
 
 
 % Include headers (preamble.tex) here
@@ -454,7 +454,7 @@
 
 \normalsize
 
-Data della versione presente: Gennaio 15, 2022.
+Data della versione presente: Gennaio 16, 2022.
 
 \hypertarget{prefazione}{%
 \chapter{Prefazione}\label{prefazione}}
@@ -527,459 +527,290 @@ Corrado Caudek
 
 \mainmatter
 
-\hypertarget{appendix-appendix}{%
-\appendix}
+\hypertarget{comparison-two-means-stan}{%
+\chapter{Confronto tra due gruppi indipendenti}\label{comparison-two-means-stan}}
 
+Il problema del confronto tra due gruppi indipendenti può essere formulato nei termini di un modello lineare nel quale la variabile \(x\) è dicotomica, ovvero assume solo due valori.
 
-\hypertarget{simbologia-di-base}{%
-\chapter{Simbologia di base}\label{simbologia-di-base}}
+\hypertarget{modello-lineare-con-una-variabile-dicotomica}{%
+\section{Modello lineare con una variabile dicotomica}\label{modello-lineare-con-una-variabile-dicotomica}}
 
-Per una scrittura più sintetica possono essere utilizzati alcuni simboli
-matematici.
-
-\begin{itemize}
-\tightlist
-\item
-  \(\log(x)\): il logaritmo naturale di \(x\).
-\item
-  L'operatore logico booleano \(\land\) significa ``e'' (congiunzione
-  forte) mentre il connettivo di disgiunzione \(\lor\) significa ``o''
-  (oppure) (congiunzione debole).
-\item
-  Il quantificatore esistenziale \(\exists\) vuol dire ``esiste almeno
-  un'' e indica l'esistenza di almeno una istanza del concetto/oggetto
-  indicato. Il quantificatore esistenziale di unicità \(\exists!\)
-  (``esiste soltanto un'') indica l'esistenza di esattamente una istanza
-  del concetto/oggetto indicato. Il quantificatore esistenziale
-  \(\nexists\) nega l'esistenza del concetto/oggetto indicato.
-\item
-  Il quantificatore universale \(\forall\) vuol dire ``per ogni.''
-\item
-  \(\mathcal{A, S}\): insiemi.
-\item
-  \(x \in A\): \(x\) è un elemento dell'insieme \(A\).
-\item
-  L'implicazione logica ``\(\Rightarrow\)'' significa ``implica'' (se
-  \ldots allora). \(P \Rightarrow Q\) vuol dire che \(P\) è condizione
-  sufficiente per la verità di \(Q\) e che \(Q\) è condizione necessaria
-  per la verità di \(P\).
-\item
-  L'equivalenza matematica ``\(\iff\)'' significa ``se e solo se'' e indica
-  una condizione necessaria e sufficiente, o corrispondenza biunivoca.
-\item
-  Il simbolo \(\vert\) si legge ``tale che.''
-\item
-  Il simbolo \(\triangleq\) (o \(:=\)) si legge ``uguale per definizione.''
-\item
-  Il simbolo \(\Delta\) indica la differenza fra due valori della
-  variabile scritta a destra del simbolo.
-\item
-  Il simbolo \(\propto\) si legge ``proporzionale a.''
-\item
-  Il simbolo \(\approx\) si legge ``circa.''
-\item
-  Il simbolo \(\in\) della teoria degli insiemi vuol dire ``appartiene'' e
-  indica l'appartenenza di un elemento ad un insieme. Il simbolo
-  \(\notin\) vuol dire ``non appartiene.''
-\item
-  Il simbolo \(\subseteq\) si legge ``è un sottoinsieme di'' (può
-  coincidere con l'insieme stesso). Il simbolo \(\subset\) si legge ``è
-  un sottoinsieme proprio di.''
-\item
-  Il simbolo \(\#\) indica la cardinalità di un insieme.
-\item
-  Il simbolo \(\cap\) indica l'intersezione di due insiemi. Il simbolo
-  \(\cup\) indica l'unione di due insiemi.
-\item
-  Il simbolo \(\emptyset\) indica l'insieme vuoto o evento impossibile.
-\item
-  In matematica, \(\mbox{argmax}\) identifica l'insieme dei punti per i quali una data funzione raggiunge il suo massimo. In altre parole, \(\mbox{argmax}_x f(x)\) è l'insieme dei valori di \(x\) per i quali \(f(x)\) raggiunge il valore più alto.
-\item
-  \(a, c, \alpha, \gamma\): scalari.
-\item
-  \(\boldsymbol{x}, \boldsymbol{y}\): vettori.
-\item
-  \(\boldsymbol{X}, \boldsymbol{Y}\): matrici.
-\item
-  \(X \sim p\): la variabile casuale \(X\) si distribuisce come \(p\).
-\item
-  \(p(\cdot)\): distribuzione di massa o di densità di probabilità.
-\item
-  \(p(y \mid \boldsymbol{x})\): la probabilità o densità di \(y\) dato \(\boldsymbol{x}\), ovvero \(p(y = \boldsymbol{Y} \mid x = \boldsymbol{X})\).
-\item
-  \(f(x)\): una funzione arbitraria di \(x\).
-\item
-  \(f(\boldsymbol{X}; \theta, \gamma)\): \(f\) è una funzione di \(\boldsymbol{X}\) con parametri \(\theta, \gamma\). Questa notazione indica che \(\boldsymbol{X}\) sono i dati che vengono passati ad un modello di parametri \(\theta, \gamma\).
-\item
-  \(\mathcal{N}(\mu, \sigma^2)\): distribuzione gaussiana di media \(\mu\) e varianza \(sigma^2\).
-\item
-  \(\mbox{Beta}(\alpha, \beta)\): distribuzione Beta di parametri \(\alpha\) e \(\beta\).
-\item
-  \(\mathcal{U}(a, b)\): distribuzione uniforme con limite inferiore \(a\) e limite superiore \(b\).
-\item
-  \(\mbox{Cauchy}(\alpha, \beta)\): distribuzione di Cauchy di parametri \(\alpha\) (posizione: media) e \(\beta\) (scala: radice quadrata della varianza).
-\item
-  \(\mathcal{B}(p)\): distribuzione di Bernoulli di parametro \(p\) (probabilità di successo).
-\item
-  \(\mbox{Bin}(n, p)\): distribuzione binomiale di parametri \(n\) (numero di prove) e \(p\) (probabilità di successo).
-\item
-  \(\mathbb{KL} (p \mid\mid q)\): la divergenza di Kullback-Leibler da \(p\) a \(q\).
-\end{itemize}
-
-\hypertarget{intro-stan}{%
-\chapter{Programmare in Stan}\label{intro-stan}}
-
-\hypertarget{che-cosuxe8-stan}{%
-\section{Che cos'è Stan?}\label{che-cosuxe8-stan}}
-
-\href{http://mc-stan.org/}{STAN} è un linguaggio di programmazione probabilistico usato per l'inferenza bayesiana \autocite{carpenter2017stan}. Prende il nome da uno dei creatori del metodo Monte Carlo, Stanislaw Ulam \autocite{Eckhardt1987stan}. Stan consente di generare campioni da distribuzioni di probabilità basati sulla costruzione di una catena di Markov avente come distribuzione di equilibrio (o stazionaria) la distribuzione desiderata.
-
-È possibile accedere al linguaggio Stan tramite diverse interfacce:
-
-\begin{itemize}
-\tightlist
-\item
-  \texttt{CmdStan}: eseguibile da riga di comando,
-\item
-  \texttt{RStan} - integrazione con il linguaggio \R;
-\item
-  \texttt{PyStan} - integrazione con il linguaggio di programmazione Python;
-\item
-  \texttt{MatlabStan} - integrazione con MATLAB;
-\item
-  \texttt{Stan.jl} - integrazione con il linguaggio di programmazione Julia;
-\item
-  \texttt{StataStan} - integrazione con Stata.
-\end{itemize}
-
-Inoltre, vengono fornite interfacce di livello superiore con i pacchetti che utilizzano Stan come backend, principalmente in Linguaggio \R:
-
-\begin{itemize}
-\tightlist
-\item
-  \texttt{shinystan}: interfaccia grafica interattiva per l'analisi della distribuzione a posteriori e le diagnostiche MCMC;\\
-\item
-  \texttt{bayesplot}: insieme di funzioni utilizzabili per creare grafici relativi all'analisi della distribuzione a posteriori, ai test del modello e alle diagnostiche MCMC;\\
-\item
-  \texttt{brms}: fornisce un'ampia gamma di modelli lineari e non lineari specificando i modelli statistici mediante la sintassi usata in \R;
-\item
-  \texttt{rstanarm}: fornisce un sostituto per i modelli frequentisti forniti da base \(\R\) e \texttt{lme4} utilizzando la sintassi usata in \(\R\) per la specificazione dei modelli statistici;
-\item
-  \texttt{edstan}: modelli Stan per la Item Response Theory;
-\item
-  \texttt{cmdstanr}, un'interfaccia \(\R\) per \texttt{CmdStan}.
-\end{itemize}
-
-\hypertarget{interfaccia-cmdstanr}{%
-\section{\texorpdfstring{Interfaccia \texttt{cmdstanr}}{Interfaccia cmdstanr}}\label{interfaccia-cmdstanr}}
-
-Negli esempi di questa dispensa verrà usata l'interfaccia \texttt{cmdstanr}. Il pacchetto \texttt{cmdstanr} non è ancora disponibile su CRAN, ma può essere installato come indicato su questo \href{https://mc-stan.org/docs/2_27/cmdstan-guide/cmdstan-installation.html}{link}. Una volta che è stato installato, il pacchetto \texttt{cmdstanr} può essere caricato come un qualsiasi altro pacchetto R.
-
-Si noti che \texttt{cmdstanr} richiede un'installazione funzionante di \texttt{CmdStan}, l'interfaccia shell per Stan. Se \texttt{CmdStan} non è installato, \texttt{cmdstanr} lo installerà automaticamente se il computer dispone di una \emph{Toolchain} adatta. Stan richiede infatti che sul computer su cui viene installato siano presenti alcuni strumenti necessari per gestire i file C++. Tra le altre ragioni, questo è dovuto al fatto che il codice Stan viene tradotto in codice C++ e compilato. Il modo migliore per ottenere il software necessario per un computer Windows o Mac è quello di installare \texttt{RTools}. Per un computer Linux, è necessario installare \texttt{build-essential} e una versione recente dei compilatori g++ o clang++. I requisiti sono descritti nella \href{https://mc-stan.org/docs/cmdstan-guide/cmdstan-installation.html}{Guida di CmdStan}.
-
-Per verificare che la Toolchain sia configurata correttamente è possibile utilizzare la funzione \texttt{check\_cmdstan\_toolchain()}:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{check\_cmdstan\_toolchain}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Se la toolchain è configurata correttamente, \texttt{CmdStan} può essere installato mediante la funzione \texttt{install\_cmdstan()}:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# do not run!}
-\CommentTok{\# install\_cmdstan(cores = 2)}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-La versione installata di \texttt{CmdStan} si ottiene con:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{cmdstan\_version}\NormalTok{()}
-\CommentTok{\#\textgreater{} [1] "2.28.2"}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{codice-stan}{%
-\section{Codice Stan}\label{codice-stan}}
-
-Qualunque sia l'interfaccia che viene usata, i modelli sottostanti sono sempre scritti nel linguaggio Stan, il che significa che lo stesso codice Stan è valido per tutte le interfacce possibili. Il codice Stan è costituito da una serie di blocchi che vengono usati per specificare un modello statistico. In ordine, questi blocchi sono: \texttt{data}, \texttt{transformed\ data}, \texttt{parameters}, \texttt{transformed\ parameters}, \texttt{model}, e \texttt{generated\ quantities}.
-
-\hypertarget{hello-world-stan}{%
-\subsection{``Hello, world'' -- Stan}\label{hello-world-stan}}
-
-Quando si studia un nuovo linguaggio di programmazione si utilizza spesso un programma ``Hello, world''. Questo è un modo semplice, spesso minimo, per dimostrare alcune delle sintassi di base del linguaggio. In Python, il programme ``Hello, world'' program è:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\BuiltInTok{print}\NormalTok{(}\StringTok{"Hello, world."}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-Qui presentiamo Stan e scriviamo un programma ``Hello, world'' per Stan.
-
-Prima di scrivere il nostro primo programma ``Hello, world'' per Stan (che estrarrà campioni dalla distribuzione a posteriori di un modello gaussiano) spendiamo due parole per spiegare cosa fa Stan. Un utente scrive un modello usando il linguaggio Stan. Questo è solitamente memorizzato in un file di testo \texttt{.stan}. Il modello viene compilato in due passaggi. Innanzitutto, Stan traduce il modello nel file \texttt{.stan} in codice C++. Quindi, quel codice C++ viene compilato in codice macchina. Una volta creato il codice macchina, l'utente può, tramite l'interfaccia CmdStan, campionare la distribuzione definita dal modello ed eseguire altri calcoli con il modello. I risultati del campionamento vengono scritti su disco come file CSV e txt. Come mostrato di seguito, l'utente accede a questi file utilizzando varie funzioni \(\R\), senza interagire direttamente con loro.
-
-Per iniziare, possiamo dire che un programma Stan contiene tre ``blocchi'' obbligatori: blocco \texttt{data}, blocco \texttt{parameters}, blocco \texttt{model}.
-
-\hypertarget{blocco-data}{%
-\subsection{\texorpdfstring{Blocco \texttt{data}}{Blocco data}}\label{blocco-data}}
-
-Qui vengono dichiarate le variabili che saranno passate a Stan. Devono essere elencati i nomi delle variabili che saranno utilizzate nel programma, il \emph{tipo di dati} da registrare per ciascuna variabile, per esempio:
-
-\begin{itemize}
-\tightlist
-\item
-  \emph{int} = intero,
-\item
-  \emph{real} = numeri reali (ovvero, numeri con cifre decimali),
-\item
-  \emph{vector} = sequenze ordinate di numeri reali unidimensionali,
-\item
-  \emph{matrix} = matrici bidimensionali di numeri reali,
-\item
-  \emph{array} = sequenze ordinate di dati multidimensionali.
-\end{itemize}
-
-Devono anche essere dichiarate le dimensioni delle variabili e le eventuali restrizioni sulle variabili (es. \texttt{upper\ =\ 1} \texttt{lower\ =\ 0}, che fungono da controlli per Stan). Tutti i nomi delle variabili assegnate qui saranno anche usati negli altri blocchi del programma.
-
-Per esempio, l'istruzione seguente dichiaria la variabile \texttt{Y} -- la quale rappresenta, ad esempio, l'altezza di 10 persone -- come una variabile di tipo \texttt{real{[}10{]}}. Ciò significa che specifichiamo un array di lunghezza 10, i cui elementi sono variabili continue definite sull'intervallo dei numeri reali \([-\infty, +\infty]\).
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{data \{}
-\NormalTok{  real Y[}\DecValTok{10}\NormalTok{]; }\SpecialCharTok{/}\ErrorTok{/}\NormalTok{ heights }\ControlFlowTok{for} \DecValTok{10}\NormalTok{ people}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-Invece, con l'istruzione
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{data \{}
-\NormalTok{  int Y[}\DecValTok{10}\NormalTok{]; }\SpecialCharTok{/}\ErrorTok{/}\NormalTok{ qi }\ControlFlowTok{for} \DecValTok{10}\NormalTok{ people}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-dichiariamo la variabile \texttt{Y} -- la quale rappresenta, ad esempio, il QI di 10 persone -- come una variabile di tipo \texttt{int{[}10{]}}, ovvero un array di lunghezza 10, i cui elementi sono numeri naturali, cioè numeri interi non negativi \(\{0, +1, +2, +3, +4, \dots\}\).
-
-Un altro esempio è
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{data \{}
-\NormalTok{  real}\SpecialCharTok{\textless{}}\NormalTok{lower}\OtherTok{=}\DecValTok{0}\NormalTok{, upper}\OtherTok{=}\DecValTok{1}\SpecialCharTok{\textgreater{}}\NormalTok{ Y[}\DecValTok{10}\NormalTok{]; }\SpecialCharTok{/}\ErrorTok{/} \DecValTok{10}\NormalTok{ proportions}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-nel quale viene specificato un array di lunghezza 10, i cui elementi sono delle variabili continue definite sull'intervallo dei numeri reali \([0, 1]\) --- per esempio, delle proporzioni.
-
-Si noti che i tipi \texttt{vector} e \texttt{matrix} contengono solo elementi di tipo \texttt{real}, ovvero variabili continue, mentre gli \texttt{array} possono contenere dati di qualsiasi tipo. I dati passati a Stan devono essere contenuti in un oggetto del tipo \texttt{list}.
-
-\hypertarget{blocco-parameters}{%
-\subsection{\texorpdfstring{Blocco \texttt{parameters}}{Blocco parameters}}\label{blocco-parameters}}
-
-I parametri che vengono stimati sono dichiarati nel blocco \texttt{parameters}. Per esempio, l'istruzione
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{parameters \{}
-\NormalTok{  real mu; }\SpecialCharTok{/}\ErrorTok{/}\NormalTok{ mean height }\ControlFlowTok{in}\NormalTok{ population}
-\NormalTok{  real}\SpecialCharTok{\textless{}}\NormalTok{lower}\OtherTok{=}\DecValTok{0}\SpecialCharTok{\textgreater{}}\NormalTok{ sigma; }\SpecialCharTok{/}\ErrorTok{/}\NormalTok{ sd of height distribution}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-dichiaria la variabile \texttt{mu} che codifica l'altezza media nella popolazione, che è una variabile continua in un intervallo illimitato di valori, e la deviazione standard \texttt{sigma}, che è una variabile continua non negativa. Avremmo anche potuto specificare un limite inferiore di zero su \texttt{mu} perché deve essere non negativo.
-
-Per una regressione lineare semplice, ad esempio, devono essere dichiarate le variabili corrispondenti all'intercetta (\texttt{alpha}), alla pendenza (\texttt{beta}) e alla deviazione standard degli errori attorno alla linea di regressione (\texttt{sigma}). In altri termini, nel blocco \texttt{parameters} devono essere elencati tutti i parametri che dovranno essere stimati dal modello. Si noti che parametri discreti non sono possibili. Infatti, Stan attualmente non supporta i parametri con valori interi, almeno non direttamente.
-
-\hypertarget{blocco-model}{%
-\subsection{\texorpdfstring{Blocco \texttt{model}}{Blocco model}}\label{blocco-model}}
-
-Nel blocco \texttt{model} vengono elencate le dichiarazioni relative alla verosimiglianza dei dati e alle distribuzioni a priori dei parametri, come ad esempio, nelle istruzioni seguenti.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{model \{}
-  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{) \{}
-\NormalTok{    Y[i] }\SpecialCharTok{\textasciitilde{}} \FunctionTok{normal}\NormalTok{(mu, sigma);}
-\NormalTok{  \}}
-\NormalTok{  mu }\SpecialCharTok{\textasciitilde{}} \FunctionTok{normal}\NormalTok{(}\DecValTok{170}\NormalTok{, }\DecValTok{15}\NormalTok{); }\SpecialCharTok{/}\ErrorTok{/}\NormalTok{ prior }\ControlFlowTok{for}\NormalTok{ mu}
-\NormalTok{  sigma }\SpecialCharTok{\textasciitilde{}} \FunctionTok{cauchy}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{); }\SpecialCharTok{/}\ErrorTok{/}\NormalTok{ prior }\ControlFlowTok{for}\NormalTok{ sigma}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Mediante l'istruzione all'interno del ciclo \texttt{for}, ciascun valore dell'altezza viene concepito come una variable casuale proveniente da una distribuzione Normale di parametri \(\mu\) e \(\sigma\) (i parametri di interesse nell'inferenza). Il ciclo \texttt{for} viene ripetuto 10 volte perché i dati sono costituiti da un array di 10 elementi (ovvero, il campione è costituito da 10 osservazioni).
-
-Le due righe che seguno il ciclo \texttt{for} specificano le distribuzioni a priori dei parametri su cui vogliamo effettuare l'inferenza. Per \(\mu\) assumiamo una distribuzione a priori Normale di parametri \(\mu = 170\) e \(\sigma = 15\); per \(\sigma\) assumiamo una distribuzione a priori Cauchy(0, 20).
-
-Se non viene definita alcuna distribuzione a priori, Stan utilizzerà la distribuzione a priori predefinita \(Unif(-\infty, +\infty)\). Raccomandazioni sulle distribuzioni a priori sono fornite in questo \href{https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations}{link}.
-
-La precedente notazione di campionamento può anche essere espressa usando la seguente notazione alternativa:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{) \{}
-\NormalTok{    target }\SpecialCharTok{+}\ErrorTok{=} \FunctionTok{normal\_lpdf}\NormalTok{(Y[i] }\SpecialCharTok{|}\NormalTok{ mu, sigma);}
-\NormalTok{  \}}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Questa notazione rende trasparente il fatto che, in pratica, Stan esegue un campionamento nello spazio
+Se \(x\) è una variabile dicotomica con valori 0 e 1, allora per il modello lineare \(\mu_i = \alpha + \beta x_i\) abbiamo quanto segue. Quando \(x=0\), il modello diventa
 \[
-\log p(\theta \mid y) \propto \log p(y \mid \theta) + \log p(\theta) = \sum_{i=1}^n \log p(y_i \mid \theta) + \log p(\theta).
+\mu_i = \alpha
 \]
-Per ogni passo MCMC, viene ottenuto un nuovo valore di \(\mu\) e \(\sigma\) eviene valutata la log densità a posteriori non normalizzata. Ad ogni passo MCMC, Stan calcola un nuovo valore della densità a posteriori su scala logaritmica partendo da un valore di 0 e incrementandola ogni volta che incontra un'istruzione \texttt{\textasciitilde{}}. Quindi, le istruzioni precedenti aumentano la log-densità di una quantità pari a \(\log (p(Y[i])) \propto -\frac{1}{2} \log(\sigma^2) - (Y[i]-\mu)^2 / 2\sigma^2\) per le altezze si ciascuno degli \(i=1 \dots, 10\) individui -- laddove la formula esprime, in termini logaritmici, la densità Normale da cui sono stati esclusi i termini costanti.
+\noindent
+mentre, quando \(X=1\), il modello diventa
+\[
+\mu_i = \alpha + \beta.
+\]
+\noindent
+Ciò significa che il parametro \(\alpha\) è uguale al valore atteso del gruppo codificato con \(X=0\) e il parametro \(\beta\) è uguale alla differenza tra le medie dei due gruppi (essendo la media del secondo gruppo uguale a \(\alpha + \beta\)). Il parametro \(\beta\), dunque, codifica l'effetto di una manipolazione sperimentale o di un trattamento, e l'inferenza su \(\beta\) corrisponde direttamente all'inferenza sull'efficacia di un trattamento o di un effetto sperimentale.\footnote{Per ``effetto di un trattamento'' si intende la differenza tra le medie di due gruppi (per esempio, il gruppo ``sperimentale'' e il gruppo ``di controllo'').} L'inferenza su \(\beta\), dunque, viene utilizzata per capire quanto ``credibile'' può essere considerato l'effetto di un trattamento o di una manipolazione sperimentale.
 
-Oppure, in termini vettorializzati, il modello descritto sopra può essere espresso come
+\hypertarget{un-esempio-concreto}{%
+\subsection{Un esempio concreto}\label{un-esempio-concreto}}
+
+Esaminiamo nuovamente i dati \texttt{kid\_score} discussi da \textcite{gelman2020regression}. La domanda della ricerca è se il QI del figlio (misurato sulla scala PIAT) è associato al livello di istruzione della madre.
+
+Codifichiamo il livello di istruzione della madre (\(x\)) con una \emph{variabile indicatrice} (ovvero, una variabile che assume solo i valori 0 e 1) tale per cui:
+
+\begin{itemize}
+\tightlist
+\item
+  \(x=0\): la madre non ha completato la scuola secondaria di secondo grado (scuola media superiore);
+\item
+  \(x=1\): la madre ha completato la scuola media superiore.
+\end{itemize}
+
+\noindent
+Supponiamo che i dati siano contenuti nel data.frame \texttt{df}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{model \{}
-\NormalTok{  Y }\SpecialCharTok{\textasciitilde{}} \FunctionTok{normal}\NormalTok{(mu, sigma);}
-\NormalTok{\}}
+\FunctionTok{library}\NormalTok{(}\StringTok{"rio"}\NormalTok{)}
+\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ rio}\SpecialCharTok{::}\FunctionTok{import}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"kidiq.dta"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \noindent
-dove il termine a sinistra di \(\sim\) è un array. Questa notazione più compatta è anche la più efficiente.
+Calcoliamo le statistiche descrittive per i due gruppi:
 
-\hypertarget{blocchi-opzionali}{%
-\subsection{Blocchi opzionali}\label{blocchi-opzionali}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(mom\_hs) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{mean\_kid\_score =} \FunctionTok{mean}\NormalTok{(kid\_score),}
+    \AttributeTok{std =} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{var}\NormalTok{(kid\_score))}
+\NormalTok{  )}
+\CommentTok{\#\textgreater{} \# A tibble: 2 × 3}
+\CommentTok{\#\textgreater{}   mom\_hs mean\_kid\_score   std}
+\CommentTok{\#\textgreater{}    \textless{}dbl\textgreater{}          \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1      0           77.5  22.6}
+\CommentTok{\#\textgreater{} 2      1           89.3  19.0}
+\end{Highlighting}
+\end{Shaded}
 
-Ci sono inoltre tre blocchi opzionali:
-
-\begin{itemize}
-\item
-  Il blocco \texttt{transformed\ data} consente il pre-processing dei dati. È possibile trasformare i parametri del modello; solitamente ciò viene fatto nel caso dei modelli più avanzati per consentire un campionamento MCMC più efficiente.
-\item
-  Il blocco \texttt{transformed\ parameters} consente la manipolazione dei parametri prima del calcolo della distribuzione a posteriori.
-\item
-  Il blocco \texttt{generated\ quantities} consente il post-processing riguardante qualsiasi quantità che non fa parte del modello ma può essere calcolata a partire dai parametri del modello, per ogni iterazione dell'algoritmo. Esempi includono la generazione dei campioni a posteriori e le dimensioni degli effetti.
-\end{itemize}
-
-\hypertarget{sintassi}{%
-\subsection{Sintassi}\label{sintassi}}
-
-Si noti che il codice Stan richiede i punti e virgola (;) alla fine di ogni istruzione di assegnazione. Questo accade per le dichiarazioni dei dati, per le dichiarazioni dei parametri e ovunque si acceda ad un elemento di un tipo \texttt{data} e lo si assegni a qualcos'altro. I punti e virgola non sono invece richiesti all'inizio di un ciclo o di un'istruzione condizionale, dove non viene assegnato nulla.
-
-In STAN, qualsiasi stringa che segue \texttt{//} denota un commento e viene ignorata dal programma.
-
-Stan è un linguaggio estremamente potente e consente di implementare quasi tutti i modelli statistici, ma al prezzo di un certo sforzo di programmazione. Anche l'adattamento di semplici modelli statistici mediante il linguaggio STAN a volte può essere laborioso. Per molti modelli comunemente usati, come i modelli di regressione e multilivello, tale processo può essere semplificato usando le funzioni del pacchetto \texttt{brms}. D'altra parte, per modelli veramente complessi, non ci sono molte alternative all'uso di STAN. Per chi è curioso, il manuale del linguaggio Stan è accessibile al seguente \href{https://mc-stan.org/docs/2_27/stan-users-guide/index.html}{link}.
-
-\hypertarget{workflow}{%
-\section{Workflow}\label{workflow}}
-
-Se usiamo \texttt{cmdstanr}, dobbiamo prima scrivere il codice con il modello statistico in un file in formato Stan. È necessario poi ``transpile'' quel file, ovvero tradurre il file in C++ e compilarlo. Ciò viene fatto mediante la funzione \texttt{cmdstan\_model()}. Possiamo poi eseguire il campionamento MCMC con il metodo \texttt{\$sample()}. Infine è possibile creare un sommario dei risultati usando, per esempio, usando il metodo \texttt{\$summary()}.
-
-\hypertarget{ciao-stan}{%
-\section{Ciao, Stan}\label{ciao-stan}}
-
-Scriviamo ora il nostro programma Stan ``Hello, world'' per generare campioni da una distribuzione Normale standard (con media zero e varianza unitaria).
+\noindent
+Il punteggio medio PIAT è pari a 77.5 per i bambini la cui madre non ha il diploma di scuola media superiore e pari a 89.3 per i bambini la cui madre ha completato la scuola media superiore. Questa differenza suggerisce un'associazione tra le variabili, ma tale differenza potrebbe essere soltanto la conseguenza della variabilità campionaria, senza riflettere una caratteristica generale della popolazione. Come possiamo usare il modello statistico lineare per fare inferenza sulla differenza osservata tra i due gruppi? Non dobbiamo fare nient'altro che usare il modello lineare che abbiamo definito in precedenza.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{modelString }\OtherTok{=} \StringTok{"}
+\StringTok{data \{}
+\StringTok{  int\textless{}lower=0\textgreater{} N;}
+\StringTok{  vector[N] y;}
+\StringTok{  vector[N] x;}
+\StringTok{\}}
+\StringTok{transformed data \{}
+\StringTok{  vector[N] x\_std;}
+\StringTok{  vector[N] y\_std;}
+\StringTok{  x\_std = (x {-} mean(x)) / sd(x);}
+\StringTok{  y\_std = (y {-} mean(y)) / sd(y);}
+\StringTok{\}}
 \StringTok{parameters \{}
-\StringTok{  real x;}
+\StringTok{  real alpha\_std;}
+\StringTok{  real beta\_std;}
+\StringTok{  real\textless{}lower=0\textgreater{} sigma\_std;}
 \StringTok{\}}
 \StringTok{model \{}
-\StringTok{  x \textasciitilde{} normal(0, 1);}
+\StringTok{  alpha\_std \textasciitilde{} normal(0, 2);}
+\StringTok{  beta\_std \textasciitilde{} normal(0, 2);}
+\StringTok{  sigma\_std \textasciitilde{} cauchy(0, 2);}
+\StringTok{  y\_std \textasciitilde{} normal(alpha\_std + beta\_std * x\_std, sigma\_std);}
+\StringTok{\}}
+\StringTok{generated quantities \{}
+\StringTok{  real alpha;}
+\StringTok{  real beta;}
+\StringTok{  real\textless{}lower=0\textgreater{} sigma;}
+\StringTok{  alpha = sd(y) * (alpha\_std {-} beta\_std * mean(x) / sd(x))}
+\StringTok{           + mean(y);}
+\StringTok{  beta = beta\_std * sd(y) / sd(x);}
+\StringTok{  sigma = sd(y) * sigma\_std;}
 \StringTok{\}}
 \StringTok{"}
-\FunctionTok{writeLines}\NormalTok{(modelString, }\AttributeTok{con =} \StringTok{"code/hello\_world.stan"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-Si noti che ci sono solo due blocchi in questo particolare codice Stan, il blocco parametri e il blocco modello. Questi sono due dei sette blocchi possibili in un codice Stan. Nel blocco parametri, abbiamo i nomi e i tipi di parametri per i quali vogliamo ottenere i campioni. In questo caso, vogliamo ottenere campioni di numeri reale che chiamiamo \texttt{x}. Nel blocco modello, abbiamo il nostro modello statistico. Specifichiamo che x, il parametro di cui vogliamo ottenere i campioni, è normalmente distribuito con media zero e deviazione standard unitaria. Ora che abbiamo il nostro codice (che è stato memorizzato in un file chiamato \texttt{hello\_world.stan}), possiamo usare CmdStan per compilarlo e ottenere \texttt{mod}, che è un oggetto \(\R\) che fornisce l'accesso all'eseguibile Stan compilato.
-
-Leggiamo il file in cui abbiamo salvato il codice Stan
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(}\StringTok{"code"}\NormalTok{, }\StringTok{"hello\_world.stan"}\NormalTok{)}
+\FunctionTok{writeLines}\NormalTok{(modelString, }\AttributeTok{con =} \StringTok{"code/simpleregstd.stan"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \noindent
-compiliamo il modello
+Come in precedenza, salviamo i dati in un oggetto di classe \texttt{list}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\NormalTok{data\_list }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
+  \AttributeTok{N =} \FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{kid\_score),}
+  \AttributeTok{y =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{kid\_score,}
+  \AttributeTok{x =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{mom\_hs}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent
+Compiliamo il modello:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(}\StringTok{"code"}\NormalTok{, }\StringTok{"simpleregstd.stan"}\NormalTok{)}
 \NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{cmdstan\_model}\NormalTok{(file)}
 \end{Highlighting}
 \end{Shaded}
 
 \noindent
-ed eseguiamo il campionamento MCMC:
+Adattiamo il modello ai dati:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{fit }\OtherTok{\textless{}{-}}\NormalTok{ mod}\SpecialCharTok{$}\FunctionTok{sample}\NormalTok{(}
-  \CommentTok{\# data = data\_list,}
+  \AttributeTok{data =}\NormalTok{ data\_list,}
   \AttributeTok{iter\_sampling =}\NormalTok{ 4000L,}
   \AttributeTok{iter\_warmup =}\NormalTok{ 2000L,}
   \AttributeTok{seed =}\NormalTok{ SEED,}
   \AttributeTok{chains =}\NormalTok{ 4L,}
-  \CommentTok{\# parallel\_chains = 2L,}
+  \AttributeTok{parallel\_chains =}\NormalTok{ 2L,}
   \AttributeTok{refresh =} \DecValTok{0}\NormalTok{,}
   \AttributeTok{thin =} \DecValTok{1}
 \NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-Tasformiamo l'oggetto \texttt{fit} nel formato \texttt{stanfit} per manipolarlo più facilmente:
+\noindent
+Creiamo un grafico con i valori predetti dal modello lineare:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{stanfit }\OtherTok{\textless{}{-}}\NormalTok{ rstan}\SpecialCharTok{::}\FunctionTok{read\_stan\_csv}\NormalTok{(fit}\SpecialCharTok{$}\FunctionTok{output\_files}\NormalTok{())}
+\NormalTok{posterior }\OtherTok{\textless{}{-}} \FunctionTok{extract}\NormalTok{(stanfit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{tibble}\NormalTok{(}
+  \AttributeTok{kid\_score =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{kid\_score,}
+  \AttributeTok{mom\_hs =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{mom\_hs}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(mom\_hs, kid\_score)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_abline}\NormalTok{(}\AttributeTok{intercept =} \FunctionTok{mean}\NormalTok{(posterior}\SpecialCharTok{$}\NormalTok{alpha), }\AttributeTok{slope =} \FunctionTok{mean}\NormalTok{(posterior}\SpecialCharTok{$}\NormalTok{beta)) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{y =} \StringTok{"Quoziente di intelligenza del bambino"}\NormalTok{,}
+    \AttributeTok{x =} \StringTok{"Diploma di istruzione secondaria di secondo grado della madre}\SpecialCharTok{\textbackslash{}n}\StringTok{(0 = no; 1 = sì)"}
+\NormalTok{  ) }\SpecialCharTok{+} 
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-9-1} \end{center}
+
+Le stime a posteriori dei parametri si ottengono con:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit}\SpecialCharTok{$}\FunctionTok{summary}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta"}\NormalTok{, }\StringTok{"sigma"}\NormalTok{))}
+\CommentTok{\#\textgreater{} \# A tibble: 3 × 10}
+\CommentTok{\#\textgreater{}   variable  mean median    sd   mad    q5   q95  rhat ess\_bulk}
+\CommentTok{\#\textgreater{}   \textless{}chr\textgreater{}    \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}    \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 alpha     77.5   77.6 2.07  2.06  74.2   81.0  1.00   17948.}
+\CommentTok{\#\textgreater{} 2 beta      11.8   11.8 2.34  2.33   7.91  15.6  1.00   18036.}
+\CommentTok{\#\textgreater{} 3 sigma     19.9   19.9 0.679 0.673 18.8   21.0  1.00   18897.}
+\CommentTok{\#\textgreater{} \# … with 1 more variable: ess\_tail \textless{}dbl\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+I risultati confermano ciò che ci aspettavamo:
+
+\begin{itemize}
+\tightlist
+\item
+  il coefficiente \(\texttt{alpha} = 77.56\) corrisponde alla media del gruppo codificato con \(x = 0\), ovvero la media dei punteggi PIAT per i bambini la cui madre non ha completato la scuola media superiore;
+\item
+  il coefficiente \(\texttt{beta} = 11.76\) corrisponde alla differenza tra le medie dei due gruppi, ovvero 89.32 - 77.55 = 11.77 (con piccoli errori di approssimazione).
+\end{itemize}
+
+La seguente chiamata ritorna l'intervallo di credibilità al 95\% per tutti i parametri del modello:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rstantools}\SpecialCharTok{::}\FunctionTok{posterior\_interval}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(stanfit), }\AttributeTok{prob =} \FloatTok{0.95}\NormalTok{)}
+\CommentTok{\#\textgreater{}                2.5\%     97.5\%}
+\CommentTok{\#\textgreater{} alpha\_std   {-}0.0904    0.0916}
+\CommentTok{\#\textgreater{} beta\_std     0.1447    0.3289}
+\CommentTok{\#\textgreater{} sigma\_std    0.9120    1.0437}
+\CommentTok{\#\textgreater{} alpha       73.4854   81.6092}
+\CommentTok{\#\textgreater{} beta         7.1877   16.3437}
+\CommentTok{\#\textgreater{} sigma       18.6155   21.3025}
+\CommentTok{\#\textgreater{} lp\_\_      {-}209.0430 {-}204.3220}
+\end{Highlighting}
+\end{Shaded}
+
+Possiamo dunque concludere che i bambini la cui madre ha completato la scuola superiore ottengono in media circa 12 punti in più rispetto ai bambini la cui madre non ha completato la scuola superiore. L'intervallo di credibilità al 95\% ci dice che possiamo essere sicuri al 95\% che tale differenza sia di almeno 7 punti e possa arrivare fino a ben 16 punti. Per riassumere, possiamo concludere, con un grado di certezza soggettiva del 95\%, che c'è un'associazione positiva tra il livello di scolarità della madre e l'intelligenza del bambino: le madri che hanno livello di istruzione più alto della media tendo ad avere bambini il cui QI è anch'esso più alto della media.
+
+\hypertarget{la-dimensione-delleffetto}{%
+\section{La dimensione dell'effetto}\label{la-dimensione-delleffetto}}
+
+Avendo a disposizione le informazioni sulle distribuzioni a posteriori dei parametri è facile calcolare la dimensione dell'effetto nei termini del \(d\) di Cohen.
+
+Iniziamo semplicemente utilizzando le medie e le deviazioni standard delle due distribuzioni:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(}\StringTok{"effectsize"}\NormalTok{)}
+\NormalTok{(d }\OtherTok{\textless{}{-}} \FunctionTok{cohens\_d}\NormalTok{(kid\_score }\SpecialCharTok{\textasciitilde{}}\NormalTok{ mom\_hs, }\AttributeTok{data =}\NormalTok{ df))}
+\CommentTok{\#\textgreater{} Cohen\textquotesingle{}s d |         95\% CI}
+\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\#\textgreater{} {-}0.59     | [{-}0.83, {-}0.36]}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} {-} Estimated using pooled SD.}
+\end{Highlighting}
+\end{Shaded}
+
+Lo stesso risultato si ottiene utilizzando la distribuzione a posteriori dei parametri:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FloatTok{11.75398} \SpecialCharTok{/} \FloatTok{19.90159} 
+\CommentTok{\#\textgreater{} [1] 0.591}
 \end{Highlighting}
 \end{Shaded}
 
 \noindent
-Lo esaminiamo
+Il \(d\) di Cohen di entità ``media'' {[}\(d\) \textgreater{} 0.5; \textcite{sawilowsky2009new}{]} conferma l'importanza dell'influenza della scolarità delle madri sul QI dei bambini.
+
+Possiamo confermare il risultato ottenuto usando le funzioni del pacchetto \(\R\) \texttt{bayestest}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{length}\NormalTok{(stanfit}\SpecialCharTok{@}\NormalTok{sim}\SpecialCharTok{$}\NormalTok{samples)}
-\CommentTok{\#\textgreater{} [1] 4}
+\FunctionTok{library}\NormalTok{ (}\StringTok{"MCMCpack"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(}\StringTok{"bayest"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\noindent
-Quello che abbiamo ottenuto sono 4 catene di 4000 osservazioni ciascuna, le quali contengono valori casuali estratti dalla gaussiana standardizzata:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{head}\NormalTok{(stanfit}\SpecialCharTok{@}\NormalTok{sim}\SpecialCharTok{$}\NormalTok{samples[[}\DecValTok{1}\NormalTok{]])}
+\NormalTok{kid\_iq0 }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(mom\_hs }\SpecialCharTok{==} \DecValTok{0}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pull}\NormalTok{(kid\_score)}
+\NormalTok{kid\_iq1 }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(mom\_hs }\SpecialCharTok{==} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pull}\NormalTok{(kid\_score)}
+\FunctionTok{bayes.t.test}\NormalTok{(}
+  \AttributeTok{n =} \DecValTok{20000}\NormalTok{,}
+  \AttributeTok{burnin =} \DecValTok{10000}\NormalTok{,}
+  \AttributeTok{firstComp =}\NormalTok{ kid\_iq0,}
+  \AttributeTok{secondComp =}\NormalTok{ kid\_iq1,}
+  \AttributeTok{sd =} \StringTok{"sd"}\NormalTok{,}
+  \AttributeTok{plot =} \StringTok{"all"}\NormalTok{,}
+  \AttributeTok{ci =} \FloatTok{0.95}\NormalTok{,}
+  \AttributeTok{hyperpars =} \StringTok{"custom"}\NormalTok{,}
+  \AttributeTok{q =} \FloatTok{0.1}
+\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\noindent
-Verifichiamo
+\begin{center}\includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-1} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-2} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-3} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-4} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-5} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-6} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-7} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-8} \end{center}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{hist}\NormalTok{(stanfit}\SpecialCharTok{@}\NormalTok{sim}\SpecialCharTok{$}\NormalTok{samples[[}\DecValTok{1}\NormalTok{]][, }\DecValTok{1}\NormalTok{])}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.8\linewidth]{914_stan_lang_files/figure-latex/unnamed-chunk-19-1} \end{center}
+Con le funzioni di \texttt{bayestest} otteniamo una stima della dimensione dell'effetto pari a 0.558 (se usiamo la media a posteriori) -- molto simile a quella ottenuta in precedenza -- con un intervallo di credibilità del 95\% pari a {[}0.02, 1.10{]}.
 
 
 % Bibliography

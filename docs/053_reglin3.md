@@ -1,9 +1,6 @@
 # Modello lineare in Stan {#reg-lin-stan}
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
-source("_common.R")
-source("_stan_options.R")
-```
+
 
 Obiettivo di questo Capitolo è illustrare come svolgere l'analisi bayesiana del modello lineare usando il linguaggio Stan.^[Una descrizione dell'approccio frequentista è fornita nell'Appendice \@ref(regr-lin-frequentista).] 
 
@@ -11,16 +8,27 @@ Obiettivo di questo Capitolo è illustrare come svolgere l'analisi bayesiana del
 
 Leggiamo in $\R$ il dataset `kidiq`:
 
-```{r}
+
+```r
 library("rio")
 df <- rio::import(here("data", "kidiq.dta"))
 head(df)
+#>   kid_score mom_hs mom_iq mom_work mom_age
+#> 1        65      1  121.1        4      27
+#> 2        98      1   89.4        4      25
+#> 3        85      1  115.4        4      27
+#> 4        83      1   99.4        3      25
+#> 5       115      1   92.7        4      27
+#> 6        98      0  107.9        1      18
 ```
 
 Vogliamo descrivere l'associazione tra il QI dei figli e il QI delle madri mediante un modello lineare. Per farci un'idea del valore dei parametri, adattiamo il modello lineare ai dati mediante la procedura di massima verosimiglianza:
 
-```{r}
+
+```r
 coef(lm(kid_score ~ mom_iq, data = df))
+#> (Intercept)      mom_iq 
+#>       25.80        0.61
 ```
 
 La formulazione bayesiano del modello lineare è:
@@ -71,7 +79,8 @@ $$
 <!-- La standardizzazione eseguita all'interno del codice Stan per l'analisi di regressione cambia la scala delle variabili, e quindi cambia anche la scala delle distribuzioni a priori dei parametri.  -->
 Consideriamo il seguente modello iniziale nel linguaggio Stan:
 
-```{r}
+
+```r
 modelString = "
 data {
   int<lower=0> N;
@@ -100,7 +109,8 @@ La funzione `modelString()` registra una stringa di testo mentre `writeLines()` 
 
 Qui sotto è invece riportato il modello per i dati standardizzati. Il blocco `data` è identico a quello del caso precedente. I predittori e la risposta standardizzati sono definiti nel blocco `transformed data`. Per semplificare la notazione (e velocizzare l'esecuzione), nel blocco `model` l'istruzione di campionamento è espressa in forma vettorializzata: `y_std ~ normal(alpha_std + beta_std * x_std, sigma_std);`.
 
-```{r}
+
+```r
 modelString = "
 data {
   int<lower=0> N; // number of data points
@@ -179,7 +189,8 @@ $$
 I valori dei parametri sulla scala originale dei dati vengono calcolati nel blocco `generated quantities`.
 
 Per svolgere l'analisi bayesiana sistemiamo i dati nel formato appropriato per Stan:
-```{r}
+
+```r
 data_list <- list(
   N = length(df$kid_score),
   y = df$kid_score,
@@ -188,27 +199,32 @@ data_list <- list(
 ```
 \noindent
 La funzione `file.path()` ritorna l'indirizzo del file con il codice Stan:
-```{r}
+
+```r
 file <- file.path("code", "simpleregstd.stan")
 ```
 \noindent
 Il codice Stan può essere stampato usando il metodo `$print()`:
-```{r, eval=FALSE}
+
+```r
 mod$print()
 ```
 
 Prendendo come input un file contenente un programma Stan, la funzione `cmdstan_model()` ritorna un oggetto di classe `CmdStanModel`. In pratica, `CmdStan` traduce un programma Stan in C++ e crea un eseguibile compilato. 
-```{r}
+
+```r
 mod <- cmdstan_model(file)
 ```
 \noindent
 L'indirizzo dell'eseguibile compilato viene ritornato da `$exe_file()`:
-```{r, eval=FALSE}
+
+```r
 mod$exe_file()
 ```
 
 Applicando il metodo `$sample()` ad un oggetto `CmdStanModel` eseguiamo il campionamento MCMC: 
-```{r, message = FALSE, warning=FALSE, results='hide'}
+
+```r
 fit <- mod$sample(
   data = data_list,
   iter_sampling = 4000L,
@@ -224,50 +240,84 @@ fit <- mod$sample(
 Al metodo `$sample()` possono essere passati molti argomenti. La pagina di documentazione è disponibile al seguente [link](https://mc-stan.org/cmdstanr/reference/model-method-sample.html).
 
 Un sommario della distribuzione a posteriori per i parametri stimati si ottiene con il metodo `$summary()`, il quale chiama la funzione `summarise_draws()` del pacchetto `posterior`:
-```{r}
+
+```r
 fit$summary(c("alpha", "beta", "sigma"))
+#> # A tibble: 3 × 10
+#>   variable   mean median     sd    mad     q5    q95  rhat ess_bulk
+#>   <chr>     <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl>    <dbl>
+#> 1 alpha    25.9   25.9   5.91   5.88   16.0   35.6    1.00   18181.
+#> 2 beta      0.609  0.609 0.0586 0.0577  0.514  0.707  1.00   18031.
+#> 3 sigma    18.3   18.3   0.617  0.610  17.3   19.4    1.00   18335.
+#> # … with 1 more variable: ess_tail <dbl>
 ```
 \noindent
 Da questo output possiamo valutare rapidamente la convergenza del modello osservando i valori di Rhat per ciascun parametro. Quando questi sono pari o vicini a 1, le catene hanno realizzato la convergenza. Ci sono molti altri test diagnostici, ma questo test è importante per Stan. Oppure è possibile usare:
-```{r eval=FALSE}
+
+```r
 fit$cmdstan_summary()
 ```
 Le statistiche diagnostiche sono fornite dal metodo `$cmdstan_diagnose()`:
-```{r}
-fit$cmdstan_diagnose()
-```
 
-È possibile creare un oggetto di classe `stanfit`
-```{r}
+```r
+fit$cmdstan_diagnose()
+#> Processing csv files: /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/RtmpGp7GoI/simpleregstd-202201160704-1-94caed.csv, /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/RtmpGp7GoI/simpleregstd-202201160704-2-94caed.csv, /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/RtmpGp7GoI/simpleregstd-202201160704-3-94caed.csv, /var/folders/hl/dt523djx7_q7xjrthzjpdvc40000gn/T/RtmpGp7GoI/simpleregstd-202201160704-4-94caed.csv
+#> 
+#> Checking sampler transitions treedepth.
+#> Treedepth satisfactory for all transitions.
+#> 
+#> Checking sampler transitions for divergences.
+#> No divergent transitions found.
+#> 
+#> Checking E-BFMI - sampler transitions HMC potential energy.
+#> E-BFMI satisfactory.
+#> 
+#> Effective sample size satisfactory.
+#> 
+#> Split R-hat values satisfactory all parameters.
+#> 
+#> Processing complete, no problems detected.
+```
+È anche possibile creare un oggetto di classe `stanfit`
+
+```r
 stanfit <- rstan::read_stan_csv(fit$output_files())
 ```
 \noindent
-per poi utilizzare le funzioni del pacchetto `bayesplot`. Ad esempio:
-```{r}
+per poi utilizzare le funzioni del pacchetto `bayesplot`:
+
+```r
 stanfit %>% 
   mcmc_trace(pars = c("alpha", "beta", "sigma"))
 ```
-Infine, eseguendo la funzione `launch_shinystan(fit)`, è possibile analizzare oggetti di classe `stanfit` mediante le funzionalità del pacchetto `ShinyStan`.
+
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{053_reglin3_files/figure-latex/unnamed-chunk-16-1} \end{center}
+Infine, eseguendo la funzione `launch_shinystan(fit)` è possibile analizzare oggetti di classe `stanfit` mediante le funzionalità del pacchetto `ShinyStan`.
 
 
 ## Interpretazione dei parametri
 
 Assegnamo ai parametri la seguente interpretazione.
 
-- L'intercetta pari a 25.9 indica il QI medio dei bamini la cui madre ha un QI = 0. Ovviamente questo non ha alcun significato. Vedremo nel modello successivo come trasformare il modello in modo da potere assegnare all'intercetta un'interpretazione sensata.
+- L'intercetta pari a 25.8 indica il QI medio dei bamini la cui madre ha un QI = 0. Ovviamente questo non ha alcun significato. Vedremo nel modello successivo come trasformare il modello in modo da potere assegnare all'intercetta un'interpretazione sensata.
 - La pendenza di 0.61 indica che, all'aumentare di un punto del QI delle madri, il QI medio dei loro bambini aumenta di 0.61 unità. Se consideriamo la gamma di variazione del QI delle madri nel campione, il QI medio dei bambini cambia di 41 punti. Questo  indica un sostanziale effetto del QI delle madri sul QI dei loro bambini:
-```{r}
+
+```r
 (138.89 - 71.04) * 0.61
+#> [1] 41.4
 ```
 
-- Il parametro $\sigma$ = 18.3 fornisce una stima della dispersione delle osservazioni attorno al valore predetto dal modello lineare, ovvero fornisce una stima della deviazione standard dei residui attorno al valore atteso del modello lineare.
+- Il parametro $\sigma$ fornisce una stima della dispersione delle osservazioni attorno al valore predetto dal modello lineare, ovvero fornisce una stima della deviazione standard dei residui attorno al valore atteso del modello lineare.
 
 
 ### Centrare i predittori
 
-Per migliorare l'interpretazione dell'intercetta possiamo "centrare" la $x$, ovvero esprimere la $x$ nei termini degli scarti dalla media: $x - \bar{x}$. In tali circostanze, la pendenza della retta specificata dal modello lineare resta immutata, ma l'intercetta corrisponde a $\E(y \mid x = \bar{x})$. Per ottenere questo risultato, modifichiamo i dati da passare a Stan:
+Per migliorare l'interpretazione dell'intercetta possiamo "centrare" la $x$, ovvero esprimere la $x$ nei termini di scarti dalla media: $x - \bar{x}$. In tali circostanze, la pendenza della retta specificata dal modello lineare resterà immutata, ma l'intercetta corrisponderà a $\E(y \mid x = \bar{x})$. Per ottenere questo risultato, modifichiamo i dati da passare a Stan:
 
-```{r}
+
+```r
 data2_list <- list(
   N = length(df$kid_score),
   y = df$kid_score,
@@ -278,7 +328,8 @@ data2_list <- list(
 \noindent
 Adattiamo il modello:
 
-```{r, message = FALSE, warning=FALSE, results='hide'}
+
+```r
 fit2 <- mod$sample(
   data = data2_list,
   iter_sampling = 4000L,
@@ -292,16 +343,25 @@ fit2 <- mod$sample(
 ```
 \noindent
 Trasformiamo l'oggetto `fit` in un oggetto di classe `stanfit`:
-```{r}
+
+```r
 stanfit <- rstan::read_stan_csv(fit2$output_files())
 ```
 \noindent
 Le stime a posteriori dei parametri si ottengono con
-```{r}
+
+```r
 fit2$summary(c("alpha", "beta", "sigma"))
+#> # A tibble: 3 × 10
+#>   variable   mean median     sd    mad     q5    q95  rhat ess_bulk
+#>   <chr>     <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl>    <dbl>
+#> 1 alpha    86.8   86.8   0.885  0.877  85.3   88.3    1.00   17059.
+#> 2 beta      0.610  0.609 0.0594 0.0595  0.513  0.708  1.00   17747.
+#> 3 sigma    18.3   18.3   0.626  0.621  17.3   19.4    1.00   17546.
+#> # … with 1 more variable: ess_tail <dbl>
 ```
 \noindent
-Si noti la nuova intercetta, ovvero 86.8. Questo valore indica il QI medio dei bambini le cui madri hanno un QI pari alla media del campione. Centrare i dati consente dunque di assegnare all'intercetta un'interpretazione utile.
+Si noti che la nuova intercetta, ovvero 86.8, corrisponde al QI medio dei bambini le cui madri hanno un QI pari alla media del campione. Centrare i dati consente dunque di assegnare all'intercetta un'interpretazione utile.
 
 
 <!-- ### Rappresentazione grafica dell'incertezza della stima -->
