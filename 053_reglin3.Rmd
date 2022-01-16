@@ -20,7 +20,7 @@ head(df)
 Vogliamo descrivere l'associazione tra il QI dei figli e il QI delle madri mediante un modello lineare. Per farci un'idea del valore dei parametri, adattiamo il modello lineare ai dati mediante la procedura di massima verosimiglianza:
 
 ```{r}
-coef(lm(kid_score ~ mom_iq, data = df))
+summary(lm(kid_score ~ mom_iq, data = df))
 ```
 
 La formulazione bayesiano del modello lineare è:
@@ -124,9 +124,9 @@ transformed parameters {
   vector[N] mu_std = alpha_std + beta_std * x_std; // linear model
 }
 model {
-  alpha_std ~ normal(0, 2); // weakly informative prior (given standardized data)
-  beta_std ~ normal(0, 2);  // weakly informative prior (given standardized data)
-  sigma_std ~ cauchy(0, 2); // weakly informative prior (given standardized data)
+  alpha_std ~ normal(0, 1); // weakly informative prior (given standardized data)
+  beta_std ~ normal(0, 1);  // weakly informative prior (given standardized data)
+  sigma_std ~ normal(0, 1); // weakly informative prior (given standardized data)
   y_std ~ normal(mu_std, sigma_std); // observation model / likelihood
 }
 generated quantities {
@@ -303,36 +303,3 @@ fit2$summary(c("alpha", "beta", "sigma"))
 \noindent
 Si noti la nuova intercetta, ovvero 86.8. Questo valore indica il QI medio dei bambini le cui madri hanno un QI pari alla media del campione. Centrare i dati consente dunque di assegnare all'intercetta un'interpretazione utile.
 
-
-<!-- ### Rappresentazione grafica dell'incertezza della stima -->
-
-<!-- Mediante la funzione `extract()` salvo le stime a posteriori dei parametri in  formato `list`: -->
-<!-- ```{r} -->
-<!-- stanfit <- rstan::read_stan_csv(fit2$output_files()) -->
-<!-- posterior <- extract(stanfit) -->
-<!-- ``` -->
-<!-- \noindent -->
-<!-- Un diagramma a dispersione dei dati con sovrapposto il valore atteso della $y$ in base al modello bayesiano si ottiene nel modo seguente: -->
-<!-- ```{r} -->
-<!-- plot( -->
-<!--   df$kid_score ~ I(df$mom_iq - mean(df$mom_iq)),  -->
-<!--   pch = 20, -->
-<!--   xlab = "mom_iq (centered)", -->
-<!--   ylab = "kid_score" -->
-<!-- ) -->
-<!-- abline(mean(posterior$alpha), mean(posterior$beta), col = 6, lw = 2) -->
-<!-- ``` -->
-<!-- \noindent -->
-<!-- Un modo per visualizzare l'incertezza della stima della retta di regressione è quello di tracciare molteplici rette di regressione, ciascuna delle quali definita da una diversa stima dei parametri $\alpha$ e $\beta$ che vengono estratti a caso dalle rispettive distribuzioni a posteriori. -->
-<!-- ```{r} -->
-<!-- plot( -->
-<!--   df$kid_score ~ I(df$mom_iq - mean(df$mom_iq)),  -->
-<!--   pch = 20, -->
-<!--   xlab = "mom_iq (centered)", -->
-<!--   ylab = "kid_score" -->
-<!-- ) -->
-<!-- for (i in 1:50) { -->
-<!--  abline(posterior$alpha[i], posterior$beta[i], col = "gray", lty = 1) -->
-<!-- } -->
-<!-- abline(mean(posterior$alpha), mean(posterior$beta), col = 6, lw = 2) -->
-<!-- ``` -->

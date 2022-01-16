@@ -7,9 +7,7 @@ library("brms")
 library("projpred")
 ```
 
-```{block, type='Summary'}
 Il principio base del metodo scientifico è la _replicabilità_ delle osservazioni: le osservazioni che non possono essere replicate sono poco interessanti. Parallelamente, una caratteristica fondamentale di un modello scientifico è la _generalizzabilità_: se un modello è capace di descrivere soltanto le proprietà di uno specifico campione di osservazioni, allora è poco utile. Ma come è possibile valutare la generalizzabilità di un modello statistico? Questa è la domanda a cui cercheremo di rispondere in questo Capitolo.
-```
 
 Secondo @Johnson2022bayesrules, nel valutare un modello, il ricercatore deve porsi tre domande critiche.
 
@@ -213,15 +211,15 @@ Se gli esiti possibili sono pioggia, neve o sole con $p(y_1) = 0.7$,  $p(y_2) = 
 
 ## La divergenza di Kullback-Leibler
 
-È comune in statistica utilizzare una distribuzione di probabilità $q$ per approssimare un'altra distribuzione $p$ -- generalmente, questo viene fatto se $p$ non è conosciuta o è troppo complessa. In questi casi possiamo chiederci quanta informazione viene perduta usando $q$ al posto di $p$, o equivalentemente quanta ulteriore incertezza stiamo introducendo nell'analisi statistica. Intuitivamente, una risposta alla nostra domanda viene fornita da una quantità che ha valore zero quando $q$ è uguale a $p$, e un valore positivo altrimenti. Seguendo la definizione \@ref(eq:entropy) di entropia, possiamo quantificare questa perdita di informazione calcolando il valore atteso della differenza tra $\log(p)$ e $\log(q)$. Una tale quantità viene chiamata _entropia relativa_ o _divergenza di Kullback-Leibler_:
+È comune in statistica utilizzare una distribuzione di probabilità $q$ per approssimare un'altra distribuzione $p$ -- generalmente, questo viene fatto se $p$ non è conosciuta o è troppo complessa. In questi casi possiamo chiederci quanta informazione viene perduta usando $q$ al posto di $p$, o equivalentemente quanta ulteriore incertezza stiamo introducendo nell'analisi statistica. Intuitivamente, una risposta alla nostra domanda viene fornita da una quantità che ha valore zero quando $q$ è uguale a $p$, e un valore positivo altrimenti. Seguendo la definizione \@ref(eq:entropy) di entropia, possiamo quantificare una tale perdita di informazione calcolando il valore atteso della differenza tra $\log(p)$ e $\log(q)$. Questa quantità è chiamata _entropia relativa_ o _divergenza di Kullback-Leibler_:
 \begin{equation}
 \mathbb{KL} (p \mid\mid q) = \E (\log p - \log q)
 (\#eq:kldivergence)
 \end{equation}
 
-Quindi $\mathbb{KL} (p \mid\mid q)$ ci fornisce la differenza media nelle probabilità logaritmiche quando si usa $q$ per approssimare $p$. Poiché gli eventi si manifestano secondo $p$, dobbiamo calcolare il valore atteso rispetto a $p$. Per le distribuzioni discrete abbiamo:
+La divergenza $\mathbb{KL} (p \mid\mid q)$ corrisponde alla differenza media nelle probabilità logaritmiche quando $q$ viene usato per approssimare $p$. Poiché gli eventi si manifestano secondo $p$, è necessario calcolare il valore atteso rispetto a $p$. Per distribuzioni discrete abbiamo:
 \begin{equation}
-\mathbb{KL} (p \mid\mid q) = \sum_i^n p_i (\log p_i - \log q_i) = \sum_i^n p_i \frac{p_i}{q_i}
+\mathbb{KL} (p \mid\mid q) = \sum_i^n p_i (\log p_i - \log q_i) = \sum_i^n p_i \log \frac{p_i}{q_i}
 \end{equation}
 Riarrangiando i termini otteniamo:
 \begin{equation}
@@ -377,25 +375,21 @@ Nel Capitolo \@ref(ch:intro-bayes-inference) abbiamo introdotto il concetto di d
 $$
 p(\tilde{y} \mid y) = \int_\Theta p(\tilde{y} \mid \theta) p(\theta \mid y) \,\operatorname {d}\!\theta .
 $$
-La distribuzione predittiva a posteriori descrive il tipo di dati che ci aspettiamo che il modello generativo $\mathcal{M}$ produca dopo aver costruito la distribuzione a posteriori dei parametri alla luce delle nostre credenze iniziali, $p(\theta)$, e dei dati osservati $y$. Il nostro scopo nella valutazione di un modello è capire in che misura $p_{\mathcal{M}}(\tilde{y} \mid y)$ approssima $p_t(\tilde{y})$. Cioè, ci chiediamo in che misura i dati prodotti nostro modello generativo $p_{\mathcal{M}}(\cdot)$ siano simili ai dati prodotti dal vero processo generatore dei dati $p_t(\cdot)$.
+La distribuzione predittiva a posteriori descrive il tipo di dati che ci aspettiamo vengano prodotti dal modello generativo $\mathcal{M}$, alla luce delle nostre credenze iniziali, $p(\theta)$ e dei dati osservati $y$. Quando valutiamo un modello ci chiediamo in che misura $p_{\mathcal{M}}(\tilde{y} \mid y)$ approssimi $p_t(\tilde{y})$. Cioè, ci chiediamo quanto siano simili i dati $p_{\mathcal{M}}(\cdot)$ prodotti dal modello $\mathcal{M}$ ai dati prodotti dal vero processo generatore dei dati $p_t(\cdot)$.
 
-Una misura della "somiglianza" tra la distribuzione dei dati $q_{\mathcal{M}}$ ipotizzata dal modello $\mathcal{M}$ e la distribuzione dei dati $p_t$del vero modello generatore dei dati è fornita dalla divergenza di Kullback-Leibler $\mathbb{KL}(p_t \mid\mid q_{\mathcal{M}})$. 
-<!-- La divergenza di Kullback-Leibler $\mathbb{KL}(p_t \mid\mid p_{\mathcal{M}})$ misura l'incremento della nostra incertezza quando la distribuzione "approssimata" ipotizzata dal modello $\mathcal{M}$ viene usata in luogo della distribuzione di probabilità $p_t$ del vero modello generatore dei dati $\mathcal{M}_0$. -->
-
-Supponiamo di avere $k$ modelli della distribuzione a posteriori, $\{q_{\mathcal{M}_1}, q_{\mathcal{M}_2}, \dots, q_{\mathcal{M}_k}\}$, e supponiamo inoltre di conoscere il vero modello generatore dei dati $\mathcal{M}_0$. Possiamo dunque scrivere
+Una misura della "somiglianza" tra la distribuzione $q_{\mathcal{M}}$ ipotizzata dal modello $\mathcal{M}$ e la distribuzione $p_t$ del vero modello generatore dei dati è fornita dalla divergenza di Kullback-Leibler $\mathbb{KL}(p_t \mid\mid q_{\mathcal{M}})$. Supponendo di avere $k$ modelli della distribuzione a posteriori, $\{q_{\mathcal{M}_1}, q_{\mathcal{M}_2}, \dots, q_{\mathcal{M}_k}\}$, e di conoscere il vero modello generatore dei dati, possiamo scrivere
 \begin{align}
-\mathbb{KL} (p_{\mathcal{M}_0} \mid\mid q_{\mathcal{M}_1}) &= \E (\log p_{\mathcal{M}_0}) - \E (\log q_{\mathcal{M}_1})\notag\\
-\mathbb{KL} (p_{\mathcal{M}_0} \mid\mid q_{\mathcal{M}_2}) &= \E (\log p_{\mathcal{M}_0}) - \E (\log q_{\mathcal{M}_2})\notag\\
+\mathbb{KL} (p_t \mid\mid q_{\mathcal{M}_1}) &= \E (\log p_{\mathcal{M}_0}) - \E (\log q_{\mathcal{M}_1})\notag\\
+\mathbb{KL} (p_t \mid\mid q_{\mathcal{M}_2}) &= \E (\log p_t) - \E (\log q_{\mathcal{M}_2})\notag\\
 &\cdots\notag\\
-\mathbb{KL} (p_{\mathcal{M}_0} \mid\mid q_{\mathcal{M}_k}) &= \E (\log p_{\mathcal{M}_0}) - \E (\log q_{\mathcal{M}_k}).
+\mathbb{KL} (p_t \mid\mid q_{\mathcal{M}_k}) &= \E (\log p_{\mathcal{M}_0}) - \E (\log q_{\mathcal{M}_k}).
 (\#eq:kl-mod-comp)
 \end{align}
-La \@ref(eq:kl-mod-comp) può sembrare un esercizio futile poiché nella vita reale non conosciamo il vero modello generatore dei dati $\mathcal{M}_0$. È però facile rendersi conto che, poiché $p_{\mathcal{M}_0}$ è lo stesso per tutti i confronti, diventa possibile costruire un ordinamento dei modelli basato unicamente sul secondo termine della \@ref(eq:kl-mod-comp), ovvero senza nessun riferimento al vero modello generatore dei dati. Per il modello $\mathcal{M}$, il secondo termine della \@ref(eq:kl-mod-comp), ovvero 
+La \@ref(eq:kl-mod-comp) può sembrare un esercizio futile poiché nella vita reale non conosciamo il vero modello generatore dei dati. È però facile rendersi conto che, poiché $p_t$ è la stessa per tutti i confronti, diventa possibile costruire un ordinamento dei modelli basato unicamente sul secondo termine della \@ref(eq:kl-mod-comp), ovvero senza nessun riferimento al vero modello generatore dei dati. Per un generico modello $\mathcal{M}$, il secondo termine della \@ref(eq:kl-mod-comp) può essere scritto come: 
 \begin{equation}
-\E \log p_{\mathcal{M}}(y) = \int_{-\infty}^{+\infty}p_{t}(y)\log p_{\mathcal{M}}(y) \,\operatorname {d}\!y,
+\E \log p_{\mathcal{M}}(y) = \int_{-\infty}^{+\infty}p_{t}(y)\log p_{\mathcal{M}}(y) \,\operatorname {d}\!y .
 (\#eq:kl-div-cont-t2)
 \end{equation}
- va sotto il nome di _expected log predictive density_ ($\elpd$)
 
 
 ## Expected log predictive density
@@ -424,9 +418,9 @@ Le previsioni del modello $\mathcal{M}$ sui nuovi dati futuri sono date dalla di
 \elpd = \int_{\tilde{y}} p_{t}(\tilde{y}) \log p(\tilde{y} \mid y) \,\operatorname {d}\!\tilde{y}.
 (\#eq:elpd)
 \end{equation}
-La \@ref(eq:elpd) è chiamata _expected log predictive density_ ($\elpd$) e fornisce la risposta al problema che ci eravamo posti, ovvero il problema del confronto tra modelli (in maniera tale da poter scegliere, tra più modelli, quello più simile al vero meccanismo generatore dei dati). Possiamo pensare alla \@ref(eq:elpd) dicendo che  descrive la distribuzione predittiva a posteriori del modello ponderando la verosimiglianza dei possibili (sconosciuti) dati futuri ($\tilde{y}$) con la vera distribuzione $p_t$. Di conseguenza, valori $\elpd$ più grandi identificano il modello che risulta più simile al vero meccanismo generatore dei dati.
+La \@ref(eq:elpd) è chiamata _expected log predictive density_ ($\elpd$) e fornisce la risposta al problema che ci eravamo posti: nel confronto tra modelli, come è possibile scegliere il modello più simile al vero meccanismo generatore dei dati? Possiamo pensare alla \@ref(eq:elpd) dicendo che descrive la distribuzione predittiva a posteriori del modello ponderando la verosimiglianza dei possibili (sconosciuti) dati futuri ($\tilde{y}$) con la vera distribuzione $p_t$. Di conseguenza, valori $\elpd$ più grandi identificano il modello che risulta più simile al vero meccanismo generatore dei dati.
 
-Non dobbiamo preoccuparci di trovare una formulazione analitica della distribuzione predittiva a posteriori $p(\tilde{y} \mid y)$ perché, come abbiamo visto nel Capitolo \@ref(chapter-ppc), è possibile approssimare tale distribuzione mediante simulazione. Notiamo però che la \@ref(eq:elpd) include un termine, $p_t(\tilde{y})$, il quale descrive la distribuzione dei dati futuri $\tilde{y}$ secondo il vero modello generatore dei dati. Il termine $p_t$, ovviamente, è ignoto.^[Se il modello sottostante i dati fosse noto non avremmo bisogno di cercare il modello migliore, perché $p_t$ è il modello migliore.] Di conseguenza, la quantità $\elpd$ non può mai essere calcolata in maniera esatta, ma può essere solo stimata. Il secondo problema di questo Capitolo è capire come la \@ref(eq:elpd) possa essere stimata utilizzando un campione di osservazioni.
+Non dobbiamo preoccuparci di trovare una formulazione analitica della distribuzione predittiva a posteriori $p(\tilde{y} \mid y)$ perché, come abbiamo visto nel Capitolo \@ref(chapter-ppc), è possibile approssimare tale distribuzione mediante simulazione. Notiamo però che la \@ref(eq:elpd) include un termine, $p_t(\tilde{y})$, il quale descrive la distribuzione dei dati futuri $\tilde{y}$ secondo il vero modello generatore dei dati. Il termine $p_t$, ovviamente, è ignoto.^[Se il modello sottostante i dati fosse noto non avremmo bisogno di cercare il modello migliore, perché $p_t$ è il modello migliore.] Di conseguenza, la quantità $\elpd$ non può mai essere calcolata in maniera esatta, ma può solo essere stimata. Il secondo problema di questo Capitolo è capire come la \@ref(eq:elpd) possa essere stimata utilizzando un campione di osservazioni.
 
 ### Log pointwise predictive density{}
 

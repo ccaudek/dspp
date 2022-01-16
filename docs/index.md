@@ -79,6 +79,7 @@ always_allow_html: true
 graphics: true
 link-citations: true
 colorlinks: yes
+cover-image: "images/confounding_variables.png"
 url: https://github.com/ccaudek/dspp/
 ---
 

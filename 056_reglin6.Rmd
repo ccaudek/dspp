@@ -1,0 +1,273 @@
+# Adattare il modello lineare ai dati {#regr-ml}
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
+source("_common.R")
+source("_stan_options.R")
+library("rstan")
+```
+
+<!-- https://mc-stan.org/docs/2_23/stan-users-guide/simulating-from-the-posterior-predictive-distribution.html -->
+
+
+# Simulare dalla distribuzione predittiva a posteriori
+
+Continuiamo ad usare i dati `kidiq` [@gelman2020regression]:
+
+```{r}
+library("rio")
+df <- rio::import(here("data", "kidiq.dta"))
+```
+
+
+```{r}
+data_list <- list(
+  N = length(df$kid_score),
+  x = scale(df$mom_iq)[, 1],
+  y = scale(df$kid_score)[, 1]
+)
+```
+
+
+```{r}
+stancode <- '
+data {
+  int<lower=0> N;  
+  vector[N] x; 
+  vector[N] y; 
+}
+parameters {
+  real alpha;
+  real beta;
+  real<lower=0> sigma;
+}
+model {
+  alpha ~ normal(0, 1);
+  beta ~ normal(0, 1);
+  sigma ~ normal(0, 1);
+  y ~ normal(alpha + beta * x, sigma);
+}
+generated quantities {
+  vector[N] y_rep;
+  
+  for(i in 1:N){
+    y_rep[i] = normal_rng(alpha + beta * x[i], sigma);
+  }
+  
+}
+'
+writeLines(stancode, con = "code/post_pred_check_1.stan")
+```
+
+
+```{r}
+file <- file.path("code", "post_pred_check_1.stan")
+mod <- cmdstan_model(file)
+```
+
+
+```{r, message = FALSE, warning=FALSE, results='hide'}
+fit <- mod$sample(
+  data = data_list,
+  iter_sampling = 4000L,
+  iter_warmup = 2000L,
+  seed = SEED,
+  chains = 4L,
+  parallel_chains = 2L,
+  refresh = 0,
+  thin = 1
+)
+```
+
+
+```{r}
+stanfit1 <- rstan::read_stan_csv(fit$output_files())
+```
+
+
+```{r}
+summary(stanfit1, pars = c("alpha", "beta", "sigma"))
+```
+
+```{r}
+hist(as.matrix(stanfit1, pars = "y_rep"), breaks = 100)
+```
+
+
+
+# Simulare dalla distribuzione predittiva a priori
+
+Per svolgere l'analisi bayesiana sistemiamo i dati nel formato appropriato per Stan:
+
+```{r}
+data_list <- list(
+  N = length(df$kid_score),
+  x = scale(df$mom_iq)[, 1]
+)
+```
+
+```{r}
+stancode <- '
+data {
+  int<lower=0> N;  
+  vector[N] x; 
+}
+parameters {
+  real alpha;
+  real beta;
+  real<lower=0> sigma;
+}
+model {
+  alpha ~ normal(0, 1);
+  beta ~ normal(0, 1);
+  sigma ~ normal(0, 1);
+}
+generated quantities {
+  vector[N] y_rep;
+  
+  for(i in 1:N){
+    y_rep[i] = normal_rng(alpha + beta * x[i], sigma);
+  }
+  
+}
+'
+writeLines(stancode, con = "code/prior_pred_check_1.stan")
+```
+
+
+```{r}
+file <- file.path("code", "prior_pred_check_1.stan")
+mod <- cmdstan_model(file)
+```
+
+
+```{r, message = FALSE, warning=FALSE, results='hide'}
+fit <- mod$sample(
+  data = data_list,
+  iter_sampling = 4000L,
+  iter_warmup = 2000L,
+  seed = SEED,
+  chains = 4L,
+  parallel_chains = 2L,
+  refresh = 0,
+  thin = 1
+)
+```
+
+
+```{r}
+stanfit2 <- rstan::read_stan_csv(fit$output_files())
+```
+
+
+```{r}
+summary(stanfit2, pars = c("alpha", "beta", "sigma"))
+```
+
+
+
+```{r}
+stanfit2 <- rstan::read_stan_csv(fit$output_files())
+```
+
+
+
+```{r}
+hist(as.matrix(stanfit2, pars = "y_rep"), breaks = 100)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+stancode <- '
+data {
+  int<lower=0> N;  
+  vector[N] x; 
+}
+parameters {
+  real alpha;
+  real beta;
+  real<lower=0> sigma;
+}
+model {
+  alpha ~ normal(0, 1);
+  beta ~ normal(0, 1);
+  sigma ~ normal(0, 1);
+}
+generated quantities {
+  real y_sim[N];
+
+  for (n in 1:N) {
+    real mu = alpha + beta * x[n];
+    y_sim[n] = normal_rng(mu, sigma);
+  }
+}
+'
+writeLines(stancode, con = "code/prior_pred_check_1.stan")
+```
+
+
+```{r}
+file <- file.path("code", "prior_pred_check_1.stan")
+mod <- cmdstan_model(file)
+```
+
+
+```{r, message = FALSE, warning=FALSE, results='hide'}
+fit <- mod$sample(
+  data = data_list,
+  iter_sampling = 4000L,
+  iter_warmup = 2000L,
+  seed = SEED,
+  chains = 4L,
+  parallel_chains = 2L,
+  refresh = 0,
+  thin = 1
+)
+```
+
+
+```{r}
+stanfit <- rstan::read_stan_csv(fit$output_files())
+```
+
+
+
+```{r}
+hist(as.matrix(stanfit, pars = "y_sim"), breaks = 100)
+```
+
+
+```{r}
+summary(stanfit)
+```
+
+```{r}
+fit$summary(c("y_sim"))
+```
+
+
+```{r}
+hist(df$kid_score)
+```
+

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.1.13)  16 JAN 2022 10:55
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.1.13)  16 JAN 2022 16:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -458,9 +458,9 @@ Package: xparse 2022-01-12 L3 Experimental document command parser
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e.sty
 Package: l3keys2e 2022-01-12 LaTeX2e option processing using LaTeX3 keys
 ) (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/fontspec/fontspec.sty
-Package: fontspec 2020/02/21 v2.7i Font selection for XeLaTeX and LuaLaTeX
+Package: fontspec 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTeX
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/fontspec/fontspec-xetex.sty
-Package: fontspec-xetex 2020/02/21 v2.7i Font selection for XeLaTeX and LuaLaTeX
+Package: fontspec-xetex 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTeX
 \l__fontspec_script_int=\count324
 \l__fontspec_language_int=\count325
 \l__fontspec_strnum_int=\count326
@@ -1843,12 +1843,12 @@ Package csquotes Info: ... found 'polyglossia' package.
 LaTeX Info: Redefining \rmfamily on input line 26.
 LaTeX Info: Redefining \sffamily on input line 26.
 LaTeX Info: Redefining \ttfamily on input line 26.
-LaTeX Info: Redefining \rmfamily on input line 86.
-LaTeX Info: Redefining \sffamily on input line 86.
-LaTeX Info: Redefining \ttfamily on input line 86.
-LaTeX Info: Redefining \rmfamily on input line 90.
-LaTeX Info: Redefining \sffamily on input line 90.
-LaTeX Info: Redefining \ttfamily on input line 90.
+LaTeX Info: Redefining \rmfamily on input line 68.
+LaTeX Info: Redefining \sffamily on input line 68.
+LaTeX Info: Redefining \ttfamily on input line 68.
+LaTeX Info: Redefining \rmfamily on input line 72.
+LaTeX Info: Redefining \sffamily on input line 72.
+LaTeX Info: Redefining \ttfamily on input line 72.
 )
 \openout1 = `DataScience.aux'.
 
@@ -2352,12 +2352,12 @@ Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 LaTeX Info: Redefining \rmfamily on input line 3.
 LaTeX Info: Redefining \sffamily on input line 3.
 LaTeX Info: Redefining \ttfamily on input line 3.
-LaTeX Info: Redefining \rmfamily on input line 27.
-LaTeX Info: Redefining \sffamily on input line 27.
-LaTeX Info: Redefining \ttfamily on input line 27.
-LaTeX Info: Redefining \rmfamily on input line 29.
-LaTeX Info: Redefining \sffamily on input line 29.
-LaTeX Info: Redefining \ttfamily on input line 29.
+LaTeX Info: Redefining \rmfamily on input line 21.
+LaTeX Info: Redefining \sffamily on input line 21.
+LaTeX Info: Redefining \ttfamily on input line 21.
+LaTeX Info: Redefining \rmfamily on input line 23.
+LaTeX Info: Redefining \sffamily on input line 23.
+LaTeX Info: Redefining \ttfamily on input line 23.
 )
 
 ******************************************************
@@ -2401,19 +2401,67 @@ LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 (Font)              scaled to size 5.99936pt on input line 517.
 [9] [10]
 LaTeX Font Info:    Font shape `TU/OperatorMonoSSmBook(0)/m/n' will be
-(Font)              scaled to size 7.5pt on input line 553.
+(Font)              scaled to size 7.5pt on input line 533.
+LaTeX Font Info:    Font shape `TU/OperatorMonoSSmBook(0)/m/it' will be
+(Font)              scaled to size 7.5pt on input line 551.
 [1
 
 
 ]
-LaTeX Font Info:    Font shape `TU/OperatorMonoSSmBook(0)/m/it' will be
-(Font)              scaled to size 7.5pt on input line 586.
-[2]
-File: 055_reglin5_files/figure-latex/unnamed-chunk-9-1.pdf Graphic file (type pdf)
-<use 055_reglin5_files/figure-latex/unnamed-chunk-9-1.pdf>
-[3] [4] [5] [6
+Underfull \vbox (badness 10000) detected at line 944
+ []
 
-]
+
+Underfull \vbox (badness 10000) detected at line 944
+ []
+
+[2]
+Underfull \vbox (badness 10000) detected at line 944
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 944
+ []
+
+[3]
+Underfull \vbox (badness 10000) detected at line 944
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 944
+ []
+
+[4]
+Underfull \vbox (badness 10000) detected at line 944
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 944
+ []
+
+[5]
+Underfull \vbox (badness 10000) detected at line 944
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 944
+ []
+
+[6]
+Underfull \vbox (badness 10000) detected at line 944
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 944
+ []
+
+[7] [8]
+File: 056_reglin6_files/figure-latex/unnamed-chunk-9-1.pdf Graphic file (type pdf)
+<use 056_reglin6_files/figure-latex/unnamed-chunk-9-1.pdf>
+[9]
+File: 056_reglin6_files/figure-latex/unnamed-chunk-12-1.pdf Graphic file (type pdf)
+<use 056_reglin6_files/figure-latex/unnamed-chunk-12-1.pdf>
+[10]
 
 ******************************************************
 Stock height and width: 845.04684pt by 597.50787pt
@@ -2434,10 +2482,11 @@ Sidefoothsep and sidefootwidth: 7pt and 117pt
 Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 ******************************************************
 
-[7
+[11
 
 
-] [8
+
+] [12
 
 
 ]
@@ -2471,7 +2520,7 @@ LaTeX Info: Redefining \ttfamily on input line 9.
 LaTeX Info: Redefining \rmfamily on input line 11.
 LaTeX Info: Redefining \sffamily on input line 11.
 LaTeX Info: Redefining \ttfamily on input line 11.
-) [9
+) [13
 
 ]
 
@@ -2494,17 +2543,19 @@ Sidefoothsep and sidefootwidth: 7pt and 117pt
 Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 ******************************************************
 
-LaTeX Info: Redefining \rmfamily on input line 838.
-LaTeX Info: Redefining \sffamily on input line 838.
-LaTeX Info: Redefining \ttfamily on input line 838.
+LaTeX Info: Redefining \rmfamily on input line 5511.
+LaTeX Info: Redefining \sffamily on input line 5511.
+LaTeX Info: Redefining \ttfamily on input line 5511.
 
-Underfull \hbox (badness 10000) in paragraph at lines 842--844
+Underfull \hbox (badness 10000) in paragraph at lines 5515--5517
 
  []
 
-LaTeX Info: Redefining \rmfamily on input line 845.
-LaTeX Info: Redefining \sffamily on input line 845.
-LaTeX Info: Redefining \ttfamily on input line 845.
+LaTeX Info: Redefining \rmfamily on input line 5518.
+LaTeX Info: Redefining \sffamily on input line 5518.
+LaTeX Info: Redefining \ttfamily on input line 5518.
+File: images/logo.pdf Graphic file (type pdf)
+<use images/logo.pdf>
 The property list \polyglossia@langsetup contains the pairs (without outer
 braces):
 >  {latex/script}  =>  {latin}
@@ -2555,7 +2606,7 @@ braces):
 >  {english/babelname}  =>  {american}
 >  {english/localnumeral}  =>  {polyglossia@C@localnumeral}
 >  {english/Localnumeral}  =>  {polyglossia@C@localnumeral}.
-[10
+[14
 
 
 ]
@@ -2569,29 +2620,29 @@ braces):
 LaTeX Info: Redefining \rmfamily on input line 26.
 LaTeX Info: Redefining \sffamily on input line 26.
 LaTeX Info: Redefining \ttfamily on input line 26.
-LaTeX Info: Redefining \rmfamily on input line 87.
-LaTeX Info: Redefining \sffamily on input line 87.
-LaTeX Info: Redefining \ttfamily on input line 87.
-LaTeX Info: Redefining \rmfamily on input line 91.
-LaTeX Info: Redefining \sffamily on input line 91.
-LaTeX Info: Redefining \ttfamily on input line 91.
+LaTeX Info: Redefining \rmfamily on input line 69.
+LaTeX Info: Redefining \sffamily on input line 69.
+LaTeX Info: Redefining \ttfamily on input line 69.
+LaTeX Info: Redefining \rmfamily on input line 73.
+LaTeX Info: Redefining \sffamily on input line 73.
+LaTeX Info: Redefining \ttfamily on input line 73.
 )
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `DataScience.out' has not changed.
-(rerunfilecheck)             Checksum: 28B226B91E808F62E61C8EBC5B86C816;1905.
+(rerunfilecheck)             Checksum: 95CAA3F1269F9BAC8EE980B429160E0D;1260.
 Package logreq Info: Writing requests to 'DataScience.run.xml'.
 \openout1 = `DataScience.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 48192 strings out of 478174
- 961497 string characters out of 5852947
- 1953987 words of memory out of 5000000
- 67976 multiletter control sequences out of 15000+600000
- 484315 words of font info for 101 fonts, out of 8000000 for 9000
+ 48209 strings out of 478174
+ 962509 string characters out of 5852947
+ 3022121 words of memory out of 5000000
+ 67996 multiletter control sequences out of 15000+600000
+ 484283 words of font info for 97 fonts, out of 8000000 for 9000
  16 hyphenation exceptions out of 8191
  99i,12n,123p,2169b,5901s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on DataScience.pdf (20 pages).
+Output written on DataScience.pdf (24 pages).
