@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.1.13)  16 JAN 2022 09:29
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.1.13)  16 JAN 2022 10:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2411,24 +2411,9 @@ LaTeX Font Info:    Font shape `TU/OperatorMonoSSmBook(0)/m/it' will be
 [2]
 File: 055_reglin5_files/figure-latex/unnamed-chunk-9-1.pdf Graphic file (type pdf)
 <use 055_reglin5_files/figure-latex/unnamed-chunk-9-1.pdf>
-[3] [4]
-File: 055_reglin5_files/figure-latex/unnamed-chunk-15-1.pdf Graphic file (type pdf)
-<use 055_reglin5_files/figure-latex/unnamed-chunk-15-1.pdf>
-File: 055_reglin5_files/figure-latex/unnamed-chunk-15-2.pdf Graphic file (type pdf)
-<use 055_reglin5_files/figure-latex/unnamed-chunk-15-2.pdf>
-File: 055_reglin5_files/figure-latex/unnamed-chunk-15-3.pdf Graphic file (type pdf)
-<use 055_reglin5_files/figure-latex/unnamed-chunk-15-3.pdf>
-File: 055_reglin5_files/figure-latex/unnamed-chunk-15-4.pdf Graphic file (type pdf)
-<use 055_reglin5_files/figure-latex/unnamed-chunk-15-4.pdf>
-File: 055_reglin5_files/figure-latex/unnamed-chunk-15-5.pdf Graphic file (type pdf)
-<use 055_reglin5_files/figure-latex/unnamed-chunk-15-5.pdf>
-File: 055_reglin5_files/figure-latex/unnamed-chunk-15-6.pdf Graphic file (type pdf)
-<use 055_reglin5_files/figure-latex/unnamed-chunk-15-6.pdf>
-File: 055_reglin5_files/figure-latex/unnamed-chunk-15-7.pdf Graphic file (type pdf)
-<use 055_reglin5_files/figure-latex/unnamed-chunk-15-7.pdf>
-File: 055_reglin5_files/figure-latex/unnamed-chunk-15-8.pdf Graphic file (type pdf)
-<use 055_reglin5_files/figure-latex/unnamed-chunk-15-8.pdf>
-[5] [6] [7] [8]
+[3] [4] [5] [6
+
+]
 
 ******************************************************
 Stock height and width: 845.04684pt by 597.50787pt
@@ -2449,11 +2434,10 @@ Sidefoothsep and sidefootwidth: 7pt and 117pt
 Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 ******************************************************
 
-[9
+[7
 
 
-
-] [10
+] [8
 
 
 ]
@@ -2487,7 +2471,7 @@ LaTeX Info: Redefining \ttfamily on input line 9.
 LaTeX Info: Redefining \rmfamily on input line 11.
 LaTeX Info: Redefining \sffamily on input line 11.
 LaTeX Info: Redefining \ttfamily on input line 11.
-) [11
+) [9
 
 ]
 
@@ -2510,17 +2494,17 @@ Sidefoothsep and sidefootwidth: 7pt and 117pt
 Sidefootvsep and sidefootheight: 12pt and 596.39996pt
 ******************************************************
 
-LaTeX Info: Redefining \rmfamily on input line 853.
-LaTeX Info: Redefining \sffamily on input line 853.
-LaTeX Info: Redefining \ttfamily on input line 853.
+LaTeX Info: Redefining \rmfamily on input line 838.
+LaTeX Info: Redefining \sffamily on input line 838.
+LaTeX Info: Redefining \ttfamily on input line 838.
 
-Underfull \hbox (badness 10000) in paragraph at lines 857--859
+Underfull \hbox (badness 10000) in paragraph at lines 842--844
 
  []
 
-LaTeX Info: Redefining \rmfamily on input line 860.
-LaTeX Info: Redefining \sffamily on input line 860.
-LaTeX Info: Redefining \ttfamily on input line 860.
+LaTeX Info: Redefining \rmfamily on input line 845.
+LaTeX Info: Redefining \sffamily on input line 845.
+LaTeX Info: Redefining \ttfamily on input line 845.
 The property list \polyglossia@langsetup contains the pairs (without outer
 braces):
 >  {latex/script}  =>  {latin}
@@ -2571,7 +2555,7 @@ braces):
 >  {english/babelname}  =>  {american}
 >  {english/localnumeral}  =>  {polyglossia@C@localnumeral}
 >  {english/Localnumeral}  =>  {polyglossia@C@localnumeral}.
-[12
+[10
 
 
 ]
@@ -2602,12 +2586,12 @@ Package logreq Info: Writing requests to 'DataScience.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 48288 strings out of 478174
- 966873 string characters out of 5852947
+ 48192 strings out of 478174
+ 961497 string characters out of 5852947
  1953987 words of memory out of 5000000
- 68064 multiletter control sequences out of 15000+600000
+ 67976 multiletter control sequences out of 15000+600000
  484315 words of font info for 101 fonts, out of 8000000 for 9000
  16 hyphenation exceptions out of 8191
  99i,12n,123p,2169b,5901s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on DataScience.pdf (22 pages).
+Output written on DataScience.pdf (20 pages).

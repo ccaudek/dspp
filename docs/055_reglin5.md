@@ -87,10 +87,12 @@ generated quantities {
   real alpha;
   real beta;
   real<lower=0> sigma;
+  real cohen_d;
   alpha = sd(y) * (alpha_std - beta_std * mean(x) / sd(x))
            + mean(y);
   beta = beta_std * sd(y) / sd(x);
   sigma = sd(y) * sigma_std;
+  cohen_d = beta / sigma;
 }
 "
 writeLines(modelString, con = "code/simpleregstd.stan")
@@ -167,13 +169,14 @@ Le stime a posteriori dei parametri si ottengono con:
 
 
 ```r
-fit$summary(c("alpha", "beta", "sigma"))
-#> # A tibble: 3 × 10
-#>   variable  mean median    sd   mad    q5   q95  rhat ess_bulk
-#>   <chr>    <dbl>  <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>    <dbl>
-#> 1 alpha     77.5   77.6 2.07  2.06  74.2   81.0  1.00   17948.
-#> 2 beta      11.8   11.8 2.34  2.33   7.91  15.6  1.00   18036.
-#> 3 sigma     19.9   19.9 0.679 0.673 18.8   21.0  1.00   18897.
+fit$summary(c("alpha", "beta", "sigma", "cohen_d"))
+#> # A tibble: 4 × 10
+#>   variable   mean median    sd   mad     q5    q95  rhat ess_bulk
+#>   <chr>     <dbl>  <dbl> <dbl> <dbl>  <dbl>  <dbl> <dbl>    <dbl>
+#> 1 alpha    77.6   77.5   2.08  2.06  74.1   81.0    1.00   16538.
+#> 2 beta     11.8   11.7   2.35  2.34   7.88  15.6    1.00   16718.
+#> 3 sigma    19.9   19.9   0.676 0.671 18.8   21.0    1.00   15949.
+#> 4 cohen_d   0.592  0.591 0.120 0.119  0.393  0.788  1.00   16771.
 #> # … with 1 more variable: ess_tail <dbl>
 ```
 
@@ -186,14 +189,15 @@ La seguente chiamata ritorna l'intervallo di credibilità al 95% per tutti i par
 
 ```r
 rstantools::posterior_interval(as.matrix(stanfit), prob = 0.95)
-#>                2.5%     97.5%
-#> alpha_std   -0.0904    0.0916
-#> beta_std     0.1447    0.3289
-#> sigma_std    0.9120    1.0437
-#> alpha       73.4854   81.6092
-#> beta         7.1877   16.3437
-#> sigma       18.6155   21.3025
-#> lp__      -209.0430 -204.3220
+#>               2.5%     97.5%
+#> alpha_std   -0.094    0.0925
+#> beta_std     0.144    0.3289
+#> sigma_std    0.913    1.0437
+#> alpha       73.432   81.6209
+#> beta         7.135   16.3396
+#> sigma       18.643   21.3029
+#> cohen_d      0.357    0.8277
+#> lp__      -208.906 -204.3240
 ```
 
 Possiamo dunque concludere che i bambini la cui madre ha completato la scuola superiore ottengono in media circa 12 punti in più rispetto ai bambini la cui madre non ha completato la scuola superiore. L'intervallo di credibilità al 95% ci dice che possiamo essere sicuri al 95% che tale differenza sia di almeno 7 punti e possa arrivare fino a ben 16 punti. Per riassumere, possiamo concludere, con un grado di certezza soggettiva del 95%, che c'è un'associazione positiva tra il livello di scolarità della madre e l'intelligenza del bambino: le madri che hanno livello di istruzione più alto della media tendo ad avere bambini il cui QI è anch'esso più alto della media.
@@ -201,9 +205,32 @@ Possiamo dunque concludere che i bambini la cui madre ha completato la scuola su
 
 ## La dimensione dell'effetto
 
-Avendo a disposizione le informazioni sulle distribuzioni a posteriori dei parametri è facile calcolare la dimensione dell'effetto nei termini del $d$ di Cohen.
+Nel caso di due gruppi indipendenti, la dimensione dell'effetto si può stimare con la statistica $d$ di Cohen:
+$$
+d={\frac {{\bar {y}}_{1}-{\bar {y}}_{2}}{s}}.
+$$
+Nel caso presente, la differenza ${\bar {y}}_{1}-{\bar {y}}_{2}$ corrisponde a al parametro $\beta$ del modello lineare. Inoltre, una stima della deviazione starndard comune dei due gruppi è fornita dalla deviazione standard della regressione, ovvero dal parametro $\sigma$. Nel blocco `generated quantities` del modello Stan ho calcolato `cohen_d = beta / sigma`. Ciò significa che Stan calcolerà la distribuzione a posteriori del parametro `cohen_d`. Possiamo dunque riassumere la distribuzione a posteriori di `cohen_d` con un qualche indice di tendenza centrale (che sarà la nostra stima della dimensione dell'effetto) e calcolare l'intervallo di credibilità, per esempio al 95%. Questi risultati si ottengono con l'istruzione riportata di seguito:
 
-Iniziamo semplicemente utilizzando le medie e le deviazioni standard delle due distribuzioni:
+
+```r
+posterior::summarise_draws(
+  stanfit, 
+  ~quantile(.x, probs = c(0.025, 0.5, 0.975))
+)
+#> # A tibble: 8 × 4
+#>   variable     `2.5%`       `50%`   `97.5%`
+#>   <chr>         <dbl>       <dbl>     <dbl>
+#> 1 alpha_std   -0.0940   -0.000366    0.0925
+#> 2 beta_std     0.144     0.236       0.329 
+#> 3 sigma_std    0.913     0.974       1.04  
+#> 4 alpha       73.4      77.5        81.6   
+#> 5 beta         7.14     11.7        16.3   
+#> 6 sigma       18.6      19.9        21.3   
+#> 7 cohen_d      0.357     0.591       0.828 
+#> 8 lp__      -209.     -205.       -204.
+```
+
+I risultati dell'analisi bayesiana coincidono con quelli che si ottengono utilizzando la formula del $d$ di Cohen con le medie dei due gruppi e una stima della varianza _pooled_. Il calcolo della statistica $d$ di Cohen è fornita, ad esempio, dal pacchetto `effectsize`:
 
 
 ```r
@@ -216,47 +243,6 @@ library("effectsize")
 #> - Estimated using pooled SD.
 ```
 
-Lo stesso risultato si ottiene utilizzando la distribuzione a posteriori dei parametri:
+Il fatto che l'output abbia un segno negativo dipende dal fatto che è stata sottratta la media maggiore dalla media minore (in altri termini, dobbiamo guardare il risultato in valore assoluto). 
 
-
-```r
-11.75398 / 19.90159	
-#> [1] 0.591
-```
-\noindent
-Il $d$ di Cohen di entità "media" [$d$ > 0.5; @sawilowsky2009new] conferma l'importanza dell'influenza della scolarità delle madri sul QI dei bambini. 
-
-Possiamo confermare il risultato ottenuto usando le funzioni del pacchetto $\R$ `bayestest`.
-
-
-```r
-library ("MCMCpack")
-library("bayest")
-```
-
-
-```r
-kid_iq0 <- df %>%
-  dplyr::filter(mom_hs == 0) %>%
-  pull(kid_score)
-kid_iq1 <- df %>%
-  dplyr::filter(mom_hs == 1) %>%
-  pull(kid_score)
-bayes.t.test(
-  n = 20000,
-  burnin = 10000,
-  firstComp = kid_iq0,
-  secondComp = kid_iq1,
-  sd = "sd",
-  plot = "all",
-  ci = 0.95,
-  hyperpars = "custom",
-  q = 0.1
-)
-```
-
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-1} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-2} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-3} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-4} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-5} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-6} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-7} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-8} \end{center}
-
-Con le funzioni di `bayestest` otteniamo una stima della dimensione dell'effetto pari a 0.558 (se usiamo la media a posteriori) -- molto simile a quella ottenuta in precedenza -- con un intervallo di credibilità del 95% pari a [0.02, 1.10].
+In conclusione, il valore $d$ di Cohen di entità "media" [$d$ > 0.5; @sawilowsky2009new] può essere interpretato dicendo che la scolarità delle madri ha un'influenza non trascurabile sul QI dei bambini. 

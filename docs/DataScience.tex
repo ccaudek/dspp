@@ -623,10 +623,12 @@ Il punteggio medio PIAT è pari a 77.5 per i bambini la cui madre non ha il dipl
 \StringTok{  real alpha;}
 \StringTok{  real beta;}
 \StringTok{  real\textless{}lower=0\textgreater{} sigma;}
+\StringTok{  real cohen\_d;}
 \StringTok{  alpha = sd(y) * (alpha\_std {-} beta\_std * mean(x) / sd(x))}
 \StringTok{           + mean(y);}
 \StringTok{  beta = beta\_std * sd(y) / sd(x);}
 \StringTok{  sigma = sd(y) * sigma\_std;}
+\StringTok{  cohen\_d = beta / sigma;}
 \StringTok{\}}
 \StringTok{"}
 \FunctionTok{writeLines}\NormalTok{(modelString, }\AttributeTok{con =} \StringTok{"code/simpleregstd.stan"}\NormalTok{)}
@@ -707,13 +709,14 @@ Le stime a posteriori dei parametri si ottengono con:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fit}\SpecialCharTok{$}\FunctionTok{summary}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta"}\NormalTok{, }\StringTok{"sigma"}\NormalTok{))}
-\CommentTok{\#\textgreater{} \# A tibble: 3 × 10}
-\CommentTok{\#\textgreater{}   variable  mean median    sd   mad    q5   q95  rhat ess\_bulk}
-\CommentTok{\#\textgreater{}   \textless{}chr\textgreater{}    \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}    \textless{}dbl\textgreater{}}
-\CommentTok{\#\textgreater{} 1 alpha     77.5   77.6 2.07  2.06  74.2   81.0  1.00   17948.}
-\CommentTok{\#\textgreater{} 2 beta      11.8   11.8 2.34  2.33   7.91  15.6  1.00   18036.}
-\CommentTok{\#\textgreater{} 3 sigma     19.9   19.9 0.679 0.673 18.8   21.0  1.00   18897.}
+\NormalTok{fit}\SpecialCharTok{$}\FunctionTok{summary}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta"}\NormalTok{, }\StringTok{"sigma"}\NormalTok{, }\StringTok{"cohen\_d"}\NormalTok{))}
+\CommentTok{\#\textgreater{} \# A tibble: 4 × 10}
+\CommentTok{\#\textgreater{}   variable   mean median    sd   mad     q5    q95  rhat ess\_bulk}
+\CommentTok{\#\textgreater{}   \textless{}chr\textgreater{}     \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}    \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 alpha    77.6   77.5   2.08  2.06  74.1   81.0    1.00   16538.}
+\CommentTok{\#\textgreater{} 2 beta     11.8   11.7   2.35  2.34   7.88  15.6    1.00   16718.}
+\CommentTok{\#\textgreater{} 3 sigma    19.9   19.9   0.676 0.671 18.8   21.0    1.00   15949.}
+\CommentTok{\#\textgreater{} 4 cohen\_d   0.592  0.591 0.120 0.119  0.393  0.788  1.00   16771.}
 \CommentTok{\#\textgreater{} \# … with 1 more variable: ess\_tail \textless{}dbl\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
@@ -733,14 +736,15 @@ La seguente chiamata ritorna l'intervallo di credibilità al 95\% per tutti i pa
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{rstantools}\SpecialCharTok{::}\FunctionTok{posterior\_interval}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(stanfit), }\AttributeTok{prob =} \FloatTok{0.95}\NormalTok{)}
-\CommentTok{\#\textgreater{}                2.5\%     97.5\%}
-\CommentTok{\#\textgreater{} alpha\_std   {-}0.0904    0.0916}
-\CommentTok{\#\textgreater{} beta\_std     0.1447    0.3289}
-\CommentTok{\#\textgreater{} sigma\_std    0.9120    1.0437}
-\CommentTok{\#\textgreater{} alpha       73.4854   81.6092}
-\CommentTok{\#\textgreater{} beta         7.1877   16.3437}
-\CommentTok{\#\textgreater{} sigma       18.6155   21.3025}
-\CommentTok{\#\textgreater{} lp\_\_      {-}209.0430 {-}204.3220}
+\CommentTok{\#\textgreater{}               2.5\%     97.5\%}
+\CommentTok{\#\textgreater{} alpha\_std   {-}0.094    0.0925}
+\CommentTok{\#\textgreater{} beta\_std     0.144    0.3289}
+\CommentTok{\#\textgreater{} sigma\_std    0.913    1.0437}
+\CommentTok{\#\textgreater{} alpha       73.432   81.6209}
+\CommentTok{\#\textgreater{} beta         7.135   16.3396}
+\CommentTok{\#\textgreater{} sigma       18.643   21.3029}
+\CommentTok{\#\textgreater{} cohen\_d      0.357    0.8277}
+\CommentTok{\#\textgreater{} lp\_\_      {-}208.906 {-}204.3240}
 \end{Highlighting}
 \end{Shaded}
 
@@ -749,9 +753,33 @@ Possiamo dunque concludere che i bambini la cui madre ha completato la scuola su
 \hypertarget{la-dimensione-delleffetto}{%
 \section{La dimensione dell'effetto}\label{la-dimensione-delleffetto}}
 
-Avendo a disposizione le informazioni sulle distribuzioni a posteriori dei parametri è facile calcolare la dimensione dell'effetto nei termini del \(d\) di Cohen.
+Nel caso di due gruppi indipendenti, la dimensione dell'effetto si può stimare con la statistica \(d\) di Cohen:
+\[
+d={\frac {{\bar {y}}_{1}-{\bar {y}}_{2}}{s}}.
+\]
+Nel caso presente, la differenza \({\bar {y}}_{1}-{\bar {y}}_{2}\) corrisponde a al parametro \(\beta\) del modello lineare. Inoltre, una stima della deviazione starndard comune dei due gruppi è fornita dalla deviazione standard della regressione, ovvero dal parametro \(\sigma\). Nel blocco \texttt{generated\ quantities} del modello Stan ho calcolato \texttt{cohen\_d\ =\ beta\ /\ sigma}. Ciò significa che Stan calcolerà la distribuzione a posteriori del parametro \texttt{cohen\_d}. Possiamo dunque riassumere la distribuzione a posteriori di \texttt{cohen\_d} con un qualche indice di tendenza centrale (che sarà la nostra stima della dimensione dell'effetto) e calcolare l'intervallo di credibilità, per esempio al 95\%. Questi risultati si ottengono con l'istruzione riportata di seguito:
 
-Iniziamo semplicemente utilizzando le medie e le deviazioni standard delle due distribuzioni:
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{posterior}\SpecialCharTok{::}\FunctionTok{summarise\_draws}\NormalTok{(}
+\NormalTok{  stanfit, }
+  \SpecialCharTok{\textasciitilde{}}\FunctionTok{quantile}\NormalTok{(.x, }\AttributeTok{probs =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.025}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\FloatTok{0.975}\NormalTok{))}
+\NormalTok{)}
+\CommentTok{\#\textgreater{} \# A tibble: 8 × 4}
+\CommentTok{\#\textgreater{}   variable     \textasciigrave{}2.5\%\textasciigrave{}       \textasciigrave{}50\%\textasciigrave{}   \textasciigrave{}97.5\%\textasciigrave{}}
+\CommentTok{\#\textgreater{}   \textless{}chr\textgreater{}         \textless{}dbl\textgreater{}       \textless{}dbl\textgreater{}     \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 alpha\_std   {-}0.0940   {-}0.000366    0.0925}
+\CommentTok{\#\textgreater{} 2 beta\_std     0.144     0.236       0.329 }
+\CommentTok{\#\textgreater{} 3 sigma\_std    0.913     0.974       1.04  }
+\CommentTok{\#\textgreater{} 4 alpha       73.4      77.5        81.6   }
+\CommentTok{\#\textgreater{} 5 beta         7.14     11.7        16.3   }
+\CommentTok{\#\textgreater{} 6 sigma       18.6      19.9        21.3   }
+\CommentTok{\#\textgreater{} 7 cohen\_d      0.357     0.591       0.828 }
+\CommentTok{\#\textgreater{} 8 lp\_\_      {-}209.     {-}205.       {-}204.}
+\end{Highlighting}
+\end{Shaded}
+
+I risultati dell'analisi bayesiana coincidono con quelli che si ottengono utilizzando la formula del \(d\) di Cohen con le medie dei due gruppi e una stima della varianza \emph{pooled}. Il calcolo della statistica \(d\) di Cohen è fornita, ad esempio, dal pacchetto \texttt{effectsize}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -765,52 +793,9 @@ Iniziamo semplicemente utilizzando le medie e le deviazioni standard delle due d
 \end{Highlighting}
 \end{Shaded}
 
-Lo stesso risultato si ottiene utilizzando la distribuzione a posteriori dei parametri:
+Il fatto che l'output abbia un segno negativo dipende dal fatto che è stata sottratta la media maggiore dalla media minore (in altri termini, dobbiamo guardare il risultato in valore assoluto).
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FloatTok{11.75398} \SpecialCharTok{/} \FloatTok{19.90159} 
-\CommentTok{\#\textgreater{} [1] 0.591}
-\end{Highlighting}
-\end{Shaded}
-
-\noindent
-Il \(d\) di Cohen di entità ``media'' {[}\(d\) \textgreater{} 0.5; \textcite{sawilowsky2009new}{]} conferma l'importanza dell'influenza della scolarità delle madri sul QI dei bambini.
-
-Possiamo confermare il risultato ottenuto usando le funzioni del pacchetto \(\R\) \texttt{bayestest}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{ (}\StringTok{"MCMCpack"}\NormalTok{)}
-\FunctionTok{library}\NormalTok{(}\StringTok{"bayest"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{kid\_iq0 }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(mom\_hs }\SpecialCharTok{==} \DecValTok{0}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{pull}\NormalTok{(kid\_score)}
-\NormalTok{kid\_iq1 }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(mom\_hs }\SpecialCharTok{==} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{pull}\NormalTok{(kid\_score)}
-\FunctionTok{bayes.t.test}\NormalTok{(}
-  \AttributeTok{n =} \DecValTok{20000}\NormalTok{,}
-  \AttributeTok{burnin =} \DecValTok{10000}\NormalTok{,}
-  \AttributeTok{firstComp =}\NormalTok{ kid\_iq0,}
-  \AttributeTok{secondComp =}\NormalTok{ kid\_iq1,}
-  \AttributeTok{sd =} \StringTok{"sd"}\NormalTok{,}
-  \AttributeTok{plot =} \StringTok{"all"}\NormalTok{,}
-  \AttributeTok{ci =} \FloatTok{0.95}\NormalTok{,}
-  \AttributeTok{hyperpars =} \StringTok{"custom"}\NormalTok{,}
-  \AttributeTok{q =} \FloatTok{0.1}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-1} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-2} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-3} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-4} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-5} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-6} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-7} \includegraphics[width=0.8\linewidth]{055_reglin5_files/figure-latex/unnamed-chunk-15-8} \end{center}
-
-Con le funzioni di \texttt{bayestest} otteniamo una stima della dimensione dell'effetto pari a 0.558 (se usiamo la media a posteriori) -- molto simile a quella ottenuta in precedenza -- con un intervallo di credibilità del 95\% pari a {[}0.02, 1.10{]}.
+In conclusione, il valore \(d\) di Cohen di entità ``media'' {[}\(d\) \textgreater{} 0.5; \textcite{sawilowsky2009new}{]} può essere interpretato dicendo che la scolarità delle madri ha un'influenza non trascurabile sul QI dei bambini.
 
 
 % Bibliography

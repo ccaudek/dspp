@@ -2,12 +2,13 @@
 suppressPackageStartupMessages({
   library("here")
   library("tidyverse")
+  library("scales")
   library("patchwork")
   library("bayesplot")
   library("ggExtra")
   library("ggpubr")
   library("viridis")
-  library("ggokabeito")
+  # library("ggokabeito")
 })  
   
 # R options set globally
@@ -19,8 +20,8 @@ options(
 )
 knitr::opts_chunk$set(width = 68)
 
-set.seed(42)
-SEED <- 374237 # set random seed for reproducibility
+set.seed(84735)
+SEED <- 84735 # set random seed for reproducibility
 
 theme_set(bayesplot::theme_default(base_size = 12))
 bayesplot::color_scheme_set("brightblue") #  mix-blue-green
@@ -59,4 +60,4 @@ if (knitr::is_html_output()) {
 
 # dplyr options ----------------------------------------------------------------
 
-options(dplyr.print_min = 6, dplyr.print_max = 6)
+options(dplyr.print_min = 8, dplyr.print_max = 8)
